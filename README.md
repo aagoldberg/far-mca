@@ -1,15 +1,24 @@
-# FAR-MCA: Crowdsourced Revenue-Based Financing
+# LendFriend: Revenue-Based Financing Platform
 
-A decentralized revenue-based financing platform where funders provide capital with **0% interest or profit** - purely crowdsourced support for businesses.
+A decentralized revenue-based financing platform built on Base blockchain. Connect businesses with funders through transparent, on-chain revenue-sharing agreements.
+
+## 📁 Monorepo Structure
+
+This is a monorepo containing multiple applications:
+
+- **`apps/web/`** - Main web application (Next.js)
+- **`apps/farcaster/`** - Farcaster Mini App for mobile users
+- **`contracts/`** - Solidity smart contracts (Foundry)
+- **`docs/`** - Documentation
 
 ## 🌟 Overview
 
-This platform enables businesses to receive funding from the community with flexible revenue-based repayment terms. Unlike traditional RBF platforms:
+LendFriend enables businesses to receive funding from the community with flexible revenue-based repayment terms:
 
-- **Zero Interest/Profit for Funders**: Funders receive exactly what they contribute back - no more, no less
-- **Community-Driven**: Built on the principle of collective support rather than profit
-- **Flexible Repayment**: Businesses pay a percentage of revenue, making payments sustainable
-- **Transparent & On-Chain**: All transactions recorded on Base blockchain for full transparency
+- **Zero-Equity Financing**: No ownership dilution for businesses
+- **Revenue-Based Repayment**: Pay as you earn - sustainable for growing businesses
+- **Flexible Terms**: Customizable revenue share % and repayment caps
+- **Transparent & On-Chain**: All transactions recorded on Base blockchain
 
 ## 🏗️ Architecture
 
@@ -17,6 +26,7 @@ This platform enables businesses to receive funding from the community with flex
 - **Blockchain**: Base (Ethereum Layer 2) for low transaction costs
 - **Authentication**: Privy for wallet and social login
 - **Smart Contracts**: Revenue-based financing campaigns with automated repayment
+- **Farcaster Integration**: Native mobile mini app experience
 - **Styling**: TailwindCSS for responsive design
 
 ## 🚀 Getting Started
@@ -30,32 +40,34 @@ This platform enables businesses to receive funding from the community with flex
 ### Installation
 
 ```bash
-# Install dependencies
+# Install all dependencies (uses npm workspaces)
 npm install
-
-# Copy environment variables
-cp .env.example .env.local
-
-# Configure your .env.local with:
-# - NEXT_PUBLIC_RPC_URL (Base RPC endpoint)
-# - NEXT_PUBLIC_CAMPAIGN_FACTORY_ADDRESS
-# - NEXT_PUBLIC_USDC_CONTRACT_ADDRESS
-# - NEXT_PUBLIC_PRIVY_APP_ID
-# - And other required variables
 ```
 
 ### Development
 
 ```bash
-# Start development server (runs on port 3001)
-npm run dev
+# Start web app (runs on port 3001)
+npm run dev:web
 
-# Build for production
+# Start Farcaster mini app (runs on port 3002)
+npm run dev:farcaster
+
+# Build both apps
 npm run build
-
-# Start production server
-npm start
 ```
+
+### Environment Setup
+
+Each app has its own `.env.local`:
+
+**Web App** (`apps/web/.env.local`):
+- Copy from `apps/web/.env.example`
+- Configure Privy, RPC URLs, contract addresses
+
+**Farcaster App** (`apps/farcaster/.env.local`):
+- Copy from `apps/farcaster/.env.local` template
+- Same variables as web app (already configured)
 
 ## 📋 Key Features
 
