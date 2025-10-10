@@ -32,18 +32,20 @@ const apolloClient = new ApolloClient({
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  // If Privy is not configured, render without auth
+  // If Privy is not configured, still provide WagmiProvider to avoid hook errors
   if (!PRIVY_APP_ID) {
     return (
       <QueryClientProvider client={queryClient}>
-        <ApolloProvider client={apolloClient}>
-          <div className="border-t-4 border-yellow-500">
-            <div className="bg-yellow-50 border-b border-yellow-200 px-4 py-2 text-sm text-yellow-800">
-              ⚠️ Authentication disabled - Configure NEXT_PUBLIC_PRIVY_APP_ID in .env.local to enable wallet connection
+        <WagmiProvider config={wagmiConfig}>
+          <ApolloProvider client={apolloClient}>
+            <div className="border-t-4 border-yellow-500">
+              <div className="bg-yellow-50 border-b border-yellow-200 px-4 py-2 text-sm text-yellow-800">
+                ⚠️ Authentication disabled - Configure NEXT_PUBLIC_PRIVY_APP_ID in .env.local to enable wallet connection
+              </div>
+              {children}
             </div>
-            {children}
-          </div>
-        </ApolloProvider>
+          </ApolloProvider>
+        </WagmiProvider>
       </QueryClientProvider>
     );
   }
