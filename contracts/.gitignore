@@ -1,5 +1,27 @@
-lib/
-out/
+# Compiler files
 cache/
-broadcast/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Dotenv file
 .env
+
+# Foundry
+lib/
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store

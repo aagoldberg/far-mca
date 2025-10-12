@@ -1,380 +1,183 @@
-# FAR-MCA Smart Contracts
+# MicroLoan Contracts
 
-Revenue-Based Financing smart contracts for zero-interest crowdfunding on Base blockchain.
+Zero-interest, crowdfunded microloans on Base.
 
-## Overview
+## Features
 
-This directory contains the Solidity smart contracts for the FAR-MCA platform. The contracts enable businesses to create revenue-based financing campaigns where funders receive exactly their contribution back (1.0x repayment cap) with zero profit.
+- ✅ **Zero Interest** - Borrowers repay only the principal
+- ✅ **Crowdfunded** - Multiple lenders can fund each loan
+- ✅ **Grace Periods** - 7-day grace period before default
+- ✅ **Emergency Pause** - Factory can be paused in emergencies
+- ✅ **Gas Optimized** - IR compiler enabled for efficiency
+- ✅ **Well Tested** - 11 comprehensive tests covering edge cases
+- ✅ **Fully Documented** - Complete NatSpec documentation
 
-## Contract Architecture
-
-### Core Contracts
-
-**RBFCampaignFactory.sol**
-- Factory pattern for deploying individual RBF campaigns
-- Maintains registry of all campaigns
-- Events for tracking campaign creation
-- Minimal gas costs for deployment
-
-**RBFCampaign.sol**
-- Individual revenue-based financing campaign
-- Manages contributions from funders
-- Tracks revenue-based repayments
-- Distributes repayments proportionally to funders
-- Supports EIP-2612 permit signatures for gasless approvals
-
-**TestUSDC.sol**
-- ERC-20 token for testing
-- Faucet functionality for easy testing
-- Mimics USDC functionality
-- Use for development and testnet only
-
-### Legacy/Alternative Contracts
-
-**Campaign.sol** - Original campaign contract (non-RBF)
-**CampaignFactory.sol** - Factory for standard campaigns
-**CrowdFund.sol** - Alternative crowdfunding implementation
-**RBFFactory.sol** - Simplified RBF factory
-**RBFAdvance.sol** - Alternative RBF implementation
-
-## Key Features
-
-### Zero-Interest Model
-
-The contracts are designed to support a **1.0x repayment cap**:
-
-```solidity
-// Example campaign creation
-uint256 goalAmount = 10000 * 10**6;  // 10,000 USDC
-uint256 revenueShareBps = 500;        // 5% revenue share
-uint256 repaymentCap = 100;           // 1.0x cap (100 = 100%)
-
-// Funder contributes: 10,000 USDC
-// Business repays: 10,000 USDC (exactly)
-// Funder profit: 0 USDC
-```
-
-### Revenue-Based Repayment
-
-Businesses pay a percentage of their monthly revenue:
-
-```solidity
-// Business makes revenue payment
-function makeRevenuePayment(uint256 amount) external {
-    // Transfer USDC from business to campaign
-    usdc.transferFrom(msg.sender, address(this), amount);
-
-    // Distribute proportionally to all funders
-    // Payments stop when totalRepaid >= goalAmount * repaymentCap
-}
-```
-
-### Dual Contribution Methods
-
-**Standard Approve/Transfer:**
-```solidity
-// 1. Approve USDC spending
-usdc.approve(campaignAddress, amount);
-
-// 2. Contribute to campaign
-campaign.contribute(amount);
-```
-
-**Gasless Permit (EIP-2612):**
-```solidity
-// Single transaction with signature
-campaign.contributeWithPermit(
-    amount,
-    deadline,
-    v, r, s  // Signature components
-);
-```
-
-## Setup & Installation
-
-### Prerequisites
-
-- [Foundry](https://book.getfoundry.sh/getting-started/installation) installed
-- Git for submodule management
-
-### Installation
+## Quick Start
 
 ```bash
-cd contracts
+# 1. Setup environment
+cp .env.example .env
+# Edit .env with your keys
 
-# Initialize Foundry (if needed)
-forge init --force
+# 2. Install & Test
+make install
+make test
 
-# Install dependencies
-forge install
-
-# Or manually install OpenZeppelin
-forge install OpenZeppelin/openzeppelin-contracts
+# 3. Deploy to Base Sepolia
+make deploy-sepolia
 ```
 
-### Configuration
+See [QUICKSTART.md](./QUICKSTART.md) for details.
 
-Edit `.env.example` and save as `.env`:
+## Contracts
 
-```bash
-# Blockchain Configuration
-PRIVATE_KEY=your_wallet_private_key
-RPC_URL=https://sepolia.base.org
-BASESCAN_API_KEY=your_basescan_api_key
+### MicroLoanFactory
+Factory contract for deploying individual microloans.
 
-# Contract Addresses (update after deployment)
-CAMPAIGN_FACTORY_ADDRESS=0x...
-USDC_ADDRESS=0x...
-```
+**Key Functions**:
+- `createLoan()` - Deploy a new loan
+- `pause()`/`unpause()` - Emergency controls
+- `setBounds()` - Update loan parameters
 
-## Development
+**Address**: (Deploy to get address)
 
-### Compile Contracts
+### MicroLoan
+Individual loan contract.
 
-```bash
-forge build
-```
+**Lifecycle**: Fundraising → Disbursement → Repayment → Completion
 
-### Run Tests
+**Key Functions**:
+- `contribute()` - Fund a loan
+- `disburse()` - Borrower claims funds
+- `repay()` - Make repayments
+- `claim()` - Lenders claim returns
+- `refund()` - Get refund if loan cancelled
 
-```bash
-# Run all tests
-forge test
+### TestUSDC
+Test USDC token with unlimited minting.
 
-# Run with verbose output
-forge test -vvv
+**Key Functions**:
+- `faucet(amount)` - Mint tokens to yourself
+- `mint(to, amount)` - Mint to any address
 
-# Run specific test
-forge test --match-test testContribute
-
-# Run with gas reporting
-forge test --gas-report
-```
-
-### Format Code
-
-```bash
-forge fmt
-```
-
-### Gas Snapshots
-
-```bash
-forge snapshot
-```
-
-## Deployment
-
-### Deploy to Base Sepolia (Testnet)
-
-**1. Deploy TestUSDC:**
-```bash
-forge script script/DeployTestUSDC.s.sol:DeployTestUSDC \
-  --rpc-url base_sepolia \
-  --broadcast \
-  --verify
-```
-
-**2. Deploy RBF Factory:**
-```bash
-forge script script/DeployRBFFactory.s.sol:DeployRBFFactory \
-  --rpc-url base_sepolia \
-  --broadcast \
-  --verify
-```
-
-**3. Update `.env` with deployed addresses**
-
-### Deploy to Base Mainnet
-
-```bash
-# Same commands but use base_mainnet RPC
-forge script script/DeployRBFFactory.s.sol:DeployRBFFactory \
-  --rpc-url base_mainnet \
-  --broadcast \
-  --verify \
-  --slow  # Add delay between transactions
-```
-
-**Note**: On mainnet, use the real USDC contract address instead of TestUSDC.
-
-## Contract Interactions
-
-### Create a Campaign
-
-```bash
-# Using cast
-cast send $FACTORY_ADDRESS \
-  "createCampaign(uint256,string)" \
-  10000000000 \
-  "ipfs://QmYourMetadataHash" \
-  --rpc-url base_sepolia \
-  --private-key $PRIVATE_KEY
-```
-
-### Contribute to Campaign
-
-```bash
-# Approve USDC
-cast send $USDC_ADDRESS \
-  "approve(address,uint256)" \
-  $CAMPAIGN_ADDRESS \
-  1000000000 \
-  --rpc-url base_sepolia \
-  --private-key $PRIVATE_KEY
-
-# Contribute
-cast send $CAMPAIGN_ADDRESS \
-  "contribute(uint256)" \
-  1000000000 \
-  --rpc-url base_sepolia \
-  --private-key $PRIVATE_KEY
-```
-
-### Make Revenue Payment
-
-```bash
-# Approve USDC for payment
-cast send $USDC_ADDRESS \
-  "approve(address,uint256)" \
-  $CAMPAIGN_ADDRESS \
-  500000000 \
-  --rpc-url base_sepolia \
-  --private-key $PRIVATE_KEY
-
-# Make payment
-cast send $CAMPAIGN_ADDRESS \
-  "makeRevenuePayment(uint256)" \
-  500000000 \
-  --rpc-url base_sepolia \
-  --private-key $PRIVATE_KEY
-```
-
-## Contract Addresses
-
-### Base Sepolia Testnet
+## Architecture
 
 ```
-RBFCampaignFactory: 0x0Eb3075cF3bAAB9715c8D3F423F1634571c4B312
-TestUSDC: 0x036CbD53842c5426634e7929541eC2318f3dCF7e
+┌─────────────────────────┐
+│   MicroLoanFactory      │
+│  - Creates loans        │
+│  - Enforces bounds      │
+│  - Emergency pause      │
+└───────────┬─────────────┘
+            │
+            │ creates
+            ↓
+┌─────────────────────────┐
+│      MicroLoan          │
+│  - Fundraising          │
+│  - Disbursement         │
+│  - Repayment tracking   │
+│  - Distribution         │
+└─────────────────────────┘
 ```
 
-### Base Mainnet
+## Configuration
 
-```
-To be deployed
-USDC: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-```
+Default factory settings:
+- **Min Principal**: 100 USDC
+- **Term Range**: 3-60 periods
+- **Period Length**: 7-60 days
+- **Disbursement Window**: 14 days
+- **Grace Period**: 7 days
+
+Modify in `.env` or call setter functions after deployment.
 
 ## Testing
 
-### Test Files
-
-- `RBFCampaign.t.sol` - Tests for RBF campaign contract
-- `Campaign.t.sol` - Tests for standard campaign
-- `TestUSDC.t.sol` - Tests for USDC mock
-- `CrowdFund.t.sol` - Tests for alternative implementation
-
-### Run Specific Test Suite
-
 ```bash
-forge test --match-contract RBFCampaignTest
+# Run all tests
+make test
+
+# Run with gas reporting
+make test-gas
+
+# Generate coverage
+make coverage
+
+# Create gas snapshot
+make snapshot
 ```
 
-### Test Coverage
+**Test Coverage**: 11/11 tests passing
+- ✅ Happy path (fund → disburse → repay → claim)
+- ✅ Refund scenarios
+- ✅ Multiple contributors
+- ✅ Partial repayments
+- ✅ Grace period & defaults
+- ✅ Factory bounds enforcement
+- ✅ Pause/unpause
+- ✅ Overpayment handling
 
+## Deployment
+
+### Base Sepolia (Testnet)
 ```bash
-forge coverage
+make deploy-sepolia
 ```
 
-## Security Considerations
-
-### Audits
-
-⚠️ **These contracts have not been professionally audited.** Use at your own risk.
-
-Before mainnet deployment:
-- [ ] Complete professional security audit
-- [ ] Bug bounty program
-- [ ] Gradual rollout with deposit limits
-
-### Known Considerations
-
-1. **Reentrancy**: Protected with checks-effects-interactions pattern
-2. **Integer Overflow**: Using Solidity 0.8+ built-in checks
-3. **Access Control**: Creator-only functions for campaign management
-4. **Emergency Functions**: Pause functionality for security incidents
-
-## Contract Verification
-
-After deployment, verify on Basescan:
-
+### Base Mainnet (Production)
 ```bash
-forge verify-contract \
-  $CONTRACT_ADDRESS \
-  src/RBFCampaignFactory.sol:RBFCampaignFactory \
-  --chain-id 84532 \
-  --etherscan-api-key $BASESCAN_API_KEY
+make deploy-mainnet
 ```
 
-## Upgradeability
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for full guide.
 
-Current contracts are **non-upgradeable** for security and simplicity. The factory pattern allows deploying new versions:
+## Security
 
-1. Deploy new factory with improved logic
-2. Update frontend to use new factory
-3. Old campaigns continue to function
-4. New campaigns use new implementation
+- ✅ **ReentrancyGuard** on all external state-changing functions
+- ✅ **SafeERC20** for token transfers
+- ✅ **Ownable** for access control
+- ✅ **Pausable** for emergency stops
+- ✅ **Comprehensive input validation**
+- ✅ **No upgradeability** (immutable by design)
 
-## Gas Optimization
+## Events
 
-The contracts use several gas optimization techniques:
+All key actions emit events for indexing:
 
-- Factory pattern for efficient campaign deployment
-- Minimal storage variables
-- Events for off-chain data
-- Efficient loops for distributions
-- Custom errors instead of string reverts
+```solidity
+// Fundraising
+event Contributed(address indexed contributor, uint256 amount)
+event FundraisingClosed(uint256 totalAmount)
+event FundraisingCancelled()
 
-## Integration with Frontend
+// Disbursement
+event Disbursed(address indexed borrower, uint256 amount)
 
-The frontend uses these contracts via the ABIs in `src/abi/`:
+// Repayment
+event Repaid(uint256 amountApplied, uint256 outstandingPrincipal)
+event PeriodPaid(uint256 indexed periodIndex, uint256 amountPaid, uint256 dueDate, address indexed payer)
+event LoanDefaulted(uint256 missedPaymentDate, uint256 periodsOverdue)
 
-- `RBFCampaignFactory.json` - Factory ABI
-- `RBFCampaign.json` - Campaign ABI
-- `TestUSDC.json` - USDC ABI
+// Claims & Refunds
+event Claimed(address indexed contributor, uint256 amount)
+event Refunded(address indexed contributor, uint256 amount)
+event Completed(uint256 totalRepaid)
 
-ABIs are auto-generated during `forge build` in the `out/` directory.
-
-## Troubleshooting
-
-### "Foundry not found"
-```bash
-# Install Foundry
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
+// Factory
+event LoanCreated(address indexed loan, address indexed borrower, uint256 principal, uint256 termPeriods)
 ```
-
-### "Dependencies not found"
-```bash
-forge install
-```
-
-### "RPC connection failed"
-Check `.env` file has correct `RPC_URL`
-
-## Resources
-
-- [Foundry Book](https://book.getfoundry.sh/)
-- [Solidity Docs](https://docs.soliditylang.org/)
-- [OpenZeppelin Contracts](https://docs.openzeppelin.com/contracts/)
-- [Base Docs](https://docs.base.org/)
-- [EIP-2612 Permit](https://eips.ethereum.org/EIPS/eip-2612)
 
 ## License
 
-MIT License
+MIT
+
+## Support
+
+- **Documentation**: See [DEPLOYMENT.md](./DEPLOYMENT.md)
+- **Quick Start**: See [QUICKSTART.md](./QUICKSTART.md)
+- **Issues**: File on GitHub
 
 ---
 
-**Ready to deploy?** Follow the deployment steps above and update the frontend with your contract addresses!
+Built with ❤️ using [Foundry](https://getfoundry.sh)

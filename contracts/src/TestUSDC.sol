@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {ERC20} from "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
-import {ERC20Permit} from "openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
 /**
  * @title TestUSDC
@@ -12,7 +12,7 @@ import {ERC20Permit} from "openzeppelin-contracts/contracts/token/ERC20/extensio
 contract TestUSDC is ERC20, ERC20Permit {
     // Same decimals as real USDC
     uint8 private constant DECIMALS = 6;
-    
+
     // Events
     event Minted(address indexed to, uint256 amount);
     event BatchMinted(address[] recipients, uint256[] amounts);
@@ -46,7 +46,7 @@ contract TestUSDC is ERC20, ERC20Permit {
     function faucet(uint256 amount) external {
         // Reasonable limits to prevent spam (1000 USDC max per call)
         require(amount <= 1000 * 10**DECIMALS, "TestUSDC: Amount exceeds faucet limit");
-        
+
         _mint(msg.sender, amount);
         emit Minted(msg.sender, amount);
     }
@@ -84,7 +84,7 @@ contract TestUSDC is ERC20, ERC20Permit {
      */
     function faucetUSDC(uint256 usdcAmount) external {
         require(usdcAmount <= 1000, "TestUSDC: Amount exceeds 1000 USDC limit");
-        
+
         uint256 amount = usdcAmount * 10**DECIMALS;
         _mint(msg.sender, amount);
         emit Minted(msg.sender, amount);
