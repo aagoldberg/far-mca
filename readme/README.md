@@ -18,6 +18,20 @@ This directory contains comprehensive documentation for the LendFriend platform 
 
 ---
 
+### 🔑 [Farcaster Functions Reference](./FARCASTER_FUNCTIONS_REFERENCE.md) ← **Check Function Accessibility**
+**Complete reference of ALL contract functions accessible to the Farcaster app**
+
+**Perfect for:**
+- Ensuring all functions are accessible
+- Understanding function permissions
+- Quick API reference
+- Hook implementation examples
+- User role matrix
+
+**Time to read:** 15 minutes
+
+---
+
 ### 1. [Frontend Integration Plan](./FRONTEND_INTEGRATION_PLAN.md)
 **Complete step-by-step guide for integrating MicroLoan contracts with the frontend applications**
 
