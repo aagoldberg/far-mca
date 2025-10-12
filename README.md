@@ -9,7 +9,8 @@ This is a monorepo containing multiple applications:
 - **`apps/web/`** - Main web application (Next.js)
 - **`apps/farcaster/`** - Farcaster Mini App for mobile users
 - **`contracts/`** - Solidity smart contracts (Foundry)
-- **`docs/`** - Documentation
+- **`readme/`** - 📚 **Integration plans & architecture docs** → **[START HERE](./readme/README.md)** for frontend integration
+- **`docs/`** - Additional documentation
 
 ## 🌟 Overview
 
@@ -124,11 +125,13 @@ far-mca/
 
 ### Smart Contract Integration
 
-The platform uses a factory pattern for deploying revenue-based financing campaigns:
+The platform uses a factory pattern for deploying zero-interest microloans:
 
-- **RBFCampaignFactory**: Deploys individual campaign contracts
-- **RBFCampaign**: Manages contributions and revenue-based repayments
-- **TestUSDC**: ERC-20 token for funding (USDC on mainnet)
+- **MicroLoanFactory**: Deploys individual loan contracts (Base Sepolia: `0x747988...bFff`)
+- **MicroLoan**: Manages contributions and fixed-period repayments
+- **TestUSDC**: ERC-20 test token with faucet (Base Sepolia: `0x2d04a1...aaFe`)
+
+**📘 For integration details**: See [readme/FRONTEND_INTEGRATION_PLAN.md](./readme/FRONTEND_INTEGRATION_PLAN.md)
 
 ### Key Difference from Traditional RBF
 
