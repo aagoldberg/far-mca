@@ -59,36 +59,87 @@ export default function CreateLoanForm() {
     }
   };
 
+  const resizeAndCompressImage = async (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // Calculate new dimensions (max 1200x1200, maintain aspect ratio)
+          const maxDimension = 1200;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = (height / width) * maxDimension;
+              width = maxDimension;
+            } else {
+              width = (width / height) * maxDimension;
+              height = maxDimension;
+            }
+          }
+
+          // Create canvas and draw resized image
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+
+          if (!ctx) {
+            reject(new Error('Failed to get canvas context'));
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert to JPEG with quality adjustment to meet size target
+          const tryCompress = (quality: number) => {
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            const sizeKB = (dataUrl.length * 3) / 4 / 1024; // Estimate base64 size
+
+            // Target: under 150KB, ideal: under 100KB
+            if (sizeKB > 150 && quality > 0.5) {
+              // Try with lower quality
+              tryCompress(quality - 0.1);
+            } else if (sizeKB > 100 && quality > 0.6) {
+              // Try with slightly lower quality for better optimization
+              tryCompress(quality - 0.05);
+            } else {
+              resolve(dataUrl);
+            }
+          };
+
+          // Start with 85% quality
+          tryCompress(0.85);
+        };
+        img.onerror = () => reject(new Error('Failed to load image'));
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleImageUpload = async (file: File) => {
     if (!file.type.startsWith('image/')) {
       alert('Please upload an image file');
       return;
     }
 
-    // Check file size (limit to 500KB for on-chain storage)
-    const maxSize = 500 * 1024; // 500KB
-    if (file.size > maxSize) {
-      alert(`Image is too large (${(file.size / 1024).toFixed(0)}KB). Please use an image smaller than 500KB. You can:\n\n1. Use a photo compression tool\n2. Resize the image to smaller dimensions\n3. Use a JPEG with lower quality setting`);
-      return;
-    }
-
     setIsUploading(true);
     try {
-      // Convert image to base64 data URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        handleChange('imageUrl', base64String);
-        setIsUploading(false);
-      };
-      reader.onerror = () => {
-        alert('Error reading file');
-        setIsUploading(false);
-      };
-      reader.readAsDataURL(file);
+      // Automatically resize and compress the image
+      const compressedDataUrl = await resizeAndCompressImage(file);
+      const sizeKB = (compressedDataUrl.length * 3) / 4 / 1024;
+
+      console.log(`Image compressed: ${(file.size / 1024).toFixed(0)}KB → ${sizeKB.toFixed(0)}KB`);
+
+      handleChange('imageUrl', compressedDataUrl);
+      setIsUploading(false);
     } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('Failed to upload image');
+      console.error('Error processing image:', error);
+      alert('Failed to process image. Please try a different image.');
       setIsUploading(false);
     }
   };
@@ -485,7 +536,7 @@ export default function CreateLoanForm() {
                       <span className="text-gray-600"> or drag and drop</span>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
-                      PNG, JPG, GIF up to 500KB (compressed images work best)
+                      PNG, JPG, GIF - automatically resized and optimized
                     </p>
                   </div>
                 )}
