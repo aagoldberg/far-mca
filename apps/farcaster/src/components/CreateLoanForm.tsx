@@ -34,6 +34,7 @@ export default function CreateLoanForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<string>('');
 
   // Give the wallet time to connect automatically in Farcaster
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function CreateLoanForm() {
     }
   };
 
-  const resizeAndCompressImage = async (file: File): Promise<string> => {
+  const resizeAndCompressImage = async (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -93,25 +94,18 @@ export default function CreateLoanForm() {
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Convert to JPEG with quality adjustment to meet size target
-          const tryCompress = (quality: number) => {
-            const dataUrl = canvas.toDataURL('image/jpeg', quality);
-            const sizeKB = (dataUrl.length * 3) / 4 / 1024; // Estimate base64 size
-
-            // Target: under 150KB, ideal: under 100KB
-            if (sizeKB > 150 && quality > 0.5) {
-              // Try with lower quality
-              tryCompress(quality - 0.1);
-            } else if (sizeKB > 100 && quality > 0.6) {
-              // Try with slightly lower quality for better optimization
-              tryCompress(quality - 0.05);
-            } else {
-              resolve(dataUrl);
-            }
-          };
-
-          // Start with 85% quality
-          tryCompress(0.85);
+          // Convert to blob for upload
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(blob);
+              } else {
+                reject(new Error('Failed to create blob'));
+              }
+            },
+            'image/jpeg',
+            0.85
+          );
         };
         img.onerror = () => reject(new Error('Failed to load image'));
         img.src = e.target?.result as string;
@@ -119,6 +113,28 @@ export default function CreateLoanForm() {
       reader.onerror = () => reject(new Error('Failed to read file'));
       reader.readAsDataURL(file);
     });
+  };
+
+  const uploadImageToIPFS = async (file: File): Promise<string> => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image to IPFS');
+      }
+
+      const result = await response.json();
+      return `ipfs://${result.hash}`;
+    } catch (error) {
+      console.error('Image upload error:', error);
+      throw error;
+    }
   };
 
   const handleImageUpload = async (file: File) => {
@@ -129,13 +145,19 @@ export default function CreateLoanForm() {
 
     setIsUploading(true);
     try {
-      // Automatically resize and compress the image
-      const compressedDataUrl = await resizeAndCompressImage(file);
-      const sizeKB = (compressedDataUrl.length * 3) / 4 / 1024;
+      // Resize and compress the image
+      const compressedBlob = await resizeAndCompressImage(file);
+      const compressedFile = new File([compressedBlob], file.name, { type: 'image/jpeg' });
 
-      console.log(`Image compressed: ${(file.size / 1024).toFixed(0)}KB → ${sizeKB.toFixed(0)}KB`);
+      console.log(`Image compressed: ${(file.size / 1024).toFixed(0)}KB → ${(compressedFile.size / 1024).toFixed(0)}KB`);
 
-      handleChange('imageUrl', compressedDataUrl);
+      // Create preview for display
+      const previewUrl = URL.createObjectURL(compressedBlob);
+      handleChange('imageUrl', previewUrl);
+
+      // Store the file for later IPFS upload
+      (window as any).__pendingImageFile = compressedFile;
+
       setIsUploading(false);
     } catch (error) {
       console.error('Error processing image:', error);
@@ -204,37 +226,54 @@ export default function CreateLoanForm() {
   };
 
   const uploadMetadataToIPFS = async () => {
-    // For MVP, we'll use a simple JSON structure
-    // In production, you'd upload to IPFS via Pinata or similar
-    const metadata = {
-      name: formData.businessName,
-      description: formData.description,
-      businessType: formData.businessType,
-      location: formData.location,
-      imageUrl: formData.imageUrl,
-      useOfFunds: formData.useOfFunds,
-      repaymentSource: formData.repaymentSource,
-    };
+    try {
+      // Upload image to IPFS first if there's a pending file
+      let imageURI: string | undefined;
+      const pendingImageFile = (window as any).__pendingImageFile;
 
-    // For now, return a data URL (in production, upload to IPFS)
-    const jsonString = JSON.stringify(metadata);
+      if (pendingImageFile) {
+        console.log('Uploading image to IPFS...');
+        imageURI = await uploadImageToIPFS(pendingImageFile);
+        console.log('Image uploaded to IPFS:', imageURI);
+      }
 
-    // Convert UTF-8 string to base64 properly
-    // First encode to UTF-8 bytes, then convert to base64
-    const utf8Bytes = new TextEncoder().encode(jsonString);
+      // Create metadata with IPFS image URL
+      const metadata = {
+        name: formData.businessName,
+        description: formData.description,
+        businessType: formData.businessType,
+        location: formData.location,
+        image: imageURI, // IPFS URI instead of base64
+        useOfFunds: formData.useOfFunds,
+        repaymentSource: formData.repaymentSource,
+        createdAt: new Date().toISOString(),
+      };
 
-    // Convert Uint8Array to binary string in chunks to avoid stack overflow
-    let binaryString = '';
-    const chunkSize = 8192;
-    for (let i = 0; i < utf8Bytes.length; i += chunkSize) {
-      const chunk = utf8Bytes.subarray(i, i + chunkSize);
-      // Use Array.from to avoid spreading too many arguments
-      binaryString += String.fromCharCode.apply(null, Array.from(chunk));
+      console.log('Uploading metadata to IPFS...');
+
+      // Upload metadata to IPFS
+      const response = await fetch('/api/upload-metadata', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(metadata),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload metadata to IPFS');
+      }
+
+      const result = await response.json();
+      const metadataURI = `ipfs://${result.hash}`;
+
+      console.log('Metadata uploaded to IPFS:', metadataURI);
+
+      return metadataURI;
+    } catch (error) {
+      console.error('IPFS upload error:', error);
+      throw error;
     }
-
-    const base64 = btoa(binaryString);
-    const dataUrl = `data:application/json;base64,${base64}`;
-    return dataUrl;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -250,10 +289,13 @@ export default function CreateLoanForm() {
     }
 
     setIsSubmitting(true);
+    setUploadProgress('Preparing upload...');
 
     try {
-      // Upload metadata
+      // Upload metadata (which includes uploading image to IPFS)
+      setUploadProgress('Uploading to IPFS...');
       const metadataURI = await uploadMetadataToIPFS();
+      setUploadProgress('Creating blockchain transaction...');
 
       // Calculate timestamps - ensure they are integers
       const now = Math.floor(Date.now() / 1000);
@@ -311,6 +353,7 @@ export default function CreateLoanForm() {
       console.error('Error creating loan:', error);
       alert(error.message || 'Failed to create loan');
       setIsSubmitting(false);
+      setUploadProgress('');
     }
   };
 
@@ -739,6 +782,16 @@ export default function CreateLoanForm() {
             </div>
           </div>
         </div>
+
+        {/* Upload Progress Indicator */}
+        {uploadProgress && (
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div className="flex items-center gap-3">
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
+              <p className="text-blue-800 font-medium">{uploadProgress}</p>
+            </div>
+          </div>
+        )}
 
         {/* Submit Button */}
         <button
