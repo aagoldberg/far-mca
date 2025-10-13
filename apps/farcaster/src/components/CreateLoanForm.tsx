@@ -168,16 +168,17 @@ export default function CreateLoanForm() {
     // For now, return a data URL (in production, upload to IPFS)
     const jsonString = JSON.stringify(metadata);
 
-    // Use proper UTF-8 encoding for base64 conversion with chunking for large data
-    const encoder = new TextEncoder();
-    const data = encoder.encode(jsonString);
+    // Convert UTF-8 string to base64 properly
+    // First encode to UTF-8 bytes, then convert to base64
+    const utf8Bytes = new TextEncoder().encode(jsonString);
 
-    // Process in chunks to avoid call stack limit
+    // Convert Uint8Array to binary string in chunks to avoid stack overflow
     let binaryString = '';
     const chunkSize = 8192;
-    for (let i = 0; i < data.length; i += chunkSize) {
-      const chunk = data.slice(i, i + chunkSize);
-      binaryString += String.fromCharCode(...chunk);
+    for (let i = 0; i < utf8Bytes.length; i += chunkSize) {
+      const chunk = utf8Bytes.subarray(i, i + chunkSize);
+      // Use Array.from to avoid spreading too many arguments
+      binaryString += String.fromCharCode.apply(null, Array.from(chunk));
     }
 
     const base64 = btoa(binaryString);
