@@ -36,21 +36,10 @@ export default function CreateLoanForm() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<string>('');
 
-  // Give the wallet time to connect automatically in Farcaster
+  // For web app with Privy, wallet connects immediately
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsCheckingConnection(false);
-    }, 2000); // Wait 2 seconds for wallet to connect
-
-    return () => clearTimeout(timer);
+    setIsCheckingConnection(false);
   }, []);
-
-  // Stop checking once connected
-  useEffect(() => {
-    if (isConnected) {
-      setIsCheckingConnection(false);
-    }
-  }, [isConnected]);
 
   const handleChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -385,6 +374,34 @@ export default function CreateLoanForm() {
               View All Loans
             </button>
             <button
+              onClick={() => {
+                const loanUrl = `${window.location.origin}/loan/${hash}`;
+                if (navigator.share) {
+                  navigator.share({
+                    title: 'Support My Zero-Interest Loan',
+                    text: `Help me fund my business with a zero-interest community loan!`,
+                    url: loanUrl,
+                  }).catch(() => {
+                    // Fallback to copying link
+                    navigator.clipboard.writeText(loanUrl);
+                    alert('Link copied to clipboard!');
+                  });
+                } else {
+                  // Fallback to copying link
+                  navigator.clipboard.writeText(loanUrl);
+                  alert('Link copied to clipboard!');
+                }
+              }}
+              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+            >
+              <span className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share Loan
+              </span>
+            </button>
+            <button
               onClick={() => window.location.reload()}
               className="block w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
             >
@@ -396,31 +413,16 @@ export default function CreateLoanForm() {
     );
   }
 
-  // Show loading state while checking for wallet connection
-  if (isCheckingConnection) {
-    return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Connecting Wallet...</h2>
-          <p className="text-gray-600">
-            Connecting to your Farcaster wallet
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   if (!isConnected) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
           <p className="text-gray-600 mb-4">
-            Please make sure you're opening this in Warpcast
+            Please connect your wallet to create a loan
           </p>
           <p className="text-sm text-gray-500">
-            This app requires a Farcaster Mini App environment
+            Use the login button in the top right corner
           </p>
         </div>
       </div>

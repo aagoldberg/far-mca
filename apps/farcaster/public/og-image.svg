@@ -1,0 +1,12 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#f5f0ec"/>
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#2E7D32" text-anchor="middle">
+    LendFriend
+  </text>
+  <text x="600" y="360" font-family="Arial, sans-serif" font-size="36" fill="#666" text-anchor="middle">
+    Zero-Interest Community Loans
+  </text>
+  <text x="600" y="420" font-family="Arial, sans-serif" font-size="28" fill="#888" text-anchor="middle">
+    Get funded by your community • No interest • 1.0x repayment
+  </text>
+</svg>

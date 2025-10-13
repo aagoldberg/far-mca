@@ -1,40 +1,38 @@
 'use client';
 
-import { useEffect } from 'react';
-import { sdk } from '@farcaster/frame-sdk';
-import CampaignList from '../components/CampaignList';
+import Link from 'next/link';
+import LoanList from '../components/LoanList';
 
 export default function HomePage() {
-  useEffect(() => {
-    // Signal to the Farcaster client that the app is ready
-    sdk.actions.ready()
-      .then(() => {
-        console.log('Farcaster Mini App signaled ready.');
-      })
-      .catch((err) => {
-        console.error('Error signaling Farcaster Mini App ready:', err);
-      });
-  }, []);
-
   return (
     <div className="frame-container">
       <div className="w-full p-4">
         {/* Header */}
         <div className="mb-4">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
-            LendFriend
-          </h1>
-          <p className="text-sm text-gray-600">
-            Zero-equity business financing
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                LendFriend
+              </h1>
+              <p className="text-sm text-gray-600">
+                Zero-interest community loans
+              </p>
+            </div>
+            <Link
+              href="/create"
+              className="px-4 py-2 bg-[#2E7D32] hover:bg-[#4CAF50] text-white text-sm font-semibold rounded-lg transition-colors duration-200"
+            >
+              + Create Loan
+            </Link>
+          </div>
         </div>
 
-        {/* Active Campaigns */}
+        {/* Active Loans */}
         <h2 className="text-lg font-semibold text-gray-900 mb-3">
-          Active Requests
+          Available Loans
         </h2>
 
-        <CampaignList />
+        <LoanList />
       </div>
     </div>
   );

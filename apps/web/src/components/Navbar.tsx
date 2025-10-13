@@ -186,10 +186,15 @@ export default function Navbar() {
                     </div>
                   )}
                   
-                  {/* Request funding button - only show when not authenticated */}
+                  {/* Create loan button - only show when not authenticated */}
                   {!authenticated && (
                     <div className="w-full">
-                      <CreateFundingRequestButton />
+                      <Link
+                        href="/create-loan"
+                        className="block w-full text-center bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-medium py-3 px-5 rounded-xl shadow-sm transition-colors"
+                      >
+                        Create a Loan
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -249,7 +254,12 @@ export default function Navbar() {
           {/* Right: Wallet Balance, Auth Buttons and User Menu */}
           <div className="flex-shrink-0 flex items-center space-x-3">
             {authenticated && <WalletBalance />}
-            <CreateFundingRequestButton />
+            <Link
+              href="/create-loan"
+              className="bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-medium py-2.5 px-5 rounded-xl shadow-sm transition-colors duration-200"
+            >
+              Create Loan
+            </Link>
             {!ready ? (
               <div className="w-20 h-10 bg-gray-100 rounded-xl animate-pulse" />
             ) : authenticated ? (

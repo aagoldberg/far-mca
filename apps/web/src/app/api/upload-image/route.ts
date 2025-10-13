@@ -9,6 +9,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
+    // Debug: Log API key values (first 10 chars only for security)
+    console.log('API Key (first 10 chars):', process.env.PINATA_API_KEY?.substring(0, 10));
+    console.log('Secret Key (first 10 chars):', process.env.PINATA_SECRET_KEY?.substring(0, 10));
+
     // Create FormData for Pinata
     const pinataFormData = new FormData();
     pinataFormData.append('file', file);
