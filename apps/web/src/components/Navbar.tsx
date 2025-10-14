@@ -191,7 +191,7 @@ export default function Navbar() {
                     <div className="w-full">
                       <Link
                         href="/create-loan"
-                        className="block w-full text-center bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-medium py-3 px-5 rounded-xl shadow-sm transition-colors"
+                        className="block w-full text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-medium py-3 px-5 rounded-xl shadow-sm transition-colors"
                       >
                         Create a Loan
                       </Link>
@@ -256,7 +256,7 @@ export default function Navbar() {
             {authenticated && <WalletBalance />}
             <Link
               href="/create-loan"
-              className="bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-medium py-2.5 px-5 rounded-xl shadow-sm transition-colors duration-200"
+              className="bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-medium py-2.5 px-5 rounded-xl shadow-sm transition-colors duration-200"
             >
               Create Loan
             </Link>

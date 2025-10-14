@@ -104,7 +104,7 @@ const FundingRequestCard = ({ request }: { request: ProcessedCampaign }) => {
         <div className="mb-3">
           <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
             <div 
-              className="bg-[#2E7D32] h-2 rounded-full transition-all duration-500"
+              className="bg-[#3B9B7F] h-2 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
             />
           </div>

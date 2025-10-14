@@ -118,7 +118,7 @@ export function LoanCard({
       <div className="mb-3">
         <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
           <div
-            className="bg-[#2E7D32] h-2 rounded-full transition-all duration-500"
+            className="bg-[#3B9B7F] h-2 rounded-full transition-all duration-500"
             style={{ width: `${Math.min(progressPercentage, 100)}%` }}
           />
         </div>
@@ -142,7 +142,7 @@ export function LoanCard({
             {termPeriods.toString()} period{termPeriods === 1n ? '' : 's'}
           </span>
         )}
-        <span className="text-[#2E7D32] font-medium hover:underline">
+        <span className="text-[#3B9B7F] font-medium hover:underline">
           View Details →
         </span>
       </div>

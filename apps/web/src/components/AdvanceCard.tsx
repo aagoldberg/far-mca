@@ -135,7 +135,7 @@ export default function AdvanceCard({ loanAddress }: AdvanceCardProps) {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  className="bg-[#2E7D32] h-2 rounded-full transition-all duration-500"
+                  className="bg-[#3B9B7F] h-2 rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                 />
               </div>
@@ -195,7 +195,7 @@ export default function AdvanceCard({ loanAddress }: AdvanceCardProps) {
                     repay(loanAddress);
                   }}
                   disabled={isRepaying}
-                  className="px-4 py-2 bg-[#2E7D32] hover:bg-[#4CAF50] text-white text-sm font-semibold rounded-lg transition-colors disabled:bg-gray-300"
+                  className="px-4 py-2 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-sm font-semibold rounded-lg transition-colors disabled:bg-gray-300"
                 >
                   {isRepaying ? 'Processing...' : `Pay ${formatUSDC(perPeriodPrincipal as bigint)} USDC`}
                 </button>

@@ -95,7 +95,7 @@ export default function BorrowerAdvances() {
           </p>
           <Link
             href="/create-loan"
-            className="inline-block px-6 py-3 bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold rounded-xl transition-colors"
+            className="inline-block px-6 py-3 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold rounded-xl transition-colors"
           >
             Create Your First Loan
           </Link>
@@ -113,7 +113,7 @@ export default function BorrowerAdvances() {
         <div className="mt-8 text-center">
           <Link
             href="/create-loan"
-            className="inline-block px-6 py-3 bg-white border-2 border-[#2E7D32] text-[#2E7D32] hover:bg-[#2E7D32] hover:text-white font-semibold rounded-xl transition-all"
+            className="inline-block px-6 py-3 bg-white border-2 border-[#3B9B7F] text-[#3B9B7F] hover:bg-[#3B9B7F] hover:text-white font-semibold rounded-xl transition-all"
           >
             + Create New Loan
           </Link>

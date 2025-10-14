@@ -150,7 +150,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     <p className="text-sm text-gray-600 mb-2">Borrower: {loan.borrower.slice(0, 6)}...{loan.borrower.slice(-4)}</p>
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-600">Progress:</span>
-                        <span className="font-medium text-[#2E7D32]">{Math.round(loan.progressPercentage)}% funded</span>
+                        <span className="font-medium text-[#3B9B7F]">{Math.round(loan.progressPercentage)}% funded</span>
                     </div>
                 </div>
 
@@ -160,7 +160,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                         type="text"
                         readOnly
                         value={loanUrl}
-                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#3B9B7F] focus:border-transparent"
                     />
                     <button
                         onClick={handleCopyToClipboard}
