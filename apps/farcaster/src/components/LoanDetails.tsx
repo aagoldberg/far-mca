@@ -47,11 +47,44 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   useEffect(() => {
     if (loanData?.metadataURI) {
       setLoadingMetadata(true);
-      fetch(loanData.metadataURI)
-        .then(res => res.json())
-        .then(data => setMetadata(data))
-        .catch(err => console.error('Error loading metadata:', err))
-        .finally(() => setLoadingMetadata(false));
+
+      // Add timeout for metadata fetch
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+
+      // Convert ipfs:// to gateway URL
+      const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
+        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        : loanData.metadataURI;
+
+      fetch(metadataUrl, { signal: controller.signal })
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to fetch metadata');
+          return res.json();
+        })
+        .then(data => {
+          // Convert IPFS image URL if needed
+          if (data.image && data.image.startsWith('ipfs://')) {
+            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+          }
+          setMetadata(data);
+        })
+        .catch(err => {
+          if (err.name !== 'AbortError') {
+            console.error('Error loading metadata:', err);
+          }
+          // Set fallback metadata so we don't block rendering
+          setMetadata({ name: 'Community Loan', description: 'Metadata not available' });
+        })
+        .finally(() => {
+          clearTimeout(timeout);
+          setLoadingMetadata(false);
+        });
+
+      return () => {
+        clearTimeout(timeout);
+        controller.abort();
+      };
     }
   }, [loanData?.metadataURI]);
 

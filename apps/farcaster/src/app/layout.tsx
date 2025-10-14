@@ -14,11 +14,35 @@ export const metadata: Metadata = {
     images: ["https://placehold.co/1200x630/2E7D32/white?text=LendFriend"],
   },
   other: {
-    "fc:frame": "vNext",
-    "fc:frame:image": "https://placehold.co/1200x630/2E7D32/white?text=LendFriend",
-    "fc:frame:button:1": "Open App",
-    "fc:frame:button:1:action": "link",
-    "fc:frame:button:1:target": appUrl,
+    "fc:miniapp": JSON.stringify({
+      version: "1",
+      imageUrl: "https://placehold.co/1200x800/3B9B7F/white?text=LendFriend+%7C+Community+Loans",
+      button: {
+        title: "Open LendFriend",
+        action: {
+          type: "launch_frame",
+          name: "LendFriend",
+          url: appUrl,
+          splashImageUrl: `${appUrl}/splash.png`,
+          splashBackgroundColor: "#f5f0ec"
+        }
+      }
+    }),
+    // Backward compatibility
+    "fc:frame": JSON.stringify({
+      version: "1",
+      imageUrl: "https://placehold.co/1200x800/3B9B7F/white?text=LendFriend+%7C+Community+Loans",
+      button: {
+        title: "Open LendFriend",
+        action: {
+          type: "launch_frame",
+          name: "LendFriend",
+          url: appUrl,
+          splashImageUrl: `${appUrl}/splash.png`,
+          splashBackgroundColor: "#f5f0ec"
+        }
+      }
+    })
   },
 };
 

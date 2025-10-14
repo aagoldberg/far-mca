@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useLoanData, useContribute } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCApprove, useNeedsApproval } from '@/hooks/useUSDC';
 import { USDC_DECIMALS } from '@/types/loan';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 interface LoanFundingFormProps {
   loanAddress: `0x${string}`;
@@ -16,10 +17,25 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loanMetadata, setLoanMetadata] = useState<any>(null);
 
   const { address, isConnected } = useAccount();
   const { loanData, isLoading: loanLoading } = useLoanData(loanAddress);
   const { balance: usdcBalance, balanceFormatted } = useUSDCBalance(address);
+
+  // Fetch loan metadata for sharing
+  useEffect(() => {
+    if (loanData?.metadataURI) {
+      const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
+        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        : loanData.metadataURI;
+
+      fetch(metadataUrl)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => data && setLoanMetadata(data))
+        .catch(() => null);
+    }
+  }, [loanData?.metadataURI]);
 
   // Check if approval needed
   const amountBigInt = amount ? parseUnits(amount, USDC_DECIMALS) : 0n;
@@ -197,6 +213,20 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     );
   }
 
+  const handleShareContribution = async () => {
+    try {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://far-micro.ngrok.dev';
+      const loanName = loanMetadata?.name || 'a community member';
+
+      await sdk.actions.composeCast({
+        text: `Just supported ${loanName} with $${amount} USDC on LendFriend! 🤝\n\nZero interest, 100% community care.\n\nHelp them reach their goal:`,
+        embeds: [`${appUrl}/loan/${loanAddress}`]
+      });
+    } catch (error) {
+      console.error('Error sharing contribution:', error);
+    }
+  };
+
   if (step === 'success') {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
@@ -207,15 +237,24 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Funding Successful!
+            Thank You for Making a Difference!
           </h2>
           <p className="text-gray-600 mb-2">
-            You've successfully funded ${amount} USDC
+            You've successfully supported with ${amount} USDC
           </p>
           <p className="text-sm text-green-600 mb-6">
-            Zero-interest • Community support • 1.0x repayment
+            Zero-interest • Community care • 1.0x repayment
           </p>
           <div className="space-y-3">
+            <button
+              onClick={handleShareContribution}
+              className="w-full bg-[#8A63D2] hover:bg-[#7952C1] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+              Share Your Support
+            </button>
             <Link
               href={`/loan/${loanAddress}`}
               className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
