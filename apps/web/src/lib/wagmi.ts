@@ -11,7 +11,11 @@ if (!alchemyRpcUrl) {
 export const wagmiConfig = createConfig({
   chains: [baseSepolia],
   transports: {
-    [baseSepolia.id]: http(alchemyRpcUrl), // Use the specific RPC URL
+    [baseSepolia.id]: http(alchemyRpcUrl, {
+      timeout: 10000, // 10 second timeout
+      retryCount: 3,
+      retryDelay: 1000,
+    }), // Use the specific RPC URL
   },
 });
 

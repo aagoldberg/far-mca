@@ -7,7 +7,12 @@ export const wagmiConfig = createConfig({
   chains: [baseSepolia],
   transports: {
     [baseSepolia.id]: http(
-      process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org'
+      process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org',
+      {
+        timeout: 10000, // 10 second timeout
+        retryCount: 3,
+        retryDelay: 1000,
+      }
     ),
   },
   connectors: [
