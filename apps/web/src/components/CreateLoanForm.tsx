@@ -358,10 +358,10 @@ export default function CreateLoanForm() {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Loan Created Successfully!
+            Your Request is Live!
           </h2>
           <p className="text-gray-600 mb-2">
-            Your zero-interest loan is now live and accepting contributions
+            Your community can now lend their support to help make your dream a reality
           </p>
           <p className="text-sm text-gray-500 mb-6">
             Transaction: {hash.slice(0, 10)}...{hash.slice(-8)}
@@ -371,15 +371,15 @@ export default function CreateLoanForm() {
               onClick={() => router.push('/')}
               className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
             >
-              View All Loans
+              See Your Request
             </button>
             <button
               onClick={() => {
                 const loanUrl = `${window.location.origin}/loan/${hash}`;
                 if (navigator.share) {
                   navigator.share({
-                    title: 'Support My Zero-Interest Loan',
-                    text: `Help me fund my business with a zero-interest community loan!`,
+                    title: 'Help Me Build My Dream',
+                    text: `I'm asking our community for support. Will you lend a hand?`,
                     url: loanUrl,
                   }).catch(() => {
                     // Fallback to copying link
@@ -398,14 +398,14 @@ export default function CreateLoanForm() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                 </svg>
-                Share Loan
+                Spread the Word
               </span>
             </button>
             <button
               onClick={() => window.location.reload()}
               className="block w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
             >
-              Create Another Loan
+              Create Another Request
             </button>
           </div>
         </div>
@@ -419,7 +419,7 @@ export default function CreateLoanForm() {
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
           <p className="text-gray-600 mb-4">
-            Please connect your wallet to create a loan
+            Please connect your wallet to request community support
           </p>
           <p className="text-sm text-gray-500">
             Use the login button in the top right corner
@@ -435,10 +435,10 @@ export default function CreateLoanForm() {
         <strong>IPFS Version 2.0</strong> - Using decentralized storage for efficient transactions
       </div>
       <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Create Zero-Interest Loan
+        Request Community Support
       </h1>
       <p className="text-gray-600 mb-6">
-        Get community funding with 0% interest • 1.0x repayment only
+        Connect with neighbors who believe in your dream • 0% interest • Pay back exactly what you borrow
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -472,7 +472,7 @@ export default function CreateLoanForm() {
               <textarea
                 value={formData.description}
                 onChange={(e) => handleChange('description', e.target.value)}
-                placeholder="Tell funders about your business and why you need this loan..."
+                placeholder="Share your story with the community - what's your dream and how will this support help you achieve it?"
                 rows={4}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.description ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -735,7 +735,7 @@ export default function CreateLoanForm() {
               <textarea
                 value={formData.useOfFunds}
                 onChange={(e) => handleChange('useOfFunds', e.target.value)}
-                placeholder="How will you use the loan? (e.g., equipment, inventory, marketing)"
+                placeholder="How will this support help you grow? (e.g., new equipment to serve more customers, inventory to expand your reach)"
                 rows={3}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.useOfFunds ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -753,7 +753,7 @@ export default function CreateLoanForm() {
               <textarea
                 value={formData.repaymentSource}
                 onChange={(e) => handleChange('repaymentSource', e.target.value)}
-                placeholder="How will you repay? (e.g., monthly revenue, specific income stream)"
+                placeholder="How will you pay back the community? (e.g., steady monthly revenue, income from specific services)"
                 rows={3}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.repaymentSource ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -775,15 +775,15 @@ export default function CreateLoanForm() {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Zero-Interest Community Loan</h3>
+              <h3 className="font-semibold text-gray-900 mb-1">Community Support, Not Profit</h3>
               <p className="text-sm text-gray-700 mb-2">
-                You'll repay exactly 1.0x of what you raise - no interest, no profit for funders.
+                Your neighbors lend because they believe in you, not to make money. Pay back exactly what you receive - nothing more.
               </p>
               <ul className="text-sm text-gray-600 space-y-1">
-                <li>• No interest charges</li>
-                <li>• Fixed repayment schedule</li>
-                <li>• Community support model</li>
-                <li>• Transparent on-chain</li>
+                <li>• Zero interest - ever</li>
+                <li>• Fair, predictable repayment</li>
+                <li>• Neighbors helping neighbors</li>
+                <li>• Built on trust and transparency</li>
               </ul>
             </div>
           </div>
@@ -814,7 +814,7 @@ export default function CreateLoanForm() {
               {isPending ? 'Creating Loan...' : 'Confirming...'}
             </span>
           ) : (
-            'Create Loan'
+            'Share Your Request'
           )}
         </button>
       </form>

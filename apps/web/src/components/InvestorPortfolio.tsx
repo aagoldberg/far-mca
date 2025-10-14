@@ -148,13 +148,13 @@ export const InvestorPortfolio = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <BriefcaseIcon className="w-6 h-6 text-[#3B9B7F]" />
-          Your Portfolio
+          Your Impact
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-[#3B9B7F] transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600 font-medium">Total Contributed</span>
+              <span className="text-sm text-gray-600 font-medium">Lives Supported</span>
               <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
                 <BanknotesIcon className="w-5 h-5 text-[#3B9B7F]" />
               </div>
@@ -162,12 +162,12 @@ export const InvestorPortfolio = () => {
             <p className="text-3xl font-bold text-gray-900 mb-1">
               ${formatUSDC(totalContributed)}
             </p>
-            <p className="text-xs text-gray-500">Zero-interest support</p>
+            <p className="text-xs text-gray-500">Given with care</p>
           </div>
 
           <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-blue-500 transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600 font-medium">Claimable Returns</span>
+              <span className="text-sm text-gray-600 font-medium">Ready to Reclaim</span>
               <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                 <ArrowTrendingUpIcon className="w-5 h-5 text-blue-600" />
               </div>
@@ -175,12 +175,12 @@ export const InvestorPortfolio = () => {
             <p className="text-3xl font-bold text-gray-900 mb-1">
               ${formatUSDC(totalClaimable)}
             </p>
-            <p className="text-xs text-gray-500">1.0x repayment</p>
+            <p className="text-xs text-gray-500">Paid back, no interest</p>
           </div>
 
           <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-purple-500 transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600 font-medium">Active Loans</span>
+              <span className="text-sm text-gray-600 font-medium">Dreams in Progress</span>
               <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
                 <ClockIcon className="w-5 h-5 text-purple-600" />
               </div>
@@ -188,12 +188,12 @@ export const InvestorPortfolio = () => {
             <p className="text-3xl font-bold text-gray-900 mb-1">
               {activeLoansCount}
             </p>
-            <p className="text-xs text-gray-500">In progress</p>
+            <p className="text-xs text-gray-500">Growing stronger</p>
           </div>
 
           <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-orange-500 transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600 font-medium">Completed</span>
+              <span className="text-sm text-gray-600 font-medium">Dreams Realized</span>
               <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
                 <CheckBadgeIcon className="w-5 h-5 text-orange-600" />
               </div>
@@ -201,7 +201,7 @@ export const InvestorPortfolio = () => {
             <p className="text-3xl font-bold text-gray-900 mb-1">
               {completedLoansCount}
             </p>
-            <p className="text-xs text-gray-500">Fully repaid</p>
+            <p className="text-xs text-gray-500">Success stories</p>
           </div>
         </div>
       </div>
@@ -211,9 +211,9 @@ export const InvestorPortfolio = () => {
         <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-gray-900 mb-1">Returns Available to Claim</h3>
+              <h3 className="font-bold text-gray-900 mb-1">Your Support Has Been Repaid</h3>
               <p className="text-sm text-gray-600">
-                You have ${formatUSDC(totalClaimable)} USDC ready to claim from your contributions
+                ${formatUSDC(totalClaimable)} USDC is ready for you to reclaim - the full amount you lent, returned with gratitude
               </p>
             </div>
             <button
@@ -228,7 +228,7 @@ export const InvestorPortfolio = () => {
               disabled={isClaimPending}
               className="px-6 py-3 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed whitespace-nowrap"
             >
-              {isClaimPending ? 'Claiming...' : 'Claim All Returns'}
+              {isClaimPending ? 'Claiming...' : 'Reclaim All'}
             </button>
           </div>
         </div>
@@ -236,7 +236,7 @@ export const InvestorPortfolio = () => {
 
       {/* Contributions List */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Your Contributions</h3>
+        <h3 className="text-lg font-bold text-gray-900 mb-4">People You've Helped</h3>
 
         {contributions.length === 0 ? (
           <div className="text-center py-12">
@@ -253,15 +253,15 @@ export const InvestorPortfolio = () => {
                 d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No Contributions Yet</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Make a Difference?</h3>
             <p className="text-gray-600 mb-6">
-              You haven't contributed to any loans yet. Start supporting businesses with zero-interest loans.
+              You haven't supported any neighbors yet. Start changing lives with interest-free loans - every dollar helps someone build their dream.
             </p>
             <Link
               href="/"
               className="inline-block px-6 py-3 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold rounded-xl transition-colors"
             >
-              Browse Available Loans
+              Find Ways to Help
             </Link>
           </div>
         ) : (
@@ -273,13 +273,13 @@ export const InvestorPortfolio = () => {
                     Loan
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Contributed
+                    You Lent
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Claimable
+                    Repaid to You
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Action
@@ -306,7 +306,7 @@ export const InvestorPortfolio = () => {
         <div className="fixed bottom-4 right-4 bg-green-50 border border-green-200 rounded-xl p-4 shadow-lg animate-in slide-in-from-bottom-10 fade-in-25">
           <div className="flex items-center gap-2">
             <CheckBadgeIcon className="w-5 h-5 text-green-600" />
-            <p className="text-green-900 font-medium">Returns claimed successfully!</p>
+            <p className="text-green-900 font-medium">Successfully reclaimed!</p>
           </div>
         </div>
       )}

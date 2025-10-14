@@ -24,8 +24,8 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: "Yunus | Revenue-Based Financing Platform",
-  description: "Get growth capital for your business with revenue-based financing. Investors earn returns based on your revenue without taking equity.",
+  title: "LendFriend | Community-Powered Interest-Free Loans",
+  description: "Support your community with interest-free loans. Help local businesses grow while getting your contribution back - no interest, just community support.",
 };
 
 // Force dynamic rendering to prevent SSG conflicts

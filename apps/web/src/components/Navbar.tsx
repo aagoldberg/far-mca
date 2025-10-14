@@ -8,7 +8,7 @@ import { useAccount, useConnect } from 'wagmi';
 import { CreateFundingRequestButton } from "./CreateFundingRequestButton";
 import { UserMenu } from './UserMenu';
 import { RotatingText } from './RotatingText';
-import { YunusLogo } from './YunusLogo';
+import { LendFriendLogo } from './LendFriendLogo';
 import { WalletBalance } from './WalletBalance';
 
 const SearchIcon = () => (
@@ -115,7 +115,7 @@ export default function Navbar() {
         {/* Mobile Navbar */}
         <div className="md:hidden flex items-center justify-between h-16">
           <Link href="/" className="flex items-center">
-            <YunusLogo />
+            <LendFriendLogo />
           </Link>
           
           <button
@@ -207,7 +207,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center justify-between h-16">
           <div className="flex items-center space-x-6">
             <Link href="/" className="flex items-center">
-              <YunusLogo />
+              <LendFriendLogo />
             </Link>
             
             {/* Search Area - Desktop only */}

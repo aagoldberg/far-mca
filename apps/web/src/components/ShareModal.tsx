@@ -142,7 +142,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     <XMarkIcon className="w-6 h-6" />
                 </button>
 
-                <h2 className="text-xl font-bold mb-4 text-gray-900">Share Loan</h2>
+                <h2 className="text-xl font-bold mb-4 text-gray-900">Spread the Word</h2>
 
                 {/* Loan Preview */}
                 <div className="mb-6 p-4 bg-gray-50 rounded-lg">
@@ -175,9 +175,9 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     </button>
                 </div>
 
-                <h3 className="text-lg font-bold mb-2 text-gray-900">Share on social media</h3>
+                <h3 className="text-lg font-bold mb-2 text-gray-900">Rally the community</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                    Help spread the word and bring more supporters to this loan
+                    Every share connects this neighbor with someone who can help make their dream a reality
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto">
@@ -198,7 +198,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                 </div>
 
                 <div className="mt-4 text-xs text-gray-500 text-center">
-                    Share tracking helps improve loan reach
+                    Together, we build stronger communities
                 </div>
             </div>
         </div>

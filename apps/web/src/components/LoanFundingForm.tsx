@@ -233,13 +233,13 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Funding Successful!
+            Thank You for Making a Difference!
           </h2>
           <p className="text-gray-600 mb-2">
-            You've successfully funded ${amount} USDC
+            Your ${amount} USDC contribution is changing someone's life
           </p>
           <p className="text-sm text-green-600 mb-6">
-            Zero-interest • Community support • 1.0x repayment
+            Interest-free • Community-powered • Paid back in full
           </p>
           <div className="space-y-3">
             <Link
@@ -273,10 +273,10 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
       </Link>
 
       <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Fund This Loan
+        Lend a Hand
       </h1>
       <p className="text-gray-600 mb-6">
-        Support this business with zero-interest community funding
+        Your interest-free loan helps a neighbor's dream become reality. Together, we lift each other up.
       </p>
 
       <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
@@ -383,7 +383,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </div>
         </div>
         <p className="text-xs text-gray-600 mt-4 italic">
-          This is community support, not profit-seeking. Your contribution helps the business grow, and you'll get exactly what you contributed back.
+          This is lending with heart. Your generosity helps someone build their future, and you'll receive every dollar back - no interest charged, just community care.
         </p>
       </div>
     </div>
