@@ -233,7 +233,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             href={`/loan/${loanAddress}/fund`}
             className="mt-6 w-full block text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
           >
-            Fund this Loan
+            Lend Support
           </Link>
         )}
 

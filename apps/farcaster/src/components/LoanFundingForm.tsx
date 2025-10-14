@@ -167,7 +167,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Fundraising Closed</h2>
           <p className="text-gray-600">
-            This loan is no longer accepting contributions
+            This loan is no longer accepting supports
           </p>
         </div>
       </div>
@@ -235,7 +235,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   }
 
   const remainingNeeded = loanData.principal - loanData.totalFunded;
-  const maxContribution = remainingNeeded < usdcBalance ? remainingNeeded : usdcBalance;
+  const maxSupport = remainingNeeded < usdcBalance ? remainingNeeded : usdcBalance;
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
@@ -268,7 +268,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               disabled={step !== 'input'}
-              max={formatUnits(maxContribution, USDC_DECIMALS)}
+              max={formatUnits(maxSupport, USDC_DECIMALS)}
               step="0.01"
               className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
             />
@@ -278,7 +278,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
               Balance: {balanceFormatted}
             </p>
             <button
-              onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
+              onClick={() => setAmount(formatUnits(maxSupport, USDC_DECIMALS))}
               className="text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
               disabled={step !== 'input'}
             >
@@ -313,7 +313,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving USDC...'}
-          {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming contribution...'}
+          {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming support...'}
           {step === 'input' && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
         </button>
 
@@ -321,7 +321,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
             <p className="text-sm text-blue-700 text-center">
               {step === 'approve' && 'Please approve USDC spending in your wallet...'}
-              {step === 'contribute' && 'Please confirm the contribution in your wallet...'}
+              {step === 'contribute' && 'Please confirm the support in your wallet...'}
             </p>
           </div>
         )}
@@ -357,7 +357,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </div>
         </div>
         <p className="text-xs text-gray-600 mt-4 italic">
-          This is community support, not profit-seeking. Your contribution helps the business grow, and you'll get exactly what you contributed back.
+          This is community support, not profit-seeking. Your support helps the business grow, and you'll get exactly what you contributed back.
         </p>
       </div>
     </div>

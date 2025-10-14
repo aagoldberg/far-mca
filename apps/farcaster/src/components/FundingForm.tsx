@@ -244,7 +244,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
         >
           {step === 'approve' && isApproving && 'Approving USDC...'}
           {step === 'approve' && !isApproving && 'Waiting for approval...'}
-          {step === 'contribute' && 'Confirming contribution...'}
+          {step === 'contribute' && 'Confirming support...'}
           {step === 'input' && 'Fund Campaign'}
         </button>
 
@@ -252,7 +252,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
           <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
             <p className="text-sm text-blue-700 text-center">
               {step === 'approve' && 'Please approve USDC spending in your wallet...'}
-              {step === 'contribute' && 'Please confirm the contribution in your wallet...'}
+              {step === 'contribute' && 'Please confirm the support in your wallet...'}
             </p>
           </div>
         )}

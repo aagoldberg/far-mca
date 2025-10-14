@@ -137,7 +137,7 @@ export function LoanCard({
       {/* Loan info */}
       <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
         <span>
-          {contributorsCount.toString()} funder{contributorsCount === 1n ? '' : 's'}
+          {contributorsCount.toString()} supporter{contributorsCount === 1n ? '' : 's'}
         </span>
         {termPeriods && (
           <span>

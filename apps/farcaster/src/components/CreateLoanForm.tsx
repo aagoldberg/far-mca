@@ -372,7 +372,7 @@ export default function CreateLoanForm() {
             Loan Created Successfully!
           </h2>
           <p className="text-gray-600 mb-2">
-            Your zero-interest loan is now live and accepting contributions
+            Your zero-interest loan is now live and accepting supports
           </p>
           <p className="text-sm text-gray-500 mb-6">
             Transaction: {hash.slice(0, 10)}...{hash.slice(-8)}
@@ -470,7 +470,7 @@ export default function CreateLoanForm() {
               <textarea
                 value={formData.description}
                 onChange={(e) => handleChange('description', e.target.value)}
-                placeholder="Tell funders about your business and why you need this loan..."
+                placeholder="Tell supporters about your business and why you need this loan..."
                 rows={4}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.description ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -775,7 +775,7 @@ export default function CreateLoanForm() {
             <div>
               <h3 className="font-semibold text-gray-900 mb-1">Zero-Interest Community Loan</h3>
               <p className="text-sm text-gray-700 mb-2">
-                You'll repay exactly 1.0x of what you raise - no interest, no profit for funders.
+                You'll repay exactly 1.0x of what you raise - no interest, no profit for supporters.
               </p>
               <ul className="text-sm text-gray-600 space-y-1">
                 <li>• No interest charges</li>
@@ -812,7 +812,7 @@ export default function CreateLoanForm() {
               {isPending ? 'Creating Loan...' : 'Confirming...'}
             </span>
           ) : (
-            'Create Loan'
+            'Request Support'
           )}
         </button>
       </form>
