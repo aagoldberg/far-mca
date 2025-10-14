@@ -129,7 +129,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8 text-center">
         <p className="text-red-500 mb-4">Campaign not found</p>
-        <Link href="/" className="text-[#2E7D32] hover:underline">
+        <Link href="/" className="text-[#3B9B7F] hover:underline">
           ← Back to campaigns
         </Link>
       </div>
@@ -139,7 +139,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
   if (!isConnected) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <Link href={`/campaign/${campaignNumericId}`} className="inline-flex items-center text-[#2E7D32] hover:text-[#4CAF50] mb-6">
+        <Link href={`/campaign/${campaignNumericId}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
           <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -177,7 +177,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
           <div className="space-y-3">
             <Link
               href={`/campaign/${campaignNumericId}`}
-              className="block w-full bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
             >
               View Campaign
             </Link>
@@ -195,7 +195,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
-      <Link href={`/campaign/${campaignNumericId}`} className="inline-flex items-center text-[#2E7D32] hover:text-[#4CAF50] mb-6">
+      <Link href={`/campaign/${campaignNumericId}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
@@ -221,7 +221,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               disabled={step !== 'input'}
-              className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
+              className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
             />
           </div>
           {usdcBalance && (
@@ -240,7 +240,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
         <button
           onClick={handleApprove}
           disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
-          className="w-full bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {step === 'approve' && isApproving && 'Approving USDC...'}
           {step === 'approve' && !isApproving && 'Waiting for approval...'}
@@ -275,7 +275,7 @@ export default function FundingForm({ campaignNumericId }: FundingFormProps) {
           </div>
           <div className="flex justify-between pt-2 border-t border-gray-200">
             <span className="text-gray-600">Expected Return</span>
-            <span className="font-semibold text-[#2E7D32]">
+            <span className="font-semibold text-[#3B9B7F]">
               ${amount && parseFloat(amount) > 0
                 ? (parseFloat(amount) * (campaign.metadata?.repaymentCap || 1.5)).toFixed(2)
                 : '0.00'}

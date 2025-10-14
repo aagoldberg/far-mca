@@ -380,7 +380,7 @@ export default function CreateLoanForm() {
           <div className="space-y-3">
             <button
               onClick={() => router.push('/')}
-              className="block w-full bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
             >
               View All Loans
             </button>
@@ -455,7 +455,7 @@ export default function CreateLoanForm() {
                 onChange={(e) => handleChange('businessName', e.target.value)}
                 placeholder="e.g., Joe's Coffee Shop"
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.businessName ? 'border-red-300' : 'border-gray-300 focus:border-[#2E7D32]'
+                  errors.businessName ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
               {errors.businessName && (
@@ -473,7 +473,7 @@ export default function CreateLoanForm() {
                 placeholder="Tell funders about your business and why you need this loan..."
                 rows={4}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.description ? 'border-red-300' : 'border-gray-300 focus:border-[#2E7D32]'
+                  errors.description ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
               {errors.description && (
@@ -491,7 +491,7 @@ export default function CreateLoanForm() {
                   value={formData.businessType}
                   onChange={(e) => handleChange('businessType', e.target.value)}
                   placeholder="e.g., Restaurant, Retail"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
               </div>
 
@@ -504,7 +504,7 @@ export default function CreateLoanForm() {
                   value={formData.location}
                   onChange={(e) => handleChange('location', e.target.value)}
                   placeholder="e.g., San Francisco, CA"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
               </div>
             </div>
@@ -521,7 +521,7 @@ export default function CreateLoanForm() {
                 onDrop={handleDrop}
                 className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
                   isDragging
-                    ? 'border-[#2E7D32] bg-green-50'
+                    ? 'border-[#3B9B7F] bg-green-50'
                     : errors.imageUrl
                     ? 'border-red-300 bg-red-50'
                     : 'border-gray-300 bg-gray-50'
@@ -568,7 +568,7 @@ export default function CreateLoanForm() {
                     <div className="mt-4">
                       <label
                         htmlFor="file-upload"
-                        className="cursor-pointer text-[#2E7D32] hover:text-[#4CAF50] font-medium"
+                        className="cursor-pointer text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
                       >
                         <span>Upload a file</span>
                         <input
@@ -590,7 +590,7 @@ export default function CreateLoanForm() {
                 {isUploading && (
                   <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
                     <div className="flex items-center gap-2">
-                      <svg className="animate-spin h-5 w-5 text-[#2E7D32]" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-5 w-5 text-[#3B9B7F]" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
@@ -607,7 +607,7 @@ export default function CreateLoanForm() {
                   value={formData.imageUrl.startsWith('data:') ? '' : formData.imageUrl}
                   onChange={(e) => handleChange('imageUrl', e.target.value)}
                   placeholder="Or paste image URL: https://example.com/photo.jpg"
-                  className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
               </div>
 
@@ -638,7 +638,7 @@ export default function CreateLoanForm() {
                   placeholder="0"
                   step="0.01"
                   className={`w-full pl-8 pr-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                    errors.fundingGoal ? 'border-red-300' : 'border-gray-300 focus:border-[#2E7D32]'
+                    errors.fundingGoal ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                   }`}
                 />
               </div>
@@ -658,7 +658,7 @@ export default function CreateLoanForm() {
                   onChange={(e) => handleChange('termMonths', parseInt(e.target.value))}
                   min="1"
                   max="60"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Number of payment periods (e.g., 12 months)
@@ -675,7 +675,7 @@ export default function CreateLoanForm() {
                   onChange={(e) => handleChange('periodLengthDays', parseInt(e.target.value))}
                   min="7"
                   max="90"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Days between payments (e.g., 30)
@@ -694,7 +694,7 @@ export default function CreateLoanForm() {
                   onChange={(e) => handleChange('fundraisingDays', parseInt(e.target.value))}
                   min="1"
                   max="90"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Days to reach funding goal
@@ -711,7 +711,7 @@ export default function CreateLoanForm() {
                   onChange={(e) => handleChange('firstPaymentDays', parseInt(e.target.value))}
                   min="1"
                   max="90"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Grace period before first payment
@@ -736,7 +736,7 @@ export default function CreateLoanForm() {
                 placeholder="How will you use the loan? (e.g., equipment, inventory, marketing)"
                 rows={3}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.useOfFunds ? 'border-red-300' : 'border-gray-300 focus:border-[#2E7D32]'
+                  errors.useOfFunds ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
               {errors.useOfFunds && (
@@ -754,7 +754,7 @@ export default function CreateLoanForm() {
                 placeholder="How will you repay? (e.g., monthly revenue, specific income stream)"
                 rows={3}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.repaymentSource ? 'border-red-300' : 'border-gray-300 focus:border-[#2E7D32]'
+                  errors.repaymentSource ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
               {errors.repaymentSource && (
@@ -801,7 +801,7 @@ export default function CreateLoanForm() {
         <button
           type="submit"
           disabled={isPending || isConfirming || isSubmitting}
-          className="w-full bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           {isPending || isConfirming || isSubmitting ? (
             <span className="flex items-center justify-center gap-2">

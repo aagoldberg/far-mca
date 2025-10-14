@@ -147,7 +147,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8 text-center">
         <p className="text-red-500 mb-4">Loan not found</p>
-        <Link href="/" className="text-[#2E7D32] hover:underline">
+        <Link href="/" className="text-[#3B9B7F] hover:underline">
           ← Back to loans
         </Link>
       </div>
@@ -157,7 +157,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   if (!loanData.fundraisingActive) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#2E7D32] hover:text-[#4CAF50] mb-6">
+        <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
           <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -177,7 +177,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   if (!isConnected) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#2E7D32] hover:text-[#4CAF50] mb-6">
+        <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
           <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -218,7 +218,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           <div className="space-y-3">
             <Link
               href={`/loan/${loanAddress}`}
-              className="block w-full bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
             >
               View Loan
             </Link>
@@ -239,7 +239,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
-      <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#2E7D32] hover:text-[#4CAF50] mb-6">
+      <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
@@ -270,7 +270,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
               disabled={step !== 'input'}
               max={formatUnits(maxContribution, USDC_DECIMALS)}
               step="0.01"
-              className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#2E7D32] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
+              className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
             />
           </div>
           <div className="flex justify-between items-center mt-2 text-sm">
@@ -279,7 +279,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             </p>
             <button
               onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
-              className="text-[#2E7D32] hover:text-[#4CAF50] font-medium"
+              className="text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
               disabled={step !== 'input'}
             >
               Max
@@ -310,7 +310,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         <button
           onClick={handleFund}
           disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
-          className="w-full bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving USDC...'}
           {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming contribution...'}
@@ -349,7 +349,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </div>
           <div className="flex justify-between pt-2 border-t border-green-200">
             <span className="text-gray-600">You'll receive back</span>
-            <span className="font-semibold text-[#2E7D32]">
+            <span className="font-semibold text-[#3B9B7F]">
               ${amount && parseFloat(amount) > 0
                 ? parseFloat(amount).toFixed(2)
                 : '0.00'} USDC

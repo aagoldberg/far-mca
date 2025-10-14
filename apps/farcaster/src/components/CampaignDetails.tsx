@@ -34,7 +34,7 @@ export default function CampaignDetails({ campaignNumericId }: CampaignDetailsPr
     return (
       <div className="max-w-4xl mx-auto px-4 py-8 text-center">
         <p className="text-red-500 mb-4">{error || 'Campaign not found'}</p>
-        <Link href="/" className="text-[#2E7D32] hover:underline">
+        <Link href="/" className="text-[#3B9B7F] hover:underline">
           ← Back to campaigns
         </Link>
       </div>
@@ -48,7 +48,7 @@ export default function CampaignDetails({ campaignNumericId }: CampaignDetailsPr
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Back button */}
-      <Link href="/" className="inline-flex items-center text-[#2E7D32] hover:text-[#4CAF50] mb-4">
+      <Link href="/" className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-4">
         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
@@ -97,7 +97,7 @@ export default function CampaignDetails({ campaignNumericId }: CampaignDetailsPr
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
-              className="bg-[#2E7D32] h-3 rounded-full transition-all duration-500"
+              className="bg-[#3B9B7F] h-3 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
             />
           </div>
@@ -145,7 +145,7 @@ export default function CampaignDetails({ campaignNumericId }: CampaignDetailsPr
         {/* Fund button */}
         <Link
           href={`/campaign/${campaignNumericId}/fund`}
-          className="mt-6 w-full block text-center bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
+          className="mt-6 w-full block text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
         >
           Fund this Campaign
         </Link>

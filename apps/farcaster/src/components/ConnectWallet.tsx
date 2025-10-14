@@ -29,7 +29,7 @@ export default function ConnectWallet() {
     <button
       onClick={() => connect({ connector: connectors[0] })}
       disabled={isPending}
-      className="px-4 py-2 bg-[#2E7D32] hover:bg-[#4CAF50] text-white text-sm font-semibold rounded-lg transition-colors disabled:bg-gray-400"
+      className="px-4 py-2 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-sm font-semibold rounded-lg transition-colors disabled:bg-gray-400"
     >
       {isPending ? 'Connecting...' : 'Connect Wallet'}
     </button>
