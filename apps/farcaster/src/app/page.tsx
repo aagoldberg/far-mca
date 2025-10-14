@@ -2,8 +2,24 @@
 
 import Link from 'next/link';
 import LoanList from '../components/LoanList';
+import { useEffect } from 'react';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 export default function HomePage() {
+  useEffect(() => {
+    // Call ready() when the page loads
+    const timer = setTimeout(() => {
+      try {
+        sdk.actions.ready();
+        console.log('[HomePage] Farcaster Mini App ready signal sent');
+      } catch (error) {
+        console.error('[HomePage] Error sending ready signal:', error);
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="frame-container">
       <div className="w-full p-4">

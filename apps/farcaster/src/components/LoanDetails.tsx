@@ -2,6 +2,7 @@
 
 import { useLoanData } from '@/hooks/useMicroLoan';
 import { useUSDCBalance } from '@/hooks/useUSDC';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useAccount } from 'wagmi';
 import Link from 'next/link';
 import { formatUnits } from 'viem';
@@ -42,6 +43,12 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
+
+  // Temporarily disable Neynar profile fetching until API key is configured
+  // const { profile, reputation, hasProfile } = useFarcasterProfile(loanData?.borrower);
+  const hasProfile = false;
+  const profile = null;
+  const reputation = null;
 
   // Fetch metadata from IPFS
   useEffect(() => {
@@ -149,12 +156,69 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       </h1>
 
       {/* Borrower */}
-      <div className="flex items-center text-sm text-gray-600 mb-2">
-        <div className="w-8 h-8 rounded-full bg-gray-300 mr-2" />
-        <span>
-          {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
-          {isBorrower && <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>}
-        </span>
+      <div className="mb-4">
+        {hasProfile && profile ? (
+          <div className="flex items-start gap-3">
+            <img
+              src={profile.pfpUrl}
+              alt={profile.displayName}
+              className="w-12 h-12 rounded-full bg-gray-200"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-lg font-semibold text-gray-900">
+                  {profile.displayName}
+                </span>
+                {profile.powerBadge && (
+                  <svg className="w-5 h-5 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 11.75A2.25 2.25 0 1111.25 9.5 2.25 2.25 0 019 11.75zm0 9.5l-3-6.75h6l-3 6.75zM15 11.75a2.25 2.25 0 112.25-2.25A2.25 2.25 0 0115 11.75zm0 9.5l-3-6.75h6l-3 6.75z"/>
+                  </svg>
+                )}
+                {isBorrower && (
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
+                )}
+              </div>
+              <div className="text-sm text-gray-600 mb-2">@{profile.username}</div>
+              {profile.bio && (
+                <p className="text-sm text-gray-700 mb-2">{profile.bio}</p>
+              )}
+              {reputation && (
+                <div className="flex items-center gap-3 text-xs">
+                  <div className="flex items-center gap-1">
+                    <span className="font-medium text-gray-900">{profile.followerCount.toLocaleString()}</span>
+                    <span className="text-gray-500">followers</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="font-medium text-gray-900">{reputation.overall}/100</span>
+                    <span className="text-gray-500">trust score</span>
+                  </div>
+                  <div className="px-2 py-1 bg-gray-100 rounded text-gray-700">
+                    {reputation.followerTier === 'whale' ? '🐋 Whale' :
+                     reputation.followerTier === 'influential' ? '⭐ Influential' :
+                     reputation.followerTier === 'active' ? '✨ Active' :
+                     reputation.followerTier === 'growing' ? '🌱 Growing' : '🆕 New'}
+                  </div>
+                  <div className="px-2 py-1 bg-gray-100 rounded text-gray-700">
+                    {reputation.accountAge === 'veteran' ? '👑 Veteran' :
+                     reputation.accountAge === 'established' ? '⚡ Established' :
+                     reputation.accountAge === 'growing' ? '🔰 Growing' : '🎯 New'}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center text-sm text-gray-600">
+            <div className="w-8 h-8 rounded-full bg-gray-300 mr-2" />
+            <span>
+              {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
+              {isBorrower && <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Status badges */}

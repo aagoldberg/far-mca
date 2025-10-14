@@ -4,9 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 
 export interface LoanCardProps {
   address: `0x${string}`;
+  borrower: `0x${string}`;
   name: string;
   description: string;
   principal: bigint;
@@ -58,6 +60,7 @@ const getStatusBadge = (
 
 export function LoanCard({
   address,
+  borrower,
   name,
   description,
   principal,
@@ -75,15 +78,19 @@ export function LoanCard({
 
   const status = getStatusBadge(fundraisingActive, active, completed);
 
-  // Truncate address for display
-  const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
+  // Temporarily disable Neynar profile fetching until API key is configured
+  // const { profile, reputation, hasProfile } = useFarcasterProfile(borrower);
+  const hasProfile = false;
+  const profile = null;
+  const reputation = null;
+
+  const shortAddress = `${borrower.slice(0, 6)}...${borrower.slice(-4)}`;
 
   return (
     <Link
       href={`/loan/${address}`}
       className="block bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
     >
-      {/* Loan Image */}
       {imageUrl && (
         <div className="w-full h-48 bg-gray-100">
           <img
@@ -98,7 +105,6 @@ export function LoanCard({
       )}
 
       <div className="p-4">
-        {/* Header with status badge */}
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-base font-semibold text-gray-900 line-clamp-1 flex-1">
             {name || 'Untitled Loan'}
@@ -108,12 +114,48 @@ export function LoanCard({
           </span>
         </div>
 
-        {/* Description */}
+        <div className="flex items-center gap-2 mb-2">
+          {hasProfile && profile ? (
+            <>
+              <img
+                src={profile.pfpUrl}
+                alt={profile.displayName}
+                className="w-6 h-6 rounded-full bg-gray-200"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                <span className="text-sm font-medium text-gray-900 truncate">
+                  @{profile.username}
+                </span>
+                {profile.powerBadge && (
+                  <svg className="w-4 h-4 text-purple-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 11.75A2.25 2.25 0 1111.25 9.5 2.25 2.25 0 019 11.75zm0 9.5l-3-6.75h6l-3 6.75zM15 11.75a2.25 2.25 0 112.25-2.25A2.25 2.25 0 0115 11.75zm0 9.5l-3-6.75h6l-3 6.75z"/>
+                  </svg>
+                )}
+                {reputation && (
+                  <span className="text-xs text-gray-500 truncate">
+                    {reputation.followerTier === 'whale' ? '🐋' :
+                     reputation.followerTier === 'influential' ? '⭐' :
+                     reputation.followerTier === 'active' ? '✨' :
+                     reputation.followerTier === 'growing' ? '🌱' : '🆕'}
+                  </span>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-6 h-6 rounded-full bg-gray-300" />
+              <span className="text-xs text-gray-500">{shortAddress}</span>
+            </>
+          )}
+        </div>
+
         <p className="text-sm text-gray-600 mb-3 line-clamp-2 h-10 overflow-hidden">
           {description || 'No description available'}
         </p>
 
-        {/* Progress bar */}
         <div className="mb-3">
           <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
             <div
@@ -131,7 +173,6 @@ export function LoanCard({
           </div>
         </div>
 
-        {/* Loan info */}
         <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
           <span>
             {contributorsCount.toString()} supporter{contributorsCount === 1n ? '' : 's'}

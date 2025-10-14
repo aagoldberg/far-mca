@@ -58,6 +58,7 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
   return (
     <LoanCard
       address={loanData.address}
+      borrower={loanData.borrower}
       name={metadata?.name || 'Loading...'}
       description={metadata?.description || ''}
       principal={loanData.principal}
