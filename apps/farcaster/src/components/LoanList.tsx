@@ -26,10 +26,28 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
 
   useEffect(() => {
     if (loanData?.metadataURI) {
-      fetch(loanData.metadataURI)
-        .then(res => res.json())
-        .then(data => setMetadata(data))
-        .catch(err => console.error('Error loading metadata:', err));
+      // Convert ipfs:// to HTTP gateway URL
+      const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
+        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        : loanData.metadataURI;
+
+      fetch(metadataUrl)
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to fetch metadata');
+          return res.json();
+        })
+        .then(data => {
+          // Also convert image IPFS URI to gateway URL
+          if (data.image && data.image.startsWith('ipfs://')) {
+            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+          }
+          setMetadata(data);
+        })
+        .catch(err => {
+          console.error('Error loading metadata:', err);
+          // Set fallback metadata
+          setMetadata({ name: 'Community Loan', description: 'Loading details...' });
+        });
     }
   }, [loanData?.metadataURI]);
 
@@ -49,7 +67,7 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
       completed={loanData.completed}
       contributorsCount={loanData.contributorsCount}
       termPeriods={loanData.termPeriods}
-      imageUrl={metadata?.imageUrl}
+      imageUrl={metadata?.image}
     />
   );
 };
@@ -82,9 +100,9 @@ const LoanList = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <p className="text-sm text-gray-500 mb-1">No loans yet</p>
+        <p className="text-sm text-gray-500 mb-1">No requests yet</p>
         <p className="text-xs text-gray-400">
-          Be the first to create a zero-interest loan!
+          Be the first to ask your community for support!
         </p>
       </div>
     );
