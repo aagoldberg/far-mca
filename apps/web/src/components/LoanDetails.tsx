@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useState, useEffect } from 'react';
+import ShareModal from './ShareModal';
+import type { LoanShareData } from '@/utils/shareUtils';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -42,6 +44,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   // Fetch metadata from IPFS
   useEffect(() => {
@@ -237,12 +240,30 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
         {/* Fund button (only if fundraising) */}
         {loanData.fundraisingActive && !isFunded && (
-          <Link
-            href={`/loan/${loanAddress}/fund`}
-            className="mt-6 w-full block text-center bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
-          >
-            Fund this Loan
-          </Link>
+          <>
+            <Link
+              href={`/loan/${loanAddress}/fund`}
+              className="mt-6 w-full block text-center bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
+            >
+              Fund this Loan
+            </Link>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShareModalOpen(true);
+              }}
+              className="mt-3 w-full bg-gradient-to-r from-blue-500/70 to-green-500/70 p-[3px] rounded-xl hover:from-blue-500/80 hover:to-green-500/80 transition-all group"
+            >
+              <div className="w-full h-full bg-white rounded-lg py-3 px-6 flex items-center justify-center gap-2 group-hover:bg-gray-50/50 transition-colors">
+                <svg className="w-5 h-5 text-gray-600 group-hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                </svg>
+                <span className="font-semibold text-gray-700 group-hover:text-gray-800">Share Loan</span>
+              </div>
+            </button>
+          </>
         )}
 
         {/* Disburse button (borrower only, if funded) */}
@@ -326,6 +347,22 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
         </div>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setShareModalOpen(false)}
+        loan={{
+          id: loanAddress,
+          title: metadata?.name || 'Loan',
+          borrower: loanData.borrower,
+          description: metadata?.description,
+          image: metadata?.image,
+          principal: principalNum,
+          totalFunded: totalFundedNum,
+          progressPercentage
+        } as LoanShareData}
+      />
     </div>
   );
 }

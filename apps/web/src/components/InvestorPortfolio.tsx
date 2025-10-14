@@ -1,283 +1,312 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { formatUnits } from 'viem';
 import Link from 'next/link';
-import { 
+import { useLoans, useContribution, useLoanData, useClaim } from '@/hooks/useMicroLoan';
+import { USDC_DECIMALS } from '@/types/loan';
+import {
   BriefcaseIcon,
-  ChartPieIcon,
   BanknotesIcon,
   ArrowTrendingUpIcon,
-  ArrowDownTrayIcon,
   ClockIcon,
-  CheckBadgeIcon
+  CheckBadgeIcon,
+  ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline';
 
-const USDC_DECIMALS = 6;
+interface LoanMetadata {
+  name?: string;
+  description?: string;
+  image?: string;
+}
 
-interface PortfolioAdvance {
-  id: string;
-  businessName: string;
-  invested: bigint;
-  returns: bigint;
-  totalFunded: bigint;
-  totalRepaid: bigint;
-  revenueSharePercentage: number;
-  repaymentCap: number;
-  status: 'funding' | 'active' | 'completed';
-  expectedReturn: bigint;
+interface ContributionWithLoan {
+  loanAddress: `0x${string}`;
+  amount: bigint;
+  claimable: bigint;
+  loanActive: boolean;
+  loanCompleted: boolean;
+  metadata?: LoanMetadata;
 }
 
 export const InvestorPortfolio = () => {
   const { address } = useAccount();
-  const [portfolio, setPortfolio] = useState<PortfolioAdvance[]>([]);
-  const [totalInvested, setTotalInvested] = useState(0);
-  const [totalReturns, setTotalReturns] = useState(0);
-  const [availableWithdrawals, setAvailableWithdrawals] = useState(0);
-  const [selectedAdvance, setSelectedAdvance] = useState<string | null>(null);
-  
-  // Withdraw returns
-  const { writeContract, data: hash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
-  
-  // Load portfolio data (would come from subgraph in production)
+  const { loanAddresses, isLoading: loansLoading } = useLoans();
+  const [contributions, setContributions] = useState<ContributionWithLoan[]>([]);
+  const [isLoadingContributions, setIsLoadingContributions] = useState(true);
+  const { claim, isPending: isClaimPending, isSuccess: isClaimSuccess } = useClaim();
+
+  // Fetch contributions for all loans
   useEffect(() => {
-    if (!address) return;
-    
-    // This would query the subgraph for all advances where user has invested
-    // For now, using mock data structure
-    loadPortfolioData();
-  }, [address]);
-  
-  const loadPortfolioData = async () => {
-    // Mock implementation - replace with actual subgraph query
-    // This would fetch all advances where the user has investments
-  };
-  
-  const handleWithdraw = async (advanceAddress: string) => {
-    try {
-      await writeContract({
-        address: advanceAddress as `0x${string}`,
-        abi: RBF_ADVANCE_ABI,
-        functionName: 'withdrawReturns',
-      });
-      setSelectedAdvance(advanceAddress);
-    } catch (error) {
-      console.error('Error withdrawing returns:', error);
-      alert('Failed to withdraw returns');
+    if (!address || !loanAddresses || loanAddresses.length === 0 || loansLoading) {
+      setIsLoadingContributions(false);
+      return;
     }
-  };
-  
+
+    const fetchContributions = async () => {
+      setIsLoadingContributions(true);
+      const userContributions: ContributionWithLoan[] = [];
+
+      for (const loanAddress of loanAddresses) {
+        try {
+          // Fetch contribution data directly using wagmi hooks would require
+          // complex dynamic hook calls, so we use window.ethereum directly
+          const { createPublicClient, http } = await import('viem');
+          const { baseSepolia } = await import('viem/chains');
+          const MicroLoanABI = (await import('@/abi/MicroLoan.json')).default;
+
+          const client = createPublicClient({
+            chain: baseSepolia,
+            transport: http(),
+          });
+
+          const [contributionAmount, claimableAmount, loanActive, loanCompleted] = await Promise.all([
+            client.readContract({
+              address: loanAddress,
+              abi: MicroLoanABI.abi,
+              functionName: 'contributions',
+              args: [address],
+            }),
+            client.readContract({
+              address: loanAddress,
+              abi: MicroLoanABI.abi,
+              functionName: 'claimableAmount',
+              args: [address],
+            }),
+            client.readContract({
+              address: loanAddress,
+              abi: MicroLoanABI.abi,
+              functionName: 'active',
+            }),
+            client.readContract({
+              address: loanAddress,
+              abi: MicroLoanABI.abi,
+              functionName: 'completed',
+            }),
+          ]);
+
+          if (contributionAmount && contributionAmount > 0n) {
+            userContributions.push({
+              loanAddress,
+              amount: contributionAmount as bigint,
+              claimable: claimableAmount as bigint,
+              loanActive: loanActive as boolean,
+              loanCompleted: loanCompleted as boolean,
+            });
+          }
+        } catch (error) {
+          console.error(`Error fetching contribution for ${loanAddress}:`, error);
+        }
+      }
+
+      setContributions(userContributions);
+      setIsLoadingContributions(false);
+    };
+
+    fetchContributions();
+  }, [address, loanAddresses, loansLoading]);
+
   // Calculate portfolio metrics
-  const activeInvestments = portfolio.filter(a => a.status === 'active').length;
-  const completedInvestments = portfolio.filter(a => a.status === 'completed').length;
-  const averageReturn = totalInvested > 0 ? ((totalReturns / totalInvested - 1) * 100) : 0;
-  
+  const totalContributed = contributions.reduce((sum, c) => sum + c.amount, 0n);
+  const totalClaimable = contributions.reduce((sum, c) => sum + c.claimable, 0n);
+  const activeLoansCount = contributions.filter(c => c.loanActive).length;
+  const completedLoansCount = contributions.filter(c => c.loanCompleted).length;
+
+  const formatUSDC = (amount: bigint): string => {
+    const value = parseFloat(formatUnits(amount, USDC_DECIMALS));
+    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  if (!address) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
+          <p className="text-gray-600">
+            Please connect your wallet to view your portfolio
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loansLoading || isLoadingContributions) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="animate-pulse space-y-6">
+          <div className="h-64 bg-gray-200 rounded-2xl" />
+          <div className="h-96 bg-gray-200 rounded-2xl" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       {/* Portfolio Overview */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <BriefcaseIcon className="w-6 h-6 text-green-600" />
-          Your Investment Portfolio
+          <BriefcaseIcon className="w-6 h-6 text-[#2E7D32]" />
+          Your Portfolio
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4">
+          <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-[#2E7D32] transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-green-700">Total Invested</span>
-              <BanknotesIcon className="w-5 h-5 text-green-600" />
+              <span className="text-sm text-gray-600 font-medium">Total Contributed</span>
+              <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                <BanknotesIcon className="w-5 h-5 text-[#2E7D32]" />
+              </div>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
-              ${totalInvested.toLocaleString()}
+            <p className="text-3xl font-bold text-gray-900 mb-1">
+              ${formatUSDC(totalContributed)}
             </p>
+            <p className="text-xs text-gray-500">Zero-interest support</p>
           </div>
-          
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4">
+
+          <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-blue-500 transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-blue-700">Total Returns</span>
-              <ArrowTrendingUpIcon className="w-5 h-5 text-blue-600" />
+              <span className="text-sm text-gray-600 font-medium">Claimable Returns</span>
+              <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                <ArrowTrendingUpIcon className="w-5 h-5 text-blue-600" />
+              </div>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
-              ${totalReturns.toLocaleString()}
+            <p className="text-3xl font-bold text-gray-900 mb-1">
+              ${formatUSDC(totalClaimable)}
             </p>
-            <p className="text-xs text-blue-600">
-              {averageReturn > 0 ? '+' : ''}{averageReturn.toFixed(1)}% ROI
-            </p>
+            <p className="text-xs text-gray-500">1.0x repayment</p>
           </div>
-          
-          <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4">
+
+          <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-purple-500 transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-purple-700">Active Advances</span>
-              <ClockIcon className="w-5 h-5 text-purple-600" />
+              <span className="text-sm text-gray-600 font-medium">Active Loans</span>
+              <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
+                <ClockIcon className="w-5 h-5 text-purple-600" />
+              </div>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
-              {activeInvestments}
+            <p className="text-3xl font-bold text-gray-900 mb-1">
+              {activeLoansCount}
             </p>
+            <p className="text-xs text-gray-500">In progress</p>
           </div>
-          
-          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4">
+
+          <div className="bg-white border-2 border-gray-100 rounded-xl p-4 hover:border-orange-500 transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-orange-700">Available</span>
-              <ArrowDownTrayIcon className="w-5 h-5 text-orange-600" />
+              <span className="text-sm text-gray-600 font-medium">Completed</span>
+              <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                <CheckBadgeIcon className="w-5 h-5 text-orange-600" />
+              </div>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
-              ${availableWithdrawals.toLocaleString()}
+            <p className="text-3xl font-bold text-gray-900 mb-1">
+              {completedLoansCount}
             </p>
-            <button className="text-xs text-orange-600 hover:text-orange-700 font-medium">
-              Withdraw →
+            <p className="text-xs text-gray-500">Fully repaid</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Claim All Button */}
+      {totalClaimable > 0n && (
+        <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-bold text-gray-900 mb-1">Returns Available to Claim</h3>
+              <p className="text-sm text-gray-600">
+                You have ${formatUSDC(totalClaimable)} USDC ready to claim from your contributions
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                // Claim from all loans with claimable amounts
+                contributions
+                  .filter(c => c.claimable > 0n)
+                  .forEach(c => {
+                    setTimeout(() => claim(c.loanAddress), 100);
+                  });
+              }}
+              disabled={isClaimPending}
+              className="px-6 py-3 bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed whitespace-nowrap"
+            >
+              {isClaimPending ? 'Claiming...' : 'Claim All Returns'}
             </button>
           </div>
         </div>
-      </div>
-      
-      {/* Portfolio Distribution Chart */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <ChartPieIcon className="w-5 h-5 text-gray-600" />
-          Portfolio Distribution
-        </h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            {/* Pie chart would go here */}
-            <div className="h-64 bg-gray-50 rounded-xl flex items-center justify-center">
-              <p className="text-gray-500">Chart visualization</p>
-            </div>
-          </div>
-          
-          <div className="space-y-3">
-            <h4 className="font-medium text-gray-700">Investment Breakdown</h4>
-            {portfolio.slice(0, 5).map((advance, index) => (
-              <div key={advance.id} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full bg-${['green', 'blue', 'purple', 'orange', 'pink'][index]}-500`} />
-                  <span className="text-sm text-gray-700">{advance.businessName}</span>
-                </div>
-                <span className="text-sm font-medium text-gray-900">
-                  ${Number(formatUnits(advance.invested, USDC_DECIMALS)).toLocaleString()}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      
-      {/* Active Investments */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Active Investments</h3>
-        
-        <div className="space-y-4">
-          {portfolio.filter(a => a.status === 'active').map((advance) => {
-            const invested = Number(formatUnits(advance.invested, USDC_DECIMALS));
-            const returns = Number(formatUnits(advance.returns, USDC_DECIMALS));
-            const expectedReturn = Number(formatUnits(advance.expectedReturn, USDC_DECIMALS));
-            const progressPercentage = (returns / expectedReturn) * 100;
-            
-            return (
-              <div key={advance.id} className="border border-gray-200 rounded-xl p-4 hover:border-green-300 transition-colors">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <Link href={`/advance/${advance.id}`} className="font-semibold text-gray-900 hover:text-green-600">
-                      {advance.businessName}
-                    </Link>
-                    <p className="text-sm text-gray-500">
-                      {advance.revenueSharePercentage}% revenue share · {advance.repaymentCap}x cap
-                    </p>
-                  </div>
-                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
-                    Active
-                  </span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 mb-3">
-                  <div>
-                    <p className="text-xs text-gray-500">Invested</p>
-                    <p className="font-medium text-gray-900">${invested.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">Received</p>
-                    <p className="font-medium text-gray-900">${returns.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">Expected</p>
-                    <p className="font-medium text-gray-900">${expectedReturn.toLocaleString()}</p>
-                  </div>
-                </div>
-                
-                <div className="mb-3">
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-green-500 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">{progressPercentage.toFixed(1)}% returned</p>
-                </div>
-                
-                {returns > 0 && (
-                  <button
-                    onClick={() => handleWithdraw(advance.id)}
-                    disabled={isPending || isConfirming}
-                    className="w-full bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    Withdraw ${returns.toLocaleString()}
-                  </button>
-                )}
-              </div>
-            );
-          })}
-          
-          {portfolio.filter(a => a.status === 'active').length === 0 && (
-            <div className="text-center py-8">
-              <p className="text-gray-500">No active investments</p>
-              <Link href="/" className="text-green-600 hover:text-green-700 font-medium text-sm">
-                Browse funding opportunities →
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-      
-      {/* Completed Investments */}
-      {completedInvestments > 0 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <CheckBadgeIcon className="w-5 h-5 text-green-600" />
-            Completed Investments
-          </h3>
-          
-          <div className="space-y-3">
-            {portfolio.filter(a => a.status === 'completed').map((advance) => {
-              const invested = Number(formatUnits(advance.invested, USDC_DECIMALS));
-              const returns = Number(formatUnits(advance.returns, USDC_DECIMALS));
-              const roi = ((returns / invested - 1) * 100).toFixed(1);
-              
-              return (
-                <div key={advance.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900">{advance.businessName}</p>
-                    <p className="text-sm text-gray-500">
-                      Invested ${invested.toLocaleString()} → Returned ${returns.toLocaleString()}
-                    </p>
-                  </div>
-                  <span className={`font-semibold ${Number(roi) > 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                    {Number(roi) > 0 ? '+' : ''}{roi}% ROI
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
       )}
-      
-      {/* Success message */}
-      {isSuccess && selectedAdvance && (
-        <div className="fixed bottom-4 right-4 bg-green-50 border border-green-200 rounded-xl p-4 shadow-lg">
+
+      {/* Contributions List */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">Your Contributions</h3>
+
+        {contributions.length === 0 ? (
+          <div className="text-center py-12">
+            <svg
+              className="w-16 h-16 text-gray-400 mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">No Contributions Yet</h3>
+            <p className="text-gray-600 mb-6">
+              You haven't contributed to any loans yet. Start supporting businesses with zero-interest loans.
+            </p>
+            <Link
+              href="/"
+              className="inline-block px-6 py-3 bg-[#2E7D32] hover:bg-[#4CAF50] text-white font-semibold rounded-xl transition-colors"
+            >
+              Browse Available Loans
+            </Link>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Loan
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Contributed
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Claimable
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {contributions.map(contribution => (
+                  <ContributionRow
+                    key={contribution.loanAddress}
+                    contribution={contribution}
+                    onClaim={claim}
+                    isClaimPending={isClaimPending}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Success Message */}
+      {isClaimSuccess && (
+        <div className="fixed bottom-4 right-4 bg-green-50 border border-green-200 rounded-xl p-4 shadow-lg animate-in slide-in-from-bottom-10 fade-in-25">
           <div className="flex items-center gap-2">
             <CheckBadgeIcon className="w-5 h-5 text-green-600" />
-            <p className="text-green-900 font-medium">Returns withdrawn successfully!</p>
+            <p className="text-green-900 font-medium">Returns claimed successfully!</p>
           </div>
         </div>
       )}
@@ -285,13 +314,112 @@ export const InvestorPortfolio = () => {
   );
 };
 
-// Minimal ABI for withdrawing returns
-const RBF_ADVANCE_ABI = [
-  {
-    inputs: [],
-    name: 'withdrawReturns',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  }
-] as const;
+// Individual contribution row component
+function ContributionRow({
+  contribution,
+  onClaim,
+  isClaimPending,
+}: {
+  contribution: ContributionWithLoan;
+  onClaim: (loanAddress: `0x${string}`) => void;
+  isClaimPending: boolean;
+}) {
+  const { loanData } = useLoanData(contribution.loanAddress);
+  const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
+
+  useEffect(() => {
+    if (loanData?.metadataURI) {
+      const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
+        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        : loanData.metadataURI;
+
+      fetch(metadataUrl)
+        .then(res => res.json())
+        .then(data => {
+          // Convert IPFS image URLs to gateway URLs
+          if (data.image && data.image.startsWith('ipfs://')) {
+            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+          }
+          setMetadata(data);
+        })
+        .catch(err => console.error('Error loading metadata:', err));
+    }
+  }, [loanData?.metadataURI]);
+
+  const formatUSDC = (amount: bigint): string => {
+    const value = parseFloat(formatUnits(amount, USDC_DECIMALS));
+    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  return (
+    <tr className="hover:bg-gray-50 transition-colors">
+      <td className="px-4 py-4">
+        <Link
+          href={`/loan/${contribution.loanAddress}`}
+          className="flex items-center gap-3 group"
+        >
+          {metadata?.image && (
+            <img
+              src={metadata.image}
+              alt={metadata.name || 'Loan'}
+              className="w-12 h-12 rounded-lg object-cover"
+            />
+          )}
+          <div>
+            <p className="font-medium text-gray-900 group-hover:text-[#2E7D32]">
+              {metadata?.name || 'Loading...'}
+            </p>
+            <p className="text-xs text-gray-500 font-mono">
+              {contribution.loanAddress.slice(0, 6)}...{contribution.loanAddress.slice(-4)}
+            </p>
+          </div>
+        </Link>
+      </td>
+      <td className="px-4 py-4">
+        <p className="font-medium text-gray-900">${formatUSDC(contribution.amount)}</p>
+        <p className="text-xs text-gray-500">USDC</p>
+      </td>
+      <td className="px-4 py-4">
+        {contribution.loanCompleted && (
+          <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+            Completed
+          </span>
+        )}
+        {contribution.loanActive && !contribution.loanCompleted && (
+          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+            Active
+          </span>
+        )}
+        {!contribution.loanActive && !contribution.loanCompleted && (
+          <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">
+            Fundraising
+          </span>
+        )}
+      </td>
+      <td className="px-4 py-4">
+        <p className="font-medium text-gray-900">${formatUSDC(contribution.claimable)}</p>
+        {contribution.claimable > 0n && (
+          <p className="text-xs text-green-600">Ready to claim</p>
+        )}
+      </td>
+      <td className="px-4 py-4">
+        {contribution.claimable > 0n ? (
+          <button
+            onClick={() => onClaim(contribution.loanAddress)}
+            disabled={isClaimPending}
+            className="px-4 py-2 bg-[#2E7D32] hover:bg-[#4CAF50] text-white text-sm font-medium rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+          >
+            Claim
+          </button>
+        ) : (
+          <Link
+            href={`/loan/${contribution.loanAddress}`}
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors inline-block"
+          >
+            View
+          </Link>
+        )}
+      </td>
+    </tr>
+  );
+}
