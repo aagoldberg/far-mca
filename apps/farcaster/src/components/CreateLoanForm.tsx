@@ -429,15 +429,18 @@ export default function CreateLoanForm() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
-      <div className="mb-4 px-3 py-2 bg-blue-100 border border-blue-300 rounded-lg text-sm text-blue-800">
-        <strong>IPFS Version 2.0</strong> - Using decentralized storage for efficient transactions
-      </div>
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Create Zero-Interest Loan
+      <button
+        onClick={() => router.push('/')}
+        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        <span className="font-medium">Back</span>
+      </button>
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+        Create Loan
       </h1>
-      <p className="text-gray-600 mb-6">
-        Get community funding with 0% interest • 1.0x repayment only
-      </p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Business Information */}
@@ -774,9 +777,6 @@ export default function CreateLoanForm() {
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 mb-1">Zero-Interest Community Loan</h3>
-              <p className="text-sm text-gray-700 mb-2">
-                You'll repay exactly 1.0x of what you raise - no interest, no profit for supporters.
-              </p>
               <ul className="text-sm text-gray-600 space-y-1">
                 <li>• No interest charges</li>
                 <li>• Fixed repayment schedule</li>
@@ -812,7 +812,7 @@ export default function CreateLoanForm() {
               {isPending ? 'Creating Loan...' : 'Confirming...'}
             </span>
           ) : (
-            'Request Support'
+            'Create Loan'
           )}
         </button>
       </form>

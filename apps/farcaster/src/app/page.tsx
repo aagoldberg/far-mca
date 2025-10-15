@@ -27,26 +27,21 @@ export default function HomePage() {
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-[#2C7DA0] from-35% via-[#2E8B8B] via-45% to-[#3B9B7F] to-55% bg-clip-text text-transparent">
                 LendFriend
               </h1>
               <p className="text-sm text-gray-600">
-                Neighbors helping neighbors thrive
+                Community lending
               </p>
             </div>
             <Link
               href="/create"
               className="px-4 py-2 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-sm font-semibold rounded-lg transition-colors duration-200"
             >
-              + Request Support
+              Create Loan
             </Link>
           </div>
         </div>
-
-        {/* Active Loans */}
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">
-          Ways to Help
-        </h2>
 
         <LoanList />
       </div>

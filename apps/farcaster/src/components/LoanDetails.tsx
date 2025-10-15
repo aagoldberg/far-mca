@@ -44,11 +44,8 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
 
-  // Temporarily disable Neynar profile fetching until API key is configured
-  // const { profile, reputation, hasProfile } = useFarcasterProfile(loanData?.borrower);
-  const hasProfile = false;
-  const profile = null;
-  const reputation = null;
+  // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
+  const { profile, reputation, hasProfile } = useFarcasterProfile(loanData?.borrower);
 
   // Fetch metadata from IPFS
   useEffect(() => {

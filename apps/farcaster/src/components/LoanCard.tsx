@@ -78,11 +78,8 @@ export function LoanCard({
 
   const status = getStatusBadge(fundraisingActive, active, completed);
 
-  // Temporarily disable Neynar profile fetching until API key is configured
-  // const { profile, reputation, hasProfile } = useFarcasterProfile(borrower);
-  const hasProfile = false;
-  const profile = null;
-  const reputation = null;
+  // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
+  const { profile, reputation, hasProfile } = useFarcasterProfile(borrower);
 
   const shortAddress = `${borrower.slice(0, 6)}...${borrower.slice(-4)}`;
 

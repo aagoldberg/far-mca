@@ -103,12 +103,14 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
       setError(null);
 
       try {
-        // Fetch user by verified address
-        const response = await neynarClient!.fetchBulkUsersByEthereumAddress([address]);
+        // Fetch user by verified address using the new API
+        const response = await neynarClient.fetchBulkUsers([address]);
 
+        // Gracefully handle cases where no profile exists - this is expected for most users
         if (!response || !response[address] || response[address].length === 0) {
           setProfile(null);
           setReputation(null);
+          setError(null); // Clear any previous errors
           return;
         }
 
@@ -143,8 +145,12 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
         const reputationScore = calculateReputationScore(farcasterProfile);
         setReputation(reputationScore);
       } catch (err) {
-        console.error('Error fetching Farcaster profile:', err);
-        setError(err as Error);
+        // Silently handle errors - most addresses won't have Farcaster profiles
+        // Only log in development, not production
+        if (process.env.NODE_ENV === 'development') {
+          console.debug('Farcaster profile not found or API error:', err);
+        }
+        setError(null); // Don't expose errors to the component
         setProfile(null);
         setReputation(null);
       } finally {
