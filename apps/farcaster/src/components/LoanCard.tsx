@@ -19,6 +19,7 @@ export interface LoanCardProps {
   contributorsCount: bigint;
   termPeriods?: bigint;
   imageUrl?: string;
+  fundraisingDeadline?: bigint;
 }
 
 const formatUSDC = (amount: bigint): string => {
@@ -58,6 +59,21 @@ const getStatusBadge = (
   };
 };
 
+const getDaysRemaining = (fundraisingDeadline?: bigint): string | null => {
+  if (!fundraisingDeadline) return null;
+
+  const now = Math.floor(Date.now() / 1000);
+  const deadline = Number(fundraisingDeadline);
+  const secondsRemaining = deadline - now;
+
+  if (secondsRemaining <= 0) return null;
+
+  const daysRemaining = Math.ceil(secondsRemaining / 86400);
+
+  if (daysRemaining === 1) return '1 day remaining';
+  return `${daysRemaining} days remaining`;
+};
+
 export function LoanCard({
   address,
   borrower,
@@ -71,6 +87,7 @@ export function LoanCard({
   contributorsCount,
   termPeriods,
   imageUrl,
+  fundraisingDeadline,
 }: LoanCardProps) {
   const totalFundedNum = parseFloat(formatUnits(totalFunded, USDC_DECIMALS));
   const principalNum = parseFloat(formatUnits(principal, USDC_DECIMALS));
@@ -83,11 +100,50 @@ export function LoanCard({
 
   const shortAddress = `${borrower.slice(0, 6)}...${borrower.slice(-4)}`;
 
+  const daysRemaining = getDaysRemaining(fundraisingDeadline);
+
   return (
     <Link
       href={`/loan/${address}`}
       className="block bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
     >
+      {/* Header with borrower info on left and days remaining on right */}
+      <div className="px-4 pt-3 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {hasProfile && profile ? (
+              <>
+                <img
+                  src={profile.pfpUrl}
+                  alt={profile.displayName}
+                  className="w-7 h-7 rounded-full bg-gray-200"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                <span className="text-xs font-semibold text-gray-900">
+                  {profile.displayName || `@${profile.username}`}
+                </span>
+              </>
+            ) : (
+              <>
+                <div className="w-7 h-7 rounded-full bg-gray-300" />
+                <span className="text-xs font-semibold text-gray-900">{shortAddress}</span>
+              </>
+            )}
+          </div>
+
+          {daysRemaining && fundraisingActive && (
+            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{daysRemaining}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
       {imageUrl && (
         <div className="w-full h-48 bg-gray-100">
           <img
@@ -102,6 +158,7 @@ export function LoanCard({
       )}
 
       <div className="p-4">
+        {/* Title and status badge */}
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-base font-semibold text-gray-900 line-clamp-1 flex-1">
             {name || 'Untitled Loan'}
@@ -109,44 +166,6 @@ export function LoanCard({
           <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${status.className}`}>
             {status.text}
           </span>
-        </div>
-
-        <div className="flex items-center gap-2 mb-2">
-          {hasProfile && profile ? (
-            <>
-              <img
-                src={profile.pfpUrl}
-                alt={profile.displayName}
-                className="w-6 h-6 rounded-full bg-gray-200"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-              <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                <span className="text-sm font-medium text-gray-900 truncate">
-                  @{profile.username}
-                </span>
-                {profile.powerBadge && (
-                  <svg className="w-4 h-4 text-purple-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 11.75A2.25 2.25 0 1111.25 9.5 2.25 2.25 0 019 11.75zm0 9.5l-3-6.75h6l-3 6.75zM15 11.75a2.25 2.25 0 112.25-2.25A2.25 2.25 0 0115 11.75zm0 9.5l-3-6.75h6l-3 6.75z"/>
-                  </svg>
-                )}
-                {reputation && (
-                  <span className="text-xs text-gray-500 truncate">
-                    {reputation.followerTier === 'whale' ? '🐋' :
-                     reputation.followerTier === 'influential' ? '⭐' :
-                     reputation.followerTier === 'active' ? '✨' :
-                     reputation.followerTier === 'growing' ? '🌱' : '🆕'}
-                  </span>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="w-6 h-6 rounded-full bg-gray-300" />
-              <span className="text-xs text-gray-500">{shortAddress}</span>
-            </>
-          )}
         </div>
 
         <p className="text-sm text-gray-600 mb-3 line-clamp-2 h-10 overflow-hidden">
