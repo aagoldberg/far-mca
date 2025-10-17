@@ -107,7 +107,6 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
       termPeriods={loanData.termPeriods}
       imageUrl={metadata?.image}
       fundraisingDeadline={loanData.fundraisingDeadline}
-      disbursementTime={loanData.disbursementTime}
       totalRepaid={loanData.totalRepaid}
     />
   );

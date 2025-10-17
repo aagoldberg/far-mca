@@ -189,12 +189,21 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     isDefaultedResult,
   ] = data;
 
-  // Check if any calls failed
+  // Check if any required calls failed
   if (
-    borrowerResult.status !== 'success' ||
-    principalResult.status !== 'success' ||
-    totalFundedResult.status !== 'success' ||
-    outstandingPrincipalResult.status !== 'success'
+    !borrowerResult || borrowerResult.status !== 'success' ||
+    !principalResult || principalResult.status !== 'success' ||
+    !totalFundedResult || totalFundedResult.status !== 'success' ||
+    !outstandingPrincipalResult || outstandingPrincipalResult.status !== 'success' ||
+    !termPeriodsResult || termPeriodsResult.status !== 'success' ||
+    !periodLengthResult || periodLengthResult.status !== 'success' ||
+    !firstDueDateResult || firstDueDateResult.status !== 'success' ||
+    !fundraisingDeadlineResult || fundraisingDeadlineResult.status !== 'success' ||
+    !metadataURIResult || metadataURIResult.status !== 'success' ||
+    !fundraisingActiveResult || fundraisingActiveResult.status !== 'success' ||
+    !activeResult || activeResult.status !== 'success' ||
+    !completedResult || completedResult.status !== 'success' ||
+    !contributorsCountResult || contributorsCountResult.status !== 'success'
   ) {
     return { loanData: null, isLoading: false };
   }
@@ -225,9 +234,9 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
   return {
     loanData,
     isLoading: false,
-    perPeriodPrincipal: perPeriodPrincipalResult.status === 'success' ? perPeriodPrincipalResult.result : undefined,
-    currentDueDate: currentDueDateResult.status === 'success' ? currentDueDateResult.result : undefined,
-    isDefaulted: isDefaultedResult.status === 'success' ? isDefaultedResult.result : undefined,
+    perPeriodPrincipal: perPeriodPrincipalResult && perPeriodPrincipalResult.status === 'success' ? perPeriodPrincipalResult.result : undefined,
+    currentDueDate: currentDueDateResult && currentDueDateResult.status === 'success' ? currentDueDateResult.result : undefined,
+    isDefaulted: isDefaultedResult && isDefaultedResult.status === 'success' ? isDefaultedResult.result : undefined,
   };
 };
 

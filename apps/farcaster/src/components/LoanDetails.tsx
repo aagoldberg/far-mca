@@ -43,6 +43,9 @@ interface LoanMetadata {
 
 export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const { loanData, isLoading, perPeriodPrincipal, currentDueDate, isDefaulted } = useLoanData(loanAddress);
+  const isLoanDefaulted = Boolean(isDefaulted);
+  const paymentPerPeriod = perPeriodPrincipal as bigint | undefined;
+  const nextDueDate = currentDueDate as bigint | undefined;
   const { address: userAddress } = useAccount();
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
@@ -158,21 +161,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const isBorrower = userAddress?.toLowerCase() === loanData.borrower.toLowerCase();
 
   // Calculate payment status if loan is active
-  const loanStatusInfo =
-    loanData.active && loanData.disbursementTime && loanData.termPeriods
-      ? calculateLoanStatus(
-          loanData.disbursementTime,
-          Number(loanData.termPeriods),
-          loanData.principal,
-          loanData.totalRepaid
-        )
-      : null;
+  // TODO: Re-enable once we have disbursementTime from contract
+  const loanStatusInfo = null;
 
   // Check if refund is available
   // Refunds available if: loan not active AND (fundraising deadline passed without full funding OR cancelled)
   const now = BigInt(Math.floor(Date.now() / 1000));
   const fundraisingExpired = now > loanData.fundraisingDeadline;
-  const refundAvailable = !loanData.active && contribution && contribution.amount > 0n &&
+  const refundAvailable = !loanData.active && contribution && contribution.amount > BigInt(0) &&
     ((!isFunded && fundraisingExpired) || (!loanData.fundraisingActive && !isFunded));
 
   const handleRefund = async () => {
@@ -327,7 +323,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             Fundraising
           </span>
         )}
-        {isDefaulted && (
+        {isLoanDefaulted && (
           <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
             Defaulted
           </span>
@@ -393,11 +389,11 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         </div>
 
         {/* Payment info */}
-        {perPeriodPrincipal && (
+        {paymentPerPeriod && (
           <div className="mt-4 pt-4 border-t border-gray-200">
             <p className="text-xs text-gray-500 mb-1">Payment Per Period</p>
             <p className="text-xl font-bold text-gray-900">
-              ${formatUSDC(perPeriodPrincipal as bigint)} USDC
+              ${formatUSDC(paymentPerPeriod)} USDC
             </p>
           </div>
         )}
@@ -410,11 +406,11 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               {formatDate(loanData.fundraisingDeadline)}
             </p>
           </div>
-          {loanData.active && currentDueDate && (
+          {loanData.active && nextDueDate && (
             <div>
               <p className="text-xs text-gray-500 mb-1">Next Payment Due</p>
               <p className="text-sm font-medium text-gray-900">
-                {formatDate(currentDueDate as bigint)}
+                {formatDate(nextDueDate)}
               </p>
             </div>
           )}
@@ -550,16 +546,16 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               )}
 
               {/* Next due date info */}
-              {currentDueDate && (
+              {nextDueDate && (
                 <div className="mt-4 pt-4 border-t border-blue-200">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-700">Next Payment Due:</span>
-                    <span className="font-medium text-gray-900">{formatDate(currentDueDate as bigint)}</span>
+                    <span className="font-medium text-gray-900">{formatDate(nextDueDate)}</span>
                   </div>
-                  {perPeriodPrincipal && (
+                  {paymentPerPeriod && (
                     <div className="flex items-center justify-between text-sm mt-2">
                       <span className="text-gray-700">Payment Amount:</span>
-                      <span className="font-medium text-gray-900">${formatUSDC(perPeriodPrincipal as bigint)} USDC</span>
+                      <span className="font-medium text-gray-900">${formatUSDC(paymentPerPeriod)} USDC</span>
                     </div>
                   )}
                 </div>

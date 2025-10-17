@@ -356,7 +356,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           {step === 'input' && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
         </button>
 
-        {step !== 'input' && step !== 'success' && step !== 'error' && (
+        {(step === 'approve' || step === 'contribute') && (
           <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
             <p className="text-sm text-blue-700 text-center">
               {step === 'approve' && 'Please approve USDC spending in your wallet...'}
