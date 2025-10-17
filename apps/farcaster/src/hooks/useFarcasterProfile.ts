@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { neynarClient, isNeynarEnabled } from '@/lib/neynar';
+import { profileCache } from '@/lib/cache';
 
 export interface FarcasterProfile {
   fid: number;
@@ -103,6 +104,24 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
       setError(null);
 
       try {
+        // Check cache first
+        const cacheKey = address.toLowerCase();
+        const cached = profileCache.get(cacheKey);
+
+        if (cached) {
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`[Profile Cache HIT] ${address.slice(0, 6)}...${address.slice(-4)}`);
+          }
+          setProfile(cached.profile);
+          setReputation(cached.reputation);
+          setIsLoading(false);
+          return;
+        }
+
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[Profile Cache MISS] ${address.slice(0, 6)}...${address.slice(-4)}`);
+        }
+
         // Fetch user by verified address using the new API
         const response = await neynarClient.fetchBulkUsers([address]);
 
@@ -144,6 +163,12 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
         // Calculate reputation
         const reputationScore = calculateReputationScore(farcasterProfile);
         setReputation(reputationScore);
+
+        // Store in cache
+        profileCache.set(cacheKey, {
+          profile: farcasterProfile,
+          reputation: reputationScore,
+        });
       } catch (err) {
         // Silently handle errors - most addresses won't have Farcaster profiles
         // Only log in development, not production

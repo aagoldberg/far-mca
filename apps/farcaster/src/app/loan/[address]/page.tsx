@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import LoanDetails from '@/components/LoanDetails';
+import { LoanErrorBoundary } from '@/components/ErrorBoundary';
 import { use } from 'react';
 
 interface PageProps {
@@ -46,5 +47,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function LoanDetailPage({ params }: PageProps) {
   const { address } = await params;
 
-  return <LoanDetails loanAddress={address as `0x${string}`} />;
+  return (
+    <LoanErrorBoundary>
+      <LoanDetails loanAddress={address as `0x${string}`} />
+    </LoanErrorBoundary>
+  );
 }

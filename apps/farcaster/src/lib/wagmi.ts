@@ -1,8 +1,8 @@
 import { createConfig, http } from 'wagmi'
 import { baseSepolia } from 'wagmi/chains'
 import { farcasterMiniApp } from '@farcaster/miniapp-wagmi-connector'
-import { injected } from 'wagmi/connectors'
 
+// Only use Farcaster connector - simpler and more reliable in Mini App
 export const wagmiConfig = createConfig({
   chains: [baseSepolia],
   transports: {
@@ -15,10 +15,8 @@ export const wagmiConfig = createConfig({
       }
     ),
   },
-  connectors: [
-    farcasterMiniApp(),
-    injected({ target: 'metaMask' }), // For testing with MetaMask
-  ],
+  connectors: [farcasterMiniApp()],
+  ssr: true, // Enable SSR support
 })
 
 // New MicroLoan contract addresses

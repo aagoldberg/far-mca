@@ -40,59 +40,28 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center group no-underline">
+          <Link href="/" className="flex flex-col group no-underline">
             <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-[#2C7DA0] from-35% via-[#2E8B8B] via-45% to-[#3B9B7F] to-55% bg-clip-text text-transparent group-hover:from-[#236382] group-hover:via-[#26706F] group-hover:to-[#2E7D68] transition-all">
               LendFriend
             </span>
+            <span className="text-xs text-gray-600 -mt-1">Community Lending</span>
           </Link>
 
-          {/* Right side - Wallet & Balance & Faucet */}
+          {/* Right side - Create Loan button & Profile */}
           <div className="flex items-center gap-3">
-            {!isConnected ? (
-              <ConnectWallet />
-            ) : (
-              <>
-                {/* Balance display */}
-                <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg">
-                  <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-sm font-medium text-gray-700">
-                    {balanceFormatted}
-                  </span>
-                </div>
+            {/* Create Loan Button */}
+            <Link
+              href="/create"
+              className="px-3 py-1.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-sm font-semibold rounded-lg transition-colors"
+            >
+              + Create
+            </Link>
 
-                {/* Faucet button */}
-                <button
-                  onClick={handleFaucet}
-                  disabled={isPending || isConfirming}
-                  className="relative px-3 py-1.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-sm font-medium rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-                >
-                  {isPending || isConfirming ? (
-                    <span className="flex items-center gap-2">
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      <span className="hidden sm:inline">Minting...</span>
-                    </span>
-                  ) : (
-                    <>
-                      <span className="hidden sm:inline">Get Test USDC</span>
-                      <span className="sm:hidden">Faucet</span>
-                    </>
-                  )}
-                </button>
-
-                {/* Success notification */}
-                {showSuccess && (
-                  <div className="absolute top-20 right-4 bg-green-50 border border-green-200 rounded-lg p-3 shadow-lg animate-fade-in-down">
-                    <p className="text-sm text-green-800 font-medium">
-                      ✅ 1000 USDC minted successfully!
-                    </p>
-                  </div>
-                )}
-              </>
+            {/* Profile Avatar (placeholder for now) */}
+            {isConnected && address && (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2C7DA0] to-[#3B9B7F] flex items-center justify-center text-white text-xs font-bold">
+                {address.slice(2, 4).toUpperCase()}
+              </div>
             )}
           </div>
         </div>

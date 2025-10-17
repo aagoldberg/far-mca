@@ -94,10 +94,10 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     query: { enabled },
   });
 
-  const { data: totalRepaid } = useReadContract({
+  const { data: outstandingPrincipal } = useReadContract({
     address: loanAddress,
     abi: MicroLoanABI.abi,
-    functionName: 'totalRepaid',
+    functionName: 'outstandingPrincipal',
     query: { enabled },
   });
 
@@ -157,13 +157,6 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     query: { enabled },
   });
 
-  const { data: disbursed } = useReadContract({
-    address: loanAddress,
-    abi: MicroLoanABI.abi,
-    functionName: 'disbursed',
-    query: { enabled },
-  });
-
   const { data: contributorsCount } = useReadContract({
     address: loanAddress,
     abi: MicroLoanABI.abi,
@@ -203,12 +196,17 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     return { loanData: null, isLoading: true };
   }
 
+  // Calculate totalRepaid from principal and outstandingPrincipal
+  const principalBigInt = principal as bigint;
+  const outstandingPrincipalBigInt = outstandingPrincipal as bigint;
+  const totalRepaid = principalBigInt - outstandingPrincipalBigInt;
+
   const loanData: RawLoan = {
     address: loanAddress,
     borrower: borrower as `0x${string}`,
-    principal: principal as bigint,
+    principal: principalBigInt,
     totalFunded: totalFunded as bigint,
-    totalRepaid: totalRepaid as bigint,
+    totalRepaid,
     termPeriods: termPeriods as bigint,
     periodLength: periodLength as bigint,
     firstDueDate: firstDueDate as bigint,
@@ -217,7 +215,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     fundraisingActive: fundraisingActive as boolean,
     active: active as boolean,
     completed: completed as boolean,
-    disbursed: disbursed as boolean,
+    disbursed: active as boolean, // disbursed = active (funds are disbursed when loan becomes active)
     contributorsCount: contributorsCount as bigint,
   };
 

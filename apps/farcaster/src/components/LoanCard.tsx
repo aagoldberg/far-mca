@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import { useContributors } from '@/hooks/useMicroLoan';
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -74,6 +75,44 @@ const getDaysRemaining = (fundraisingDeadline?: bigint): string | null => {
   return `${daysRemaining} days remaining`;
 };
 
+// Component for individual contributor avatar
+function ContributorAvatar({ address, index, total }: { address: `0x${string}`; index: number; total: number }) {
+  const { profile } = useFarcasterProfile(address);
+
+  return (
+    <div
+      className="relative w-7 h-7 rounded-full border-2 border-white bg-gray-200 overflow-hidden"
+      style={{ zIndex: total - index }}
+    >
+      {profile?.pfpUrl ? (
+        <img
+          src={profile.pfpUrl}
+          alt={profile.displayName || 'Contributor'}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-[10px] font-bold">
+          {address.slice(2, 4).toUpperCase()}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Component for contributor name in text
+function ContributorName({ address }: { address: `0x${string}` }) {
+  const { profile } = useFarcasterProfile(address);
+
+  return (
+    <span className="font-medium text-gray-900">
+      {profile?.username ? `@${profile.username}` : `${address.slice(0, 6)}...${address.slice(-4)}`}
+    </span>
+  );
+}
+
 export function LoanCard({
   address,
   borrower,
@@ -97,6 +136,9 @@ export function LoanCard({
 
   // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
   const { profile, reputation, hasProfile } = useFarcasterProfile(borrower);
+
+  // Fetch first 3 contributors for display
+  const { contributors, totalCount, hasMore } = useContributors(address, 3);
 
   const shortAddress = `${borrower.slice(0, 6)}...${borrower.slice(-4)}`;
 
@@ -189,19 +231,43 @@ export function LoanCard({
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
-          <span>
-            {contributorsCount.toString()} supporter{contributorsCount === 1n ? '' : 's'}
-          </span>
-          {termPeriods && (
-            <span>
-              {termPeriods.toString()} period{termPeriods === 1n ? '' : 's'}
-            </span>
-          )}
-          <span className="text-[#3B9B7F] font-medium hover:underline">
-            View Details →
-          </span>
-        </div>
+        {/* Contributor avatars footer */}
+        {totalCount > 0 ? (
+          <div className="pt-3 border-t border-gray-100">
+            <div className="flex items-center gap-2">
+              {/* Avatar stack */}
+              <div className="flex -space-x-2">
+                {contributors.map((contributorAddress, index) => (
+                  <ContributorAvatar
+                    key={contributorAddress}
+                    address={contributorAddress}
+                    index={index}
+                    total={contributors.length}
+                  />
+                ))}
+              </div>
+
+              {/* Text description */}
+              <div className="flex-1 text-xs text-gray-600">
+                {contributors.slice(0, 2).map((addr, idx) => (
+                  <span key={addr}>
+                    <ContributorName address={addr} />
+                    {idx === 0 && contributors.length > 1 && ', '}
+                  </span>
+                ))}
+                {hasMore && (
+                  <span>
+                    {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="pt-3 border-t border-gray-100 text-xs text-gray-500">
+            No supporters yet
+          </div>
+        )}
       </div>
     </Link>
   );

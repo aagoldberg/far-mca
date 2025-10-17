@@ -93,7 +93,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
       {
         address: loanAddress,
         abi: MicroLoanABI.abi,
-        functionName: 'totalRepaid',
+        functionName: 'outstandingPrincipal',
       },
       {
         address: loanAddress,
@@ -138,11 +138,6 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
       {
         address: loanAddress,
         abi: MicroLoanABI.abi,
-        functionName: 'disbursed',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
         functionName: 'contributorsCount',
       },
       {
@@ -179,7 +174,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     borrowerResult,
     principalResult,
     totalFundedResult,
-    totalRepaidResult,
+    outstandingPrincipalResult,
     termPeriodsResult,
     periodLengthResult,
     firstDueDateResult,
@@ -188,7 +183,6 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     fundraisingActiveResult,
     activeResult,
     completedResult,
-    disbursedResult,
     contributorsCountResult,
     perPeriodPrincipalResult,
     currentDueDateResult,
@@ -199,17 +193,23 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
   if (
     borrowerResult.status !== 'success' ||
     principalResult.status !== 'success' ||
-    totalFundedResult.status !== 'success'
+    totalFundedResult.status !== 'success' ||
+    outstandingPrincipalResult.status !== 'success'
   ) {
     return { loanData: null, isLoading: false };
   }
 
+  // Calculate totalRepaid from principal and outstandingPrincipal
+  const principal = principalResult.result as bigint;
+  const outstandingPrincipal = outstandingPrincipalResult.result as bigint;
+  const totalRepaid = principal - outstandingPrincipal;
+
   const loanData: RawLoan = {
     address: loanAddress,
     borrower: borrowerResult.result as `0x${string}`,
-    principal: principalResult.result as bigint,
+    principal,
     totalFunded: totalFundedResult.result as bigint,
-    totalRepaid: totalRepaidResult.result as bigint,
+    totalRepaid,
     termPeriods: termPeriodsResult.result as bigint,
     periodLength: periodLengthResult.result as bigint,
     firstDueDate: firstDueDateResult.result as bigint,
@@ -218,7 +218,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     fundraisingActive: fundraisingActiveResult.result as boolean,
     active: activeResult.result as boolean,
     completed: completedResult.result as boolean,
-    disbursed: disbursedResult.result as boolean,
+    disbursed: activeResult.result as boolean, // disbursed = active (funds are disbursed when loan becomes active)
     contributorsCount: contributorsCountResult.result as bigint,
   };
 
@@ -228,6 +228,54 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     perPeriodPrincipal: perPeriodPrincipalResult.status === 'success' ? perPeriodPrincipalResult.result : undefined,
     currentDueDate: currentDueDateResult.status === 'success' ? currentDueDateResult.result : undefined,
     isDefaulted: isDefaultedResult.status === 'success' ? isDefaultedResult.result : undefined,
+  };
+};
+
+// =============================================================================
+// LOAN - CONTRIBUTORS LIST
+// =============================================================================
+
+/**
+ * Get contributor addresses (up to a limit for display)
+ */
+export const useContributors = (
+  loanAddress: `0x${string}` | undefined,
+  limit: number = 3
+) => {
+  const enabled = !!loanAddress;
+
+  // First get the count
+  const { data: count } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributorsCount',
+    query: { enabled },
+  });
+
+  const contributorsCount = (count as bigint) || 0n;
+  const actualLimit = Math.min(Number(contributorsCount), limit);
+
+  // Fetch the first N contributors by index
+  const contributorQueries = Array.from({ length: actualLimit }, (_, i) => ({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributors',
+    args: [BigInt(i)],
+  }));
+
+  const { data: contributorsData } = useReadContracts({
+    contracts: contributorQueries.length > 0 ? contributorQueries as any : [],
+    query: { enabled: enabled && actualLimit > 0 },
+  });
+
+  const contributors = contributorsData
+    ?.filter((result) => result.status === 'success')
+    .map((result) => result.result as `0x${string}`) || [];
+
+  return {
+    contributors,
+    totalCount: Number(contributorsCount),
+    hasMore: Number(contributorsCount) > limit,
   };
 };
 
