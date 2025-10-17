@@ -2,11 +2,11 @@
   "miniapp": {
     "version": "1",
     "name": "LendFriend",
-    "iconUrl": "https://far-micro.ngrok.dev/icon.png",
-    "homeUrl": "https://far-micro.ngrok.dev",
-    "imageUrl": "https://far-micro.ngrok.dev/og-image.png",
+    "iconUrl": "https://lendfriend.co/icon.png",
+    "homeUrl": "https://lendfriend.co",
+    "imageUrl": "https://lendfriend.co/og-image.png",
     "buttonTitle": "Open LendFriend",
-    "splashImageUrl": "https://far-micro.ngrok.dev/splash.png",
+    "splashImageUrl": "https://lendfriend.co/splash.png",
     "splashBackgroundColor": "#f5f0ec",
     "requiredChains": ["eip155:84532"],
     "requiredCapabilities": [
