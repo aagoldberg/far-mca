@@ -6,6 +6,8 @@ import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useContributors } from '@/hooks/useMicroLoan';
+import { calculateLoanStatus } from '@/utils/loanStatus';
+import { PaymentWarningBadgeCompact } from '@/components/PaymentWarningBadge';
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -21,6 +23,8 @@ export interface LoanCardProps {
   termPeriods?: bigint;
   imageUrl?: string;
   fundraisingDeadline?: bigint;
+  disbursementTime?: bigint;
+  totalRepaid?: bigint;
 }
 
 const formatUSDC = (amount: bigint): string => {
@@ -81,7 +85,7 @@ function ContributorAvatar({ address, index, total }: { address: `0x${string}`; 
 
   return (
     <div
-      className="relative w-7 h-7 rounded-full border-2 border-white bg-gray-200 overflow-hidden"
+      className="relative w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white bg-gray-200 overflow-hidden"
       style={{ zIndex: total - index }}
     >
       {profile?.pfpUrl ? (
@@ -94,7 +98,7 @@ function ContributorAvatar({ address, index, total }: { address: `0x${string}`; 
           }}
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-[10px] font-bold">
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-[9px] sm:text-[10px] font-bold">
           {address.slice(2, 4).toUpperCase()}
         </div>
       )}
@@ -127,6 +131,8 @@ export function LoanCard({
   termPeriods,
   imageUrl,
   fundraisingDeadline,
+  disbursementTime,
+  totalRepaid,
 }: LoanCardProps) {
   const totalFundedNum = parseFloat(formatUnits(totalFunded, USDC_DECIMALS));
   const principalNum = parseFloat(formatUnits(principal, USDC_DECIMALS));
@@ -144,50 +150,62 @@ export function LoanCard({
 
   const daysRemaining = getDaysRemaining(fundraisingDeadline);
 
+  // Calculate payment status if loan is active
+  const loanStatusInfo =
+    active && disbursementTime && termPeriods && totalRepaid !== undefined
+      ? calculateLoanStatus(
+          disbursementTime,
+          Number(termPeriods),
+          principal,
+          totalRepaid
+        )
+      : null;
+
   return (
     <Link
       href={`/loan/${address}`}
       className="block bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
     >
       {/* Header with borrower info on left and days remaining on right */}
-      <div className="px-4 pt-3 pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      <div className="px-3 sm:px-4 pt-3 pb-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             {hasProfile && profile ? (
               <>
                 <img
                   src={profile.pfpUrl}
                   alt={profile.displayName}
-                  className="w-7 h-7 rounded-full bg-gray-200"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-200 flex-shrink-0"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
-                <span className="text-xs font-semibold text-gray-900">
+                <span className="text-xs font-semibold text-gray-900 truncate">
                   {profile.displayName || `@${profile.username}`}
                 </span>
               </>
             ) : (
               <>
-                <div className="w-7 h-7 rounded-full bg-gray-300" />
-                <span className="text-xs font-semibold text-gray-900">{shortAddress}</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-300 flex-shrink-0" />
+                <span className="text-xs font-semibold text-gray-900 truncate">{shortAddress}</span>
               </>
             )}
           </div>
 
           {daysRemaining && fundraisingActive && (
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-1 sm:gap-1.5 text-xs text-gray-500 flex-shrink-0">
+              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>{daysRemaining}</span>
+              <span className="hidden sm:inline">{daysRemaining}</span>
+              <span className="sm:hidden">{daysRemaining.replace(' remaining', '')}</span>
             </div>
           )}
         </div>
       </div>
 
       {imageUrl && (
-        <div className="w-full h-48 bg-gray-100">
+        <div className="w-full h-40 sm:h-48 bg-gray-100">
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
@@ -199,29 +217,36 @@ export function LoanCard({
         </div>
       )}
 
-      <div className="p-4">
-        {/* Title and status badge */}
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-base font-semibold text-gray-900 line-clamp-1 flex-1">
+      <div className="p-3 sm:p-4">
+        {/* Title and badges */}
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900 line-clamp-1 flex-1 min-w-0">
             {name || 'Untitled Loan'}
           </h3>
-          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${status.className}`}>
-            {status.text}
-          </span>
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+            {/* Payment warning badge (if applicable) */}
+            {loanStatusInfo && (
+              <PaymentWarningBadgeCompact statusInfo={loanStatusInfo} />
+            )}
+            {/* Status badge */}
+            <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-medium whitespace-nowrap ${status.className}`}>
+              {status.text}
+            </span>
+          </div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-3 line-clamp-2 h-10 overflow-hidden">
+        <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 min-h-[2.5rem] sm:min-h-[2.5rem] overflow-hidden">
           {description || 'No description available'}
         </p>
 
         <div className="mb-3">
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+          <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 mb-2">
             <div
-              className="bg-[#3B9B7F] h-2 rounded-full transition-all duration-500"
+              className="bg-[#3B9B7F] h-1.5 sm:h-2 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
             />
           </div>
-          <div className="flex justify-between items-center text-xs">
+          <div className="flex justify-between items-center text-[11px] sm:text-xs">
             <span className="font-semibold text-gray-900">
               ${formatUSDC(totalFunded)} USDC
             </span>
@@ -233,10 +258,10 @@ export function LoanCard({
 
         {/* Contributor avatars footer */}
         {totalCount > 0 ? (
-          <div className="pt-3 border-t border-gray-100">
+          <div className="pt-2.5 sm:pt-3 border-t border-gray-100">
             <div className="flex items-center gap-2">
               {/* Avatar stack */}
-              <div className="flex -space-x-2">
+              <div className="flex -space-x-2 flex-shrink-0">
                 {contributors.map((contributorAddress, index) => (
                   <ContributorAvatar
                     key={contributorAddress}
@@ -248,7 +273,7 @@ export function LoanCard({
               </div>
 
               {/* Text description */}
-              <div className="flex-1 text-xs text-gray-600">
+              <div className="flex-1 text-[11px] sm:text-xs text-gray-600 truncate">
                 {contributors.slice(0, 2).map((addr, idx) => (
                   <span key={addr}>
                     <ContributorName address={addr} />
@@ -264,7 +289,7 @@ export function LoanCard({
             </div>
           </div>
         ) : (
-          <div className="pt-3 border-t border-gray-100 text-xs text-gray-500">
+          <div className="pt-2.5 sm:pt-3 border-t border-gray-100 text-[11px] sm:text-xs text-gray-500">
             No supporters yet
           </div>
         )}

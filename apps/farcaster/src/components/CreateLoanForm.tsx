@@ -428,24 +428,24 @@ export default function CreateLoanForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
+    <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
       <button
         onClick={() => router.push('/')}
-        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+        className="flex items-center gap-1.5 sm:gap-2 text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 transition-colors touch-manipulation"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        <span className="font-medium">Back</span>
+        <span className="text-sm sm:text-base font-medium">Back</span>
       </button>
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
         Create Loan
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         {/* Business Information */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Business Information</h2>
+        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Business Information</h2>
 
           <div className="space-y-4">
             <div>
@@ -622,8 +622,8 @@ export default function CreateLoanForm() {
         </div>
 
         {/* Loan Terms */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Loan Terms</h2>
+        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Loan Terms</h2>
 
           <div className="space-y-4">
             <div>
@@ -725,8 +725,8 @@ export default function CreateLoanForm() {
         </div>
 
         {/* Additional Details */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Additional Details</h2>
+        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Additional Details</h2>
 
           <div className="space-y-4">
             <div>
@@ -768,16 +768,16 @@ export default function CreateLoanForm() {
         </div>
 
         {/* Zero-Interest Highlight */}
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
-          <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="bg-green-50 border border-green-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+          <div className="flex items-start gap-2.5 sm:gap-3">
+            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Zero-Interest Community Loan</h3>
-              <ul className="text-sm text-gray-600 space-y-1">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1">Zero-Interest Community Loan</h3>
+              <ul className="text-xs sm:text-sm text-gray-600 space-y-0.5 sm:space-y-1">
                 <li>• No interest charges</li>
                 <li>• Fixed repayment schedule</li>
                 <li>• Community support model</li>
@@ -801,11 +801,11 @@ export default function CreateLoanForm() {
         <button
           type="submit"
           disabled={isPending || isConfirming || isSubmitting}
-          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
         >
           {isPending || isConfirming || isSubmitting ? (
             <span className="flex items-center justify-center gap-2">
-              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+              <svg className="animate-spin h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>

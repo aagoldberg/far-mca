@@ -9,6 +9,9 @@ import { formatUnits, parseUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useState, useEffect } from 'react';
 import { fetchFromIPFS } from '@/lib/ipfs';
+import { calculateLoanStatus } from '@/utils/loanStatus';
+import { PaymentWarningAlert } from '@/components/PaymentWarningBadge';
+import { useToast } from '@/contexts/ToastContext';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -44,6 +47,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
+  const { showToast } = useToast();
 
   // Fetch user's contribution (if any)
   const { contribution } = useContribution(loanAddress, userAddress);
@@ -77,6 +81,26 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
   // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
   const { profile, reputation, hasProfile } = useFarcasterProfile(loanData?.borrower);
+
+  // Toast notifications for transaction success
+  useEffect(() => {
+    if (isApproveSuccess) {
+      showToast('USDC approved successfully!', 'success');
+    }
+  }, [isApproveSuccess, showToast]);
+
+  useEffect(() => {
+    if (isRepaySuccess) {
+      showToast('Repayment submitted successfully!', 'success');
+      setRepaymentAmount(''); // Clear the input
+    }
+  }, [isRepaySuccess, showToast]);
+
+  useEffect(() => {
+    if (isRefundSuccess) {
+      showToast('Refund claimed successfully!', 'success');
+    }
+  }, [isRefundSuccess, showToast]);
 
   // Fetch metadata from IPFS with caching
   useEffect(() => {
@@ -133,6 +157,17 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const isFunded = loanData.totalFunded >= loanData.principal;
   const isBorrower = userAddress?.toLowerCase() === loanData.borrower.toLowerCase();
 
+  // Calculate payment status if loan is active
+  const loanStatusInfo =
+    loanData.active && loanData.disbursementTime && loanData.termPeriods
+      ? calculateLoanStatus(
+          loanData.disbursementTime,
+          Number(loanData.termPeriods),
+          loanData.principal,
+          loanData.totalRepaid
+        )
+      : null;
+
   // Check if refund is available
   // Refunds available if: loan not active AND (fundraising deadline passed without full funding OR cancelled)
   const now = BigInt(Math.floor(Date.now() / 1000));
@@ -146,6 +181,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       await requestRefund(loanAddress);
     } catch (error) {
       console.error('Error requesting refund:', error);
+      showToast('Failed to request refund. Please try again.', 'error');
     }
   };
 
@@ -157,6 +193,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       await approveUSDC(loanAddress, amount);
     } catch (error) {
       console.error('Error approving USDC:', error);
+      showToast('Failed to approve USDC. Please try again.', 'error');
     }
   };
 
@@ -167,6 +204,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       await repay(loanAddress, amount);
     } catch (error) {
       console.error('Error making repayment:', error);
+      showToast('Failed to submit repayment. Please try again.', 'error');
     }
   };
 
@@ -295,6 +333,13 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </span>
         )}
       </div>
+
+      {/* Payment Warning Alert */}
+      {loanStatusInfo && (
+        <div className="mb-6">
+          <PaymentWarningAlert statusInfo={loanStatusInfo} />
+        </div>
+      )}
 
       {/* Funding Progress Card */}
       <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">

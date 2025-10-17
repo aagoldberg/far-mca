@@ -37,29 +37,30 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <Link href="/" className="flex flex-col group no-underline">
-            <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-[#2C7DA0] from-35% via-[#2E8B8B] via-45% to-[#3B9B7F] to-55% bg-clip-text text-transparent group-hover:from-[#236382] group-hover:via-[#26706F] group-hover:to-[#2E7D68] transition-all">
+            <span className="text-xl sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-[#2C7DA0] from-35% via-[#2E8B8B] via-45% to-[#3B9B7F] to-55% bg-clip-text text-transparent group-hover:from-[#236382] group-hover:via-[#26706F] group-hover:to-[#2E7D68] transition-all">
               LendFriend
             </span>
-            <span className="text-xs text-gray-600 -mt-1">Community Lending</span>
+            <span className="text-[10px] sm:text-xs text-gray-600 -mt-1 hidden xs:block">Community Lending</span>
           </Link>
 
           {/* Right side - Create Loan button & Profile */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Create Loan Button */}
             <Link
               href="/create"
-              className="px-3 py-1.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-sm font-semibold rounded-lg transition-colors"
+              className="px-2.5 sm:px-3 py-1.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap"
             >
-              + Create
+              <span className="hidden xs:inline">+ Create</span>
+              <span className="xs:hidden">+</span>
             </Link>
 
             {/* Profile Avatar (placeholder for now) */}
             {isConnected && address && (
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2C7DA0] to-[#3B9B7F] flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#2C7DA0] to-[#3B9B7F] flex items-center justify-center text-white text-[10px] sm:text-xs font-bold flex-shrink-0">
                 {address.slice(2, 4).toUpperCase()}
               </div>
             )}

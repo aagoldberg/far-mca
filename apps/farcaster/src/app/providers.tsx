@@ -7,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ApolloProvider } from "@apollo/client";
 import { getClient } from "@/lib/apollo";
 import { sdk } from "@farcaster/miniapp-sdk";
+import { ToastProvider } from "@/contexts/ToastContext";
+import ToastContainer from "@/components/Toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,12 +34,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, []); // Empty deps = run once on mount
 
   return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <ApolloProvider client={apolloClient}>
-          {children}
-        </ApolloProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <ToastProvider>
+      <WagmiProvider config={wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
+          <ApolloProvider client={apolloClient}>
+            {children}
+            <ToastContainer />
+          </ApolloProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </ToastProvider>
   );
 }
