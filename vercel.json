@@ -2,6 +2,7 @@
   "git": {
     "deploymentEnabled": {
       "dev": true
-    }
+    },
+    "productionBranch": "dev"
   }
 }
