@@ -886,7 +886,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           )}
 
           {/* Gitcoin Passport Score */}
-          {gitcoinScore && (
+          {gitcoinScore ? (
             <div className="flex items-start gap-2">
               <span className={`mt-0.5 text-lg ${
                 gitcoinScore.score >= 20 ? 'text-green-600' :
@@ -909,34 +909,52 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 </span>
               </div>
             </div>
+          ) : (
+            <div className="flex items-start gap-2">
+              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-500">Humanity Score:</span>{' '}
+                <span className="text-gray-500">Not Available</span>
+              </div>
+            </div>
           )}
 
           {/* OpenRank Score */}
-          {openRankData && (
-            <div className="flex items-start gap-2">
-              <span className={`mt-0.5 text-lg ${
-                openRankData.score >= 0.5 ? 'text-green-600' :
-                openRankData.score >= 0.2 ? 'text-yellow-600' :
-                'text-gray-400'
-              }`}>
-                {openRankData.score >= 0.5 ? '✓' : openRankData.score >= 0.2 ? '⚠' : '○'}
-              </span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">OpenRank:</span>{' '}
-                <span className={`font-semibold ${
-                  openRankData.score >= 0.5 ? 'text-green-700' :
-                  openRankData.score >= 0.2 ? 'text-yellow-700' :
-                  'text-gray-600'
+          {hasProfile && (
+            openRankData ? (
+              <div className="flex items-start gap-2">
+                <span className={`mt-0.5 text-lg ${
+                  openRankData.score >= 0.5 ? 'text-green-600' :
+                  openRankData.score >= 0.2 ? 'text-yellow-600' :
+                  'text-gray-400'
                 }`}>
-                  {openRankData.score.toFixed(3)}
+                  {openRankData.score >= 0.5 ? '✓' : openRankData.score >= 0.2 ? '⚠' : '○'}
                 </span>
-                {openRankData.rank && (
-                  <span className="text-gray-600 text-sm ml-1">
-                    (Rank #{openRankData.rank.toLocaleString()})
+                <div className="flex-1">
+                  <span className="font-medium text-gray-900">OpenRank:</span>{' '}
+                  <span className={`font-semibold ${
+                    openRankData.score >= 0.5 ? 'text-green-700' :
+                    openRankData.score >= 0.2 ? 'text-yellow-700' :
+                    'text-gray-600'
+                  }`}>
+                    {openRankData.score.toFixed(3)}
                   </span>
-                )}
+                  {openRankData.rank && (
+                    <span className="text-gray-600 text-sm ml-1">
+                      (Rank #{openRankData.rank.toLocaleString()})
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex items-start gap-2">
+                <span className="text-gray-400 mt-0.5 text-lg">✗</span>
+                <div className="flex-1">
+                  <span className="font-medium text-gray-500">OpenRank:</span>{' '}
+                  <span className="text-gray-500">Not Available</span>
+                </div>
+              </div>
+            )
           )}
         </div>
 
