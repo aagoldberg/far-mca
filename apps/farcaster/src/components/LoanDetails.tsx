@@ -4,6 +4,7 @@ import { useLoanData, useContribution, useContributors, useRefund, useRepay, cal
 import { useUSDCBalance, useUSDCAllowance, useUSDCApprove } from '@/hooks/useUSDC';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useENSProfile } from '@/hooks/useENSProfile';
+import { useReputationScore } from '@/hooks/useReputationScore';
 import { useAccount } from 'wagmi';
 import Link from 'next/link';
 import { formatUnits, parseUnits } from 'viem';
@@ -97,6 +98,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
   // Fetch ENS profile
   const { profile: ensProfile, hasENS } = useENSProfile(loanData?.borrower);
+
+  // Fetch enhanced reputation score (combines Farcaster + wallet activity)
+  const { score: enhancedReputation, isLoading: reputationLoading } = useReputationScore(loanData?.borrower);
 
   // Toast notifications for transaction success
   useEffect(() => {
@@ -352,29 +356,105 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               {profile.bio && (
                 <p className="text-sm text-gray-700 mb-2">{profile.bio}</p>
               )}
-              {reputation && (
+              <div className="space-y-3">
+                {/* Basic stats */}
                 <div className="flex items-center gap-3 text-xs flex-wrap">
-                  <div className="flex items-center gap-1">
-                    <span className="font-medium text-gray-900">{profile.followerCount.toLocaleString()}</span>
-                    <span className="text-gray-500">followers</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="font-medium text-gray-900">{reputation.overall}/100</span>
-                    <span className="text-gray-500">trust score</span>
-                  </div>
-                  <div className="px-2 py-1 bg-gray-100 rounded text-gray-700">
-                    {reputation.followerTier === 'whale' ? '🐋 Whale' :
-                     reputation.followerTier === 'influential' ? '⭐ Influential' :
-                     reputation.followerTier === 'active' ? '✨ Active' :
-                     reputation.followerTier === 'growing' ? '🌱 Growing' : '🆕 New'}
-                  </div>
-                  <div className="px-2 py-1 bg-gray-100 rounded text-gray-700">
-                    {reputation.accountAge === 'veteran' ? '👑 Veteran' :
-                     reputation.accountAge === 'established' ? '⚡ Established' :
-                     reputation.accountAge === 'growing' ? '🔰 Growing' : '🎯 New'}
-                  </div>
+                  {profile.followerCount > 0 && (
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium text-gray-900">{profile.followerCount.toLocaleString()}</span>
+                      <span className="text-gray-500">followers</span>
+                    </div>
+                  )}
+                  {reputation && (
+                    <>
+                      <div className="px-2 py-1 bg-gray-100 rounded text-gray-700">
+                        {reputation.followerTier === 'whale' ? '🐋 Whale' :
+                         reputation.followerTier === 'influential' ? '⭐ Influential' :
+                         reputation.followerTier === 'active' ? '✨ Active' :
+                         reputation.followerTier === 'growing' ? '🌱 Growing' : '🆕 New'}
+                      </div>
+                      <div className="px-2 py-1 bg-gray-100 rounded text-gray-700">
+                        {reputation.accountAge === 'veteran' ? '👑 Veteran' :
+                         reputation.accountAge === 'established' ? '⚡ Established' :
+                         reputation.accountAge === 'growing' ? '🔰 Growing' : '🎯 New'}
+                      </div>
+                    </>
+                  )}
                 </div>
-              )}
+
+                {/* Enhanced reputation score */}
+                {enhancedReputation && (
+                  <div className="pt-2 border-t border-gray-200">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-semibold text-gray-900">{enhancedReputation.overall}/100</span>
+                      <span className="text-xs text-gray-500">Trust Score</span>
+                      {enhancedReputation.badges.hasENS && (
+                        <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">ENS</span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <div className="text-gray-500 mb-1">Social ({enhancedReputation.farcasterScore}/60)</div>
+                        <div className="space-y-0.5 text-[10px]">
+                          {enhancedReputation.breakdown.powerBadge > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Power Badge</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.powerBadge}</span>
+                            </div>
+                          )}
+                          {enhancedReputation.breakdown.followers > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Followers</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.followers}</span>
+                            </div>
+                          )}
+                          {enhancedReputation.breakdown.accountAge > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Account Age</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.accountAge}</span>
+                            </div>
+                          )}
+                          {enhancedReputation.breakdown.engagement > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Engagement</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.engagement}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-gray-500 mb-1">Wallet ({enhancedReputation.walletScore}/40)</div>
+                        <div className="space-y-0.5 text-[10px]">
+                          {enhancedReputation.breakdown.walletAge > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Age</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.walletAge}</span>
+                            </div>
+                          )}
+                          {enhancedReputation.breakdown.walletActivity > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Activity</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.walletActivity}</span>
+                            </div>
+                          )}
+                          {enhancedReputation.breakdown.recentActivity > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Recent</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.recentActivity}</span>
+                            </div>
+                          )}
+                          {enhancedReputation.breakdown.balance > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Balance</span>
+                              <span className="font-medium">{enhancedReputation.breakdown.balance}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ) : (
