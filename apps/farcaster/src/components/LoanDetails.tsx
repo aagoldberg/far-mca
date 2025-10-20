@@ -849,26 +849,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
           )}
 
-          {/* Pro User (formerly Power Badge) */}
-          {hasProfile && reputation?.powerBadge ? (
-            <div className="flex items-start gap-2">
-              <span className="text-green-600 mt-0.5 text-lg">✓</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">Pro User:</span>{' '}
-                <span className="text-gray-700">Active Subscriber</span>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5">✗</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-500">Pro User:</span>{' '}
-                <span className="text-gray-500">{hasProfile ? 'No Subscription' : 'N/A'}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Neynar User Score */}
+          {/* Neynar Score */}
           {hasProfile && profile?.score !== undefined && (
             <div className="flex items-start gap-2">
               <span className={`mt-0.5 text-lg ${
@@ -879,7 +860,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 {profile.score >= 0.7 ? '✓' : profile.score >= 0.4 ? '⚠' : '✗'}
               </span>
               <div className="flex-1">
-                <span className="font-medium text-gray-900">User Quality:</span>{' '}
+                <span className="font-medium text-gray-900">Neynar Score:</span>{' '}
                 <span className={`font-semibold ${
                   profile.score >= 0.7 ? 'text-green-700' :
                   profile.score >= 0.4 ? 'text-yellow-700' :
@@ -902,10 +883,10 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           <div className="flex items-center justify-between">
             <span className="font-medium text-gray-900">Lending Risk:</span>
             <span className={`font-semibold px-3 py-1.5 rounded-lg ${
-              // High risk if low user quality score
+              // High risk if low Neynar score
               (profile?.score !== undefined && profile.score < 0.4)
                 ? 'bg-red-100 text-red-800'
-                : (hasENS && reputation?.powerBadge) || (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential') || (profile?.score !== undefined && profile.score >= 0.7)
+                : (hasENS && (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')) || (profile?.score !== undefined && profile.score >= 0.7)
                 ? 'bg-green-100 text-green-800'
                 : walletMetrics?.hasTransactions || (profile && profile.followerCount > 100)
                 ? 'bg-yellow-100 text-yellow-800'
@@ -913,7 +894,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             }`}>
               {(profile?.score !== undefined && profile.score < 0.4)
                 ? 'High Risk'
-                : (hasENS && reputation?.powerBadge) || (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential') || (profile?.score !== undefined && profile.score >= 0.7)
+                : (hasENS && (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')) || (profile?.score !== undefined && profile.score >= 0.7)
                 ? 'Low Risk'
                 : walletMetrics?.hasTransactions || (profile && profile.followerCount > 100)
                 ? 'Medium Risk'
