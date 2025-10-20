@@ -31,6 +31,10 @@ export default function CreateLoanForm() {
     fundraisingDays: 30,
     useOfFunds: '',
     repaymentSource: '',
+    socialWebsite: '',
+    socialTwitter: '',
+    socialInstagram: '',
+    socialLinkedin: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -287,6 +291,12 @@ export default function CreateLoanForm() {
         image: imageURI, // IPFS URI instead of base64
         useOfFunds: formData.useOfFunds,
         repaymentSource: formData.repaymentSource,
+        socialLinks: {
+          website: formData.socialWebsite,
+          twitter: formData.socialTwitter,
+          instagram: formData.socialInstagram,
+          linkedin: formData.socialLinkedin,
+        },
         createdAt: new Date().toISOString(),
       };
 
@@ -867,6 +877,68 @@ export default function CreateLoanForm() {
               {errors.repaymentSource && (
                 <p className="text-sm text-red-600 mt-1">{errors.repaymentSource}</p>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Social Links */}
+        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-2">Social Links (Optional)</h2>
+          <p className="text-xs sm:text-sm text-gray-600 mb-4">
+            Help lenders learn more about you and your business
+          </p>
+
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Website
+              </label>
+              <input
+                type="url"
+                value={formData.socialWebsite}
+                onChange={(e) => handleChange('socialWebsite', e.target.value)}
+                placeholder="https://yourwebsite.com"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Twitter
+              </label>
+              <input
+                type="text"
+                value={formData.socialTwitter}
+                onChange={(e) => handleChange('socialTwitter', e.target.value)}
+                placeholder="username (without @)"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Instagram
+              </label>
+              <input
+                type="text"
+                value={formData.socialInstagram}
+                onChange={(e) => handleChange('socialInstagram', e.target.value)}
+                placeholder="username (without @)"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                LinkedIn
+              </label>
+              <input
+                type="url"
+                value={formData.socialLinkedin}
+                onChange={(e) => handleChange('socialLinkedin', e.target.value)}
+                placeholder="https://linkedin.com/in/yourprofile or https://linkedin.com/company/yourcompany"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
+              />
             </div>
           </div>
         </div>
