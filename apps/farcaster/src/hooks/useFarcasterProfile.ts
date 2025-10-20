@@ -16,6 +16,7 @@ export interface FarcasterProfile {
   powerBadge: boolean;
   accountAgeInDays: number;
   activeStatus: 'very_active' | 'active' | 'moderate' | 'low';
+  score?: number; // Neynar user score (0-1), higher is better, lower indicates spam
 }
 
 export interface ReputationScore {
@@ -163,6 +164,7 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
           powerBadge: user.power_badge || false,
           accountAgeInDays,
           activeStatus: user.active_status || 'low',
+          score: user.score, // Neynar user score (0-1)
         };
 
         setProfile(farcasterProfile);
