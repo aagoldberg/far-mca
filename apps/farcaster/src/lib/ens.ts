@@ -2,9 +2,12 @@ import { createPublicClient, http } from 'viem';
 import { mainnet } from 'viem/chains';
 import { normalize } from 'viem/ens';
 
+// Use Cloudflare's public mainnet RPC or custom RPC from env
+const rpcUrl = process.env.NEXT_PUBLIC_MAINNET_RPC_URL || 'https://cloudflare-eth.com';
+
 const publicClient = createPublicClient({
   chain: mainnet,
-  transport: http()
+  transport: http(rpcUrl)
 });
 
 export interface ENSProfile {
@@ -47,7 +50,11 @@ export async function getENSProfile(address: `0x${string}`): Promise<ENSProfile 
       discord,
     };
   } catch (error) {
-    console.error('Error fetching ENS profile:', error);
+    // Silently handle errors - most addresses won't have ENS profiles
+    // Only log in development for debugging
+    if (process.env.NODE_ENV === 'development') {
+      console.debug('ENS lookup failed (this is normal for addresses without ENS):', error instanceof Error ? error.message : error);
+    }
     return null;
   }
 }

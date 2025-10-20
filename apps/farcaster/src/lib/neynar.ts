@@ -86,7 +86,6 @@ export const neynarClient = {
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('[Neynar] API error:', response.status, errorText);
 
           // Silently handle 404s - most addresses won't have Farcaster profiles
           // Cache the null result to avoid repeated requests
@@ -94,6 +93,9 @@ export const neynarClient = {
             setCachedData(addresses, null);
             return null;
           }
+
+          // Log other errors (not 404s)
+          console.error('[Neynar] API error:', response.status, errorText);
 
           // Don't cache rate limit errors
           if (response.status === 429) {
