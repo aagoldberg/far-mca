@@ -793,18 +793,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               <span className="text-green-600 mt-0.5 text-lg">✓</span>
               <div className="flex-1">
                 <span className="font-medium text-gray-900">Farcaster:</span>{' '}
-                <span className="text-gray-700">
-                  @{profile.username} ({profile.followerCount.toLocaleString()} followers
-                  {reputation && (
-                    <>, {
-                      reputation.followerTier === 'whale' ? 'Whale' :
-                      reputation.followerTier === 'influential' ? 'Influential' :
-                      reputation.followerTier === 'active' ? 'Active' :
-                      reputation.followerTier === 'growing' ? 'Growing' : 'New'
-                    }</>
-                  )}
-                  )
-                </span>
+                <span className="text-gray-700">@{profile.username}</span>
               </div>
             </div>
           ) : (
