@@ -8,8 +8,8 @@ export default function TabNavigation() {
 
   const tabs = [
     { name: 'Feed', path: '/' },
-    { name: 'My Loans', path: '/my-loans' },
     { name: 'Supporting', path: '/supporting' },
+    { name: 'My Loans', path: '/my-loans' },
   ];
 
   return (
