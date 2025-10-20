@@ -6,6 +6,8 @@ import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useENSProfile } from '@/hooks/useENSProfile';
 import { useReputationScore } from '@/hooks/useReputationScore';
 import { useWalletActivity } from '@/hooks/useWalletActivity';
+import { useOpenRank } from '@/hooks/useOpenRank';
+import { useGitcoinPassport } from '@/hooks/useGitcoinPassport';
 import { useAccount } from 'wagmi';
 import Link from 'next/link';
 import { formatUnits, parseUnits } from 'viem';
@@ -105,6 +107,12 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
   // Fetch wallet activity for credentials display
   const { activityScore, metrics: walletMetrics } = useWalletActivity(loanData?.borrower);
+
+  // Fetch OpenRank score (Farcaster reputation)
+  const { data: openRankData } = useOpenRank(profile?.fid);
+
+  // Fetch Gitcoin Passport score (human verification)
+  const { score: gitcoinScore } = useGitcoinPassport(loanData?.borrower);
 
   // Toast notifications for transaction success
   useEffect(() => {
@@ -873,6 +881,60 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                     profile.score >= 0.4 ? 'Moderate' :
                     'Low - Potential Spam'})
                 </span>
+              </div>
+            </div>
+          )}
+
+          {/* Gitcoin Passport Score */}
+          {gitcoinScore && (
+            <div className="flex items-start gap-2">
+              <span className={`mt-0.5 text-lg ${
+                gitcoinScore.score >= 20 ? 'text-green-600' :
+                gitcoinScore.score >= 10 ? 'text-yellow-600' :
+                'text-red-600'
+              }`}>
+                {gitcoinScore.score >= 20 ? '✓' : gitcoinScore.score >= 10 ? '⚠' : '✗'}
+              </span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-900">Humanity Score:</span>{' '}
+                <span className={`font-semibold ${
+                  gitcoinScore.score >= 20 ? 'text-green-700' :
+                  gitcoinScore.score >= 10 ? 'text-yellow-700' :
+                  'text-red-700'
+                }`}>
+                  {gitcoinScore.score.toFixed(1)}
+                </span>
+                <span className="text-gray-600 text-sm ml-1">
+                  ({gitcoinScore.passing_score ? 'Verified Human' : 'Not Verified'})
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* OpenRank Score */}
+          {openRankData && (
+            <div className="flex items-start gap-2">
+              <span className={`mt-0.5 text-lg ${
+                openRankData.score >= 0.5 ? 'text-green-600' :
+                openRankData.score >= 0.2 ? 'text-yellow-600' :
+                'text-gray-400'
+              }`}>
+                {openRankData.score >= 0.5 ? '✓' : openRankData.score >= 0.2 ? '⚠' : '○'}
+              </span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-900">OpenRank:</span>{' '}
+                <span className={`font-semibold ${
+                  openRankData.score >= 0.5 ? 'text-green-700' :
+                  openRankData.score >= 0.2 ? 'text-yellow-700' :
+                  'text-gray-600'
+                }`}>
+                  {openRankData.score.toFixed(3)}
+                </span>
+                {openRankData.rank && (
+                  <span className="text-gray-600 text-sm ml-1">
+                    (Rank #{openRankData.rank.toLocaleString()})
+                  </span>
+                )}
               </div>
             </div>
           )}
