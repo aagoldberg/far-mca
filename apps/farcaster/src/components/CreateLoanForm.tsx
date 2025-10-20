@@ -6,6 +6,8 @@ import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
 import { useCreateLoan } from '@/hooks/useMicroLoan';
 import { USDC_DECIMALS, PERIOD_LENGTH } from '@/types/loan';
+import ImageCropModal from '@/components/ImageCropModal';
+import LoanCardPreview from '@/components/LoanCardPreview';
 
 export default function CreateLoanForm() {
   const router = useRouter();
@@ -18,6 +20,7 @@ export default function CreateLoanForm() {
   const [formData, setFormData] = useState({
     businessName: '',
     description: '',
+    fullDescription: '',
     businessType: '',
     location: '',
     imageUrl: '',
@@ -35,6 +38,8 @@ export default function CreateLoanForm() {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<string>('');
+  const [tempImageSrc, setTempImageSrc] = useState<string>('');
+  const [showCropModal, setShowCropModal] = useState(false);
 
   // Give the wallet time to connect automatically in Farcaster
   useEffect(() => {
@@ -145,10 +150,29 @@ export default function CreateLoanForm() {
 
     setIsUploading(true);
     try {
-      // Resize and compress the image
-      const compressedBlob = await resizeAndCompressImage(file);
+      // Create a temporary URL for the cropper
+      const reader = new FileReader();
+      reader.onload = () => {
+        setTempImageSrc(reader.result as string);
+        setShowCropModal(true);
+        setIsUploading(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('Error loading image:', error);
+      alert('Failed to load image. Please try a different image.');
+      setIsUploading(false);
+    }
+  };
 
-      console.log(`Image compressed: ${(file.size / 1024).toFixed(0)}KB → ${(compressedBlob.size / 1024).toFixed(0)}KB`);
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    try {
+      // Compress the cropped image
+      const compressedBlob = await resizeAndCompressImage(
+        new File([croppedBlob], 'cropped.jpg', { type: 'image/jpeg' })
+      );
+
+      console.log(`Image processed: ${(croppedBlob.size / 1024).toFixed(0)}KB → ${(compressedBlob.size / 1024).toFixed(0)}KB`);
 
       // Create preview for display
       const previewUrl = URL.createObjectURL(compressedBlob);
@@ -156,14 +180,19 @@ export default function CreateLoanForm() {
 
       // Store the blob and filename for later IPFS upload
       (window as any).__pendingImageBlob = compressedBlob;
-      (window as any).__pendingImageFilename = file.name;
+      (window as any).__pendingImageFilename = 'business-photo.jpg';
 
-      setIsUploading(false);
+      setShowCropModal(false);
+      setTempImageSrc('');
     } catch (error) {
-      console.error('Error processing image:', error);
-      alert('Failed to process image. Please try a different image.');
-      setIsUploading(false);
+      console.error('Error processing cropped image:', error);
+      alert('Failed to process image. Please try again.');
     }
+  };
+
+  const handleCropCancel = () => {
+    setShowCropModal(false);
+    setTempImageSrc('');
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -205,6 +234,16 @@ export default function CreateLoanForm() {
     if (!formData.description.trim()) {
       newErrors.description = 'Description is required';
     }
+    if (!formData.fullDescription.trim()) {
+      newErrors.fullDescription = 'Full description is required';
+    } else {
+      const wordCount = formData.fullDescription.trim().split(/\s+/).length;
+      if (wordCount < 100) {
+        newErrors.fullDescription = 'Full description is too short (minimum 100 words)';
+      } else if (wordCount > 1000) {
+        newErrors.fullDescription = 'Full description is too long (maximum 1000 words)';
+      }
+    }
     if (!formData.imageUrl.trim()) {
       newErrors.imageUrl = 'Business photo is required';
     }
@@ -242,6 +281,7 @@ export default function CreateLoanForm() {
       const metadata = {
         name: formData.businessName,
         description: formData.description,
+        fullDescription: formData.fullDescription,
         businessType: formData.businessType,
         location: formData.location,
         image: imageURI, // IPFS URI instead of base64
@@ -467,20 +507,67 @@ export default function CreateLoanForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description *
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Description *
+                </label>
+                <span className="text-xs text-gray-500">
+                  {formData.description.length} characters
+                </span>
+              </div>
               <textarea
                 value={formData.description}
                 onChange={(e) => handleChange('description', e.target.value)}
                 placeholder="Tell supporters about your business and why you need this loan..."
                 rows={4}
+                maxLength={280}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.description ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
+              <p className="text-xs text-gray-500 mt-1">
+                Keep it concise - only 2 lines will show on loan cards (recommended: ~120 characters)
+              </p>
               {errors.description && (
                 <p className="text-sm text-red-600 mt-1">{errors.description}</p>
+              )}
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Full Description *
+                </label>
+                <span className={`text-xs ${
+                  (() => {
+                    const wordCount = formData.fullDescription.trim().split(/\s+/).filter(w => w).length;
+                    if (wordCount === 0) return 'text-gray-500';
+                    if (wordCount < 100) return 'text-red-500';
+                    if (wordCount >= 300 && wordCount <= 500) return 'text-green-600';
+                    if (wordCount > 700) return 'text-orange-500';
+                    return 'text-gray-500';
+                  })()
+                }`}>
+                  {formData.fullDescription.trim().split(/\s+/).filter(w => w).length} words
+                </span>
+              </div>
+              <textarea
+                value={formData.fullDescription}
+                onChange={(e) => handleChange('fullDescription', e.target.value)}
+                placeholder="Tell the full story of your business, your goals, and why this loan matters. Be specific about what you'll use the funds for and how you plan to repay..."
+                rows={12}
+                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
+                  errors.fullDescription ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                }`}
+              />
+              <div className="flex items-start justify-between mt-1">
+                <p className="text-xs text-gray-600 flex-1">
+                  <span className="font-medium">Research-backed guidance:</span> 300-500 words is optimal for crowdfunding success.
+                  Minimum 100 words, maximum 1000 words.
+                </p>
+              </div>
+              {errors.fullDescription && (
+                <p className="text-sm text-red-600 mt-1">{errors.fullDescription}</p>
               )}
             </div>
 
@@ -619,6 +706,23 @@ export default function CreateLoanForm() {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Live Preview */}
+        <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
+            Live Preview
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-600 mb-4">
+            See how your loan will appear to supporters
+          </p>
+          <LoanCardPreview
+            businessName={formData.businessName}
+            description={formData.description}
+            fundingGoal={formData.fundingGoal}
+            imageUrl={formData.imageUrl}
+            fundraisingDays={formData.fundraisingDays}
+          />
         </div>
 
         {/* Loan Terms */}
@@ -816,6 +920,15 @@ export default function CreateLoanForm() {
           )}
         </button>
       </form>
+
+      {/* Image Crop Modal */}
+      {showCropModal && tempImageSrc && (
+        <ImageCropModal
+          imageSrc={tempImageSrc}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   );
 }

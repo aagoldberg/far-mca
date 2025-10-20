@@ -57,8 +57,7 @@ export default function Navbar() {
               href="/create"
               className="px-2.5 sm:px-3 py-1.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap"
             >
-              <span className="hidden xs:inline">+ Create</span>
-              <span className="xs:hidden">+</span>
+              Create Loan
             </Link>
 
             {/* Profile Avatar - Shows Farcaster pfp if available */}

@@ -34,9 +34,11 @@ const formatDate = (timestamp: bigint): string => {
 interface LoanMetadata {
   name?: string;
   description?: string;
+  fullDescription?: string;
   businessType?: string;
   location?: string;
-  imageUrl?: string;
+  imageUrl?: string; // Legacy field
+  image?: string; // Current field used in CreateLoanForm
   useOfFunds?: string;
   repaymentSource?: string;
 }
@@ -50,6 +52,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
   const { showToast } = useToast();
 
   // Fetch user's contribution (if any)
@@ -222,13 +225,15 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       </Link>
 
       {/* Loan Image */}
-      {metadata?.imageUrl && (
+      {(metadata?.imageUrl || metadata?.image) && (
         <div className="relative h-64 md:h-80 w-full rounded-3xl overflow-hidden mb-6">
           <img
-            src={metadata.imageUrl.startsWith('ipfs://')
-              ? `https://gateway.pinata.cloud/ipfs/${metadata.imageUrl.replace('ipfs://', '')}`
-              : metadata.imageUrl
-            }
+            src={(() => {
+              const imageSource = metadata.imageUrl || metadata.image || '';
+              return imageSource.startsWith('ipfs://')
+                ? `https://gateway.pinata.cloud/ipfs/${imageSource.replace('ipfs://', '')}`
+                : imageSource;
+            })()}
             alt={metadata?.name || 'Loan'}
             className="w-full h-full object-cover"
           />
@@ -356,80 +361,10 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
         </div>
 
-        {/* Zero-interest info */}
-        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Interest Rate</p>
-            <p className="text-lg font-semibold text-green-600">
-              0%
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Repayment</p>
-            <p className="text-lg font-semibold text-gray-900">
-              1.0x
-            </p>
-          </div>
-        </div>
-
-        {/* Term info */}
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Term Length</p>
-            <p className="text-sm font-medium text-gray-900">
-              {loanData.termPeriods.toString()} periods
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Period Length</p>
-            <p className="text-sm font-medium text-gray-900">
-              {Number(loanData.periodLength) / 86400} days
-            </p>
-          </div>
-        </div>
-
-        {/* Payment info */}
-        {paymentPerPeriod && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Payment Per Period</p>
-            <p className="text-xl font-bold text-gray-900">
-              ${formatUSDC(paymentPerPeriod)} USDC
-            </p>
-          </div>
-        )}
-
-        {/* Important dates */}
-        <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-gray-200">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Fundraising Deadline</p>
-            <p className="text-sm font-medium text-gray-900">
-              {formatDate(loanData.fundraisingDeadline)}
-            </p>
-          </div>
-          {loanData.active && nextDueDate && (
-            <div>
-              <p className="text-xs text-gray-500 mb-1">Next Payment Due</p>
-              <p className="text-sm font-medium text-gray-900">
-                {formatDate(nextDueDate)}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Fund button (only if fundraising) */}
-        {loanData.fundraisingActive && !isFunded && (
-          <Link
-            href={`/loan/${loanAddress}/fund`}
-            className="mt-6 w-full block text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
-          >
-            Lend Support
-          </Link>
-        )}
-
         {/* Disburse button (borrower only, if funded) */}
         {isBorrower && isFunded && !loanData.disbursed && (
           <button
-            className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
+            className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
           >
             Disburse Funds
           </button>
@@ -609,8 +544,53 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
         <h2 className="text-xl font-bold text-gray-900 mb-3">About</h2>
         <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-          {metadata?.description || 'Loading description...'}
+          {metadata?.fullDescription || metadata?.description || 'Loading description...'}
         </p>
+      </div>
+
+      {/* Loan Terms - Condensed */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Loan Terms</h2>
+
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Interest Rate</p>
+            <p className="font-semibold text-green-600">0%</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Repayment</p>
+            <p className="font-semibold text-gray-900">1.0x</p>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Term Length</p>
+            <p className="font-semibold text-gray-900">{loanData.termPeriods.toString()} periods</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Period Length</p>
+            <p className="font-semibold text-gray-900">{Number(loanData.periodLength) / 86400} days</p>
+          </div>
+
+          {paymentPerPeriod && (
+            <>
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Payment Per Period</p>
+                <p className="font-semibold text-gray-900">${formatUSDC(paymentPerPeriod)} USDC</p>
+              </div>
+              {loanData.active && nextDueDate && (
+                <div>
+                  <p className="text-xs text-gray-500 mb-1">Next Payment Due</p>
+                  <p className="font-semibold text-gray-900">{formatDate(nextDueDate)}</p>
+                </div>
+              )}
+            </>
+          )}
+
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Fundraising Deadline</p>
+            <p className="font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
+          </div>
+        </div>
       </div>
 
       {/* Use of Funds */}
@@ -745,28 +725,85 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
       {/* Fixed Bottom Menu */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
-        <button
-          onClick={() => {
-            // Share functionality using Web Share API if available
-            if (navigator.share) {
-              navigator.share({
-                title: metadata?.name || 'Support a Community Loan',
-                text: `Help support this community loan on LendFriend`,
-                url: window.location.href,
-              }).catch(err => console.log('Share cancelled', err));
-            } else {
-              // Fallback: copy to clipboard
-              navigator.clipboard.writeText(window.location.href);
-              alert('Link copied to clipboard!');
-            }
-          }}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-xl transition-colors"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-          </svg>
-          Share
-        </button>
+        {/* Split Share Button */}
+        <div className="flex-1 relative">
+          <div className="flex gap-0.5">
+            {/* Cast to Farcaster - Primary Action */}
+            <button
+              onClick={() => {
+                const castUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(
+                  `Check out this community loan on LendFriend!\n\n${metadata?.name || 'Community Loan'}\n\n${window.location.href}`
+                )}`;
+                window.open(castUrl, '_blank');
+              }}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-l-xl transition-colors"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 1000 1000" fill="currentColor">
+                <path d="M257.778 155.556H742.222V844.444H671.111V528.889H670.414C662.554 441.677 589.258 373.333 500 373.333C410.742 373.333 337.446 441.677 329.586 528.889H328.889V844.444H257.778V155.556Z"/>
+                <path d="M128.889 253.333L128.889 746.667H184.444V253.333H128.889Z"/>
+                <path d="M815.556 253.333L815.556 746.667H871.111V253.333H815.556Z"/>
+              </svg>
+              Cast
+            </button>
+
+            {/* Menu Toggle */}
+            <button
+              onClick={() => setShowShareMenu(!showShareMenu)}
+              className="px-3 py-3 bg-white border-2 border-l-0 border-gray-300 hover:bg-gray-50 text-gray-700 rounded-r-xl transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Share Menu Dropdown */}
+          {showShareMenu && (
+            <>
+              {/* Backdrop */}
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setShowShareMenu(false)}
+              />
+
+              {/* Menu */}
+              <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    showToast('Link copied to clipboard!', 'success');
+                    setShowShareMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+                >
+                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">Copy Link</span>
+                </button>
+
+                {navigator.share && (
+                  <button
+                    onClick={() => {
+                      navigator.share({
+                        title: metadata?.name || 'Support a Community Loan',
+                        text: `Help support this community loan on LendFriend`,
+                        url: window.location.href,
+                      }).catch(err => console.log('Share cancelled', err));
+                      setShowShareMenu(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-t border-gray-100"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <span className="text-sm font-medium text-gray-700">More Options</span>
+                  </button>
+                )}
+              </div>
+            </>
+          )}
+        </div>
 
         {loanData.fundraisingActive && !isFunded ? (
           <Link

@@ -274,6 +274,7 @@ export function LoanCard({
 
               {/* Text description */}
               <div className="flex-1 text-[11px] sm:text-xs text-gray-600 truncate">
+                <span>Supported by </span>
                 {contributors.slice(0, 2).map((addr, idx) => (
                   <span key={addr}>
                     <ContributorName address={addr} />

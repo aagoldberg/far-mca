@@ -125,16 +125,17 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
         // Fetch user by verified address using the new API
         const response = await neynarClient.fetchBulkUsers([address]);
 
+        // Try both original case and lowercase
+        const lowerAddress = address.toLowerCase();
+        const user = response?.[address]?.[0] || response?.[lowerAddress]?.[0];
+
         // Gracefully handle cases where no profile exists - this is expected for most users
-        if (!response || !response[address] || response[address].length === 0) {
+        if (!user) {
           setProfile(null);
           setReputation(null);
           setError(null); // Clear any previous errors
           return;
         }
-
-        // Get the first user associated with this address
-        const user = response[address][0];
 
         // Calculate account age
         const registeredAt = new Date(user.timestamp);
