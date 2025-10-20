@@ -358,113 +358,8 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 </div>
               </div>
               {profile.bio && (
-                <p className="text-sm text-gray-700 mb-3">{profile.bio}</p>
+                <p className="text-sm text-gray-700">{profile.bio}</p>
               )}
-
-              {/* Verified Credentials */}
-              <div className="pt-3 border-t border-gray-200">
-                <h3 className="text-xs font-semibold text-gray-900 mb-2">Verified Identity</h3>
-                <div className="space-y-2 text-sm">
-                  {/* Farcaster */}
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-600 mt-0.5">✓</span>
-                    <div className="flex-1">
-                      <span className="font-medium text-gray-900">Farcaster:</span>{' '}
-                      <span className="text-gray-700">
-                        @{profile.username} ({profile.followerCount.toLocaleString()} followers
-                        {reputation && (
-                          <>, {
-                            reputation.followerTier === 'whale' ? 'Whale' :
-                            reputation.followerTier === 'influential' ? 'Influential' :
-                            reputation.followerTier === 'active' ? 'Active' :
-                            reputation.followerTier === 'growing' ? 'Growing' : 'New'
-                          }</>
-                        )}
-                        )
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* ENS */}
-                  {hasENS && ensProfile ? (
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600 mt-0.5">✓</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-900">ENS:</span>{' '}
-                        <span className="text-gray-700">{ensProfile.name}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-2">
-                      <span className="text-gray-400 mt-0.5">✗</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-500">ENS:</span>{' '}
-                        <span className="text-gray-500">Not Set</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Wallet Activity */}
-                  {walletMetrics && walletMetrics.hasTransactions ? (
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600 mt-0.5">✓</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-900">Wallet:</span>{' '}
-                        <span className="text-gray-700">
-                          Active ({walletMetrics.transactionCount} transaction{walletMetrics.transactionCount !== 1 ? 's' : ''})
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-2">
-                      <span className="text-gray-400 mt-0.5">✗</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-500">Wallet:</span>{' '}
-                        <span className="text-gray-500">No On-Chain Activity</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Power Badge */}
-                  {reputation?.powerBadge ? (
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600 mt-0.5">✓</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-900">Power Badge:</span>{' '}
-                        <span className="text-gray-700">Verified Active User</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-2">
-                      <span className="text-gray-400 mt-0.5">✗</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-500">Power Badge:</span>{' '}
-                        <span className="text-gray-500">Not Earned</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Risk Assessment */}
-                <div className="mt-3 pt-3 border-t border-gray-200">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium text-gray-700">Lending Risk:</span>
-                    <span className={`font-semibold px-2 py-1 rounded ${
-                      (hasENS && reputation?.powerBadge) || (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')
-                        ? 'bg-green-100 text-green-800'
-                        : walletMetrics?.hasTransactions || profile.followerCount > 100
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-orange-100 text-orange-800'
-                    }`}>
-                      {(hasENS && reputation?.powerBadge) || (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')
-                        ? 'Low Risk'
-                        : walletMetrics?.hasTransactions || profile.followerCount > 100
-                        ? 'Medium Risk'
-                        : 'Higher Risk'}
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         ) : (
@@ -504,86 +399,6 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
                 </button>
-              </div>
-
-              {/* Verified Credentials for non-Farcaster users */}
-              <div className="mt-3 pt-3 border-t border-gray-200">
-                <h3 className="text-xs font-semibold text-gray-900 mb-2">Verified Identity</h3>
-                <div className="space-y-2 text-xs">
-                  {/* Farcaster - Not Found */}
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400 mt-0.5">✗</span>
-                    <div className="flex-1">
-                      <span className="font-medium text-gray-500">Farcaster:</span>{' '}
-                      <span className="text-gray-500">No Profile Found</span>
-                    </div>
-                  </div>
-
-                  {/* ENS */}
-                  {hasENS && ensProfile ? (
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600 mt-0.5">✓</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-900">ENS:</span>{' '}
-                        <span className="text-gray-700">{ensProfile.name}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-2">
-                      <span className="text-gray-400 mt-0.5">✗</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-500">ENS:</span>{' '}
-                        <span className="text-gray-500">Not Set</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Wallet Activity */}
-                  {walletMetrics && walletMetrics.hasTransactions ? (
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600 mt-0.5">✓</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-900">Wallet:</span>{' '}
-                        <span className="text-gray-700">
-                          Active ({walletMetrics.transactionCount} transaction{walletMetrics.transactionCount !== 1 ? 's' : ''})
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-2">
-                      <span className="text-gray-400 mt-0.5">✗</span>
-                      <div className="flex-1">
-                        <span className="font-medium text-gray-500">Wallet:</span>{' '}
-                        <span className="text-gray-500">No On-Chain Activity</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Power Badge - N/A for non-Farcaster users */}
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400 mt-0.5">✗</span>
-                    <div className="flex-1">
-                      <span className="font-medium text-gray-500">Power Badge:</span>{' '}
-                      <span className="text-gray-500">N/A</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Risk Assessment */}
-                <div className="mt-3 pt-3 border-t border-gray-200">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-medium text-gray-700">Lending Risk:</span>
-                    <span className={`font-semibold px-2 py-1 rounded ${
-                      hasENS && walletMetrics?.hasTransactions
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-orange-100 text-orange-800'
-                    }`}>
-                      {hasENS && walletMetrics?.hasTransactions
-                        ? 'Medium Risk'
-                        : 'Higher Risk'}
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -959,6 +774,121 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </p>
         </div>
       )}
+
+      {/* Borrower Identity */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Borrower Identity</h2>
+        <div className="space-y-3">
+          {/* Farcaster */}
+          {hasProfile && profile ? (
+            <div className="flex items-start gap-2">
+              <span className="text-green-600 mt-0.5 text-lg">✓</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-900">Farcaster:</span>{' '}
+                <span className="text-gray-700">
+                  @{profile.username} ({profile.followerCount.toLocaleString()} followers
+                  {reputation && (
+                    <>, {
+                      reputation.followerTier === 'whale' ? 'Whale' :
+                      reputation.followerTier === 'influential' ? 'Influential' :
+                      reputation.followerTier === 'active' ? 'Active' :
+                      reputation.followerTier === 'growing' ? 'Growing' : 'New'
+                    }</>
+                  )}
+                  )
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-2">
+              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-500">Farcaster:</span>{' '}
+                <span className="text-gray-500">No Profile Found</span>
+              </div>
+            </div>
+          )}
+
+          {/* ENS */}
+          {hasENS && ensProfile ? (
+            <div className="flex items-start gap-2">
+              <span className="text-green-600 mt-0.5 text-lg">✓</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-900">ENS:</span>{' '}
+                <span className="text-gray-700">{ensProfile.name}</span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-2">
+              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-500">ENS:</span>{' '}
+                <span className="text-gray-500">Not Set</span>
+              </div>
+            </div>
+          )}
+
+          {/* Wallet Activity */}
+          {walletMetrics && walletMetrics.hasTransactions ? (
+            <div className="flex items-start gap-2">
+              <span className="text-green-600 mt-0.5 text-lg">✓</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-900">Wallet:</span>{' '}
+                <span className="text-gray-700">
+                  Active ({walletMetrics.transactionCount} transaction{walletMetrics.transactionCount !== 1 ? 's' : ''})
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-2">
+              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-500">Wallet:</span>{' '}
+                <span className="text-gray-500">No On-Chain Activity</span>
+              </div>
+            </div>
+          )}
+
+          {/* Pro User (formerly Power Badge) */}
+          {hasProfile && reputation?.powerBadge ? (
+            <div className="flex items-start gap-2">
+              <span className="text-green-600 mt-0.5 text-lg">✓</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-900">Pro User:</span>{' '}
+                <span className="text-gray-700">Active Subscriber</span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-2">
+              <span className="text-gray-400 mt-0.5">✗</span>
+              <div className="flex-1">
+                <span className="font-medium text-gray-500">Pro User:</span>{' '}
+                <span className="text-gray-500">{hasProfile ? 'No Subscription' : 'N/A'}</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Risk Assessment */}
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-gray-900">Lending Risk:</span>
+            <span className={`font-semibold px-3 py-1.5 rounded-lg ${
+              (hasENS && reputation?.powerBadge) || (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')
+                ? 'bg-green-100 text-green-800'
+                : walletMetrics?.hasTransactions || (profile && profile.followerCount > 100)
+                ? 'bg-yellow-100 text-yellow-800'
+                : 'bg-orange-100 text-orange-800'
+            }`}>
+              {(hasENS && reputation?.powerBadge) || (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')
+                ? 'Low Risk'
+                : walletMetrics?.hasTransactions || (profile && profile.followerCount > 100)
+                ? 'Medium Risk'
+                : 'Higher Risk'}
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* Business Details */}
       {metadata?.businessType && (

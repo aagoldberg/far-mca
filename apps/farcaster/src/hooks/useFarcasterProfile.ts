@@ -137,6 +137,12 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
           return;
         }
 
+        // Log all user fields to see what's available
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Neynar User Object Keys]:', Object.keys(user));
+          console.log('[Neynar Full User Object]:', user);
+        }
+
         // Calculate account age
         const registeredAt = new Date(user.timestamp);
         const now = new Date();
