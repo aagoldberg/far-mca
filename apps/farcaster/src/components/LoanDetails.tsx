@@ -249,19 +249,38 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       <div className="mb-4">
         {hasProfile && profile ? (
           <div className="flex items-start gap-3">
-            <img
-              src={profile.pfpUrl}
-              alt={profile.displayName}
-              className="w-12 h-12 rounded-full bg-gray-200"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-lg font-semibold text-gray-900">
+            {/* Avatar - clickable to Warpcast */}
+            <a
+              href={`https://warpcast.com/${profile.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 hover:opacity-80 transition-opacity"
+            >
+              <img
+                src={profile.pfpUrl}
+                alt={profile.displayName}
+                className="w-14 h-14 rounded-full object-cover bg-gray-200 border-2 border-gray-100"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.style.display = 'none';
+                  const fallback = document.createElement('div');
+                  fallback.className = 'w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-lg';
+                  fallback.textContent = profile.displayName.charAt(0).toUpperCase();
+                  target.parentNode?.appendChild(fallback);
+                }}
+              />
+            </a>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                {/* Display Name - clickable to Warpcast */}
+                <a
+                  href={`https://warpcast.com/${profile.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-lg font-semibold text-gray-900 hover:text-[#3B9B7F] transition-colors"
+                >
                   {profile.displayName}
-                </span>
+                </a>
                 {profile.powerBadge && (
                   <svg className="w-5 h-5 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M9 11.75A2.25 2.25 0 1111.25 9.5 2.25 2.25 0 019 11.75zm0 9.5l-3-6.75h6l-3 6.75zM15 11.75a2.25 2.25 0 112.25-2.25A2.25 2.25 0 0115 11.75zm0 9.5l-3-6.75h6l-3 6.75z"/>
@@ -271,12 +290,60 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
                 )}
               </div>
-              <div className="text-sm text-gray-600 mb-2">@{profile.username}</div>
+              {/* Username - clickable to Warpcast */}
+              <div className="flex items-center gap-2 mb-2">
+                <a
+                  href={`https://warpcast.com/${profile.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-600 hover:text-[#3B9B7F] transition-colors"
+                >
+                  @{profile.username}
+                </a>
+                {/* Wallet address with dropdown */}
+                <div className="relative group">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(loanData.borrower);
+                      showToast('Address copied to clipboard!', 'success');
+                    }}
+                    className="text-xs text-gray-500 hover:text-gray-700 font-mono flex items-center gap-1 transition-colors"
+                    title="Click to copy address"
+                  >
+                    {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                  {/* Dropdown menu */}
+                  <div className="absolute left-0 top-full mt-1 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-10">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]">
+                      <a
+                        href={`https://basescan.org/address/${loanData.borrower}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors"
+                      >
+                        View on Basescan
+                      </a>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(loanData.borrower);
+                          showToast('Full address copied!', 'success');
+                        }}
+                        className="block w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors"
+                      >
+                        Copy full address
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {profile.bio && (
                 <p className="text-sm text-gray-700 mb-2">{profile.bio}</p>
               )}
               {reputation && (
-                <div className="flex items-center gap-3 text-xs">
+                <div className="flex items-center gap-3 text-xs flex-wrap">
                   <div className="flex items-center gap-1">
                     <span className="font-medium text-gray-900">{profile.followerCount.toLocaleString()}</span>
                     <span className="text-gray-500">followers</span>
@@ -301,12 +368,44 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
           </div>
         ) : (
-          <div className="flex items-center text-sm text-gray-600">
-            <div className="w-8 h-8 rounded-full bg-gray-300 mr-2" />
-            <span>
-              {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
-              {isBorrower && <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>}
-            </span>
+          <div className="flex items-center gap-3 text-sm">
+            {/* Fallback avatar */}
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              {loanData.borrower.slice(2, 4).toUpperCase()}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <span className="font-medium text-gray-900">
+                  {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
+                </span>
+                {isBorrower && (
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
+                )}
+              </div>
+              {/* Wallet address actions */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <a
+                  href={`https://basescan.org/address/${loanData.borrower}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  View on Basescan
+                </a>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(loanData.borrower);
+                    showToast('Address copied to clipboard!', 'success');
+                  }}
+                  className="text-xs text-gray-600 hover:text-gray-700 transition-colors flex items-center gap-1"
+                >
+                  Copy address
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
