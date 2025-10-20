@@ -8,6 +8,7 @@ import { ApolloProvider } from "@apollo/client";
 import { getClient } from "@/lib/apollo";
 import { sdk } from "@farcaster/miniapp-sdk";
 import { ToastProvider } from "@/contexts/ToastContext";
+import { FarcasterProvider } from "@/contexts/FarcasterContext";
 import ToastContainer from "@/components/Toast";
 
 const queryClient = new QueryClient({
@@ -34,15 +35,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, []); // Empty deps = run once on mount
 
   return (
-    <ToastProvider>
-      <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          <ApolloProvider client={apolloClient}>
-            {children}
-            <ToastContainer />
-          </ApolloProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
-    </ToastProvider>
+    <FarcasterProvider>
+      <ToastProvider>
+        <WagmiProvider config={wagmiConfig}>
+          <QueryClientProvider client={queryClient}>
+            <ApolloProvider client={apolloClient}>
+              {children}
+              <ToastContainer />
+            </ApolloProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </ToastProvider>
+    </FarcasterProvider>
   );
 }

@@ -17,6 +17,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: '*.mypinata.cloud',
       },
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'imagedelivery.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
     ],
   },
   async headers() {
@@ -30,7 +42,7 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://*.mypinata.cloud https://gateway.pinata.cloud https://i.imgur.com",
+              "img-src 'self' data: blob: https://*.mypinata.cloud https://gateway.pinata.cloud https://i.imgur.com https://imagedelivery.net https://res.cloudinary.com",
               "font-src 'self' data:",
               "connect-src 'self' " +
               "https://*.walletconnect.com https://*.walletconnect.org " +

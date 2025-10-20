@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { useUSDCFaucet, useUSDCBalance } from '@/hooks/useUSDC';
+import { useFarcasterUser } from '@/contexts/FarcasterContext';
 import ConnectWallet from './ConnectWallet';
 
 const SearchIcon = () => (
@@ -20,6 +22,7 @@ const GrowthIcon = () => (
 
 export default function Navbar() {
   const { address, isConnected } = useAccount();
+  const { user: farcasterUser } = useFarcasterUser();
   const { balanceFormatted } = useUSDCBalance(address);
   const { faucet, isPending, isConfirming, isSuccess } = useUSDCFaucet();
   const [showSuccess, setShowSuccess] = useState(false);
@@ -58,10 +61,22 @@ export default function Navbar() {
               <span className="xs:hidden">+</span>
             </Link>
 
-            {/* Profile Avatar (placeholder for now) */}
+            {/* Profile Avatar - Shows Farcaster pfp if available */}
             {isConnected && address && (
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#2C7DA0] to-[#3B9B7F] flex items-center justify-center text-white text-[10px] sm:text-xs font-bold flex-shrink-0">
-                {address.slice(2, 4).toUpperCase()}
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden flex-shrink-0 border border-gray-200">
+                {farcasterUser?.pfpUrl ? (
+                  <Image
+                    src={farcasterUser.pfpUrl}
+                    alt={farcasterUser.displayName || farcasterUser.username || 'Profile'}
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-[#2C7DA0] to-[#3B9B7F] flex items-center justify-center text-white text-[10px] sm:text-xs font-bold">
+                    {address.slice(2, 4).toUpperCase()}
+                  </div>
+                )}
               </div>
             )}
           </div>
