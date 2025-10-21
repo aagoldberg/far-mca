@@ -47,51 +47,60 @@ export default function WhitepaperPage() {
         {/* Manifesto */}
         <section className="mb-16">
           <div className="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-2xl border-l-4 border-[#3B9B7F]">
-            <h2 className="text-2xl font-bold mb-6 text-[#2E7D68]">Manifesto :: Community Over Profit</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#2E7D68]">Manifesto :: From Social Trust to Sustainable Credit</h2>
             <div className="space-y-4 text-lg leading-relaxed text-gray-700">
               <p>
-                <strong>True community support requires no interest.</strong> When friends help friends, when communities uplift members, profit has no place in the equation.
+                <strong>Reputation can replace collateral.</strong> This is proven: Prosper started with social networks and auctions (2006), evolved to algorithmic pricing (2010). Branch was founded by Kiva's co-founder, evolving from social endorsements to ML models using 2,000+ data points. Tala began with mobile signals, evolved to causal inference that doubled approval rates while cutting defaults. We follow the same path.
               </p>
               <p>
-                Traditional finance failed—extractive interest rates trap borrowers in debt cycles. Web2 P2P failed—platforms took huge cuts while pretending to connect peers. DeFi overcollateralized lending failed—requiring 150% collateral isn't lending, it's inefficiency.
+                Traditional finance failed—credit checks exclude billions, predatory rates trap borrowers. Web2 P2P failed—platforms took huge cuts. DeFi overcollateralized lending failed—requiring 150% collateral isn't lending, it's inefficiency.
               </p>
               <p>
-                <strong>LendFriend is different.</strong> We're building credit native to social trust. Where your reputation is your collateral. Where your community is your credit union. Where returning principal, not earning interest, is the goal.
+                <strong>LendFriend starts different, then scales smart.</strong> We launch with 0% interest to build trust and gather behavioral data. As we prove the model works, we evolve to low, socially-appropriate interest (0-5% vs 10-30% predatory rates) using hybrid social + cash flow underwriting.
               </p>
               <p className="text-[#2E7D68] font-semibold">
-                The cryptoeconomy needs real credit expansion. Not through interest—that extracts value from borrowers. Through reputation—that creates new opportunities from social capital.
+                Phase 1: Bootstrap trust at 0%. Phase 2: Scale sustainably with algorithms. The cryptoeconomy needs credit that starts with community and evolves with data.
               </p>
             </div>
           </div>
         </section>
 
-        {/* The Zero-Interest Gap */}
+        {/* The Bootstrap Problem */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-2 border-[#3B9B7F] pb-4">
-            The Zero-Interest Gap
+            The Bootstrap Problem: Trust Before Algorithm
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <p>
-              Communities have always helped their members. ROSCAs (rotating savings and credit associations) have existed for centuries across cultures. Friends lend to friends every day. But these trust-based systems remain invisible to the modern financial infrastructure.
+              Communities have always helped their members. Friends lend to friends every day. But these trust-based transactions create no verifiable credit history. <strong>To build algorithmic credit scoring, you first need behavioral data.</strong>
             </p>
 
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
+              <h4 className="font-bold mb-3 text-blue-800">The Cold Start Dilemma</h4>
+              <p className="mb-3 text-blue-700">You can't train credit models without repayment data. You can't get repayment data without loans. You can't make loans without credit models.</p>
+              <p className="font-semibold text-blue-900">Solution: Start with pure social trust (0% interest), gather data, evolve to hybrid underwriting.</p>
+            </div>
+
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
-              <h4 className="font-bold mb-4">The problem with existing solutions:</h4>
+              <h4 className="font-bold mb-4">Why Existing Solutions Can't Bootstrap Social Credit:</h4>
               <ul className="space-y-2">
-                <li>• <strong>Traditional lending:</strong> Credit checks exclude billions, interest rates trap borrowers</li>
-                <li>• <strong>DeFi overcollateralized:</strong> Requires more capital than you borrow</li>
-                <li>• <strong>P2P platforms:</strong> High fees, no reputation portability, platform risk</li>
-                <li>• <strong>Informal lending:</strong> No transparency, no accountability, no credit building</li>
+                <li>• <strong>Traditional lending:</strong> Requires credit history you're trying to build</li>
+                <li>• <strong>DeFi overcollateralized:</strong> Defeats the purpose of credit expansion</li>
+                <li>• <strong>P2P with interest:</strong> Profit motive biases early data, attracts extractive lenders</li>
+                <li>• <strong>Informal lending:</strong> No on-chain record, no network effect</li>
               </ul>
             </div>
 
             <p>
-              Every day, people Venmo friends expecting repayment. Every week, communities support members through tough times. These transactions build trust but create no verifiable credit history. No reputation accrues. No access unlocks.
+              Every successful fintech lender followed this path: <strong>Prosper (social auctions → algorithms), Branch (Kiva founder's evolution to ML), Tala (mobile signals → causal inference), Upstart (alt-data → ML)</strong>—all started with social/alternative proof before automating. LendFriend does the same, but on-chain and transparent.
             </p>
 
             <div className="bg-green-50 p-6 rounded-2xl border border-[#3B9B7F]">
-              <p className="font-semibold text-[#2E7D68] text-xl text-center">
-                <strong>LendFriend makes social lending transparent, accountable, and reputation-building.</strong>
+              <p className="font-semibold text-[#2E7D68] text-xl text-center mb-2">
+                <strong>Phase 1 (0%):</strong> Build trust graph and gather clean repayment data
+              </p>
+              <p className="text-center text-gray-700">
+                <strong>Phase 2 (0-5%):</strong> Layer in cash flow signals and automate underwriting
               </p>
             </div>
           </div>
@@ -417,12 +426,12 @@ export default function WhitepaperPage() {
             </p>
 
             <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 mb-6">
-              <h4 className="font-bold text-lg mb-4 text-blue-800">The Proven Sequence (Grameen → Kiva → Tala → Upstart)</h4>
+              <h4 className="font-bold text-lg mb-4 text-blue-800">The Proven Sequence (Prosper → Branch → Tala → Upstart)</h4>
               <ol className="space-y-3 text-blue-700">
-                <li><strong>Step 1: Social Proof</strong> → Group lending replaces collateral (default rates drop 2-5% vs 10-20%)</li>
-                <li><strong>Step 2: Digitize Relationships</strong> → Mobile + social graph data (AUC ≈ 0.65-0.75)</li>
-                <li><strong>Step 3: Behavioral Scorecards</strong> → Hybrid social + cash flow models (AUC &gt; 0.70)</li>
-                <li><strong>Step 4: Continuous Learning</strong> → Every repayment improves the model</li>
+                <li><strong>Step 1: Social Proof</strong> → Prosper social networks (2006), Branch from Kiva founder's group lending roots</li>
+                <li><strong>Step 2: Digitize Signals</strong> → Mobile + social graph data (Tala: 250 points, Branch: 2,000 points, AUC ≈ 0.65-0.75)</li>
+                <li><strong>Step 3: Algorithmic Models</strong> → Prosper's algorithmic pricing (2010), Tala's causal inference ML (AUC &gt; 0.70)</li>
+                <li><strong>Step 4: Continuous Learning</strong> → Tala doubled approvals 40%→80% while defaults fell</li>
               </ol>
             </div>
 
