@@ -260,6 +260,78 @@ export default function WhyUncollateralizedPage() {
           </div>
         </section>
 
+        {/* The Vision from Ethereum's Founders */}
+        <section className="mb-16">
+          <div className="border-b-2 border-[#3B9B7F] pb-2 mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">The Vision from Ethereum's Founders</h2>
+            <p className="text-gray-600 mt-2">Why reputation-backed credit is the missing primitive of Web3</p>
+          </div>
+
+          <div className="space-y-8">
+            {/* Quote 1: The Core Problem */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] pl-6 py-6">
+              <p className="text-lg text-gray-700 italic mb-4 leading-relaxed">
+                "Web3 today centers around expressing transferable, financialized assets, rather than encoding
+                social relationships of trust. Yet <strong>many core economic activities—such as uncollateralized
+                lending and building personal brands—are built on persistent, non-transferable relationships</strong>."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Vitalik Buterin & E. Glen Weyl, <em>Decentralized Society: Finding Web3's Soul</em> (2022)
+              </p>
+            </div>
+
+            {/* Quote 2: The Largest Untapped Market */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] pl-6 py-6">
+              <p className="text-lg text-gray-700 italic mb-4 leading-relaxed">
+                "<strong>Perhaps the largest financial value built directly on reputation is credit and
+                uncollateralized lending.</strong> Currently, the Web 3 ecosystem cannot replicate even the
+                most primitive forms of uncollateralized lending, because all assets are transferable and
+                saleable – thus simply forms of collateral."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Vitalik Buterin & E. Glen Weyl, <em>Decentralized Society: Finding Web3's Soul</em> (2022)
+              </p>
+            </div>
+
+            {/* Quote 3: Reputation as Collateral */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] pl-6 py-6">
+              <p className="text-lg text-gray-700 italic mb-4 leading-relaxed">
+                "Education credentials, work history, and rental contracts could serve as a persistent record
+                of credit-relevant history... <strong>to seek an undercollateralized loan, reputation will be
+                the collateral</strong>."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Vitalik Buterin & E. Glen Weyl, <em>Decentralized Society: Finding Web3's Soul</em> (2022)
+              </p>
+            </div>
+
+            {/* Quote 4: Portable Reputation */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] pl-6 py-6">
+              <p className="text-lg text-gray-700 italic mb-4 leading-relaxed">
+                "Crypto allows you to <strong>earn pseudonymously, and with a recent innovation...would let
+                you transfer reputation from one pseudonym to another</strong>."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Balaji Srinivasan, <em>The Tim Ferriss Show</em> (2021)
+              </p>
+            </div>
+
+            {/* Connection to LendFriend */}
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-[#2E7D68] pl-6 py-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">LendFriend: Implementing the Vision Today</h3>
+              <p className="text-gray-700 mb-4 leading-relaxed">
+                Ethereum's founders identified the problem in 2022. LendFriend is building the solution in 2025.
+              </p>
+              <p className="text-gray-700 leading-relaxed">
+                Using <strong>Farcaster's persistent identity (FIDs)</strong>, multi-signal reputation scoring
+                (<strong>OpenRank, Neynar, Gitcoin Passport</strong>), and transparent on-chain repayment records,
+                we're proving that reputation can replace collateral—starting with pure social trust at 0% interest,
+                then scaling to hybrid algorithmic models as behavioral data accumulates.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section className="mb-8">
           <div className="bg-[#3B9B7F] rounded-2xl p-8 text-center text-white">

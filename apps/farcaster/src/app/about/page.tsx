@@ -29,11 +29,23 @@ export default function AboutPage() {
               DeFi overcollateralization defeats the purpose of credit expansion. We're building a third path:
               <strong> reputation-backed lending that starts with trust and evolves to scale.</strong>
             </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
               LendFriend proves that <strong>your network is your credit history</strong>, your reputation is your
               collateral, and your community is your underwriter. We start with pure altruism at 0% interest to gather
               behavioral data, then scale sustainably with algorithmic hybrid underwriting at socially-appropriate rates.
             </p>
+
+            {/* Quote */}
+            <div className="bg-white border-l-4 border-[#2E7D68] pl-6 py-4">
+              <p className="text-gray-700 italic mb-3">
+                "<strong>Perhaps the largest financial value built directly on reputation is credit and
+                uncollateralized lending.</strong> Currently, the Web 3 ecosystem cannot replicate even the
+                most primitive forms of uncollateralized lending..."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Vitalik Buterin & E. Glen Weyl, <em>Decentralized Society: Finding Web3's Soul</em> (2022)
+              </p>
+            </div>
           </div>
         </section>
 

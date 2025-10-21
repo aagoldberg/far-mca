@@ -192,6 +192,115 @@ export default function WhitepaperPage() {
           </div>
         </section>
 
+        {/* Ethereum's Vision for Reputation-Based Credit */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-2 border-[#3B9B7F] pb-4">
+            Ethereum's Vision for Reputation-Based Credit
+          </h2>
+          <div className="space-y-6 text-gray-700 leading-relaxed">
+            <p className="text-lg">
+              In their 2022 paper <em>"Decentralized Society: Finding Web3's Soul,"</em> Ethereum co-founder
+              <strong> Vitalik Buterin</strong> and economist <strong>E. Glen Weyl</strong> identified uncollateralized
+              lending as the largest untapped market in crypto—and explained why it requires a fundamental shift from
+              transferable assets to persistent identity.
+            </p>
+
+            {/* Quote 1: The Core Problem */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] p-6 rounded-r-2xl">
+              <p className="text-lg italic mb-4">
+                "Web3 today centers around expressing transferable, financialized assets, rather than encoding
+                social relationships of trust. Yet <strong>many core economic activities—such as uncollateralized
+                lending and building personal brands—are built on persistent, non-transferable relationships</strong>."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Vitalik Buterin & E. Glen Weyl, <em>Decentralized Society: Finding Web3's Soul</em> (2022)
+              </p>
+            </div>
+
+            <p>
+              This insight cuts to the heart of why DeFi has been limited to overcollateralized lending. Without
+              persistent identity and reputation primitives, <strong>collateral is the only signal of creditworthiness</strong>.
+              But this creates a paradox: the people who need loans most don't have collateral—that's why they need loans.
+            </p>
+
+            {/* Quote 2: The Largest Untapped Market */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] p-6 rounded-r-2xl">
+              <p className="text-lg italic mb-4">
+                "<strong>Perhaps the largest financial value built directly on reputation is credit and
+                uncollateralized lending.</strong> Currently, the Web 3 ecosystem cannot replicate even the
+                most primitive forms of uncollateralized lending, because all assets are transferable and
+                saleable – thus simply forms of collateral."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Vitalik Buterin & E. Glen Weyl, <em>Decentralized Society: Finding Web3's Soul</em> (2022)
+              </p>
+            </div>
+
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
+              <h4 className="font-bold mb-3 text-blue-800">Soulbound Tokens (SBTs): The Proposed Solution</h4>
+              <p className="text-blue-700 mb-3">
+                Buterin and Weyl proposed <strong>non-transferable "soulbound" tokens (SBTs)</strong> representing
+                commitments, credentials, and affiliations that "can encode the trust networks of the real economy
+                to establish provenance and reputation."
+              </p>
+              <p className="text-blue-700">
+                Key insight: <strong>"To seek an undercollateralized loan, reputation will be the collateral."</strong>
+                Education credentials, work history, and rental contracts could serve as a persistent record of
+                credit-relevant history—a kind of <strong>"non-seizable reputational collateral."</strong>
+              </p>
+            </div>
+
+            {/* Quote 3: Portable Reputation (Balaji) */}
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] p-6 rounded-r-2xl">
+              <p className="text-lg italic mb-4">
+                "Crypto allows you to <strong>earn pseudonymously, and with a recent innovation...would let
+                you transfer reputation from one pseudonym to another</strong>."
+              </p>
+              <p className="text-sm text-gray-600">
+                — Balaji Srinivasan, entrepreneur and crypto thought leader, <em>The Tim Ferriss Show</em> (2021)
+              </p>
+            </div>
+
+            <p>
+              This vision of <strong>portable, verifiable reputation</strong> is exactly what LendFriend implements
+              today—not as hypothetical SBTs, but as <strong>real, working infrastructure</strong> using Farcaster's
+              persistent FIDs, multi-protocol reputation scores, and on-chain repayment records.
+            </p>
+
+            {/* How LendFriend Implements This */}
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-2xl p-8 mt-6">
+              <h4 className="font-bold text-xl text-[#2E7D68] mb-4">How LendFriend Implements Ethereum's Vision</h4>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold text-gray-900 mb-2">The Vision (2022)</h5>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li>• Persistent, non-transferable identity</li>
+                    <li>• Reputation as collateral</li>
+                    <li>• Trust networks encode provenance</li>
+                    <li>• Credit history travels with you</li>
+                    <li>• Censorship-resistant credit</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-semibold text-gray-900 mb-2">The Implementation (2025)</h5>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li>• <strong>Farcaster FIDs</strong> (persistent identity)</li>
+                    <li>• <strong>Multi-signal reputation</strong> (OpenRank, Neynar, Gitcoin)</li>
+                    <li>• <strong>Implicit vouching</strong> (high-rep lenders endorse)</li>
+                    <li>• <strong>On-chain repayment records</strong> (transparent history)</li>
+                    <li>• <strong>Smart contracts</strong> (no intermediaries)</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-green-200">
+                <p className="text-gray-700 font-semibold">
+                  Ethereum's founders identified the problem in 2022. LendFriend is building the solution in 2025.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* The Zero-Interest Primitive */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-2 border-[#3B9B7F] pb-4">
