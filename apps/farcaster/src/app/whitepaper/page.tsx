@@ -96,236 +96,41 @@ export default function WhitepaperPage() {
         {/* Why Uncollateralized Lending? */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-2 border-[#3B9B7F] pb-4">
-            The Credit Access Gap: Why Uncollateralized Lending?
+            Why Uncollateralized Lending?
           </h2>
-          <div className="space-y-8 text-gray-700 leading-relaxed">
+          <div className="space-y-6 text-gray-700 leading-relaxed">
             <p className="text-lg">
-              Access to credit is a fundamental economic primitive. Yet <strong>every existing model—traditional finance, Web2 P2P, and DeFi overcollateralization—has failed to provide fair, accessible, capital-efficient credit</strong> to those who need it most. Here's why.
+              <strong>Every existing credit model has failed.</strong> Traditional finance excludes 1.7 billion unbanked
+              people and traps vulnerable borrowers with predatory rates (400% APR payday loans). Web2 P2P platforms like
+              LendingClub and Prosper became rent-extracting intermediaries charging up to 12% origination fees while
+              still requiring credit scores—95% of their volume shifted to institutional investors by 2020, abandoning
+              the "peer" in peer-to-peer. DeFi overcollateralization (deposit $150 to borrow $100) serves leverage
+              traders but solves nothing for the underbanked—it's 15x less capital efficient than traditional unsecured
+              lending and only exists because anonymous wallets can't build credit history.
             </p>
 
-            {/* Traditional Finance Failures */}
-            <div className="bg-white border-2 border-red-200 rounded-2xl p-6">
-              <div className="flex items-start gap-3 mb-4">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-red-600 text-xl font-bold">✕</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Traditional Finance Failed</h3>
-                  <p className="text-sm text-gray-600 italic">Credit scores exclude billions. Predatory rates trap the vulnerable.</p>
-                </div>
-              </div>
+            <p className="text-lg">
+              <strong>Reputation-backed credit is the solution.</strong> With verifiable identity (Farcaster FIDs),
+              multi-signal reputation scoring (OpenRank, Neynar, Gitcoin Passport), and transparent on-chain repayment
+              records, we can finally make reputation <em>verifiable, portable, and programmable</em>. This isn't
+              radical—it's how village lending worked for millennia. What's new is the infrastructure to scale it:
+              persistent identity that travels across protocols, behavioral data that improves credit models network-wide,
+              and transparent accountability visible to all.
+            </p>
 
-              <div className="space-y-4">
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                  <h4 className="font-bold text-red-900 mb-2">The Credit Bureau Gatekeeping Problem</h4>
-                  <p className="text-red-800 mb-3">
-                    <strong>1.7 billion adults globally are "unbanked"</strong> with no access to formal financial services
-                    (World Bank, 2021). In the U.S. alone, <strong>45 million adults are "credit invisible"</strong>—they
-                    have no credit file at all (CFPB, 2015). Another <strong>19 million are "unscorable"</strong> due to
-                    insufficient credit history.
-                  </p>
-                  <p className="text-sm text-red-700">
-                    These aren't inherently risky borrowers—they're systematically excluded by a system that requires
-                    credit history to build credit history. The poorest are locked out by design.
-                  </p>
-                </div>
-
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                  <h4 className="font-bold text-red-900 mb-2">Predatory Interest Rates</h4>
-                  <p className="text-red-800 mb-3">
-                    For those who <em>do</em> qualify, the rates are often extractive:
-                  </p>
-                  <ul className="space-y-1 text-sm text-red-700">
-                    <li>• <strong>Payday loans:</strong> 400% APR average (CFPB data)</li>
-                    <li>• <strong>Subprime credit cards:</strong> 25-30% APR + fees</li>
-                    <li>• <strong>Installment loans:</strong> 200-300% APR for small amounts</li>
-                    <li>• <strong>Buy Now Pay Later:</strong> 10-30% effective monthly rates when fees compound</li>
-                  </ul>
-                  <p className="text-sm text-red-700 mt-3">
-                    These rates don't reflect risk—they reflect <strong>market power over desperate borrowers</strong>.
-                    The very people who need affordable credit the most pay the highest prices.
-                  </p>
-                </div>
-
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                  <h4 className="font-bold text-red-900 mb-2">Collateral Requirements</h4>
-                  <p className="text-sm text-red-800">
-                    Traditional secured loans require assets most people don't have: homes, cars, investment portfolios.
-                    <strong> Unsecured loans require pristine credit history</strong>, creating a Catch-22. The result:
-                    those with assets get cheap capital; those without pay usury or are excluded entirely.
-                  </p>
-                </div>
-
-                <div className="bg-gray-100 border border-gray-300 rounded-lg p-3 mt-4">
-                  <p className="text-sm text-gray-700 font-semibold">
-                    Verdict: Traditional finance optimizes for institutions and the wealthy, not accessibility or fairness.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Web2 P2P Failures */}
-            <div className="bg-white border-2 border-orange-200 rounded-2xl p-6">
-              <div className="flex items-start gap-3 mb-4">
-                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-orange-600 text-xl font-bold">✕</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Web2 P2P Lending Failed</h3>
-                  <p className="text-sm text-gray-600 italic">Platforms extracted value. Lenders got intermediated. Borrowers still paid high rates.</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-                  <h4 className="font-bold text-orange-900 mb-2">Platform Rent Extraction</h4>
-                  <p className="text-orange-800 mb-3">
-                    Platforms like LendingClub and Prosper were supposed to disintermediate banks and connect
-                    borrowers directly to lenders. Instead, they became <strong>new intermediaries extracting massive fees</strong>:
-                  </p>
-                  <ul className="space-y-1 text-sm text-orange-700">
-                    <li>• <strong>LendingClub:</strong> 1-6% origination fee to borrowers + 1% annual service fee to lenders</li>
-                    <li>• <strong>Prosper:</strong> 2.4-5% origination fee + 1% annual servicing fee</li>
-                    <li>• <strong>Upstart:</strong> Up to 12% origination fee on some loans</li>
-                  </ul>
-                  <p className="text-sm text-orange-700 mt-3">
-                    A $5,000 loan could cost $250-$600 in fees before interest. These platforms kept 20-40% of the
-                    interest spread. <strong>Disintermediation became re-intermediation.</strong>
-                  </p>
-                </div>
-
-                <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-                  <h4 className="font-bold text-orange-900 mb-2">Still Credit Score Dependent</h4>
-                  <p className="text-sm text-orange-800">
-                    P2P platforms didn't solve the accessibility problem—they <em>replicated it</em>. LendingClub requires
-                    a minimum 600 FICO score. Prosper requires 640. The credit-invisible were still excluded. These platforms
-                    became <strong>marketplaces for the already creditworthy</strong>, not solutions for the underbanked.
-                  </p>
-                </div>
-
-                <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-                  <h4 className="font-bold text-orange-900 mb-2">Institutional Takeover</h4>
-                  <p className="text-sm text-orange-800 mb-2">
-                    By 2020, <strong>institutional investors (hedge funds, banks) accounted for 95%+ of lending volume</strong>
-                    on major P2P platforms (WSJ, 2019). The "peer" in peer-to-peer disappeared. Individual lenders were
-                    crowded out by sophisticated capital seeking yield. The platforms became <em>institutional lending
-                    marketplaces with P2P branding</em>.
-                  </p>
-                </div>
-
-                <div className="bg-gray-100 border border-gray-300 rounded-lg p-3 mt-4">
-                  <p className="text-sm text-gray-700 font-semibold">
-                    Verdict: Web2 P2P promised disintermediation but delivered centralized rent-seeking with better UX.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* DeFi Overcollateralization Failures */}
-            <div className="bg-white border-2 border-yellow-200 rounded-2xl p-6">
-              <div className="flex items-start gap-3 mb-4">
-                <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-yellow-600 text-xl font-bold">✕</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">DeFi Overcollateralized Lending Failed</h3>
-                  <p className="text-sm text-gray-600 italic">Requiring 150% collateral isn't lending—it's capital inefficiency masquerading as DeFi.</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                  <h4 className="font-bold text-yellow-900 mb-2">The Fundamental Paradox</h4>
-                  <p className="text-yellow-800 mb-3">
-                    Aave, Compound, and similar protocols require you to deposit <strong>$150-200 worth of crypto to
-                    borrow $100</strong>. This isn't credit expansion—it's <strong>collateralized borrowing for tax
-                    optimization and leverage trading</strong>.
-                  </p>
-                  <p className="text-sm text-yellow-700">
-                    If you already have 150% of the value you want to borrow, <em>you don't need a loan</em>. True credit
-                    means accessing capital you don't already have. Overcollateralization solves smart contract risk, not
-                    the credit access problem.
-                  </p>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                  <h4 className="font-bold text-yellow-900 mb-2">Who This Actually Serves</h4>
-                  <p className="text-yellow-800 mb-2">Overcollateralized DeFi lending is useful for:</p>
-                  <ul className="space-y-1 text-sm text-yellow-700 mb-3">
-                    <li>• <strong>Leverage traders:</strong> Borrow stablecoins against ETH to go long more ETH</li>
-                    <li>• <strong>Tax optimizers:</strong> Access liquidity without triggering capital gains</li>
-                    <li>• <strong>Yield farmers:</strong> Recursive borrowing/lending for APY</li>
-                  </ul>
-                  <p className="text-sm text-yellow-800">
-                    These are <em>legitimate use cases for crypto-native users</em>, but they're not solving credit access
-                    for the underbanked, small businesses, or anyone who needs to borrow <em>more</em> than they have.
-                  </p>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                  <h4 className="font-bold text-yellow-900 mb-2">Capital Efficiency: -50%</h4>
-                  <p className="text-sm text-yellow-800">
-                    At 150% collateralization, <strong>every dollar lent requires $1.50 locked</strong>. This is
-                    capital inefficiency by design. Compare to traditional unsecured lending where every dollar in reserves
-                    can support $10+ in loans (via fractional reserve banking). DeFi's overcollateralization is
-                    <strong> 15x less capital efficient</strong>.
-                  </p>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                  <h4 className="font-bold text-yellow-900 mb-2">No Identity, No Trust, No Progress</h4>
-                  <p className="text-sm text-yellow-800">
-                    Overcollateralization exists because DeFi has lacked robust identity and reputation primitives.
-                    Anonymous addresses can't build credit history. Without reputation, collateral is the only signal
-                    of creditworthiness. <strong>This is a technical limitation being mistaken for a feature.</strong>
-                  </p>
-                </div>
-
-                <div className="bg-gray-100 border border-gray-300 rounded-lg p-3 mt-4">
-                  <p className="text-sm text-gray-700 font-semibold">
-                    Verdict: DeFi overcollateralization is useful for leverage but useless for credit expansion.
-                    It's a temporary stopgap until identity and reputation mature.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* The Path Forward */}
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-[#2E7D68] mb-4">The Path Forward: Reputation-Backed Credit</h3>
-              <p className="text-lg text-gray-700 mb-4">
-                Uncollateralized lending isn't radical—it's <strong>how most credit worked for millennia</strong> before
-                industrialization. Village lending, trade credit, and community mutual aid all operated on reputation and
-                social accountability.
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-2xl">
+              <p className="text-blue-900 font-semibold mb-2">
+                For a detailed breakdown of why traditional finance, Web2 P2P, and DeFi all failed:
               </p>
-              <div className="space-y-3 text-gray-700">
-                <p>
-                  <strong>What's changed:</strong> We now have the tools to make reputation <em>verifiable, portable,
-                  and programmable</em>:
-                </p>
-                <ul className="space-y-2 ml-6">
-                  <li>
-                    ✓ <strong>Persistent identity:</strong> Farcaster FIDs, ENS, on-chain history
-                  </li>
-                  <li>
-                    ✓ <strong>Multi-signal reputation:</strong> Social graphs (OpenRank), humanity verification
-                    (Gitcoin Passport), activity patterns (Neynar scores)
-                  </li>
-                  <li>
-                    ✓ <strong>Transparent accountability:</strong> On-chain repayment records visible to all
-                  </li>
-                  <li>
-                    ✓ <strong>Network effects:</strong> Your reputation travels with you across protocols
-                  </li>
-                  <li>
-                    ✓ <strong>Behavioral data:</strong> Every repayment improves credit models for the entire network
-                  </li>
-                </ul>
-                <p className="mt-4 font-semibold text-[#2E7D68]">
-                  LendFriend proves that <strong>reputation can replace collateral</strong>—starting with pure social
-                  trust at 0% interest, then scaling to hybrid algorithmic models as behavioral data accumulates.
-                </p>
-              </div>
+              <Link
+                href="/why-uncollateralized"
+                className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900 font-medium"
+              >
+                Read the full analysis
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </div>
           </div>
         </section>
