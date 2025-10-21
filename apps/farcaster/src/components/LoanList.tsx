@@ -57,7 +57,7 @@ const LoanCardSkeleton = () => (
 );
 
 // Component to fetch and display a single loan
-const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
+export const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
   const { loanData, isLoading } = useLoanData(loanAddress);
   const [metadata, setMetadata] = useState<any>(null);
 
