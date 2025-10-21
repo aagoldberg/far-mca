@@ -61,6 +61,40 @@ export const useBorrowerLoans = (borrower: `0x${string}` | undefined) => {
   };
 };
 
+/**
+ * Get loans that a specific address has contributed to
+ */
+export const useContributorLoans = (contributor: `0x${string}` | undefined) => {
+  const { loanAddresses, isLoading: isLoadingLoans } = useLoans();
+  const enabled = !!contributor && loanAddresses.length > 0;
+
+  // Build multicall to check contribution for each loan
+  const contributionQueries = loanAddresses.map((loanAddress) => ({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributions',
+    args: [contributor],
+  }));
+
+  const { data: contributionsData, isLoading: isLoadingContributions } = useReadContracts({
+    contracts: contributionQueries.length > 0 ? contributionQueries as any : [],
+    query: { enabled },
+  });
+
+  // Filter to only loans where user has contributed
+  const contributorLoanAddresses = loanAddresses.filter((_, index) => {
+    const result = contributionsData?.[index];
+    if (result?.status !== 'success') return false;
+    const contribution = result.result as bigint;
+    return contribution > 0n;
+  });
+
+  return {
+    loanAddresses: contributorLoanAddresses,
+    isLoading: isLoadingLoans || isLoadingContributions,
+  };
+};
+
 // =============================================================================
 // LOAN - READ BASIC INFO
 // =============================================================================
