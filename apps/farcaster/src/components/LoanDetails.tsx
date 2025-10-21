@@ -770,51 +770,6 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         </p>
       </div>
 
-      {/* Loan Terms - Condensed */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Loan Terms</h2>
-
-        <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Interest Rate</p>
-            <p className="font-semibold text-green-600">0%</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Repayment</p>
-            <p className="font-semibold text-gray-900">1.0x</p>
-          </div>
-
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Term Length</p>
-            <p className="font-semibold text-gray-900">{loanData.termPeriods.toString()} periods</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Period Length</p>
-            <p className="font-semibold text-gray-900">{Number(loanData.periodLength) / 86400} days</p>
-          </div>
-
-          {paymentPerPeriod && (
-            <>
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Payment Per Period</p>
-                <p className="font-semibold text-gray-900">${formatUSDC(paymentPerPeriod)} USDC</p>
-              </div>
-              {loanData.active && nextDueDate && (
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Next Payment Due</p>
-                  <p className="font-semibold text-gray-900">{formatDate(nextDueDate)}</p>
-                </div>
-              )}
-            </>
-          )}
-
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Fundraising Deadline</p>
-            <p className="font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
-          </div>
-        </div>
-      </div>
-
       {/* Use of Funds */}
       {metadata?.useOfFunds && (
         <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
@@ -1021,6 +976,51 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 ? 'Medium Risk'
                 : 'Higher Risk'}
             </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Loan Terms - Condensed */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Loan Terms</h2>
+
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Interest Rate</p>
+            <p className="font-semibold text-green-600">0%</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Repayment</p>
+            <p className="font-semibold text-gray-900">1.0x</p>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Term Length</p>
+            <p className="font-semibold text-gray-900">{loanData.termPeriods.toString()} periods</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Period Length</p>
+            <p className="font-semibold text-gray-900">{Number(loanData.periodLength) / 86400} days</p>
+          </div>
+
+          {paymentPerPeriod && (
+            <>
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Payment Per Period</p>
+                <p className="font-semibold text-gray-900">${formatUSDC(paymentPerPeriod)} USDC</p>
+              </div>
+              {loanData.active && nextDueDate && (
+                <div>
+                  <p className="text-xs text-gray-500 mb-1">Next Payment Due</p>
+                  <p className="font-semibold text-gray-900">{formatDate(nextDueDate)}</p>
+                </div>
+              )}
+            </>
+          )}
+
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Fundraising Deadline</p>
+            <p className="font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
           </div>
         </div>
       </div>
