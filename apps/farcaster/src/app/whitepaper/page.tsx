@@ -358,30 +358,47 @@ export default function WhitepaperPage() {
             </div>
 
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
-              <h4 className="font-bold text-lg mb-4">Growth Strategy</h4>
+              <h4 className="font-bold text-lg mb-4">Growth Roadmap: Bootstrap → Scale → Automate</h4>
               <div className="space-y-4 text-sm">
-                <div>
-                  <strong className="text-[#2E7D68]">Phase 1: Farcaster Native (Now)</strong>
-                  <ul className="ml-4 mt-1">
-                    <li>• 350K+ addressable Farcaster users</li>
-                    <li>• Frame-native interface for viral distribution</li>
-                    <li>• Build core reputation data</li>
+                <div className="bg-green-50 p-3 rounded border border-green-200">
+                  <strong className="text-[#2E7D68]">v1.0 Launch: Social Trust at 0% (Q4 2025)</strong>
+                  <ul className="ml-4 mt-2 space-y-1">
+                    <li>• Bootstrap 500-1,000 Farcaster users</li>
+                    <li>• Small loans ($100-$1,000) with pure social underwriting</li>
+                    <li>• Gather repayment data and map trust networks</li>
+                    <li>• Build transparent on-chain history</li>
+                    <li>• Frame-native interface for viral growth</li>
                   </ul>
                 </div>
-                <div>
-                  <strong className="text-[#2E7D68]">Phase 2: Cross-Protocol Identity (Q1 2026)</strong>
-                  <ul className="ml-4 mt-1">
-                    <li>• Lens Protocol integration</li>
-                    <li>• WorldID verification option</li>
-                    <li>• Aggregate reputation across networks</li>
+                <div className="bg-blue-50 p-3 rounded border border-blue-200">
+                  <strong className="text-blue-800">v1.5 Evolution: Multi-Protocol Identity (Q1 2026)</strong>
+                  <ul className="ml-4 mt-2 space-y-1">
+                    <li>• Lens Protocol integration for broader reputation</li>
+                    <li>• WorldID verification for stronger Sybil resistance</li>
+                    <li>• Aggregate scores across social networks</li>
+                    <li>• Cross-chain reputation bridges (Base, Optimism, Polygon)</li>
+                    <li>• Train initial hybrid models on v1 repayment data</li>
                   </ul>
                 </div>
-                <div>
-                  <strong className="text-[#2E7D68]">Phase 3: Community Scaling (Q2 2026)</strong>
-                  <ul className="ml-4 mt-1">
-                    <li>• DAO treasury lending pools</li>
-                    <li>• Creator fan funding</li>
-                    <li>• Regional community networks</li>
+                <div className="bg-purple-50 p-3 rounded border border-purple-200">
+                  <strong className="text-purple-800">v2.0 Hybrid: Cash Flow + Socially-Judged Interest (Q2 2026)</strong>
+                  <ul className="ml-4 mt-2 space-y-1">
+                    <li>• Plaid integration for bank account verification</li>
+                    <li>• On-chain revenue streams (DEX, NFT, token income)</li>
+                    <li>• Automated approval for loans &lt;$10k (AUC &gt; 0.70)</li>
+                    <li>• Low interest (0-5% monthly) for larger amounts</li>
+                    <li>• Creator and merchant cash advance products</li>
+                    <li>• Revenue-based repayment structures (RBF)</li>
+                  </ul>
+                </div>
+                <div className="bg-gray-100 p-3 rounded border border-gray-300">
+                  <strong className="text-gray-800">v3.0+ Scale: Global Community Credit (2027+)</strong>
+                  <ul className="ml-4 mt-2 space-y-1">
+                    <li>• DAO treasury lending pools for members</li>
+                    <li>• Regional community networks (Kenya, India, Brazil)</li>
+                    <li>• Staking/vouching mechanisms (friends stake on repayment)</li>
+                    <li>• Continuous ML model improvement with every loan</li>
+                    <li>• $25k+ loans with full hybrid underwriting</li>
                   </ul>
                 </div>
               </div>
@@ -389,44 +406,187 @@ export default function WhitepaperPage() {
           </div>
         </section>
 
-        {/* Future Directions */}
+        {/* The Evolution: From Social Trust to Hybrid Underwriting */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-2 border-[#3B9B7F] pb-4">
-            Future Directions
+            The Evolution: From Social Trust to Hybrid Underwriting
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <p>
-              As social identity becomes economic identity, LendFriend unlocks new categories of community credit:
+              LendFriend follows the proven path pioneered by successful microfinance and fintech lenders: start with social proof, gather behavioral data, automate trust.
             </p>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 mb-6">
+              <h4 className="font-bold text-lg mb-4 text-blue-800">The Proven Sequence (Grameen → Kiva → Tala → Upstart)</h4>
+              <ol className="space-y-3 text-blue-700">
+                <li><strong>Step 1: Social Proof</strong> → Group lending replaces collateral (default rates drop 2-5% vs 10-20%)</li>
+                <li><strong>Step 2: Digitize Relationships</strong> → Mobile + social graph data (AUC ≈ 0.65-0.75)</li>
+                <li><strong>Step 3: Behavioral Scorecards</strong> → Hybrid social + cash flow models (AUC &gt; 0.70)</li>
+                <li><strong>Step 4: Continuous Learning</strong> → Every repayment improves the model</li>
+              </ol>
+            </div>
+
+            {/* Version 1: Current State */}
+            <div className="bg-white border-2 border-[#3B9B7F] rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-[#3B9B7F] text-white px-3 py-1 rounded-lg font-bold">Version 1.0</div>
+                <h3 className="text-xl font-bold text-[#2E7D68]">Social Underwriting at 0% Interest</h3>
+              </div>
+
+              <p className="mb-4">
+                <strong>Current implementation:</strong> Pure social reputation with zero interest. Build trust graph and gather behavioral data.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <h4 className="font-semibold mb-2 text-green-800">Trust Signals</h4>
+                  <ul className="text-sm space-y-1 text-green-700">
+                    <li>• <strong>Neynar Score:</strong> Spam detection (0-1 scale)</li>
+                    <li>• <strong>OpenRank:</strong> Social graph reputation</li>
+                    <li>• <strong>Gitcoin Passport:</strong> Humanity verification</li>
+                    <li>• <strong>Wallet Activity:</strong> On-chain history</li>
+                    <li>• <strong>Lender Vouching:</strong> Implicit endorsement by funding</li>
+                  </ul>
+                </div>
+
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <h4 className="font-semibold mb-2 text-green-800">Cash Flow Proxies</h4>
+                  <ul className="text-sm space-y-1 text-green-700">
+                    <li>• <strong>Cast Frequency:</strong> Active = stable income signal</li>
+                    <li>• <strong>Engagement Growth:</strong> Trending up = opportunity</li>
+                    <li>• <strong>Network Expansion:</strong> Follower growth indicates reach</li>
+                    <li>• <strong>Mutual Connections:</strong> Borrower-lender overlap = trust</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                <h4 className="font-semibold mb-2 text-yellow-800">Data Collection Goals (v1)</h4>
+                <ul className="text-sm space-y-1 text-yellow-700">
+                  <li>✓ Bootstrap with 500-1,000 users to establish baseline repayment patterns</li>
+                  <li>✓ Capture repayment streaks, timing, and community response</li>
+                  <li>✓ Map endorsement network density and quality</li>
+                  <li>✓ Measure correlation between social signals and repayment behavior</li>
+                  <li>✓ Build transparent repayment history for trust reinforcement</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Version 2: Future State */}
+            <div className="bg-white border-2 border-purple-300 rounded-2xl p-6 mt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-purple-600 text-white px-3 py-1 rounded-lg font-bold">Version 2.0</div>
+                <h3 className="text-xl font-bold text-purple-900">Hybrid Underwriting with Socially-Judged Interest</h3>
+              </div>
+
+              <p className="mb-4">
+                <strong>Future evolution:</strong> Combine v1 social data with real cash flow signals. Automate larger loans with low, community-appropriate interest rates.
+              </p>
+
+              <div className="bg-purple-50 p-4 rounded-lg border border-purple-200 mb-4">
+                <h4 className="font-semibold mb-3 text-purple-800">Research-Backed Model</h4>
+                <p className="text-sm text-purple-700 mb-3">
+                  Studies show hybrid social + cash-flow models achieve <strong>AUC ≈ 0.72-0.80</strong> vs 0.65 for social alone (Karlan & Zinman 2012; FinRegLab 2023).
+                </p>
+                <div className="bg-white p-3 rounded border border-purple-200 font-mono text-xs text-gray-800">
+                  P(default) = f(repayment_streaks, endorsement_strength, transaction_volatility)
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                  <h4 className="font-semibold mb-2 text-purple-800">Additional Data Sources</h4>
+                  <ul className="text-sm space-y-1 text-purple-700">
+                    <li>• <strong>Plaid Integration:</strong> Real bank account cash flow</li>
+                    <li>• <strong>On-Chain Revenue:</strong> DEX fees, NFT sales, token streams</li>
+                    <li>• <strong>Merchant Data:</strong> Shopify/Stripe receipts</li>
+                    <li>• <strong>Creator Metrics:</strong> Subscriber count, Patreon/Substack MRR</li>
+                    <li>• <strong>Staking/Vouching:</strong> Friends stake tokens on repayment</li>
+                  </ul>
+                </div>
+
+                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                  <h4 className="font-semibold mb-2 text-purple-800">Automation Capabilities</h4>
+                  <ul className="text-sm space-y-1 text-purple-700">
+                    <li>• <strong>Auto-Approval:</strong> Loans &lt;$10k with AUC &gt; 0.70</li>
+                    <li>• <strong>Dynamic Pricing:</strong> 0-5% monthly based on risk</li>
+                    <li>• <strong>Larger Tickets:</strong> Scale to $25k+ with proven model</li>
+                    <li>• <strong>RBF Structure:</strong> Revenue-based repayment for merchants</li>
+                    <li>• <strong>Continuous Learning:</strong> Model improves with each loan</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-orange-50 p-4 rounded-lg border border-orange-200 mt-4">
+                <h4 className="font-semibold mb-2 text-orange-800">Interest Rate Philosophy (v2)</h4>
+                <p className="text-sm text-orange-700">
+                  Unlike v1's pure altruism, v2 introduces <strong>socially-judged, low interest</strong> (0-5% monthly) to:
+                </p>
+                <ul className="text-sm space-y-1 mt-2 text-orange-700">
+                  <li>• Compensate lenders for risk on larger amounts</li>
+                  <li>• Create sustainability for professional capital providers</li>
+                  <li>• Still far below predatory rates (10-30%+ APR)</li>
+                  <li>• Community voting can set max acceptable rates</li>
+                  <li>• Transparent pricing based on quantified risk</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Research Evidence */}
+            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 mt-6">
+              <h4 className="font-bold text-lg mb-4">Research Foundations</h4>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="font-semibold mb-2">Social + Cash Flow Outperforms Either Alone:</p>
+                  <ul className="space-y-1 ml-4">
+                    <li>• Karlan (2007): Group lending → default ↓ 7pp</li>
+                    <li>• Karlan & Zinman (2012): Peer + cash flow → AUC ≈ 0.72</li>
+                    <li>• Lenddo EFL (2016): Social + mobile → AUC ≈ 0.70</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-semibold mb-2">Cash Flow Strongest Single Variable:</p>
+                  <ul className="space-y-1 ml-4">
+                    <li>• FinRegLab (2023): Bank cash flow → AUC ≈ 0.80</li>
+                    <li>• Upstart (2022): Alt-data + ML → approval ↑ 27%</li>
+                    <li>• Tala/Branch: Mobile money → minutes approval</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Use Cases Evolution */}
+            <div className="grid md:grid-cols-3 gap-6 mt-6">
               <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h4 className="font-bold text-lg mb-4">Creator Funding</h4>
+                <div className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded inline-block mb-2">V1 Ready</div>
+                <h4 className="font-bold text-lg mb-4">Friends & Community</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• Fan-funded working capital</li>
-                  <li>• Reputation from engagement metrics</li>
-                  <li>• Advances against future content</li>
-                  <li>• Community investment without equity</li>
+                  <li>• Small emergency loans ($100-$500)</li>
+                  <li>• 0% interest, pure social trust</li>
+                  <li>• Build reputation through repayment</li>
+                  <li>• Transparent public accountability</li>
                 </ul>
               </div>
 
               <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h4 className="font-bold text-lg mb-4">DAO Treasury Pools</h4>
+                <div className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded inline-block mb-2">V2 Target</div>
+                <h4 className="font-bold text-lg mb-4">Creator Working Capital</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• Transform treasuries into member credit unions</li>
-                  <li>• Programmatic lending based on contribution</li>
-                  <li>• Governance token holders as lenders</li>
-                  <li>• Build within-community financial resilience</li>
+                  <li>• Fan-funded advances ($1k-$10k)</li>
+                  <li>• Low interest (0-3% monthly)</li>
+                  <li>• Subscriber count + engagement data</li>
+                  <li>• Repay from future content revenue</li>
                 </ul>
               </div>
 
               <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h4 className="font-bold text-lg mb-4">Cash Flow Estimation</h4>
+                <div className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded inline-block mb-2">V2 Target</div>
+                <h4 className="font-bold text-lg mb-4">Merchant Cash Advances</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• Social activity as income proxy</li>
-                  <li>• Engagement trends predict stability</li>
-                  <li>• Network growth indicates opportunity</li>
-                  <li>• On-chain history validates capacity</li>
+                  <li>• Business inventory funding ($5k-$25k)</li>
+                  <li>• Revenue-based repayment (3-5%)</li>
+                  <li>• Shopify/Stripe cash flow verified</li>
+                  <li>• Automatic deductions from sales</li>
                 </ul>
               </div>
             </div>
@@ -436,28 +596,72 @@ export default function WhitepaperPage() {
         {/* The Vision */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 border-b-2 border-[#3B9B7F] pb-4">
-            The Vision
+            The Vision: From Altruism to Algorithm
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <p>
-              LendFriend demonstrates that <strong>reputation can replace both collateral and interest</strong> when identity persists and communities witness. As social graphs become economic graphs, as trust becomes verifiable, as reputation becomes portable—every community becomes a credit union, every social network becomes a mutual aid society.
+              LendFriend demonstrates that <strong>reputation can replace collateral</strong> when identity persists and communities witness. We start with pure altruism (0% interest) to build trust and gather data. We evolve to hybrid underwriting (social + cash flow) to scale sustainably.
             </p>
 
             <p>
-              We're not building another DeFi protocol chasing yield. We're building the primitive that makes community-first finance possible. Where a teacher in Kenya can borrow for classroom supplies based on community standing. Where a developer in India can get conference funding from open-source contributions. Where a creator in Brazil can advance working capital from fan support.
+              This is the proven path: <strong>Grameen started with village trust circles, evolved to mobile money.</strong> Kiva began with manual endorsements, now uses ML scorecards. Upstart started with alternative data, now approves 27% more borrowers than traditional models.
             </p>
 
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border border-[#3B9B7F]">
-              <div className="text-center space-y-2">
-                <div>Stage 1: Friends lending on Farcaster ✓</div>
-                <div>Stage 2: Multi-protocol reputation aggregation</div>
-                <div>Stage 3: DAO and creator community pools</div>
-                <div>Stage 4: Global zero-interest social credit</div>
+            <p>
+              We're not building another DeFi protocol chasing yield. We're building the <strong>data infrastructure for social credit</strong>—where every repayment strengthens the model, where community trust becomes quantifiable, where reputation becomes portable capital.
+            </p>
+
+            <div className="bg-gradient-to-r from-green-50 via-purple-50 to-blue-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F]">
+              <h4 className="font-bold text-lg mb-3 text-[#2E7D68]">The Evolution Path</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-3">
+                  <div className="bg-green-600 text-white px-2 py-0.5 rounded text-xs font-bold">v1</div>
+                  <span><strong>Social Trust:</strong> Friends help friends at 0%, build reputation graph</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="bg-blue-600 text-white px-2 py-0.5 rounded text-xs font-bold">v1.5</div>
+                  <span><strong>Cross-Protocol:</strong> Aggregate identity across Farcaster, Lens, WorldID</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="bg-purple-600 text-white px-2 py-0.5 rounded text-xs font-bold">v2</div>
+                  <span><strong>Hybrid Underwriting:</strong> Social + cash flow → automate $10k loans at 0-5%</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="bg-gray-600 text-white px-2 py-0.5 rounded text-xs font-bold">v3+</div>
+                  <span><strong>Global Scale:</strong> DAO pools, merchant advances, $25k+ with full ML models</span>
+                </div>
               </div>
             </div>
 
-            <div className="text-center text-xl font-bold text-[#2E7D68] mt-8">
-              <strong>The infrastructure for community credit now exists. Your reputation is your collateral. Your network is your safety net.</strong>
+            <div className="grid md:grid-cols-2 gap-6 mt-6">
+              <div className="bg-green-50 p-6 rounded-2xl border border-green-200">
+                <h4 className="font-bold text-lg mb-3 text-green-800">What v1 (0%) Enables</h4>
+                <ul className="text-sm space-y-2 text-green-700">
+                  <li>✓ Build trust without extraction</li>
+                  <li>✓ Gather clean repayment data</li>
+                  <li>✓ Map social endorsement networks</li>
+                  <li>✓ Establish baseline default rates</li>
+                  <li>✓ Create transparent reputation layer</li>
+                  <li>✓ Bootstrap 500-1,000 user cohort</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-50 p-6 rounded-2xl border border-purple-200">
+                <h4 className="font-bold text-lg mb-3 text-purple-800">What v2 (Hybrid) Unlocks</h4>
+                <ul className="text-sm space-y-2 text-purple-700">
+                  <li>✓ Scale to larger loan amounts ($10k+)</li>
+                  <li>✓ Attract professional capital</li>
+                  <li>✓ Automate approval decisions (AUC &gt; 0.70)</li>
+                  <li>✓ Sustainable low rates (0-5% vs 10-30%)</li>
+                  <li>✓ Revenue-based repayment options</li>
+                  <li>✓ Creator/merchant working capital</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="text-center text-xl font-bold text-[#2E7D68] mt-8 p-6 bg-gradient-to-r from-green-50 to-purple-50 rounded-2xl border-2 border-[#3B9B7F]">
+              <p className="mb-2">Start with altruism. Gather data. Evolve to algorithm.</p>
+              <p className="text-base font-normal text-gray-700 mt-3">Your reputation is your collateral. Your network is your credit history. Your community is your underwriter.</p>
             </div>
           </div>
         </section>
