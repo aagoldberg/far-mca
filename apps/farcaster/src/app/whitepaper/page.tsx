@@ -103,6 +103,22 @@ export default function WhitepaperPage() {
                 <strong>Phase 2 (0-5%):</strong> Layer in cash flow signals and automate underwriting
               </p>
             </div>
+
+            {/* Loan Size Ceiling with Social Signals */}
+            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-300 mt-6">
+              <h4 className="font-bold mb-3 text-amber-900">Why Cash Flow Matters for Scale</h4>
+              <p className="text-amber-800 mb-3">
+                Social reputation alone has a natural ceiling on loan amounts. Research shows lenders using only
+                social and behavioral signals average <strong>~$6,000 per loan</strong>, with industry practitioners
+                reporting insufficient evidence that social data alone can reliably underwrite larger amounts.
+              </p>
+              <p className="text-amber-800">
+                <strong>To scale beyond small loans ($1k-$5k) to meaningful amounts ($10k+)</strong>, cash flow
+                verification becomes essential. This is why Phase 1 focuses on building trust with smaller loans,
+                while Phase 2 layers in bank account data and on-chain revenue streams to enable larger, more
+                impactful lending.
+              </p>
+            </div>
           </div>
         </section>
 
