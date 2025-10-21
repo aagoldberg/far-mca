@@ -59,22 +59,22 @@ export const InvestmentCard = ({ loanAddress }: InvestmentCardProps) => {
           <div className="flex items-center justify-between gap-3">
             {/* Investment Info */}
             <div className="flex-1 grid grid-cols-2 gap-3">
-              {/* Your Investment */}
+              {/* Your Contribution */}
               <div>
-                <p className="text-xs text-gray-600 mb-1">Your Investment</p>
+                <p className="text-xs text-gray-600 mb-1">Your Contribution</p>
                 <p className="text-sm font-bold text-gray-900">
                   ${formatUSDC(contribution.amount)} USDC
                 </p>
                 {contribution.sharePercentage > 0 && (
                   <p className="text-xs text-gray-500">
-                    {contribution.sharePercentage.toFixed(1)}% of total
+                    {contribution.sharePercentage.toFixed(1)}% of loan
                   </p>
                 )}
               </div>
 
-              {/* Claimable */}
+              {/* Repaid (Available to Claim) */}
               <div>
-                <p className="text-xs text-gray-600 mb-1">Claimable</p>
+                <p className="text-xs text-gray-600 mb-1">Repaid to You (0% interest)</p>
                 <p className={`text-sm font-bold ${hasClaimable ? 'text-green-600' : 'text-gray-400'}`}>
                   ${formatUSDC(contribution.claimable)} USDC
                 </p>
@@ -95,7 +95,7 @@ export const InvestmentCard = ({ loanAddress }: InvestmentCardProps) => {
                   ? 'Claiming...'
                   : isClaimSuccess
                   ? 'Claimed ✓'
-                  : 'Claim'}
+                  : 'Claim Back'}
               </button>
             )}
           </div>
