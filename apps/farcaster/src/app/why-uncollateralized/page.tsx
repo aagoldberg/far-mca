@@ -1,50 +1,33 @@
 'use client';
 
-import TabNavigation from '../../components/TabNavigation';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { sdk } from '@farcaster/miniapp-sdk';
 
 export default function WhyUncollateralizedPage() {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        sdk.actions.ready();
-        console.log('[WhyUncollateralizedPage] Farcaster Mini App ready signal sent');
-      } catch (error) {
-        console.error('[WhyUncollateralizedPage] Error sending ready signal:', error);
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <div className="frame-container">
-      {/* Tab Navigation */}
-      <TabNavigation />
-
-      {/* Content */}
-      <div className="w-full max-w-4xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-12">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] text-white py-12">
+        <div className="max-w-4xl mx-auto px-6">
           <Link
             href="/whitepaper"
-            className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] mb-4 font-medium"
+            className="inline-flex items-center gap-2 text-white hover:text-gray-200 mb-4 font-medium"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Whitepaper
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            The Credit Access Gap: Why Uncollateralized Lending?
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            The Credit Access Gap
           </h1>
-          <p className="text-xl text-gray-600">
-            Understanding why traditional finance, Web2 P2P, and DeFi overcollateralization all failed to solve credit access.
+          <p className="text-xl md:text-2xl font-light">
+            Why Uncollateralized Lending?
           </p>
         </div>
+      </div>
 
+      {/* Content */}
+      <div className="w-full max-w-4xl mx-auto px-6 py-16">
         {/* Introduction */}
         <section className="mb-12">
           <div className="bg-gradient-to-r from-gray-50 to-blue-50 border-l-4 border-[#3B9B7F] p-6 rounded-r-2xl">
@@ -319,6 +302,64 @@ export default function WhyUncollateralizedPage() {
           </div>
         </section>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-300 py-12">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-white font-bold text-lg mb-4">LendFriend</h3>
+              <p className="text-sm text-gray-400">
+                Reputation-backed credit on Farcaster. Start with 0% interest, scale with algorithms.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-white font-bold text-lg mb-4">Learn More</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="/whitepaper" className="hover:text-white transition-colors">
+                    Whitepaper
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:text-white transition-colors">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/why-uncollateralized" className="hover:text-white transition-colors">
+                    Why Uncollateralized?
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-white font-bold text-lg mb-4">Get Started</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="/" className="hover:text-white transition-colors">
+                    Browse Loans
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/create" className="hover:text-white transition-colors">
+                    Create Loan
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/supporting" className="hover:text-white transition-colors">
+                    My Investments
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+            <p>Built on Base • Powered by USDC • Secured by Smart Contracts</p>
+            <p className="mt-2">Open source • Transparent • Community-governed</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
