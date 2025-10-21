@@ -118,13 +118,13 @@ export default function WhitepaperPage() {
               and transparent accountability visible to all.
             </p>
 
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-2xl">
-              <p className="text-blue-900 font-semibold mb-2">
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] p-6 rounded-r-2xl">
+              <p className="text-gray-900 font-semibold mb-2">
                 For a detailed breakdown of why traditional finance, Web2 P2P, and DeFi all failed:
               </p>
               <Link
                 href="/why-uncollateralized"
-                className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900 font-medium"
+                className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 font-medium"
               >
                 Read the full analysis
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,15 +145,15 @@ export default function WhitepaperPage() {
               Communities have always helped their members. Friends lend to friends every day. But these trust-based transactions create no verifiable credit history. <strong>To build algorithmic credit scoring, you first need behavioral data.</strong>
             </p>
 
-            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
-              <h4 className="font-bold mb-3 text-blue-800">The Cold Start Dilemma</h4>
-              <p className="mb-3 text-blue-700">You can't train credit models without repayment data. You can't get repayment data without loans. You can't make loans without credit models.</p>
-              <p className="font-semibold text-blue-900">Solution: Start with pure social trust (0% interest), gather data, evolve to hybrid underwriting.</p>
+            <div className="bg-gray-50 border-l-4 border-[#3B9B7F] p-6 shadow-sm">
+              <h4 className="font-bold mb-3 text-gray-900">The Cold Start Dilemma</h4>
+              <p className="mb-3 text-gray-700 leading-relaxed">You can't train credit models without repayment data. You can't get repayment data without loans. You can't make loans without credit models.</p>
+              <p className="font-semibold text-gray-900">Solution: Start with pure social trust (0% interest), gather data, evolve to hybrid underwriting.</p>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
-              <h4 className="font-bold mb-4">Why Existing Solutions Can't Bootstrap Social Credit:</h4>
-              <ul className="space-y-2">
+            <div className="bg-white border border-gray-200 p-6 shadow-sm rounded-lg">
+              <h4 className="font-bold mb-4 text-gray-900">Why Existing Solutions Can't Bootstrap Social Credit:</h4>
+              <ul className="space-y-2 text-gray-700">
                 <li>• <strong>Traditional lending:</strong> Requires credit history you're trying to build</li>
                 <li>• <strong>DeFi overcollateralized:</strong> Defeats the purpose of credit expansion</li>
                 <li>• <strong>P2P with interest:</strong> Profit motive biases early data, attracts extractive lenders</li>
@@ -165,24 +165,24 @@ export default function WhitepaperPage() {
               Every successful fintech lender followed this path: <strong>Prosper (social auctions → algorithms), Branch (Kiva founder's evolution to ML), Tala (mobile signals → causal inference), Upstart (alt-data → ML)</strong>—all started with social/alternative proof before automating. LendFriend does the same, but on-chain and transparent.
             </p>
 
-            <div className="bg-green-50 p-6 rounded-2xl border border-[#3B9B7F]">
-              <p className="font-semibold text-[#2E7D68] text-xl text-center mb-2">
-                <strong>Phase 1 (0%):</strong> Build trust graph and gather clean repayment data
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-[#3B9B7F] p-8 shadow-sm">
+              <p className="font-bold text-[#2E7D68] text-xl text-center mb-2">
+                Phase 1 (0%): Build trust graph and gather clean repayment data
               </p>
-              <p className="text-center text-gray-700">
-                <strong>Phase 2 (0-5%):</strong> Layer in cash flow signals and automate underwriting
+              <p className="text-center text-gray-700 font-medium">
+                Phase 2 (0-5%): Layer in cash flow signals and automate underwriting
               </p>
             </div>
 
             {/* Loan Size Ceiling with Social Signals */}
-            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-300 mt-6">
-              <h4 className="font-bold mb-3 text-amber-900">Why Cash Flow Matters for Scale</h4>
-              <p className="text-amber-800 mb-3">
+            <div className="bg-white border border-gray-200 p-6 shadow-sm rounded-lg mt-6">
+              <h4 className="font-bold mb-3 text-gray-900">Why Cash Flow Matters for Scale</h4>
+              <p className="text-gray-700 mb-3">
                 Social reputation alone has a natural ceiling on loan amounts. Research shows lenders using only
                 social and behavioral signals average <strong>~$6,000 per loan</strong>, with industry practitioners
                 reporting insufficient evidence that social data alone can reliably underwrite larger amounts.
               </p>
-              <p className="text-amber-800">
+              <p className="text-gray-700">
                 <strong>To scale beyond small loans ($1k-$5k) to meaningful amounts ($10k+)</strong>, cash flow
                 verification becomes essential. This is why Phase 1 focuses on building trust with smaller loans,
                 while Phase 2 layers in bank account data and on-chain revenue streams to enable larger, more
@@ -236,14 +236,14 @@ export default function WhitepaperPage() {
               </p>
             </div>
 
-            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
-              <h4 className="font-bold mb-3 text-blue-800">Soulbound Tokens (SBTs): The Proposed Solution</h4>
-              <p className="text-blue-700 mb-3">
+            <div className="bg-blue-50 p-6 rounded-2xl border-l-4 border-blue-500 shadow-sm">
+              <h4 className="font-bold mb-3 text-blue-900">Soulbound Tokens (SBTs): The Proposed Solution</h4>
+              <p className="text-blue-800 mb-3">
                 Buterin and Weyl proposed <strong>non-transferable "soulbound" tokens (SBTs)</strong> representing
                 commitments, credentials, and affiliations that "can encode the trust networks of the real economy
                 to establish provenance and reputation."
               </p>
-              <p className="text-blue-700">
+              <p className="text-blue-800">
                 Key insight: <strong>"To seek an undercollateralized loan, reputation will be the collateral."</strong>
                 Education credentials, work history, and rental contracts could serve as a persistent record of
                 credit-relevant history—a kind of <strong>"non-seizable reputational collateral."</strong>
@@ -268,7 +268,7 @@ export default function WhitepaperPage() {
             </p>
 
             {/* How LendFriend Implements This */}
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-2xl p-8 mt-6">
+            <div className="bg-gradient-to-r from-green-50 via-blue-50 to-indigo-50 border-2 border-[#3B9B7F] rounded-2xl p-8 mt-6 shadow-sm">
               <h4 className="font-bold text-xl text-[#2E7D68] mb-4">How LendFriend Implements Ethereum's Vision</h4>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -367,7 +367,7 @@ export default function WhitepaperPage() {
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h4 className="font-bold text-lg mb-4">Layer 0: Identity Infrastructure</h4>
                 <ul className="space-y-2 text-sm">
                   <li><strong>Farcaster IDs:</strong> Persistent, cryptographically-controlled identity</li>
@@ -378,7 +378,7 @@ export default function WhitepaperPage() {
                 </ul>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h4 className="font-bold text-lg mb-4">Layer 2: Application Layer</h4>
                 <ul className="space-y-2 text-sm">
                   <li><strong>LendFriend.co:</strong> Farcaster Frame-native interface</li>
@@ -390,7 +390,7 @@ export default function WhitepaperPage() {
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm">
               <h4 className="font-bold text-lg mb-4">Layer 1: Smart Contract Protocol</h4>
               <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
                 <div>MicroLoanFactory.sol (Base)</div>
@@ -419,7 +419,7 @@ export default function WhitepaperPage() {
             Reputation Mechanics
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm">
               <h4 className="font-bold text-lg mb-4">Multi-Signal Risk Assessment</h4>
               <p className="mb-4">LendFriend evaluates borrower trustworthiness using multiple independent signals:</p>
               <div className="grid md:grid-cols-2 gap-6">
@@ -463,7 +463,7 @@ export default function WhitepaperPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h4 className="font-bold text-lg mb-4">Lending Risk Levels</h4>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
@@ -471,21 +471,21 @@ export default function WhitepaperPage() {
                     <span>High Neynar (&gt;0.7) OR verified human + good OpenRank</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-yellow-600 font-bold">Medium:</span>
+                    <span className="text-gray-600 font-bold">Medium:</span>
                     <span>Wallet activity + moderate social presence</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-orange-600 font-bold">Higher:</span>
+                    <span className="text-gray-700 font-bold">Higher:</span>
                     <span>Limited signals, new account, or sparse activity</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">High Risk:</span>
+                    <span className="text-gray-800 font-bold">High Risk:</span>
                     <span>Low Neynar (&lt;0.4) indicating spam behavior</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h4 className="font-bold text-lg mb-4">Implicit Vouching</h4>
                 <p className="text-sm mb-3">Lender reputation signals loan quality:</p>
                 <ul className="space-y-2 text-sm">
@@ -505,7 +505,7 @@ export default function WhitepaperPage() {
             Why Zero Interest Works
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
-            <div className="bg-green-50 p-6 rounded-2xl border border-[#3B9B7F]">
+            <div className="bg-green-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
               <h4 className="font-bold text-lg mb-4 text-[#2E7D68]">Economic Sustainability</h4>
               <p className="mb-4">Zero interest doesn't mean zero value. The system creates value through:</p>
               <ol className="space-y-2 text-sm">
@@ -518,9 +518,9 @@ export default function WhitepaperPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6">
-                <h4 className="font-bold text-lg mb-4 text-blue-800">For Borrowers</h4>
-                <ul className="space-y-2 text-sm text-blue-700">
+              <div className="bg-gray-50 border border-gray-300 rounded-2xl p-6 shadow-sm">
+                <h4 className="font-bold text-lg mb-4 text-gray-900">For Borrowers</h4>
+                <ul className="space-y-2 text-sm text-gray-700">
                   <li>✓ No interest = predictable repayment</li>
                   <li>✓ No credit check = faster access</li>
                   <li>✓ No collateral = true liquidity</li>
@@ -529,9 +529,9 @@ export default function WhitepaperPage() {
                 </ul>
               </div>
 
-              <div className="bg-purple-50 border border-purple-200 rounded-2xl p-6">
-                <h4 className="font-bold text-lg mb-4 text-purple-800">For Lenders</h4>
-                <ul className="space-y-2 text-sm text-purple-700">
+              <div className="bg-gray-50 border border-gray-300 rounded-2xl p-6 shadow-sm">
+                <h4 className="font-bold text-lg mb-4 text-gray-900">For Lenders</h4>
+                <ul className="space-y-2 text-sm text-gray-700">
                   <li>✓ Help community members</li>
                   <li>✓ Build social capital</li>
                   <li>✓ Support ecosystem growth</li>
@@ -549,9 +549,9 @@ export default function WhitepaperPage() {
             Network Effects and Growth
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
-            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
-              <h4 className="font-bold text-lg mb-4 text-blue-800">The Virtuous Cycle</h4>
-              <ol className="space-y-2 text-blue-700">
+            <div className="bg-gray-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
+              <h4 className="font-bold text-lg mb-4 text-gray-900">The Virtuous Cycle</h4>
+              <ol className="space-y-2 text-gray-700">
                 <li>1. <strong>Successful loan</strong> → Builds borrower reputation</li>
                 <li>2. <strong>Public repayment</strong> → Increases system trust</li>
                 <li>3. <strong>Higher trust</strong> → More lenders participate</li>
@@ -561,10 +561,10 @@ export default function WhitepaperPage() {
               </ol>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div className="bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
               <h4 className="font-bold text-lg mb-4">Growth Roadmap: Bootstrap → Scale → Automate</h4>
               <div className="space-y-4 text-sm">
-                <div className="bg-green-50 p-3 rounded border border-green-200">
+                <div className="bg-green-50 p-3 rounded border-l-4 border-green-500">
                   <strong className="text-[#2E7D68]">v1.0 Launch: Social Trust at 0% (Q4 2025)</strong>
                   <ul className="ml-4 mt-2 space-y-1">
                     <li>• Bootstrap 500-1,000 Farcaster users</li>
@@ -574,8 +574,8 @@ export default function WhitepaperPage() {
                     <li>• Frame-native interface for viral growth</li>
                   </ul>
                 </div>
-                <div className="bg-blue-50 p-3 rounded border border-blue-200">
-                  <strong className="text-blue-800">v1.5 Evolution: Multi-Protocol Identity (Q1 2026)</strong>
+                <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-500">
+                  <strong className="text-blue-900">v1.5 Evolution: Multi-Protocol Identity (Q1 2026)</strong>
                   <ul className="ml-4 mt-2 space-y-1">
                     <li>• Lens Protocol integration for broader reputation</li>
                     <li>• WorldID verification for stronger Sybil resistance</li>
@@ -584,8 +584,8 @@ export default function WhitepaperPage() {
                     <li>• Train initial hybrid models on v1 repayment data</li>
                   </ul>
                 </div>
-                <div className="bg-purple-50 p-3 rounded border border-purple-200">
-                  <strong className="text-purple-800">v2.0 Hybrid: Cash Flow + Socially-Judged Interest (Q2 2026)</strong>
+                <div className="bg-indigo-50 p-3 rounded border-l-4 border-indigo-500">
+                  <strong className="text-indigo-900">v2.0 Hybrid: Cash Flow + Socially-Judged Interest (Q2 2026)</strong>
                   <ul className="ml-4 mt-2 space-y-1">
                     <li>• Plaid integration for bank account verification</li>
                     <li>• On-chain revenue streams (DEX, NFT, token income)</li>
@@ -620,9 +620,9 @@ export default function WhitepaperPage() {
               LendFriend follows the proven path pioneered by successful microfinance and fintech lenders: start with social proof, gather behavioral data, automate trust.
             </p>
 
-            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 mb-6">
-              <h4 className="font-bold text-lg mb-4 text-blue-800">The Proven Sequence (Prosper → Branch → Tala → Upstart)</h4>
-              <ol className="space-y-3 text-blue-700">
+            <div className="bg-gray-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm mb-6">
+              <h4 className="font-bold text-lg mb-4 text-gray-900">The Proven Sequence (Prosper → Branch → Tala → Upstart)</h4>
+              <ol className="space-y-3 text-gray-700">
                 <li><strong>Step 1: Social Proof</strong> → Prosper social networks (2006), Branch from Kiva founder's group lending roots</li>
                 <li><strong>Step 2: Digitize Signals</strong> → Mobile + social graph data (Tala: 250 points, Branch: 2,000 points, AUC ≈ 0.65-0.75)</li>
                 <li><strong>Step 3: Algorithmic Models</strong> → Prosper's algorithmic pricing (2010), Tala's causal inference ML (AUC &gt; 0.70)</li>
@@ -631,9 +631,9 @@ export default function WhitepaperPage() {
             </div>
 
             {/* Version 1: Current State */}
-            <div className="bg-white border-2 border-[#3B9B7F] rounded-2xl p-6">
+            <div className="bg-white border-2 border-[#3B9B7F] rounded-2xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-[#3B9B7F] text-white px-3 py-1 rounded-lg font-bold">Version 1.0</div>
+                <div className="bg-[#3B9B7F] text-white px-3 py-1 rounded-lg font-bold text-sm">Version 1.0</div>
                 <h3 className="text-xl font-bold text-[#2E7D68]">Social Underwriting at 0% Interest</h3>
               </div>
 
@@ -664,9 +664,9 @@ export default function WhitepaperPage() {
                 </div>
               </div>
 
-              <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                <h4 className="font-semibold mb-2 text-yellow-800">Data Collection Goals (v1)</h4>
-                <ul className="text-sm space-y-1 text-yellow-700">
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-300">
+                <h4 className="font-semibold mb-2 text-gray-800">Data Collection Goals (v1)</h4>
+                <ul className="text-sm space-y-1 text-gray-700">
                   <li>✓ Bootstrap with 500-1,000 users to establish baseline repayment patterns</li>
                   <li>✓ Capture repayment streaks, timing, and community response</li>
                   <li>✓ Map endorsement network density and quality</li>
@@ -677,30 +677,30 @@ export default function WhitepaperPage() {
             </div>
 
             {/* Version 2: Future State */}
-            <div className="bg-white border-2 border-purple-300 rounded-2xl p-6 mt-6">
+            <div className="bg-white border-2 border-gray-300 rounded-2xl p-6 mt-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-purple-600 text-white px-3 py-1 rounded-lg font-bold">Version 2.0</div>
-                <h3 className="text-xl font-bold text-purple-900">Hybrid Underwriting with Socially-Judged Interest</h3>
+                <div className="bg-gray-700 text-white px-3 py-1 rounded-lg font-bold">Version 2.0</div>
+                <h3 className="text-xl font-bold text-gray-900">Hybrid Underwriting with Socially-Judged Interest</h3>
               </div>
 
               <p className="mb-4">
                 <strong>Future evolution:</strong> Combine v1 social data with real cash flow signals. Automate larger loans with low, community-appropriate interest rates.
               </p>
 
-              <div className="bg-purple-50 p-4 rounded-lg border border-purple-200 mb-4">
-                <h4 className="font-semibold mb-3 text-purple-800">Research-Backed Model</h4>
-                <p className="text-sm text-purple-700 mb-3">
+              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 shadow-sm mb-4">
+                <h4 className="font-semibold mb-3 text-blue-900">Research-Backed Model</h4>
+                <p className="text-sm text-blue-800 mb-3">
                   Studies show hybrid social + cash-flow models achieve <strong>AUC ≈ 0.72-0.80</strong> vs 0.65 for social alone (Karlan & Zinman 2012; FinRegLab 2023).
                 </p>
-                <div className="bg-white p-3 rounded border border-purple-200 font-mono text-xs text-gray-800">
+                <div className="bg-white p-3 rounded border border-gray-300 font-mono text-xs text-gray-800">
                   P(default) = f(repayment_streaks, endorsement_strength, transaction_volatility)
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                  <h4 className="font-semibold mb-2 text-purple-800">Additional Data Sources</h4>
-                  <ul className="text-sm space-y-1 text-purple-700">
+                <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+                  <h4 className="font-semibold mb-2 text-blue-900">Additional Data Sources</h4>
+                  <ul className="text-sm space-y-1 text-blue-800">
                     <li>• <strong>Plaid Integration:</strong> Real bank account cash flow</li>
                     <li>• <strong>On-Chain Revenue:</strong> DEX fees, NFT sales, token streams</li>
                     <li>• <strong>Merchant Data:</strong> Shopify/Stripe receipts</li>
@@ -709,9 +709,9 @@ export default function WhitepaperPage() {
                   </ul>
                 </div>
 
-                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                  <h4 className="font-semibold mb-2 text-purple-800">Automation Capabilities</h4>
-                  <ul className="text-sm space-y-1 text-purple-700">
+                <div className="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-400">
+                  <h4 className="font-semibold mb-2 text-indigo-900">Automation Capabilities</h4>
+                  <ul className="text-sm space-y-1 text-indigo-800">
                     <li>• <strong>Auto-Approval:</strong> Loans &lt;$10k with AUC &gt; 0.70</li>
                     <li>• <strong>Dynamic Pricing:</strong> 0-5% monthly based on risk</li>
                     <li>• <strong>Larger Tickets:</strong> Scale to $25k+ with proven model</li>
@@ -721,12 +721,12 @@ export default function WhitepaperPage() {
                 </div>
               </div>
 
-              <div className="bg-orange-50 p-4 rounded-lg border border-orange-200 mt-4">
-                <h4 className="font-semibold mb-2 text-orange-800">Interest Rate Philosophy (v2)</h4>
-                <p className="text-sm text-orange-700">
+              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 shadow-sm mt-4">
+                <h4 className="font-semibold mb-2 text-blue-900">Interest Rate Philosophy (v2)</h4>
+                <p className="text-sm text-blue-800">
                   Unlike v1's pure altruism, v2 introduces <strong>socially-judged, low interest</strong> (0-5% monthly) to:
                 </p>
-                <ul className="text-sm space-y-1 mt-2 text-orange-700">
+                <ul className="text-sm space-y-1 mt-2 text-blue-800">
                   <li>• Compensate lenders for risk on larger amounts</li>
                   <li>• Create sustainability for professional capital providers</li>
                   <li>• Still far below predatory rates (10-30%+ APR)</li>
@@ -737,7 +737,7 @@ export default function WhitepaperPage() {
             </div>
 
             {/* Research Evidence */}
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 mt-6">
+            <div className="bg-gray-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm mt-6">
               <h4 className="font-bold text-lg mb-4">Research Foundations</h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -761,7 +761,7 @@ export default function WhitepaperPage() {
 
             {/* Use Cases Evolution */}
             <div className="grid md:grid-cols-3 gap-6 mt-6">
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <div className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded inline-block mb-2">V1 Ready</div>
                 <h4 className="font-bold text-lg mb-4">Friends & Community</h4>
                 <ul className="space-y-2 text-sm">
@@ -772,8 +772,8 @@ export default function WhitepaperPage() {
                 </ul>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <div className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded inline-block mb-2">V2 Target</div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <div className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded inline-block mb-2">V2 Target</div>
                 <h4 className="font-bold text-lg mb-4">Creator Working Capital</h4>
                 <ul className="space-y-2 text-sm">
                   <li>• Fan-funded advances ($1k-$10k)</li>
@@ -783,8 +783,8 @@ export default function WhitepaperPage() {
                 </ul>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                <div className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded inline-block mb-2">V2 Target</div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <div className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded inline-block mb-2">V2 Target</div>
                 <h4 className="font-bold text-lg mb-4">Merchant Cash Advances</h4>
                 <ul className="space-y-2 text-sm">
                   <li>• Business inventory funding ($5k-$25k)</li>
@@ -815,11 +815,11 @@ export default function WhitepaperPage() {
               We're not building another DeFi protocol chasing yield. We're building the <strong>data infrastructure for social credit</strong>—where every repayment strengthens the model, where community trust becomes quantifiable, where reputation becomes portable capital.
             </p>
 
-            <div className="bg-gradient-to-r from-green-50 via-purple-50 to-blue-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F]">
+            <div className="bg-gradient-to-r from-green-50 via-blue-50 to-indigo-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
               <h4 className="font-bold text-lg mb-3 text-[#2E7D68]">The Evolution Path</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-3">
-                  <div className="bg-green-600 text-white px-2 py-0.5 rounded text-xs font-bold">v1</div>
+                  <div className="bg-[#3B9B7F] text-white px-2 py-0.5 rounded text-xs font-bold">v1</div>
                   <span><strong>Social Trust:</strong> Friends help friends at 0%, build reputation graph</span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -827,19 +827,19 @@ export default function WhitepaperPage() {
                   <span><strong>Cross-Protocol:</strong> Aggregate identity across Farcaster, Lens, WorldID</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="bg-purple-600 text-white px-2 py-0.5 rounded text-xs font-bold">v2</div>
+                  <div className="bg-indigo-600 text-white px-2 py-0.5 rounded text-xs font-bold">v2</div>
                   <span><strong>Hybrid Underwriting:</strong> Social + cash flow → automate $10k loans at 0-5%</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="bg-gray-600 text-white px-2 py-0.5 rounded text-xs font-bold">v3+</div>
+                  <div className="bg-gray-700 text-white px-2 py-0.5 rounded text-xs font-bold">v3+</div>
                   <span><strong>Global Scale:</strong> DAO pools, merchant advances, $25k+ with full ML models</span>
                 </div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mt-6">
-              <div className="bg-green-50 p-6 rounded-2xl border border-green-200">
-                <h4 className="font-bold text-lg mb-3 text-green-800">What v1 (0%) Enables</h4>
+              <div className="bg-green-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
+                <h4 className="font-bold text-lg mb-3 text-[#2E7D68]">What v1 (0%) Enables</h4>
                 <ul className="text-sm space-y-2 text-green-700">
                   <li>✓ Build trust without extraction</li>
                   <li>✓ Gather clean repayment data</li>
@@ -850,9 +850,9 @@ export default function WhitepaperPage() {
                 </ul>
               </div>
 
-              <div className="bg-purple-50 p-6 rounded-2xl border border-purple-200">
-                <h4 className="font-bold text-lg mb-3 text-purple-800">What v2 (Hybrid) Unlocks</h4>
-                <ul className="text-sm space-y-2 text-purple-700">
+              <div className="bg-blue-50 p-6 rounded-2xl border-l-4 border-blue-500 shadow-sm">
+                <h4 className="font-bold text-lg mb-3 text-blue-900">What v2 (Hybrid) Unlocks</h4>
+                <ul className="text-sm space-y-2 text-blue-800">
                   <li>✓ Scale to larger loan amounts ($10k+)</li>
                   <li>✓ Attract professional capital</li>
                   <li>✓ Automate approval decisions (AUC &gt; 0.70)</li>
@@ -863,7 +863,7 @@ export default function WhitepaperPage() {
               </div>
             </div>
 
-            <div className="text-center text-xl font-bold text-[#2E7D68] mt-8 p-6 bg-gradient-to-r from-green-50 to-purple-50 rounded-2xl border-2 border-[#3B9B7F]">
+            <div className="text-center text-xl font-bold text-[#2E7D68] mt-8 p-6 bg-gradient-to-r from-green-50 via-blue-50 to-indigo-50 rounded-2xl border-2 border-[#3B9B7F] shadow-md">
               <p className="mb-2">Start with altruism. Gather data. Evolve to algorithm.</p>
               <p className="text-base font-normal text-gray-700 mt-3">Your reputation is your collateral. Your network is your credit history. Your community is your underwriter.</p>
             </div>
@@ -876,7 +876,7 @@ export default function WhitepaperPage() {
             Technical Specifications
           </h2>
           <div className="space-y-6 text-gray-700 leading-relaxed">
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div className="bg-gray-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
               <h4 className="font-bold text-lg mb-4">Smart Contract Details</h4>
               <ul className="space-y-2 text-sm">
                 <li><strong>Network:</strong> Base (Ethereum L2)</li>
@@ -888,7 +888,7 @@ export default function WhitepaperPage() {
               </ul>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div className="bg-gray-50 p-6 rounded-2xl border-l-4 border-[#3B9B7F] shadow-sm">
               <h4 className="font-bold text-lg mb-4">Identity Verification APIs</h4>
               <ul className="space-y-2 text-sm">
                 <li><strong>Neynar:</strong> Farcaster social graph and spam detection</li>
