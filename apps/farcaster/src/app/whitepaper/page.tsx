@@ -44,6 +44,37 @@ export default function WhitepaperPage() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-6 py-16">
+        {/* Introduction */}
+        <section className="mb-16">
+          <div className="prose prose-lg max-w-none">
+            <p className="text-xl leading-relaxed text-gray-800 mb-6">
+              Crypto promised financial inclusion. It delivered overcollateralized lending—deposit $150 to borrow $100.
+              This isn't broken DeFi. <strong>It's DeFi that never solved the actual problem.</strong>
+            </p>
+
+            <p className="text-lg leading-relaxed text-gray-700 mb-6">
+              True credit expansion means accessing capital you don't already have. It means a small business owner
+              borrowing for inventory, a creator financing equipment, a student covering expenses—without requiring
+              assets they don't possess. <strong>This is what 1.7 billion unbanked people need.</strong> This is what
+              overcollateralized DeFi categorically cannot provide.
+            </p>
+
+            <p className="text-lg leading-relaxed text-gray-700 mb-6">
+              The missing piece isn't capital—DeFi has billions in TVL. The missing piece is <strong>reputation</strong>.
+              Anonymous wallets can't build credit history. Without persistent identity and verifiable social capital,
+              collateral becomes the only signal of creditworthiness. This is why Aave and Compound require 150%+
+              collateralization—not because it's good design, but because it's the only design possible without identity.
+            </p>
+
+            <p className="text-lg leading-relaxed text-gray-700">
+              <strong>LendFriend solves this</strong> by making reputation verifiable, portable, and programmable.
+              We leverage Farcaster's persistent identity (FIDs), multi-protocol reputation scoring (OpenRank, Neynar,
+              Gitcoin Passport), and transparent on-chain repayment records to enable <em>actual credit expansion</em>—lending
+              to people based on who they are and how they behave, not just what they already own.
+            </p>
+          </div>
+        </section>
+
         {/* Manifesto */}
         <section className="mb-16">
           <div className="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-2xl border-l-4 border-[#3B9B7F]">
