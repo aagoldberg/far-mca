@@ -1,7 +1,7 @@
 'use client';
 
 import TabNavigation from '../../components/TabNavigation';
-import { LoanCardWrapper } from '../../components/LoanList';
+import { InvestmentCard } from '../../components/InvestmentCard';
 import { useEffect } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import { useAccount } from 'wagmi';
@@ -90,7 +90,7 @@ export default function SupportingPage() {
 
             <div className="grid grid-cols-1 gap-4">
               {loanAddresses.map((loanAddress) => (
-                <LoanCardWrapper key={loanAddress} loanAddress={loanAddress} />
+                <InvestmentCard key={loanAddress} loanAddress={loanAddress} />
               ))}
             </div>
           </>
