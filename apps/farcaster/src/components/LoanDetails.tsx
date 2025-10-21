@@ -1,6 +1,6 @@
 'use client';
 
-import { useLoanData, useContribution, useContributors, useRefund, useRepay, calculateRepaymentProgress } from '@/hooks/useMicroLoan';
+import { useLoanData, useContribution, useContributors, useRefund, useRepay, useDisburse, calculateRepaymentProgress } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCAllowance, useUSDCApprove } from '@/hooks/useUSDC';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useENSProfile } from '@/hooks/useENSProfile';
@@ -80,6 +80,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
     isSuccess: isRefundSuccess
   } = useRefund();
 
+  // Disbursement hook
+  const {
+    disburse: disburseLoan,
+    isPending: isDisbursePending,
+    isConfirming: isDisburseConfirming,
+    isSuccess: isDisburseSuccess
+  } = useDisburse();
+
   // Repayment state and hooks
   const [repaymentAmount, setRepaymentAmount] = useState('');
   const { allowance: usdcAllowance } = useUSDCAllowance(userAddress, loanAddress);
@@ -133,6 +141,12 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       showToast('Refund claimed successfully!', 'success');
     }
   }, [isRefundSuccess, showToast]);
+
+  useEffect(() => {
+    if (isDisburseSuccess) {
+      showToast('Funds disbursed successfully!', 'success');
+    }
+  }, [isDisburseSuccess, showToast]);
 
   // Fetch metadata from IPFS with caching
   useEffect(() => {
@@ -709,6 +723,44 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
         )}
       </div>
+
+      {/* Disbursement button (borrower only, when fully funded but not yet disbursed) */}
+      {isFunded && !loanData.active && userAddress && userAddress.toLowerCase() === loanData.borrower.toLowerCase() && (
+        <div className="mb-6">
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-green-900 mb-1">
+                  Loan Fully Funded!
+                </h3>
+                <p className="text-sm text-green-800 mb-3">
+                  Your loan has reached its funding goal. Click below to disburse the funds to your wallet.
+                </p>
+                <div className="flex items-baseline gap-2 mb-3">
+                  <span className="text-xs text-green-700">Amount to disburse:</span>
+                  <span className="text-lg font-bold text-green-900">
+                    ${formatUSDC(loanData.principal)} USDC
+                  </span>
+                </div>
+                <button
+                  onClick={() => disburseLoan(loanAddress)}
+                  disabled={isDisbursePending || isDisburseConfirming || isDisburseSuccess}
+                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+                >
+                  {isDisbursePending || isDisburseConfirming
+                    ? 'Processing Disbursement...'
+                    : isDisburseSuccess
+                    ? 'Disbursed! ✓'
+                    : 'Claim Funds'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Description */}
       <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
