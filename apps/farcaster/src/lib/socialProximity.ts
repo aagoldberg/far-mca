@@ -221,3 +221,221 @@ export function getRiskEmoji(riskTier: 'LOW' | 'MEDIUM' | 'HIGH'): string {
       return '🔴';
   }
 }
+
+/**
+ * Loan-level social support score
+ * Measures how well-connected existing lenders are to the borrower
+ */
+export interface LoanSocialSupport {
+  totalLenders: number;
+  lendersWithConnections: number;      // Lenders with 5+ mutual connections with borrower
+  averageMutualConnections: number;    // Average mutual connections across all lenders
+  percentageFromNetwork: number;       // % of lenders who are connected to borrower
+  supportStrength: 'STRONG' | 'MODERATE' | 'WEAK' | 'NONE';
+  lenderDetails?: Array<{
+    address: string;
+    fid?: number;
+    mutualConnections: number;
+    isConnected: boolean;
+  }>;
+}
+
+// Cache for loan social support calculations (30 min TTL)
+const socialSupportCache = new Map<string, { data: LoanSocialSupport; timestamp: number }>();
+const SOCIAL_SUPPORT_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+
+/**
+ * Calculate social support for a loan
+ * This measures how close existing lenders are to the borrower (Kiva's research finding)
+ *
+ * @param borrowerAddress Borrower's wallet address
+ * @param lenderAddresses Array of contributor wallet addresses
+ * @returns Aggregated social support score
+ */
+export async function calculateLoanSocialSupport(
+  borrowerAddress: `0x${string}`,
+  lenderAddresses: `0x${string}`[]
+): Promise<LoanSocialSupport> {
+  // Check cache first
+  const cacheKey = `${borrowerAddress}:${lenderAddresses.sort().join(',')}`;
+  const cached = socialSupportCache.get(cacheKey);
+
+  if (cached && Date.now() - cached.timestamp < SOCIAL_SUPPORT_CACHE_TTL) {
+    console.log('[Social Support] Cache hit for loan');
+    return cached.data;
+  }
+
+  // No lenders yet
+  if (lenderAddresses.length === 0) {
+    const result: LoanSocialSupport = {
+      totalLenders: 0,
+      lendersWithConnections: 0,
+      averageMutualConnections: 0,
+      percentageFromNetwork: 0,
+      supportStrength: 'NONE',
+      lenderDetails: [],
+    };
+
+    socialSupportCache.set(cacheKey, {
+      data: result,
+      timestamp: Date.now(),
+    });
+
+    return result;
+  }
+
+  try {
+    // Import profile fetching
+    const { neynarClient } = await import('./neynar');
+
+    // Fetch borrower's Farcaster profile to get FID
+    const borrowerResponse = await neynarClient.fetchBulkUsers([borrowerAddress]);
+    const borrowerUser = borrowerResponse?.[borrowerAddress]?.[0] || borrowerResponse?.[borrowerAddress.toLowerCase()]?.[0];
+
+    if (!borrowerUser) {
+      // Borrower has no Farcaster profile - can't calculate social support
+      console.log('[Social Support] Borrower has no Farcaster profile');
+      const result: LoanSocialSupport = {
+        totalLenders: lenderAddresses.length,
+        lendersWithConnections: 0,
+        averageMutualConnections: 0,
+        percentageFromNetwork: 0,
+        supportStrength: 'NONE',
+      };
+
+      socialSupportCache.set(cacheKey, {
+        data: result,
+        timestamp: Date.now(),
+      });
+
+      return result;
+    }
+
+    const borrowerFid = borrowerUser.fid;
+    const borrowerScore = borrowerUser.score;
+
+    // Fetch lender profiles in bulk
+    const lendersResponse = await neynarClient.fetchBulkUsers(lenderAddresses);
+
+    // Calculate proximity for each lender
+    const lenderProximities = await Promise.all(
+      lenderAddresses.map(async (lenderAddress) => {
+        const lenderUser = lendersResponse?.[lenderAddress]?.[0] || lendersResponse?.[lenderAddress.toLowerCase()]?.[0];
+
+        if (!lenderUser) {
+          // Lender has no Farcaster profile
+          return {
+            address: lenderAddress,
+            fid: undefined,
+            mutualConnections: 0,
+            isConnected: false,
+          };
+        }
+
+        // Calculate proximity between borrower and this lender
+        const proximity = await calculateSocialProximity(
+          borrowerFid,
+          lenderUser.fid,
+          borrowerScore,
+          lenderUser.score
+        );
+
+        return {
+          address: lenderAddress,
+          fid: lenderUser.fid,
+          mutualConnections: proximity.mutualFollows,
+          isConnected: proximity.mutualFollows >= 5, // Connected if 5+ mutual connections
+        };
+      })
+    );
+
+    // Aggregate results
+    const lendersWithConnections = lenderProximities.filter(l => l.isConnected).length;
+    const totalMutualConnections = lenderProximities.reduce((sum, l) => sum + l.mutualConnections, 0);
+    const averageMutualConnections = lenderProximities.length > 0
+      ? totalMutualConnections / lenderProximities.length
+      : 0;
+    const percentageFromNetwork = lenderProximities.length > 0
+      ? (lendersWithConnections / lenderProximities.length) * 100
+      : 0;
+
+    // Determine support strength based on Kiva research
+    let supportStrength: LoanSocialSupport['supportStrength'];
+    if (percentageFromNetwork >= 60) {
+      supportStrength = 'STRONG';    // Most lenders are connected (like Kiva's 20+ friend lenders)
+    } else if (percentageFromNetwork >= 30) {
+      supportStrength = 'MODERATE';  // Some lenders are connected
+    } else if (percentageFromNetwork > 0) {
+      supportStrength = 'WEAK';      // Few lenders are connected
+    } else {
+      supportStrength = 'NONE';      // No lenders are connected (like Kiva's 0 friend lenders)
+    }
+
+    const result: LoanSocialSupport = {
+      totalLenders: lenderAddresses.length,
+      lendersWithConnections,
+      averageMutualConnections: Math.round(averageMutualConnections * 10) / 10, // Round to 1 decimal
+      percentageFromNetwork: Math.round(percentageFromNetwork),
+      supportStrength,
+      lenderDetails: lenderProximities,
+    };
+
+    // Cache the result
+    socialSupportCache.set(cacheKey, {
+      data: result,
+      timestamp: Date.now(),
+    });
+
+    return result;
+  } catch (error) {
+    console.error('[Social Support] Error calculating loan social support:', error);
+
+    // Return default on error
+    return {
+      totalLenders: lenderAddresses.length,
+      lendersWithConnections: 0,
+      averageMutualConnections: 0,
+      percentageFromNetwork: 0,
+      supportStrength: 'NONE',
+    };
+  }
+}
+
+/**
+ * Get human-readable description of social support
+ */
+export function getSocialSupportDescription(support: LoanSocialSupport): string {
+  const { supportStrength, lendersWithConnections, totalLenders, averageMutualConnections } = support;
+
+  if (totalLenders === 0) {
+    return 'No lenders yet';
+  }
+
+  if (supportStrength === 'STRONG') {
+    return `Strong social support: ${lendersWithConnections} of ${totalLenders} lenders are connected to borrower (avg ${averageMutualConnections} mutual connections)`;
+  } else if (supportStrength === 'MODERATE') {
+    return `Moderate social support: ${lendersWithConnections} of ${totalLenders} lenders share connections with borrower`;
+  } else if (supportStrength === 'WEAK') {
+    return `Limited social support: ${lendersWithConnections} of ${totalLenders} lenders connected`;
+  } else {
+    return totalLenders === 1
+      ? 'Lender has no known connections to borrower'
+      : 'Lenders have no known connections to borrower';
+  }
+}
+
+/**
+ * Get emoji for social support strength
+ */
+export function getSocialSupportEmoji(strength: LoanSocialSupport['supportStrength']): string {
+  switch (strength) {
+    case 'STRONG':
+      return '🟢';
+    case 'MODERATE':
+      return '🟡';
+    case 'WEAK':
+      return '🟠';
+    case 'NONE':
+      return '⚪';
+  }
+}

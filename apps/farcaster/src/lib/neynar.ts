@@ -160,6 +160,10 @@ export const neynarClient = {
 
       if (!response.ok) {
         if (response.status === 404) return [];
+        if (response.status === 402) {
+          console.warn('[Neynar] Rate limit or quota exceeded (402). Social features may be limited.');
+          return [];
+        }
         console.error('[Neynar] Error fetching followers:', response.status);
         return [];
       }
@@ -210,6 +214,10 @@ export const neynarClient = {
 
       if (!response.ok) {
         if (response.status === 404) return [];
+        if (response.status === 402) {
+          console.warn('[Neynar] Rate limit or quota exceeded (402). Social features may be limited.');
+          return [];
+        }
         console.error('[Neynar] Error fetching following:', response.status);
         return [];
       }

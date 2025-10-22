@@ -17,7 +17,7 @@ import { fetchFromIPFS } from '@/lib/ipfs';
 import { calculateLoanStatus } from '@/utils/loanStatus';
 import { PaymentWarningAlert } from '@/components/PaymentWarningBadge';
 import { useToast } from '@/contexts/ToastContext';
-import { SocialProximityBadge } from '@/components/SocialProximityBadge';
+import { TrustSignals } from '@/components/TrustSignals';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -41,17 +41,14 @@ interface LoanMetadata {
   name?: string;
   description?: string;
   fullDescription?: string;
-  businessType?: string;
-  location?: string;
+  businessWebsite?: string;
   imageUrl?: string; // Legacy field
   image?: string; // Current field used in CreateLoanForm
-  useOfFunds?: string;
-  repaymentSource?: string;
-  socialLinks?: {
-    website?: string;
-    twitter?: string;
-    instagram?: string;
-    linkedin?: string;
+  loanDetails?: {
+    aboutYou?: string;
+    businessWebsite?: string;
+    loanUseAndImpact?: string;
+    repaymentPlan?: string;
   };
 }
 
@@ -256,7 +253,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
+    <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
       {/* Back button */}
       <Link href="/" className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-4">
         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -267,7 +264,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
       {/* Loan Image */}
       {(metadata?.imageUrl || metadata?.image) && (
-        <div className="relative h-64 md:h-80 w-full rounded-3xl overflow-hidden mb-6">
+        <div className="relative h-48 md:h-56 w-full rounded-2xl overflow-hidden mb-4">
           <img
             src={(() => {
               const imageSource = metadata.imageUrl || metadata.image || '';
@@ -281,16 +278,15 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         </div>
       )}
 
-      {/* Title */}
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-        {metadata?.name || 'Loading...'}
-      </h1>
-
-      {/* Borrower */}
+      {/* Title and Borrower - Compact */}
       <div className="mb-4">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+          {metadata?.name || 'Loading...'}
+        </h1>
+
+        {/* Borrower Info */}
         {hasProfile && profile ? (
-          <div className="flex items-start gap-3">
-            {/* Avatar - clickable to Warpcast */}
+          <div className="flex items-center gap-2">
             <a
               href={`https://warpcast.com/${profile.username}`}
               target="_blank"
@@ -300,221 +296,117 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               <img
                 src={profile.pfpUrl}
                 alt={profile.displayName}
-                className="w-14 h-14 rounded-full object-cover bg-gray-200 border-2 border-gray-100"
+                className="w-8 h-8 rounded-full object-cover bg-gray-200"
                 onError={(e) => {
                   const target = e.currentTarget;
                   target.style.display = 'none';
                   const fallback = document.createElement('div');
-                  fallback.className = 'w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-lg';
+                  fallback.className = 'w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-xs';
                   fallback.textContent = profile.displayName.charAt(0).toUpperCase();
                   target.parentNode?.appendChild(fallback);
                 }}
               />
             </a>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
-                {/* Display Name - clickable to Warpcast */}
+            <div className="flex items-center gap-2 flex-wrap text-sm">
+              {hasENS && ensProfile ? (
+                <span className="font-medium text-gray-900 flex items-center gap-1">
+                  {ensProfile.name}
+                  <span className="text-xs text-blue-600">✓</span>
+                </span>
+              ) : (
                 <a
                   href={`https://warpcast.com/${profile.username}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lg font-semibold text-gray-900 hover:text-[#3B9B7F] transition-colors"
+                  className="font-medium text-gray-900 hover:text-[#3B9B7F] transition-colors"
                 >
                   {profile.displayName}
                 </a>
-                {profile.powerBadge && (
-                  <svg className="w-5 h-5 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 11.75A2.25 2.25 0 1111.25 9.5 2.25 2.25 0 019 11.75zm0 9.5l-3-6.75h6l-3 6.75zM15 11.75a2.25 2.25 0 112.25-2.25A2.25 2.25 0 0115 11.75zm0 9.5l-3-6.75h6l-3 6.75z"/>
-                  </svg>
-                )}
-                {isBorrower && (
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
-                )}
-              </div>
-              {/* Username - clickable to Warpcast */}
-              <div className="flex items-center gap-2 mb-2">
-                <a
-                  href={`https://warpcast.com/${profile.username}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-gray-600 hover:text-[#3B9B7F] transition-colors"
-                >
-                  @{profile.username}
-                </a>
-                {/* Wallet address with dropdown */}
-                <div className="relative group">
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(loanData.borrower);
-                      showToast('Address copied to clipboard!', 'success');
-                    }}
-                    className="text-xs text-gray-500 hover:text-gray-700 font-mono flex items-center gap-1 transition-colors"
-                    title="Click to copy address"
-                  >
-                    {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-                  {/* Dropdown menu */}
-                  <div className="absolute left-0 top-full mt-1 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-10">
-                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]">
-                      <a
-                        href={`https://basescan.org/address/${loanData.borrower}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors"
-                      >
-                        View on Basescan
-                      </a>
-                      <button
-                        onClick={() => {
-                          navigator.clipboard.writeText(loanData.borrower);
-                          showToast('Full address copied!', 'success');
-                        }}
-                        className="block w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors"
-                      >
-                        Copy full address
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {profile.bio && (
-                <p className="text-sm text-gray-700">{profile.bio}</p>
+              )}
+              {profile.powerBadge && (
+                <svg className="w-4 h-4 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 11.75A2.25 2.25 0 1111.25 9.5 2.25 2.25 0 019 11.75zm0 9.5l-3-6.75h6l-3 6.75zM15 11.75a2.25 2.25 0 112.25-2.25A2.25 2.25 0 0115 11.75zm0 9.5l-3-6.75h6l-3 6.75z"/>
+                </svg>
+              )}
+              <span className="text-gray-500">•</span>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(loanData.borrower);
+                  showToast('Address copied!', 'success');
+                }}
+                className="text-xs text-gray-500 hover:text-gray-700 font-mono transition-colors"
+                title="Click to copy address"
+              >
+                {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
+              </button>
+              {isBorrower && (
+                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
               )}
             </div>
           </div>
+        ) : hasENS && ensProfile ? (
+          <div className="flex items-center gap-2 text-sm">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+              {ensProfile.name.charAt(0).toUpperCase()}
+            </div>
+            <span className="font-medium text-gray-900 flex items-center gap-1">
+              {ensProfile.name}
+              <span className="text-xs text-blue-600">✓</span>
+            </span>
+            <span className="text-gray-500">•</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(loanData.borrower);
+                showToast('Address copied!', 'success');
+              }}
+              className="text-xs text-gray-500 hover:text-gray-700 font-mono transition-colors"
+            >
+              {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
+            </button>
+            {isBorrower && (
+              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
+            )}
+          </div>
         ) : (
-          <div className="flex items-center gap-3 text-sm">
-            {/* Fallback avatar */}
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+          <div className="flex items-center gap-2 text-sm">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
               {loanData.borrower.slice(2, 4).toUpperCase()}
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span className="font-medium text-gray-900">
-                  {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
-                </span>
-                {isBorrower && (
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
-                )}
-              </div>
-              {/* Wallet address actions */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <a
-                  href={`https://basescan.org/address/${loanData.borrower}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-blue-600 hover:text-blue-700 transition-colors"
-                >
-                  View on Basescan
-                </a>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(loanData.borrower);
-                    showToast('Address copied to clipboard!', 'success');
-                  }}
-                  className="text-xs text-gray-600 hover:text-gray-700 transition-colors flex items-center gap-1"
-                >
-                  Copy address
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(loanData.borrower);
+                showToast('Address copied!', 'success');
+              }}
+              className="font-medium text-gray-900 hover:text-gray-700 font-mono transition-colors"
+            >
+              {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
+            </button>
+            {isBorrower && (
+              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">You</span>
+            )}
           </div>
         )}
       </div>
 
-      {/* ENS Profile */}
-      {hasENS && ensProfile && (
-        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xl">🔷</span>
-            <span className="font-semibold text-blue-900">
-              {ensProfile.name}
-            </span>
-            <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-medium">
-              ENS Verified
-            </span>
-          </div>
-
-          {ensProfile.description && (
-            <p className="text-sm text-gray-700 mb-3">{ensProfile.description}</p>
-          )}
-
-          {/* Verified Links from ENS */}
-          {(ensProfile.website || ensProfile.twitter || ensProfile.github) && (
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-blue-900 mb-2">Verified Links (via ENS):</p>
-              {ensProfile.website && (
-                <a
-                  href={ensProfile.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-blue-700 hover:text-blue-800 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                  {ensProfile.website}
-                  <span className="text-xs text-green-600">✓</span>
-                </a>
-              )}
-              {ensProfile.twitter && (
-                <a
-                  href={`https://twitter.com/${ensProfile.twitter}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-blue-700 hover:text-blue-800 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                  @{ensProfile.twitter}
-                  <span className="text-xs text-green-600">✓</span>
-                </a>
-              )}
-              {ensProfile.github && (
-                <a
-                  href={`https://github.com/${ensProfile.github}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-blue-700 hover:text-blue-800 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                  </svg>
-                  {ensProfile.github}
-                  <span className="text-xs text-green-600">✓</span>
-                </a>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Status badges */}
-      <div className="flex gap-2 mb-6">
+      {/* Status badges - Compact */}
+      <div className="flex gap-1.5 mb-3">
         {loanData.completed && (
-          <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+          <span className="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
             Completed
           </span>
         )}
         {loanData.active && !loanData.completed && (
-          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+          <span className="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
             Active
           </span>
         )}
         {loanData.fundraisingActive && (
-          <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+          <span className="px-2 py-0.5 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">
             Fundraising
           </span>
         )}
         {isLoanDefaulted && (
-          <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
+          <span className="px-2 py-0.5 bg-red-100 text-red-800 rounded-full text-xs font-medium">
             Defaulted
           </span>
         )}
@@ -527,721 +419,264 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         </div>
       )}
 
-      {/* Funding Progress Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <div className="mb-4">
-          <div className="flex justify-between items-baseline mb-2">
-            <span className="text-3xl font-bold text-gray-900">
-              ${formatUSDC(loanData.totalFunded)} USDC
-            </span>
-            <span className="text-sm text-gray-500">
-              of ${formatUSDC(loanData.principal)} USDC
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <div
-              className="bg-[#3B9B7F] h-3 rounded-full transition-all duration-500"
-              style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-            />
-          </div>
+      {/* Compact Funding Progress */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+        <div className="flex justify-between items-center mb-2 text-sm">
+          <span className="font-semibold text-gray-900">
+            ${formatUSDC(loanData.totalFunded)} USDC
+          </span>
+          <span className="text-gray-500">
+            of ${formatUSDC(loanData.principal)}
+          </span>
         </div>
-
-        {/* Disburse button (borrower only, if funded) */}
-        {isBorrower && isFunded && !loanData.disbursed && (
-          <button
-            className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200"
-          >
-            Disburse Funds
-          </button>
-        )}
-
-        {/* Repayment section (borrower only, if active loan) */}
-        {isBorrower && loanData.active && !loanData.completed && (
-          <div className="mt-6 border-t border-gray-200 pt-6">
-            {/* Repayment Progress */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-bold text-gray-900">Repayment Progress</h3>
-                <span className="text-sm text-gray-500">
-                  {calculateRepaymentProgress(loanData.totalRepaid, loanData.principal).toFixed(0)}% Complete
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 mb-3">
-                <div
-                  className="bg-blue-600 h-3 rounded-full transition-all duration-500"
-                  style={{ width: `${Math.min(calculateRepaymentProgress(loanData.totalRepaid, loanData.principal), 100)}%` }}
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-500 mb-1">Repaid</p>
-                  <p className="font-semibold text-gray-900">
-                    ${formatUSDC(loanData.totalRepaid)} USDC
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-gray-500 mb-1">Outstanding</p>
-                  <p className="font-semibold text-gray-900">
-                    ${formatUSDC(loanData.principal - loanData.totalRepaid)} USDC
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Repayment Form */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <h3 className="text-sm font-semibold text-blue-900 mb-3">
-                Make a Repayment
-              </h3>
-
-              <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="repayAmount" className="text-sm text-gray-700">
-                    Amount (USDC)
-                  </label>
-                  <button
-                    onClick={setMaxRepayment}
-                    className="text-xs text-blue-600 hover:text-blue-700 font-medium"
-                  >
-                    Pay Full Amount
-                  </button>
-                </div>
-                <input
-                  id="repayAmount"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  placeholder="0.00"
-                  value={repaymentAmount}
-                  onChange={(e) => setRepaymentAmount(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Balance info */}
-              <div className="mb-4 p-3 bg-white rounded-lg border border-blue-100">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Your USDC Balance:</span>
-                  <span className="font-medium text-gray-900">${formatUSDC(usdcBalance)} USDC</span>
-                </div>
-              </div>
-
-              {/* Two-step approval flow */}
-              {repaymentAmount && parseFloat(repaymentAmount) > 0 ? (
-                <>
-                  {/* Step 1: Approve USDC */}
-                  {(!usdcAllowance || usdcAllowance < parseUnits(repaymentAmount, USDC_DECIMALS)) ? (
-                    <button
-                      onClick={handleApprove}
-                      disabled={isApprovePending || isApproveConfirming || isApproveSuccess}
-                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 mb-2"
-                    >
-                      {isApprovePending || isApproveConfirming
-                        ? 'Approving...'
-                        : isApproveSuccess
-                        ? 'Approved! Now Submit Repayment'
-                        : 'Step 1: Approve USDC'}
-                    </button>
-                  ) : null}
-
-                  {/* Step 2: Make Repayment (only if approved) */}
-                  {usdcAllowance && usdcAllowance >= parseUnits(repaymentAmount, USDC_DECIMALS) && (
-                    <button
-                      onClick={handleRepay}
-                      disabled={isRepayPending || isRepayConfirming || isRepaySuccess}
-                      className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
-                    >
-                      {isRepayPending || isRepayConfirming
-                        ? 'Processing...'
-                        : isRepaySuccess
-                        ? 'Repayment Successful!'
-                        : 'Submit Repayment'}
-                    </button>
-                  )}
-                </>
-              ) : (
-                <div className="text-center py-3 text-sm text-gray-500">
-                  Enter an amount to make a repayment
-                </div>
-              )}
-
-              {/* Next due date info */}
-              {nextDueDate && (
-                <div className="mt-4 pt-4 border-t border-blue-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-700">Next Payment Due:</span>
-                    <span className="font-medium text-gray-900">{formatDate(nextDueDate)}</span>
-                  </div>
-                  {paymentPerPeriod && (
-                    <div className="flex items-center justify-between text-sm mt-2">
-                      <span className="text-gray-700">Payment Amount:</span>
-                      <span className="font-medium text-gray-900">${formatUSDC(paymentPerPeriod)} USDC</span>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Refund button (contributors only, if eligible) */}
-        {refundAvailable && (
-          <div className="mt-6 border-t border-gray-200 pt-6">
-            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-4">
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-orange-900 mb-1">
-                    Refund Available
-                  </h3>
-                  <p className="text-sm text-orange-800 mb-3">
-                    {fundraisingExpired && !isFunded
-                      ? 'This loan did not reach its funding goal by the deadline. You can claim a refund of your contribution.'
-                      : 'This loan fundraising was cancelled. You can claim a refund of your contribution.'}
-                  </p>
-                  <div className="flex items-baseline gap-2 mb-3">
-                    <span className="text-xs text-orange-700">Your contribution:</span>
-                    <span className="text-lg font-bold text-orange-900">
-                      ${formatUSDC(contribution!.amount)} USDC
-                    </span>
-                  </div>
-                  <button
-                    onClick={handleRefund}
-                    disabled={isRefundPending || isRefundConfirming || isRefundSuccess}
-                    className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
-                  >
-                    {isRefundPending || isRefundConfirming
-                      ? 'Processing Refund...'
-                      : isRefundSuccess
-                      ? 'Refund Claimed!'
-                      : 'Claim Refund'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <div className="w-full bg-gray-200 rounded-full h-2">
+          <div
+            className="bg-[#3B9B7F] h-2 rounded-full transition-all duration-500"
+            style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+          />
+        </div>
       </div>
 
-      {/* Disbursement button (borrower only, when fully funded but not yet disbursed) */}
-      {isFunded && !loanData.active && userAddress && userAddress.toLowerCase() === loanData.borrower.toLowerCase() && (
-        <div className="mb-6">
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-green-900 mb-1">
-                  Loan Fully Funded!
-                </h3>
-                <p className="text-sm text-green-800 mb-3">
-                  Your loan has reached its funding goal. Click below to disburse the funds to your wallet.
-                </p>
-                <div className="flex items-baseline gap-2 mb-3">
-                  <span className="text-xs text-green-700">Amount to disburse:</span>
-                  <span className="text-lg font-bold text-green-900">
-                    ${formatUSDC(loanData.principal)} USDC
-                  </span>
-                </div>
-                <button
-                  onClick={() => disburseLoan(loanAddress)}
-                  disabled={isDisbursePending || isDisburseConfirming || isDisburseSuccess}
-                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
-                >
-                  {isDisbursePending || isDisburseConfirming
-                    ? 'Processing Disbursement...'
-                    : isDisburseSuccess
-                    ? 'Disbursed! ✓'
-                    : 'Claim Funds'}
-                </button>
-              </div>
+      {/* Borrower Actions - Compact */}
+      {isBorrower && loanData.active && !loanData.completed && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+          <div className="flex justify-between items-center mb-3">
+            <div>
+              <p className="text-xs text-gray-600">Repaid</p>
+              <p className="text-sm font-semibold text-gray-900">${formatUSDC(loanData.totalRepaid)}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-gray-600">Outstanding</p>
+              <p className="text-sm font-semibold text-gray-900">${formatUSDC(loanData.principal - loanData.totalRepaid)}</p>
             </div>
           </div>
+          <div className="mb-3">
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              placeholder="Enter amount"
+              value={repaymentAmount}
+              onChange={(e) => setRepaymentAmount(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          {repaymentAmount && parseFloat(repaymentAmount) > 0 ? (
+            <>
+              {(!usdcAllowance || usdcAllowance < parseUnits(repaymentAmount, USDC_DECIMALS)) ? (
+                <button
+                  onClick={handleApprove}
+                  disabled={isApprovePending || isApproveConfirming}
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm mb-2"
+                >
+                  {isApprovePending || isApproveConfirming ? 'Approving...' : 'Approve USDC'}
+                </button>
+              ) : (
+                <button
+                  onClick={handleRepay}
+                  disabled={isRepayPending || isRepayConfirming}
+                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+                >
+                  {isRepayPending || isRepayConfirming ? 'Processing...' : 'Submit Repayment'}
+                </button>
+              )}
+            </>
+          ) : null}
         </div>
       )}
 
-      {/* Description */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-3">About</h2>
-        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-          {metadata?.fullDescription || metadata?.description || 'Loading description...'}
+      {/* Disburse - Compact */}
+      {isFunded && !loanData.active && isBorrower && (
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
+          <p className="text-sm text-green-800 mb-2">Loan fully funded! Claim ${formatUSDC(loanData.principal)} USDC</p>
+          <button
+            onClick={() => disburseLoan(loanAddress)}
+            disabled={isDisbursePending || isDisburseConfirming}
+            className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+          >
+            {isDisbursePending || isDisburseConfirming ? 'Processing...' : 'Claim Funds'}
+          </button>
+        </div>
+      )}
+
+      {/* Refund - Compact */}
+      {refundAvailable && (
+        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-4">
+          <p className="text-sm text-orange-800 mb-2">Refund available: ${formatUSDC(contribution!.amount)} USDC</p>
+          <button
+            onClick={handleRefund}
+            disabled={isRefundPending || isRefundConfirming}
+            className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+          >
+            {isRefundPending || isRefundConfirming ? 'Processing...' : 'Claim Refund'}
+          </button>
+        </div>
+      )}
+
+      {/* About the Borrower */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+        <h2 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+          <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          About the Borrower
+        </h2>
+        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
+          {metadata?.loanDetails?.aboutYou || metadata?.description || (
+            <span className="text-gray-400 italic">No information provided</span>
+          )}
         </p>
       </div>
 
-      {/* Use of Funds */}
-      {metadata?.useOfFunds && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">Use of Funds</h2>
-          <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-            {metadata.useOfFunds}
-          </p>
-        </div>
-      )}
-
-      {/* Repayment Source */}
-      {metadata?.repaymentSource && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">Repayment Source</h2>
-          <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-            {metadata.repaymentSource}
-          </p>
-        </div>
-      )}
-
-      {/* Social Trust */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Social Trust</h2>
-        <SocialProximityBadge borrowerAddress={loanData.borrower} showDetails={true} />
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Research from Kiva shows borrowers with 20+ mutual connections have <span className="font-semibold text-green-600">98% repayment rates</span> vs 88% with 0 connections - a 10% improvement from social accountability.
-          </p>
-        </div>
+      {/* How I'll Use This Loan */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+        <h2 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+          <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+          How I'll Use This Loan
+        </h2>
+        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
+          {metadata?.loanDetails?.loanUseAndImpact || (
+            <span className="text-gray-400 italic">No plan provided</span>
+          )}
+        </p>
       </div>
 
-      {/* Borrower Identity */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Borrower Identity</h2>
+      {/* Repayment Plan */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+        <h2 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+          <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Repayment Plan
+        </h2>
+        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
+          {metadata?.loanDetails?.repaymentPlan || (
+            <span className="text-gray-400 italic">No repayment plan provided</span>
+          )}
+        </p>
+      </div>
+
+      {/* Trust & Verification */}
+      <div className="mb-4">
+        <TrustSignals
+          borrowerAddress={loanData.borrower}
+          loanAddress={loanAddress}
+          businessWebsite={metadata?.businessWebsite}
+        />
+      </div>
+
+      {/* Loan Terms */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+        <h2 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Loan Terms
+        </h2>
+
         <div className="space-y-3">
-          {/* Farcaster */}
-          {hasProfile && profile ? (
-            <div className="flex items-start gap-2">
-              <span className="text-green-600 mt-0.5 text-lg">✓</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">Farcaster:</span>{' '}
-                <span className="text-gray-700">@{profile.username}</span>
+          {/* Key Highlights - Compact */}
+          <div className="flex items-center gap-4 pb-3 border-b border-gray-100">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500">Interest</p>
+                <p className="text-sm font-semibold text-green-600">0%</p>
               </div>
             </div>
-          ) : (
-            <div className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-500">Farcaster:</span>{' '}
-                <span className="text-gray-500">No Profile Found</span>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500">Repayment</p>
+                <p className="text-sm font-semibold text-gray-900">1.0x</p>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* ENS */}
-          {hasENS && ensProfile ? (
-            <div className="flex items-start gap-2">
-              <span className="text-green-600 mt-0.5 text-lg">✓</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">ENS:</span>{' '}
-                <span className="text-gray-700">{ensProfile.name}</span>
-              </div>
+          {/* Details Grid - Simplified */}
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="bg-gray-50 rounded-lg p-2.5">
+              <p className="text-xs text-gray-500 mb-0.5">Term Length</p>
+              <p className="text-sm font-semibold text-gray-900">{loanData.termPeriods.toString()} weeks</p>
             </div>
-          ) : (
-            <div className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-500">ENS:</span>{' '}
-                <span className="text-gray-500">Not Set</span>
-              </div>
-            </div>
-          )}
 
-          {/* Wallet Activity */}
-          {walletMetrics && walletMetrics.hasTransactions ? (
-            <div className="flex items-start gap-2">
-              <span className="text-green-600 mt-0.5 text-lg">✓</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">Wallet:</span>{' '}
-                <span className="text-gray-700">
-                  Active ({walletMetrics.transactionCount} transaction{walletMetrics.transactionCount !== 1 ? 's' : ''})
-                </span>
-              </div>
+            <div className="bg-gray-50 rounded-lg p-2.5">
+              <p className="text-xs text-gray-500 mb-0.5">Deadline</p>
+              <p className="text-sm font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
             </div>
-          ) : (
-            <div className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-500">Wallet:</span>{' '}
-                <span className="text-gray-500">No On-Chain Activity</span>
-              </div>
-            </div>
-          )}
+          </div>
+        </div>
+      </div>
 
-          {/* Neynar Score */}
-          {hasProfile && profile?.score !== undefined && (
-            <div className="flex items-start gap-2">
-              <span className={`mt-0.5 text-lg ${
-                profile.score >= 0.7 ? 'text-green-600' :
-                profile.score >= 0.4 ? 'text-yellow-600' :
-                'text-red-600'
-              }`}>
-                {profile.score >= 0.7 ? '✓' : profile.score >= 0.4 ? '⚠' : '✗'}
-              </span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">Neynar Score:</span>{' '}
-                <span className={`font-semibold ${
-                  profile.score >= 0.7 ? 'text-green-700' :
-                  profile.score >= 0.4 ? 'text-yellow-700' :
-                  'text-red-700'
-                }`}>
-                  {Math.round(profile.score * 100)}%
-                </span>
-                <span className="text-gray-600 text-sm ml-1">
-                  ({profile.score >= 0.7 ? 'High Quality' :
-                    profile.score >= 0.4 ? 'Moderate' :
-                    'Low - Potential Spam'})
-                </span>
-              </div>
+      {/* Contributors - Compact */}
+      {totalCount > 0 && (
+        <div className="bg-white border border-gray-200 rounded-xl p-4">
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Supporters</h3>
+          <div className="flex items-center gap-3">
+            {/* Avatar stack */}
+            <div className="flex -space-x-2">
+              {contributors.map((contributorAddress, index) => {
+                const { profile } = useFarcasterProfile(contributorAddress);
+                return (
+                  <div
+                    key={contributorAddress}
+                    className="relative w-8 h-8 rounded-full border-2 border-white bg-gray-200 overflow-hidden"
+                    style={{ zIndex: contributors.length - index }}
+                  >
+                    {profile?.pfpUrl ? (
+                      <img
+                        src={profile.pfpUrl}
+                        alt={profile.displayName || 'Contributor'}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-xs font-bold">
+                        {contributorAddress.slice(2, 4).toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-          )}
 
-          {/* Gitcoin Passport Score */}
-          {gitcoinScore ? (
-            <div className="flex items-start gap-2">
-              <span className={`mt-0.5 text-lg ${
-                gitcoinScore.score >= 20 ? 'text-green-600' :
-                gitcoinScore.score >= 10 ? 'text-yellow-600' :
-                'text-red-600'
-              }`}>
-                {gitcoinScore.score >= 20 ? '✓' : gitcoinScore.score >= 10 ? '⚠' : '✗'}
-              </span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">Humanity Score:</span>{' '}
-                <span className={`font-semibold ${
-                  gitcoinScore.score >= 20 ? 'text-green-700' :
-                  gitcoinScore.score >= 10 ? 'text-yellow-700' :
-                  'text-red-700'
-                }`}>
-                  {gitcoinScore.score.toFixed(1)}
-                </span>
-                <span className="text-gray-600 text-sm ml-1">
-                  ({gitcoinScore.passing_score ? 'Verified Human' : 'Not Verified'})
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5 text-lg">✗</span>
-              <div className="flex-1">
-                <span className="font-medium text-gray-500">Humanity Score:</span>{' '}
-                <span className="text-gray-500">Not Available</span>
-              </div>
-            </div>
-          )}
-
-          {/* OpenRank Score */}
-          {hasProfile && (
-            openRankData ? (
-              <div className="flex items-start gap-2">
-                <span className={`mt-0.5 text-lg ${
-                  openRankData.score >= 0.5 ? 'text-green-600' :
-                  openRankData.score >= 0.2 ? 'text-yellow-600' :
-                  'text-gray-400'
-                }`}>
-                  {openRankData.score >= 0.5 ? '✓' : openRankData.score >= 0.2 ? '⚠' : '○'}
-                </span>
-                <div className="flex-1">
-                  <span className="font-medium text-gray-900">OpenRank:</span>{' '}
-                  <span className={`font-semibold ${
-                    openRankData.score >= 0.5 ? 'text-green-700' :
-                    openRankData.score >= 0.2 ? 'text-yellow-700' :
-                    'text-gray-600'
-                  }`}>
-                    {openRankData.score.toFixed(3)}
-                  </span>
-                  {openRankData.rank && (
-                    <span className="text-gray-600 text-sm ml-1">
-                      (Rank #{openRankData.rank.toLocaleString()})
+            {/* Text description */}
+            <div className="flex-1 text-sm text-gray-600">
+              {contributors.slice(0, 2).map((addr, idx) => {
+                const { profile } = useFarcasterProfile(addr);
+                return (
+                  <span key={addr}>
+                    <span className="font-medium text-gray-900">
+                      {profile?.username ? `@${profile.username}` : `${addr.slice(0, 6)}...${addr.slice(-4)}`}
                     </span>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-start gap-2">
-                <span className="text-gray-400 mt-0.5 text-lg">✗</span>
-                <div className="flex-1">
-                  <span className="font-medium text-gray-500">OpenRank:</span>{' '}
-                  <span className="text-gray-500">Not Available</span>
-                </div>
-              </div>
-            )
-          )}
-        </div>
-
-        {/* Risk Assessment */}
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <div className="flex items-center justify-between">
-            <span className="font-medium text-gray-900">Lending Risk:</span>
-            <span className={`font-semibold px-3 py-1.5 rounded-lg ${
-              // High risk if low Neynar score
-              (profile?.score !== undefined && profile.score < 0.4)
-                ? 'bg-red-100 text-red-800'
-                : (hasENS && (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')) || (profile?.score !== undefined && profile.score >= 0.7)
-                ? 'bg-green-100 text-green-800'
-                : walletMetrics?.hasTransactions || (profile && profile.followerCount > 100)
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-orange-100 text-orange-800'
-            }`}>
-              {(profile?.score !== undefined && profile.score < 0.4)
-                ? 'High Risk'
-                : (hasENS && (reputation?.followerTier === 'whale' || reputation?.followerTier === 'influential')) || (profile?.score !== undefined && profile.score >= 0.7)
-                ? 'Low Risk'
-                : walletMetrics?.hasTransactions || (profile && profile.followerCount > 100)
-                ? 'Medium Risk'
-                : 'Higher Risk'}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Loan Terms - Condensed */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Loan Terms</h2>
-
-        <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Interest Rate</p>
-            <p className="font-semibold text-green-600">0%</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Repayment</p>
-            <p className="font-semibold text-gray-900">1.0x</p>
-          </div>
-
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Term Length</p>
-            <p className="font-semibold text-gray-900">{loanData.termPeriods.toString()} periods</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Period Length</p>
-            <p className="font-semibold text-gray-900">{Number(loanData.periodLength) / 86400} days</p>
-          </div>
-
-          {paymentPerPeriod && (
-            <>
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Payment Per Period</p>
-                <p className="font-semibold text-gray-900">${formatUSDC(paymentPerPeriod)} USDC</p>
-              </div>
-              {loanData.active && nextDueDate && (
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Next Payment Due</p>
-                  <p className="font-semibold text-gray-900">{formatDate(nextDueDate)}</p>
-                </div>
+                    {idx === 0 && contributors.length > 1 && ', '}
+                  </span>
+                );
+              })}
+              {hasMore && (
+                <span>
+                  {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
+                </span>
               )}
-            </>
-          )}
-
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Fundraising Deadline</p>
-            <p className="font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Business Details */}
-      {metadata?.businessType && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Business Details</h2>
-          <div className="space-y-3">
-            {metadata.businessType && (
-              <div>
-                <p className="text-xs text-gray-500">Business Type</p>
-                <p className="text-sm font-medium text-gray-900">
-                  {metadata.businessType}
-                </p>
-              </div>
-            )}
-            {metadata.location && (
-              <div>
-                <p className="text-xs text-gray-500">Location</p>
-                <p className="text-sm font-medium text-gray-900">
-                  {metadata.location}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Social Links */}
-      {metadata?.socialLinks && (metadata.socialLinks.website || metadata.socialLinks.twitter || metadata.socialLinks.instagram || metadata.socialLinks.linkedin) && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Connect</h2>
-          <div className="space-y-3">
-            {metadata.socialLinks.website && (
-              <a
-                href={metadata.socialLinks.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-700 hover:text-[#3B9B7F] transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-green-50 flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Website</p>
-                  <p className="text-xs text-gray-500">{metadata.socialLinks.website}</p>
-                </div>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            )}
-            {metadata.socialLinks.twitter && (
-              <a
-                href={`https://twitter.com/${metadata.socialLinks.twitter}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-700 hover:text-[#1DA1F2] transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-blue-50 flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Twitter</p>
-                  <p className="text-xs text-gray-500">@{metadata.socialLinks.twitter}</p>
-                </div>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            )}
-            {metadata.socialLinks.instagram && (
-              <a
-                href={`https://instagram.com/${metadata.socialLinks.instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-700 hover:text-[#E4405F] transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-pink-50 flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Instagram</p>
-                  <p className="text-xs text-gray-500">@{metadata.socialLinks.instagram}</p>
-                </div>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            )}
-            {metadata.socialLinks.linkedin && (
-              <a
-                href={metadata.socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-700 hover:text-[#0A66C2] transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-blue-50 flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">LinkedIn</p>
-                  <p className="text-xs text-gray-500 truncate">{metadata.socialLinks.linkedin}</p>
-                </div>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Contributors section */}
-      <div className="mt-6 bg-white border border-gray-200 rounded-2xl p-6 mb-24">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Community Support</h2>
-
-        {/* Contributor avatars */}
-        {totalCount > 0 && (
-          <div className="mb-4 pb-4 border-b border-gray-200">
-            <div className="flex items-center gap-3">
-              {/* Avatar stack */}
-              <div className="flex -space-x-2">
-                {contributors.map((contributorAddress, index) => {
-                  const { profile } = useFarcasterProfile(contributorAddress);
-                  return (
-                    <div
-                      key={contributorAddress}
-                      className="relative w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden"
-                      style={{ zIndex: contributors.length - index }}
-                    >
-                      {profile?.pfpUrl ? (
-                        <img
-                          src={profile.pfpUrl}
-                          alt={profile.displayName || 'Contributor'}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-xs font-bold">
-                          {contributorAddress.slice(2, 4).toUpperCase()}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Text description */}
-              <div className="flex-1">
-                <p className="text-sm text-gray-700">
-                  {contributors.length > 0 ? (
-                    <>
-                      Backed by{' '}
-                      {contributors.slice(0, 2).map((addr, idx) => {
-                        const { profile } = useFarcasterProfile(addr);
-                        return (
-                          <span key={addr}>
-                            <span className="font-semibold text-gray-900">
-                              {profile?.username ? `@${profile.username}` : `${addr.slice(0, 6)}...${addr.slice(-4)}`}
-                            </span>
-                            {idx === 0 && contributors.length > 1 && ', '}
-                          </span>
-                        );
-                      })}
-                      {hasMore && (
-                        <span className="text-gray-600">
-                          {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-gray-500">No contributors yet</span>
-                  )}
-                </p>
-              </div>
             </div>
           </div>
-        )}
-
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Total Contributors</p>
-            <p className="text-2xl font-bold text-gray-900">
-              {loanData.contributorsCount.toString()}
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-gray-500 mb-1">Zero-Interest Model</p>
-            <p className="text-sm font-medium text-green-600">
-              Community Support, Not Profit
-            </p>
-          </div>
         </div>
-      </div>
+      )}
 
       {/* Fixed Bottom Menu */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg px-4 py-2.5 flex gap-2 max-w-4xl mx-auto">
         {/* Split Share Button */}
         <div className="flex-1 relative">
           <div className="flex gap-0.5">
@@ -1253,9 +688,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 )}`;
                 window.open(castUrl, '_blank');
               }}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-l-xl transition-colors"
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-l-lg transition-colors text-sm"
             >
-              <svg className="w-5 h-5" viewBox="0 0 1000 1000" fill="currentColor">
+              <svg className="w-4 h-4" viewBox="0 0 1000 1000" fill="currentColor">
                 <path d="M257.778 155.556H742.222V844.444H671.111V528.889H670.414C662.554 441.677 589.258 373.333 500 373.333C410.742 373.333 337.446 441.677 329.586 528.889H328.889V844.444H257.778V155.556Z"/>
                 <path d="M128.889 253.333L128.889 746.667H184.444V253.333H128.889Z"/>
                 <path d="M815.556 253.333L815.556 746.667H871.111V253.333H815.556Z"/>
@@ -1266,9 +701,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             {/* Menu Toggle */}
             <button
               onClick={() => setShowShareMenu(!showShareMenu)}
-              className="px-3 py-3 bg-white border-2 border-l-0 border-gray-300 hover:bg-gray-50 text-gray-700 rounded-r-xl transition-colors"
+              className="px-2.5 py-2.5 bg-white border border-l-0 border-gray-300 hover:bg-gray-50 text-gray-700 rounded-r-lg transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
               </svg>
             </button>
@@ -1284,16 +719,16 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               />
 
               {/* Menu */}
-              <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+              <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-xl z-50 overflow-hidden">
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     showToast('Link copied to clipboard!', 'success');
                     setShowShareMenu(false);
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+                  className="w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-gray-50 transition-colors text-left"
                 >
-                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
                   <span className="text-sm font-medium text-gray-700">Copy Link</span>
@@ -1309,9 +744,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                       }).catch(err => console.log('Share cancelled', err));
                       setShowShareMenu(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-t border-gray-100"
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-gray-50 transition-colors text-left border-t border-gray-100"
                   >
-                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                     </svg>
                     <span className="text-sm font-medium text-gray-700">More Options</span>
@@ -1325,14 +760,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         {loanData.fundraisingActive && !isFunded ? (
           <Link
             href={`/loan/${loanAddress}/fund`}
-            className="flex-[2] flex items-center justify-center px-4 py-3 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold rounded-xl transition-colors"
+            className="flex-[2] flex items-center justify-center px-4 py-2.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold rounded-lg transition-colors text-sm shadow-sm"
           >
             Donate
           </Link>
         ) : (
           <button
             disabled
-            className="flex-[2] flex items-center justify-center px-4 py-3 bg-gray-300 text-gray-500 font-semibold rounded-xl cursor-not-allowed"
+            className="flex-[2] flex items-center justify-center px-4 py-2.5 bg-gray-300 text-gray-500 font-semibold rounded-lg cursor-not-allowed text-sm"
           >
             {isFunded ? 'Fully Funded' : 'Fundraising Closed'}
           </button>

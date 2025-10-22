@@ -8,7 +8,6 @@ import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useContributors } from '@/hooks/useMicroLoan';
 import { calculateLoanStatus } from '@/utils/loanStatus';
 import { PaymentWarningBadgeCompact } from '@/components/PaymentWarningBadge';
-import { SocialProximityBadge } from '@/components/SocialProximityBadge';
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -26,6 +25,7 @@ export interface LoanCardProps {
   fundraisingDeadline?: bigint;
   disbursementTime?: bigint;
   totalRepaid?: bigint;
+  businessWebsite?: string;
 }
 
 const formatUSDC = (amount: bigint): string => {
@@ -36,32 +36,55 @@ const formatUSDC = (amount: bigint): string => {
   });
 };
 
-const getStatusBadge = (
+const getStatusInfo = (
   fundraisingActive: boolean,
   active: boolean,
-  completed: boolean
-) => {
+  completed: boolean,
+  totalFunded: bigint,
+  principal: bigint,
+  fundraisingDeadline?: bigint
+): { text: string; className: string; showDays: boolean } => {
+  // Completed loan
   if (completed) {
     return {
       text: 'Completed',
       className: 'bg-green-100 text-green-800',
+      showDays: false,
     };
   }
+
+  // Active loan (being repaid)
   if (active) {
     return {
       text: 'Active',
       className: 'bg-blue-100 text-blue-800',
+      showDays: false,
     };
   }
+
+  // Check if fully funded
+  if (totalFunded >= principal && principal > 0n) {
+    return {
+      text: 'Funded',
+      className: 'bg-green-100 text-green-800',
+      showDays: false,
+    };
+  }
+
+  // Still fundraising
   if (fundraisingActive) {
     return {
       text: 'Fundraising',
       className: 'bg-yellow-100 text-yellow-800',
+      showDays: true, // Show days remaining for fundraising
     };
   }
+
+  // Inactive/cancelled
   return {
     text: 'Inactive',
     className: 'bg-gray-100 text-gray-800',
+    showDays: false,
   };
 };
 
@@ -134,12 +157,13 @@ export function LoanCard({
   fundraisingDeadline,
   disbursementTime,
   totalRepaid,
+  businessWebsite,
 }: LoanCardProps) {
   const totalFundedNum = parseFloat(formatUnits(totalFunded, USDC_DECIMALS));
   const principalNum = parseFloat(formatUnits(principal, USDC_DECIMALS));
   const progressPercentage = principalNum > 0 ? (totalFundedNum / principalNum) * 100 : 0;
 
-  const status = getStatusBadge(fundraisingActive, active, completed);
+  const statusInfo = getStatusInfo(fundraisingActive, active, completed, totalFunded, principal, fundraisingDeadline);
 
   // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
   const { profile, reputation, hasProfile } = useFarcasterProfile(borrower);
@@ -167,7 +191,7 @@ export function LoanCard({
       href={`/loan/${address}`}
       className="block bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
     >
-      {/* Header with borrower info on left and days remaining on right */}
+      {/* Header with borrower info on left and status on right */}
       <div className="px-3 sm:px-4 pt-3 pb-3">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -184,16 +208,27 @@ export function LoanCard({
                 <span className="text-xs font-semibold text-gray-900 truncate">
                   {profile.displayName || `@${profile.username}`}
                 </span>
+                {businessWebsite && (
+                  <svg className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                )}
               </>
             ) : (
               <>
                 <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-300 flex-shrink-0" />
                 <span className="text-xs font-semibold text-gray-900 truncate">{shortAddress}</span>
+                {businessWebsite && (
+                  <svg className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                )}
               </>
             )}
           </div>
 
-          {daysRemaining && fundraisingActive && (
+          {/* Show days remaining if fundraising, otherwise show status badge */}
+          {statusInfo.showDays && daysRemaining ? (
             <div className="flex items-center gap-1 sm:gap-1.5 text-xs text-gray-500 flex-shrink-0">
               <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -201,6 +236,10 @@ export function LoanCard({
               <span className="hidden sm:inline">{daysRemaining}</span>
               <span className="sm:hidden">{daysRemaining.replace(' remaining', '')}</span>
             </div>
+          ) : (
+            <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-medium whitespace-nowrap ${statusInfo.className}`}>
+              {statusInfo.text}
+            </span>
           )}
         </div>
       </div>
@@ -224,26 +263,17 @@ export function LoanCard({
           <h3 className="text-sm sm:text-base font-semibold text-gray-900 line-clamp-1 flex-1 min-w-0">
             {name || 'Untitled Loan'}
           </h3>
-          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            {/* Payment warning badge (if applicable) */}
-            {loanStatusInfo && (
+          {/* Payment warning badge (if applicable) */}
+          {loanStatusInfo && (
+            <div className="flex-shrink-0">
               <PaymentWarningBadgeCompact statusInfo={loanStatusInfo} />
-            )}
-            {/* Status badge */}
-            <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-medium whitespace-nowrap ${status.className}`}>
-              {status.text}
-            </span>
-          </div>
+            </div>
+          )}
         </div>
 
         <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 min-h-[2.5rem] sm:min-h-[2.5rem] overflow-hidden">
           {description || 'No description available'}
         </p>
-
-        {/* Social proximity badge */}
-        <div className="mb-3">
-          <SocialProximityBadge borrowerAddress={borrower} showDetails={false} />
-        </div>
 
         <div className="mb-3">
           <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 mb-2">
