@@ -4,16 +4,40 @@ import React, { useEffect, useState } from 'react';
 import { useLoans, useLoanData } from '@/hooks/useMicroLoan';
 import { LoanCard } from './LoanCard';
 
-// Skeleton loading component
+// Enhanced skeleton loading component matching actual loan card structure
 const LoanCardSkeleton = () => (
-  <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 animate-pulse">
-    <div className="p-4">
-      <div className="h-5 bg-gray-200 rounded mb-2" />
-      <div className="h-4 bg-gray-200 rounded mb-3 w-3/4" />
-      <div className="h-2 bg-gray-200 rounded-full mb-2" />
-      <div className="flex justify-between mt-2">
-        <div className="h-4 bg-gray-200 rounded w-20" />
-        <div className="h-4 bg-gray-200 rounded w-16" />
+  <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-300 animate-pulse">
+    {/* Optional image placeholder */}
+    <div className="w-full h-48 bg-gray-100" />
+
+    {/* Content */}
+    <div className="p-5">
+      {/* Title and badge */}
+      <div className="flex items-start justify-between mb-3 gap-2">
+        <div className="h-5 bg-gray-200 rounded w-2/3" />
+        <div className="h-6 w-20 bg-gray-200 rounded-lg flex-shrink-0" />
+      </div>
+
+      {/* Description */}
+      <div className="space-y-2 mb-4">
+        <div className="h-4 bg-gray-200 rounded w-full" />
+        <div className="h-4 bg-gray-200 rounded w-5/6" />
+      </div>
+
+      {/* Progress bar */}
+      <div className="mb-4">
+        <div className="h-2.5 bg-gray-200 rounded-full mb-2" />
+        <div className="flex justify-between">
+          <div className="h-4 bg-gray-200 rounded w-24" />
+          <div className="h-4 bg-gray-200 rounded w-20" />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+        <div className="h-3 bg-gray-200 rounded w-16" />
+        <div className="h-3 bg-gray-200 rounded w-16" />
+        <div className="h-3 bg-gray-200 rounded w-20" />
       </div>
     </div>
   </div>
@@ -94,16 +118,41 @@ const LoanList = () => {
 
   if (!loanAddresses || loanAddresses.length === 0) {
     return (
-      <div className="text-center py-8">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
-          <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
+      <div className="text-center py-12 px-4">
+        <div className="max-w-sm mx-auto">
+          {/* Icon */}
+          <div className="w-20 h-20 bg-gradient-to-br from-[#3B9B7F]/10 to-[#2E7D68]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-10 h-10 text-[#3B9B7F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+
+          {/* Heading */}
+          <h3 className="text-lg font-bold text-gray-900 mb-2">
+            No Loan Requests Yet
+          </h3>
+
+          {/* Description */}
+          <p className="text-sm text-gray-600 mb-6">
+            Be the first in your community to create a zero-interest loan request and get support from your friends!
+          </p>
+
+          {/* CTA Button */}
+          <a
+            href="/create-loan"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create Loan Request
+          </a>
+
+          {/* Info text */}
+          <p className="text-xs text-gray-500 mt-4">
+            Interest-free community lending powered by trust
+          </p>
         </div>
-        <p className="text-sm text-gray-500 mb-1">No requests yet</p>
-        <p className="text-xs text-gray-400">
-          Be the first to ask your community for support!
-        </p>
       </div>
     );
   }

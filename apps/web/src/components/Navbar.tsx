@@ -110,7 +110,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm">
+    <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile Navbar */}
         <div className="md:hidden flex items-center justify-between h-16">
@@ -191,8 +191,11 @@ export default function Navbar() {
                     <div className="w-full">
                       <Link
                         href="/create-loan"
-                        className="block w-full text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-medium py-3 px-5 rounded-xl shadow-sm transition-colors"
+                        className="block w-full text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-1.5"
                       >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
                         Create a Loan
                       </Link>
                     </div>
@@ -256,8 +259,11 @@ export default function Navbar() {
             {authenticated && <WalletBalance />}
             <Link
               href="/create-loan"
-              className="bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-medium py-2.5 px-5 rounded-xl shadow-sm transition-colors duration-200"
+              className="bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
             >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
               Create Loan
             </Link>
             {!ready ? (
