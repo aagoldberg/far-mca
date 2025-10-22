@@ -545,7 +545,7 @@ export default function CreateLoanForm() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Amount needed *
+                How much would help you reach your goal? *
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
@@ -573,7 +573,7 @@ export default function CreateLoanForm() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Repayment period *
+                When can you repay this? *
               </label>
               <select
                 name="repaymentWeeks"
@@ -591,14 +591,14 @@ export default function CreateLoanForm() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Loan title *
+                What's this loan for? *
               </label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={(e) => handleChange('title', e.target.value)}
-                placeholder="New laptop to grow my design business"
+                placeholder="A sewing machine to start my clothing alteration business"
                 maxLength={80}
                 className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
                   errors.title ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -606,7 +606,7 @@ export default function CreateLoanForm() {
               />
               <div className="flex items-center justify-between mt-1.5">
                 <p className="text-xs text-gray-500">
-                  Be specific
+                  Be specific about what you need
                 </p>
                 <span className="text-xs text-gray-400">{formData.title.length}/80</span>
               </div>
@@ -655,7 +655,7 @@ export default function CreateLoanForm() {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-semibold text-gray-900">
-                  Tell us about yourself *
+                  Introduce yourself to lenders *
                 </label>
                 <span className={`text-xs ${
                   formData.aboutYou.length < 100 ? 'text-red-500' :
@@ -669,7 +669,7 @@ export default function CreateLoanForm() {
                 name="aboutYou"
                 value={formData.aboutYou}
                 onChange={(e) => handleChange('aboutYou', e.target.value)}
-                placeholder="I'm Alex, a freelance graphic designer based in Austin. I've been doing design work for 2 years, specializing in branding for small businesses. I currently work with 8 active clients and earn about $2,500/month..."
+                placeholder="I'm Sarah, a single mother of two living in Austin. I work as a seamstress from home, making custom clothes for my neighbors and local boutiques. I've been sewing since I was 12 - my grandmother taught me. Right now I'm doing everything by hand because I can't afford a proper sewing machine. Despite this, I have 6 regular customers and make about $800/month. My dream is to expand and hire another seamstress from my community..."
                 rows={6}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.aboutYou ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -682,20 +682,20 @@ export default function CreateLoanForm() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Website (optional)
+                Your website or portfolio (optional)
               </label>
               <input
                 type="url"
                 name="businessWebsite"
                 value={formData.businessWebsite}
                 onChange={(e) => handleChange('businessWebsite', e.target.value)}
-                placeholder="https://mywebsite.com"
+                placeholder="https://myportfolio.com"
                 className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
                   errors.businessWebsite ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
               <p className="text-xs text-gray-500 mt-1.5">
-                Builds trust with lenders
+                Show lenders what you do
               </p>
               {errors.businessWebsite && (
                 <p className="text-sm text-red-600 mt-1">{errors.businessWebsite}</p>
@@ -716,7 +716,7 @@ export default function CreateLoanForm() {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-semibold text-gray-900">
-                  How will you use this loan? *
+                  How will this loan change things for you? *
                 </label>
                 <span className={`text-xs ${
                   formData.loanUseAndImpact.length < 150 ? 'text-red-500' :
@@ -730,13 +730,11 @@ export default function CreateLoanForm() {
                 name="loanUseAndImpact"
                 value={formData.loanUseAndImpact}
                 onChange={(e) => handleChange('loanUseAndImpact', e.target.value)}
-                placeholder="I'll use the $1,500 to:
-- Refurbished MacBook Pro M2: $1,400
-- Adobe Creative Cloud (1 year): $100
+                placeholder="I'll use the $600 to buy a Singer Professional sewing machine ($450) and fabric supplies ($150) to get started.
 
-My current laptop is 8 years old and crashes 2-3 times per day, which means I'm losing clients and can't meet deadlines.
+Right now, I'm hand-sewing everything, which takes 4-5 hours per dress. With a machine, I can finish a dress in 45 minutes. This means I can go from making 6 dresses a month to 25-30 dresses.
 
-This will let me take on 3-5 more clients per month (currently turning them down). That's an extra $1,200-$1,500 in monthly revenue, which means I can repay this loan in 2 months."
+My customers are already asking for more - I have a waiting list of 12 people! With this machine, I can serve them all and grow my monthly income from $800 to around $2,000. This will help me support my kids better and maybe even hire my neighbor Maria, who also knows how to sew but lost her job last year."
                 rows={8}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -757,7 +755,7 @@ This will let me take on 3-5 more clients per month (currently turning them down
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-semibold text-gray-900">
-                  Repayment plan *
+                  How will you repay lenders? *
                 </label>
                 <span className={`text-xs ${
                   formData.repaymentPlan.length < 75 ? 'text-red-500' :
@@ -771,7 +769,9 @@ This will let me take on 3-5 more clients per month (currently turning them down
                 name="repaymentPlan"
                 value={formData.repaymentPlan}
                 onChange={(e) => handleChange('repaymentPlan', e.target.value)}
-                placeholder="I earn $2,500/month from my design freelance work, with 8 active clients providing steady income. The bi-weekly payment of $187 is only 7.5% of my monthly income. I also have $3,000 in savings as backup..."
+                placeholder="I currently make $800/month from my sewing work, and with the new machine I expect to earn $2,000/month. The bi-weekly payment of $75 would be less than 10% of my current income, which I can easily manage.
+
+I also receive $400/month in child support that I can use as backup if needed. My sister has also agreed to help if I ever fall behind - she knows how important this business is for my family's future."
                 rows={5}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.repaymentPlan ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
@@ -785,7 +785,7 @@ This will let me take on 3-5 more clients per month (currently turning them down
             {/* Monthly Income (Optional) */}
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Monthly income (optional)
+                What do you earn each month? (optional)
               </label>
               <select
                 name="monthlyIncome"
@@ -802,7 +802,7 @@ This will let me take on 3-5 more clients per month (currently turning them down
                 <option value={IncomeRange.OVER_SEVEN_HALF_K}>More than $7,500/month</option>
               </select>
               <p className="text-xs text-gray-500 mt-2">
-                🔒 Private — helps calculate if payments are manageable
+                🔒 Only you see this — helps us make sure payments fit your budget
               </p>
             </div>
           </div>
@@ -857,10 +857,10 @@ This will let me take on 3-5 more clients per month (currently turning them down
         <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
           <h2 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
             <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">4</span>
-            Photo
+            Add a Photo
           </h2>
           <p className="text-sm text-gray-600 mb-4 ml-10">
-            Loans with photos get funded 35% faster
+            Show lenders what you're working toward — loans with photos get funded 35% faster
           </p>
 
           {/* Drag and Drop Zone */}
