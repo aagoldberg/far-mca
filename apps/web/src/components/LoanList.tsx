@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLoans, useLoanData } from '@/hooks/useMicroLoan';
 import { LoanCard } from './LoanCard';
+import { fetchFromIPFS } from '@/lib/ipfs';
 
 // Enhanced skeleton loading component matching actual loan card structure
 const LoanCardSkeleton = () => (
@@ -50,18 +51,9 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
 
   useEffect(() => {
     if (loanData?.metadataURI) {
-      // Convert ipfs:// to HTTP gateway URL
-      const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
-        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
-        : loanData.metadataURI;
-
-      fetch(metadataUrl)
-        .then(res => {
-          if (!res.ok) throw new Error('Failed to fetch metadata');
-          return res.json();
-        })
+      fetchFromIPFS(loanData.metadataURI)
         .then(data => {
-          // Also convert image IPFS URI to gateway URL
+          // Convert image IPFS URI to gateway URL if needed
           if (data.image && data.image.startsWith('ipfs://')) {
             data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
           }
@@ -82,6 +74,7 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
   return (
     <LoanCard
       address={loanData.address}
+      borrower={loanData.borrower}
       name={metadata?.name || 'Loading...'}
       description={metadata?.description || ''}
       principal={loanData.principal}
@@ -92,6 +85,8 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
       contributorsCount={loanData.contributorsCount}
       termPeriods={loanData.termPeriods}
       imageUrl={metadata?.image}
+      fundraisingDeadline={loanData.fundraisingDeadline}
+      businessWebsite={metadata?.loanDetails?.businessWebsite}
     />
   );
 };
