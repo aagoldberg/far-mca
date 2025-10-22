@@ -174,7 +174,7 @@ const LoanList = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 sm:space-y-5">
       {loanAddresses.map((address) => (
         <LoanCardWrapper key={address} loanAddress={address} />
       ))}
