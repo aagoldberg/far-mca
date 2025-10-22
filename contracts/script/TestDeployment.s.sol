@@ -48,24 +48,20 @@ contract TestDeployment is Script {
         console2.log("Step 2: Creating test loan");
 
         uint256 principal = 1_000e6; // 1,000 USDC
-        uint256 termPeriods = 12; // 12 months
-        uint256 periodLength = 30 days;
-        uint256 firstDueDate = block.timestamp + 30 days;
+        uint256 loanDuration = 56 days; // 8 weeks
         uint256 fundraisingDeadline = block.timestamp + 7 days;
+        uint256 dueAt = block.timestamp + loanDuration;
 
         console2.log("  Principal:", principal / 1e6, "USDC");
-        console2.log("  Term:", termPeriods, "periods");
-        console2.log("  Period length:", periodLength / 1 days, "days");
-        console2.log("  First due date:", firstDueDate);
+        console2.log("  Loan duration:", loanDuration / 1 days, "days");
+        console2.log("  Due at:", dueAt);
         console2.log("  Fundraising deadline:", fundraisingDeadline);
 
         address loanAddress = factory.createLoan(
             deployer, // borrower
             "ipfs://QmTest123", // metadataURI
             principal,
-            termPeriods,
-            periodLength,
-            firstDueDate,
+            loanDuration,
             fundraisingDeadline
         );
 
@@ -77,8 +73,8 @@ contract TestDeployment is Script {
         console2.log("Step 3: Verifying loan parameters");
         console2.log("  Borrower:", loan.borrower());
         console2.log("  Principal:", loan.principal() / 1e6, "USDC");
-        console2.log("  Term periods:", loan.termPeriods());
-        console2.log("  Period length:", loan.periodLength() / 1 days, "days");
+        console2.log("  Due at:", loan.dueAt());
+        console2.log("  Seconds until due:", loan.secondsUntilDue() / 1 days, "days");
         console2.log("  Fundraising active:", loan.fundraisingActive());
         console2.log("  [OK] All parameters verified");
         console2.log("");

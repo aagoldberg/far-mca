@@ -7,32 +7,35 @@ import "./MicroLoan.sol";
 
 /**
  * @title MicroLoanFactory
- * @notice Deploys zero-interest MicroLoan contracts and tracks them. Enforces simple policy bounds.
- * @dev Factory pattern for creating MicroLoan instances. Prevents multiple active loans per borrower.
+ * @notice Deploys zero-interest MicroLoan contracts with single-maturity repayment model
+ * @dev Simplified factory - no installments, just loan duration and maturity date
  */
 contract MicroLoanFactory is Ownable, Pausable {
 
     // --------------------
     // Events
     // --------------------
-    event LoanCreated(address indexed loan, address indexed borrower, uint256 principal, uint256 termPeriods);
+    event LoanCreated(
+        address indexed loan,
+        address indexed borrower,
+        uint256 principal,
+        uint256 dueAt,
+        uint256 duration
+    );
 
     // --------------------
-    // Config & Policy bounds
+    // Config & Policy Bounds
     // --------------------
-    address public immutable usdc;              // single funding token for all loans
-    uint256 public minPrincipal = 100e6;         // $100 minimum (6 decimals)
-    uint256 public minTermPeriods = 3;
-    uint256 public maxTermPeriods = 60;
-    uint256 public minPeriodLength = 7 days;     // weekly minimum
-    uint256 public maxPeriodLength = 60 days;    // bi-monthly maximum
-    uint256 public disbursementWindow = 14 days; // default window to disburse after funding
-    uint256 public gracePeriod = 7 days;         // default grace period before default
+    address public immutable usdc;
+    uint256 public minPrincipal = 100e6;           // $100 minimum (6 decimals)
+    uint256 public minLoanDuration = 7 days;       // Minimum time to maturity
+    uint256 public maxLoanDuration = 365 days;     // Maximum time to maturity
+    uint256 public disbursementWindow = 14 days;   // Time to disburse after funding
 
     address[] public loans;
     mapping(address => address[]) public borrowerLoans;
-    mapping(address => bool) public hasActiveLoan;       // borrower => has active loan
-    mapping(address => address) public loanToBorrower;   // loan => borrower
+    mapping(address => bool) public hasActiveLoan;
+    mapping(address => address) public loanToBorrower;
 
     constructor(address _usdc) Ownable(msg.sender) {
         require(_usdc != address(0), "usdc=0");
@@ -40,24 +43,17 @@ contract MicroLoanFactory is Ownable, Pausable {
     }
 
     /**
-     * @notice Update term and period length bounds for new loans
-     * @param _minTerm Minimum number of repayment periods
-     * @param _maxTerm Maximum number of repayment periods
-     * @param _minPeriodLen Minimum period length in seconds
-     * @param _maxPeriodLen Maximum period length in seconds
+     * @notice Update loan duration bounds for new loans
+     * @param _minDuration Minimum loan duration in seconds
+     * @param _maxDuration Maximum loan duration in seconds
      */
-    function setBounds(
-        uint256 _minTerm,
-        uint256 _maxTerm,
-        uint256 _minPeriodLen,
-        uint256 _maxPeriodLen
+    function setDurationBounds(
+        uint256 _minDuration,
+        uint256 _maxDuration
     ) external onlyOwner {
-        require(_minTerm > 0 && _minTerm <= _maxTerm, "term bounds");
-        require(_minPeriodLen > 0 && _minPeriodLen <= _maxPeriodLen, "period bounds");
-        minTermPeriods = _minTerm;
-        maxTermPeriods = _maxTerm;
-        minPeriodLength = _minPeriodLen;
-        maxPeriodLength = _maxPeriodLen;
+        require(_minDuration > 0 && _minDuration <= _maxDuration, "duration bounds");
+        minLoanDuration = _minDuration;
+        maxLoanDuration = _maxDuration;
     }
 
     function setMinPrincipal(uint256 _minPrincipal) external onlyOwner {
@@ -70,50 +66,43 @@ contract MicroLoanFactory is Ownable, Pausable {
         disbursementWindow = _window;
     }
 
-    function setGracePeriod(uint256 _gracePeriod) external onlyOwner {
-        require(_gracePeriod > 0, "grace period must be > 0");
-        gracePeriod = _gracePeriod;
-    }
-
     /**
-     * @notice Create a new zero-interest microloan
-     * @dev Validates all parameters against factory bounds. Prevents multiple active loans per borrower.
-     * @param borrower Address that will receive the disbursed funds and is responsible for repayment
-     * @param metadataURI IPFS or HTTP URI pointing to loan metadata (title, description, image, etc.)
-     * @param principal Total amount to raise and repay (in funding token base units, e.g., USDC has 6 decimals)
-     * @param termPeriods Number of repayment installments
-     * @param periodLength Duration of each period in seconds (e.g., 30 days)
-     * @param firstDueDate Unix timestamp when first payment is due
-     * @param fundraisingDeadline Unix timestamp when fundraising expires if not fully funded
+     * @notice Create a new zero-interest microloan with flexible repayment
+     * @dev Validates parameters against factory bounds. Prevents multiple active loans per borrower.
+     * @param borrower Address that will receive funds and is responsible for repayment
+     * @param metadataURI IPFS or HTTP URI pointing to loan metadata
+     * @param principal Total amount to raise and repay (in USDC base units)
+     * @param loanDuration Duration in seconds until loan maturity (e.g., 56 days = 56 * 86400)
+     * @param fundraisingDeadline Unix timestamp when fundraising expires
      * @return loanAddr Address of the newly created MicroLoan contract
      */
     function createLoan(
         address borrower,
         string calldata metadataURI,
         uint256 principal,
-        uint256 termPeriods,
-        uint256 periodLength,
-        uint256 firstDueDate,
+        uint256 loanDuration,
         uint256 fundraisingDeadline
     ) external whenNotPaused returns (address loanAddr) {
         require(principal >= minPrincipal, "principal below minimum");
-        require(termPeriods >= minTermPeriods && termPeriods <= maxTermPeriods, "term out of bounds");
-        require(periodLength >= minPeriodLength && periodLength <= maxPeriodLength, "period out of bounds");
+        require(
+            loanDuration >= minLoanDuration && loanDuration <= maxLoanDuration,
+            "duration out of bounds"
+        );
         require(!hasActiveLoan[borrower], "borrower has active loan");
 
-        // Deploy a new MicroLoan instance (direct new; clones could be added later if desired)
+        // Calculate maturity date
+        uint256 dueAt = block.timestamp + loanDuration;
+
+        // Deploy new MicroLoan instance
         MicroLoan loan = new MicroLoan(
             address(this),
             usdc,
             borrower,
             metadataURI,
             principal,
-            termPeriods,
-            periodLength,
-            firstDueDate,
+            dueAt,
             fundraisingDeadline,
-            disbursementWindow,
-            gracePeriod
+            disbursementWindow
         );
 
         loanAddr = address(loan);
@@ -122,7 +111,7 @@ contract MicroLoanFactory is Ownable, Pausable {
         hasActiveLoan[borrower] = true;
         loanToBorrower[loanAddr] = borrower;
 
-        emit LoanCreated(loanAddr, borrower, principal, termPeriods);
+        emit LoanCreated(loanAddr, borrower, principal, dueAt, loanDuration);
     }
 
     function getLoans() external view returns (address[] memory) {
@@ -135,7 +124,7 @@ contract MicroLoanFactory is Ownable, Pausable {
 
     /**
      * @notice Called by MicroLoan contracts when they complete or are cancelled
-     * @dev Unlocks the borrower to create a new loan. Only callable by loan contracts created by this factory.
+     * @dev Unlocks the borrower to create a new loan
      */
     function notifyLoanClosed() external {
         address borrower = loanToBorrower[msg.sender];
@@ -146,20 +135,11 @@ contract MicroLoanFactory is Ownable, Pausable {
     // --------------------
     // Emergency Controls
     // --------------------
-    /**
-     * @notice Pause new loan creation in case of emergency
-     * @dev Only affects createLoan(); existing loans continue to operate normally
-     */
     function pause() external onlyOwner {
         _pause();
     }
 
-    /**
-     * @notice Unpause loan creation after emergency is resolved
-     */
     function unpause() external onlyOwner {
         _unpause();
     }
 }
-
-
