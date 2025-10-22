@@ -136,6 +136,34 @@ factory.createLoan(
 - UI suggests weekly amounts (calculated off-chain)
 - Loan defaults immediately if unpaid at `dueAt`
 - Simple subtraction, no loops
+- **Overpayments distributed as bonus**: If borrower pays more than outstanding, excess goes to lenders pro-rata (no refund)
+
+### Overpayment-as-Tip Feature
+
+In the new system, borrowers can show appreciation to lenders by overpaying:
+
+```solidity
+// Example: $1,000 loan, borrower pays $1,500
+loan.repay(1_500e6);
+
+// Result:
+// - outstanding = 0 (loan completed)
+// - totalRepaid = $1,500
+// - Lenders can claim 150% of their contribution
+// - No refund to borrower
+```
+
+**Why this is useful for 0% interest microloans:**
+- Encourages community goodwill
+- Borrowers can voluntarily reward helpful lenders
+- Creates positive feedback loop
+- Simpler than refund logic (one transfer instead of two)
+
+**Example scenario:**
+1. Borrower gets $1,000 loan at 0% interest
+2. Business succeeds, borrower pays back $1,200 (20% tip)
+3. Each lender receives 120% of their contribution
+4. Lender reputation improves, making future loans easier to fund
 
 ## Off-Chain Reputation Tracking
 
@@ -198,6 +226,7 @@ function calculateReputation(loan: Loan, events: RepaymentEvent[]) {
 - Borrowers can repay on their own schedule
 - Lump sum, weekly, or arbitrary amounts all work
 - UI can suggest any payment schedule without changing contracts
+- **Overpayments distributed as bonus**: Borrowers can "tip" lenders by paying more than principal (distributed pro-rata)
 
 ### ✅ Security
 - Smaller attack surface

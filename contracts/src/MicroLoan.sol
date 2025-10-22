@@ -228,8 +228,8 @@ contract MicroLoan is ReentrancyGuard {
     // --------------------
     /**
      * @notice Repay principal on this loan (flexible: any amount, anytime before/after maturity)
-     * @dev Anyone can repay on behalf of borrower. Overpayments refunded.
-     * @param amount Amount to repay (excess beyond outstanding principal refunded)
+     * @dev Anyone can repay on behalf of borrower. Overpayments distributed to lenders as bonus.
+     * @param amount Amount to repay (excess beyond outstanding principal distributed to lenders)
      */
     function repay(uint256 amount) external nonReentrant {
         if (!active) revert NotActive();
@@ -241,45 +241,34 @@ contract MicroLoan is ReentrancyGuard {
 
         fundingToken.safeTransferFrom(msg.sender, address(this), amount);
 
-        // Apply payment to outstanding principal (cap at outstanding)
-        uint256 applied = amount > outstandingPrincipal ? outstandingPrincipal : amount;
+        // Apply full payment amount (including any overpayment)
+        uint256 principalPortion = amount > outstandingPrincipal ? outstandingPrincipal : amount;
 
-        outstandingPrincipal -= applied;
-        totalRepaid += applied;
+        outstandingPrincipal -= principalPortion;
+        totalRepaid += amount; // Track total including overpayments
 
-        // Update accumulator for pro-rata distribution
-        if (applied > 0) {
-            accRepaidPerShare += (applied * ACC_PRECISION) / principal;
-        }
+        // Update accumulator for pro-rata distribution (includes overpayments)
+        accRepaidPerShare += (amount * ACC_PRECISION) / principal;
 
         // Emit default event if loan was in default (for off-chain tracking)
         if (wasDefaulted) {
-            emit Defaulted(dueAt, outstandingPrincipal + applied, block.timestamp);
+            emit Defaulted(dueAt, outstandingPrincipal + principalPortion, block.timestamp);
         }
 
         // Rich repayment event for off-chain reputation tracking
         uint256 timeUntilDue = secondsUntilDue();
         emit Repayment(
             msg.sender,
-            applied,
+            amount,
             totalRepaid,
             outstandingPrincipal,
             block.timestamp,
             timeUntilDue
         );
 
-        // Refund overpayment
-        if (amount > applied) {
-            fundingToken.safeTransfer(msg.sender, amount - applied);
-        }
-
         // Check completion
         if (outstandingPrincipal == 0) {
             completed = true;
-            // Finalize accumulator to release any rounding dust
-            if (accRepaidPerShare < ACC_PRECISION) {
-                accRepaidPerShare = ACC_PRECISION;
-            }
             emit Completed(totalRepaid, block.timestamp);
             factory.notifyLoanClosed();
         }

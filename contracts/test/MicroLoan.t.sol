@@ -121,7 +121,7 @@ contract MicroLoanTest is Test {
         vm.stopPrank();
     }
 
-    function test_RepaymentOverpaymentRefund() public {
+    function test_RepaymentOverpaymentDistributed() public {
         MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
 
         vm.startPrank(alice);
@@ -132,20 +132,28 @@ contract MicroLoanTest is Test {
         vm.prank(borrower);
         loan.disburse();
 
-        // Borrower overpays
+        // Borrower overpays by 50% as a tip to lenders
         uint256 borrowerBefore = usdc.balanceOf(borrower);
         vm.startPrank(borrower);
         usdc.approve(address(loan), type(uint256).max);
-        loan.repay(1_500e6); // overpay by 500
+        loan.repay(1_500e6); // overpay by 500 (50% bonus)
         vm.stopPrank();
 
         // Loan is completed
         assertTrue(loan.completed());
         assertEq(loan.outstandingPrincipal(), 0);
+        assertEq(loan.totalRepaid(), 1_500e6); // Tracks full amount including overpayment
 
-        // Borrower got refunded the overpayment
+        // Borrower was charged full amount (no refund)
         uint256 borrowerAfter = usdc.balanceOf(borrower);
-        assertEq(borrowerBefore - borrowerAfter, 1_000e6); // only charged 1000, not 1500
+        assertEq(borrowerBefore - borrowerAfter, 1_500e6);
+
+        // Alice can claim 150% of her contribution (principal + 50% bonus)
+        uint256 aliceBefore = usdc.balanceOf(alice);
+        vm.prank(alice);
+        loan.claim();
+        uint256 aliceAfter = usdc.balanceOf(alice);
+        assertEq(aliceAfter - aliceBefore, 1_500e6); // Gets back 1500 (1000 principal + 500 bonus)
     }
 
     function test_DefaultDetection() public {
