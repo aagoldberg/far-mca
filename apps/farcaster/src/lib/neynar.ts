@@ -129,6 +129,106 @@ export const neynarClient = {
 
     return requestPromise;
   },
+
+  /**
+   * Fetch followers for a given FID
+   * @param fid Farcaster ID
+   * @param limit Max number of followers to fetch (default 150, max 1000)
+   * @returns Array of FIDs who follow this user
+   */
+  async fetchFollowers(fid: number, limit: number = 150): Promise<number[]> {
+    if (!this.isEnabled()) {
+      console.warn('[Neynar] API key not configured');
+      return [];
+    }
+
+    const cacheKey = `followers:${fid}:${limit}`;
+    const cached = cache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      return cached.data;
+    }
+
+    try {
+      const url = `${NEYNAR_API_BASE}/farcaster/followers?fid=${fid}&limit=${limit}`;
+
+      const response = await fetch(url, {
+        headers: {
+          'accept': 'application/json',
+          'api_key': neynarApiKey!,
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) return [];
+        console.error('[Neynar] Error fetching followers:', response.status);
+        return [];
+      }
+
+      const data = await response.json();
+      const followerFids = data.users?.map((user: any) => user.fid) || [];
+
+      // Cache the result
+      cache.set(cacheKey, {
+        data: followerFids,
+        timestamp: Date.now(),
+      });
+
+      return followerFids;
+    } catch (error) {
+      console.debug('[Neynar] Error fetching followers:', error);
+      return [];
+    }
+  },
+
+  /**
+   * Fetch users that a given FID is following
+   * @param fid Farcaster ID
+   * @param limit Max number to fetch (default 150, max 1000)
+   * @returns Array of FIDs that this user follows
+   */
+  async fetchFollowing(fid: number, limit: number = 150): Promise<number[]> {
+    if (!this.isEnabled()) {
+      console.warn('[Neynar] API key not configured');
+      return [];
+    }
+
+    const cacheKey = `following:${fid}:${limit}`;
+    const cached = cache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      return cached.data;
+    }
+
+    try {
+      const url = `${NEYNAR_API_BASE}/farcaster/following?fid=${fid}&limit=${limit}`;
+
+      const response = await fetch(url, {
+        headers: {
+          'accept': 'application/json',
+          'api_key': neynarApiKey!,
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) return [];
+        console.error('[Neynar] Error fetching following:', response.status);
+        return [];
+      }
+
+      const data = await response.json();
+      const followingFids = data.users?.map((user: any) => user.fid) || [];
+
+      // Cache the result
+      cache.set(cacheKey, {
+        data: followingFids,
+        timestamp: Date.now(),
+      });
+
+      return followingFids;
+    } catch (error) {
+      console.debug('[Neynar] Error fetching following:', error);
+      return [];
+    }
+  },
 };
 
 // Helper to check if Neynar is available
