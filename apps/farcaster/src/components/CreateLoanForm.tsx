@@ -448,31 +448,31 @@ export default function CreateLoanForm() {
   if (isSuccess && hash) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 text-center shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Loan Created Successfully!
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
+            Loan Created!
           </h2>
-          <p className="text-gray-600 mb-2">
-            Your zero-interest loan is now live and accepting contributions
+          <p className="text-gray-700 mb-2 text-lg">
+            Your loan is live and accepting contributions
           </p>
-          <p className="text-sm text-gray-500 mb-6">
-            Transaction: {hash.slice(0, 10)}...{hash.slice(-8)}
+          <p className="text-xs text-gray-500 mb-8 font-mono bg-white/50 rounded px-3 py-2 inline-block">
+            {hash.slice(0, 10)}...{hash.slice(-8)}
           </p>
           <div className="space-y-3">
             <button
               onClick={() => router.push('/')}
-              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
             >
               View All Loans
             </button>
             <button
               onClick={() => window.location.reload()}
-              className="block w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-white border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-all duration-200"
             >
               Create Another Loan
             </button>
@@ -514,33 +514,38 @@ export default function CreateLoanForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-24">
+    <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
       <button
         onClick={() => router.push('/')}
-        className="flex items-center gap-1.5 sm:gap-2 text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 transition-colors touch-manipulation"
+        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group"
       >
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        <span className="text-sm sm:text-base font-medium">Back</span>
+        <span className="font-medium">Back to Loans</span>
       </button>
 
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Create Loan Request
-      </h1>
-      <p className="text-sm text-gray-600 mb-4 sm:mb-6">
-        Tell your story and get zero-interest funding from your community
-      </p>
+      <div className="mb-8">
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
+          Create Your Loan
+        </h1>
+        <p className="text-gray-600">
+          Get zero-interest funding from your community
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Section 1: Loan Basics */}
-        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Loan Basics</h2>
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">1</span>
+            Loan Basics
+          </h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                How much do you need? *
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Amount needed *
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
@@ -567,43 +572,43 @@ export default function CreateLoanForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                How long to repay? *
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Repayment period *
               </label>
               <select
                 name="repaymentWeeks"
                 value={formData.repaymentWeeks}
                 onChange={(e) => handleChange('repaymentWeeks', parseInt(e.target.value))}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
               >
-                <option value={4}>4 weeks (1 month)</option>
-                <option value={8}>8 weeks (2 months)</option>
-                <option value={12}>12 weeks (3 months)</option>
-                <option value={16}>16 weeks (4 months)</option>
-                <option value={24}>24 weeks (6 months)</option>
+                <option value={4}>1 month (4 weeks)</option>
+                <option value={8}>2 months (8 weeks)</option>
+                <option value={12}>3 months (12 weeks)</option>
+                <option value={16}>4 months (16 weeks)</option>
+                <option value={24}>6 months (24 weeks)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Give your loan a clear title *
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Loan title *
               </label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={(e) => handleChange('title', e.target.value)}
-                placeholder="Buying sewing machine to expand tailoring business"
+                placeholder="New laptop to grow my design business"
                 maxLength={80}
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
+                className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
                   errors.title ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
-              <div className="flex items-center justify-between mt-1">
+              <div className="flex items-center justify-between mt-1.5">
                 <p className="text-xs text-gray-500">
-                  Make it specific and action-oriented
+                  Be specific
                 </p>
-                <span className="text-xs text-gray-500">{formData.title.length}/80</span>
+                <span className="text-xs text-gray-400">{formData.title.length}/80</span>
               </div>
               {errors.title && (
                 <p className="text-sm text-red-600 mt-1">{errors.title}</p>
@@ -614,31 +619,43 @@ export default function CreateLoanForm() {
 
         {/* Repayment Calculator */}
         {formData.amount && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-2">💰 Your Repayment Schedule</h3>
-            <div className="text-sm text-gray-700 space-y-1">
-              <p>Loan amount: <span className="font-semibold">${parseFloat(formData.amount).toFixed(2)} USDC</span></p>
-              <p>Period: <span className="font-semibold">{formData.repaymentWeeks} weeks ({formData.repaymentWeeks / 2} bi-weekly payments)</span></p>
-              <p>Bi-weekly payment: <span className="font-semibold text-blue-700">${biWeeklyPayment.toFixed(2)} USDC</span></p>
-              {paymentPercentage !== null && (
-                <p className="text-xs text-gray-600 mt-2">
-                  {paymentPercentage > 25 ? '⚠️' : '✅'} This is {paymentPercentage.toFixed(1)}% of your stated monthly income
-                  {paymentPercentage > 25 && ' (consider a longer timeline)'}
-                </p>
-              )}
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200/60 rounded-xl p-4 shadow-sm">
+            <h3 className="text-sm font-bold text-gray-900 mb-3">Repayment Schedule</h3>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <p className="text-gray-600 text-xs mb-0.5">Total loan</p>
+                <p className="font-bold text-gray-900">${parseFloat(formData.amount).toLocaleString()} USDC</p>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs mb-0.5">Bi-weekly payment</p>
+                <p className="font-bold text-[#3B9B7F]">${biWeeklyPayment.toFixed(2)}</p>
+              </div>
+              <div className="col-span-2">
+                <p className="text-gray-600 text-xs mb-0.5">Payments</p>
+                <p className="font-semibold text-gray-900">{formData.repaymentWeeks / 2} payments over {formData.repaymentWeeks} weeks</p>
+              </div>
             </div>
+            {paymentPercentage !== null && (
+              <div className={`text-xs mt-3 pt-3 border-t ${paymentPercentage > 25 ? 'border-orange-200 text-orange-700' : 'border-green-200 text-green-700'}`}>
+                {paymentPercentage > 25 ? '⚠️' : '✅'} {paymentPercentage.toFixed(1)}% of your monthly income
+                {paymentPercentage > 25 && ' — consider extending timeline'}
+              </div>
+            )}
           </div>
         )}
 
         {/* Section 2: About You */}
-        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">About You</h2>
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">2</span>
+            About You
+          </h2>
 
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Who are you and what do you do? *
+                <label className="block text-sm font-semibold text-gray-900">
+                  Tell us about yourself *
                 </label>
                 <span className={`text-xs ${
                   formData.aboutYou.length < 100 ? 'text-red-500' :
@@ -664,21 +681,21 @@ export default function CreateLoanForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Business Website (optional)
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Website (optional)
               </label>
               <input
                 type="url"
                 name="businessWebsite"
                 value={formData.businessWebsite}
                 onChange={(e) => handleChange('businessWebsite', e.target.value)}
-                placeholder="https://mybusiness.com"
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
+                placeholder="https://mywebsite.com"
+                className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
                   errors.businessWebsite ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
-              <p className="text-xs text-gray-500 mt-1">
-                Share your business website to build lender trust
+              <p className="text-xs text-gray-500 mt-1.5">
+                Builds trust with lenders
               </p>
               {errors.businessWebsite && (
                 <p className="text-sm text-red-600 mt-1">{errors.businessWebsite}</p>
@@ -688,15 +705,18 @@ export default function CreateLoanForm() {
         </div>
 
         {/* Section 3: This Loan */}
-        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">This Loan</h2>
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">3</span>
+            Loan Details
+          </h2>
 
           <div className="space-y-4">
             {/* Loan Use & Impact (Combined) */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  How will you use this loan and what will it help you achieve? *
+                <label className="block text-sm font-semibold text-gray-900">
+                  How will you use this loan? *
                 </label>
                 <span className={`text-xs ${
                   formData.loanUseAndImpact.length < 150 ? 'text-red-500' :
@@ -736,8 +756,8 @@ This will let me take on 3-5 more clients per month (currently turning them down
             {/* Repayment Plan */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  How will you repay this loan? *
+                <label className="block text-sm font-semibold text-gray-900">
+                  Repayment plan *
                 </label>
                 <span className={`text-xs ${
                   formData.repaymentPlan.length < 75 ? 'text-red-500' :
@@ -764,14 +784,14 @@ This will let me take on 3-5 more clients per month (currently turning them down
 
             {/* Monthly Income (Optional) */}
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Approximate monthly income (optional)
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Monthly income (optional)
               </label>
               <select
                 name="monthlyIncome"
                 value={formData.monthlyIncome}
                 onChange={(e) => handleChange('monthlyIncome', e.target.value as IncomeRange)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
               >
                 <option value={IncomeRange.PREFER_NOT_TO_SAY}>Prefer not to say</option>
                 <option value={IncomeRange.UNDER_1K}>Less than $1,000/month</option>
@@ -782,7 +802,7 @@ This will let me take on 3-5 more clients per month (currently turning them down
                 <option value={IncomeRange.OVER_SEVEN_HALF_K}>More than $7,500/month</option>
               </select>
               <p className="text-xs text-gray-500 mt-2">
-                🔒 This helps us warn you if the repayment schedule might be challenging. We'll never display this publicly—only you see it.
+                🔒 Private — helps calculate if payments are manageable
               </p>
             </div>
           </div>
@@ -834,10 +854,13 @@ This will let me take on 3-5 more clients per month (currently turning them down
         )}
 
         {/* Section 4: Add a Photo */}
-        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-2">Add a Photo</h2>
-          <p className="text-sm text-gray-600 mb-4">
-            📸 Loans with photos get funded 35% faster
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">4</span>
+            Photo
+          </h2>
+          <p className="text-sm text-gray-600 mb-4 ml-10">
+            Loans with photos get funded 35% faster
           </p>
 
           {/* Drag and Drop Zone */}
@@ -933,20 +956,20 @@ This will let me take on 3-5 more clients per month (currently turning them down
 
         {/* Upload Progress */}
         {uploadProgress && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-4 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
-              <p className="text-blue-800 font-medium">{uploadProgress}</p>
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-[#3B9B7F] border-t-transparent"></div>
+              <p className="text-gray-900 font-semibold">{uploadProgress}</p>
             </div>
           </div>
         )}
 
         {/* Loan Card Preview */}
         {(formData.title || formData.aboutYou || formData.amount) && (
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-300 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-2">Preview</h2>
-            <p className="text-sm text-gray-600 mb-4">
-              This is how your loan will appear to potential lenders
+          <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-300 rounded-xl p-5 shadow-sm">
+            <h2 className="text-lg font-bold text-gray-900 mb-1">Preview</h2>
+            <p className="text-sm text-gray-600 mb-5">
+              How your loan will appear
             </p>
 
             <div className="max-w-md mx-auto">
@@ -972,18 +995,18 @@ This will let me take on 3-5 more clients per month (currently turning them down
         <button
           type="submit"
           disabled={isPending || isConfirming || isSubmitting}
-          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
+          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
         >
           {isPending || isConfirming || isSubmitting ? (
             <span className="flex items-center justify-center gap-2">
-              <svg className="animate-spin h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 24 24">
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              {isPending ? 'Creating Loan...' : 'Confirming...'}
+              {isPending ? 'Creating...' : 'Confirming...'}
             </span>
           ) : (
-            'Create Loan Request'
+            'Create Loan'
           )}
         </button>
       </form>
