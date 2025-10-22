@@ -417,4 +417,228 @@ contract MicroLoanTest is Test {
         vm.warp(loan.dueAt() + 1);
         assertEq(loan.secondsUntilDue(), 0);
     }
+
+    function test_MetadataUpdate() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        // Fund and disburse
+        vm.startPrank(alice);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.contribute(1_000e6);
+        vm.stopPrank();
+
+        vm.prank(borrower);
+        loan.disburse();
+
+        // Borrower updates metadata with progress update
+        vm.prank(borrower);
+        loan.updateMetadata("ipfs://QmProgressUpdate1");
+        assertEq(loan.metadataURI(), "ipfs://QmProgressUpdate1");
+
+        // Borrower updates again with thank you message
+        vm.prank(borrower);
+        loan.updateMetadata("ipfs://QmThankYou");
+        assertEq(loan.metadataURI(), "ipfs://QmThankYou");
+
+        // Non-borrower cannot update
+        vm.prank(alice);
+        vm.expectRevert();
+        loan.updateMetadata("ipfs://Unauthorized");
+    }
+
+    function test_MetadataUpdateAfterCompletion() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        // Fund, disburse, and complete
+        vm.startPrank(alice);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.contribute(1_000e6);
+        vm.stopPrank();
+
+        vm.prank(borrower);
+        loan.disburse();
+
+        vm.startPrank(borrower);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.repay(1_000e6);
+        vm.stopPrank();
+
+        // Borrower can still update metadata after completion (for final thank you)
+        vm.prank(borrower);
+        loan.updateMetadata("ipfs://QmFinalThankYou");
+        assertEq(loan.metadataURI(), "ipfs://QmFinalThankYou");
+    }
+
+    function test_TokenRecovery() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        // Fund, disburse, and complete
+        vm.startPrank(alice);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.contribute(1_000e6);
+        vm.stopPrank();
+
+        vm.prank(borrower);
+        loan.disburse();
+
+        vm.startPrank(borrower);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.repay(1_000e6);
+        vm.stopPrank();
+
+        // Alice claims her funds
+        vm.prank(alice);
+        loan.claim();
+
+        // Someone accidentally sends 100 USDC to the completed loan
+        usdc.mint(address(loan), 100e6);
+
+        // Anyone can recover the accidentally sent tokens
+        uint256 recoveryRecipientBefore = usdc.balanceOf(bob);
+        vm.prank(alice);
+        loan.recoverTokens(address(usdc), bob);
+        uint256 recoveryRecipientAfter = usdc.balanceOf(bob);
+
+        assertEq(recoveryRecipientAfter - recoveryRecipientBefore, 100e6);
+    }
+
+    function test_TokenRecoveryOnCancelled() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        // Borrower cancels fundraising
+        vm.prank(borrower);
+        loan.cancelFundraise();
+
+        // Someone accidentally sends tokens
+        usdc.mint(address(loan), 50e6);
+
+        // Can recover from cancelled loan
+        vm.prank(alice);
+        loan.recoverTokens(address(usdc), alice);
+        // Verify recovery succeeded (no revert)
+    }
+
+    function test_GetStatus() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        // Initial state
+        (
+            bool fundraisingActive,
+            bool active,
+            bool completed,
+            bool cancelled,
+            bool defaulted,
+            uint256 percentFunded,
+            uint256 percentRepaid,
+            uint256 secondsUntilDue
+        ) = loan.getStatus();
+
+        assertTrue(fundraisingActive);
+        assertFalse(active);
+        assertFalse(completed);
+        assertFalse(cancelled);
+        assertFalse(defaulted);
+        assertEq(percentFunded, 0);
+        assertEq(percentRepaid, 0);
+        assertGt(secondsUntilDue, 0);
+
+        // After 60% funding
+        vm.startPrank(alice);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.contribute(600e6);
+        vm.stopPrank();
+
+        (,,,, , percentFunded,,) = loan.getStatus();
+        assertEq(percentFunded, 6000); // 60% in basis points
+
+        // After full funding and disbursement
+        vm.startPrank(bob);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.contribute(400e6);
+        vm.stopPrank();
+
+        vm.prank(borrower);
+        loan.disburse();
+
+        (, active, , , , percentFunded,,) = loan.getStatus();
+        assertTrue(active);
+        assertEq(percentFunded, 10000); // 100%
+
+        // After 30% repayment
+        vm.startPrank(borrower);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.repay(300e6);
+        vm.stopPrank();
+
+        (,,,,,, percentRepaid,) = loan.getStatus();
+        assertEq(percentRepaid, 3000); // 30%
+
+        // After full repayment
+        vm.startPrank(borrower);
+        loan.repay(700e6);
+        vm.stopPrank();
+
+        (,, completed,,,, percentRepaid,) = loan.getStatus();
+        assertTrue(completed);
+        assertEq(percentRepaid, 10000); // 100%
+    }
+
+    function test_GetStatusWithOverpayment() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        vm.startPrank(alice);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.contribute(1_000e6);
+        vm.stopPrank();
+
+        vm.prank(borrower);
+        loan.disburse();
+
+        // Borrower overpays by 50%
+        vm.startPrank(borrower);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.repay(1_500e6);
+        vm.stopPrank();
+
+        (,, bool completed,,,, uint256 percentRepaid,) = loan.getStatus();
+        assertTrue(completed);
+        assertEq(percentRepaid, 15000); // 150% (includes tip)
+    }
+
+    function test_AccumulatorFinalizationWithOverpayment() public {
+        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+
+        // Multiple lenders contribute
+        vm.prank(alice); usdc.approve(address(loan), type(uint256).max);
+        vm.prank(alice); loan.contribute(600e6);
+
+        vm.prank(bob); usdc.approve(address(loan), type(uint256).max);
+        vm.prank(bob); loan.contribute(400e6);
+
+        vm.prank(borrower);
+        loan.disburse();
+
+        // Borrower overpays by 20%
+        vm.startPrank(borrower);
+        usdc.approve(address(loan), type(uint256).max);
+        loan.repay(1_200e6);
+        vm.stopPrank();
+
+        // Both lenders should be able to claim exactly their proportional share
+        uint256 aliceBefore = usdc.balanceOf(alice);
+        vm.prank(alice);
+        loan.claim();
+        uint256 aliceAfter = usdc.balanceOf(alice);
+        assertEq(aliceAfter - aliceBefore, 720e6); // 60% of 1200
+
+        uint256 bobBefore = usdc.balanceOf(bob);
+        vm.prank(bob);
+        loan.claim();
+        uint256 bobAfter = usdc.balanceOf(bob);
+        assertEq(bobAfter - bobBefore, 480e6); // 40% of 1200
+
+        // No dust should remain
+        assertEq(loan.claimableAmount(alice), 0);
+        assertEq(loan.claimableAmount(bob), 0);
+    }
 }

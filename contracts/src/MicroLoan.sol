@@ -84,6 +84,7 @@ contract MicroLoan is ReentrancyGuard {
     event Defaulted(uint256 dueDate, uint256 outstandingAmount, uint256 timestamp);
     event Refunded(address indexed contributor, uint256 amount);
     event FundraisingCancelled();
+    event MetadataUpdated(string newMetadataURI, uint256 timestamp);
 
     // --------------------
     // Constructor
@@ -224,6 +225,21 @@ contract MicroLoan is ReentrancyGuard {
     }
 
     // --------------------
+    // Metadata Updates
+    // --------------------
+    /**
+     * @notice Update loan metadata (for progress updates, thank you messages, photos, etc.)
+     * @dev Only borrower can update. Allows community engagement throughout loan lifecycle.
+     * @param newMetadataURI New IPFS or HTTP URI pointing to updated metadata
+     */
+    function updateMetadata(string calldata newMetadataURI) external onlyBorrower {
+        require(active || completed, "loan not active or completed");
+        require(bytes(newMetadataURI).length > 0, "empty metadata");
+        metadataURI = newMetadataURI;
+        emit MetadataUpdated(newMetadataURI, block.timestamp);
+    }
+
+    // --------------------
     // Repayment (Flexible - any amount, anytime)
     // --------------------
     /**
@@ -269,6 +285,11 @@ contract MicroLoan is ReentrancyGuard {
         // Check completion
         if (outstandingPrincipal == 0) {
             completed = true;
+            // Finalize accumulator to ensure all funds (including overpayments) are distributable
+            // This handles any rounding dust and ensures lenders can claim 100% of totalRepaid
+            if (totalRepaid > 0) {
+                accRepaidPerShare = (totalRepaid * ACC_PRECISION) / principal;
+            }
             emit Completed(totalRepaid, block.timestamp);
             factory.notifyLoanClosed();
         }
@@ -320,5 +341,60 @@ contract MicroLoan is ReentrancyGuard {
 
         fundingToken.safeTransfer(msg.sender, contributed);
         emit Refunded(msg.sender, contributed);
+    }
+
+    // --------------------
+    // Token Recovery (Safety)
+    // --------------------
+    /**
+     * @notice Recover tokens accidentally sent to completed/cancelled loans
+     * @dev Can only be called when loan is completed or cancelled (no active funds)
+     * @param token Address of token to recover
+     * @param to Address to send recovered tokens to
+     */
+    function recoverTokens(address token, address to) external nonReentrant {
+        require(completed || cancelled, "loan still active");
+        require(to != address(0), "invalid recipient");
+
+        uint256 balance = IERC20(token).balanceOf(address(this));
+        require(balance > 0, "no tokens to recover");
+
+        IERC20(token).safeTransfer(to, balance);
+    }
+
+    // --------------------
+    // Loan Status View
+    // --------------------
+    /**
+     * @notice Get comprehensive loan status in a single call
+     * @return _fundraisingActive Whether fundraising is still accepting contributions
+     * @return _active Whether loan has been disbursed to borrower
+     * @return _completed Whether loan has been fully repaid
+     * @return _cancelled Whether loan was cancelled
+     * @return _defaulted Whether loan is currently in default
+     * @return percentFunded Percentage funded in basis points (10000 = 100%)
+     * @return percentRepaid Percentage repaid in basis points (10000 = 100%)
+     * @return _secondsUntilDue Seconds remaining until due date (0 if past due)
+     */
+    function getStatus() external view returns (
+        bool _fundraisingActive,
+        bool _active,
+        bool _completed,
+        bool _cancelled,
+        bool _defaulted,
+        uint256 percentFunded,
+        uint256 percentRepaid,
+        uint256 _secondsUntilDue
+    ) {
+        return (
+            fundraisingActive,
+            active,
+            completed,
+            cancelled,
+            isDefaulted(),
+            totalFunded > 0 ? (totalFunded * 10000) / principal : 0,
+            active && totalRepaid > 0 ? (totalRepaid * 10000) / principal : 0,
+            secondsUntilDue()
+        );
     }
 }
