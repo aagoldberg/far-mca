@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "../components/Navbar";
-import CacheStats from "../components/CacheStats";
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://far-micro.ngrok.dev';
 
@@ -59,7 +58,6 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
-          <CacheStats />
         </Providers>
       </body>
     </html>
