@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { formatUnits, parseUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useState, useEffect } from 'react';
+import { TrustSignals } from '@/components/TrustSignals';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -366,6 +367,17 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           >
             {isRefundPending || isRefundConfirming ? 'Processing...' : 'Claim Refund'}
           </button>
+        </div>
+      )}
+
+      {/* Trust & Verification */}
+      {loanData && (
+        <div className="mb-4">
+          <TrustSignals
+            borrowerAddress={loanData.borrower}
+            loanAddress={loanAddress}
+            businessWebsite={metadata?.loanDetails?.businessWebsite}
+          />
         </div>
       )}
 
