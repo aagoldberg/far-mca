@@ -5,7 +5,48 @@ import { useAccount } from 'wagmi';
 import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
 import { useCreateLoan } from '@/hooks/useMicroLoan';
-import { USDC_DECIMALS, PERIOD_LENGTH } from '@/types/loan';
+import { USDC_DECIMALS } from '@/types/loan';
+import ImageCropModal from '@/components/ImageCropModal';
+import { LoanCard } from '@/components/LoanCard';
+
+enum IncomeRange {
+  PREFER_NOT_TO_SAY = '',
+  UNDER_1K = 'under_1k',
+  ONE_TO_TWO_K = '1k_to_2k',
+  TWO_TO_THREE_HALF_K = '2k_to_3.5k',
+  THREE_HALF_TO_FIVE_K = '3.5k_to_5k',
+  FIVE_TO_SEVEN_HALF_K = '5k_to_7.5k',
+  OVER_SEVEN_HALF_K = 'over_7.5k'
+}
+
+// Income range to monthly income mapping for calculations
+const INCOME_RANGES: Record<string, number> = {
+  [IncomeRange.UNDER_1K]: 750,
+  [IncomeRange.ONE_TO_TWO_K]: 1500,
+  [IncomeRange.TWO_TO_THREE_HALF_K]: 2750,
+  [IncomeRange.THREE_HALF_TO_FIVE_K]: 4250,
+  [IncomeRange.FIVE_TO_SEVEN_HALF_K]: 6250,
+  [IncomeRange.OVER_SEVEN_HALF_K]: 9000,
+};
+
+interface FormData {
+  // Section 1: Basics
+  amount: string;
+  repaymentWeeks: number;
+  title: string;
+
+  // Section 2: About You
+  aboutYou: string;
+  businessWebsite: string;
+
+  // Section 3: This Loan
+  loanUseAndImpact: string; // Combined: what you'll buy + what it will help you achieve
+  repaymentPlan: string;
+  monthlyIncome: IncomeRange;
+
+  // Section 4: Photo
+  imageUrl: string;
+}
 
 export default function CreateLoanForm() {
   const router = useRouter();
@@ -13,21 +54,16 @@ export default function CreateLoanForm() {
   const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoan();
 
   const [isCheckingConnection, setIsCheckingConnection] = useState(true);
-
-  // Form state
-  const [formData, setFormData] = useState({
-    businessName: '',
-    description: '',
-    businessType: '',
-    location: '',
+  const [formData, setFormData] = useState<FormData>({
+    amount: '',
+    repaymentWeeks: 8,
+    title: '',
+    aboutYou: '',
+    businessWebsite: '',
+    loanUseAndImpact: '',
+    repaymentPlan: '',
+    monthlyIncome: IncomeRange.PREFER_NOT_TO_SAY,
     imageUrl: '',
-    fundingGoal: '',
-    termMonths: 12,
-    periodLengthDays: 30,
-    firstPaymentDays: 30,
-    fundraisingDays: 30,
-    useOfFunds: '',
-    repaymentSource: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -35,27 +71,60 @@ export default function CreateLoanForm() {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<string>('');
+  const [tempImageSrc, setTempImageSrc] = useState<string>('');
+  const [showCropModal, setShowCropModal] = useState(false);
 
-  // For web app with Privy, wallet connects immediately
+  // Give the wallet time to connect automatically
   useEffect(() => {
-    setIsCheckingConnection(false);
+    const timer = setTimeout(() => {
+      setIsCheckingConnection(false);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const handleChange = (field: string, value: string | number) => {
+  useEffect(() => {
+    if (isConnected) {
+      setIsCheckingConnection(false);
+    }
+  }, [isConnected]);
+
+  const handleChange = (field: keyof FormData, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user types
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
   };
 
+  // Calculate bi-weekly payment
+  const biWeeklyPayment = formData.amount && formData.repaymentWeeks
+    ? parseFloat(formData.amount) / (formData.repaymentWeeks / 2)
+    : 0;
+
+  // Calculate payment as % of income
+  const paymentPercentage = formData.monthlyIncome && formData.monthlyIncome !== IncomeRange.PREFER_NOT_TO_SAY
+    ? (biWeeklyPayment / INCOME_RANGES[formData.monthlyIncome]) * 100
+    : null;
+
+  // Extract numbers from loan use field
+  const extractNumbers = (text: string | undefined): number[] => {
+    if (!text) return [];
+    const regex = /\$?\s*(\d+(?:,\d{3})*(?:\.\d{2})?)/g;
+    const matches = text.matchAll(regex);
+    return Array.from(matches).map(m => parseFloat(m[1].replace(/,/g, '')));
+  };
+
+  const loanUseNumbers = extractNumbers(formData.loanUseAndImpact || '');
+  const loanUseSum = loanUseNumbers.reduce((sum, n) => sum + n, 0);
+  const loanAmount = parseFloat(formData.amount) || 0;
+  const sumMatchesAmount = loanUseSum > 0 && Math.abs(loanUseSum - loanAmount) / loanAmount < 0.1;
+
+  // Image upload functions
   const resizeAndCompressImage = async (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          // Calculate new dimensions (max 1200x1200, maintain aspect ratio)
           const maxDimension = 1200;
           let width = img.width;
           let height = img.height;
@@ -70,7 +139,6 @@ export default function CreateLoanForm() {
             }
           }
 
-          // Create canvas and draw resized image
           const canvas = document.createElement('canvas');
           canvas.width = width;
           canvas.height = height;
@@ -83,7 +151,6 @@ export default function CreateLoanForm() {
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Convert to blob for upload
           canvas.toBlob(
             (blob) => {
               if (blob) {
@@ -134,25 +201,44 @@ export default function CreateLoanForm() {
 
     setIsUploading(true);
     try {
-      // Resize and compress the image
-      const compressedBlob = await resizeAndCompressImage(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setTempImageSrc(reader.result as string);
+        setShowCropModal(true);
+        setIsUploading(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('Error loading image:', error);
+      alert('Failed to load image. Please try a different image.');
+      setIsUploading(false);
+    }
+  };
 
-      console.log(`Image compressed: ${(file.size / 1024).toFixed(0)}KB → ${(compressedBlob.size / 1024).toFixed(0)}KB`);
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    try {
+      const compressedBlob = await resizeAndCompressImage(
+        new File([croppedBlob], 'cropped.jpg', { type: 'image/jpeg' })
+      );
 
-      // Create preview for display
       const previewUrl = URL.createObjectURL(compressedBlob);
       handleChange('imageUrl', previewUrl);
 
-      // Store the blob and filename for later IPFS upload
+      // Store for later IPFS upload
       (window as any).__pendingImageBlob = compressedBlob;
-      (window as any).__pendingImageFilename = file.name;
+      (window as any).__pendingImageFilename = 'loan-photo.jpg';
 
-      setIsUploading(false);
+      setShowCropModal(false);
+      setTempImageSrc('');
     } catch (error) {
-      console.error('Error processing image:', error);
-      alert('Failed to process image. Please try a different image.');
-      setIsUploading(false);
+      console.error('Error processing cropped image:', error);
+      alert('Failed to process image. Please try again.');
     }
+  };
+
+  const handleCropCancel = () => {
+    setShowCropModal(false);
+    setTempImageSrc('');
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -188,26 +274,43 @@ export default function CreateLoanForm() {
   const validate = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.businessName.trim()) {
-      newErrors.businessName = 'Business name is required';
+    // Section 1: Basics
+    if (!formData.amount || parseFloat(formData.amount) < 100) {
+      newErrors.amount = 'Minimum loan amount is $100 USDC';
     }
-    if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
+    if (!formData.amount || parseFloat(formData.amount) > 10000) {
+      newErrors.amount = 'Maximum loan amount is $10,000 USDC';
     }
+    if (!formData.title.trim() || formData.title.length < 10) {
+      newErrors.title = 'Title must be at least 10 characters';
+    }
+    if (formData.title.length > 80) {
+      newErrors.title = 'Title must be 80 characters or less';
+    }
+
+    // Section 2: About You
+    if (!formData.aboutYou.trim()) {
+      newErrors.aboutYou = 'Please tell us about yourself';
+    } else if (formData.aboutYou.length < 100) {
+      newErrors.aboutYou = 'Please add more detail (at least 100 characters)';
+    }
+
+    // Section 3: This Loan
+    if (!formData.loanUseAndImpact.trim()) {
+      newErrors.loanUseAndImpact = 'Please describe how you\'ll use the loan and what it will help you achieve';
+    } else if (formData.loanUseAndImpact.length < 150) {
+      newErrors.loanUseAndImpact = 'Please add more detail (at least 150 characters)';
+    }
+
+    if (!formData.repaymentPlan.trim()) {
+      newErrors.repaymentPlan = 'Please explain how you\'ll repay this loan';
+    } else if (formData.repaymentPlan.length < 75) {
+      newErrors.repaymentPlan = 'Please add more specific information';
+    }
+
+    // Section 4: Photo
     if (!formData.imageUrl.trim()) {
-      newErrors.imageUrl = 'Business photo is required';
-    }
-    if (!formData.fundingGoal || parseFloat(formData.fundingGoal) <= 0) {
-      newErrors.fundingGoal = 'Valid funding goal is required';
-    }
-    if (formData.termMonths < 1 || formData.termMonths > 60) {
-      newErrors.termMonths = 'Term must be between 1 and 60 months';
-    }
-    if (!formData.useOfFunds.trim()) {
-      newErrors.useOfFunds = 'Use of funds is required';
-    }
-    if (!formData.repaymentSource.trim()) {
-      newErrors.repaymentSource = 'Repayment source is required';
+      newErrors.imageUrl = 'Photo is required';
     }
 
     setErrors(newErrors);
@@ -216,7 +319,7 @@ export default function CreateLoanForm() {
 
   const uploadMetadataToIPFS = async () => {
     try {
-      // Upload image to IPFS first if there's a pending blob
+      // Upload image to IPFS first
       let imageURI: string | undefined;
       const pendingImageBlob = (window as any).__pendingImageBlob;
       const pendingImageFilename = (window as any).__pendingImageFilename;
@@ -227,21 +330,24 @@ export default function CreateLoanForm() {
         console.log('Image uploaded to IPFS:', imageURI);
       }
 
-      // Create metadata with IPFS image URL
+      // Create metadata
       const metadata = {
-        name: formData.businessName,
-        description: formData.description,
-        businessType: formData.businessType,
-        location: formData.location,
-        image: imageURI, // IPFS URI instead of base64
-        useOfFunds: formData.useOfFunds,
-        repaymentSource: formData.repaymentSource,
+        name: formData.title,
+        description: formData.aboutYou.substring(0, 280), // Short description for card
+        fullDescription: `${formData.aboutYou}\n\n**How I'll use this loan and what it will achieve:**\n${formData.loanUseAndImpact}\n\n**Repayment Plan:**\n${formData.repaymentPlan}`,
+        image: imageURI,
+        businessWebsite: formData.businessWebsite || undefined,
+        loanDetails: {
+          aboutYou: formData.aboutYou,
+          businessWebsite: formData.businessWebsite,
+          loanUseAndImpact: formData.loanUseAndImpact,
+          repaymentPlan: formData.repaymentPlan,
+        },
         createdAt: new Date().toISOString(),
       };
 
       console.log('Uploading metadata to IPFS...');
 
-      // Upload metadata to IPFS
       const response = await fetch('/api/upload-metadata', {
         method: 'POST',
         headers: {
@@ -275,6 +381,10 @@ export default function CreateLoanForm() {
     }
 
     if (!validate()) {
+      // Scroll to first error
+      const firstErrorField = Object.keys(errors)[0];
+      const element = document.getElementsByName(firstErrorField)[0];
+      element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -282,48 +392,35 @@ export default function CreateLoanForm() {
     setUploadProgress('Preparing upload...');
 
     try {
-      // Upload metadata (which includes uploading image to IPFS)
       setUploadProgress('Uploading to IPFS...');
       const metadataURI = await uploadMetadataToIPFS();
       setUploadProgress('Creating blockchain transaction...');
 
-      // Calculate timestamps - ensure they are integers
       const now = Math.floor(Date.now() / 1000);
-      const fundraisingDeadline = Math.floor(now + (formData.fundraisingDays * 86400));
-      const firstDueDate = Math.floor(fundraisingDeadline + (formData.firstPaymentDays * 86400));
+      const fundraisingDeadline = Math.floor(now + (30 * 86400)); // 30 days
+      const firstDueDate = Math.floor(fundraisingDeadline + (14 * 86400)); // 14 days after fundraising ends
 
-      // Prepare contract parameters
-      const principal = parseUnits(formData.fundingGoal, USDC_DECIMALS);
-      const periodLength = Math.floor(formData.periodLengthDays * 86400); // Convert days to seconds
+      const principal = parseUnits(formData.amount, USDC_DECIMALS);
+      const periodLength = 14 * 86400; // Bi-weekly (14 days in seconds)
+      const termPeriods = formData.repaymentWeeks / 2; // Number of bi-weekly periods
 
-      // Validate against contract bounds
-      const MIN_PRINCIPAL = 100e6; // $100 minimum (6 decimals)
-      const MIN_TERM_PERIODS = 3;
-      const MAX_TERM_PERIODS = 60;
-      const MIN_PERIOD_LENGTH = 7 * 86400; // 7 days
-      const MAX_PERIOD_LENGTH = 60 * 86400; // 60 days
+      // Validate
+      const MIN_PRINCIPAL = 100e6;
+      const MIN_TERM_PERIODS = 2;
+      const MAX_TERM_PERIODS = 12; // Max 24 weeks = 12 bi-weekly periods
 
       if (principal < BigInt(MIN_PRINCIPAL)) {
-        throw new Error(`Principal must be at least $100 USDC`);
+        throw new Error('Principal must be at least $100 USDC');
       }
-      if (formData.termMonths < MIN_TERM_PERIODS || formData.termMonths > MAX_TERM_PERIODS) {
-        throw new Error(`Term periods must be between ${MIN_TERM_PERIODS} and ${MAX_TERM_PERIODS}`);
-      }
-      if (periodLength < MIN_PERIOD_LENGTH || periodLength > MAX_PERIOD_LENGTH) {
-        throw new Error(`Period length must be between 7 and 60 days`);
-      }
-      if (fundraisingDeadline <= now) {
-        throw new Error('Fundraising deadline must be in the future');
-      }
-      if (firstDueDate <= fundraisingDeadline) {
-        throw new Error('First due date must be after fundraising deadline');
+      if (termPeriods < MIN_TERM_PERIODS || termPeriods > MAX_TERM_PERIODS) {
+        throw new Error('Term periods must be between 2 and 12 bi-weekly periods');
       }
 
       console.log('Creating loan with params:', {
         borrower: address,
         metadataURILength: metadataURI.length,
         principal: principal.toString(),
-        termPeriods: formData.termMonths,
+        termPeriods,
         periodLength,
         firstDueDate,
         fundraisingDeadline,
@@ -333,7 +430,7 @@ export default function CreateLoanForm() {
         borrower: address,
         metadataURI,
         principal,
-        termPeriods: formData.termMonths,
+        termPeriods,
         periodLength,
         firstDueDate,
         fundraisingDeadline,
@@ -351,63 +448,50 @@ export default function CreateLoanForm() {
   if (isSuccess && hash) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 text-center shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Your Request is Live!
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
+            Loan Created!
           </h2>
-          <p className="text-gray-600 mb-2">
-            Your community can now lend their support to help make your dream a reality
+          <p className="text-gray-700 mb-2 text-lg">
+            Your loan is live and accepting contributions
           </p>
-          <p className="text-sm text-gray-500 mb-6">
-            Transaction: {hash.slice(0, 10)}...{hash.slice(-8)}
+          <p className="text-xs text-gray-500 mb-8 font-mono bg-white/50 rounded px-3 py-2 inline-block">
+            {hash.slice(0, 10)}...{hash.slice(-8)}
           </p>
           <div className="space-y-3">
             <button
               onClick={() => router.push('/')}
-              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
             >
-              See Your Request
-            </button>
-            <button
-              onClick={() => {
-                const loanUrl = `${window.location.origin}/loan/${hash}`;
-                if (navigator.share) {
-                  navigator.share({
-                    title: 'Help Me Build My Dream',
-                    text: `I'm asking our community for support. Will you lend a hand?`,
-                    url: loanUrl,
-                  }).catch(() => {
-                    // Fallback to copying link
-                    navigator.clipboard.writeText(loanUrl);
-                    alert('Link copied to clipboard!');
-                  });
-                } else {
-                  // Fallback to copying link
-                  navigator.clipboard.writeText(loanUrl);
-                  alert('Link copied to clipboard!');
-                }
-              }}
-              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-                Spread the Word
-              </span>
+              View All Loans
             </button>
             <button
               onClick={() => window.location.reload()}
-              className="block w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-white border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-all duration-200"
             >
-              Create Another Request
+              Create Another Loan
             </button>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Loading state
+  if (isCheckingConnection) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
+          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Connecting Wallet...</h2>
+          <p className="text-gray-600">
+            Connecting to your wallet
+          </p>
         </div>
       </div>
     );
@@ -419,10 +503,10 @@ export default function CreateLoanForm() {
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
           <p className="text-gray-600 mb-4">
-            Please connect your wallet to request community support
+            Please connect your wallet to create a loan request
           </p>
           <p className="text-sm text-gray-500">
-            Use the login button in the top right corner
+            Click 'Login' in the navigation to connect
           </p>
         </div>
       </div>
@@ -430,204 +514,38 @@ export default function CreateLoanForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
-      <div className="mb-4 px-3 py-2 bg-blue-100 border border-blue-300 rounded-lg text-sm text-blue-800">
-        <strong>IPFS Version 2.0</strong> - Using decentralized storage for efficient transactions
+    <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
+      <button
+        onClick={() => router.push('/')}
+        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group"
+      >
+        <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        <span className="font-medium">Back to Loans</span>
+      </button>
+
+      <div className="mb-8">
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
+          Create Your Loan
+        </h1>
+        <p className="text-gray-600">
+          Get zero-interest funding from your community
+        </p>
       </div>
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Request Community Support
-      </h1>
-      <p className="text-gray-600 mb-6">
-        Connect with neighbors who believe in your dream • 0% interest • Pay back exactly what you borrow
-      </p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Business Information */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Business Information</h2>
+        {/* Section 1: Loan Basics */}
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">1</span>
+            Loan Basics
+          </h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Business Name *
-              </label>
-              <input
-                type="text"
-                value={formData.businessName}
-                onChange={(e) => handleChange('businessName', e.target.value)}
-                placeholder="e.g., Joe's Coffee Shop"
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.businessName ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
-                }`}
-              />
-              {errors.businessName && (
-                <p className="text-sm text-red-600 mt-1">{errors.businessName}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description *
-              </label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => handleChange('description', e.target.value)}
-                placeholder="Share your story with the community - what's your dream and how will this support help you achieve it?"
-                rows={4}
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.description ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
-                }`}
-              />
-              {errors.description && (
-                <p className="text-sm text-red-600 mt-1">{errors.description}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Business Type
-                </label>
-                <input
-                  type="text"
-                  value={formData.businessType}
-                  onChange={(e) => handleChange('businessType', e.target.value)}
-                  placeholder="e.g., Restaurant, Retail"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Location
-                </label>
-                <input
-                  type="text"
-                  value={formData.location}
-                  onChange={(e) => handleChange('location', e.target.value)}
-                  placeholder="e.g., San Francisco, CA"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Business Photo *
-              </label>
-
-              {/* Drag and Drop Zone */}
-              <div
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
-                  isDragging
-                    ? 'border-[#3B9B7F] bg-green-50'
-                    : errors.imageUrl
-                    ? 'border-red-300 bg-red-50'
-                    : 'border-gray-300 bg-gray-50'
-                }`}
-              >
-                {formData.imageUrl ? (
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-gray-200 flex-shrink-0">
-                      <img
-                        src={formData.imageUrl}
-                        alt="Business preview"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900 mb-1">Image uploaded</p>
-                      <p className="text-xs text-gray-500 mb-2">
-                        Drag a new image to replace, or paste a URL below
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => handleChange('imageUrl', '')}
-                        className="text-sm text-red-600 hover:text-red-700 font-medium"
-                      >
-                        Remove image
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center">
-                    <svg
-                      className="mx-auto h-12 w-12 text-gray-400"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 48 48"
-                    >
-                      <path
-                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <div className="mt-4">
-                      <label
-                        htmlFor="file-upload"
-                        className="cursor-pointer text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
-                      >
-                        <span>Upload a file</span>
-                        <input
-                          id="file-upload"
-                          name="file-upload"
-                          type="file"
-                          accept="image/*"
-                          className="sr-only"
-                          onChange={handleFileSelect}
-                        />
-                      </label>
-                      <span className="text-gray-600"> or drag and drop</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-2">
-                      PNG, JPG, GIF - automatically resized and optimized
-                    </p>
-                  </div>
-                )}
-                {isUploading && (
-                  <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
-                    <div className="flex items-center gap-2">
-                      <svg className="animate-spin h-5 w-5 text-[#3B9B7F]" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      <span className="text-sm font-medium text-gray-700">Uploading...</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* URL Input (alternative) */}
-              <div className="mt-3">
-                <input
-                  type="url"
-                  value={formData.imageUrl.startsWith('data:') ? '' : formData.imageUrl}
-                  onChange={(e) => handleChange('imageUrl', e.target.value)}
-                  placeholder="Or paste image URL: https://example.com/photo.jpg"
-                  className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-              </div>
-
-              {errors.imageUrl && (
-                <p className="text-sm text-red-600 mt-2">{errors.imageUrl}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Loan Terms */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Loan Terms</h2>
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Funding Goal (USDC) *
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                How much would help you reach your goal? *
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
@@ -635,166 +553,440 @@ export default function CreateLoanForm() {
                 </span>
                 <input
                   type="number"
-                  value={formData.fundingGoal}
-                  onChange={(e) => handleChange('fundingGoal', e.target.value)}
-                  placeholder="0"
-                  step="0.01"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={(e) => handleChange('amount', e.target.value)}
+                  placeholder="500"
+                  step="10"
+                  min="100"
+                  max="10000"
                   className={`w-full pl-8 pr-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                    errors.fundingGoal ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                    errors.amount ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                   }`}
                 />
               </div>
-              {errors.fundingGoal && (
-                <p className="text-sm text-red-600 mt-1">{errors.fundingGoal}</p>
+              <p className="text-xs text-gray-500 mt-1">$100 - $10,000 USDC</p>
+              {errors.amount && (
+                <p className="text-sm text-red-600 mt-1">{errors.amount}</p>
               )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Repayment Term (periods)
-                </label>
-                <input
-                  type="number"
-                  value={formData.termMonths}
-                  onChange={(e) => handleChange('termMonths', parseInt(e.target.value))}
-                  min="1"
-                  max="60"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Number of payment periods (e.g., 12 months)
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Period Length (days)
-                </label>
-                <input
-                  type="number"
-                  value={formData.periodLengthDays}
-                  onChange={(e) => handleChange('periodLengthDays', parseInt(e.target.value))}
-                  min="7"
-                  max="90"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Days between payments (e.g., 30)
-                </p>
-              </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                When can you repay this? *
+              </label>
+              <select
+                name="repaymentWeeks"
+                value={formData.repaymentWeeks}
+                onChange={(e) => handleChange('repaymentWeeks', parseInt(e.target.value))}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
+              >
+                <option value={4}>1 month (4 weeks)</option>
+                <option value={8}>2 months (8 weeks)</option>
+                <option value={12}>3 months (12 weeks)</option>
+                <option value={16}>4 months (16 weeks)</option>
+                <option value={24}>6 months (24 weeks)</option>
+              </select>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Fundraising Period (days)
-                </label>
-                <input
-                  type="number"
-                  value={formData.fundraisingDays}
-                  onChange={(e) => handleChange('fundraisingDays', parseInt(e.target.value))}
-                  min="1"
-                  max="90"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Days to reach funding goal
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                What's this loan for? *
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={(e) => handleChange('title', e.target.value)}
+                placeholder="A sewing machine to start my clothing alteration business"
+                maxLength={80}
+                className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
+                  errors.title ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                }`}
+              />
+              <div className="flex items-center justify-between mt-1.5">
+                <p className="text-xs text-gray-500">
+                  Be specific about what you need
                 </p>
+                <span className="text-xs text-gray-400">{formData.title.length}/80</span>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  First Payment (days after funding)
-                </label>
-                <input
-                  type="number"
-                  value={formData.firstPaymentDays}
-                  onChange={(e) => handleChange('firstPaymentDays', parseInt(e.target.value))}
-                  min="1"
-                  max="90"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Grace period before first payment
-                </p>
-              </div>
+              {errors.title && (
+                <p className="text-sm text-red-600 mt-1">{errors.title}</p>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Additional Details */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Additional Details</h2>
+        {/* Repayment Calculator */}
+        {formData.amount && (
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200/60 rounded-xl p-4 shadow-sm">
+            <h3 className="text-sm font-bold text-gray-900 mb-3">Repayment Schedule</h3>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <p className="text-gray-600 text-xs mb-0.5">Total loan</p>
+                <p className="font-bold text-gray-900">${parseFloat(formData.amount).toLocaleString()} USDC</p>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs mb-0.5">Bi-weekly payment</p>
+                <p className="font-bold text-[#3B9B7F]">${biWeeklyPayment.toFixed(2)}</p>
+              </div>
+              <div className="col-span-2">
+                <p className="text-gray-600 text-xs mb-0.5">Payments</p>
+                <p className="font-semibold text-gray-900">{formData.repaymentWeeks / 2} payments over {formData.repaymentWeeks} weeks</p>
+              </div>
+            </div>
+            {paymentPercentage !== null && (
+              <div className={`text-xs mt-3 pt-3 border-t ${paymentPercentage > 25 ? 'border-orange-200 text-orange-700' : 'border-green-200 text-green-700'}`}>
+                {paymentPercentage > 25 ? '⚠️' : '✅'} {paymentPercentage.toFixed(1)}% of your monthly income
+                {paymentPercentage > 25 && ' — consider extending timeline'}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Section 2: About You */}
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">2</span>
+            About You
+          </h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Use of Funds *
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-gray-900">
+                  Introduce yourself to lenders *
+                </label>
+                <span className={`text-xs ${
+                  formData.aboutYou.length < 100 ? 'text-red-500' :
+                  formData.aboutYou.length >= 200 && formData.aboutYou.length <= 600 ? 'text-green-600' :
+                  'text-gray-500'
+                }`}>
+                  {formData.aboutYou.length} chars
+                </span>
+              </div>
               <textarea
-                value={formData.useOfFunds}
-                onChange={(e) => handleChange('useOfFunds', e.target.value)}
-                placeholder="How will this support help you grow? (e.g., new equipment to serve more customers, inventory to expand your reach)"
-                rows={3}
+                name="aboutYou"
+                value={formData.aboutYou}
+                onChange={(e) => handleChange('aboutYou', e.target.value)}
+                placeholder="I'm Sarah, a single mother of two living in Austin. I work as a seamstress from home, making custom clothes for my neighbors and local boutiques. I've been sewing since I was 12 - my grandmother taught me. Right now I'm doing everything by hand because I can't afford a proper sewing machine. Despite this, I have 6 regular customers and make about $800/month. My dream is to expand and hire another seamstress from my community..."
+                rows={6}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.useOfFunds ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                  errors.aboutYou ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
-              {errors.useOfFunds && (
-                <p className="text-sm text-red-600 mt-1">{errors.useOfFunds}</p>
+              {errors.aboutYou && (
+                <p className="text-sm text-red-600 mt-1">{errors.aboutYou}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Repayment Source *
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Your website or portfolio (optional)
               </label>
-              <textarea
-                value={formData.repaymentSource}
-                onChange={(e) => handleChange('repaymentSource', e.target.value)}
-                placeholder="How will you pay back the community? (e.g., steady monthly revenue, income from specific services)"
-                rows={3}
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.repaymentSource ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+              <input
+                type="url"
+                name="businessWebsite"
+                value={formData.businessWebsite}
+                onChange={(e) => handleChange('businessWebsite', e.target.value)}
+                placeholder="https://myportfolio.com"
+                className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
+                  errors.businessWebsite ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
-              {errors.repaymentSource && (
-                <p className="text-sm text-red-600 mt-1">{errors.repaymentSource}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Zero-Interest Highlight */}
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
-          <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Community Support, Not Profit</h3>
-              <p className="text-sm text-gray-700 mb-2">
-                Your neighbors lend because they believe in you, not to make money. Pay back exactly what you receive - nothing more.
+              <p className="text-xs text-gray-500 mt-1.5">
+                Show lenders what you do
               </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Zero interest - ever</li>
-                <li>• Fair, predictable repayment</li>
-                <li>• Neighbors helping neighbors</li>
-                <li>• Built on trust and transparency</li>
-              </ul>
+              {errors.businessWebsite && (
+                <p className="text-sm text-red-600 mt-1">{errors.businessWebsite}</p>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Upload Progress Indicator */}
+        {/* Section 3: This Loan */}
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">3</span>
+            Loan Details
+          </h2>
+
+          <div className="space-y-4">
+            {/* Loan Use & Impact (Combined) */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-gray-900">
+                  How will this loan change things for you? *
+                </label>
+                <span className={`text-xs ${
+                  formData.loanUseAndImpact.length < 150 ? 'text-red-500' :
+                  formData.loanUseAndImpact.length >= 250 && formData.loanUseAndImpact.length <= 600 ? 'text-green-600' :
+                  'text-gray-500'
+                }`}>
+                  {formData.loanUseAndImpact.length} chars
+                </span>
+              </div>
+              <textarea
+                name="loanUseAndImpact"
+                value={formData.loanUseAndImpact}
+                onChange={(e) => handleChange('loanUseAndImpact', e.target.value)}
+                placeholder="I'll use the $600 to buy a Singer Professional sewing machine ($450) and fabric supplies ($150) to get started.
+
+Right now, I'm hand-sewing everything, which takes 4-5 hours per dress. With a machine, I can finish a dress in 45 minutes. This means I can go from making 6 dresses a month to 25-30 dresses.
+
+My customers are already asking for more - I have a waiting list of 12 people! With this machine, I can serve them all and grow my monthly income from $800 to around $2,000. This will help me support my kids better and maybe even hire my neighbor Maria, who also knows how to sew but lost her job last year."
+                rows={8}
+                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
+                  errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                }`}
+              />
+              {loanUseNumbers.length > 0 && (
+                <div className={`text-xs mt-2 ${sumMatchesAmount ? 'text-green-600' : 'text-orange-600'}`}>
+                  {sumMatchesAmount ? '✅' : '⚠️'} Detected amounts: ${loanUseSum.toFixed(2)}
+                  {!sumMatchesAmount && loanAmount > 0 && ` (loan is $${loanAmount.toFixed(2)})`}
+                </div>
+              )}
+              {errors.loanUseAndImpact && (
+                <p className="text-sm text-red-600 mt-1">{errors.loanUseAndImpact}</p>
+              )}
+            </div>
+
+            {/* Repayment Plan */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-gray-900">
+                  How will you repay lenders? *
+                </label>
+                <span className={`text-xs ${
+                  formData.repaymentPlan.length < 75 ? 'text-red-500' :
+                  formData.repaymentPlan.length >= 150 && formData.repaymentPlan.length <= 400 ? 'text-green-600' :
+                  'text-gray-500'
+                }`}>
+                  {formData.repaymentPlan.length} chars
+                </span>
+              </div>
+              <textarea
+                name="repaymentPlan"
+                value={formData.repaymentPlan}
+                onChange={(e) => handleChange('repaymentPlan', e.target.value)}
+                placeholder="I currently make $800/month from my sewing work, and with the new machine I expect to earn $2,000/month. The bi-weekly payment of $75 would be less than 10% of my current income, which I can easily manage.
+
+I also receive $400/month in child support that I can use as backup if needed. My sister has also agreed to help if I ever fall behind - she knows how important this business is for my family's future."
+                rows={5}
+                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
+                  errors.repaymentPlan ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                }`}
+              />
+              {errors.repaymentPlan && (
+                <p className="text-sm text-red-600 mt-1">{errors.repaymentPlan}</p>
+              )}
+            </div>
+
+            {/* Monthly Income (Optional) */}
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                What do you earn each month? (optional)
+              </label>
+              <select
+                name="monthlyIncome"
+                value={formData.monthlyIncome}
+                onChange={(e) => handleChange('monthlyIncome', e.target.value as IncomeRange)}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
+              >
+                <option value={IncomeRange.PREFER_NOT_TO_SAY}>Prefer not to say</option>
+                <option value={IncomeRange.UNDER_1K}>Less than $1,000/month</option>
+                <option value={IncomeRange.ONE_TO_TWO_K}>$1,000 - $2,000/month</option>
+                <option value={IncomeRange.TWO_TO_THREE_HALF_K}>$2,000 - $3,500/month</option>
+                <option value={IncomeRange.THREE_HALF_TO_FIVE_K}>$3,500 - $5,000/month</option>
+                <option value={IncomeRange.FIVE_TO_SEVEN_HALF_K}>$5,000 - $7,500/month</option>
+                <option value={IncomeRange.OVER_SEVEN_HALF_K}>More than $7,500/month</option>
+              </select>
+              <p className="text-xs text-gray-500 mt-2">
+                🔒 Only you see this — helps us make sure payments fit your budget
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Income Warning */}
+        {paymentPercentage !== null && paymentPercentage > 25 && (
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl">⚠️</span>
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  This repayment schedule may be challenging
+                </h3>
+                <p className="text-sm text-gray-700 mb-3">
+                  Your bi-weekly payment (${biWeeklyPayment.toFixed(2)}) is {paymentPercentage.toFixed(1)}% of your stated monthly income.
+                  Most successful borrowers keep payments under 20% of income.
+                </p>
+                <p className="text-sm text-gray-600 font-medium">Suggestions:</p>
+                <ul className="text-sm text-gray-600 space-y-1 mt-1">
+                  {formData.repaymentWeeks < 24 && (
+                    <li>• Extend timeline to {formData.repaymentWeeks + 8} weeks → ${(parseFloat(formData.amount) / ((formData.repaymentWeeks + 8) / 2)).toFixed(2)} bi-weekly</li>
+                  )}
+                  <li>• Reduce loan amount to ${(INCOME_RANGES[formData.monthlyIncome] * 0.2 * (formData.repaymentWeeks / 2)).toFixed(2)}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {paymentPercentage !== null && paymentPercentage < 20 && (
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl">✅</span>
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  This looks manageable!
+                </h3>
+                <p className="text-sm text-gray-700">
+                  Your bi-weekly payment (${biWeeklyPayment.toFixed(2)}) is only {paymentPercentage.toFixed(1)}% of your stated monthly income.
+                  This is well within the recommended range.
+                </p>
+                <p className="text-xs text-gray-600 mt-2">
+                  💡 Tip: Mentioning this in your "repayment plan" above helps build lender confidence.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Add a Photo */}
+        <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-[#3B9B7F]/10 flex items-center justify-center text-[#3B9B7F] font-bold text-sm">4</span>
+            Add a Photo
+          </h2>
+          <p className="text-sm text-gray-600 mb-4 ml-10">
+            Show lenders what you're working toward — loans with photos get funded 35% faster
+          </p>
+
+          {/* Drag and Drop Zone */}
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
+              isDragging
+                ? 'border-[#3B9B7F] bg-green-50'
+                : errors.imageUrl
+                ? 'border-red-300 bg-red-50'
+                : 'border-gray-300 bg-gray-50'
+            }`}
+          >
+            {formData.imageUrl ? (
+              <div className="flex items-center gap-4">
+                <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-gray-200 flex-shrink-0">
+                  <img
+                    src={formData.imageUrl}
+                    alt="Loan preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900 mb-1">Image uploaded ✅</p>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Drag a new image to replace
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleChange('imageUrl', '')}
+                    className="text-sm text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Remove image
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center">
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                >
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <div className="mt-4">
+                  <label
+                    htmlFor="file-upload"
+                    className="cursor-pointer text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
+                  >
+                    <span>Upload a file</span>
+                    <input
+                      id="file-upload"
+                      name="file-upload"
+                      type="file"
+                      accept="image/*"
+                      className="sr-only"
+                      onChange={handleFileSelect}
+                    />
+                  </label>
+                  <span className="text-gray-600"> or drag and drop</span>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  PNG, JPG, GIF - automatically resized and optimized
+                </p>
+              </div>
+            )}
+            {isUploading && (
+              <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
+                <div className="flex items-center gap-2">
+                  <svg className="animate-spin h-5 w-5 text-[#3B9B7F]" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">Loading...</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {errors.imageUrl && (
+            <p className="text-sm text-red-600 mt-2">{errors.imageUrl}</p>
+          )}
+        </div>
+
+        {/* Upload Progress */}
         {uploadProgress && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-4 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
-              <p className="text-blue-800 font-medium">{uploadProgress}</p>
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-[#3B9B7F] border-t-transparent"></div>
+              <p className="text-gray-900 font-semibold">{uploadProgress}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Loan Card Preview */}
+        {(formData.title || formData.aboutYou || formData.amount) && (
+          <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-300 rounded-xl p-5 shadow-sm">
+            <h2 className="text-lg font-bold text-gray-900 mb-1">Preview</h2>
+            <p className="text-sm text-gray-600 mb-5">
+              How your loan will appear
+            </p>
+
+            <div className="max-w-md mx-auto">
+              <LoanCard
+                address={"0x0000000000000000000000000000000000000000" as `0x${string}`}
+                borrower={address || "0x0000000000000000000000000000000000000000" as `0x${string}`}
+                name={formData.title || "Your Loan Title"}
+                description={formData.aboutYou || "Tell potential lenders about yourself..."}
+                principal={formData.amount ? parseUnits(formData.amount, USDC_DECIMALS) : 0n}
+                totalFunded={0n}
+                fundraisingActive={true}
+                active={false}
+                completed={false}
+                contributorsCount={0n}
+                termPeriods={BigInt(formData.repaymentWeeks / 2)}
+                imageUrl={formData.imageUrl || undefined}
+              />
             </div>
           </div>
         )}
@@ -803,7 +995,7 @@ export default function CreateLoanForm() {
         <button
           type="submit"
           disabled={isPending || isConfirming || isSubmitting}
-          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
         >
           {isPending || isConfirming || isSubmitting ? (
             <span className="flex items-center justify-center gap-2">
@@ -811,13 +1003,22 @@ export default function CreateLoanForm() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              {isPending ? 'Creating Loan...' : 'Confirming...'}
+              {isPending ? 'Creating...' : 'Confirming...'}
             </span>
           ) : (
-            'Share Your Request'
+            'Create Loan'
           )}
         </button>
       </form>
+
+      {/* Image Crop Modal */}
+      {showCropModal && tempImageSrc && (
+        <ImageCropModal
+          imageSrc={tempImageSrc}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   );
 }
