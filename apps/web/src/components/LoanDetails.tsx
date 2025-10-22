@@ -1,6 +1,6 @@
 'use client';
 
-import { useLoanData, useContribution, useRefund, useRepay, useDisburse } from '@/hooks/useMicroLoan';
+import { useLoanData, useContribution, useRefund, useRepay, useDisburse, useContributors } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCAllowance, useUSDCApprove } from '@/hooks/useUSDC';
 import { useAccount } from 'wagmi';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import { formatUnits, parseUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useState, useEffect } from 'react';
 import { TrustSignals } from '@/components/TrustSignals';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -55,6 +56,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
   // Fetch user's contribution (if any)
   const { contribution } = useContribution(loanAddress, userAddress);
+
+  // Fetch contributors for sidebar
+  const { contributors, totalCount } = useContributors(loanAddress, 10);
 
   // Refund hook
   const {
@@ -200,8 +204,38 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
     setRepaymentAmount(maxAmount.toString());
   };
 
+  // Component for individual contributor in sidebar
+  const ContributorItem = ({ address: contributorAddress }: { address: `0x${string}` }) => {
+    const { profile } = useFarcasterProfile(contributorAddress);
+    const { contribution: contribData } = useContribution(loanAddress, contributorAddress);
+
+    return (
+      <div className="flex items-center gap-2 py-2">
+        {profile?.pfpUrl ? (
+          <img
+            src={profile.pfpUrl}
+            alt={profile.displayName || 'Contributor'}
+            className="w-10 h-10 rounded-full bg-gray-200"
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] flex items-center justify-center text-white text-xs font-bold">
+            {contributorAddress.slice(2, 4).toUpperCase()}
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-gray-900 truncate">
+            {profile?.displayName || profile?.username ? `@${profile.username}` : 'Anonymous'}
+          </div>
+          <div className="text-xs text-gray-600">
+            ${contribData ? formatUSDC(contribData.amount) : '...'} USDC
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
+    <div className="max-w-7xl mx-auto px-4 py-6 pb-24 lg:pb-6">
       {/* Back button */}
       <Link href="/" className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-4">
         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,6 +243,11 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         </svg>
         Back to loans
       </Link>
+
+      {/* Grid layout with main content and sticky sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main content */}
+        <div className="lg:col-span-2">
 
       {/* Loan Image */}
       {(metadata?.imageUrl || metadata?.image) && (
@@ -490,9 +529,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         </div>
       </div>
 
-      {/* Contributors - Simple Count */}
+      {/* Contributors - Simple Count (Mobile Only) */}
       {loanData.contributorsCount > 0n && (
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="lg:hidden bg-white border border-gray-200 rounded-xl p-4">
           <h3 className="text-sm font-medium text-gray-700 mb-2">Supporters</h3>
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -502,9 +541,121 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
         </div>
       )}
+        </div>
 
-      {/* Fixed Bottom Menu */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg px-4 py-2.5 flex gap-2 max-w-4xl mx-auto">
+        {/* Sticky Sidebar (Desktop Only) */}
+        <div className="hidden lg:block">
+          <div className="sticky top-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+              {/* Circular Progress */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-20 h-20">
+                  <svg className="w-20 h-20 transform -rotate-90">
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="36"
+                      stroke="#E5E7EB"
+                      strokeWidth="8"
+                      fill="none"
+                    />
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="36"
+                      stroke="#3B9B7F"
+                      strokeWidth="8"
+                      fill="none"
+                      strokeDasharray={`${2 * Math.PI * 36}`}
+                      strokeDashoffset={`${2 * Math.PI * 36 * (1 - progressPercentage / 100)}`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-sm font-bold text-gray-900">{Math.round(progressPercentage)}%</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">
+                    ${formatUSDC(loanData.totalFunded)} raised
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    ${formatUSDC(loanData.principal)} goal · {loanData.contributorsCount.toString()} donations
+                  </div>
+                </div>
+              </div>
+
+              {/* Share Button */}
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: metadata?.name || 'Support a Community Loan',
+                      text: `Help support this community loan on LendFriend`,
+                      url: window.location.href,
+                    }).catch(err => console.log('Share cancelled', err));
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  }
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#2E7D68] hover:bg-[#256655] text-white font-semibold rounded-xl transition-colors mb-3"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share
+              </button>
+
+              {/* Donate Button */}
+              {loanData.fundraisingActive && !isFunded ? (
+                <Link
+                  href={`/loan/${loanAddress}/fund`}
+                  className="w-full flex items-center justify-center px-4 py-3 bg-[#9FE870] hover:bg-[#8DD65E] text-gray-900 font-semibold rounded-xl transition-colors"
+                >
+                  Donate now
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="w-full flex items-center justify-center px-4 py-3 bg-gray-200 text-gray-500 font-semibold rounded-xl cursor-not-allowed"
+                >
+                  {isFunded ? 'Fully Funded' : 'Fundraising Closed'}
+                </button>
+              )}
+
+              {/* Recent Contributors */}
+              {contributors && contributors.length > 0 && (
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    {contributors.map((contributorAddress) => (
+                      <ContributorItem key={contributorAddress} address={contributorAddress} />
+                    ))}
+                  </div>
+
+                  {/* See all / See top buttons */}
+                  {totalCount > contributors.length && (
+                    <div className="flex gap-2 mt-4">
+                      <button className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                        See all
+                      </button>
+                      <button className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        </svg>
+                        See top
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fixed Bottom Menu (Mobile Only) */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg px-4 py-2.5 flex gap-2 max-w-4xl mx-auto">
         {/* Share Button */}
         <button
           onClick={() => {
