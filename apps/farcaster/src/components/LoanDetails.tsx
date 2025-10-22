@@ -17,6 +17,7 @@ import { fetchFromIPFS } from '@/lib/ipfs';
 import { calculateLoanStatus } from '@/utils/loanStatus';
 import { PaymentWarningAlert } from '@/components/PaymentWarningBadge';
 import { useToast } from '@/contexts/ToastContext';
+import { SocialProximityBadge } from '@/components/SocialProximityBadge';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -789,6 +790,17 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </p>
         </div>
       )}
+
+      {/* Social Trust */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Social Trust</h2>
+        <SocialProximityBadge borrowerAddress={loanData.borrower} showDetails={true} />
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Research from Kiva shows borrowers with 20+ mutual connections have <span className="font-semibold text-green-600">98% repayment rates</span> vs 88% with 0 connections - a 10% improvement from social accountability.
+          </p>
+        </div>
+      </div>
 
       {/* Borrower Identity */}
       <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">

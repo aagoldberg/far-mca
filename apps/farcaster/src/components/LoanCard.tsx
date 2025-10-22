@@ -8,6 +8,7 @@ import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useContributors } from '@/hooks/useMicroLoan';
 import { calculateLoanStatus } from '@/utils/loanStatus';
 import { PaymentWarningBadgeCompact } from '@/components/PaymentWarningBadge';
+import { SocialProximityBadge } from '@/components/SocialProximityBadge';
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -238,6 +239,11 @@ export function LoanCard({
         <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 min-h-[2.5rem] sm:min-h-[2.5rem] overflow-hidden">
           {description || 'No description available'}
         </p>
+
+        {/* Social proximity badge */}
+        <div className="mb-3">
+          <SocialProximityBadge borrowerAddress={borrower} showDetails={false} />
+        </div>
 
         <div className="mb-3">
           <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 mb-2">
