@@ -4,6 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import { useContributors } from '@/hooks/useMicroLoan';
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -99,6 +101,44 @@ const getDaysRemaining = (fundraisingDeadline?: bigint): string | null => {
   return `${daysRemaining} days remaining`;
 };
 
+// Component for individual contributor avatar
+function ContributorAvatar({ address: contributorAddress, index, total }: { address: `0x${string}`; index: number; total: number }) {
+  const { profile } = useFarcasterProfile(contributorAddress);
+
+  return (
+    <div
+      className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-gray-200 overflow-hidden shadow-sm hover:shadow-md hover:scale-110 transition-all duration-200"
+      style={{ zIndex: total - index }}
+    >
+      {profile?.pfpUrl ? (
+        <img
+          src={profile.pfpUrl}
+          alt={profile.displayName || 'Contributor'}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-[10px] sm:text-xs font-bold">
+          {contributorAddress.slice(2, 4).toUpperCase()}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Component for contributor name in text
+function ContributorName({ address: contributorAddress }: { address: `0x${string}` }) {
+  const { profile } = useFarcasterProfile(contributorAddress);
+
+  return (
+    <span className="font-medium text-gray-900">
+      {profile?.username ? `@${profile.username}` : `${contributorAddress.slice(0, 6)}...${contributorAddress.slice(-4)}`}
+    </span>
+  );
+}
+
 export function LoanCard({
   address,
   borrower,
@@ -123,6 +163,12 @@ export function LoanCard({
 
   const statusInfo = getStatusInfo(fundraisingActive, active, completed, totalFunded, principal, fundraisingDeadline);
 
+  // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
+  const { profile, hasProfile } = useFarcasterProfile(borrower);
+
+  // Fetch first 3 contributors for display
+  const { contributors, totalCount, hasMore } = useContributors(address, 3);
+
   const shortAddress = borrower ? `${borrower.slice(0, 6)}...${borrower.slice(-4)}` : '';
 
   const daysRemaining = getDaysRemaining(fundraisingDeadline);
@@ -144,20 +190,54 @@ export function LoanCard({
         <div className="px-3 sm:px-4 pt-3 pb-3">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex-shrink-0 ring-2 ring-gray-100" />
-              <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{shortAddress || 'Anonymous'}</span>
-              {businessWebsite && (
-                <a
-                  href={businessWebsite}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                >
-                  <svg className="w-3.5 h-3.5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                  </svg>
-                </a>
+              {hasProfile && profile ? (
+                <>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
+                    <img
+                      src={profile.pfpUrl}
+                      alt={profile.displayName}
+                      className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">
+                    {profile.displayName || `@${profile.username}`}
+                  </span>
+                  {businessWebsite && (
+                    <a
+                      href={businessWebsite}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                    >
+                      <svg className="w-3.5 h-3.5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </a>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex-shrink-0 ring-2 ring-gray-100" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{shortAddress || 'Anonymous'}</span>
+                  {businessWebsite && (
+                    <a
+                      href={businessWebsite}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                    >
+                      <svg className="w-3.5 h-3.5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </a>
+                  )}
+                </>
               )}
             </div>
 
@@ -225,23 +305,37 @@ export function LoanCard({
           </div>
         </div>
 
-        {/* Footer with contributor count */}
-        {contributorsCount > 0n ? (
+        {/* Contributor avatars footer */}
+        {totalCount > 0 ? (
           <div className="pt-3 sm:pt-3.5 mt-3 border-t border-gray-100/80">
-            <div className="flex items-center justify-between text-[11px] sm:text-xs">
-              <div className="flex items-center gap-2 text-gray-600">
-                <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span>
-                  {contributorsCount.toString()} supporter{contributorsCount === 1n ? '' : 's'}
-                </span>
+            <div className="flex items-center gap-2.5">
+              {/* Avatar stack */}
+              <div className="flex -space-x-2.5 flex-shrink-0">
+                {contributors.map((contributorAddress, index) => (
+                  <ContributorAvatar
+                    key={contributorAddress}
+                    address={contributorAddress}
+                    index={index}
+                    total={contributors.length}
+                  />
+                ))}
               </div>
-              {termPeriods && (
-                <span className="text-gray-500 font-medium">
-                  {termPeriods.toString()} period{termPeriods === 1n ? '' : 's'}
-                </span>
-              )}
+
+              {/* Text description */}
+              <div className="flex-1 text-[11px] sm:text-xs text-gray-600 truncate">
+                <span className="text-gray-500">Supported by </span>
+                {contributors.slice(0, 2).map((addr, idx) => (
+                  <span key={addr}>
+                    <ContributorName address={addr} />
+                    {idx === 0 && contributors.length > 1 && ', '}
+                  </span>
+                ))}
+                {hasMore && (
+                  <span className="text-gray-500">
+                    {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         ) : (

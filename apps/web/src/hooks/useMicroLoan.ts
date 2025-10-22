@@ -5,7 +5,7 @@
  * Handles all read and write operations for zero-interest microloans
  */
 
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
+import { useReadContract, useReadContracts, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import { formatUnits, parseUnits } from 'viem';
 import { MICROLOAN_FACTORY_ADDRESS, USDC_ADDRESS } from '@/lib/wagmi';
 import MicroLoanFactoryABI from '@/abi/MicroLoanFactory.json';
@@ -280,6 +280,50 @@ export const useContribution = (
   };
 
   return { contribution, isLoading: false };
+};
+
+/**
+ * Get first N contributors for a loan
+ */
+export const useContributors = (
+  loanAddress: `0x${string}` | undefined,
+  limit: number = 3
+) => {
+  const enabled = !!loanAddress;
+
+  // First get the count
+  const { data: count } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributorsCount',
+    query: { enabled },
+  });
+
+  const contributorsCount = (count as bigint) || 0n;
+  const actualLimit = Math.min(Number(contributorsCount), limit);
+
+  // Fetch the first N contributors by index
+  const contributorQueries = Array.from({ length: actualLimit }, (_, i) => ({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributors',
+    args: [BigInt(i)],
+  }));
+
+  const { data: contributorsData } = useReadContracts({
+    contracts: contributorQueries.length > 0 ? contributorQueries as any : [],
+    query: { enabled: enabled && actualLimit > 0 },
+  });
+
+  const contributors = contributorsData
+    ?.filter((result) => result.status === 'success')
+    .map((result) => result.result as `0x${string}`) || [];
+
+  return {
+    contributors,
+    totalCount: Number(contributorsCount),
+    hasMore: Number(contributorsCount) > limit,
+  };
 };
 
 // =============================================================================
