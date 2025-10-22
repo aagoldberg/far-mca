@@ -6,7 +6,7 @@ import { useContribution, useClaim } from '@/hooks/useMicroLoan';
 import { useAccount } from 'wagmi';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
-import toast from 'react-hot-toast';
+import { useToast } from '@/contexts/ToastContext';
 
 interface InvestmentCardProps {
   loanAddress: `0x${string}`;
@@ -21,6 +21,7 @@ export const InvestmentCard = ({ loanAddress }: InvestmentCardProps) => {
     isConfirming: isClaimConfirming,
     isSuccess: isClaimSuccess,
   } = useClaim();
+  const { showToast } = useToast();
 
   const [hasClaimedSuccessfully, setHasClaimedSuccessfully] = useState(false);
 
@@ -29,16 +30,16 @@ export const InvestmentCard = ({ loanAddress }: InvestmentCardProps) => {
     if (isClaimSuccess && !hasClaimedSuccessfully) {
       setHasClaimedSuccessfully(true);
       const claimableFormatted = contribution?.claimableFormatted || '0 USDC';
-      toast.success(`Successfully claimed ${claimableFormatted}!`);
+      showToast(`Successfully claimed ${claimableFormatted}!`, 'success');
     }
-  }, [isClaimSuccess, hasClaimedSuccessfully, contribution?.claimableFormatted]);
+  }, [isClaimSuccess, hasClaimedSuccessfully, contribution?.claimableFormatted, showToast]);
 
   const handleClaim = async () => {
     try {
       await claim(loanAddress);
     } catch (error) {
       console.error('Error claiming:', error);
-      toast.error('Failed to claim repayment');
+      showToast('Failed to claim repayment', 'error');
     }
   };
 

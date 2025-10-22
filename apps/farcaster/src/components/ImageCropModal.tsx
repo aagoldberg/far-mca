@@ -2,7 +2,19 @@
 
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
-import { Area, Point } from 'react-easy-crop/types';
+
+// Type definitions for react-easy-crop
+interface Area {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
+interface Point {
+  x: number;
+  y: number;
+}
 
 interface ImageCropModalProps {
   imageSrc: string;

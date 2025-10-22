@@ -173,7 +173,7 @@ export async function analyzeWalletActivityWithAPI(
 
     // Check recent activity (last 30 days)
     const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
-    const recentActivity = transactions.some(tx =>
+    const recentActivity = transactions.some((tx: any) =>
       parseInt(tx.timeStamp) * 1000 > thirtyDaysAgo
     );
 
