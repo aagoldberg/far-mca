@@ -232,6 +232,12 @@ function calculateReputation(loan: Loan, events: RepaymentEvent[]) {
 - Smaller attack surface
 - Easier to audit (less code)
 - Same security primitives (ReentrancyGuard, SafeERC20, Accumulator pattern)
+- Token recovery for accidentally sent funds
+
+### ✅ Community Engagement
+- **Metadata updates**: Borrowers can post progress updates, thank you messages, and photos throughout loan lifecycle
+- **Overpayment-as-tip**: Borrowers can voluntarily reward helpful lenders
+- Rich events for off-chain reputation tracking
 
 ### ✅ Data Collection
 - Rich events capture all payment behavior
@@ -267,6 +273,59 @@ function calculateReputation(loan: Loan, events: RepaymentEvent[]) {
 - [ ] Integration tests for full loan lifecycle
 - [ ] Gas benchmarking
 - [ ] Load testing off-chain infrastructure
+
+## New Features (Community & Safety)
+
+Beyond the simplification, we added four high-value features that enhance community engagement and safety:
+
+### 1. Metadata Updates
+```solidity
+function updateMetadata(string calldata newMetadataURI) external onlyBorrower {
+    require(active || completed, "loan not active or completed");
+    require(bytes(newMetadataURI).length > 0, "empty metadata");
+    metadataURI = newMetadataURI;
+    emit MetadataUpdated(newMetadataURI, block.timestamp);
+}
+```
+
+**Use cases:**
+- Week 1: "Just opened my food cart! Here's a photo: ipfs://..."
+- Week 4: "Hit $500 in sales this week, on track to repay early!"
+- Completion: "Thank you lenders! You changed my life. Here's my story: ipfs://..."
+
+### 2. Token Recovery (Safety)
+```solidity
+function recoverTokens(address token, address to) external nonReentrant {
+    require(completed || cancelled, "loan still active");
+    require(to != address(0), "invalid recipient");
+
+    uint256 balance = IERC20(token).balanceOf(address(this));
+    require(balance > 0, "no tokens to recover");
+
+    IERC20(token).safeTransfer(to, balance);
+}
+```
+
+Prevents funds from being permanently locked if someone accidentally sends tokens to a completed loan.
+
+### 3. Comprehensive Status View
+```solidity
+function getStatus() external view returns (
+    bool fundraisingActive,
+    bool active,
+    bool completed,
+    bool cancelled,
+    bool defaulted,
+    uint256 percentFunded,    // basis points
+    uint256 percentRepaid,    // basis points
+    uint256 secondsUntilDue
+);
+```
+
+Reduces frontend RPC calls from 8+ individual state reads to 1 single call.
+
+### 4. Accumulator Finalization Fix
+When loan completes with overpayment, accumulator is finalized to ensure 100% of funds (including tips) are distributable to lenders with no rounding dust.
 
 ## Rollback Plan
 
