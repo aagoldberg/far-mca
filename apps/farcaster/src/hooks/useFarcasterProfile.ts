@@ -9,10 +9,13 @@ export interface FarcasterProfile {
   username: string;
   displayName: string;
   pfpUrl: string;
+  pfp?: string; // Alias for compatibility
   bio: string;
   followerCount: number;
   followingCount: number;
-  verifications: string[]; // Verified wallet addresses
+  verifications: string[]; // Verified Ethereum wallet addresses
+  custodyAddress?: string; // Farcaster custody address
+  solanaAddresses?: string[]; // Verified Solana addresses
   powerBadge: boolean;
   accountAgeInDays: number;
   activeStatus: 'very_active' | 'active' | 'moderate' | 'low';
@@ -158,10 +161,13 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
           username: user.username,
           displayName: user.display_name || user.username,
           pfpUrl: user.pfp_url || '',
+          pfp: user.pfp_url || '', // Alias for compatibility
           bio: user.profile?.bio?.text || '',
           followerCount: user.follower_count || 0,
           followingCount: user.following_count || 0,
           verifications: user.verified_addresses?.eth_addresses || [],
+          custodyAddress: user.custody_address,
+          solanaAddresses: user.verified_addresses?.sol_addresses || [],
           powerBadge: user.power_badge || false,
           accountAgeInDays,
           activeStatus: user.active_status || 'low',
