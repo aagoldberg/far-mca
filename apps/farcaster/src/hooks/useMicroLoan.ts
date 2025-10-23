@@ -132,17 +132,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
       {
         address: loanAddress,
         abi: MicroLoanABI.abi,
-        functionName: 'termPeriods',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'periodLength',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'firstDueDate',
+        functionName: 'dueAt',
       },
       {
         address: loanAddress,
@@ -174,21 +164,6 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
         abi: MicroLoanABI.abi,
         functionName: 'contributorsCount',
       },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'perPeriodPrincipal',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'currentDueDate',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'isDefaulted',
-      },
     ] as const : [],
     query: {
       enabled,
@@ -209,18 +184,13 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     principalResult,
     totalFundedResult,
     outstandingPrincipalResult,
-    termPeriodsResult,
-    periodLengthResult,
-    firstDueDateResult,
+    dueAtResult,
     fundraisingDeadlineResult,
     metadataURIResult,
     fundraisingActiveResult,
     activeResult,
     completedResult,
     contributorsCountResult,
-    perPeriodPrincipalResult,
-    currentDueDateResult,
-    isDefaultedResult,
   ] = data;
 
   // Check if any required calls failed
@@ -229,9 +199,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     !principalResult || principalResult.status !== 'success' ||
     !totalFundedResult || totalFundedResult.status !== 'success' ||
     !outstandingPrincipalResult || outstandingPrincipalResult.status !== 'success' ||
-    !termPeriodsResult || termPeriodsResult.status !== 'success' ||
-    !periodLengthResult || periodLengthResult.status !== 'success' ||
-    !firstDueDateResult || firstDueDateResult.status !== 'success' ||
+    !dueAtResult || dueAtResult.status !== 'success' ||
     !fundraisingDeadlineResult || fundraisingDeadlineResult.status !== 'success' ||
     !metadataURIResult || metadataURIResult.status !== 'success' ||
     !fundraisingActiveResult || fundraisingActiveResult.status !== 'success' ||
@@ -253,9 +221,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     principal,
     totalFunded: totalFundedResult.result as bigint,
     totalRepaid,
-    termPeriods: termPeriodsResult.result as bigint,
-    periodLength: periodLengthResult.result as bigint,
-    firstDueDate: firstDueDateResult.result as bigint,
+    dueAt: dueAtResult.result as bigint,
     fundraisingDeadline: fundraisingDeadlineResult.result as bigint,
     metadataURI: metadataURIResult.result as string,
     fundraisingActive: fundraisingActiveResult.result as boolean,
@@ -268,9 +234,6 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
   return {
     loanData,
     isLoading: false,
-    perPeriodPrincipal: perPeriodPrincipalResult && perPeriodPrincipalResult.status === 'success' ? perPeriodPrincipalResult.result : undefined,
-    currentDueDate: currentDueDateResult && currentDueDateResult.status === 'success' ? currentDueDateResult.result : undefined,
-    isDefaulted: isDefaultedResult && isDefaultedResult.status === 'success' ? isDefaultedResult.result : undefined,
   };
 };
 
@@ -572,9 +535,7 @@ export const useCreateLoan = () => {
     borrower: `0x${string}`;
     metadataURI: string;
     principal: bigint;
-    termPeriods: number;
-    periodLength: number;
-    firstDueDate: number;
+    loanDuration: number;
     fundraisingDeadline: number;
   }) => {
     console.log('useCreateLoan: Converting params to contract args');
@@ -582,19 +543,15 @@ export const useCreateLoan = () => {
       params.borrower,
       params.metadataURI,
       params.principal,
-      BigInt(params.termPeriods),
-      BigInt(params.periodLength),
-      BigInt(params.firstDueDate),
+      BigInt(params.loanDuration),
       BigInt(params.fundraisingDeadline),
     ];
     console.log('useCreateLoan: Contract args prepared:', {
       borrower: args[0],
       metadataURILength: (args[1] as string).length,
       principal: args[2].toString(),
-      termPeriods: args[3].toString(),
-      periodLength: args[4].toString(),
-      firstDueDate: args[5].toString(),
-      fundraisingDeadline: args[6].toString(),
+      loanDuration: args[3].toString(),
+      fundraisingDeadline: args[4].toString(),
     });
 
     try {

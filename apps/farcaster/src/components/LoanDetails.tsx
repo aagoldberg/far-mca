@@ -53,10 +53,7 @@ interface LoanMetadata {
 }
 
 export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
-  const { loanData, isLoading, perPeriodPrincipal, currentDueDate, isDefaulted } = useLoanData(loanAddress);
-  const isLoanDefaulted = Boolean(isDefaulted);
-  const paymentPerPeriod = perPeriodPrincipal as bigint | undefined;
-  const nextDueDate = currentDueDate as bigint | undefined;
+  const { loanData, isLoading } = useLoanData(loanAddress);
   const { address: userAddress } = useAccount();
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
@@ -405,11 +402,6 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             Fundraising
           </span>
         )}
-        {isLoanDefaulted && (
-          <span className="px-2 py-0.5 bg-red-100 text-red-800 rounded-full text-xs font-medium">
-            Defaulted
-          </span>
-        )}
       </div>
 
       {/* Payment Warning Alert */}
@@ -606,12 +598,12 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           {/* Details Grid - Simplified */}
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="bg-gray-50 rounded-lg p-2.5">
-              <p className="text-xs text-gray-500 mb-0.5">Term Length</p>
-              <p className="text-sm font-semibold text-gray-900">{loanData.termPeriods.toString()} weeks</p>
+              <p className="text-xs text-gray-500 mb-0.5">Due Date</p>
+              <p className="text-sm font-semibold text-gray-900">{formatDate(loanData.dueAt)}</p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-2.5">
-              <p className="text-xs text-gray-500 mb-0.5">Deadline</p>
+              <p className="text-xs text-gray-500 mb-0.5">Fundraising Deadline</p>
               <p className="text-sm font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
             </div>
           </div>

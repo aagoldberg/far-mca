@@ -101,24 +101,10 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     query: { enabled },
   });
 
-  const { data: termPeriods } = useReadContract({
+  const { data: dueAt } = useReadContract({
     address: loanAddress,
     abi: MicroLoanABI.abi,
-    functionName: 'termPeriods',
-    query: { enabled },
-  });
-
-  const { data: periodLength } = useReadContract({
-    address: loanAddress,
-    abi: MicroLoanABI.abi,
-    functionName: 'periodLength',
-    query: { enabled },
-  });
-
-  const { data: firstDueDate } = useReadContract({
-    address: loanAddress,
-    abi: MicroLoanABI.abi,
-    functionName: 'firstDueDate',
+    functionName: 'dueAt',
     query: { enabled },
   });
 
@@ -164,27 +150,6 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     query: { enabled },
   });
 
-  const { data: perPeriodPrincipal } = useReadContract({
-    address: loanAddress,
-    abi: MicroLoanABI.abi,
-    functionName: 'perPeriodPrincipal',
-    query: { enabled },
-  });
-
-  const { data: currentDueDate } = useReadContract({
-    address: loanAddress,
-    abi: MicroLoanABI.abi,
-    functionName: 'currentDueDate',
-    query: { enabled },
-  });
-
-  const { data: isDefaulted } = useReadContract({
-    address: loanAddress,
-    abi: MicroLoanABI.abi,
-    functionName: 'isDefaulted',
-    query: { enabled },
-  });
-
   if (!loanAddress) {
     return { loanData: null, isLoading: false };
   }
@@ -207,9 +172,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     principal: principalBigInt,
     totalFunded: totalFunded as bigint,
     totalRepaid,
-    termPeriods: termPeriods as bigint,
-    periodLength: periodLength as bigint,
-    firstDueDate: firstDueDate as bigint,
+    dueAt: dueAt as bigint,
     fundraisingDeadline: fundraisingDeadline as bigint,
     metadataURI: metadataURI as string,
     fundraisingActive: fundraisingActive as boolean,
@@ -219,7 +182,7 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     contributorsCount: contributorsCount as bigint,
   };
 
-  return { loanData, isLoading: false, perPeriodPrincipal, currentDueDate, isDefaulted };
+  return { loanData, isLoading: false };
 };
 
 // =============================================================================
@@ -516,9 +479,7 @@ export const useCreateLoan = () => {
     borrower: `0x${string}`;
     metadataURI: string;
     principal: bigint;
-    termPeriods: number;
-    periodLength: number;
-    firstDueDate: number;
+    loanDuration: number;
     fundraisingDeadline: number;
   }) => {
     writeContract({
@@ -529,9 +490,7 @@ export const useCreateLoan = () => {
         params.borrower,
         params.metadataURI,
         params.principal,
-        BigInt(params.termPeriods),
-        BigInt(params.periodLength),
-        BigInt(params.firstDueDate),
+        BigInt(params.loanDuration),
         BigInt(params.fundraisingDeadline),
       ],
     });

@@ -381,9 +381,13 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             <span className="font-medium text-gray-900">1.0x</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">Term</span>
+            <span className="text-gray-600">Due Date</span>
             <span className="font-medium text-gray-900">
-              {loanData.termPeriods.toString()} periods
+              {new Date(Number(loanData.dueAt) * 1000).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })}
             </span>
           </div>
           <div className="flex justify-between pt-2 border-t border-green-200">

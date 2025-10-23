@@ -392,31 +392,27 @@ export default function CreateLoanForm() {
 
       const now = Math.floor(Date.now() / 1000);
       const fundraisingDeadline = Math.floor(now + (30 * 86400)); // 30 days
-      const firstDueDate = Math.floor(fundraisingDeadline + (14 * 86400)); // 14 days after fundraising ends
+      const loanDuration = formData.repaymentWeeks * 7 * 86400; // weeks to seconds
 
       const principal = parseUnits(formData.amount, USDC_DECIMALS);
-      const periodLength = 14 * 86400; // Bi-weekly (14 days in seconds)
-      const termPeriods = formData.repaymentWeeks / 2; // Number of bi-weekly periods
 
       // Validate
       const MIN_PRINCIPAL = 100e6;
-      const MIN_TERM_PERIODS = 2;
-      const MAX_TERM_PERIODS = 12; // Max 24 weeks = 12 bi-weekly periods
+      const MIN_LOAN_DURATION = 4 * 7 * 86400; // 4 weeks
+      const MAX_LOAN_DURATION = 24 * 7 * 86400; // 24 weeks
 
       if (principal < BigInt(MIN_PRINCIPAL)) {
         throw new Error('Principal must be at least $100 USDC');
       }
-      if (termPeriods < MIN_TERM_PERIODS || termPeriods > MAX_TERM_PERIODS) {
-        throw new Error('Term periods must be between 2 and 12 bi-weekly periods');
+      if (loanDuration < MIN_LOAN_DURATION || loanDuration > MAX_LOAN_DURATION) {
+        throw new Error('Loan duration must be between 4 and 24 weeks');
       }
 
       console.log('Creating loan with params:', {
         borrower: address,
         metadataURILength: metadataURI.length,
         principal: principal.toString(),
-        termPeriods,
-        periodLength,
-        firstDueDate,
+        loanDuration,
         fundraisingDeadline,
       });
 
@@ -424,9 +420,7 @@ export default function CreateLoanForm() {
         borrower: address,
         metadataURI,
         principal,
-        termPeriods,
-        periodLength,
-        firstDueDate,
+        loanDuration,
         fundraisingDeadline,
       });
 

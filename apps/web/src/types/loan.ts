@@ -19,9 +19,7 @@ export interface RawLoan {
   principal: bigint;              // Target funding amount (USDC, 6 decimals)
   totalFunded: bigint;            // Current funded amount (USDC, 6 decimals)
   totalRepaid: bigint;            // Amount repaid so far (USDC, 6 decimals)
-  termPeriods: bigint;            // Number of repayment periods (e.g., 12)
-  periodLength: bigint;           // Length of each period in seconds (e.g., 2592000 = 30 days)
-  firstDueDate: bigint;           // Timestamp of first payment
+  dueAt: bigint;                  // Single maturity timestamp
   fundraisingDeadline: bigint;    // Timestamp fundraising ends
   metadataURI: string;            // IPFS URI for loan metadata
   fundraisingActive: boolean;     // Can still accept contributions
@@ -126,9 +124,7 @@ export interface CreateLoanParams {
   borrower: `0x${string}`;
   metadataURI: string;            // IPFS URI after uploading metadata
   principal: bigint;              // Funding goal (USDC, 6 decimals)
-  termPeriods: number;            // Number of payment periods
-  periodLength: number;           // Seconds per period
-  firstDueDate: number;           // Unix timestamp
+  loanDuration: number;           // Duration in seconds until maturity
   fundraisingDeadline: number;    // Unix timestamp
 }
 

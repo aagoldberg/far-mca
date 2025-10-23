@@ -20,7 +20,7 @@ export interface LoanCardProps {
   active: boolean;
   completed: boolean;
   contributorsCount: bigint;
-  termPeriods?: bigint;
+  dueAt?: bigint;
   imageUrl?: string;
   fundraisingDeadline?: bigint;
   disbursementTime?: bigint;
@@ -152,7 +152,7 @@ export function LoanCard({
   active,
   completed,
   contributorsCount,
-  termPeriods,
+  dueAt,
   imageUrl,
   fundraisingDeadline,
   disbursementTime,
@@ -176,15 +176,8 @@ export function LoanCard({
   const daysRemaining = getDaysRemaining(fundraisingDeadline);
 
   // Calculate payment status if loan is active
-  const loanStatusInfo =
-    active && disbursementTime && termPeriods && totalRepaid !== undefined
-      ? calculateLoanStatus(
-          disbursementTime,
-          Number(termPeriods),
-          principal,
-          totalRepaid
-        )
-      : null;
+  // TODO: Re-enable once we have disbursementTime and payment schedule from contract
+  const loanStatusInfo = null;
 
   return (
     <Link
