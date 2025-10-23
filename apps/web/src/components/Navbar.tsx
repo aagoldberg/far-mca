@@ -10,6 +10,7 @@ import { UserMenu } from './UserMenu';
 import { RotatingText } from './RotatingText';
 import { LendFriendLogo } from './LendFriendLogo';
 import { WalletBalance } from './WalletBalance';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-700 hover:text-gray-900">
@@ -40,11 +41,13 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const menuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const aboutDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { ready, authenticated, login } = usePrivy();
   
@@ -63,12 +66,15 @@ export default function Navbar() {
              setIsSearchOpen(false);
         }
       }
+      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target as Node)) {
+        setAboutDropdownOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [menuRef, searchRef]);
+  }, [menuRef, searchRef, aboutDropdownRef]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -192,6 +198,7 @@ export default function Navbar() {
                       <Link
                         href="/create-loan"
                         className="block w-full text-center bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-1.5"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -200,6 +207,36 @@ export default function Navbar() {
                       </Link>
                     </div>
                   )}
+
+                  {/* About Section */}
+                  <div className="pt-6 mt-6 border-t border-gray-200">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-4 mb-3">
+                      About
+                    </p>
+                    <div className="space-y-1">
+                      <Link
+                        href="/about"
+                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        About LendFriend
+                      </Link>
+                      <Link
+                        href="/whitepaper"
+                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        White Paper
+                      </Link>
+                      <Link
+                        href="/research"
+                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Research
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -245,13 +282,47 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Center: Logo */}
+          {/* Center: About Dropdown */}
           <div
             className={`flex-grow flex items-center justify-center ${
               isSearchOpen && 'hidden sm:flex'
             }`}
           >
-            {/* The centered logo is removed to prevent layout conflicts */}
+            <div className="relative" ref={aboutDropdownRef}>
+              <button
+                onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
+                className="flex items-center gap-1 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              >
+                About
+                <ChevronDownIcon className={`w-4 h-4 transition-transform ${aboutDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {aboutDropdownOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
+                  <Link
+                    href="/about"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    About LendFriend
+                  </Link>
+                  <Link
+                    href="/whitepaper"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    White Paper
+                  </Link>
+                  <Link
+                    href="/research"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    Research
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Right: Wallet Balance, Auth Buttons and User Menu */}
