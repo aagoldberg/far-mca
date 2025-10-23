@@ -9,6 +9,8 @@ import { USDC_DECIMALS } from '@/types/loan';
 import { useState, useEffect } from 'react';
 import { TrustSignals } from '@/components/TrustSignals';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import ShareModal from '@/components/ShareModal';
+import type { LoanShareData } from '@/utils/shareUtils';
 
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
@@ -52,7 +54,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
-  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Fetch user's contribution (if any)
   const { contribution } = useContribution(loanAddress, userAddress);
@@ -292,7 +294,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       </div>
 
       {/* Status badges */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-5">
         {loanData.completed && (
           <span className="px-3 py-1.5 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
             Completed
@@ -313,24 +315,6 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             Defaulted
           </span>
         )}
-      </div>
-
-      {/* Funding Progress */}
-      <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 mb-5">
-        <div className="flex justify-between items-center mb-3 text-base">
-          <span className="font-bold text-gray-900">
-            ${formatUSDC(loanData.totalFunded)} USDC
-          </span>
-          <span className="text-gray-600">
-            of ${formatUSDC(loanData.principal)}
-          </span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
-          <div
-            className="bg-[#3B9B7F] h-3 rounded-full transition-all duration-500"
-            style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-          />
-        </div>
       </div>
 
       {/* Borrower Actions */}
@@ -487,44 +471,26 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           Loan Terms
         </h2>
 
-        <div className="space-y-4">
-          {/* Key Highlights */}
-          <div className="flex items-center gap-5 pb-4 border-b border-gray-100">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500 mb-0.5">Interest</p>
-                <p className="text-base font-bold text-green-600">0%</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500 mb-0.5">Repayment</p>
-                <p className="text-base font-bold text-gray-900">1.0x</p>
-              </div>
-            </div>
+        {/* All 4 data points in one row */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="bg-green-50 rounded-lg p-3.5">
+            <p className="text-sm text-gray-500 mb-1">Interest</p>
+            <p className="text-base font-bold text-green-600">0%</p>
           </div>
 
-          {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-3 text-base">
-            <div className="bg-gray-50 rounded-lg p-3.5">
-              <p className="text-sm text-gray-500 mb-1">Term Length</p>
-              <p className="text-base font-bold text-gray-900">{loanData.termPeriods.toString()} weeks</p>
-            </div>
+          <div className="bg-blue-50 rounded-lg p-3.5">
+            <p className="text-sm text-gray-500 mb-1">Repayment</p>
+            <p className="text-base font-bold text-gray-900">1.0x</p>
+          </div>
 
-            <div className="bg-gray-50 rounded-lg p-3.5">
-              <p className="text-sm text-gray-500 mb-1">Deadline</p>
-              <p className="text-base font-bold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
-            </div>
+          <div className="bg-gray-50 rounded-lg p-3.5">
+            <p className="text-sm text-gray-500 mb-1">Term Length</p>
+            <p className="text-base font-bold text-gray-900">{loanData.termPeriods.toString()} weeks</p>
+          </div>
+
+          <div className="bg-gray-50 rounded-lg p-3.5">
+            <p className="text-sm text-gray-500 mb-1">Deadline</p>
+            <p className="text-base font-bold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
           </div>
         </div>
       </div>
@@ -585,33 +551,31 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 </div>
               </div>
 
-              {/* Share Button */}
-              <button
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: metadata?.name || 'Support a Community Loan',
-                      text: `Help support this community loan on LendFriend`,
-                      url: window.location.href,
-                    }).catch(err => console.log('Share cancelled', err));
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('Link copied to clipboard!');
-                  }
-                }}
-                className="w-full flex items-center justify-center gap-2.5 px-5 py-3.5 bg-[#2E7D68] hover:bg-[#256655] text-white font-bold rounded-xl transition-colors mb-3 text-base"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-                Share
-              </button>
+              {/* Share Button - White background with gradient border and text */}
+              <div className="relative p-[6px] bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] rounded-xl mb-3">
+                <button
+                  onClick={() => setIsShareModalOpen(true)}
+                  className="w-full flex items-center justify-center gap-2.5 px-5 py-3 bg-white hover:bg-gray-50 font-bold rounded-[10px] transition-colors text-base"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24">
+                    <defs>
+                      <linearGradient id="shareGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#2C7DA0" />
+                        <stop offset="50%" stopColor="#2E8B8B" />
+                        <stop offset="100%" stopColor="#3B9B7F" />
+                      </linearGradient>
+                    </defs>
+                    <path stroke="url(#shareGradient)" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                  <span className="bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] bg-clip-text text-transparent">Share</span>
+                </button>
+              </div>
 
-              {/* Donate Button */}
+              {/* Donate Button - Full gradient background */}
               {loanData.fundraisingActive && !isFunded ? (
                 <Link
                   href={`/loan/${loanAddress}/fund`}
-                  className="w-full flex items-center justify-center px-5 py-3.5 bg-[#9FE870] hover:bg-[#8DD65E] text-gray-900 font-bold rounded-xl transition-colors text-base"
+                  className="w-full flex items-center justify-center px-5 py-3.5 bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] hover:from-[#236382] hover:via-[#26706F] hover:to-[#2E7D68] text-white font-bold rounded-xl transition-all text-base shadow-sm"
                 >
                   Donate now
                 </Link>
@@ -656,34 +620,32 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
       {/* Fixed Bottom Menu (Mobile Only) */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg px-5 py-3.5 flex gap-3 max-w-4xl mx-auto">
-        {/* Share Button */}
-        <button
-          onClick={() => {
-            if (navigator.share) {
-              navigator.share({
-                title: metadata?.name || 'Support a Community Loan',
-                text: `Help support this community loan on LendFriend`,
-                url: window.location.href,
-              }).catch(err => console.log('Share cancelled', err));
-            } else {
-              navigator.clipboard.writeText(window.location.href);
-              alert('Link copied to clipboard!');
-            }
-          }}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-lg transition-colors text-base"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-          </svg>
-          Share
-        </button>
+        {/* Share Button - White background with gradient border and text */}
+        <div className="flex-1 relative p-[6px] bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] rounded-lg">
+          <button
+            onClick={() => setIsShareModalOpen(true)}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white hover:bg-gray-50 font-semibold rounded-[4px] transition-colors text-base"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24">
+              <defs>
+                <linearGradient id="shareGradientMobile" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#2C7DA0" />
+                  <stop offset="50%" stopColor="#2E8B8B" />
+                  <stop offset="100%" stopColor="#3B9B7F" />
+                </linearGradient>
+              </defs>
+              <path stroke="url(#shareGradientMobile)" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            <span className="bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] bg-clip-text text-transparent">Share</span>
+          </button>
+        </div>
 
         {loanData.fundraisingActive && !isFunded ? (
           <Link
             href={`/loan/${loanAddress}/fund`}
-            className="flex-[2] flex items-center justify-center px-5 py-3 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold rounded-lg transition-colors text-base shadow-sm"
+            className="flex-[2] flex items-center justify-center px-5 py-3 bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] hover:from-[#236382] hover:via-[#26706F] hover:to-[#2E7D68] text-white font-bold rounded-lg transition-all text-base shadow-sm"
           >
-            Donate
+            Donate now
           </Link>
         ) : (
           <button
@@ -694,6 +656,26 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </button>
         )}
       </div>
+
+      {/* Share Modal */}
+      {loanData && (
+        <ShareModal
+          isOpen={isShareModalOpen}
+          onClose={() => setIsShareModalOpen(false)}
+          loan={{
+            id: loanAddress,
+            title: metadata?.name || 'Community Loan',
+            borrower: loanData.borrower,
+            description: metadata?.description,
+            image: metadata?.image || metadata?.imageUrl,
+            principal: parseFloat(formatUnits(loanData.principal, USDC_DECIMALS)),
+            totalFunded: parseFloat(formatUnits(loanData.totalFunded, USDC_DECIMALS)),
+            progressPercentage: loanData.principal > 0n
+              ? (parseFloat(formatUnits(loanData.totalFunded, USDC_DECIMALS)) / parseFloat(formatUnits(loanData.principal, USDC_DECIMALS))) * 100
+              : 0
+          }}
+        />
+      )}
     </div>
   );
 }
