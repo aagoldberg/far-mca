@@ -5,6 +5,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import Link from 'next/link';
 import { useDisconnect } from 'wagmi';
 import { getSocialProfile, formatDisplayName, PlatformBadges, TrustIndicator } from '@/utils/socialUtils';
+import { HeartIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 
 type UserMenuProps = {
   inline?: boolean;
@@ -90,18 +91,20 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
             Get Funding
           </Link>
           <Link
-            href="/my-advances"
-            className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl font-medium no-underline transition-colors"
+            href="/portfolio"
+            className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl font-medium no-underline transition-colors"
             onClick={handleItemClick}
           >
-            Your Advances
+            <HeartIcon className="w-5 h-5" />
+            Supporting
           </Link>
           <Link
-            href="/portfolio"
-            className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl font-medium no-underline transition-colors"
+            href="/my-advances"
+            className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl font-medium no-underline transition-colors"
             onClick={handleItemClick}
           >
-            Your Portfolio
+            <DocumentTextIcon className="w-5 h-5" />
+            My Loans
           </Link>
           <Link
             href="/account-settings"
@@ -194,20 +197,22 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
             </div>
           </div>
           <Link
-            href="/my-advances"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
+            href="/portfolio"
+            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
             role="menuitem"
             onClick={() => setMenuOpen(false)}
           >
-            Your Advances
+            <HeartIcon className="w-4 h-4" />
+            Supporting
           </Link>
           <Link
-            href="/portfolio"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
+            href="/my-advances"
+            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 no-underline"
             role="menuitem"
             onClick={() => setMenuOpen(false)}
           >
-            Your Portfolio
+            <DocumentTextIcon className="w-4 h-4" />
+            My Loans
           </Link>
           <Link
             href="/account-settings"

@@ -9,7 +9,7 @@ import { fetchFromIPFS } from '@/lib/ipfs';
 const LoanCardSkeleton = () => (
   <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-300 animate-pulse">
     {/* Header */}
-    <div className="px-5 sm:px-6 pt-4 pb-4">
+    <div className="px-4 sm:px-5 pt-3 pb-3">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200" />
@@ -23,20 +23,20 @@ const LoanCardSkeleton = () => (
     <div className="w-full h-48 sm:h-56 bg-gray-100" />
 
     {/* Content */}
-    <div className="p-5 sm:p-6">
+    <div className="p-4 sm:p-5">
       {/* Title */}
-      <div className="flex items-start justify-between mb-3 gap-3">
+      <div className="flex items-start justify-between mb-2 gap-3">
         <div className="h-6 bg-gray-200 rounded w-2/3" />
       </div>
 
       {/* Description */}
-      <div className="space-y-2 mb-5">
+      <div className="space-y-2 mb-4">
         <div className="h-5 bg-gray-200 rounded w-full" />
         <div className="h-5 bg-gray-200 rounded w-5/6" />
       </div>
 
       {/* Progress bar */}
-      <div className="mb-4">
+      <div className="mb-3">
         <div className="h-3 bg-gray-200 rounded-full mb-2.5" />
         <div className="flex justify-between">
           <div className="h-5 bg-gray-200 rounded w-28" />
@@ -45,7 +45,7 @@ const LoanCardSkeleton = () => (
       </div>
 
       {/* Footer */}
-      <div className="pt-4 sm:pt-4.5 mt-4 border-t border-gray-100 flex items-center gap-3">
+      <div className="pt-3 mt-3 border-t border-gray-100 flex items-center gap-3">
         <div className="h-4 bg-gray-200 rounded w-20" />
         <div className="h-4 bg-gray-200 rounded w-24" />
       </div>
