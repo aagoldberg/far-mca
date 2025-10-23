@@ -29,7 +29,17 @@ export const useLoans = () => {
     address: MICROLOAN_FACTORY_ADDRESS,
     abi: MicroLoanFactoryABI.abi,
     functionName: 'getLoans',
+    query: {
+      enabled: !!MICROLOAN_FACTORY_ADDRESS && MICROLOAN_FACTORY_ADDRESS !== '0x0000000000000000000000000000000000000000',
+      staleTime: 30_000, // Consider data fresh for 30 seconds
+    },
   });
+
+  // Debug logging
+  console.log('[useLoans] Factory address:', MICROLOAN_FACTORY_ADDRESS);
+  console.log('[useLoans] isLoading:', isLoading);
+  console.log('[useLoans] error:', error);
+  console.log('[useLoans] loanAddresses:', loanAddresses);
 
   return {
     loanAddresses: (loanAddresses as `0x${string}`[]) || [],
