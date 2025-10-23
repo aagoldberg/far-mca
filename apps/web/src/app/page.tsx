@@ -42,20 +42,9 @@ export default function Home() {
 
       {/* Loan List Section */}
       <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Ways to Help</h2>
-            <p className="text-gray-600">Support community members working toward their dreams</p>
-          </div>
-          <Link
-            href="/create-loan"
-            className="hidden sm:flex items-center gap-1.5 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold text-sm transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            New Loan
-          </Link>
+        <div className="mb-8">
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Ways to Help</h2>
+          <p className="text-gray-600">Support community members working toward their dreams</p>
         </div>
         <LoanList />
       </div>
