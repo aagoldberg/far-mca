@@ -344,7 +344,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               )}
             </div>
           </div>
-        ) : hasENS && ensProfile ? (
+        ) : hasENS && ensProfile && ensProfile.name ? (
           <div className="flex items-center gap-2 text-sm">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
               {ensProfile.name.charAt(0).toUpperCase()}

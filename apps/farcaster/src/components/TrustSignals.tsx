@@ -86,7 +86,7 @@ export function TrustSignals({
   const neynarStatus = getNeynarStatus(profile?.score);
 
   // Check if we have any data to display
-  const hasAnyData = businessWebsite || gitcoinScore?.score || (hasContributors && support) || profile || profile?.score;
+  const hasAnyData = businessWebsite || gitcoinScore?.score || (hasContributors && support) || profile;
 
   if (!hasAnyData) {
     return null; // Don't show the section at all if there's no data
