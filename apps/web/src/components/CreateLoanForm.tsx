@@ -295,17 +295,11 @@ export default function CreateLoanForm() {
       newErrors.aboutYou = 'Please add more detail (at least 100 characters)';
     }
 
-    // Section 3: This Loan
+    // Section 3: This Loan (now includes repayment plan)
     if (!formData.loanUseAndImpact.trim()) {
-      newErrors.loanUseAndImpact = 'Please describe how you\'ll use the loan and what it will help you achieve';
-    } else if (formData.loanUseAndImpact.length < 150) {
-      newErrors.loanUseAndImpact = 'Please add more detail (at least 150 characters)';
-    }
-
-    if (!formData.repaymentPlan.trim()) {
-      newErrors.repaymentPlan = 'Please explain how you\'ll repay this loan';
-    } else if (formData.repaymentPlan.length < 75) {
-      newErrors.repaymentPlan = 'Please add more specific information';
+      newErrors.loanUseAndImpact = 'Please describe what you\'ll achieve and how you\'ll pay it back';
+    } else if (formData.loanUseAndImpact.length < 225) {
+      newErrors.loanUseAndImpact = 'Please add more detail (at least 225 characters)';
     }
 
     // Section 4: Photo
@@ -334,14 +328,14 @@ export default function CreateLoanForm() {
       const metadata = {
         name: formData.title,
         description: formData.aboutYou.substring(0, 280), // Short description for card
-        fullDescription: `${formData.aboutYou}\n\n**How I'll use this loan and what it will achieve:**\n${formData.loanUseAndImpact}\n\n**Repayment Plan:**\n${formData.repaymentPlan}`,
+        fullDescription: `${formData.aboutYou}\n\n**What I'll achieve and how I'll pay it back:**\n${formData.loanUseAndImpact}`,
         image: imageURI,
         businessWebsite: formData.businessWebsite || undefined,
         loanDetails: {
           aboutYou: formData.aboutYou,
           businessWebsite: formData.businessWebsite,
           loanUseAndImpact: formData.loanUseAndImpact,
-          repaymentPlan: formData.repaymentPlan,
+          repaymentPlan: '', // Now combined in loanUseAndImpact
         },
         createdAt: new Date().toISOString(),
       };
@@ -685,15 +679,15 @@ export default function CreateLoanForm() {
           </h2>
 
           <div className="space-y-4">
-            {/* Loan Use & Impact (Combined) */}
+            {/* Combined: Loan Impact & Repayment Plan */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-semibold text-gray-900">
-                  How will this loan change things for you? *
+                  What will this loan help you achieve, and how will you pay it back? *
                 </label>
                 <span className={`text-xs ${
-                  formData.loanUseAndImpact.length < 150 ? 'text-red-500' :
-                  formData.loanUseAndImpact.length >= 250 && formData.loanUseAndImpact.length <= 600 ? 'text-green-600' :
+                  formData.loanUseAndImpact.length < 225 ? 'text-red-500' :
+                  formData.loanUseAndImpact.length >= 400 && formData.loanUseAndImpact.length <= 1000 ? 'text-green-600' :
                   'text-gray-500'
                 }`}>
                   {formData.loanUseAndImpact.length} chars
@@ -703,12 +697,14 @@ export default function CreateLoanForm() {
                 name="loanUseAndImpact"
                 value={formData.loanUseAndImpact}
                 onChange={(e) => handleChange('loanUseAndImpact', e.target.value)}
-                placeholder="I'll use the $600 to buy a Singer Professional sewing machine ($450) and fabric supplies ($150) to get started.
+                placeholder="I'll use the $600 to buy a Singer Professional sewing machine ($450) and fabric supplies ($150).
 
-Right now, I'm hand-sewing everything, which takes 4-5 hours per dress. With a machine, I can finish a dress in 45 minutes. This means I can go from making 6 dresses a month to 25-30 dresses.
+Right now I'm hand-sewing everything, taking 4-5 hours per dress. With a machine, I can finish in 45 minutes - going from 6 dresses/month to 25-30 dresses.
 
-My customers are already asking for more - I have a waiting list of 12 people! With this machine, I can serve them all and grow my monthly income from $800 to around $2,000. This will help me support my kids better and maybe even hire my neighbor Maria, who also knows how to sew but lost her job last year."
-                rows={8}
+I have 12 customers waiting! This will grow my income from $800 to $2,000/month. This will help me support my kids better and maybe even hire my neighbor Maria.
+
+For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekly payment would be under 10% of my current income, which I can easily manage. I also have $400/month child support as backup, and my sister has agreed to help if needed."
+                rows={10}
                 className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
                   errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
@@ -721,37 +717,6 @@ My customers are already asking for more - I have a waiting list of 12 people! W
               )}
               {errors.loanUseAndImpact && (
                 <p className="text-sm text-red-600 mt-1">{errors.loanUseAndImpact}</p>
-              )}
-            </div>
-
-            {/* Repayment Plan */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-semibold text-gray-900">
-                  How will you repay lenders? *
-                </label>
-                <span className={`text-xs ${
-                  formData.repaymentPlan.length < 75 ? 'text-red-500' :
-                  formData.repaymentPlan.length >= 150 && formData.repaymentPlan.length <= 400 ? 'text-green-600' :
-                  'text-gray-500'
-                }`}>
-                  {formData.repaymentPlan.length} chars
-                </span>
-              </div>
-              <textarea
-                name="repaymentPlan"
-                value={formData.repaymentPlan}
-                onChange={(e) => handleChange('repaymentPlan', e.target.value)}
-                placeholder="I currently make $800/month from my sewing work, and with the new machine I expect to earn $2,000/month. The bi-weekly payment of $75 would be less than 10% of my current income, which I can easily manage.
-
-I also receive $400/month in child support that I can use as backup if needed. My sister has also agreed to help if I ever fall behind - she knows how important this business is for my family's future."
-                rows={5}
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                  errors.repaymentPlan ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
-                }`}
-              />
-              {errors.repaymentPlan && (
-                <p className="text-sm text-red-600 mt-1">{errors.repaymentPlan}</p>
               )}
             </div>
 
