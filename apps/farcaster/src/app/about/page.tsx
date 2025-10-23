@@ -171,7 +171,23 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Learn More */}
+        {/* Learn More - Vision */}
+        <section className="mb-6">
+          <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6 text-center">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">Our Vision & Roadmap</h3>
+            <p className="text-gray-700 mb-4">
+              See how we're building the future of reputation-backed credit, from bootstrap to global scale.
+            </p>
+            <Link
+              href="/vision"
+              className="inline-block px-6 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              Explore the Vision →
+            </Link>
+          </div>
+        </section>
+
+        {/* Learn More - Research */}
         <section className="mb-8">
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
             <h3 className="text-lg font-bold text-gray-900 mb-2">Want the Full Story?</h3>
