@@ -79,6 +79,18 @@ export function TrustSignals({
     return null; // Don't show the section at all if there's no data
   }
 
+  // Helper to copy address to clipboard
+  const copyToClipboard = (address: string, label: string) => {
+    navigator.clipboard.writeText(address);
+    alert(`${label} copied to clipboard!`);
+  };
+
+  // Helper to format address
+  const formatAddress = (address: string) => {
+    if (address.length <= 12) return address;
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-4">
       <h3 className="text-sm font-semibold text-gray-900 mb-3">
@@ -115,6 +127,172 @@ export function TrustSignals({
               >
                 {businessWebsite}
               </a>
+            </div>
+          </div>
+        )}
+
+        {/* FID (Farcaster ID) */}
+        {profile?.fid && (
+          <div className="flex items-start gap-3">
+            <svg
+              className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+              />
+            </svg>
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-700 flex items-center">
+                FID
+                <InfoTooltip text="Farcaster ID - unique identifier for this account" />
+              </div>
+              <button
+                onClick={() => copyToClipboard(profile.fid.toString(), 'FID')}
+                className="text-sm text-gray-900 hover:text-blue-600 font-mono transition-colors flex items-center gap-1"
+              >
+                {profile.fid}
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Farcaster Custody Address */}
+        {profile?.custodyAddress && (
+          <div className="flex items-start gap-3">
+            <svg
+              className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-700 flex items-center">
+                Farcaster custody address
+                <InfoTooltip text="Primary custody address for Farcaster account" />
+              </div>
+              <a
+                href={`https://etherscan.io/address/${profile.custodyAddress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:underline font-mono flex items-center gap-1"
+              >
+                {formatAddress(profile.custodyAddress)}
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Connected Ethereum Wallets */}
+        {profile?.verifications && profile.verifications.length > 0 && (
+          <div className="flex items-start gap-3">
+            <svg
+              className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+              />
+            </svg>
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-700 flex items-center mb-2">
+                Connected Ethereum wallets
+                <InfoTooltip text="Verified Ethereum addresses linked to this Farcaster account" />
+              </div>
+              <div className="space-y-1">
+                {profile.verifications.map((address, index) => (
+                  <div key={address} className="flex items-center gap-2">
+                    <a
+                      href={`https://etherscan.io/address/${address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 hover:underline font-mono flex items-center gap-1"
+                    >
+                      {formatAddress(address)}
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                    {index === 0 && (
+                      <>
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Primary</span>
+                        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">Farcaster Wallet</span>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Connected Solana Wallets */}
+        {profile?.solanaAddresses && profile.solanaAddresses.length > 0 && (
+          <div className="flex items-start gap-3">
+            <svg
+              className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-700 flex items-center mb-2">
+                Connected Solana wallets
+                <InfoTooltip text="Verified Solana addresses linked to this Farcaster account" />
+              </div>
+              <div className="space-y-1">
+                {profile.solanaAddresses.map((address, index) => (
+                  <div key={address} className="flex items-center gap-2">
+                    <a
+                      href={`https://solscan.io/account/${address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 hover:underline font-mono flex items-center gap-1"
+                    >
+                      {formatAddress(address)}
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                    {index === 0 && (
+                      <>
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Primary</span>
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Farcaster Wallet</span>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -227,7 +405,14 @@ export function TrustSignals({
                 <InfoTooltip text="Social profile with reputation indicators. Power Badge shows trusted community member status." />
               </div>
               <div className="text-sm text-gray-600">
-                @{profile.username}
+                <a
+                  href={`https://warpcast.com/${profile.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  @{profile.username}
+                </a>
                 {profile.powerBadge && <span className="text-purple-600 ml-1">(Power Badge)</span>}
               </div>
               {reputation && (
