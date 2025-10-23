@@ -650,7 +650,7 @@ export default function CreateLoanForm() {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-semibold text-gray-900">
-                  Introduce yourself to lenders *
+                  Tell us about yourself, what you do, and who you serve *
                 </label>
                 <span className={`text-xs ${
                   formData.aboutYou.length < 100 ? 'text-red-500' :
