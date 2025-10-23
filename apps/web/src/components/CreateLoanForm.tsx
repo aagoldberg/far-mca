@@ -335,7 +335,6 @@ export default function CreateLoanForm() {
           aboutYou: formData.aboutYou,
           businessWebsite: formData.businessWebsite,
           loanUseAndImpact: formData.loanUseAndImpact,
-          repaymentPlan: '', // Now combined in loanUseAndImpact
         },
         createdAt: new Date().toISOString(),
       };
