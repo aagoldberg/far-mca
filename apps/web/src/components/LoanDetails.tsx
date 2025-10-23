@@ -157,6 +157,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const isFunded = loanData.totalFunded >= loanData.principal;
   const isBorrower = userAddress?.toLowerCase() === loanData.borrower.toLowerCase();
 
+  // Fetch Farcaster profile for borrower
+  const { profile: borrowerProfile, isLoading: isProfileLoading } = useFarcasterProfile(loanData.borrower);
+
   // Check if refund is available
   const now = BigInt(Math.floor(Date.now() / 1000));
   const fundraisingExpired = now > loanData.fundraisingDeadline;
@@ -275,21 +278,25 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
         {/* Borrower Info */}
         <div className="flex items-center gap-3 text-base">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-            {loanData.borrower.slice(2, 4).toUpperCase()}
-          </div>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(loanData.borrower);
-              alert('Address copied to clipboard!');
-            }}
-            className="font-medium text-gray-900 hover:text-gray-700 font-mono transition-colors"
-          >
-            {loanData.borrower.slice(0, 6)}...{loanData.borrower.slice(-4)}
-          </button>
-          {isBorrower && (
-            <span className="text-sm bg-blue-100 text-blue-800 px-2.5 py-1 rounded">You</span>
+          {borrowerProfile?.pfp ? (
+            <img
+              src={borrowerProfile.pfp}
+              alt={borrowerProfile.displayName || borrowerProfile.username || 'Borrower'}
+              className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              {loanData.borrower.slice(2, 4).toUpperCase()}
+            </div>
           )}
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-900">
+              {borrowerProfile?.displayName || borrowerProfile?.username || `${loanData.borrower.slice(0, 6)}...${loanData.borrower.slice(-4)}`}
+            </span>
+            {isBorrower && (
+              <span className="text-sm bg-blue-100 text-blue-800 px-2.5 py-1 rounded">You</span>
+            )}
+          </div>
         </div>
       </div>
 
