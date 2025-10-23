@@ -101,8 +101,9 @@ export default function CreateLoanForm() {
     : 0;
 
   // Calculate payment as % of income
-  const paymentPercentage = formData.monthlyIncome && formData.monthlyIncome !== ''
-    ? (biWeeklyPayment / INCOME_RANGES[formData.monthlyIncome as keyof typeof INCOME_RANGES]) * 100
+  const hasValidIncome = formData.monthlyIncome && formData.monthlyIncome in INCOME_RANGES;
+  const paymentPercentage = hasValidIncome
+    ? (biWeeklyPayment / INCOME_RANGES[formData.monthlyIncome]) * 100
     : null;
 
   // Extract numbers from loan use field
