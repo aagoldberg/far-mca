@@ -617,33 +617,6 @@ export default function CreateLoanForm() {
           </div>
         </div>
 
-        {/* Repayment Calculator */}
-        {formData.amount && (
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200/60 rounded-xl p-4 shadow-sm">
-            <h3 className="text-sm font-bold text-gray-900 mb-3">Repayment Schedule</h3>
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div>
-                <p className="text-gray-600 text-xs mb-0.5">Total loan</p>
-                <p className="font-bold text-gray-900">${parseFloat(formData.amount).toLocaleString()} USDC</p>
-              </div>
-              <div>
-                <p className="text-gray-600 text-xs mb-0.5">Bi-weekly payment</p>
-                <p className="font-bold text-[#3B9B7F]">${biWeeklyPayment.toFixed(2)}</p>
-              </div>
-              <div className="col-span-2">
-                <p className="text-gray-600 text-xs mb-0.5">Payments</p>
-                <p className="font-semibold text-gray-900">{formData.repaymentWeeks / 2} payments over {formData.repaymentWeeks} weeks</p>
-              </div>
-            </div>
-            {paymentPercentage !== null && (
-              <div className={`text-xs mt-3 pt-3 border-t ${paymentPercentage > 25 ? 'border-orange-200 text-orange-700' : 'border-green-200 text-green-700'}`}>
-                {paymentPercentage > 25 ? '⚠️' : '✅'} {paymentPercentage.toFixed(1)}% of your monthly income
-                {paymentPercentage > 25 && ' — consider extending timeline'}
-              </div>
-            )}
-          </div>
-        )}
-
         {/* Section 2: About You */}
         <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
           <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
