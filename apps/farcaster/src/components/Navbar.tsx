@@ -7,6 +7,7 @@ import { useAccount } from 'wagmi';
 import { useUSDCFaucet, useUSDCBalance } from '@/hooks/useUSDC';
 import { useFarcasterUser } from '@/contexts/FarcasterContext';
 import ConnectWallet from './ConnectWallet';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-700 hover:text-gray-900">
@@ -26,6 +27,8 @@ export default function Navbar() {
   const { balanceFormatted } = useUSDCBalance(address);
   const { faucet, isPending, isConfirming, isSuccess } = useUSDCFaucet();
   const [showSuccess, setShowSuccess] = useState(false);
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+  const aboutDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isSuccess) {
@@ -33,6 +36,19 @@ export default function Navbar() {
       setTimeout(() => setShowSuccess(false), 3000);
     }
   }, [isSuccess]);
+
+  // Close About dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target as Node)) {
+        setAboutDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [aboutDropdownRef]);
 
   const handleFaucet = () => {
     faucet(); // Mints 1000 USDC by default
@@ -53,6 +69,45 @@ export default function Navbar() {
               </span>
             </div>
           </Link>
+
+          {/* Center: About Dropdown */}
+          <div className="flex-1 flex items-center justify-center">
+            <div className="relative" ref={aboutDropdownRef}>
+              <button
+                onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
+                className="flex items-center gap-1 px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              >
+                About
+                <ChevronDownIcon className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform ${aboutDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {aboutDropdownOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-44 sm:w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
+                  <Link
+                    href="/about"
+                    className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    About LendFriend
+                  </Link>
+                  <Link
+                    href="/vision"
+                    className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    Vision & Roadmap
+                  </Link>
+                  <Link
+                    href="/research"
+                    className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    Research
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* Right side - Create Loan button & Profile */}
           <div className="flex items-center gap-2 sm:gap-3">
