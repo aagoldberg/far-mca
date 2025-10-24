@@ -263,7 +263,7 @@ export default function VisionPage() {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-green-50 border border-green-200 rounded-lg p-5">
-                <h5 className="font-semibold text-green-900 mb-2">Viral Coefficient > 1.5</h5>
+                <h5 className="font-semibold text-green-900 mb-2">Viral Coefficient &gt; 1.5</h5>
                 <p className="text-sm text-green-800">
                   When each user brings 1.5+ new users, growth becomes exponential. Loan sharing achieves this naturally
                   because borrowers are motivated to reach their funding goal.
