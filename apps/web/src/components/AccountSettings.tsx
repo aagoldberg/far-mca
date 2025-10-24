@@ -80,16 +80,6 @@ export default function AccountSettings() {
             Disconnect
           </button>
         </div>
-
-        {/* Full address (hidden by default, shown on click) */}
-        <details className="mt-4">
-          <summary className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
-            Show full address
-          </summary>
-          <p className="mt-2 p-3 bg-gray-50 rounded-lg font-mono text-xs break-all">
-            {address}
-          </p>
-        </details>
       </section>
 
       {/* Activity Stats Section */}
