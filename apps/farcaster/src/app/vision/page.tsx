@@ -4,331 +4,339 @@ import Link from 'next/link';
 
 export default function VisionPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] text-white py-16">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            The Vision
-          </h1>
-          <p className="text-xl md:text-2xl font-light">
-            Building the infrastructure for reputation-backed credit—from trust to scale.
+    <div className="min-h-screen bg-white pb-20">
+      {/* Compact Header */}
+      <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] text-white py-8">
+        <div className="max-w-2xl mx-auto px-4">
+          <h1 className="text-2xl font-bold mb-2">The Vision</h1>
+          <p className="text-sm opacity-90">
+            Building reputation-backed credit infrastructure
           </p>
         </div>
       </div>
 
       {/* Content */}
-      <div className="w-full max-w-3xl mx-auto px-6 py-12">
+      <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
 
         {/* The Problem */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">The Problem We're Solving</h2>
-          <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-            <p>
-              Traditional lending is broken. Banks exclude billions who lack credit history or collateral.
-              Payday lenders prey on the vulnerable with 300%+ APR. DeFi requires 150% overcollateralization,
-              defeating the purpose of credit.
-            </p>
-            <p>
-              Meanwhile, we all trust people based on reputation every day—who we hire, who we do business with,
-              who we lend to informally. <strong>But this social capital has never been systematized for credit at scale.</strong>
-            </p>
-          </div>
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">The Problem</h2>
+          <p className="text-sm text-gray-700 leading-relaxed mb-3">
+            Traditional lending excludes billions without credit history. Payday lenders charge 300%+ APR.
+            DeFi requires 150% overcollateralization, defeating the purpose of credit.
+          </p>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            Meanwhile, we trust people based on reputation daily—<strong>but this social capital has never been
+            systematized for credit at scale.</strong>
+          </p>
 
           {/* Vitalik Quote */}
-          <div className="mt-8 bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-[#2E7D68] rounded-xl p-6">
-            <p className="text-gray-800 text-lg italic mb-4 leading-relaxed">
+          <div className="mt-4 bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-[#2E7D68] rounded-r-lg p-4">
+            <p className="text-xs text-gray-800 italic mb-2 leading-relaxed">
               "Perhaps the largest financial value built directly on reputation is credit and
-              uncollateralized lending. Currently, the Web 3 ecosystem cannot replicate even the
-              most primitive forms of uncollateralized lending... because there is no web3-native
-              representation of persistent identity and reputation."
+              uncollateralized lending... the Web 3 ecosystem cannot replicate even the
+              most primitive forms of uncollateralized lending..."
             </p>
-            <p className="text-sm text-gray-600 font-semibold">
+            <p className="text-[10px] text-gray-600 font-semibold">
               — Vitalik Buterin & E. Glen Weyl
-            </p>
-            <p className="text-xs text-gray-500 italic">
-              "Decentralized Society: Finding Web3's Soul" (2022)
             </p>
           </div>
         </section>
 
         {/* Our Vision */}
-        <section className="mb-12">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-xl p-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Our Vision</h2>
-            <p className="text-xl text-gray-800 mb-6 text-center leading-relaxed">
+        <section>
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-lg p-4">
+            <h2 className="text-lg font-bold text-gray-900 mb-2 text-center">Our Vision</h2>
+            <p className="text-sm text-gray-800 mb-3 text-center leading-relaxed">
               A world where <strong className="text-[#2E7D68]">your reputation is your collateral</strong>,
               your network is your credit history, and your community is your underwriter.
             </p>
-            <div className="space-y-4 text-gray-700">
-              <p>
-                We're building the primitive that Vitalik described: <strong>web3-native uncollateralized lending</strong>
-                powered by persistent identity and reputation. Not extractive payday lending. Not restrictive traditional banking.
-                But fair, transparent, community-driven credit.
-              </p>
-              <p>
-                This starts simple—friends helping friends at 0% interest—then evolves to algorithmic underwriting
-                that serves millions while maintaining social accountability.
-              </p>
-            </div>
+            <p className="text-xs text-gray-700 leading-relaxed">
+              We're building web3-native uncollateralized lending powered by persistent identity and reputation.
+              Not extractive, not restrictive—but fair, transparent, and community-driven.
+            </p>
           </div>
         </section>
 
-        {/* How We Get There: The Roadmap */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">How We Get There</h2>
-          <p className="text-gray-600 text-center mb-8">
-            A research-backed evolution from social trust to scalable credit infrastructure
-          </p>
+        {/* The Roadmap */}
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3 text-center">The Roadmap</h2>
 
           {/* Phase 1 */}
-          <div className="mb-8">
-            <div className="bg-white border-2 border-[#3B9B7F] rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-[#3B9B7F] text-white px-4 py-2 rounded-lg font-bold">
-                  Phase 1
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-[#2E7D68]">Bootstrap Trust</h3>
-                  <p className="text-sm text-gray-600">Q4 2025 - Q1 2026</p>
-                </div>
+          <div className="bg-white border-2 border-[#3B9B7F] rounded-lg p-4 mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="bg-[#3B9B7F] text-white px-3 py-1 rounded text-xs font-bold">
+                Phase 1
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#2E7D68]">Bootstrap Trust</h3>
+                <p className="text-[10px] text-gray-600">Q4 2025 - Q1 2026</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-700 mb-3">
+              Pure 0% interest lending to prove the primitive works
+            </p>
+
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="bg-green-50 border border-green-200 rounded p-2">
+                <h4 className="text-[10px] font-semibold text-green-900 mb-1">Building</h4>
+                <ul className="text-[9px] text-green-800 space-y-0.5">
+                  <li>• $100-$5k loans</li>
+                  <li>• Farcaster identity</li>
+                  <li>• Multi-signal reputation</li>
+                  <li>• On-chain repayments</li>
+                </ul>
               </div>
 
-              <div className="space-y-4 text-gray-700">
-                <p className="font-semibold text-gray-900">
-                  Pure altruistic lending at 0% interest to prove the primitive works
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-green-900 mb-2">What We're Building</h4>
-                    <ul className="text-sm text-green-800 space-y-1">
-                      <li>✓ $100-$5,000 community loans</li>
-                      <li>✓ Farcaster-native identity</li>
-                      <li>✓ Multi-signal reputation scoring</li>
-                      <li>✓ Transparent on-chain repayments</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-blue-900 mb-2">What We're Learning</h4>
-                    <ul className="text-sm text-blue-800 space-y-1">
-                      <li>✓ Repayment behavior patterns</li>
-                      <li>✓ Trust network topology</li>
-                      <li>✓ Social signal predictiveness</li>
-                      <li>✓ Community dynamics at scale</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 border border-amber-300 rounded-lg p-4">
-                  <p className="text-sm text-amber-900">
-                    <strong>Success Metric:</strong> 500-1,000 users, 3-6 months of clean behavioral data,
-                    proven that reputation-backed 0% interest loans can work.
-                  </p>
-                </div>
+              <div className="bg-blue-50 border border-blue-200 rounded p-2">
+                <h4 className="text-[10px] font-semibold text-blue-900 mb-1">Learning</h4>
+                <ul className="text-[9px] text-blue-800 space-y-0.5">
+                  <li>• Repayment patterns</li>
+                  <li>• Trust networks</li>
+                  <li>• Signal predictiveness</li>
+                  <li>• Community dynamics</li>
+                </ul>
               </div>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-300 rounded p-2">
+              <p className="text-[10px] text-amber-900">
+                <strong>Goal:</strong> 500-1,000 users, 3-6 months of data
+              </p>
             </div>
           </div>
 
           {/* Phase 2 */}
-          <div className="mb-8">
-            <div className="bg-white border-2 border-purple-300 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
-                  Phase 2
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-purple-900">Scale with Algorithms</h3>
-                  <p className="text-sm text-gray-600">Q2 2026+</p>
-                </div>
+          <div className="bg-white border-2 border-purple-300 rounded-lg p-4 mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="bg-purple-600 text-white px-3 py-1 rounded text-xs font-bold">
+                Phase 2
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-purple-900">Scale with Algorithms</h3>
+                <p className="text-[10px] text-gray-600">Q2 2026+</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-700 mb-3">
+              Layer in cash flow data for larger loans with socially-appropriate interest (0-5%)
+            </p>
+
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="bg-purple-50 border border-purple-200 rounded p-2">
+                <h4 className="text-[10px] font-semibold text-purple-900 mb-1">New Capabilities</h4>
+                <ul className="text-[9px] text-purple-800 space-y-0.5">
+                  <li>• $10k-$25k+ loans</li>
+                  <li>• Bank cash flow (Plaid)</li>
+                  <li>• On-chain revenue</li>
+                  <li>• Algorithmic underwriting</li>
+                </ul>
               </div>
 
-              <div className="space-y-4 text-gray-700">
-                <p className="font-semibold text-gray-900">
-                  Layer in cash flow data for larger loans with socially-appropriate interest
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-purple-900 mb-2">New Capabilities</h4>
-                    <ul className="text-sm text-purple-800 space-y-1">
-                      <li>✓ $10k-$25k+ loan sizes</li>
-                      <li>✓ Bank account cash flow (Plaid)</li>
-                      <li>✓ On-chain revenue verification</li>
-                      <li>✓ Algorithmic underwriting (0-5%)</li>
-                      <li>✓ Revenue-based repayment</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-purple-900 mb-2">The Model</h4>
-                    <ul className="text-sm text-purple-800 space-y-1">
-                      <li>✓ Hybrid social + financial signals</li>
-                      <li>✓ Proven AUC ≈ 0.72-0.80 accuracy</li>
-                      <li>✓ Auto-approval for qualified loans</li>
-                      <li>✓ Dynamic risk-based pricing</li>
-                      <li>✓ Continuous model improvement</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-green-50 border border-green-300 rounded-lg p-4">
-                  <p className="text-sm text-green-900">
-                    <strong>This isn't theory:</strong> Prosper, Branch, and Tala all followed this exact evolution—
-                    start with social proof, gather data, scale with algorithms. We're doing the same, but transparent and on-chain.
-                  </p>
-                </div>
+              <div className="bg-purple-50 border border-purple-200 rounded p-2">
+                <h4 className="text-[10px] font-semibold text-purple-900 mb-1">The Model</h4>
+                <ul className="text-[9px] text-purple-800 space-y-0.5">
+                  <li>• Hybrid social + financial</li>
+                  <li>• AUC ≈ 0.72-0.80</li>
+                  <li>• Auto-approval</li>
+                  <li>• Dynamic pricing</li>
+                </ul>
               </div>
+            </div>
+
+            <div className="bg-green-50 border border-green-300 rounded p-2">
+              <p className="text-[10px] text-green-900">
+                Prosper, Branch, and Tala followed this exact evolution
+              </p>
             </div>
           </div>
 
           {/* Phase 3 */}
-          <div>
-            <div className="bg-gradient-to-br from-gray-50 to-blue-50 border-2 border-gray-300 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-gray-700 text-white px-4 py-2 rounded-lg font-bold">
-                  Phase 3
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">The Credit Network</h3>
-                  <p className="text-sm text-gray-600">2027+</p>
-                </div>
+          <div className="bg-gradient-to-br from-gray-50 to-blue-50 border-2 border-gray-300 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="bg-gray-700 text-white px-3 py-1 rounded text-xs font-bold">
+                Phase 3
               </div>
-
-              <div className="space-y-4 text-gray-700">
-                <p className="font-semibold text-gray-900">
-                  Transform Farcaster's social graph into a full credit network
-                </p>
-
-                <ul className="space-y-2">
-                  <li className="flex gap-3">
-                    <span className="text-[#3B9B7F] font-bold">→</span>
-                    <span><strong>Cross-platform expansion:</strong> Extend beyond Farcaster to broader web3 identity</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-[#3B9B7F] font-bold">→</span>
-                    <span><strong>Credit scoring primitive:</strong> Portable reputation scores used across DeFi</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-[#3B9B7F] font-bold">→</span>
-                    <span><strong>Liquidity markets:</strong> Secondary markets for loan participation</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-[#3B9B7F] font-bold">→</span>
-                    <span><strong>Institutional integration:</strong> Traditional lenders using our risk models</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-[#3B9B7F] font-bold">→</span>
-                    <span><strong>Global accessibility:</strong> Serving the 1.7B unbanked worldwide</span>
-                  </li>
-                </ul>
+              <div>
+                <h3 className="text-base font-bold text-gray-900">The Credit Network</h3>
+                <p className="text-[10px] text-gray-600">2027+</p>
               </div>
             </div>
+
+            <p className="text-xs text-gray-700 mb-3">
+              Transform Farcaster's social graph into a full credit network
+            </p>
+
+            <ul className="space-y-1.5 text-[10px] text-gray-700">
+              <li className="flex gap-2">
+                <span className="text-[#3B9B7F] font-bold">→</span>
+                <span>Cross-platform expansion beyond Farcaster</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#3B9B7F] font-bold">→</span>
+                <span>Portable reputation scores across DeFi</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#3B9B7F] font-bold">→</span>
+                <span>Secondary markets for loan participation</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#3B9B7F] font-bold">→</span>
+                <span>Serving 1.7B unbanked globally</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* Viral Growth Mechanics */}
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3 text-center">Built-In Viral Growth</h2>
+
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-300 rounded-lg p-4 mb-4">
+            <h3 className="text-base font-bold text-purple-900 mb-2">The Viral Loop</h3>
+            <p className="text-xs text-gray-700 leading-relaxed mb-3">
+              Every borrower who creates a loan becomes a growth engine. When they share their loan
+              on Twitter, Farcaster, WhatsApp & LinkedIn to reach their funding goal, they naturally
+              introduce dozens of potential lenders to the protocol.
+            </p>
+
+            <div className="bg-white rounded p-3 mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
+                <span className="text-xs font-semibold text-gray-900">Borrower creates loan</span>
+              </div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
+                <span className="text-xs font-semibold text-gray-900">Shares to 50-200 people on socials</span>
+              </div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">3</div>
+                <span className="text-xs font-semibold text-gray-900">10-20% visit and become lenders</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">4</div>
+                <span className="text-xs font-semibold text-gray-900">Some lenders become borrowers → loop repeats</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-green-50 border border-green-200 rounded p-2">
+                <h5 className="text-[10px] font-semibold text-green-900 mb-1">Viral Coefficient</h5>
+                <p className="text-[9px] text-green-800">
+                  If each user brings 1.5+ new users, growth becomes exponential. Loan sharing achieves this naturally.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded p-2">
+                <h5 className="text-[10px] font-semibold text-blue-900 mb-1">Network Effects</h5>
+                <p className="text-[9px] text-blue-800">
+                  More borrowers = more shares = more lenders = more liquidity = more loans funded
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-300 rounded-lg p-3">
+            <p className="text-xs text-amber-900 leading-relaxed">
+              <strong>The magic:</strong> Borrowers aren't sharing "an app"—they're sharing their personal story
+              and asking for help. This emotional connection drives 10-100x better engagement than traditional
+              marketing. Each funded loan proves the concept works, creating social proof that accelerates growth.
+            </p>
           </div>
         </section>
 
         {/* Why This Matters */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Why This Matters</h2>
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Why This Matters</h2>
 
-          <div className="grid md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-5 text-center">
-              <div className="text-4xl font-bold text-[#3B9B7F] mb-2">1.7B</div>
-              <p className="text-sm text-gray-600">Unbanked adults globally</p>
+          <div className="grid grid-cols-3 gap-2 mb-3">
+            <div className="bg-white border border-gray-200 rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-[#3B9B7F] mb-1">1.7B</div>
+              <p className="text-[9px] text-gray-600">Unbanked adults</p>
             </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-5 text-center">
-              <div className="text-4xl font-bold text-[#3B9B7F] mb-2">$100B+</div>
-              <p className="text-sm text-gray-600">Annual payday loan market (US)</p>
+            <div className="bg-white border border-gray-200 rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-[#3B9B7F] mb-1">$100B+</div>
+              <p className="text-[9px] text-gray-600">Payday loans (US)</p>
             </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-5 text-center">
-              <div className="text-4xl font-bold text-[#3B9B7F] mb-2">300%+</div>
-              <p className="text-sm text-gray-600">Typical payday loan APR</p>
+            <div className="bg-white border border-gray-200 rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-[#3B9B7F] mb-1">300%+</div>
+              <p className="text-[9px] text-gray-600">Payday APR</p>
             </div>
           </div>
 
-          <div className="space-y-4 text-gray-700 leading-relaxed">
-            <p>
-              Traditional finance has failed to serve billions of people. Web3 has the tools to fix this—
-              persistent identity, transparent transactions, programmable trust—but until now, no one has
-              built the primitive for uncollateralized lending.
-            </p>
-            <p>
-              LendFriend is that primitive. We're proving that <strong>reputation can be collateral</strong>,
-              that <strong>communities can be underwriters</strong>, and that <strong>algorithms can scale trust</strong>
-              without extracting predatory profits.
-            </p>
-            <p>
-              This isn't just a product. It's infrastructure for a fairer financial system.
-            </p>
-          </div>
+          <p className="text-xs text-gray-700 leading-relaxed mb-2">
+            Traditional finance has failed billions. Web3 has the tools—persistent identity, transparent
+            transactions, programmable trust—but until now, no one has built the primitive for
+            uncollateralized lending.
+          </p>
+          <p className="text-xs text-gray-700 leading-relaxed">
+            LendFriend is that primitive. We're proving <strong>reputation can be collateral</strong>,
+            <strong> communities can be underwriters</strong>, and <strong>algorithms can scale trust</strong>
+            without extracting predatory profits.
+          </p>
         </section>
 
         {/* Principles */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Principles</h2>
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Our Principles</h2>
 
-          <div className="space-y-4">
-            <div className="bg-white border-l-4 border-[#3B9B7F] p-5 rounded-r-xl">
-              <h3 className="font-bold text-gray-900 mb-2">🔍 Transparent by Default</h3>
-              <p className="text-gray-700 text-sm">
-                All loans, repayments, and reputation scoring are on-chain and publicly auditable.
-                No black boxes, no hidden fees, no surprises.
+          <div className="space-y-2">
+            <div className="bg-white border-l-4 border-[#3B9B7F] p-3 rounded-r-lg">
+              <h3 className="font-bold text-gray-900 mb-1 text-xs">🔍 Transparent by Default</h3>
+              <p className="text-gray-700 text-[10px]">
+                All loans and repayments on-chain. No black boxes, no hidden fees.
               </p>
             </div>
 
-            <div className="bg-white border-l-4 border-[#3B9B7F] p-5 rounded-r-xl">
-              <h3 className="font-bold text-gray-900 mb-2">📊 Research-Driven</h3>
-              <p className="text-gray-700 text-sm">
-                Every decision is backed by academic research and proven fintech evolution.
-                We're not guessing—we're following the data.
+            <div className="bg-white border-l-4 border-[#3B9B7F] p-3 rounded-r-lg">
+              <h3 className="font-bold text-gray-900 mb-1 text-xs">📊 Research-Driven</h3>
+              <p className="text-gray-700 text-[10px]">
+                Every decision backed by academic research and proven fintech evolution.
               </p>
             </div>
 
-            <div className="bg-white border-l-4 border-[#3B9B7F] p-5 rounded-r-xl">
-              <h3 className="font-bold text-gray-900 mb-2">🤝 Community-Governed</h3>
-              <p className="text-gray-700 text-sm">
-                Borrowers and lenders are real people with persistent identities.
-                Reputation matters. Community accountability matters.
+            <div className="bg-white border-l-4 border-[#3B9B7F] p-3 rounded-r-lg">
+              <h3 className="font-bold text-gray-900 mb-1 text-xs">🤝 Community-Governed</h3>
+              <p className="text-gray-700 text-[10px]">
+                Real people with persistent identities. Reputation and accountability matter.
               </p>
             </div>
 
-            <div className="bg-white border-l-4 border-[#3B9B7F] p-5 rounded-r-xl">
-              <h3 className="font-bold text-gray-900 mb-2">💚 Mission-First</h3>
-              <p className="text-gray-700 text-sm">
-                We start altruistic (0% interest) and evolve to sustainable (0-5% for larger loans).
-                Not extractive. Not predatory. Just fair.
+            <div className="bg-white border-l-4 border-[#3B9B7F] p-3 rounded-r-lg">
+              <h3 className="font-bold text-gray-900 mb-1 text-xs">💚 Mission-First</h3>
+              <p className="text-gray-700 text-[10px]">
+                Start altruistic (0%), evolve to sustainable (0-5%). Not extractive, just fair.
               </p>
             </div>
           </div>
         </section>
 
         {/* Call to Action */}
-        <section className="mb-8">
-          <div className="bg-[#3B9B7F] rounded-xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">Join the Movement</h2>
-            <p className="text-lg mb-6 opacity-90 leading-relaxed">
-              We're building the future of credit. Help us prove that reputation,
-              community, and trust can power a fairer financial system.
+        <section>
+          <div className="bg-[#3B9B7F] rounded-lg p-5 text-center text-white">
+            <h2 className="text-lg font-bold mb-2">Join the Movement</h2>
+            <p className="text-sm mb-4 opacity-90">
+              Help us build the future of credit
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col gap-2">
               <Link
                 href="/"
-                className="inline-block px-8 py-3 bg-white text-[#3B9B7F] font-bold rounded-lg hover:bg-gray-100 transition-colors"
+                className="block px-6 py-2.5 bg-white text-[#3B9B7F] text-sm font-bold rounded-lg hover:bg-gray-100 transition-colors"
               >
                 Browse Loans
               </Link>
               <Link
                 href="/create"
-                className="inline-block px-8 py-3 bg-[#2E7D68] text-white font-bold rounded-lg hover:bg-[#255A51] transition-colors"
+                className="block px-6 py-2.5 bg-[#2E7D68] text-white text-sm font-bold rounded-lg hover:bg-[#255A51] transition-colors"
               >
                 Create a Loan
               </Link>
               <Link
                 href="/research"
-                className="inline-block px-8 py-3 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-[#3B9B7F] transition-colors"
+                className="block px-6 py-2.5 border-2 border-white text-white text-sm font-bold rounded-lg hover:bg-white hover:text-[#3B9B7F] transition-colors"
               >
-                Read the Research
+                Read Research
               </Link>
             </div>
           </div>

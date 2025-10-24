@@ -50,9 +50,10 @@ export default function Navbar() {
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { ready, authenticated, login } = usePrivy();
-  
+
   // Debug logging
   console.log('Navbar - Privy state:', { ready, authenticated });
+  console.log('Navbar - About dropdown state:', aboutDropdownOpen);
 
 
   // Close menu when clicking outside
@@ -297,7 +298,10 @@ export default function Navbar() {
           >
             <div className="relative" ref={aboutDropdownRef}>
               <button
-                onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
+                onClick={() => {
+                  console.log('About button clicked! Current state:', aboutDropdownOpen);
+                  setAboutDropdownOpen(!aboutDropdownOpen);
+                }}
                 className="flex items-center gap-1 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
               >
                 About

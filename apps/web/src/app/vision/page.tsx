@@ -228,6 +228,71 @@ export default function VisionPage() {
           </div>
         </section>
 
+        {/* Viral Growth Mechanics */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Built-In Viral Growth</h2>
+
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-300 rounded-xl p-6 mb-6">
+            <h3 className="text-2xl font-bold text-purple-900 mb-4">The Viral Loop</h3>
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+              Every borrower who creates a loan becomes a growth engine. When they share their loan
+              on Twitter, Farcaster, WhatsApp & LinkedIn to reach their funding goal, they naturally
+              introduce dozens of potential lenders to the protocol.
+            </p>
+
+            <div className="bg-white rounded-xl p-5 mb-5">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">1</div>
+                  <span className="text-base font-semibold text-gray-900">Borrower creates loan</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">2</div>
+                  <span className="text-base font-semibold text-gray-900">Shares to 50-200 people across social platforms</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">3</div>
+                  <span className="text-base font-semibold text-gray-900">10-20% click through and become lenders</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">4</div>
+                  <span className="text-base font-semibold text-gray-900">Some lenders become borrowers → loop repeats</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-5">
+                <h5 className="font-semibold text-green-900 mb-2">Viral Coefficient > 1.5</h5>
+                <p className="text-sm text-green-800">
+                  When each user brings 1.5+ new users, growth becomes exponential. Loan sharing achieves this naturally
+                  because borrowers are motivated to reach their funding goal.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+                <h5 className="font-semibold text-blue-900 mb-2">Network Effects</h5>
+                <p className="text-sm text-blue-800">
+                  More borrowers → more shares → more lenders → more liquidity → more loans funded.
+                  The flywheel accelerates as the community grows.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-300 rounded-xl p-6">
+            <h4 className="font-bold text-amber-900 mb-3">The Magic of Personal Stories</h4>
+            <p className="text-gray-700 leading-relaxed mb-3">
+              Borrowers aren't sharing "an app"—they're sharing their personal story and asking their community for help.
+              This emotional connection drives 10-100x better engagement than traditional marketing.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Each funded loan proves the concept works, creating social proof that accelerates growth.
+              As more people see their friends successfully using LendFriend, trust in the platform compounds exponentially.
+            </p>
+          </div>
+        </section>
+
         {/* Why This Matters */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Why This Matters</h2>

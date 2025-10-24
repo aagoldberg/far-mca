@@ -4,78 +4,68 @@ import Link from 'next/link';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] text-white py-16">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            About LendFriend
-          </h1>
-          <p className="text-xl md:text-2xl font-light">
-            Zero-interest community loans powered by trust, not collateral.
+    <div className="min-h-screen bg-white pb-20">
+      {/* Compact Header */}
+      <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] text-white py-8">
+        <div className="max-w-2xl mx-auto px-4">
+          <h1 className="text-2xl font-bold mb-2">About LendFriend</h1>
+          <p className="text-sm opacity-90">
+            Zero-interest community loans on Farcaster
           </p>
         </div>
       </div>
 
       {/* Content */}
-      <div className="w-full max-w-3xl mx-auto px-6 py-12">
+      <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
 
         {/* What We Do */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">What We Do</h2>
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            LendFriend makes it easy for Farcaster community members to get and give interest-free loans.
-            No banks. No credit checks. No collateral. Just people helping people.
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">What We Do</h2>
+          <p className="text-sm text-gray-700 leading-relaxed mb-3">
+            LendFriend makes it easy for Farcaster members to get and give interest-free loans.
+            No banks, credit checks, or collateral—just people helping people.
           </p>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            Borrowers share their story, community members contribute what they can, and repayments are
-            transparent on-chain. It's Venmo meets Kiva, built for the Farcaster community.
+          <p className="text-sm text-gray-700 leading-relaxed">
+            Borrowers share their story, the community contributes, and repayments are transparent on-chain.
           </p>
         </section>
 
         {/* How It Works */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">How It Works</h2>
-
-          <div className="space-y-6">
-            {/* Step 1 */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center">
-                <span className="text-white text-lg font-bold">1</span>
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">How It Works</h2>
+          <div className="space-y-4">
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-8 h-8 bg-[#3B9B7F] rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">1</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Create a Loan Request</h3>
-                <p className="text-gray-600">
-                  Tell your story, set your funding goal (up to $5,000), and choose your repayment timeline.
-                  Your Farcaster profile serves as your identity.
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Create Request</h3>
+                <p className="text-xs text-gray-600">
+                  Set your goal ($100-$5k) and timeline. Your Farcaster profile is your identity.
                 </p>
               </div>
             </div>
 
-            {/* Step 2 */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center">
-                <span className="text-white text-lg font-bold">2</span>
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-8 h-8 bg-[#3B9B7F] rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">2</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Get Community Support</h3>
-                <p className="text-gray-600">
-                  Friends and community members contribute USDC to help you reach your goal.
-                  All contributions are on Base L2 for low fees.
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Get Support & Share</h3>
+                <p className="text-xs text-gray-600">
+                  Friends contribute USDC on Base L2. Share your loan on Twitter, Farcaster, WhatsApp & more to reach your community and hit your goal faster!
                 </p>
               </div>
             </div>
 
-            {/* Step 3 */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center">
-                <span className="text-white text-lg font-bold">3</span>
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-8 h-8 bg-[#3B9B7F] rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">3</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Repay When You Can</h3>
-                <p className="text-gray-600">
-                  Pay back on your timeline. All repayments are transparent and on-chain.
-                  Lenders can claim their share as you repay.
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Repay</h3>
+                <p className="text-xs text-gray-600">
+                  Pay back on your timeline. All repayments are transparent on-chain.
                 </p>
               </div>
             </div>
@@ -83,143 +73,123 @@ export default function AboutPage() {
         </section>
 
         {/* Why Zero Interest */}
-        <section className="mb-12">
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Why 0% Interest?</h2>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              We believe in building trust, not extracting profit from those who need help.
-              Zero interest keeps it simple, fair, and accessible.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Lenders give to support their community. Borrowers repay to build reputation and
-              keep the cycle going. It's altruistic by design.
+        <section>
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <h2 className="text-base font-bold text-gray-900 mb-2">Why 0% Interest?</h2>
+            <p className="text-xs text-gray-700 leading-relaxed">
+              We believe in building trust, not extracting profit. Lenders give to support their community,
+              borrowers repay to build reputation. It's altruistic by design.
             </p>
           </div>
         </section>
 
         {/* Who It's For */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Who It's For</h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Borrowers */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Borrowers
-              </h3>
-              <ul className="space-y-2 text-gray-600">
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Who It's For</h2>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Borrowers</h3>
+              <ul className="space-y-1 text-xs text-gray-600">
                 <li>• Small business owners</li>
-                <li>• Freelancers and creators</li>
-                <li>• Anyone needing a helping hand</li>
-                <li>• People building in web3</li>
+                <li>• Freelancers & creators</li>
+                <li>• Web3 builders</li>
               </ul>
             </div>
 
-            {/* Lenders */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <svg className="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Lenders
-              </h3>
-              <ul className="space-y-2 text-gray-600">
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Lenders</h3>
+              <ul className="space-y-1 text-xs text-gray-600">
                 <li>• Community supporters</li>
                 <li>• Impact-focused givers</li>
                 <li>• Friends helping friends</li>
-                <li>• Anyone who believes in trust</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Why Different */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">What Makes Us Different</h2>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">🔍 Fully Transparent</h4>
-              <p className="text-sm text-gray-600">
-                All loans and repayments are on-chain and publicly visible. No hidden fees or terms.
+        {/* What Makes Us Different */}
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">What Makes Us Different</h2>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h4 className="font-bold text-gray-900 mb-1 text-xs">🔍 Transparent</h4>
+              <p className="text-[10px] text-gray-600">
+                All on-chain and publicly visible
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">🤝 Community-Driven</h4>
-              <p className="text-sm text-gray-600">
-                Real people with Farcaster identities. Reputation matters more than credit scores.
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h4 className="font-bold text-gray-900 mb-1 text-xs">🤝 Community</h4>
+              <p className="text-[10px] text-gray-600">
+                Real Farcaster identities
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">⚡ Low Fees</h4>
-              <p className="text-sm text-gray-600">
-                Built on Base L2. Gas costs are pennies, not barriers.
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h4 className="font-bold text-gray-900 mb-1 text-xs">⚡ Low Fees</h4>
+              <p className="text-[10px] text-gray-600">
+                Base L2 gas costs
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">🔐 Self-Custodial</h4>
-              <p className="text-sm text-gray-600">
-                Smart contracts handle everything. No middlemen, no counterparty risk.
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h4 className="font-bold text-gray-900 mb-1 text-xs">🔐 Safe</h4>
+              <p className="text-[10px] text-gray-600">
+                Smart contract secured
               </p>
             </div>
           </div>
         </section>
 
         {/* Learn More - Vision */}
-        <section className="mb-6">
-          <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6 text-center">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Our Vision & Roadmap</h3>
-            <p className="text-gray-700 mb-4">
-              See how we're building the future of reputation-backed credit, from bootstrap to global scale.
+        <section>
+          <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4">
+            <h3 className="text-sm font-bold text-gray-900 mb-1">Our Vision & Roadmap</h3>
+            <p className="text-xs text-gray-700 mb-3">
+              See how we're building reputation-backed credit from bootstrap to scale.
             </p>
             <Link
               href="/vision"
-              className="inline-block px-6 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+              className="inline-block px-4 py-2 bg-purple-600 text-white text-xs font-semibold rounded-lg hover:bg-purple-700 transition-colors"
             >
-              Explore the Vision →
+              Explore Vision →
             </Link>
           </div>
         </section>
 
         {/* Learn More - Research */}
-        <section className="mb-8">
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Want the Full Story?</h3>
-            <p className="text-gray-700 mb-4">
-              Deep dive into our research, evolution strategy, and the academic foundations behind reputation-backed lending.
+        <section>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="text-sm font-bold text-gray-900 mb-1">Want the Full Story?</h3>
+            <p className="text-xs text-gray-700 mb-3">
+              Deep dive into our research and the academic foundations behind reputation lending.
             </p>
             <Link
               href="/research"
-              className="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-block px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Read the Research →
+              Read Research →
             </Link>
           </div>
         </section>
 
         {/* Call to Action */}
-        <section className="mb-8">
-          <div className="bg-[#3B9B7F] rounded-xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="text-lg mb-6 opacity-90">
-              Browse loans to support or create your own request.
+        <section>
+          <div className="bg-[#3B9B7F] rounded-lg p-5 text-center text-white">
+            <h2 className="text-lg font-bold mb-2">Ready to Get Started?</h2>
+            <p className="text-sm mb-4 opacity-90">
+              Browse loans to support or create your own
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col gap-2">
               <Link
                 href="/"
-                className="inline-block px-8 py-3 bg-white text-[#3B9B7F] font-bold rounded-lg hover:bg-gray-100 transition-colors"
+                className="block px-6 py-2.5 bg-white text-[#3B9B7F] text-sm font-bold rounded-lg hover:bg-gray-100 transition-colors"
               >
                 Browse Loans
               </Link>
               <Link
                 href="/create"
-                className="inline-block px-8 py-3 bg-[#2E7D68] text-white font-bold rounded-lg hover:bg-[#255A51] transition-colors"
+                className="block px-6 py-2.5 bg-[#2E7D68] text-white text-sm font-bold rounded-lg hover:bg-[#255A51] transition-colors"
               >
                 Create a Loan
               </Link>

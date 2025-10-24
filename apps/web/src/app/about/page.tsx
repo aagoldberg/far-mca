@@ -58,10 +58,11 @@ export default function AboutPage() {
                 <span className="text-white text-lg font-bold">2</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Get Community Support</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Get Community Support & Share</h3>
                 <p className="text-gray-600">
                   Friends and community members contribute USDC to help you reach your goal.
-                  All contributions are on Base L2 for low fees.
+                  Share your loan on Twitter, Farcaster, WhatsApp, LinkedIn & more to spread the word
+                  and reach your funding goal faster! All contributions are on Base L2 for low fees.
                 </p>
               </div>
             </div>
