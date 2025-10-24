@@ -730,12 +730,6 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
                   errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
                 }`}
               />
-              {loanUseNumbers.length > 0 && (
-                <div className={`text-xs mt-2 ${sumMatchesAmount ? 'text-green-600' : 'text-orange-600'}`}>
-                  {sumMatchesAmount ? '✅' : '⚠️'} Detected amounts: ${loanUseSum.toFixed(2)}
-                  {!sumMatchesAmount && loanAmount > 0 && ` (loan is $${loanAmount.toFixed(2)})`}
-                </div>
-              )}
               {errors.loanUseAndImpact && (
                 <p className="text-sm text-red-600 mt-1">{errors.loanUseAndImpact}</p>
               )}
