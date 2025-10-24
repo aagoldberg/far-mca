@@ -8,6 +8,7 @@ import { useCreateLoan } from '@/hooks/useMicroLoan';
 import { USDC_DECIMALS } from '@/types/loan';
 import ImageCropModal from '@/components/ImageCropModal';
 import { LoanCard } from '@/components/LoanCard';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 
 enum IncomeRange {
   PREFER_NOT_TO_SAY = '',
@@ -52,6 +53,7 @@ export default function CreateLoanForm() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
   const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoan();
+  const { profile } = useFarcasterProfile(address);
 
   const [isCheckingConnection, setIsCheckingConnection] = useState(true);
   const [formData, setFormData] = useState<FormData>({
@@ -929,8 +931,8 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
               <LoanCard
                 address={"0x0000000000000000000000000000000000000000" as `0x${string}`}
                 borrower={address || "0x0000000000000000000000000000000000000000" as `0x${string}`}
-                name={formData.title || "Your Loan Title"}
-                description={formData.aboutYou || "Tell potential lenders about yourself..."}
+                name={profile?.displayName?.split(' ')[0] || profile?.username || "Your Name"}
+                description={formData.loanUseAndImpact || "What will this loan help you achieve, and how will you pay it back?"}
                 principal={formData.amount ? parseUnits(formData.amount, USDC_DECIMALS) : 0n}
                 totalFunded={0n}
                 fundraisingActive={true}
