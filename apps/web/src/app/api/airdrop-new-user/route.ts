@@ -5,7 +5,7 @@ import { privateKeyToAccount } from 'viem/accounts';
 
 // Faucet configuration
 const FAUCET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY as `0x${string}`;
-const USDC_ADDRESS = process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as `0x${string}`;
+const USDC_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}`;
 
 // Airdrop amounts
 const ETH_AMOUNT = '0.01'; // 0.01 ETH for gas
