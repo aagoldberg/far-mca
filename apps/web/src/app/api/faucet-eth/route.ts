@@ -4,8 +4,7 @@ import { baseSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 
 // Faucet configuration
-const FAUCET_PRIVATE_KEY = process.env.PRIVATE_KEY as `0x${string}`;
-const FAUCET_ADDRESS = process.env.FAUCET_WALLET_ADDRESS as `0x${string}`;
+const FAUCET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY as `0x${string}`;
 const ETH_AMOUNT = '0.01'; // Send 0.01 ETH per request
 
 export async function POST(request: NextRequest) {
@@ -35,7 +34,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Check faucet balance first
-    const balance = await publicClient.getBalance({ address: FAUCET_ADDRESS });
+    const balance = await publicClient.getBalance({ address: account.address });
     const amountToSend = parseEther(ETH_AMOUNT);
 
     if (balance < amountToSend) {
@@ -50,6 +49,14 @@ export async function POST(request: NextRequest) {
 
     // Wait for confirmation
     const receipt = await publicClient.waitForTransactionReceipt({ hash });
+
+    // Check if transaction was successful
+    if (receipt.status === 'reverted') {
+      return NextResponse.json(
+        { error: 'Transaction reverted', txHash: hash },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,

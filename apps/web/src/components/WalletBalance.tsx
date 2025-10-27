@@ -63,8 +63,10 @@ export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?:
 
       if (data.success) {
         console.log(`Successfully received ${data.amount} ETH!`);
-        // Refetch balance after successful transfer
-        setTimeout(() => refetchEth(), 3000);
+        // Refetch balance multiple times to overcome caching
+        setTimeout(() => refetchEth(), 2000);
+        setTimeout(() => refetchEth(), 4000);
+        setTimeout(() => refetchEth(), 6000);
       } else {
         console.error('Failed to get ETH:', data.error);
         console.error('ETH faucet failed:', data.error);
@@ -97,8 +99,10 @@ export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?:
 
       if (data.success) {
         console.log(`Successfully received ${data.amount} USDC!`);
-        // Refetch balance after successful transfer
-        setTimeout(() => refetchUsdc(), 3000);
+        // Refetch balance multiple times to overcome caching
+        setTimeout(() => refetchUsdc(), 2000);
+        setTimeout(() => refetchUsdc(), 4000);
+        setTimeout(() => refetchUsdc(), 6000);
       } else {
         console.error('Failed to get USDC:', data.error);
         console.error('USDC faucet failed:', data.error);

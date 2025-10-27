@@ -5,7 +5,6 @@ import { privateKeyToAccount } from 'viem/accounts';
 
 // Faucet configuration - uses your test wallet with USDC
 const FAUCET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY as `0x${string}`;
-const FAUCET_ADDRESS = process.env.TEST_WALLET_ADDRESS as `0x${string}`;
 const USDC_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}`;
 const USDC_AMOUNT = '10'; // Send 10 USDC per request
 const USDC_DECIMALS = 6;
@@ -61,7 +60,7 @@ export async function POST(request: NextRequest) {
       address: USDC_ADDRESS,
       abi: ERC20_ABI,
       functionName: 'balanceOf',
-      args: [FAUCET_ADDRESS]
+      args: [account.address]
     });
 
     const amountToSend = parseUnits(USDC_AMOUNT, USDC_DECIMALS);
