@@ -328,7 +328,7 @@ export function TrustSignals({
                   <div>
                     <div className="text-xs font-medium text-gray-500 mb-1">FID</div>
                     <button
-                      onClick={() => copyToClipboard(profile.fid.toString(), 'FID')}
+                      onClick={() => copyToClipboard(String(profile.fid || ''), 'FID')}
                       className="text-sm text-gray-900 hover:text-blue-600 font-mono transition-colors flex items-center gap-1"
                     >
                       {profile.fid}
