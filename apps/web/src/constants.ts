@@ -6,8 +6,8 @@ export const CAMPAIGN_FACTORY_ADDRESS = process.env.NEXT_PUBLIC_CAMPAIGN_FACTORY
 // RBF Factory address on Base Sepolia  
 export const RBF_FACTORY_ADDRESS = process.env.NEXT_PUBLIC_RBF_FACTORY_ADDRESS as `0x${string}` || '0x0000000000000000000000000000000000000000';
 
-// USDC token address on Base Sepolia
-export const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as `0x${string}` || '0x036CbD53842c5426634e7929541eC2318f3dCF7E';
+// USDC token address on Base Sepolia (legacy export - use USDC_ADDRESS from wagmi.ts for new code)
+export const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}` || '0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe';
 
 // IPFS Gateway
 export const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';

@@ -5,7 +5,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useBalance, usePublicClient, useWalletClient } from 'wagmi';
 import { formatUnits } from 'viem';
 
-const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS as `0x${string}`;
+const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}`;
 
 export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?: boolean }) {
   const { user, ready } = usePrivy();
