@@ -46,10 +46,7 @@ interface LoanMetadata {
 }
 
 export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
-  const { loanData, isLoading, perPeriodPrincipal, currentDueDate, isDefaulted } = useLoanData(loanAddress);
-  const isLoanDefaulted = Boolean(isDefaulted);
-  const paymentPerPeriod = perPeriodPrincipal as bigint | undefined;
-  const nextDueDate = currentDueDate as bigint | undefined;
+  const { loanData, isLoading } = useLoanData(loanAddress);
   const { address: userAddress } = useAccount();
   const { balance: usdcBalance } = useUSDCBalance(userAddress);
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
@@ -157,11 +154,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const isFunded = loanData.totalFunded >= loanData.principal;
   const isBorrower = userAddress?.toLowerCase() === loanData.borrower.toLowerCase();
 
+  // Check if loan is defaulted (active, not completed, and past due date)
+  const now = BigInt(Math.floor(Date.now() / 1000));
+  const isLoanDefaulted = loanData.active && !loanData.completed && now > loanData.dueAt;
+
   // Fetch Farcaster profile for borrower
   const { profile: borrowerProfile, isLoading: isProfileLoading } = useFarcasterProfile(loanData.borrower);
 
   // Check if refund is available
-  const now = BigInt(Math.floor(Date.now() / 1000));
   const fundraisingExpired = now > loanData.fundraisingDeadline;
   const refundAvailable = !loanData.active && contribution && contribution.amount > BigInt(0) &&
     ((!isFunded && fundraisingExpired) || (!loanData.fundraisingActive && !isFunded));
@@ -477,12 +477,12 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
 
           <div className="bg-gray-50 rounded-lg p-3.5">
-            <p className="text-sm text-gray-500 mb-1">Term Length</p>
-            <p className="text-base font-bold text-gray-900">{loanData.termPeriods.toString()} weeks</p>
+            <p className="text-sm text-gray-500 mb-1">Maturity Date</p>
+            <p className="text-base font-bold text-gray-900">{formatDate(loanData.dueAt)}</p>
           </div>
 
           <div className="bg-gray-50 rounded-lg p-3.5">
-            <p className="text-sm text-gray-500 mb-1">Deadline</p>
+            <p className="text-sm text-gray-500 mb-1">Funding Deadline</p>
             <p className="text-base font-bold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
           </div>
         </div>

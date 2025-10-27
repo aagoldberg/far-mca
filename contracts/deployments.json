@@ -1,12 +1,12 @@
 {
   "base-sepolia": {
     "usdc": "0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe",
-    "factory": "0x747988d925e8eeC76CF1E143307630dD8BE4bFff",
+    "factory": "0x66C4857774F768DB1ac7F2eE1bB943F0D86D6a34",
     "deployer": "0x6F1e5BD44783327984f4723C87E0D2939524943B",
-    "deployedAt": "2025-10-12T20:15:00Z",
+    "deployedAt": "2025-10-27T16:00:00Z",
     "blockNumber": "18448000",
     "verified": false,
-    "notes": "TestUSDC deployed for MVP testing with unlimited minting. To verify contracts, get a valid Basescan API key from https://basescan.org/myapikey and update .env, then run: forge verify-contract 0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe src/TestUSDC.sol:TestUSDC --chain base-sepolia && forge verify-contract 0x747988d925e8eeC76CF1E143307630dD8BE4bFff src/MicroLoanFactory.sol:MicroLoanFactory --chain base-sepolia --constructor-args $(cast abi-encode 'constructor(address)' 0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe)"
+    "notes": "New simplified contract architecture with single-maturity repayment (no term periods). TestUSDC deployed for MVP testing with unlimited minting. To verify contracts, get a valid Basescan API key from https://basescan.org/myapikey and update .env, then run: forge verify-contract 0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe src/TestUSDC.sol:TestUSDC --chain base-sepolia && forge verify-contract 0x66C4857774F768DB1ac7F2eE1bB943F0D86D6a34 src/MicroLoanFactory.sol:MicroLoanFactory --chain base-sepolia --constructor-args $(cast abi-encode 'constructor(address)' 0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe)"
   },
   "base-mainnet": {
     "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",

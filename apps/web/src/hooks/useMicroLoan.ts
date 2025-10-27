@@ -150,6 +150,27 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     query: { enabled },
   });
 
+  const { data: totalRepaid } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'totalRepaid',
+    query: { enabled },
+  });
+
+  const { data: cancelled } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'cancelled',
+    query: { enabled },
+  });
+
+  const { data: fundedAt } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'fundedAt',
+    query: { enabled },
+  });
+
   if (!loanAddress) {
     return { loanData: null, isLoading: false };
   }
@@ -161,24 +182,21 @@ export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
     return { loanData: null, isLoading: true };
   }
 
-  // Calculate totalRepaid from principal and outstandingPrincipal
-  const principalBigInt = principal as bigint;
-  const outstandingPrincipalBigInt = outstandingPrincipal as bigint;
-  const totalRepaid = principalBigInt - outstandingPrincipalBigInt;
-
   const loanData: RawLoan = {
     address: loanAddress,
     borrower: borrower as `0x${string}`,
-    principal: principalBigInt,
+    principal: principal as bigint,
     totalFunded: totalFunded as bigint,
-    totalRepaid,
+    totalRepaid: totalRepaid as bigint,
+    outstandingPrincipal: outstandingPrincipal as bigint,
     dueAt: dueAt as bigint,
     fundraisingDeadline: fundraisingDeadline as bigint,
+    fundedAt: fundedAt as bigint,
     metadataURI: metadataURI as string,
     fundraisingActive: fundraisingActive as boolean,
     active: active as boolean,
     completed: completed as boolean,
-    disbursed: active as boolean, // disbursed = active (funds are disbursed when loan becomes active)
+    cancelled: cancelled as boolean,
     contributorsCount: contributorsCount as bigint,
   };
 
