@@ -5,12 +5,15 @@ import Image from 'next/image';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useGitcoinPassport } from '@/hooks/useGitcoinPassport';
 import { useLoanSocialSupport } from '@/hooks/useLoanSocialSupport';
+import { useBlueskyProfile } from '@/hooks/useBlueskyProfile';
 import { getSocialSupportDescription } from '@/lib/socialProximity';
 
 interface TrustSignalsProps {
   borrowerAddress: `0x${string}`;
   loanAddress: `0x${string}`;
   businessWebsite?: string;
+  blueskyHandle?: string; // Optional Bluesky handle (e.g., "alice.bsky.social")
+  twitterHandle?: string; // Optional X/Twitter handle (e.g., "@alice" or "alice")
 }
 
 // Tooltip component
@@ -44,9 +47,13 @@ export function TrustSignals({
   borrowerAddress,
   loanAddress,
   businessWebsite,
+  blueskyHandle,
+  twitterHandle,
 }: TrustSignalsProps) {
   const [showAddresses, setShowAddresses] = useState(false);
+  const [showBlueskyInfo, setShowBlueskyInfo] = useState(false);
   const { profile, reputation } = useFarcasterProfile(borrowerAddress);
+  const { profile: blueskyProfile, quality: blueskyQuality } = useBlueskyProfile(blueskyHandle);
   const { score: gitcoinScore } = useGitcoinPassport(borrowerAddress);
   const { support, hasContributors } = useLoanSocialSupport(
     loanAddress,
@@ -70,11 +77,20 @@ export function TrustSignals({
     return { text: 'Low', color: 'text-yellow-600' };
   };
 
+  // Helper to get Bluesky quality score status (0-100 scale)
+  const getBlueskyQualityStatus = (score: number | null | undefined) => {
+    if (!score || score === 0) return { text: 'Not Available', color: 'text-gray-500' };
+    if (score >= 70) return { text: 'High Quality', color: 'text-green-600' };
+    if (score >= 40) return { text: 'Medium Quality', color: 'text-yellow-600' };
+    return { text: 'Low Quality', color: 'text-orange-600' };
+  };
+
   const gitcoinStatus = getGitcoinStatus(gitcoinScore?.score);
   const neynarStatus = getNeynarStatus(profile?.score);
+  const blueskyQualityStatus = getBlueskyQualityStatus(blueskyQuality?.overall);
 
   // Check if we have any data to display
-  const hasAnyData = businessWebsite || gitcoinScore?.score || (hasContributors && support) || profile || profile?.score;
+  const hasAnyData = businessWebsite || gitcoinScore?.score || (hasContributors && support) || profile || profile?.score || blueskyProfile;
 
   if (!hasAnyData) {
     return null; // Don't show the section at all if there's no data
@@ -213,6 +229,39 @@ export function TrustSignals({
               <div className="text-sm text-gray-600">
                 {getSocialSupportDescription(support)}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Bluesky Quality Score */}
+        {blueskyQuality && blueskyQuality.overall > 0 && (
+          <div className="flex items-start gap-3">
+            <svg
+              className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+              />
+            </svg>
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-700 flex items-center">
+                Bluesky Quality Score
+                <InfoTooltip text="Measures account quality through follower count, engagement rate, activity level, and profile completeness." />
+              </div>
+              <div className="text-sm text-gray-600">
+                Score: {blueskyQuality.overall}/100 - <span className={blueskyQualityStatus.color}>{blueskyQualityStatus.text}</span>
+              </div>
+              {blueskyQuality.tier && (
+                <div className="text-xs text-gray-500 mt-1">
+                  Tier: {blueskyQuality.tier}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -364,6 +413,127 @@ export function TrustSignals({
                           )}
                         </div>
                       ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Bluesky Profile */}
+        {blueskyProfile && (
+          <div className="border border-gray-200 rounded-lg">
+            <div className="flex items-start gap-3 p-3">
+              <svg
+                className="w-5 h-5 mt-0.5 flex-shrink-0 text-blue-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+                />
+              </svg>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-gray-700 flex items-center justify-between">
+                  <div className="flex items-center">
+                    Bluesky Profile
+                    <InfoTooltip text="Decentralized social profile from the AT Protocol network. Shows account activity and engagement." />
+                  </div>
+                  <button
+                    onClick={() => setShowBlueskyInfo(!showBlueskyInfo)}
+                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                  >
+                    {showBlueskyInfo ? 'Hide' : 'Show'} details
+                    <svg className={`w-4 h-4 transition-transform ${showBlueskyInfo ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="text-sm text-gray-600">
+                  <a
+                    href={`https://bsky.app/profile/${blueskyProfile.handle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    @{blueskyProfile.handle}
+                  </a>
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {blueskyProfile.followersCount.toLocaleString()} followers · {blueskyProfile.followsCount.toLocaleString()} following · {blueskyProfile.postsCount.toLocaleString()} posts
+                </div>
+              </div>
+            </div>
+
+            {/* Collapsible Details Section */}
+            {showBlueskyInfo && (
+              <div className="border-t border-gray-200 p-3 bg-gray-50 space-y-3">
+                {/* DID */}
+                {blueskyProfile.did && (
+                  <div>
+                    <div className="text-xs font-medium text-gray-500 mb-1">DID (Decentralized Identifier)</div>
+                    <button
+                      onClick={() => copyToClipboard(blueskyProfile.did, 'DID')}
+                      className="text-sm text-gray-900 hover:text-blue-600 font-mono transition-colors flex items-center gap-1 break-all"
+                    >
+                      {blueskyProfile.did}
+                      <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+
+                {/* Display Name */}
+                {blueskyProfile.displayName && (
+                  <div>
+                    <div className="text-xs font-medium text-gray-500 mb-1">Display Name</div>
+                    <div className="text-sm text-gray-900">{blueskyProfile.displayName}</div>
+                  </div>
+                )}
+
+                {/* Bio/Description */}
+                {blueskyProfile.description && (
+                  <div>
+                    <div className="text-xs font-medium text-gray-500 mb-1">Bio</div>
+                    <div className="text-sm text-gray-900">{blueskyProfile.description}</div>
+                  </div>
+                )}
+
+                {/* Quality Breakdown */}
+                {blueskyQuality && (
+                  <div>
+                    <div className="text-xs font-medium text-gray-500 mb-2">Quality Score Breakdown</div>
+                    <div className="space-y-1 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Account Age:</span>
+                        <span className="font-medium text-gray-900">{blueskyQuality.breakdown.accountAge}/20</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Follower Count:</span>
+                        <span className="font-medium text-gray-900">{blueskyQuality.breakdown.followerCount}/25</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Engagement Rate:</span>
+                        <span className="font-medium text-gray-900">{blueskyQuality.breakdown.engagementRate}/25</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Activity Level:</span>
+                        <span className="font-medium text-gray-900">{blueskyQuality.breakdown.activityLevel}/20</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Profile Completeness:</span>
+                        <span className="font-medium text-gray-900">{blueskyQuality.breakdown.profileCompleteness}/10</span>
+                      </div>
+                      <div className="flex justify-between pt-1 border-t border-gray-300">
+                        <span className="text-gray-900 font-medium">Total Score:</span>
+                        <span className="font-bold text-gray-900">{blueskyQuality.overall}/100</span>
+                      </div>
                     </div>
                   </div>
                 )}

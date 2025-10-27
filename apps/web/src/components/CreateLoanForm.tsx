@@ -39,6 +39,7 @@ interface FormData {
   // Section 2: About You
   aboutYou: string;
   businessWebsite: string;
+  twitterHandle: string; // X/Twitter handle (e.g., "@alice" or "alice")
 
   // Section 3: This Loan
   loanUseAndImpact: string; // Combined: what you'll buy + what it will help you achieve
@@ -62,6 +63,7 @@ export default function CreateLoanForm() {
     title: '',
     aboutYou: '',
     businessWebsite: '',
+    twitterHandle: '',
     loanUseAndImpact: '',
     repaymentPlan: '',
     monthlyIncome: IncomeRange.PREFER_NOT_TO_SAY,
@@ -97,13 +99,13 @@ export default function CreateLoanForm() {
     }
   };
 
-  // Calculate bi-weekly payment
-  const biWeeklyPayment = formData.amount && formData.repaymentWeeks
+  // Calculate bi-weekly payment (handle grant with 0 weeks)
+  const biWeeklyPayment = formData.amount && formData.repaymentWeeks > 0
     ? parseFloat(formData.amount) / (formData.repaymentWeeks / 2)
     : 0;
 
-  // Calculate payment as % of income
-  const paymentPercentage = formData.monthlyIncome && formData.monthlyIncome !== IncomeRange.PREFER_NOT_TO_SAY
+  // Calculate payment as % of income (skip for grants)
+  const paymentPercentage = formData.repaymentWeeks > 0 && formData.monthlyIncome && formData.monthlyIncome !== IncomeRange.PREFER_NOT_TO_SAY
     ? (biWeeklyPayment / INCOME_RANGES[formData.monthlyIncome]) * 100
     : null;
 
@@ -333,9 +335,11 @@ export default function CreateLoanForm() {
         fullDescription: `${formData.aboutYou}\n\n**What I'll achieve and how I'll pay it back:**\n${formData.loanUseAndImpact}`,
         image: imageURI,
         businessWebsite: formData.businessWebsite || undefined,
+        twitterHandle: formData.twitterHandle || undefined,
         loanDetails: {
           aboutYou: formData.aboutYou,
           businessWebsite: formData.businessWebsite,
+          twitterHandle: formData.twitterHandle,
           loanUseAndImpact: formData.loanUseAndImpact,
         },
         createdAt: new Date().toISOString(),
@@ -400,13 +404,14 @@ export default function CreateLoanForm() {
       // Validate
       const MIN_PRINCIPAL = 100e6;
       const MIN_LOAN_DURATION = 4 * 7 * 86400; // 4 weeks
-      const MAX_LOAN_DURATION = 24 * 7 * 86400; // 24 weeks
+      const MAX_LOAN_DURATION = 12 * 7 * 86400; // 12 weeks (3 months)
 
       if (principal < BigInt(MIN_PRINCIPAL)) {
         throw new Error('Principal must be at least $100 USDC');
       }
-      if (loanDuration < MIN_LOAN_DURATION || loanDuration > MAX_LOAN_DURATION) {
-        throw new Error('Loan duration must be between 4 and 24 weeks');
+      // Allow 0 duration for grants, or require between 4 and 12 weeks for loans
+      if (loanDuration !== 0 && (loanDuration < MIN_LOAN_DURATION || loanDuration > MAX_LOAN_DURATION)) {
+        throw new Error('Loan duration must be 0 (grant) or between 4 and 12 weeks');
       }
 
       console.log('Creating loan with params:', {
@@ -570,11 +575,10 @@ export default function CreateLoanForm() {
                 onChange={(e) => handleChange('repaymentWeeks', parseInt(e.target.value))}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
               >
-                <option value={4}>1 month (4 weeks)</option>
-                <option value={8}>2 months (8 weeks)</option>
-                <option value={12}>3 months (12 weeks)</option>
-                <option value={16}>4 months (16 weeks)</option>
-                <option value={24}>6 months (24 weeks)</option>
+                <option value={0}>This is a grant (no repayment)</option>
+                <option value={4}>1 month</option>
+                <option value={8}>2 months</option>
+                <option value={12}>3 months</option>
               </select>
             </div>
 
@@ -661,6 +665,28 @@ export default function CreateLoanForm() {
               </p>
               {errors.businessWebsite && (
                 <p className="text-sm text-red-600 mt-1">{errors.businessWebsite}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                X/Twitter handle (optional)
+              </label>
+              <input
+                type="text"
+                name="twitterHandle"
+                value={formData.twitterHandle}
+                onChange={(e) => handleChange('twitterHandle', e.target.value)}
+                placeholder="@alice or alice"
+                className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-0 outline-none ${
+                  errors.twitterHandle ? 'border-red-300' : 'border-gray-300 focus:border-[#3B9B7F]'
+                }`}
+              />
+              <p className="text-xs text-gray-500 mt-1.5">
+                Build trust through your social network
+              </p>
+              {errors.twitterHandle && (
+                <p className="text-sm text-red-600 mt-1">{errors.twitterHandle}</p>
               )}
             </div>
           </div>

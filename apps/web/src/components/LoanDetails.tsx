@@ -407,6 +407,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             borrowerAddress={loanData.borrower}
             loanAddress={loanAddress}
             businessWebsite={metadata?.loanDetails?.businessWebsite}
+            twitterHandle={metadata?.loanDetails?.twitterHandle}
           />
         </div>
       )}
