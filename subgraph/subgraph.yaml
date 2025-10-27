@@ -1,0 +1,73 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MicroLoanFactory
+    network: base-sepolia
+    source:
+      address: "0x66C4857774F768DB1ac7F2eE1bB943F0D86D6a34"
+      abi: MicroLoanFactory
+      startBlock: 18448000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - MicroLoan
+        - GlobalStats
+      abis:
+        - name: MicroLoanFactory
+          file: ../contracts/out/MicroLoanFactory.sol/MicroLoanFactory.json
+        - name: MicroLoan
+          file: ../contracts/out/MicroLoan.sol/MicroLoan.json
+      eventHandlers:
+        - event: LoanCreated(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleLoanCreated
+      file: ./src/mapping.ts
+templates:
+  - kind: ethereum
+    name: MicroLoan
+    network: base-sepolia
+    source:
+      abi: MicroLoan
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - MicroLoan
+        - Contribution
+        - Repayment
+        - Claim
+        - Refund
+        - MetadataUpdate
+        - LenderPosition
+        - GlobalStats
+      abis:
+        - name: MicroLoan
+          file: ../contracts/out/MicroLoan.sol/MicroLoan.json
+      eventHandlers:
+        - event: Contributed(indexed address,uint256)
+          handler: handleContributed
+        - event: FundraisingClosed(uint256)
+          handler: handleFundraisingClosed
+        - event: Disbursed(indexed address,uint256,uint256)
+          handler: handleDisbursed
+        - event: Repayment(indexed address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRepayment
+        - event: Claimed(indexed address,uint256)
+          handler: handleClaimed
+        - event: Completed(uint256,uint256)
+          handler: handleCompleted
+        - event: Defaulted(uint256,uint256,uint256)
+          handler: handleDefaulted
+        - event: Refunded(indexed address,uint256)
+          handler: handleRefunded
+        - event: FundraisingCancelled()
+          handler: handleFundraisingCancelled
+        - event: MetadataUpdated(string,uint256)
+          handler: handleMetadataUpdated
+      file: ./src/mapping.ts

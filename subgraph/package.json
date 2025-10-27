@@ -1,0 +1,21 @@
+{
+  "name": "rbf-base-subgraph",
+  "version": "0.0.3",
+  "description": "The Graph subgraph for MicroLoan protocol on Base Sepolia",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --studio rbf-base",
+    "create-local": "graph create --node http://localhost:8020/ rbf-base",
+    "remove-local": "graph remove --node http://localhost:8020/ rbf-base",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 rbf-base",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.69.0",
+    "@graphprotocol/graph-ts": "^0.35.0"
+  },
+  "devDependencies": {
+    "matchstick-as": "^0.6.0"
+  }
+}

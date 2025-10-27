@@ -12,8 +12,8 @@ export const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRE
 // IPFS Gateway
 export const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
 
-// Subgraph URL
-export const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL || 'https://api.studio.thegraph.com/query/69647/fundrise-base-sepolia/version/latest';
+// Subgraph URL - MicroLoan Protocol
+export const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL || 'https://api.studio.thegraph.com/query/113071/rbf-base/version/latest';
 
 // Revenue share limits (in basis points)
 export const MIN_REVENUE_SHARE = 100; // 1%

@@ -3,87 +3,144 @@ import { gql } from "@apollo/client";
 
 const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
 
-const GET_CAMPAIGN_DETAILS = gql`
-  query GetCampaignDetails($id: ID!) {
-    campaign(id: $id) {
+const GET_LOAN_DETAILS = gql`
+  query GetLoanDetails($id: ID!) {
+    microLoan(id: $id) {
       id
-      campaignId
-      creator
+      borrower
       metadataURI
-      deadline
-      goalAmount
-      totalRaised
-      totalDirectTransfers
-      actualBalance
-      ended
-      tokenAddress
-      state
-      claimed
+      principal
+      dueAt
+      fundraisingDeadline
+      duration
+      fundraisingActive
+      active
+      completed
+      cancelled
+      defaulted
+      totalFunded
+      totalRepaid
+      outstandingPrincipal
       createdAt
+      fundedAt
+      disbursedAt
+      completedAt
+      contributorsCount
+      percentFunded
+      percentRepaid
       contributions {
         id
         contributor
         amount
         timestamp
+        transactionHash
       }
-      directTransfers {
+      repayments {
         id
-        from
+        payer
         amount
+        totalRepaid
+        outstanding
         timestamp
-        source
+        secondsUntilDue
+        wasLate
         transactionHash
       }
     }
   }
 `;
 
-const GET_ALL_CAMPAIGNS = gql`
-  query GetAllCampaigns {
-    campaigns(orderBy: createdAt, orderDirection: desc) {
+const GET_ALL_LOANS = gql`
+  query GetAllLoans {
+    microLoans(orderBy: createdAt, orderDirection: desc) {
       id
-      campaignId
-      creator
+      borrower
       metadataURI
-      deadline
-      goalAmount
-      totalRaised
-      totalDirectTransfers
-      actualBalance
-      ended
-      tokenAddress
-      state
-      claimed
+      principal
+      dueAt
+      fundraisingDeadline
+      duration
+      fundraisingActive
+      active
+      completed
+      cancelled
+      defaulted
+      totalFunded
+      totalRepaid
+      outstandingPrincipal
       createdAt
+      fundedAt
+      disbursedAt
+      completedAt
+      contributorsCount
+      percentFunded
+      percentRepaid
     }
   }
 `;
 
-const GET_RECENT_DONATIONS = gql`
-  query GetRecentDonations($campaignId: String!) {
-    contributions(where: { campaign: $campaignId }, orderBy: timestamp, orderDirection: desc, first: 10) {
+const GET_RECENT_ACTIVITY = gql`
+  query GetRecentActivity($loanId: String!) {
+    contributions(where: { loan: $loanId }, orderBy: timestamp, orderDirection: desc, first: 10) {
       id
       contributor
       amount
       timestamp
+      transactionHash
     }
-    directTransfers(where: { campaign: $campaignId }, orderBy: timestamp, orderDirection: desc, first: 10) {
+    repayments(where: { loan: $loanId }, orderBy: timestamp, orderDirection: desc, first: 10) {
       id
-      from
+      payer
       amount
+      totalRepaid
+      outstanding
       timestamp
-      source
+      wasLate
       transactionHash
     }
   }
 `;
 
-export async function getCampaign(id: string) {
+const GET_LENDER_POSITION = gql`
+  query GetLenderPosition($loanId: String!, $lender: String!) {
+    lenderPosition(id: $loanId) {
+      id
+      loan {
+        id
+        borrower
+        principal
+        dueAt
+      }
+      lender
+      contributed
+      claimed
+      claimable
+      lastUpdated
+    }
+  }
+`;
+
+const GET_GLOBAL_STATS = gql`
+  query GetGlobalStats {
+    globalStats(id: "global") {
+      totalLoans
+      activeLoans
+      completedLoans
+      defaultedLoans
+      totalPrincipalFunded
+      totalPrincipalRepaid
+      totalContributions
+      totalRepayments
+    }
+  }
+`;
+
+export async function getLoan(id: string) {
     const { data } = await getClient().query({
-        query: GET_CAMPAIGN_DETAILS,
+        query: GET_LOAN_DETAILS,
         variables: { id: id.toLowerCase() },
     });
-    return data.campaign;
+    return data.microLoan;
 }
 
 export async function getIPFSMetadata(cid: string): Promise<{ title: string; description: string; image: string; } | null> {
@@ -102,35 +159,55 @@ export async function getIPFSMetadata(cid: string): Promise<{ title: string; des
     }
 }
 
-export async function getCampaignMetadata(id: string) {
-    const campaign = await getCampaign(id);
-    if (!campaign || !campaign.metadataURI) {
+export async function getLoanMetadata(id: string) {
+    const loan = await getLoan(id);
+    if (!loan || !loan.metadataURI) {
         return null;
     }
-    const metadata = await getIPFSMetadata(campaign.metadataURI);
+    const metadata = await getIPFSMetadata(loan.metadataURI);
     return metadata;
 }
 
-export async function getAllCampaigns() {
+export async function getAllLoans() {
     const { data } = await getClient().query({
-        query: GET_ALL_CAMPAIGNS,
+        query: GET_ALL_LOANS,
         fetchPolicy: 'network-only',
     });
-    return data.campaigns;
+    return data.microLoans;
 }
 
-export async function getRecentDonations(campaignId: string) {
+export async function getRecentActivity(loanId: string) {
     const { data } = await getClient().query({
-        query: GET_RECENT_DONATIONS,
-        variables: { campaignId: campaignId.toLowerCase() },
+        query: GET_RECENT_ACTIVITY,
+        variables: { loanId: loanId.toLowerCase() },
         fetchPolicy: 'network-only',
     });
-    
-    // Combine and sort all donations by timestamp
-    const allDonations = [
-        ...data.contributions.map((c: any) => ({ ...c, type: 'wallet', txHash: null })),
-        ...data.directTransfers.map((d: any) => ({ ...d, type: d.source, contributor: d.from, txHash: d.transactionHash }))
+
+    // Combine and sort all activity by timestamp
+    const allActivity = [
+        ...data.contributions.map((c: any) => ({ ...c, type: 'contribution', txHash: c.transactionHash })),
+        ...data.repayments.map((r: any) => ({ ...r, type: 'repayment', contributor: r.payer, txHash: r.transactionHash }))
     ].sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp));
-    
-    return allDonations;
+
+    return allActivity;
+}
+
+export async function getLenderPosition(loanId: string, lender: string) {
+    const { data } = await getClient().query({
+        query: GET_LENDER_POSITION,
+        variables: {
+            loanId: loanId.toLowerCase(),
+            lender: lender.toLowerCase()
+        },
+        fetchPolicy: 'network-only',
+    });
+    return data.lenderPosition;
+}
+
+export async function getGlobalStats() {
+    const { data } = await getClient().query({
+        query: GET_GLOBAL_STATS,
+        fetchPolicy: 'network-only',
+    });
+    return data.globalStats;
 } 

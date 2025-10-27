@@ -1,0 +1,110 @@
+type MicroLoan @entity {
+  id: ID! # Loan contract address
+  borrower: Bytes!
+  metadataURI: String!
+  principal: BigInt!
+  dueAt: BigInt!
+  fundraisingDeadline: BigInt!
+  duration: BigInt!
+
+  # State
+  fundraisingActive: Boolean!
+  active: Boolean!
+  completed: Boolean!
+  cancelled: Boolean!
+  defaulted: Boolean!
+
+  # Amounts
+  totalFunded: BigInt!
+  totalRepaid: BigInt!
+  outstandingPrincipal: BigInt!
+
+  # Timestamps
+  createdAt: BigInt!
+  fundedAt: BigInt
+  disbursedAt: BigInt
+  completedAt: BigInt
+
+  # Relations
+  contributions: [Contribution!]! @derivedFrom(field: "loan")
+  repayments: [Repayment!]! @derivedFrom(field: "loan")
+  claims: [Claim!]! @derivedFrom(field: "loan")
+  refunds: [Refund!]! @derivedFrom(field: "loan")
+  metadataUpdates: [MetadataUpdate!]! @derivedFrom(field: "loan")
+
+  # Computed
+  contributorsCount: Int!
+  percentFunded: BigInt!
+  percentRepaid: BigInt!
+}
+
+type Contribution @entity {
+  id: ID! # tx hash + log index
+  loan: MicroLoan!
+  contributor: Bytes!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Repayment @entity {
+  id: ID! # tx hash + log index
+  loan: MicroLoan!
+  payer: Bytes!
+  amount: BigInt!
+  totalRepaid: BigInt! # Total repaid at time of this payment
+  outstanding: BigInt! # Outstanding principal after this payment
+  timestamp: BigInt!
+  secondsUntilDue: BigInt!
+  wasLate: Boolean! # Whether loan was past due when this payment was made
+  transactionHash: Bytes!
+}
+
+type Claim @entity {
+  id: ID! # tx hash + log index
+  loan: MicroLoan!
+  contributor: Bytes!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Refund @entity {
+  id: ID! # tx hash + log index
+  loan: MicroLoan!
+  contributor: Bytes!
+  amount: BigInt!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MetadataUpdate @entity {
+  id: ID! # tx hash + log index
+  loan: MicroLoan!
+  newMetadataURI: String!
+  timestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LenderPosition @entity {
+  id: ID! # loan address + lender address
+  loan: MicroLoan!
+  lender: Bytes!
+  contributed: BigInt!
+  claimed: BigInt!
+  claimable: BigInt!
+  lastUpdated: BigInt!
+}
+
+# Global stats
+type GlobalStats @entity {
+  id: ID! # "global"
+  totalLoans: Int!
+  activeLoans: Int!
+  completedLoans: Int!
+  defaultedLoans: Int!
+  totalPrincipalFunded: BigInt!
+  totalPrincipalRepaid: BigInt!
+  totalContributions: Int!
+  totalRepayments: Int!
+}
