@@ -29,17 +29,7 @@ export const useLoans = () => {
     address: MICROLOAN_FACTORY_ADDRESS,
     abi: MicroLoanFactoryABI.abi,
     functionName: 'getLoans',
-    query: {
-      enabled: !!MICROLOAN_FACTORY_ADDRESS && MICROLOAN_FACTORY_ADDRESS !== '0x0000000000000000000000000000000000000000',
-      staleTime: 30_000, // Consider data fresh for 30 seconds
-    },
   });
-
-  // Debug logging
-  console.log('[useLoans] Factory address:', MICROLOAN_FACTORY_ADDRESS);
-  console.log('[useLoans] isLoading:', isLoading);
-  console.log('[useLoans] error:', error);
-  console.log('[useLoans] loanAddresses:', loanAddresses);
 
   return {
     loanAddresses: (loanAddresses as `0x${string}`[]) || [],
@@ -72,35 +62,45 @@ export const useBorrowerLoans = (borrower: `0x${string}` | undefined) => {
 };
 
 /**
- * Get loans that a specific address has contributed to
+ * Get loans that a contributor has funded
+ * This checks all loans and filters to those where the user has a contribution
  */
 export const useContributorLoans = (contributor: `0x${string}` | undefined) => {
-  const { loanAddresses, isLoading: isLoadingLoans } = useLoans();
-  const enabled = !!contributor && loanAddresses.length > 0;
+  const enabled = !!contributor;
 
-  // Build multicall to check contribution for each loan
+  // First get all loans
+  const { data: allLoanAddresses, isLoading: isLoadingLoans } = useReadContract({
+    address: MICROLOAN_FACTORY_ADDRESS,
+    abi: MicroLoanFactoryABI.abi,
+    functionName: 'getLoans',
+    query: { enabled },
+  });
+
+  const loanAddresses = (allLoanAddresses as `0x${string}`[]) || [];
+
+  // For each loan, check if contributor has a contribution
   const contributionQueries = loanAddresses.map((loanAddress) => ({
     address: loanAddress,
     abi: MicroLoanABI.abi,
     functionName: 'contributions',
-    args: [contributor],
+    args: [contributor!],
   }));
 
   const { data: contributionsData, isLoading: isLoadingContributions } = useReadContracts({
     contracts: contributionQueries.length > 0 ? contributionQueries as any : [],
-    query: { enabled },
+    query: { enabled: enabled && loanAddresses.length > 0 },
   });
 
-  // Filter to only loans where user has contributed
-  const contributorLoanAddresses = loanAddresses.filter((_, index) => {
+  // Filter to loans where contribution > 0
+  const contributedLoans = loanAddresses.filter((_, index) => {
     const result = contributionsData?.[index];
-    if (result?.status !== 'success') return false;
-    const contribution = result.result as bigint;
-    return contribution > 0n;
+    if (!result || result.status !== 'success') return false;
+    const amount = result.result as bigint;
+    return amount > 0n;
   });
 
   return {
-    loanAddresses: contributorLoanAddresses,
+    loanAddresses: contributedLoans,
     isLoading: isLoadingLoans || isLoadingContributions,
   };
 };
@@ -110,189 +110,141 @@ export const useContributorLoans = (contributor: `0x${string}` | undefined) => {
 // =============================================================================
 
 /**
- * Get raw loan data from contract using multicall for better performance
- * Returns all basic loan information in a single RPC call
+ * Get raw loan data from contract
+ * Returns all basic loan information
  */
 export const useLoanData = (loanAddress: `0x${string}` | undefined) => {
   const enabled = !!loanAddress;
 
-  // Batch all contract reads into one multicall
-  const { data, isLoading, isError } = useReadContracts({
-    contracts: loanAddress ? [
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'borrower',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'principal',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'totalFunded',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'outstandingPrincipal',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'dueAt',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'fundraisingDeadline',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'metadataURI',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'fundraisingActive',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'active',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'completed',
-      },
-      {
-        address: loanAddress,
-        abi: MicroLoanABI.abi,
-        functionName: 'contributorsCount',
-      },
-    ] as const : [],
-    query: {
-      enabled,
-    },
+  // Read all loan data in parallel
+  const { data: borrower } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'borrower',
+    query: { enabled },
   });
 
-  if (!loanAddress) {
-    return { loanData: null, isLoading: false };
-  }
-
-  if (isLoading || !data) {
-    return { loanData: null, isLoading: true };
-  }
-
-  // Extract results from multicall (all calls should succeed)
-  const [
-    borrowerResult,
-    principalResult,
-    totalFundedResult,
-    outstandingPrincipalResult,
-    dueAtResult,
-    fundraisingDeadlineResult,
-    metadataURIResult,
-    fundraisingActiveResult,
-    activeResult,
-    completedResult,
-    contributorsCountResult,
-  ] = data;
-
-  // Check if any required calls failed
-  if (
-    !borrowerResult || borrowerResult.status !== 'success' ||
-    !principalResult || principalResult.status !== 'success' ||
-    !totalFundedResult || totalFundedResult.status !== 'success' ||
-    !outstandingPrincipalResult || outstandingPrincipalResult.status !== 'success' ||
-    !dueAtResult || dueAtResult.status !== 'success' ||
-    !fundraisingDeadlineResult || fundraisingDeadlineResult.status !== 'success' ||
-    !metadataURIResult || metadataURIResult.status !== 'success' ||
-    !fundraisingActiveResult || fundraisingActiveResult.status !== 'success' ||
-    !activeResult || activeResult.status !== 'success' ||
-    !completedResult || completedResult.status !== 'success' ||
-    !contributorsCountResult || contributorsCountResult.status !== 'success'
-  ) {
-    return { loanData: null, isLoading: false };
-  }
-
-  // Calculate totalRepaid from principal and outstandingPrincipal
-  const principal = principalResult.result as bigint;
-  const outstandingPrincipal = outstandingPrincipalResult.result as bigint;
-  const totalRepaid = principal - outstandingPrincipal;
-
-  const loanData: RawLoan = {
+  const { data: principal } = useReadContract({
     address: loanAddress,
-    borrower: borrowerResult.result as `0x${string}`,
-    principal,
-    totalFunded: totalFundedResult.result as bigint,
-    totalRepaid,
-    dueAt: dueAtResult.result as bigint,
-    fundraisingDeadline: fundraisingDeadlineResult.result as bigint,
-    metadataURI: metadataURIResult.result as string,
-    fundraisingActive: fundraisingActiveResult.result as boolean,
-    active: activeResult.result as boolean,
-    completed: completedResult.result as boolean,
-    disbursed: activeResult.result as boolean, // disbursed = active (funds are disbursed when loan becomes active)
-    contributorsCount: contributorsCountResult.result as bigint,
-  };
+    abi: MicroLoanABI.abi,
+    functionName: 'principal',
+    query: { enabled },
+  });
 
-  return {
-    loanData,
-    isLoading: false,
-  };
-};
+  const { data: totalFunded } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'totalFunded',
+    query: { enabled },
+  });
 
-// =============================================================================
-// LOAN - CONTRIBUTORS LIST
-// =============================================================================
+  const { data: outstandingPrincipal } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'outstandingPrincipal',
+    query: { enabled },
+  });
 
-/**
- * Get contributor addresses (up to a limit for display)
- */
-export const useContributors = (
-  loanAddress: `0x${string}` | undefined,
-  limit: number = 3
-) => {
-  const enabled = !!loanAddress;
+  const { data: dueAt } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'dueAt',
+    query: { enabled },
+  });
 
-  // First get the count
-  const { data: count } = useReadContract({
+  const { data: fundraisingDeadline } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'fundraisingDeadline',
+    query: { enabled },
+  });
+
+  const { data: metadataURI } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'metadataURI',
+    query: { enabled },
+  });
+
+  const { data: fundraisingActive } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'fundraisingActive',
+    query: { enabled },
+  });
+
+  const { data: active } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'active',
+    query: { enabled },
+  });
+
+  const { data: completed } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'completed',
+    query: { enabled },
+  });
+
+  const { data: contributorsCount } = useReadContract({
     address: loanAddress,
     abi: MicroLoanABI.abi,
     functionName: 'contributorsCount',
     query: { enabled },
   });
 
-  const contributorsCount = (count as bigint) || 0n;
-  const actualLimit = Math.min(Number(contributorsCount), limit);
-
-  // Fetch the first N contributors by index
-  const contributorQueries = Array.from({ length: actualLimit }, (_, i) => ({
+  const { data: totalRepaid } = useReadContract({
     address: loanAddress,
     abi: MicroLoanABI.abi,
-    functionName: 'contributors',
-    args: [BigInt(i)],
-  }));
-
-  const { data: contributorsData } = useReadContracts({
-    contracts: contributorQueries.length > 0 ? contributorQueries as any : [],
-    query: { enabled: enabled && actualLimit > 0 },
+    functionName: 'totalRepaid',
+    query: { enabled },
   });
 
-  const contributors = contributorsData
-    ?.filter((result) => result.status === 'success')
-    .map((result) => result.result as `0x${string}`) || [];
+  const { data: cancelled } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'cancelled',
+    query: { enabled },
+  });
 
-  return {
-    contributors,
-    totalCount: Number(contributorsCount),
-    hasMore: Number(contributorsCount) > limit,
+  const { data: fundedAt } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'fundedAt',
+    query: { enabled },
+  });
+
+  if (!loanAddress) {
+    return { loanData: null, isLoading: false };
+  }
+
+  // Check if still loading
+  const isLoading = borrower === undefined || principal === undefined;
+
+  if (isLoading) {
+    return { loanData: null, isLoading: true };
+  }
+
+  const loanData: RawLoan = {
+    address: loanAddress,
+    borrower: borrower as `0x${string}`,
+    principal: principal as bigint,
+    totalFunded: totalFunded as bigint,
+    totalRepaid: totalRepaid as bigint,
+    outstandingPrincipal: outstandingPrincipal as bigint,
+    dueAt: dueAt as bigint,
+    fundraisingDeadline: fundraisingDeadline as bigint,
+    fundedAt: fundedAt as bigint,
+    metadataURI: metadataURI as string,
+    fundraisingActive: fundraisingActive as boolean,
+    active: active as boolean,
+    completed: completed as boolean,
+    cancelled: cancelled as boolean,
+    contributorsCount: contributorsCount as bigint,
   };
+
+  return { loanData, isLoading: false };
 };
 
 // =============================================================================
@@ -353,6 +305,50 @@ export const useContribution = (
   };
 
   return { contribution, isLoading: false };
+};
+
+/**
+ * Get first N contributors for a loan
+ */
+export const useContributors = (
+  loanAddress: `0x${string}` | undefined,
+  limit: number = 3
+) => {
+  const enabled = !!loanAddress;
+
+  // First get the count
+  const { data: count } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributorsCount',
+    query: { enabled },
+  });
+
+  const contributorsCount = (count as bigint) || 0n;
+  const actualLimit = Math.min(Number(contributorsCount), limit);
+
+  // Fetch the first N contributors by index
+  const contributorQueries = Array.from({ length: actualLimit }, (_, i) => ({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributors',
+    args: [BigInt(i)],
+  }));
+
+  const { data: contributorsData } = useReadContracts({
+    contracts: contributorQueries.length > 0 ? contributorQueries as any : [],
+    query: { enabled: enabled && actualLimit > 0 },
+  });
+
+  const contributors = contributorsData
+    ?.filter((result) => result.status === 'success')
+    .map((result) => result.result as `0x${string}`) || [];
+
+  return {
+    contributors,
+    totalCount: Number(contributorsCount),
+    hasMore: Number(contributorsCount) > limit,
+  };
 };
 
 // =============================================================================
@@ -548,33 +544,18 @@ export const useCreateLoan = () => {
     loanDuration: number;
     fundraisingDeadline: number;
   }) => {
-    console.log('useCreateLoan: Converting params to contract args');
-    const args = [
-      params.borrower,
-      params.metadataURI,
-      params.principal,
-      BigInt(params.loanDuration),
-      BigInt(params.fundraisingDeadline),
-    ];
-    console.log('useCreateLoan: Contract args prepared:', {
-      borrower: args[0],
-      metadataURILength: (args[1] as string).length,
-      principal: args[2].toString(),
-      loanDuration: args[3].toString(),
-      fundraisingDeadline: args[4].toString(),
+    writeContract({
+      address: MICROLOAN_FACTORY_ADDRESS,
+      abi: MicroLoanFactoryABI.abi,
+      functionName: 'createLoan',
+      args: [
+        params.borrower,
+        params.metadataURI,
+        params.principal,
+        BigInt(params.loanDuration),
+        BigInt(params.fundraisingDeadline),
+      ],
     });
-
-    try {
-      writeContract({
-        address: MICROLOAN_FACTORY_ADDRESS,
-        abi: MicroLoanFactoryABI.abi,
-        functionName: 'createLoan',
-        args,
-      });
-    } catch (err) {
-      console.error('useCreateLoan: Error calling writeContract:', err);
-      throw err;
-    }
   };
 
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({

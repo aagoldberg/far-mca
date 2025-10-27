@@ -10,7 +10,7 @@
 // =============================================================================
 
 /**
- * Raw loan data as returned from the MicroLoan contract
+ * Raw loan data as returned from the MicroLoan contract (simplified single-maturity architecture)
  * All bigint values are in their raw form (USDC = 6 decimals)
  */
 export interface RawLoan {
@@ -19,13 +19,15 @@ export interface RawLoan {
   principal: bigint;              // Target funding amount (USDC, 6 decimals)
   totalFunded: bigint;            // Current funded amount (USDC, 6 decimals)
   totalRepaid: bigint;            // Amount repaid so far (USDC, 6 decimals)
+  outstandingPrincipal: bigint;   // Remaining principal to be repaid (USDC, 6 decimals)
   dueAt: bigint;                  // Single maturity timestamp
   fundraisingDeadline: bigint;    // Timestamp fundraising ends
+  fundedAt: bigint;               // When loan was fully funded (0 if not funded)
   metadataURI: string;            // IPFS URI for loan metadata
   fundraisingActive: boolean;     // Can still accept contributions
   active: boolean;                // Loan is active and repaying
   completed: boolean;             // Loan fully repaid
-  disbursed: boolean;             // Borrower withdrew funds
+  cancelled: boolean;             // Fundraising was cancelled
   contributorsCount: bigint;      // Number of unique contributors
 }
 
@@ -62,7 +64,7 @@ export interface ProcessedLoan extends RawLoan {
 }
 
 /**
- * Loan details with calculated fields
+ * Loan details with calculated fields (simplified single-maturity architecture)
  * Used in detail pages and dashboards
  */
 export interface LoanDetails extends ProcessedLoan {
@@ -74,23 +76,22 @@ export interface LoanDetails extends ProcessedLoan {
   principalFormatted: string;     // e.g., "5,000.00 USDC"
   totalFundedFormatted: string;   // e.g., "3,250.00 USDC"
   totalRepaidFormatted: string;   // e.g., "1,250.00 USDC"
-  perPeriodFormatted: string;     // e.g., "416.67 USDC/month"
+  outstandingFormatted: string;   // e.g., "3,750.00 USDC" (remaining to repay)
 
   // Dates (human-readable)
-  fundraisingDeadlineDate: Date;
-  firstDueDateDate: Date;
-  nextDueDateDate: Date | null;   // Next payment due (if active)
+  fundraisingDeadlineDate: Date;  // Deadline to reach funding goal
+  dueDate: Date;                  // Single maturity date for full repayment
+  fundedAtDate: Date | null;      // When loan was fully funded (null if not funded)
 
   // Status flags
   isFunded: boolean;              // Reached funding goal
   isExpired: boolean;             // Past fundraising deadline
   canDisburse: boolean;           // Borrower can withdraw
-  isDefaulted: boolean;           // Past due with grace period
+  isDefaulted: boolean;           // Past due date and not fully repaid
 
-  // Period calculations
-  periodsCompleted: number;       // Number of periods passed
-  periodsRemaining: number;       // Number of periods left
-  periodLengthDays: number;       // Period length in days
+  // Time calculations
+  daysUntilDue: number;           // Days remaining until maturity (0 if past due)
+  secondsUntilDue: number;        // Seconds remaining until maturity (0 if past due)
 }
 
 // =============================================================================
