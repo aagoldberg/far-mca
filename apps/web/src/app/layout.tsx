@@ -3,6 +3,7 @@ import { Nunito, Figtree, Rubik } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "@/components/Navbar";
+import { AirdropToast } from "@/components/AirdropToast";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({
           <div>
             <Navbar />
             <main>{children}</main>
+            <AirdropToast />
           </div>
         </Providers>
       </body>
