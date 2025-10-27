@@ -45,7 +45,7 @@ export default function RootLayout({
           <div>
             <Navbar />
             <main>{children}</main>
-            {/* <AirdropToast /> */}
+            <AirdropToast />
           </div>
         </Providers>
       </body>

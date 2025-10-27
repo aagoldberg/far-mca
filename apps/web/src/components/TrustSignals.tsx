@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
-import { useGitcoinPassport } from '@/hooks/useGitcoinPassport';
 import { useLoanSocialSupport } from '@/hooks/useLoanSocialSupport';
 import { useBlueskyProfile } from '@/hooks/useBlueskyProfile';
 import { getSocialSupportDescription } from '@/lib/socialProximity';
@@ -54,19 +53,10 @@ export function TrustSignals({
   const [showBlueskyInfo, setShowBlueskyInfo] = useState(false);
   const { profile, reputation } = useFarcasterProfile(borrowerAddress);
   const { profile: blueskyProfile, quality: blueskyQuality } = useBlueskyProfile(blueskyHandle);
-  const { score: gitcoinScore } = useGitcoinPassport(borrowerAddress);
   const { support, hasContributors } = useLoanSocialSupport(
     loanAddress,
     borrowerAddress
   );
-
-  // Helper to get Gitcoin score status
-  const getGitcoinStatus = (score: number | null | undefined) => {
-    if (!score || score === 0) return { text: 'Not verified', color: 'text-gray-500' };
-    if (score >= 40) return { text: 'Very Likely Human', color: 'text-green-600' };
-    if (score >= 20) return { text: 'Likely Human', color: 'text-green-600' };
-    return { text: 'Low Score', color: 'text-yellow-600' };
-  };
 
   // Helper to get Neynar score status (0-1 scale)
   const getNeynarStatus = (score: number | null | undefined) => {
@@ -85,12 +75,11 @@ export function TrustSignals({
     return { text: 'Low Quality', color: 'text-orange-600' };
   };
 
-  const gitcoinStatus = getGitcoinStatus(gitcoinScore?.score);
   const neynarStatus = getNeynarStatus(profile?.score);
   const blueskyQualityStatus = getBlueskyQualityStatus(blueskyQuality?.overall);
 
   // Check if we have any data to display
-  const hasAnyData = businessWebsite || gitcoinScore?.score || (hasContributors && support) || profile || profile?.score || blueskyProfile;
+  const hasAnyData = businessWebsite || (hasContributors && support) || profile || profile?.score || blueskyProfile;
 
   if (!hasAnyData) {
     return null; // Don't show the section at all if there's no data
@@ -166,36 +155,6 @@ export function TrustSignals({
               </div>
               <div className="text-sm text-gray-600">
                 Score: {profile.score.toFixed(2)} - <span className={neynarStatus.color}>{neynarStatus.text}</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Gitcoin Passport */}
-        {gitcoinScore?.score && gitcoinScore.score > 0 && (
-          <div className="flex items-start gap-3">
-            <svg
-              className={`w-5 h-5 mt-0.5 flex-shrink-0 ${
-                (gitcoinScore?.score ?? 0) > 20 ? 'text-green-500' : 'text-gray-400'
-              }`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
-            <div className="flex-1">
-              <div className="text-sm font-medium text-gray-700 flex items-center">
-                Humanity Verification
-                <InfoTooltip text="Verifies real human identity through web3 stamps. Score above 20 indicates genuine user." />
-              </div>
-              <div className="text-sm text-gray-600">
-                Score: {gitcoinScore.score.toFixed(1)} - <span className={gitcoinStatus.color}>{gitcoinStatus.text}</span>
               </div>
             </div>
           </div>
