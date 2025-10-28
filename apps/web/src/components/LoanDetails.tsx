@@ -256,7 +256,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
       {/* Loan Image */}
       {(metadata?.imageUrl || metadata?.image) && (
-        <div className="relative h-56 md:h-64 lg:h-72 w-full rounded-2xl overflow-hidden mb-5">
+        <div className="relative h-56 md:h-64 lg:h-72 w-full rounded-2xl overflow-hidden mb-5 bg-gray-100">
           <img
             src={(() => {
               const imageSource = metadata.imageUrl || metadata.image || '';
@@ -265,7 +265,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 : imageSource;
             })()}
             alt={metadata?.name || 'Loan'}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
       )}
