@@ -91,7 +91,7 @@ export default function ImageCropModal({
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const aspectRatio = 1; // Fixed 1:1 square ratio
+  const aspectRatio = 4 / 3; // Fixed 4:3 ratio
 
   const onCropAreaChange = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -103,7 +103,7 @@ export default function ImageCropModal({
     setIsProcessing(true);
     try {
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-      onCropComplete(croppedImage, 1); // Always 1:1 square
+      onCropComplete(croppedImage, 4 / 3); // Always 4:3 ratio
     } catch (error) {
       console.error('Error cropping image:', error);
       alert('Failed to crop image. Please try again.');

@@ -260,7 +260,7 @@ export function LoanCard({
         </div>
 
       {imageUrl && (
-        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '100%' }}>
+        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '75%' }}>
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
