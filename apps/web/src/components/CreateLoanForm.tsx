@@ -434,7 +434,23 @@ export default function CreateLoanForm() {
 
     } catch (error: any) {
       console.error('Error creating loan:', error);
-      alert(error.message || 'Failed to create loan');
+
+      // Check if user rejected the transaction
+      const isUserRejection =
+        error.message?.includes('User denied') ||
+        error.message?.includes('User rejected') ||
+        error.message?.includes('user rejected') ||
+        error.code === 4001 || // MetaMask rejection code
+        error.code === 'ACTION_REJECTED';
+
+      if (isUserRejection) {
+        // User cancelled - just reset quietly
+        console.log('Transaction cancelled by user');
+      } else {
+        // Actual error - show alert
+        alert(error.message || 'Failed to create loan');
+      }
+
       setIsSubmitting(false);
       setUploadProgress('');
     }
