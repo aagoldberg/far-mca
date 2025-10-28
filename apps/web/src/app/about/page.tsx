@@ -84,12 +84,13 @@ export default function AboutPage() {
           <div className="bg-green-50 border border-green-200 rounded-xl p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Why 0% Interest?</h2>
             <p className="text-gray-700 leading-relaxed mb-3">
-              We believe in building trust, not extracting profit from those who need help.
-              Zero interest keeps it simple, fair, and accessible.
+              We're starting with pure generosity. Zero interest means lenders give because they want to help, not because they're chasing returns. It keeps everything simple and builds real community trust.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-3">
+              Borrowers repay to build their reputation and keep the cycle going. Lenders support people they believe in. And if borrowers want to show extra gratitude, they can leave an optional tip to share with their lenders.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Lenders give to support their community. Borrowers repay to build reputation and
-              keep the cycle going. It's altruistic by design.
+              When people succeed here, new opportunities open up—for everyone.
             </p>
           </div>
         </section>
