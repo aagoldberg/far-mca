@@ -135,6 +135,14 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
 
         // Gracefully handle cases where no profile exists - this is expected for most users
         if (!user) {
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`[Profile] ${address.slice(0, 6)}...${address.slice(-4)} - No Farcaster profile found, caching negative result`);
+          }
+          // Cache negative result to avoid repeated API calls
+          profileCache.set(cacheKey, {
+            profile: null,
+            reputation: null,
+          });
           setProfile(null);
           setReputation(null);
           setError(null); // Clear any previous errors
@@ -191,6 +199,14 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
         if (process.env.NODE_ENV === 'development') {
           console.debug('Farcaster profile not found or API error:', err);
         }
+
+        // Cache negative result to prevent repeated failed API calls
+        const cacheKey = address.toLowerCase();
+        profileCache.set(cacheKey, {
+          profile: null,
+          reputation: null,
+        });
+
         setError(null); // Don't expose errors to the component
         setProfile(null);
         setReputation(null);

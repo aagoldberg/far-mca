@@ -270,7 +270,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 : imageSource;
             })()}
             alt={metadata?.name || 'Loan'}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
       )}

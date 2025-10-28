@@ -88,7 +88,7 @@ export default function ImageCropModal({
   onCancel,
 }: ImageCropModalProps) {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(0.5);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -132,7 +132,9 @@ export default function ImageCropModal({
           image={imageSrc}
           crop={crop}
           zoom={zoom}
-          aspect={16 / 9}
+          aspect={4 / 3}
+          minZoom={0.5}
+          maxZoom={3}
           onCropChange={setCrop}
           onCropComplete={onCropAreaChange}
           onZoomChange={setZoom}
@@ -147,7 +149,7 @@ export default function ImageCropModal({
           </label>
           <input
             type="range"
-            min={1}
+            min={0.5}
             max={3}
             step={0.1}
             value={zoom}

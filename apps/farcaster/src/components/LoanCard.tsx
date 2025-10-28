@@ -141,6 +141,74 @@ function ContributorName({ address }: { address: `0x${string}` }) {
   );
 }
 
+// Component for contributor footer - calls hooks at top level
+function ContributorFooter({ contributors, totalCount, hasMore }: { contributors: `0x${string}`[], totalCount: number, hasMore: boolean }) {
+  // Always call hooks at the top level
+  const profile1 = useFarcasterProfile(contributors[0]);
+  const profile2 = useFarcasterProfile(contributors.length > 1 ? contributors[1] : undefined);
+  const anyHaveProfiles = profile1.profile !== null || (contributors.length > 1 && profile2.profile !== null);
+
+  return (
+    <div className="pt-3 sm:pt-3.5 mt-3 border-t border-gray-100/80">
+      <div className="flex items-center gap-2.5">
+        {anyHaveProfiles && (
+          <div className="flex -space-x-2.5 flex-shrink-0">
+            {contributors.map((contributorAddress, index) => (
+              <ContributorAvatar
+                key={contributorAddress}
+                address={contributorAddress}
+                index={index}
+                total={contributors.length}
+              />
+            ))}
+          </div>
+        )}
+        <div className="flex-1 text-[11px] sm:text-xs text-gray-600 truncate">
+          <span className="text-gray-500">Supported by </span>
+          <ContributorsDisplay
+            contributors={contributors}
+            totalCount={totalCount}
+            hasMore={hasMore}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Component for displaying contributor names or generic count
+function ContributorsDisplay({ contributors, totalCount, hasMore }: { contributors: `0x${string}`[], totalCount: number, hasMore: boolean }) {
+  const profile1 = useFarcasterProfile(contributors[0]);
+  const profile2 = useFarcasterProfile(contributors.length > 1 ? contributors[1] : undefined);
+  const anyHaveProfiles = profile1.profile !== null || (contributors.length > 1 && profile2.profile !== null);
+
+  // If no one has profiles, show generic lender count
+  if (!anyHaveProfiles) {
+    return (
+      <span className="text-gray-500">
+        {totalCount === 1 ? '1 lender' : `${totalCount} lenders`}
+      </span>
+    );
+  }
+
+  // Otherwise show names
+  return (
+    <>
+      {contributors.slice(0, 2).map((addr, idx) => (
+        <span key={addr}>
+          <ContributorName address={addr} />
+          {idx === 0 && contributors.length > 1 && ', '}
+        </span>
+      ))}
+      {hasMore && (
+        <span className="text-gray-500">
+          {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
+        </span>
+      )}
+    </>
+  );
+}
+
 export function LoanCard({
   address,
   borrower,
@@ -193,67 +261,55 @@ export function LoanCard({
       {/* Card content */}
       <div className="relative bg-white rounded-xl transition-shadow duration-300">
         {/* Header with borrower info on left and status on right */}
-        <div className="px-3 sm:px-4 pt-3 pb-3">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 min-w-0 flex-1">
-              {hasProfile && profile ? (
-                <>
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
-                    <img
-                      src={profile.pfpUrl}
-                      alt={profile.displayName}
-                      className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">
-                    {profile.displayName || `@${profile.username}`}
-                  </span>
-                  {businessWebsite && (
-                    <svg className="w-3.5 h-3.5 text-[#3B9B7F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
-                  )}
-                </>
+        {hasProfile && profile && (
+          <div className="px-3 sm:px-4 pt-3 pb-3">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
+                  <img
+                    src={profile.pfpUrl}
+                    alt={profile.displayName}
+                    className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+                <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">
+                  {profile.displayName || `@${profile.username}`}
+                </span>
+                {businessWebsite && (
+                  <svg className="w-3.5 h-3.5 text-[#3B9B7F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                )}
+              </div>
+
+              {/* Show days remaining if fundraising, otherwise show status badge */}
+              {statusInfo.showDays && daysRemaining ? (
+                <div className="flex items-center gap-1 sm:gap-1.5 text-xs text-gray-600 flex-shrink-0 bg-gray-50 px-2 py-1 rounded-lg">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="hidden sm:inline font-medium">{daysRemaining}</span>
+                  <span className="sm:hidden font-medium">{daysRemaining.replace(' remaining', '')}</span>
+                </div>
               ) : (
-                <>
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex-shrink-0 ring-2 ring-gray-100" />
-                  <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{shortAddress}</span>
-                  {businessWebsite && (
-                    <svg className="w-3.5 h-3.5 text-[#3B9B7F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
-                  )}
-                </>
+                <span className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-semibold whitespace-nowrap shadow-sm ${statusInfo.className}`}>
+                  {statusInfo.text}
+                </span>
               )}
             </div>
-
-            {/* Show days remaining if fundraising, otherwise show status badge */}
-            {statusInfo.showDays && daysRemaining ? (
-              <div className="flex items-center gap-1 sm:gap-1.5 text-xs text-gray-600 flex-shrink-0 bg-gray-50 px-2 py-1 rounded-lg">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="hidden sm:inline font-medium">{daysRemaining}</span>
-                <span className="sm:hidden font-medium">{daysRemaining.replace(' remaining', '')}</span>
-              </div>
-            ) : (
-              <span className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-semibold whitespace-nowrap shadow-sm ${statusInfo.className}`}>
-                {statusInfo.text}
-              </span>
-            )}
           </div>
-        </div>
+        )}
 
       {imageUrl && (
         <div className="w-full h-40 sm:h-48 bg-gray-100">
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
             onError={(e) => {
               e.currentTarget.style.display = 'none';
             }}
@@ -263,8 +319,8 @@ export function LoanCard({
 
       <div className="p-3 sm:p-4">
         {/* Title and badges */}
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="text-sm sm:text-base font-bold text-gray-900 line-clamp-1 flex-1 min-w-0 group-hover:text-[#2E7D68] transition-colors duration-200">
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <h3 className="text-sm sm:text-base font-medium text-gray-900 line-clamp-3 flex-1 min-w-0 group-hover:text-[#2E7D68] transition-colors duration-200">
             {name || 'Untitled Loan'}
           </h3>
           {/* Payment warning badge (if applicable) */}
@@ -274,10 +330,6 @@ export function LoanCard({
             </div>
           )}
         </div>
-
-        <p className="text-xs sm:text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem] sm:min-h-[2.5rem] overflow-hidden leading-relaxed">
-          {description || 'No description available'}
-        </p>
 
         <div className="mb-3">
           {/* Enhanced progress bar with gradient */}
@@ -293,7 +345,7 @@ export function LoanCard({
           </div>
           <div className="flex justify-between items-center text-[11px] sm:text-xs">
             <span className="font-bold text-gray-900 bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] bg-clip-text text-transparent">
-              ${formatUSDC(totalFunded)} USDC
+              ${formatUSDC(totalFunded)} raised
             </span>
             <span className="text-gray-500 font-medium">
               of ${formatUSDC(principal)} USDC
@@ -303,37 +355,11 @@ export function LoanCard({
 
         {/* Contributor avatars footer */}
         {totalCount > 0 ? (
-          <div className="pt-3 sm:pt-3.5 mt-3 border-t border-gray-100/80">
-            <div className="flex items-center gap-2.5">
-              {/* Avatar stack */}
-              <div className="flex -space-x-2.5 flex-shrink-0">
-                {contributors.map((contributorAddress, index) => (
-                  <ContributorAvatar
-                    key={contributorAddress}
-                    address={contributorAddress}
-                    index={index}
-                    total={contributors.length}
-                  />
-                ))}
-              </div>
-
-              {/* Text description */}
-              <div className="flex-1 text-[11px] sm:text-xs text-gray-600 truncate">
-                <span className="text-gray-500">Supported by </span>
-                {contributors.slice(0, 2).map((addr, idx) => (
-                  <span key={addr}>
-                    <ContributorName address={addr} />
-                    {idx === 0 && contributors.length > 1 && ', '}
-                  </span>
-                ))}
-                {hasMore && (
-                  <span className="text-gray-500">
-                    {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+          <ContributorFooter
+            contributors={contributors}
+            totalCount={totalCount}
+            hasMore={hasMore}
+          />
         ) : (
           <div className="pt-3 sm:pt-3.5 mt-3 border-t border-gray-100/80 text-[11px] sm:text-xs text-gray-400 italic flex items-center gap-1.5">
             <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -9,6 +9,7 @@ import { USDC_DECIMALS } from '@/types/loan';
 import ImageCropModal from '@/components/ImageCropModal';
 import { LoanCard } from '@/components/LoanCard';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 enum IncomeRange {
   PREFER_NOT_TO_SAY = '',
@@ -440,6 +441,20 @@ export default function CreateLoanForm() {
   };
 
   // Success state
+  const handleShareLoan = async () => {
+    try {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://far-micro.ngrok.dev';
+      const loanName = formData.title || 'my loan request';
+
+      await sdk.actions.composeCast({
+        text: `I just created a loan request on LendFriend! Help me reach my goal 🙏\n\nZero interest, 100% community care.\n\nSupport me here:`,
+        embeds: [`${appUrl}/`]
+      });
+    } catch (error) {
+      console.error('Error sharing loan:', error);
+    }
+  };
+
   if (isSuccess && hash) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
@@ -459,6 +474,15 @@ export default function CreateLoanForm() {
             {hash.slice(0, 10)}...{hash.slice(-8)}
           </p>
           <div className="space-y-3">
+            <button
+              onClick={handleShareLoan}
+              className="w-full bg-[#8A63D2] hover:bg-[#7952C1] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+              Share Your Loan
+            </button>
             <button
               onClick={() => router.push('/')}
               className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
@@ -768,77 +792,8 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
                 <p className="text-sm text-red-600 mt-1">{errors.loanUseAndImpact}</p>
               )}
             </div>
-
-            {/* Monthly Income (Optional) */}
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <label className="block text-sm font-semibold text-gray-900 mb-2">
-                What do you earn each month? (optional)
-              </label>
-              <select
-                name="monthlyIncome"
-                value={formData.monthlyIncome}
-                onChange={(e) => handleChange('monthlyIncome', e.target.value as IncomeRange)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
-              >
-                <option value={IncomeRange.PREFER_NOT_TO_SAY}>Prefer not to say</option>
-                <option value={IncomeRange.UNDER_1K}>Less than $1,000/month</option>
-                <option value={IncomeRange.ONE_TO_TWO_K}>$1,000 - $2,000/month</option>
-                <option value={IncomeRange.TWO_TO_THREE_HALF_K}>$2,000 - $3,500/month</option>
-                <option value={IncomeRange.THREE_HALF_TO_FIVE_K}>$3,500 - $5,000/month</option>
-                <option value={IncomeRange.FIVE_TO_SEVEN_HALF_K}>$5,000 - $7,500/month</option>
-                <option value={IncomeRange.OVER_SEVEN_HALF_K}>More than $7,500/month</option>
-              </select>
-              <p className="text-xs text-gray-500 mt-2">
-                🔒 Only you see this — helps us make sure payments fit your budget
-              </p>
-            </div>
           </div>
         </div>
-
-        {/* Income Warning */}
-        {paymentPercentage !== null && paymentPercentage > 25 && (
-          <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">⚠️</span>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">
-                  This repayment schedule may be challenging
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Your bi-weekly payment (${biWeeklyPayment.toFixed(2)}) is {paymentPercentage.toFixed(1)}% of your stated monthly income.
-                  Most successful borrowers keep payments under 20% of income.
-                </p>
-                <p className="text-sm text-gray-600 font-medium">Suggestions:</p>
-                <ul className="text-sm text-gray-600 space-y-1 mt-1">
-                  {formData.repaymentWeeks < 24 && (
-                    <li>• Extend timeline to {formData.repaymentWeeks + 8} weeks → ${(parseFloat(formData.amount) / ((formData.repaymentWeeks + 8) / 2)).toFixed(2)} bi-weekly</li>
-                  )}
-                  <li>• Reduce loan amount to ${(INCOME_RANGES[formData.monthlyIncome] * 0.2 * (formData.repaymentWeeks / 2)).toFixed(2)}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {paymentPercentage !== null && paymentPercentage < 20 && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">
-                  This looks manageable!
-                </h3>
-                <p className="text-sm text-gray-700">
-                  Your bi-weekly payment (${biWeeklyPayment.toFixed(2)}) is only {paymentPercentage.toFixed(1)}% of your stated monthly income.
-                  This is well within the recommended range.
-                </p>
-                <p className="text-xs text-gray-600 mt-2">
-                  💡 Tip: Mentioning this in your "repayment plan" above helps build lender confidence.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Section 4: Add a Photo */}
         <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
