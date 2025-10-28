@@ -88,7 +88,7 @@ export default function ImageCropModal({
   onCancel,
 }: ImageCropModalProps) {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(0.5); // Start more zoomed out
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const aspectRatio = 4 / 3; // Fixed 4:3 ratio
@@ -134,6 +134,8 @@ export default function ImageCropModal({
           crop={crop}
           zoom={zoom}
           aspect={aspectRatio}
+          minZoom={0.5}
+          maxZoom={3}
           onCropChange={setCrop}
           onCropComplete={onCropAreaChange}
           onZoomChange={setZoom}
@@ -148,7 +150,7 @@ export default function ImageCropModal({
           </label>
           <input
             type="range"
-            min={1}
+            min={0.5}
             max={3}
             step={0.1}
             value={zoom}
