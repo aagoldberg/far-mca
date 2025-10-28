@@ -105,7 +105,7 @@ export default function ImageCropModal({
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [aspectRatio, setAspectRatio] = useState<number | undefined>(16 / 9);
+  const [aspectRatio, setAspectRatio] = useState<number | undefined>(4 / 3);
 
   const onCropAreaChange = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);

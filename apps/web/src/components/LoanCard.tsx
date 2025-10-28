@@ -260,18 +260,11 @@ export function LoanCard({
         </div>
 
       {imageUrl && (
-        <div
-          className="w-full bg-gray-100 relative overflow-hidden"
-          style={
-            imageAspectRatio
-              ? { paddingBottom: `${(1 / imageAspectRatio) * 100}%` }
-              : { height: '14rem' } // fallback to fixed height (h-56 = 14rem)
-          }
-        >
+        <div className="w-full h-48 sm:h-56 bg-gray-100">
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
-            className={imageAspectRatio ? "absolute inset-0 w-full h-full object-cover" : "w-full h-full object-cover"}
+            className="w-full h-full object-cover"
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}
