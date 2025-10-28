@@ -11,9 +11,7 @@ export default function AboutPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             About LendFriend
           </h1>
-          <p className="text-xl md:text-2xl font-light">
-            Zero-interest community loans powered by trust, not collateral.
-          </p>
+          <p className="text-xl md:text-2xl font-light whitespace-nowrap">Community loans based on character, not collateral or credit scores.</p>
         </div>
       </div>
 
@@ -28,8 +26,7 @@ export default function AboutPage() {
             No banks. No credit checks. No collateral. Just people helping people.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Borrowers share their story, community members contribute what they can, and repayments are
-            transparent on-chain. It's Venmo meets Kiva, built for the Farcaster community.
+            Borrowers tell their story, community members vouch by contributing, and every social connection strengthens trust scores algorithmically. Your reputation grows with every successful repayment.
           </p>
         </section>
 
