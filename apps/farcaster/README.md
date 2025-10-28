@@ -43,9 +43,9 @@ Create a `.env.local` file with:
 
 ```bash
 NEXT_PUBLIC_RPC_URL=https://sepolia.base.org
-NEXT_PUBLIC_CAMPAIGN_FACTORY_ADDRESS=0x0Eb3075cF3bAAB9715c8D3F423F1634571c4B312
-NEXT_PUBLIC_USDC_CONTRACT_ADDRESS=0x036CbD53842c5426634e7929541eC2318f3dCF7e
-NEXT_PUBLIC_SUBGRAPH_URL=https://api.studio.thegraph.com/query/113071/subgraph/version/latest
+NEXT_PUBLIC_MICROLOAN_FACTORY_ADDRESS=0x66C4857774F768DB1ac7F2eE1bB943F0D86D6a34
+NEXT_PUBLIC_USDC_ADDRESS=0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe
+NEXT_PUBLIC_SUBGRAPH_URL=https://api.studio.thegraph.com/query/113071/rbf-base/version/latest
 NEXT_PUBLIC_APP_URL=http://localhost:3002
 NEXT_PUBLIC_IPFS_GATEWAY=https://gateway.pinata.cloud/ipfs/
 ```
@@ -124,8 +124,8 @@ The app uses `@farcaster/frame-sdk` to:
 
 ## Smart Contracts
 
-- **Campaign Factory**: `0x0Eb3075cF3bAAB9715c8D3F423F1634571c4B312`
-- **USDC (Test)**: `0x036CbD53842c5426634e7929541eC2318f3dCF7e`
+- **MicroLoan Factory**: `0x66C4857774F768DB1ac7F2eE1bB943F0D86D6a34`
+- **USDC (Test)**: `0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe`
 - **Network**: Base Sepolia Testnet
 
 ## Notes
