@@ -244,7 +244,7 @@ export function LoanCard({
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-contain"
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}
