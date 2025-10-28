@@ -140,6 +140,41 @@ function ContributorName({ address: contributorAddress }: { address: `0x${string
   );
 }
 
+function ContributorsDisplay({ contributors, totalCount, hasMore }: { contributors: `0x${string}`[], totalCount: number, hasMore: boolean }) {
+  // Fetch profiles for first 2 contributors to check if any have profiles
+  const profile1 = useFarcasterProfile(contributors[0]);
+  const profile2 = useFarcasterProfile(contributors[1]);
+
+  // Check if any of the displayed contributors has a profile
+  const anyHaveProfiles = profile1.profile !== null || profile2.profile !== null;
+
+  // If no one has a profile, show generic message
+  if (!anyHaveProfiles) {
+    return (
+      <span className="text-gray-500">
+        {totalCount === 1 ? '1 lender' : `${totalCount} lenders`}
+      </span>
+    );
+  }
+
+  // Otherwise show names as before
+  return (
+    <>
+      {contributors.slice(0, 2).map((addr, idx) => (
+        <span key={addr}>
+          <ContributorName address={addr} />
+          {idx === 0 && contributors.length > 1 && ', '}
+        </span>
+      ))}
+      {hasMore && (
+        <span className="text-gray-500">
+          {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
+        </span>
+      )}
+    </>
+  );
+}
+
 export function LoanCard({
   address,
   borrower,
@@ -301,37 +336,42 @@ export function LoanCard({
 
         {/* Contributor avatars footer */}
         {totalCount > 0 ? (
-          <div className="pt-3 mt-3 border-t border-gray-100/80">
-            <div className="flex items-center gap-3">
-              {/* Avatar stack */}
-              <div className="flex -space-x-3 flex-shrink-0">
-                {contributors.map((contributorAddress, index) => (
-                  <ContributorAvatar
-                    key={contributorAddress}
-                    address={contributorAddress}
-                    index={index}
-                    total={contributors.length}
-                  />
-                ))}
-              </div>
+          (() => {
+            // Check if any contributors have profiles
+            const profile1 = useFarcasterProfile(contributors[0]);
+            const profile2 = useFarcasterProfile(contributors[1]);
+            const anyHaveProfiles = profile1.profile !== null || profile2.profile !== null;
 
-              {/* Text description */}
-              <div className="flex-1 text-xs sm:text-sm text-gray-600 truncate">
-                <span className="text-gray-500">Supported by </span>
-                {contributors.slice(0, 2).map((addr, idx) => (
-                  <span key={addr}>
-                    <ContributorName address={addr} />
-                    {idx === 0 && contributors.length > 1 && ', '}
-                  </span>
-                ))}
-                {hasMore && (
-                  <span className="text-gray-500">
-                    {' '}and {totalCount - contributors.length} other{totalCount - contributors.length !== 1 ? 's' : ''}
-                  </span>
-                )}
+            return (
+              <div className="pt-3 mt-3 border-t border-gray-100/80">
+                <div className="flex items-center gap-3">
+                  {/* Avatar stack - only show if someone has a profile */}
+                  {anyHaveProfiles && (
+                    <div className="flex -space-x-3 flex-shrink-0">
+                      {contributors.map((contributorAddress, index) => (
+                        <ContributorAvatar
+                          key={contributorAddress}
+                          address={contributorAddress}
+                          index={index}
+                          total={contributors.length}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Text description */}
+                  <div className="flex-1 text-xs sm:text-sm text-gray-600 truncate">
+                    <span className="text-gray-500">Supported by </span>
+                    <ContributorsDisplay
+                      contributors={contributors}
+                      totalCount={totalCount}
+                      hasMore={hasMore}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            );
+          })()
         ) : (
           <div className="pt-3 mt-3 border-t border-gray-100/80 text-xs sm:text-sm text-gray-400 italic flex items-center gap-2">
             <svg className="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
