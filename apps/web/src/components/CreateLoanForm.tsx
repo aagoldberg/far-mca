@@ -1007,7 +1007,6 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
                 active={false}
                 completed={false}
                 contributorsCount={0n}
-                termPeriods={BigInt(formData.repaymentWeeks / 2)}
                 imageUrl={formData.imageUrl || undefined}
               />
             </div>

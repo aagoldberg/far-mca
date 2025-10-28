@@ -92,7 +92,6 @@ const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
       active={loanData.active}
       completed={loanData.completed}
       contributorsCount={loanData.contributorsCount}
-      termPeriods={loanData.termPeriods}
       imageUrl={metadata?.image}
       fundraisingDeadline={loanData.fundraisingDeadline}
       businessWebsite={metadata?.loanDetails?.businessWebsite}
