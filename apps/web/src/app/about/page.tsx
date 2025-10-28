@@ -26,7 +26,7 @@ export default function AboutPage() {
             No banks. No credit checks. No collateral. Just people helping people.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Borrowers tell their story, community members vouch by contributing, and every social connection strengthens trust scores algorithmically. Your reputation grows with every successful repayment.
+            Borrowers share their story publicly, community members vouch by contributing, and every social connection strengthens trust scores algorithmically. Your reputation grows with every successful repayment.
           </p>
         </section>
 
