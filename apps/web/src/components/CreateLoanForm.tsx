@@ -753,76 +753,8 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
               )}
             </div>
 
-            {/* Monthly Income (Optional) */}
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <label className="block text-sm font-semibold text-gray-900 mb-2">
-                What do you earn each month? (optional)
-              </label>
-              <select
-                name="monthlyIncome"
-                value={formData.monthlyIncome}
-                onChange={(e) => handleChange('monthlyIncome', e.target.value as IncomeRange)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#3B9B7F] focus:ring-0 outline-none"
-              >
-                <option value={IncomeRange.PREFER_NOT_TO_SAY}>Prefer not to say</option>
-                <option value={IncomeRange.UNDER_1K}>Less than $1,000/month</option>
-                <option value={IncomeRange.ONE_TO_TWO_K}>$1,000 - $2,000/month</option>
-                <option value={IncomeRange.TWO_TO_THREE_HALF_K}>$2,000 - $3,500/month</option>
-                <option value={IncomeRange.THREE_HALF_TO_FIVE_K}>$3,500 - $5,000/month</option>
-                <option value={IncomeRange.FIVE_TO_SEVEN_HALF_K}>$5,000 - $7,500/month</option>
-                <option value={IncomeRange.OVER_SEVEN_HALF_K}>More than $7,500/month</option>
-              </select>
-              <p className="text-xs text-gray-500 mt-2">
-                🔒 Only you see this — helps us make sure payments fit your budget
-              </p>
-            </div>
           </div>
         </div>
-
-        {/* Income Warning */}
-        {paymentPercentage !== null && paymentPercentage > 25 && (
-          <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">⚠️</span>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">
-                  This repayment schedule may be challenging
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Your bi-weekly payment (${biWeeklyPayment.toFixed(2)}) is {paymentPercentage.toFixed(1)}% of your stated monthly income.
-                  Most successful borrowers keep payments under 20% of income.
-                </p>
-                <p className="text-sm text-gray-600 font-medium">Suggestions:</p>
-                <ul className="text-sm text-gray-600 space-y-1 mt-1">
-                  {formData.repaymentWeeks < 24 && (
-                    <li>• Extend timeline to {formData.repaymentWeeks + 8} weeks → ${(parseFloat(formData.amount) / ((formData.repaymentWeeks + 8) / 2)).toFixed(2)} bi-weekly</li>
-                  )}
-                  <li>• Reduce loan amount to ${(INCOME_RANGES[formData.monthlyIncome] * 0.2 * (formData.repaymentWeeks / 2)).toFixed(2)}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {paymentPercentage !== null && paymentPercentage < 20 && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">
-                  This looks manageable!
-                </h3>
-                <p className="text-sm text-gray-700">
-                  Your bi-weekly payment (${biWeeklyPayment.toFixed(2)}) is only {paymentPercentage.toFixed(1)}% of your stated monthly income.
-                  This is well within the recommended range.
-                </p>
-                <p className="text-xs text-gray-600 mt-2">
-                  💡 Tip: Mentioning this in your "repayment plan" above helps build lender confidence.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Section 4: Add a Photo */}
         <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
