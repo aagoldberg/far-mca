@@ -188,76 +188,56 @@ export function LoanCard({
 
       {/* Card content */}
       <div className="relative bg-white rounded-xl transition-shadow duration-300">
-        {/* Header with borrower info on left and status on right */}
-        <div className="px-4 sm:px-5 pt-3 pb-3">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0 flex-1">
-              {hasProfile && profile ? (
-                <>
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
-                    <img
-                      src={profile.pfpUrl}
-                      alt={profile.displayName}
-                      className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                  <span className="text-sm sm:text-base font-semibold text-gray-900 truncate">
-                    {profile.displayName || `@${profile.username}`}
-                  </span>
-                  {businessWebsite && (
-                    <a
-                      href={businessWebsite}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                    >
-                      <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                      </svg>
-                    </a>
-                  )}
-                </>
+        {/* Header with borrower info - only show if has Farcaster profile */}
+        {hasProfile && profile && (
+          <div className="px-4 sm:px-5 pt-3 pb-3">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
+                  <img
+                    src={profile.pfpUrl}
+                    alt={profile.displayName}
+                    className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+                <span className="text-sm sm:text-base font-semibold text-gray-900 truncate">
+                  {profile.displayName || `@${profile.username}`}
+                </span>
+                {businessWebsite && (
+                  <a
+                    href={businessWebsite}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                  >
+                    <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>
+                  </a>
+                )}
+              </div>
+
+              {/* Show days remaining if fundraising, otherwise show status badge */}
+              {statusInfo.showDays && daysRemaining ? (
+                <div className="flex items-center gap-1.5 sm:gap-2 text-sm text-gray-600 flex-shrink-0 bg-gray-50 px-3 py-1.5 rounded-lg">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="font-medium">{daysRemaining}</span>
+                </div>
               ) : (
-                <>
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex-shrink-0 ring-2 ring-gray-100" />
-                  <span className="text-sm sm:text-base font-semibold text-gray-900 truncate">{shortAddress || 'Anonymous'}</span>
-                  {businessWebsite && (
-                    <a
-                      href={businessWebsite}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                    >
-                      <svg className="w-4 h-4 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                      </svg>
-                    </a>
-                  )}
-                </>
+                <span className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold whitespace-nowrap shadow-sm ${statusInfo.className}`}>
+                  {statusInfo.text}
+                </span>
               )}
             </div>
-
-            {/* Show days remaining if fundraising, otherwise show status badge */}
-            {statusInfo.showDays && daysRemaining ? (
-              <div className="flex items-center gap-1.5 sm:gap-2 text-sm text-gray-600 flex-shrink-0 bg-gray-50 px-3 py-1.5 rounded-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="font-medium">{daysRemaining}</span>
-              </div>
-            ) : (
-              <span className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold whitespace-nowrap shadow-sm ${statusInfo.className}`}>
-                {statusInfo.text}
-              </span>
-            )}
           </div>
-        </div>
+        )}
 
       {imageUrl && (
         <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '75%' }}>
@@ -269,6 +249,23 @@ export function LoanCard({
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
+          {/* Status badge overlay when no profile */}
+          {!hasProfile && !profile && (
+            <div className="absolute top-3 right-3">
+              {statusInfo.showDays && daysRemaining ? (
+                <div className="flex items-center gap-1.5 text-xs text-gray-900 bg-white/90 backdrop-blur-sm px-2.5 py-1.5 rounded-lg shadow-md">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="font-semibold">{daysRemaining}</span>
+                </div>
+              ) : (
+                <span className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold shadow-md ${statusInfo.className}`}>
+                  {statusInfo.text}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       )}
 
