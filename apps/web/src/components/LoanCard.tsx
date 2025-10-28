@@ -274,15 +274,11 @@ export function LoanCard({
 
       <div className="p-4 sm:p-5">
         {/* Title */}
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="text-base sm:text-lg font-bold text-gray-900 line-clamp-1 flex-1 min-w-0 group-hover:text-[#2E7D68] transition-colors duration-200">
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-2 flex-1 min-w-0 group-hover:text-[#2E7D68] transition-colors duration-200">
             {name || 'Untitled Loan'}
           </h3>
         </div>
-
-        <p className="text-sm sm:text-base text-gray-600 mb-4 line-clamp-2 min-h-[3rem] sm:min-h-[3rem] overflow-hidden leading-relaxed">
-          {description || 'No description available'}
-        </p>
 
         <div className="mb-3">
           {/* Enhanced progress bar with gradient */}
