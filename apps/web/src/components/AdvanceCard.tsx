@@ -142,13 +142,7 @@ export default function AdvanceCard({ loanAddress }: AdvanceCardProps) {
             </div>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-4 mb-4 text-sm">
-              <div>
-                <p className="text-xs text-gray-500">Term</p>
-                <p className="font-medium text-gray-900">
-                  {loanData.termPeriods.toString()} periods
-                </p>
-              </div>
+            <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
               <div>
                 <p className="text-xs text-gray-500">Contributors</p>
                 <p className="font-medium text-gray-900">
