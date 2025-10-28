@@ -20,6 +20,7 @@ export interface LoanCardProps {
   contributorsCount: bigint;
   termPeriods?: bigint;
   imageUrl?: string;
+  imageAspectRatio?: number; // undefined means free aspect ratio
   fundraisingDeadline?: bigint;
   disbursementTime?: bigint;
   totalRepaid?: bigint;
@@ -152,6 +153,7 @@ export function LoanCard({
   contributorsCount,
   termPeriods,
   imageUrl,
+  imageAspectRatio,
   fundraisingDeadline,
   disbursementTime,
   totalRepaid,
@@ -258,11 +260,18 @@ export function LoanCard({
         </div>
 
       {imageUrl && (
-        <div className="w-full h-48 sm:h-56 bg-gray-100">
+        <div
+          className="w-full bg-gray-100 relative overflow-hidden"
+          style={
+            imageAspectRatio
+              ? { paddingBottom: `${(1 / imageAspectRatio) * 100}%` }
+              : { height: '14rem' } // fallback to fixed height (h-56 = 14rem)
+          }
+        >
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
-            className="w-full h-full object-cover"
+            className={imageAspectRatio ? "absolute inset-0 w-full h-full object-cover" : "w-full h-full object-cover"}
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}

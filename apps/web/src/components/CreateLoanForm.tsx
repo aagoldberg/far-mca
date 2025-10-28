@@ -48,6 +48,7 @@ interface FormData {
 
   // Section 4: Photo
   imageUrl: string;
+  imageAspectRatio?: number; // undefined means free crop
 }
 
 export default function CreateLoanForm() {
@@ -92,7 +93,7 @@ export default function CreateLoanForm() {
     }
   }, [isConnected]);
 
-  const handleChange = (field: keyof FormData, value: string | number) => {
+  const handleChange = (field: keyof FormData, value: string | number | undefined) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
@@ -219,7 +220,7 @@ export default function CreateLoanForm() {
     }
   };
 
-  const handleCropComplete = async (croppedBlob: Blob) => {
+  const handleCropComplete = async (croppedBlob: Blob, aspectRatio: number | undefined) => {
     try {
       const compressedBlob = await resizeAndCompressImage(
         new File([croppedBlob], 'cropped.jpg', { type: 'image/jpeg' })
@@ -227,6 +228,7 @@ export default function CreateLoanForm() {
 
       const previewUrl = URL.createObjectURL(compressedBlob);
       handleChange('imageUrl', previewUrl);
+      handleChange('imageAspectRatio', aspectRatio);
 
       // Store for later IPFS upload
       (window as any).__pendingImageBlob = compressedBlob;
@@ -939,6 +941,7 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
                 contributorsCount={0n}
                 termPeriods={BigInt(formData.repaymentWeeks / 2)}
                 imageUrl={formData.imageUrl || undefined}
+                imageAspectRatio={formData.imageAspectRatio}
               />
             </div>
           </div>

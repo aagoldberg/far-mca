@@ -18,7 +18,7 @@ interface Point {
 
 interface ImageCropModalProps {
   imageSrc: string;
-  onCropComplete: (croppedImage: Blob) => void;
+  onCropComplete: (croppedImage: Blob, aspectRatio: number | undefined) => void;
   onCancel: () => void;
 }
 
@@ -117,7 +117,7 @@ export default function ImageCropModal({
     setIsProcessing(true);
     try {
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-      onCropComplete(croppedImage);
+      onCropComplete(croppedImage, aspectRatio);
     } catch (error) {
       console.error('Error cropping image:', error);
       alert('Failed to crop image. Please try again.');
