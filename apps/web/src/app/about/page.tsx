@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { EyeIcon, ChartBarIcon, BoltIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
 export default function AboutPage() {
   return (
@@ -11,7 +12,7 @@ export default function AboutPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             About LendFriend
           </h1>
-          <p className="text-xl md:text-2xl font-light whitespace-nowrap">Community loans based on character, not collateral or credit scores.</p>
+          <p className="text-xl md:text-2xl font-light whitespace-nowrap">Loans backed by your relationships, not your credit score.</p>
         </div>
       </div>
 
@@ -22,11 +23,11 @@ export default function AboutPage() {
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">What We Do</h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            LendFriend makes it easy for Farcaster community members to get and give interest-free loans.
+            LendFriend makes it easy for community members to get and give interest-free loans.
             No banks. No credit checks. No collateral. Just people helping people.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Borrowers share their story publicly, community members vouch by contributing, and every social connection strengthens trust scores algorithmically. Your reputation grows with every successful repayment.
+            Borrowers share their story publicly, community members vouch by contributing, and contributions from close connections strengthen your trust score algorithmically. Your reputation grows with every successful repayment.
           </p>
         </section>
 
@@ -44,7 +45,7 @@ export default function AboutPage() {
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Create a Loan Request</h3>
                 <p className="text-gray-600">
                   Share your story publicly, set your funding goal (up to $5,000), and choose your repayment timeline.
-                  The closer your network, the stronger your trust score.
+                  Your trust score is strongest when close connections vouch for you.
                 </p>
               </div>
             </div>
@@ -57,7 +58,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Get Community Support & Share</h3>
                 <p className="text-gray-600">
-                  Friends and community members vouch for you by contributing USDC. Each contribution strengthens your trust score algorithmically.
+                  Friends and community members vouch for you by contributing. Each contribution strengthens your trust score algorithmically.
                   Share your loan on Twitter, Farcaster, Bluesky, Facebook and more to expand your network and reach your funding goal faster!
                 </p>
               </div>
@@ -98,40 +99,12 @@ export default function AboutPage() {
         {/* Who It's For */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Who It's For</h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Borrowers */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Borrowers
-              </h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Small business owners</li>
-                <li>• Freelancers and creators</li>
-                <li>• Anyone needing a helping hand</li>
-                <li>• People building in web3</li>
-              </ul>
-            </div>
-
-            {/* Lenders */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <svg className="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Lenders
-              </h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Community supporters</li>
-                <li>• Impact-focused givers</li>
-                <li>• Friends helping friends</li>
-                <li>• Anyone who believes in trust</li>
-              </ul>
-            </div>
-          </div>
+          <ul className="space-y-3 text-lg text-gray-700">
+            <li>• Small business owners needing working capital</li>
+            <li>• Immigrants without local credit history</li>
+            <li>• Gig workers and freelancers with irregular income</li>
+            <li>• People facing unexpected expenses</li>
+          </ul>
         </section>
 
         {/* Why Different */}
@@ -140,28 +113,40 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">🔍 Fully Transparent</h4>
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <EyeIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Fully Transparent
+              </h4>
               <p className="text-sm text-gray-600">
                 All loans and repayments are on-chain and publicly visible. No hidden fees or terms.
               </p>
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">🤝 Community-Driven</h4>
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <ChartBarIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Algorithmic Trust
+              </h4>
               <p className="text-sm text-gray-600">
-                Real people with Farcaster identities. Reputation matters more than credit scores.
+                Trust scores based on how well your lenders know you. The closer they are to you, the stronger your score.
               </p>
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">⚡ Low Fees</h4>
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <BoltIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Low Fees
+              </h4>
               <p className="text-sm text-gray-600">
                 Built on Base L2. Gas costs are pennies, not barriers.
               </p>
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <h4 className="font-bold text-gray-900 mb-2">🔐 Self-Custodial</h4>
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <LockClosedIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Self-Custodial
+              </h4>
               <p className="text-sm text-gray-600">
                 Smart contracts handle everything. No middlemen, no counterparty risk.
               </p>
@@ -174,7 +159,7 @@ export default function AboutPage() {
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6 text-center">
             <h3 className="text-lg font-bold text-gray-900 mb-2">Our Vision & Roadmap</h3>
             <p className="text-gray-700 mb-4">
-              See how we're building the future of reputation-backed credit, from bootstrap to global scale.
+              See how we're building the future of reputation-backed lending, from bootstrap to global scale.
             </p>
             <Link
               href="/vision"

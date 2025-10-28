@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { EyeIcon, ChartBarIcon, BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 export default function AboutPage() {
   return (
@@ -10,7 +11,7 @@ export default function AboutPage() {
         <div className="max-w-2xl mx-auto px-4">
           <h1 className="text-2xl font-bold mb-2">About LendFriend</h1>
           <p className="text-sm opacity-90">
-            Zero-interest community loans on Farcaster
+            Loans backed by your relationships, not your credit score
           </p>
         </div>
       </div>
@@ -26,7 +27,7 @@ export default function AboutPage() {
             No banks, credit checks, or collateral—just people helping people.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">
-            Borrowers share their story, the community contributes, and repayments are transparent on-chain.
+            Borrowers share their story, community members vouch by contributing, and contributions from close connections strengthen your trust score algorithmically. Your reputation grows with every successful repayment.
           </p>
         </section>
 
@@ -41,7 +42,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-sm font-bold text-gray-900 mb-1">Create Request</h3>
                 <p className="text-xs text-gray-600">
-                  Set your goal ($100-$5k) and timeline. Your Farcaster profile is your identity.
+                  Share your story, set your goal ($100-$5k), and choose your timeline. Your trust score is strongest when close connections vouch for you.
                 </p>
               </div>
             </div>
@@ -53,7 +54,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-sm font-bold text-gray-900 mb-1">Get Support & Share</h3>
                 <p className="text-xs text-gray-600">
-                  Friends contribute USDC on Base L2. Share your loan on Twitter, Farcaster, WhatsApp & more to reach your community and hit your goal faster!
+                  Friends vouch for you by contributing. Each contribution strengthens your trust score algorithmically. Share on Farcaster, Twitter, WhatsApp & more to reach your goal faster!
                 </p>
               </div>
             </div>
@@ -65,7 +66,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-sm font-bold text-gray-900 mb-1">Repay</h3>
                 <p className="text-xs text-gray-600">
-                  Pay back on your timeline. All repayments are transparent on-chain.
+                  Pay back on your timeline. Every successful repayment builds your reputation for future opportunities. All transactions are transparent on-chain.
                 </p>
               </div>
             </div>
@@ -76,9 +77,14 @@ export default function AboutPage() {
         <section>
           <div className="bg-green-50 border border-green-200 rounded-lg p-4">
             <h2 className="text-base font-bold text-gray-900 mb-2">Why 0% Interest?</h2>
+            <p className="text-xs text-gray-700 leading-relaxed mb-2">
+              We're starting with pure generosity. Zero interest means lenders give because they want to help, not chase returns. It keeps everything simple and builds real community trust.
+            </p>
+            <p className="text-xs text-gray-700 leading-relaxed mb-2">
+              Borrowers repay to build their reputation. Lenders support people they believe in. If borrowers want to show extra gratitude, they can leave an optional tip to share with their lenders.
+            </p>
             <p className="text-xs text-gray-700 leading-relaxed">
-              We believe in building trust, not extracting profit. Lenders give to support their community,
-              borrowers repay to build reputation. It's altruistic by design.
+              When people succeed here, new opportunities open up—for everyone.
             </p>
           </div>
         </section>
@@ -86,25 +92,12 @@ export default function AboutPage() {
         {/* Who It's For */}
         <section>
           <h2 className="text-xl font-bold text-gray-900 mb-3">Who It's For</h2>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <h3 className="text-sm font-bold text-gray-900 mb-2">Borrowers</h3>
-              <ul className="space-y-1 text-xs text-gray-600">
-                <li>• Small business owners</li>
-                <li>• Freelancers & creators</li>
-                <li>• Web3 builders</li>
-              </ul>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <h3 className="text-sm font-bold text-gray-900 mb-2">Lenders</h3>
-              <ul className="space-y-1 text-xs text-gray-600">
-                <li>• Community supporters</li>
-                <li>• Impact-focused givers</li>
-                <li>• Friends helping friends</li>
-              </ul>
-            </div>
-          </div>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li>• Small business owners needing working capital</li>
+            <li>• Immigrants without local credit history</li>
+            <li>• Gig workers and freelancers with irregular income</li>
+            <li>• People facing unexpected expenses</li>
+          </ul>
         </section>
 
         {/* What Makes Us Different */}
@@ -112,30 +105,42 @@ export default function AboutPage() {
           <h2 className="text-xl font-bold text-gray-900 mb-3">What Makes Us Different</h2>
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <h4 className="font-bold text-gray-900 mb-1 text-xs">🔍 Transparent</h4>
+              <h4 className="font-bold text-gray-900 mb-1 text-xs flex items-center gap-1">
+                <EyeIcon className="w-4 h-4 text-[#3B9B7F]" />
+                Transparent
+              </h4>
               <p className="text-[10px] text-gray-600">
                 All on-chain and publicly visible
               </p>
             </div>
 
             <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <h4 className="font-bold text-gray-900 mb-1 text-xs">🤝 Community</h4>
+              <h4 className="font-bold text-gray-900 mb-1 text-xs flex items-center gap-1">
+                <ChartBarIcon className="w-4 h-4 text-[#3B9B7F]" />
+                Algorithmic Trust
+              </h4>
               <p className="text-[10px] text-gray-600">
-                Real Farcaster identities
+                Trust scores based on lender proximity
               </p>
             </div>
 
             <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <h4 className="font-bold text-gray-900 mb-1 text-xs">⚡ Low Fees</h4>
+              <h4 className="font-bold text-gray-900 mb-1 text-xs flex items-center gap-1">
+                <ShieldCheckIcon className="w-4 h-4 text-[#3B9B7F]" />
+                Verified Identity
+              </h4>
+              <p className="text-[10px] text-gray-600">
+                Real Farcaster profiles
+              </p>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <h4 className="font-bold text-gray-900 mb-1 text-xs flex items-center gap-1">
+                <BoltIcon className="w-4 h-4 text-[#3B9B7F]" />
+                Low Fees
+              </h4>
               <p className="text-[10px] text-gray-600">
                 Base L2 gas costs
-              </p>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <h4 className="font-bold text-gray-900 mb-1 text-xs">🔐 Safe</h4>
-              <p className="text-[10px] text-gray-600">
-                Smart contract secured
               </p>
             </div>
           </div>
@@ -146,7 +151,7 @@ export default function AboutPage() {
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4">
             <h3 className="text-sm font-bold text-gray-900 mb-1">Our Vision & Roadmap</h3>
             <p className="text-xs text-gray-700 mb-3">
-              See how we're building reputation-backed credit from bootstrap to scale.
+              See how we're building the future of reputation-backed lending, from bootstrap to global scale.
             </p>
             <Link
               href="/vision"
@@ -162,7 +167,7 @@ export default function AboutPage() {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h3 className="text-sm font-bold text-gray-900 mb-1">Want the Full Story?</h3>
             <p className="text-xs text-gray-700 mb-3">
-              Deep dive into our research and the academic foundations behind reputation lending.
+              Deep dive into our research, evolution strategy, and the academic foundations behind reputation-backed lending.
             </p>
             <Link
               href="/research"
