@@ -367,12 +367,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             <span className="text-gray-600">Repayment Multiple</span>
             <span className="font-medium text-gray-900">1.0x</span>
           </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Term</span>
-            <span className="font-medium text-gray-900">
-              {loanData.termPeriods.toString()} periods
-            </span>
-          </div>
           <div className="flex justify-between pt-2 border-t border-green-200">
             <span className="text-gray-600">You'll receive back</span>
             <span className="font-semibold text-[#3B9B7F]">
