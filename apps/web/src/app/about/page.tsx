@@ -43,8 +43,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Create a Loan Request</h3>
                 <p className="text-gray-600">
-                  Tell your story, set your funding goal (up to $5,000), and choose your repayment timeline.
-                  Your Farcaster profile serves as your identity.
+                  Share your story publicly, set your funding goal (up to $5,000), and choose your repayment timeline.
+                  Your social connections and character build your creditworthiness.
                 </p>
               </div>
             </div>
@@ -57,9 +57,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Get Community Support & Share</h3>
                 <p className="text-gray-600">
-                  Friends and community members contribute USDC to help you reach your goal.
-                  Share your loan on Twitter, Farcaster, WhatsApp, LinkedIn & more to spread the word
-                  and reach your funding goal faster! All contributions are on Base L2 for low fees.
+                  Friends and community members vouch for you by contributing USDC. Each contribution strengthens your trust score algorithmically.
+                  Share your loan on Twitter, Farcaster, Bluesky, Facebook and more to expand your network and reach your funding goal faster!
                 </p>
               </div>
             </div>
@@ -72,8 +71,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Repay When You Can</h3>
                 <p className="text-gray-600">
-                  Pay back on your timeline. All repayments are transparent and on-chain.
-                  Lenders can claim their share as you repay.
+                  Pay back on your timeline. Every successful repayment builds your reputation for future opportunities.
+                  All transactions are transparent and on-chain, and lenders can claim their share as you repay.
                 </p>
               </div>
             </div>
