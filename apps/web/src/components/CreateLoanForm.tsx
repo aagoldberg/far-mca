@@ -929,7 +929,7 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
               <LoanCard
                 address={"0x0000000000000000000000000000000000000000" as `0x${string}`}
                 borrower={address || "0x0000000000000000000000000000000000000000" as `0x${string}`}
-                name={profile?.displayName?.split(' ')[0] || profile?.username || "Your Name"}
+                name={formData.title || "What's this loan for?"}
                 description={formData.loanUseAndImpact || "What will this loan help you achieve, and how will you pay it back?"}
                 principal={formData.amount ? parseUnits(formData.amount, USDC_DECIMALS) : 0n}
                 totalFunded={0n}
