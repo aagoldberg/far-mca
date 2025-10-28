@@ -918,7 +918,7 @@ For repayment: I currently earn $800/month and expect $2,000 after. The bi-weekl
         )}
 
         {/* Loan Card Preview */}
-        {(formData.title || formData.aboutYou || formData.amount) && (
+        {(formData.title || formData.loanUseAndImpact || formData.amount || formData.imageUrl) && (
           <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-300 rounded-xl p-5 shadow-sm">
             <h2 className="text-lg font-bold text-gray-900 mb-1">Preview</h2>
             <p className="text-sm text-gray-600 mb-5">
