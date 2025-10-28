@@ -108,13 +108,13 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
       setError(null);
 
       try {
-        // Check cache first
+        // Check cache first (including negative results)
         const cacheKey = address.toLowerCase();
         const cached = profileCache.get(cacheKey);
 
-        if (cached) {
+        if (cached !== null) {
           if (process.env.NODE_ENV === 'development') {
-            console.log(`[Profile Cache HIT] ${address.slice(0, 6)}...${address.slice(-4)}`);
+            console.log(`[Profile Cache HIT] ${address.slice(0, 6)}...${address.slice(-4)}`, cached.profile ? '✓ Profile' : '✗ No Profile');
           }
           setProfile(cached.profile);
           setReputation(cached.reputation);
@@ -123,7 +123,7 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
         }
 
         if (process.env.NODE_ENV === 'development') {
-          console.log(`[Profile Cache MISS] ${address.slice(0, 6)}...${address.slice(-4)}`);
+          console.log(`[Profile Cache MISS] ${address.slice(0, 6)}...${address.slice(-4)} - Fetching from API`);
         }
 
         // Fetch user by verified address using the new API
@@ -135,6 +135,14 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
 
         // Gracefully handle cases where no profile exists - this is expected for most users
         if (!user) {
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`[Profile] ${address.slice(0, 6)}...${address.slice(-4)} - No Farcaster profile found, caching negative result`);
+          }
+          // Cache negative result to avoid repeated API calls
+          profileCache.set(cacheKey, {
+            profile: null,
+            reputation: null,
+          });
           setProfile(null);
           setReputation(null);
           setError(null); // Clear any previous errors
@@ -191,6 +199,14 @@ export function useFarcasterProfile(address: `0x${string}` | undefined) {
         if (process.env.NODE_ENV === 'development') {
           console.debug('Farcaster profile not found or API error:', err);
         }
+
+        // Cache negative result to prevent repeated failed API calls
+        const cacheKey = address.toLowerCase();
+        profileCache.set(cacheKey, {
+          profile: null,
+          reputation: null,
+        });
+
         setError(null); // Don't expose errors to the component
         setProfile(null);
         setReputation(null);
