@@ -82,20 +82,6 @@ function createImage(url: string): Promise<HTMLImageElement> {
   });
 }
 
-type AspectRatioOption = {
-  label: string;
-  value: number | undefined;
-  icon: string;
-};
-
-const ASPECT_RATIOS: AspectRatioOption[] = [
-  { label: '16:9', value: 16 / 9, icon: '🖼️' },
-  { label: '4:3', value: 4 / 3, icon: '📷' },
-  { label: '1:1', value: 1, icon: '⬜' },
-  { label: '3:4', value: 3 / 4, icon: '📱' },
-  { label: 'Free', value: undefined, icon: '✂️' },
-];
-
 export default function ImageCropModal({
   imageSrc,
   onCropComplete,
@@ -105,7 +91,7 @@ export default function ImageCropModal({
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [aspectRatio, setAspectRatio] = useState<number | undefined>(4 / 3);
+  const aspectRatio = 1; // Fixed 1:1 square ratio
 
   const onCropAreaChange = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -117,7 +103,7 @@ export default function ImageCropModal({
     setIsProcessing(true);
     try {
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-      onCropComplete(croppedImage, aspectRatio);
+      onCropComplete(croppedImage, 1); // Always 1:1 square
     } catch (error) {
       console.error('Error cropping image:', error);
       alert('Failed to crop image. Please try again.');
@@ -156,30 +142,6 @@ export default function ImageCropModal({
 
       {/* Controls */}
       <div className="bg-white px-4 py-4 border-t">
-        {/* Aspect Ratio Selection */}
-        <div className="mb-4">
-          <label className="text-sm font-medium text-gray-700 mb-2 block">
-            Aspect Ratio
-          </label>
-          <div className="flex gap-2">
-            {ASPECT_RATIOS.map((ratio) => (
-              <button
-                key={ratio.label}
-                type="button"
-                onClick={() => setAspectRatio(ratio.value)}
-                className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                  aspectRatio === ratio.value
-                    ? 'bg-[#3B9B7F] text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <div className="text-base mb-0.5">{ratio.icon}</div>
-                <div className="text-xs">{ratio.label}</div>
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div className="mb-4">
           <label className="text-sm font-medium text-gray-700 mb-2 block">
             Zoom
