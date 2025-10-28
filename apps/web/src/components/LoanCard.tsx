@@ -260,11 +260,11 @@ export function LoanCard({
         </div>
 
       {imageUrl && (
-        <div className="w-full h-48 sm:h-56 bg-gray-100">
+        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '100%' }}>
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}
