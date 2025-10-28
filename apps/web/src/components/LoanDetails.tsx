@@ -40,6 +40,7 @@ interface LoanMetadata {
   loanDetails?: {
     aboutYou?: string;
     businessWebsite?: string;
+    twitterHandle?: string;
     loanUseAndImpact?: string;
     repaymentPlan?: string;
   };

@@ -11,6 +11,7 @@ interface TrustSignalsProps {
   borrowerAddress: `0x${string}`;
   loanAddress: `0x${string}`;
   businessWebsite?: string;
+  twitterHandle?: string;
 }
 
 // Tooltip component
@@ -44,6 +45,7 @@ export function TrustSignals({
   borrowerAddress,
   loanAddress,
   businessWebsite,
+  twitterHandle,
 }: TrustSignalsProps) {
   const { profile, reputation } = useFarcasterProfile(borrowerAddress);
   const { score: gitcoinScore } = useGitcoinPassport(borrowerAddress);
@@ -86,7 +88,7 @@ export function TrustSignals({
   const neynarStatus = getNeynarStatus(profile?.score);
 
   // Check if we have any data to display
-  const hasAnyData = businessWebsite || gitcoinScore?.score || (hasContributors && support) || profile;
+  const hasAnyData = businessWebsite || twitterHandle || gitcoinScore?.score || (hasContributors && support) || profile;
 
   if (!hasAnyData) {
     return null; // Don't show the section at all if there's no data
@@ -127,6 +129,33 @@ export function TrustSignals({
                 className="text-sm text-blue-600 hover:underline break-all"
               >
                 {businessWebsite}
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Twitter/X Handle */}
+        {twitterHandle && (
+          <div className="flex items-start gap-3">
+            <svg
+              className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-medium text-gray-700 flex items-center">
+                X (Twitter)
+                <InfoTooltip text="Borrower's X/Twitter account for additional verification." />
+              </div>
+              <a
+                href={`https://twitter.com/${twitterHandle.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:underline break-all"
+              >
+                @{twitterHandle.replace('@', '')}
               </a>
             </div>
           </div>

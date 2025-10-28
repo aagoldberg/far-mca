@@ -47,6 +47,7 @@ interface LoanMetadata {
   loanDetails?: {
     aboutYou?: string;
     businessWebsite?: string;
+    twitterHandle?: string;
     loanUseAndImpact?: string;
     repaymentPlan?: string;
   };
@@ -540,7 +541,8 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         <TrustSignals
           borrowerAddress={loanData.borrower}
           loanAddress={loanAddress}
-          businessWebsite={metadata?.businessWebsite}
+          businessWebsite={metadata?.businessWebsite || metadata?.loanDetails?.businessWebsite}
+          twitterHandle={metadata?.loanDetails?.twitterHandle}
         />
       </div>
 
