@@ -326,7 +326,7 @@ export function LoanCard({
           </div>
           <div className="flex justify-between items-center text-xs sm:text-sm">
             <span className="font-bold text-gray-900 bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] bg-clip-text text-transparent">
-              ${formatUSDC(totalFunded)}
+              ${formatUSDC(totalFunded)} raised
             </span>
             <span className="text-gray-500 font-medium">
               of ${formatUSDC(principal)}
