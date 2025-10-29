@@ -2,7 +2,17 @@
 
 ## Social Proximity Measurement
 
-We calculate social distance between borrower and lender by measuring mutual connections on Farcaster. The algorithm is based on research from Kiva and Grameen Bank showing that **20+ friend/family lenders achieve 98% repayment vs 88% with 0 friend/family lenders—a 10% improvement from social proximity alone.**
+We calculate social distance between borrower and lender by measuring mutual connections on Farcaster. Research from Kiva and Grameen Bank proves that social proximity dramatically improves repayment rates.
+
+{% hint style="success" %}
+📊 **Impact of Social Connections**
+
+- **20+ friend/family lenders**: 98% repayment rate
+- **0 friend/family lenders**: 88% repayment rate
+- **Result**: 10% improvement from social proximity alone
+
+*Source: Kiva and Grameen Bank research*
+{% endhint %}
 
 ## The Algorithm
 

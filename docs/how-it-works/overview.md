@@ -9,7 +9,9 @@ Here's exactly how we turn relationships into credit scores.
 ## The Core Mechanics
 
 ### 1. Trust Score Algorithm
-We calculate social distance between borrower and lender by measuring mutual connections on Farcaster. The algorithm is based on research from Kiva and Grameen Bank showing that **20+ friend/family lenders achieve 98% repayment vs 88% with 0 friend/family lenders—a 10% improvement from social proximity alone.**
+We calculate social distance between borrower and lender by measuring mutual connections on Farcaster.
+
+Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve **10% higher repayment rates**—proving that social proximity is a powerful predictor of creditworthiness.
 
 [→ Learn about the Trust Score Algorithm](trust-score-algorithm.md)
 
