@@ -42,7 +42,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-sm font-bold text-gray-900 mb-1">Create Request</h3>
                 <p className="text-xs text-gray-600">
-                  Share your story, set your goal ($100-$5k), and choose your timeline. Your trust score is strongest when close connections vouch for you.
+                  Share your story, set your goal ($100-$5k), and choose your timeline.
                 </p>
               </div>
             </div>

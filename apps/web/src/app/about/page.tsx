@@ -45,7 +45,6 @@ export default function AboutPage() {
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Create a Loan Request</h3>
                 <p className="text-gray-600">
                   Share your story publicly, set your funding goal (up to $5,000), and choose your repayment timeline.
-                  Your trust score is strongest when close connections vouch for you.
                 </p>
               </div>
             </div>
