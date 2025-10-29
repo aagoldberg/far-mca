@@ -37,6 +37,57 @@ function union<T>(arr1: T[], arr2: T[]): T[] {
 }
 
 /**
+ * Calculate Adamic-Adar score for mutual connections
+ * Weights each mutual connection inversely by their degree (connection count)
+ * Rare connections are more valuable than common ones
+ *
+ * @param mutualFids Array of FIDs representing mutual connections
+ * @returns Adamic-Adar score (sum of 1/log(degree) for each mutual)
+ */
+async function calculateAdamicAdarScore(mutualFids: number[]): Promise<number> {
+  if (mutualFids.length === 0) return 0;
+
+  try {
+    // Fetch connection counts for all mutual connections in parallel
+    const degrees = await Promise.all(
+      mutualFids.map(async (fid) => {
+        try {
+          const [followers, following] = await Promise.all([
+            neynarClient.fetchFollowers(fid),
+            neynarClient.fetchFollowing(fid),
+          ]);
+          // Total degree = followers + following
+          return followers.length + following.length;
+        } catch (error) {
+          console.warn(`[Adamic-Adar] Failed to fetch degree for FID ${fid}:`, error);
+          // If we can't fetch, assume moderate degree to avoid skewing score
+          return 100;
+        }
+      })
+    );
+
+    // Calculate Adamic-Adar score: Σ (1 / log(degree))
+    let aaScore = 0;
+    for (const degree of degrees) {
+      if (degree > 1) {
+        // Use natural log (Math.log) for standard Adamic-Adar
+        aaScore += 1 / Math.log(degree);
+      } else {
+        // Edge case: mutual has 0-1 connections (new account)
+        // Give maximum weight (1.0) since this is a very rare, strong signal
+        aaScore += 1.0;
+      }
+    }
+
+    return aaScore;
+  } catch (error) {
+    console.error('[Adamic-Adar] Error calculating score:', error);
+    // Fall back to simple count if AA calculation fails
+    return mutualFids.length * 0.3; // Conservative estimate
+  }
+}
+
+/**
  * Calculate social proximity between two Farcaster users
  * @param borrowerFid Borrower's Farcaster ID
  * @param lenderFid Lender's Farcaster ID
@@ -82,26 +133,37 @@ export async function calculateSocialProximity(
       ? (borrowerScore + lenderScore) / 2
       : 0.7;
 
-    // Quality-adjusted mutual connections
-    // Example: 20 mutuals × 0.9 quality = 18 "effective" mutuals (high quality)
-    //          20 mutuals × 0.3 quality = 6 "effective" mutuals (low quality/spam)
-    const effectiveMutuals = mutualCount * avgQuality;
+    // Calculate Adamic-Adar score for mutual connections
+    // This weights each mutual by how "rare" they are (inverse of their degree)
+    // A mutual friend with 20 connections is weighted higher than one with 20,000
+    const rawAdamicAdar = await calculateAdamicAdarScore(mutualConnections);
+
+    // Quality-adjust the Adamic-Adar score
+    // Multiply by quality to penalize spam/bot accounts
+    const effectiveMutuals = rawAdamicAdar * avgQuality;
 
     // Calculate social distance score (0-100, higher = closer)
     let socialDistance = 0;
 
-    // Base score from quality-adjusted mutual connections (up to 60 points)
-    // Research: 20+ connections = 98% repayment vs 88% with 0 connections
-    // Now weighted by account quality to prevent spam/bot gaming
-    if (effectiveMutuals >= 18) {  // Was 20, now quality-adjusted
+    // Base score from Adamic-Adar weighted mutual connections (up to 60 points)
+    // Adamic-Adar weights connections by rarity - a friend with 20 connections
+    // is worth more than an influencer with 20,000 connections
+    //
+    // Calibration based on typical Farcaster networks:
+    // - AA score of 20+ = very tight-knit community (60 points)
+    // - AA score of 10+ = strong social ties (50 points)
+    // - AA score of 5+ = moderate connections (35 points)
+    // - AA score of 2.5+ = some shared connections (20 points)
+    // - AA score of 1+ = weak connection (10 points)
+    if (effectiveMutuals >= 20) {
       socialDistance += 60;
-    } else if (effectiveMutuals >= 9) {  // Was 10
+    } else if (effectiveMutuals >= 10) {
       socialDistance += 50;
-    } else if (effectiveMutuals >= 4.5) {  // Was 5
+    } else if (effectiveMutuals >= 5) {
       socialDistance += 35;
-    } else if (effectiveMutuals >= 2.5) {  // Was 3
+    } else if (effectiveMutuals >= 2.5) {
       socialDistance += 20;
-    } else if (effectiveMutuals >= 0.8) {  // Was 1
+    } else if (effectiveMutuals >= 1) {
       socialDistance += 10;
     }
 
