@@ -37,7 +37,7 @@ export default function HowItWorksPage() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">1. Trust Score Algorithm</h2>
 
-          <div className="bg-gradient-to-br from-green-50 to-blue-50 border border-green-200 rounded-xl p-8 mb-8">
+          <div className="bg-white border border-gray-200 rounded-lg p-8 mb-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">Social Proximity Measurement</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
               We calculate social distance between borrower and lender by measuring mutual connections on Farcaster.
@@ -46,12 +46,12 @@ export default function HowItWorksPage() {
             </p>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-6 mb-6">
-            <h4 className="font-bold text-gray-900 mb-3">The Algorithm</h4>
+          <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
+            <h4 className="font-bold text-gray-900 mb-4">The Algorithm</h4>
 
-            <div className="space-y-4 text-sm">
+            <div className="space-y-6 text-sm">
               <div>
-                <div className="font-semibold text-gray-900 mb-2">Step 1: Identify Mutual Connections</div>
+                <div className="font-semibold text-gray-900 mb-3">Step 1: Identify Mutual Connections</div>
                 <div className="bg-white rounded-lg p-4 border border-gray-200">
                   <p className="text-gray-700 mb-2">
                     Let B = borrower's social network (followers ∪ following)<br/>
@@ -62,100 +62,99 @@ export default function HowItWorksPage() {
               </div>
 
               <div>
-                <div className="font-semibold text-gray-900 mb-2">Step 2: Quality Weighting</div>
+                <div className="font-semibold text-gray-900 mb-3">Step 2: Quality Weighting</div>
                 <div className="bg-white rounded-lg p-4 border border-gray-200">
                   <p className="text-gray-700 mb-3">
                     Filter spam/bots using identity quality scores (0-1 scale):
                   </p>
-                  <div className="bg-gray-50 p-3 rounded font-mono text-xs">
+                  <div className="bg-gray-50 p-3 rounded border border-gray-200 font-mono text-xs">
                     Q<sub>avg</sub> = (Q<sub>borrower</sub> + Q<sub>lender</sub>) / 2
                   </div>
-                  <div className="bg-gray-50 p-3 rounded font-mono text-xs mt-2">
+                  <div className="bg-gray-50 p-3 rounded border border-gray-200 font-mono text-xs mt-2">
                     M<sub>effective</sub> = M × Q<sub>avg</sub>
                   </div>
                 </div>
               </div>
 
               <div>
-                <div className="font-semibold text-gray-900 mb-2">Step 3: Calculate Social Distance Score (0-100)</div>
+                <div className="font-semibold text-gray-900 mb-3">Step 3: Calculate Social Distance Score (0-100)</div>
                 <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-gray-700 mb-3">The score has three components:</p>
+                  <p className="text-gray-700 mb-4">The score has three components:</p>
 
                   <div className="space-y-3">
-                    <div className="bg-blue-50 p-3 rounded">
-                      <div className="font-semibold text-blue-900 mb-1">Base Score (max 60 points)</div>
-                      <div className="text-xs text-blue-800">
-                        Based on effective mutual connections:<br/>
-                        • M<sub>eff</sub> ≥ 18 → 60 points<br/>
-                        • M<sub>eff</sub> ≥ 9 → 50 points<br/>
-                        • M<sub>eff</sub> ≥ 4.5 → 35 points<br/>
-                        • M<sub>eff</sub> ≥ 2.5 → 20 points<br/>
-                        • M<sub>eff</sub> ≥ 0.8 → 10 points
+                    <div className="bg-white border border-gray-300 p-4 rounded">
+                      <div className="font-semibold text-gray-900 mb-2">Base Score (max 60 points)</div>
+                      <div className="text-xs text-gray-700 space-y-1">
+                        <div>• M<sub>eff</sub> ≥ 18 → 60 points</div>
+                        <div>• M<sub>eff</sub> ≥ 9 → 50 points</div>
+                        <div>• M<sub>eff</sub> ≥ 4.5 → 35 points</div>
+                        <div>• M<sub>eff</sub> ≥ 2.5 → 20 points</div>
+                        <div>• M<sub>eff</sub> ≥ 0.8 → 10 points</div>
                       </div>
                     </div>
 
-                    <div className="bg-purple-50 p-3 rounded">
-                      <div className="font-semibold text-purple-900 mb-1">Overlap Bonus (max 30 points)</div>
-                      <div className="text-xs text-purple-800">
+                    <div className="bg-white border border-gray-300 p-4 rounded">
+                      <div className="font-semibold text-gray-900 mb-2">Overlap Bonus (max 30 points)</div>
+                      <div className="text-xs text-gray-700">
                         P<sub>overlap</sub> = (M / min(|B|, |L|)) × 100<br/>
                         Bonus = min(P<sub>overlap</sub> × 3, 30) if P<sub>overlap</sub> &gt; 10%
                       </div>
                     </div>
 
-                    <div className="bg-green-50 p-3 rounded">
-                      <div className="font-semibold text-green-900 mb-1">Mutual Follow Bonus (max 10 points)</div>
-                      <div className="text-xs text-green-800">
+                    <div className="bg-white border border-gray-300 p-4 rounded">
+                      <div className="font-semibold text-gray-900 mb-2">Mutual Follow Bonus (max 10 points)</div>
+                      <div className="text-xs text-gray-700">
                         • Both follow each other → +10 points<br/>
                         • One-way follow → +5 points
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 p-3 rounded font-mono text-xs mt-3">
+                  <div className="bg-gray-50 p-3 rounded border border-gray-200 font-mono text-xs mt-4">
                     S<sub>total</sub> = min(S<sub>base</sub> + S<sub>overlap</sub> + S<sub>mutual</sub>, 100)
                   </div>
                 </div>
               </div>
             </div>
 
-            <h4 className="font-bold text-gray-900 mb-3 mt-6">Risk Tier Classification</h4>
+            <h4 className="font-bold text-gray-900 mb-4 mt-8">Risk Tier Classification</h4>
             <div className="space-y-3">
-              <div className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
-                <div className="font-bold text-green-900">LOW RISK</div>
-                <p className="text-sm text-green-800">M<sub>eff</sub> ≥ 9 OR S<sub>total</sub> ≥ 60</p>
+              <div className="bg-white border-l-4 border-green-500 p-4 rounded border border-gray-200">
+                <div className="font-bold text-gray-900">LOW RISK</div>
+                <p className="text-sm text-gray-700">M<sub>eff</sub> ≥ 9 OR S<sub>total</sub> ≥ 60</p>
               </div>
-              <div className="bg-yellow-50 border-l-4 border-yellow-500 p-3 rounded">
-                <div className="font-bold text-yellow-900">MEDIUM RISK</div>
-                <p className="text-sm text-yellow-800">M<sub>eff</sub> ≥ 2.5 OR S<sub>total</sub> ≥ 30</p>
+              <div className="bg-white border-l-4 border-yellow-500 p-4 rounded border border-gray-200">
+                <div className="font-bold text-gray-900">MEDIUM RISK</div>
+                <p className="text-sm text-gray-700">M<sub>eff</sub> ≥ 2.5 OR S<sub>total</sub> ≥ 30</p>
               </div>
-              <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded">
-                <div className="font-bold text-red-900">HIGH RISK</div>
-                <p className="text-sm text-red-800">M<sub>eff</sub> &lt; 2.5 AND S<sub>total</sub> &lt; 30</p>
+              <div className="bg-white border-l-4 border-red-500 p-4 rounded border border-gray-200">
+                <div className="font-bold text-gray-900">HIGH RISK</div>
+                <p className="text-sm text-gray-700">M<sub>eff</sub> &lt; 2.5 AND S<sub>total</sub> &lt; 30</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-xl p-6">
-            <h4 className="font-bold text-gray-900 mb-3">Loan-Level Support Strength</h4>
-            <p className="text-gray-700 mb-3">
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h4 className="font-bold text-gray-900 mb-4">Loan-Level Support Strength</h4>
+            <p className="text-gray-700 mb-4">
               For the entire loan, we aggregate proximity across all lenders:
             </p>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
               <div className="space-y-2 text-sm text-gray-700">
                 <div className="flex items-center gap-2">
-                  <div className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">
+                  <div className="font-mono text-xs bg-white px-2 py-1 rounded border border-gray-200">
                     N<sub>connected</sub>
                   </div>
                   <div>= number of lenders with social connections to borrower</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">
+                  <div className="font-mono text-xs bg-white px-2 py-1 rounded border border-gray-200">
                     N<sub>total</sub>
                   </div>
                   <div>= total number of lenders</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">
+                  <div className="font-mono text-xs bg-white px-2 py-1 rounded border border-gray-200">
                     P<sub>network</sub>
                   </div>
                   <div>= (N<sub>connected</sub> / N<sub>total</sub>) × 100</div>
@@ -175,7 +174,7 @@ export default function HowItWorksPage() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">2. Smart Contract Flow</h2>
 
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
             <p className="text-sm text-gray-800">
               <strong>Important:</strong> Trust scores are calculated off-chain using the algorithm above. The smart contracts
               handle money movement, not social graph analysis. This keeps gas costs low (Base L2 fees are pennies).
@@ -183,7 +182,7 @@ export default function HowItWorksPage() {
           </div>
 
           {/* Interface Definitions */}
-          <div className="bg-gray-900 rounded-xl p-6 mb-8">
+          <div className="bg-gray-900 rounded-lg p-6 mb-8">
             <h3 className="text-lg font-bold text-white mb-4">Contract Interfaces</h3>
 
             <div className="space-y-4">
@@ -222,15 +221,15 @@ export default function HowItWorksPage() {
 
           <div className="space-y-6">
             {/* Loan Creation */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold">
                   1
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Loan Deployed via Factory</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Loan Deployed via Factory</h3>
 
-                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                  <div className="bg-gray-900 rounded-lg p-3 mb-4">
                     <pre className="text-xs text-green-300 font-mono overflow-x-auto">
 {`function createLoan(
     address borrower,
@@ -245,7 +244,7 @@ export default function HowItWorksPage() {
                   <p className="text-gray-700 mb-3">
                     A factory contract deploys individual loan contracts with the following constraints:
                   </p>
-                  <div className="bg-gray-50 rounded p-4 mb-3">
+                  <div className="bg-gray-50 rounded border border-gray-200 p-4 mb-3">
                     <div className="space-y-2 text-sm text-gray-700">
                       <div>• <strong>Minimum principal:</strong> P<sub>min</sub> = $100</div>
                       <div>• <strong>Loan duration:</strong> 7 days ≤ D ≤ 365 days</div>
@@ -261,15 +260,15 @@ export default function HowItWorksPage() {
             </div>
 
             {/* Contributions */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold">
                   2
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Lenders Contribute</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Lenders Contribute</h3>
 
-                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                  <div className="bg-gray-900 rounded-lg p-3 mb-4">
                     <pre className="text-xs text-green-300 font-mono overflow-x-auto">
 {`function contribute(uint256 amount) external`}
                     </pre>
@@ -278,7 +277,7 @@ export default function HowItWorksPage() {
                   <p className="text-gray-700 mb-3">
                     Lenders send funds to the contract. Each contribution updates:
                   </p>
-                  <div className="bg-gray-50 rounded p-4 mb-3">
+                  <div className="bg-gray-50 rounded border border-gray-200 p-4 mb-3">
                     <div className="space-y-2 text-sm text-gray-700">
                       <div className="font-mono text-xs bg-white p-2 rounded border border-gray-200">
                         C<sub>lender</sub> ← C<sub>lender</sub> + amount
@@ -300,15 +299,15 @@ export default function HowItWorksPage() {
             </div>
 
             {/* Disbursement */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold">
                   3
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Funds Disbursed to Borrower</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Funds Disbursed to Borrower</h3>
 
-                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                  <div className="bg-gray-900 rounded-lg p-3 mb-4">
                     <pre className="text-xs text-green-300 font-mono overflow-x-auto">
 {`function disburse() external`}
                     </pre>
@@ -317,7 +316,7 @@ export default function HowItWorksPage() {
                   <p className="text-gray-700 mb-3">
                     Once fully funded, borrower can claim funds within the disbursement window:
                   </p>
-                  <div className="bg-gray-50 rounded p-4 mb-3">
+                  <div className="bg-gray-50 rounded border border-gray-200 p-4">
                     <div className="space-y-2 text-sm text-gray-700">
                       <div><strong>Condition 1:</strong> R<sub>total</sub> ≥ P (fully funded)</div>
                       <div><strong>Condition 2:</strong> T<sub>current</sub> ≤ T<sub>deadline</sub> + 14 days</div>
@@ -332,15 +331,15 @@ export default function HowItWorksPage() {
             </div>
 
             {/* Repayment */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold">
                   4
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Repayment & Claims</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Repayment & Claims</h3>
 
-                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                  <div className="bg-gray-900 rounded-lg p-3 mb-4">
                     <pre className="text-xs text-green-300 font-mono overflow-x-auto">
 {`function repay(uint256 amount) external
 
@@ -355,7 +354,7 @@ function claim() external`}
                     Borrower repays flexibly. Lenders claim their pro-rata share using an <strong>accumulator pattern</strong> for gas efficiency:
                   </p>
 
-                  <div className="bg-gray-50 rounded p-4 mb-3">
+                  <div className="bg-gray-50 rounded border border-gray-200 p-4 mb-3">
                     <div className="font-semibold text-gray-900 mb-2">On Each Repayment:</div>
                     <div className="bg-white p-3 rounded border border-gray-200 font-mono text-xs mb-3">
                       A ← A + (r × k) / P
@@ -394,7 +393,7 @@ function claim() external`}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">3. Vouching Mechanics</h2>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-8 mb-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-8 mb-6">
             <h3 className="text-xl font-bold text-gray-900 mb-4">How Contributions Signal Trust</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
               When someone contributes to your loan, they're doing two things: (1) providing capital, and (2) vouching for you with their social reputation.
@@ -405,9 +404,9 @@ function claim() external`}
             </p>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-6 mb-6">
-            <h4 className="font-bold text-gray-900 mb-3">Displayed Information</h4>
-            <p className="text-gray-700 mb-3">
+          <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
+            <h4 className="font-bold text-gray-900 mb-4">Displayed Information</h4>
+            <p className="text-gray-700 mb-4">
               The UI calculates and displays for each lender-borrower pair:
             </p>
             <div className="grid grid-cols-2 gap-3">
@@ -428,7 +427,7 @@ function claim() external`}
                 <div className="text-xs text-gray-600">Loan-level support %</div>
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-3">
+            <p className="text-xs text-gray-500 mt-4">
               All calculations run off-chain with a 30-minute cache. Results guide lender decisions but don't affect smart contract logic.
             </p>
           </div>
@@ -468,7 +467,7 @@ function claim() external`}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">4. Reputation System</h2>
 
-          <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 mb-6">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
             <p className="text-sm text-gray-800">
               <strong>Current Status:</strong> Reputation tracking is partially implemented. All repayment behavior is recorded on-chain,
               but we're still gathering data to build a robust reputation scoring algorithm. Here's what's tracked now and planned for the future.
@@ -478,16 +477,16 @@ function claim() external`}
           <div className="mb-6">
             <h3 className="text-xl font-bold text-gray-900 mb-4">Trust Score vs Reputation</h3>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-5">
-                <h4 className="font-bold text-green-900 mb-2">Trust Score (Implemented)</h4>
-                <p className="text-sm text-green-800">
+              <div className="bg-white border border-gray-200 rounded-lg p-5">
+                <h4 className="font-bold text-gray-900 mb-2">Trust Score (Implemented)</h4>
+                <p className="text-sm text-gray-600">
                   Measures current social validation. Based on mutual connections between you and your lenders.
                   Calculated for each new loan.
                 </p>
               </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
-                <h4 className="font-bold text-blue-900 mb-2">Reputation (Future)</h4>
-                <p className="text-sm text-blue-800">
+              <div className="bg-white border border-gray-200 rounded-lg p-5">
+                <h4 className="font-bold text-gray-900 mb-2">Reputation (Future)</h4>
+                <p className="text-sm text-gray-600">
                   Measures historical creditworthiness. Based on past repayment behavior, timeliness, and track record.
                   Persists across all loans.
                 </p>
@@ -495,9 +494,9 @@ function claim() external`}
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-6 mb-6">
-            <h4 className="font-bold text-gray-900 mb-3">What's On-Chain Now</h4>
-            <p className="text-gray-700 mb-3">
+          <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
+            <h4 className="font-bold text-gray-900 mb-4">What's On-Chain Now</h4>
+            <p className="text-gray-700 mb-4">
               Each loan contract permanently stores:
             </p>
             <div className="grid grid-cols-2 gap-3">
@@ -526,61 +525,61 @@ function claim() external`}
                 <div className="text-xs text-gray-600">Each lender's claims</div>
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-3">
+            <p className="text-xs text-gray-500 mt-4">
               Factory contract enforces: one active loan per borrower at a time
             </p>
           </div>
 
-          <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-8">
+          <div className="bg-white border border-gray-200 rounded-lg p-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">Planned Reputation Formula</h3>
             <p className="text-gray-700 mb-4">
               Once we have sufficient repayment data (target: 100+ loans), reputation will be calculated as a weighted score:
             </p>
 
-            <div className="bg-white rounded-lg p-4 mb-4">
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
               <div className="font-mono text-sm mb-3">
                 Rep = w₁·Ratio + w₂·Time + w₃·Count + w₄·Trust + w₅·Volume
               </div>
               <div className="text-xs text-gray-600 space-y-2">
-                <div className="border-l-2 border-purple-300 pl-3">
+                <div className="border-l-2 border-gray-400 pl-3">
                   <strong>Ratio</strong> = Σ(R<sub>paid</sub>) / Σ(R<sub>total</sub>) across all loans
                 </div>
-                <div className="border-l-2 border-purple-300 pl-3">
+                <div className="border-l-2 border-gray-400 pl-3">
                   <strong>Time</strong> = avg(T<sub>repay</sub> − T<sub>maturity</sub>) normalized to [-1, 1]<br/>
                   <span className="text-[10px]">(early = positive, late = negative)</span>
                 </div>
-                <div className="border-l-2 border-purple-300 pl-3">
+                <div className="border-l-2 border-gray-400 pl-3">
                   <strong>Count</strong> = log(N<sub>loans</sub> + 1) to reward repeated success
                 </div>
-                <div className="border-l-2 border-purple-300 pl-3">
+                <div className="border-l-2 border-gray-400 pl-3">
                   <strong>Trust</strong> = avg(P<sub>network</sub>) across all loans
                 </div>
-                <div className="border-l-2 border-purple-300 pl-3">
+                <div className="border-l-2 border-gray-400 pl-3">
                   <strong>Volume</strong> = log(Σ(P) + 1) total principal borrowed
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-4">
-              <div className="font-semibold text-gray-900 mb-2">Proposed Weights (subject to tuning):</div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold text-gray-900 mb-3">Proposed Weights (subject to tuning):</div>
               <div className="grid grid-cols-5 gap-2 text-xs text-center">
-                <div className="bg-purple-50 p-2 rounded">
+                <div className="bg-white border border-gray-200 p-2 rounded">
                   <div className="font-bold">w₁ = 40%</div>
                   <div className="text-[10px] text-gray-600">Repayment</div>
                 </div>
-                <div className="bg-purple-50 p-2 rounded">
+                <div className="bg-white border border-gray-200 p-2 rounded">
                   <div className="font-bold">w₂ = 30%</div>
                   <div className="text-[10px] text-gray-600">Timing</div>
                 </div>
-                <div className="bg-purple-50 p-2 rounded">
+                <div className="bg-white border border-gray-200 p-2 rounded">
                   <div className="font-bold">w₃ = 15%</div>
                   <div className="text-[10px] text-gray-600">Count</div>
                 </div>
-                <div className="bg-purple-50 p-2 rounded">
+                <div className="bg-white border border-gray-200 p-2 rounded">
                   <div className="font-bold">w₄ = 10%</div>
                   <div className="text-[10px] text-gray-600">Trust</div>
                 </div>
-                <div className="bg-purple-50 p-2 rounded">
+                <div className="bg-white border border-gray-200 p-2 rounded">
                   <div className="font-bold">w₅ = 5%</div>
                   <div className="text-[10px] text-gray-600">Volume</div>
                 </div>
@@ -597,7 +596,7 @@ function claim() external`}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">5. Risk & Default Handling</h2>
 
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-8 mb-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-8 mb-6">
             <h3 className="text-xl font-bold text-gray-900 mb-4">What Happens If Someone Doesn't Repay?</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
               Phase 1 uses 0% interest, which means lenders are giving out of generosity, not chasing returns.
@@ -700,22 +699,22 @@ function claim() external`}
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-xl p-6 mt-6">
-            <h4 className="font-bold text-gray-900 mb-3">Key Parameters</h4>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-6">
+            <h4 className="font-bold text-gray-900 mb-4">Key Parameters</h4>
             <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="bg-white p-3 rounded border border-gray-200">
+              <div className="bg-white border border-gray-200 p-3 rounded">
                 <div className="font-semibold text-gray-900">Cache TTL</div>
                 <div className="text-xs text-gray-600">30 minutes for trust scores</div>
               </div>
-              <div className="bg-white p-3 rounded border border-gray-200">
+              <div className="bg-white border border-gray-200 p-3 rounded">
                 <div className="font-semibold text-gray-900">Gas Optimization</div>
                 <div className="text-xs text-gray-600">O(1) repayment distribution</div>
               </div>
-              <div className="bg-white p-3 rounded border border-gray-200">
+              <div className="bg-white border border-gray-200 p-3 rounded">
                 <div className="font-semibold text-gray-900">Precision</div>
                 <div className="text-xs text-gray-600">k = 10<sup>18</sup> for fixed-point math</div>
               </div>
-              <div className="bg-white p-3 rounded border border-gray-200">
+              <div className="bg-white border border-gray-200 p-3 rounded">
                 <div className="font-semibold text-gray-900">Network Fees</div>
                 <div className="text-xs text-gray-600">~$0.01 per transaction on Base L2</div>
               </div>
@@ -725,7 +724,7 @@ function claim() external`}
 
         {/* Call to Action */}
         <section className="mb-8">
-          <div className="bg-[#3B9B7F] rounded-xl p-8 text-center text-white">
+          <div className="bg-[#3B9B7F] rounded-lg p-8 text-center text-white">
             <h2 className="text-2xl font-bold mb-4">Want to Go Deeper?</h2>
             <p className="text-lg mb-6 opacity-90">
               Read our whitepaper for the philosophical foundations or our vision for where we're headed.
