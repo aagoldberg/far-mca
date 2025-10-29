@@ -7,18 +7,16 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#3B9B7F]/10 via-[#2C7DA0]/5 to-white py-16 sm:py-20">
+      <div className="bg-gradient-to-br from-[#3B9B7F]/10 via-[#2C7DA0]/5 to-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">
-            Support Your Community,
-            <br />
-            <span className="bg-gradient-to-r from-[#2C7DA0] via-[#2E8B8B] to-[#3B9B7F] bg-clip-text text-transparent">
-              Change Lives
-            </span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-[#3B9B7F] mb-8 tracking-tight leading-tight">
+            Community Lending
           </h1>
-          <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed">
-            Help neighbors and local businesses thrive with interest-free loans.
-            Together, we build stronger communities—one loan at a time.
+          <p className="text-xl sm:text-2xl text-gray-700 max-w-4xl mx-auto mb-4 leading-relaxed font-semibold">
+            No collateral. No interest. Relationships replace credit scores.
+          </p>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
+            Your network stands behind you, securing funding from others.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
