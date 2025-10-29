@@ -6,6 +6,17 @@ LendFriend enables uncollateralized lending by quantifying social trust. Your ne
 
 This documentation explains exactly how we turn relationships into credit scores.
 
+## Built on Proven Research
+
+LendFriend's mechanics are grounded in decades of microfinance research:
+
+- **Grameen Bank**: 97-98% repayment rate across 9.6M borrowers using social collateral
+- **Kiva**: 96.3% repayment rate on $1.8B+ in peer-to-peer loans
+- **Akhuwat**: 99.9% repayment rate with zero-interest Islamic microfinance
+- **Academic Foundation**: 30+ peer-reviewed papers on social collateral, network effects, and reputation systems
+
+See our complete [Academic Research](references.md) for full citations and methodology.
+
 ## What You'll Find Here
 
 ### [How It Works](how-it-works/overview.md)
@@ -24,6 +35,9 @@ Academic foundations, Kiva/Grameen studies, and our evolution strategy for growi
 
 ### [White Paper](whitepaper.md)
 The philosophical and economic foundations behind LendFriend.
+
+### [Academic Research](references.md)
+Complete bibliography of research supporting our mechanics, with 15+ academic papers and institutional case studies.
 
 ## Quick Links
 

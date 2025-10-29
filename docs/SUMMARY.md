@@ -23,3 +23,7 @@
 ## White Paper
 
 * [White Paper](whitepaper.md)
+
+## References
+
+* [Academic Research](references.md)

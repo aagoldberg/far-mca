@@ -67,6 +67,18 @@ The vouching system creates natural trust cascades:
 
 This pattern mirrors traditional lending: you ask family first, then friends, then acquaintances, then institutions.
 
+### Research Foundation
+
+Trust cascades are supported by microfinance research:
+
+- **Peer Monitoring**: Group members monitor each other's behavior, reducing moral hazard<sup>[[1]](../references.md#group-lending-and-social-collateral)</sup>
+- **Social Sanctions**: Network connections create enforcement through reputation damage<sup>[[2]](../references.md#social-capital-and-network-effects)</sup>
+- **Information Cascades**: Early endorsements by trusted connections influence subsequent lenders<sup>[[3]](../references.md#peer-to-peer-lending-and-reputation)</sup>
+
+{% hint style="info" %}
+Feigenberg et al. (2013) found that increased meeting frequency in lending groups builds social capital and information sharing, improving repayment by creating persistent social ties.
+{% endhint %}
+
 ## Anti-Patterns
 
 What **doesn't** work:
