@@ -12,4 +12,4 @@ Coming soon.
 
 ---
 
-**For now**, visit [lendfriend.com/whitepaper](https://lendfriend.com/whitepaper) on the main site.
+**For now**, visit [lendfriend.org/whitepaper](https://lendfriend.org/whitepaper) on the main site.

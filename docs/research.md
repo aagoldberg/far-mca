@@ -16,4 +16,4 @@ Deep dive into our research, evolution strategy, and the academic foundations be
 
 ---
 
-**For now**, visit [lendfriend.com/research](https://lendfriend.com/research) on the main site.
+**For now**, visit [lendfriend.org/research](https://lendfriend.org/research) on the main site.

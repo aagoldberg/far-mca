@@ -41,7 +41,7 @@ Complete bibliography of research supporting our mechanics, with 15+ academic pa
 
 ## Quick Links
 
-- **Main Site**: [lendfriend.com](https://lendfriend.com)
+- **Main Site**: [lendfriend.org](https://lendfriend.org)
 - **GitHub**: [github.com/your-org/far-mca](https://github.com)
 - **Twitter**: [@lendfriend](https://twitter.com)
 - **Farcaster**: [@lendfriend](https://warpcast.com/lendfriend)

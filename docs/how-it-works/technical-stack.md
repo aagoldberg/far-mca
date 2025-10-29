@@ -223,7 +223,7 @@ POST /api/repay             # Repay loan
 
 ### Bug Bounty
 - 💰 Up to $10,000 for critical vulnerabilities
-- 📧 Report to: security@lendfriend.com
+- 📧 Report to: security@lendfriend.org
 
 ## Performance Targets
 

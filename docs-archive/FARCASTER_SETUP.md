@@ -23,7 +23,7 @@ The manifest must be signed for your production domain (not ngrok). The signed d
 
 ### Step 2: Sign the Manifest
 1. Go to: https://farcaster.xyz/~/developers/mini-apps/manifest
-2. Enter your production domain (e.g., `lendfriend.com` or `app.lendfriend.com`)
+2. Enter your production domain (e.g., `lendfriend.org` or `app.lendfriend.org`)
 3. The tool will generate the `accountAssociation` object with:
    - `header` - Account type and key info
    - `payload` - Domain information (base64url encoded)

@@ -14,4 +14,4 @@ Building the future of reputation-backed lending, from bootstrap to global scale
 
 ---
 
-**For now**, visit [lendfriend.com/vision](https://lendfriend.com/vision) on the main site.
+**For now**, visit [lendfriend.org/vision](https://lendfriend.org/vision) on the main site.

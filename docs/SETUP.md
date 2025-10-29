@@ -16,7 +16,7 @@ This folder contains the LendFriend documentation in GitBook format.
 
 3. **Custom domain** (optional)
    - Go to Space Settings → Domain
-   - Add `docs.lendfriend.com` as custom domain
+   - Add `docs.lendfriend.org` as custom domain
    - Update DNS records as instructed
 
 4. **Auto-sync enabled**
@@ -147,7 +147,7 @@ Wait for DNS propagation (up to 24 hours).
 ### Verify in GitBook
 
 1. Go to Space Settings → Domain
-2. Enter `docs.lendfriend.com`
+2. Enter `docs.lendfriend.org`
 3. Click "Verify"
 
 ## Troubleshooting
