@@ -47,52 +47,90 @@ export default function HowItWorksPage() {
           </div>
 
           <div className="bg-gray-50 rounded-xl p-6 mb-6">
-            <h4 className="font-bold text-gray-900 mb-3">The Exact Algorithm</h4>
-            <div className="bg-white rounded-lg p-4 mb-4 font-mono text-xs overflow-x-auto">
-              <pre className="text-gray-800">{`// 1. Fetch social graphs from Farcaster
-const borrowerNetwork = union(borrowerFollowers, borrowerFollowing);
-const lenderNetwork = union(lenderFollowers, lenderFollowing);
-const mutualConnections = intersection(borrowerNetwork, lenderNetwork);
+            <h4 className="font-bold text-gray-900 mb-3">The Algorithm</h4>
 
-// 2. Quality weighting (filter spam/bots using Neynar scores)
-const avgQuality = (borrowerScore + lenderScore) / 2;
-const effectiveMutuals = mutualCount * avgQuality;
+            <div className="space-y-4 text-sm">
+              <div>
+                <div className="font-semibold text-gray-900 mb-2">Step 1: Identify Mutual Connections</div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-gray-700 mb-2">
+                    Let B = borrower's social network (followers ∪ following)<br/>
+                    Let L = lender's social network (followers ∪ following)<br/>
+                    Let M = |B ∩ L| = count of mutual connections
+                  </p>
+                </div>
+              </div>
 
-// 3. Calculate social distance score (0-100)
-let socialDistance = 0;
+              <div>
+                <div className="font-semibold text-gray-900 mb-2">Step 2: Quality Weighting</div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-gray-700 mb-3">
+                    Filter spam/bots using identity quality scores (0-1 scale):
+                  </p>
+                  <div className="bg-gray-50 p-3 rounded font-mono text-xs">
+                    Q<sub>avg</sub> = (Q<sub>borrower</sub> + Q<sub>lender</sub>) / 2
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded font-mono text-xs mt-2">
+                    M<sub>effective</sub> = M × Q<sub>avg</sub>
+                  </div>
+                </div>
+              </div>
 
-// Base score from quality-adjusted mutuals (up to 60 points)
-if (effectiveMutuals >= 18) socialDistance += 60;
-else if (effectiveMutuals >= 9) socialDistance += 50;
-else if (effectiveMutuals >= 4.5) socialDistance += 35;
-else if (effectiveMutuals >= 2.5) socialDistance += 20;
-else if (effectiveMutuals >= 0.8) socialDistance += 10;
+              <div>
+                <div className="font-semibold text-gray-900 mb-2">Step 3: Calculate Social Distance Score (0-100)</div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-gray-700 mb-3">The score has three components:</p>
 
-// Bonus for high overlap percentage (up to 30 points)
-if (percentOverlap > 10) {
-  socialDistance += Math.min(percentOverlap * 3, 30);
-}
+                  <div className="space-y-3">
+                    <div className="bg-blue-50 p-3 rounded">
+                      <div className="font-semibold text-blue-900 mb-1">Base Score (max 60 points)</div>
+                      <div className="text-xs text-blue-800">
+                        Based on effective mutual connections:<br/>
+                        • M<sub>eff</sub> ≥ 18 → 60 points<br/>
+                        • M<sub>eff</sub> ≥ 9 → 50 points<br/>
+                        • M<sub>eff</sub> ≥ 4.5 → 35 points<br/>
+                        • M<sub>eff</sub> ≥ 2.5 → 20 points<br/>
+                        • M<sub>eff</sub> ≥ 0.8 → 10 points
+                      </div>
+                    </div>
 
-// Bonus for mutual follows (up to 10 points)
-if (lenderFollowsBorrower && borrowerFollowsLender) socialDistance += 10;
-else if (lenderFollowsBorrower || borrowerFollowsLender) socialDistance += 5;
+                    <div className="bg-purple-50 p-3 rounded">
+                      <div className="font-semibold text-purple-900 mb-1">Overlap Bonus (max 30 points)</div>
+                      <div className="text-xs text-purple-800">
+                        P<sub>overlap</sub> = (M / min(|B|, |L|)) × 100<br/>
+                        Bonus = min(P<sub>overlap</sub> × 3, 30) if P<sub>overlap</sub> &gt; 10%
+                      </div>
+                    </div>
 
-socialDistance = Math.min(socialDistance, 100);`}</pre>
+                    <div className="bg-green-50 p-3 rounded">
+                      <div className="font-semibold text-green-900 mb-1">Mutual Follow Bonus (max 10 points)</div>
+                      <div className="text-xs text-green-800">
+                        • Both follow each other → +10 points<br/>
+                        • One-way follow → +5 points
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 rounded font-mono text-xs mt-3">
+                    S<sub>total</sub> = min(S<sub>base</sub> + S<sub>overlap</sub> + S<sub>mutual</sub>, 100)
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <h4 className="font-bold text-gray-900 mb-3 mt-6">Risk Tier Determination</h4>
+            <h4 className="font-bold text-gray-900 mb-3 mt-6">Risk Tier Classification</h4>
             <div className="space-y-3">
               <div className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
                 <div className="font-bold text-green-900">LOW RISK</div>
-                <p className="text-sm text-green-800">9+ effective mutuals OR 60+ social distance score</p>
+                <p className="text-sm text-green-800">M<sub>eff</sub> ≥ 9 OR S<sub>total</sub> ≥ 60</p>
               </div>
               <div className="bg-yellow-50 border-l-4 border-yellow-500 p-3 rounded">
                 <div className="font-bold text-yellow-900">MEDIUM RISK</div>
-                <p className="text-sm text-yellow-800">2.5+ effective mutuals OR 30+ social distance score</p>
+                <p className="text-sm text-yellow-800">M<sub>eff</sub> ≥ 2.5 OR S<sub>total</sub> ≥ 30</p>
               </div>
               <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded">
                 <div className="font-bold text-red-900">HIGH RISK</div>
-                <p className="text-sm text-red-800">Less than 2.5 effective mutuals AND less than 30 social distance</p>
+                <p className="text-sm text-red-800">M<sub>eff</sub> &lt; 2.5 AND S<sub>total</sub> &lt; 30</p>
               </div>
             </div>
           </div>
@@ -102,13 +140,33 @@ socialDistance = Math.min(socialDistance, 100);`}</pre>
             <p className="text-gray-700 mb-3">
               For the entire loan, we aggregate proximity across all lenders:
             </p>
-            <div className="bg-white rounded-lg p-4 font-mono text-xs overflow-x-auto">
-              <pre className="text-gray-800">{`const percentageFromNetwork = (lendersWithConnections / totalLenders) * 100;
-
-if (percentageFromNetwork >= 60) supportStrength = 'STRONG';
-else if (percentageFromNetwork >= 30) supportStrength = 'MODERATE';
-else if (percentageFromNetwork > 0) supportStrength = 'WEAK';
-else supportStrength = 'NONE';`}</pre>
+            <div className="bg-white rounded-lg p-4 border border-gray-200">
+              <div className="space-y-2 text-sm text-gray-700">
+                <div className="flex items-center gap-2">
+                  <div className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">
+                    N<sub>connected</sub>
+                  </div>
+                  <div>= number of lenders with social connections to borrower</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">
+                    N<sub>total</sub>
+                  </div>
+                  <div>= total number of lenders</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">
+                    P<sub>network</sub>
+                  </div>
+                  <div>= (N<sub>connected</sub> / N<sub>total</sub>) × 100</div>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-200 space-y-2 text-sm">
+                <div><strong>STRONG:</strong> P<sub>network</sub> ≥ 60%</div>
+                <div><strong>MODERATE:</strong> 30% ≤ P<sub>network</sub> &lt; 60%</div>
+                <div><strong>WEAK:</strong> 0% &lt; P<sub>network</sub> &lt; 30%</div>
+                <div><strong>NONE:</strong> P<sub>network</sub> = 0%</div>
+              </div>
             </div>
           </div>
         </section>
@@ -134,19 +192,18 @@ else supportStrength = 'NONE';`}</pre>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Loan Deployed via Factory</h3>
                   <p className="text-gray-700 mb-3">
-                    MicroLoanFactory deploys a new MicroLoan contract with constraints:
+                    A factory contract deploys individual loan contracts with the following constraints:
                   </p>
-                  <div className="bg-gray-50 rounded p-3 font-mono text-xs overflow-x-auto mb-3">
-                    <pre className="text-gray-800">{`uint256 public minPrincipal = 100e6;           // $100 minimum
-uint256 public minLoanDuration = 7 days;
-uint256 public maxLoanDuration = 365 days;
-uint256 public disbursementWindow = 14 days;
-
-// Prevents multiple active loans per borrower
-require(!hasActiveLoan[borrower], "borrower has active loan");`}</pre>
+                  <div className="bg-gray-50 rounded p-4 mb-3">
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <div>• <strong>Minimum principal:</strong> P<sub>min</sub> = $100</div>
+                      <div>• <strong>Loan duration:</strong> 7 days ≤ D ≤ 365 days</div>
+                      <div>• <strong>Disbursement window:</strong> 14 days after funding</div>
+                      <div>• <strong>Restriction:</strong> One active loan per borrower</div>
+                    </div>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Each loan gets its own contract. Parameters: principal amount, maturity date, borrower address, and FID (Farcaster ID).
+                    Each loan gets its own smart contract with parameters: principal P, maturity date T<sub>maturity</sub>, borrower address, and verified Farcaster ID.
                   </p>
                 </div>
               </div>
@@ -161,22 +218,24 @@ require(!hasActiveLoan[borrower], "borrower has active loan");`}</pre>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Lenders Contribute</h3>
                   <p className="text-gray-700 mb-3">
-                    Lenders send USDC to the contract. The contract tracks contributions:
+                    Lenders send funds to the contract. Each contribution updates:
                   </p>
-                  <div className="bg-gray-50 rounded p-3 font-mono text-xs overflow-x-auto mb-3">
-                    <pre className="text-gray-800">{`function contribute(uint256 amount) external {
-    require(isFundingOpen(), "funding closed");
-    require(amount > 0, "zero amount");
-
-    usdc.transferFrom(msg.sender, address(this), amount);
-    contributions[msg.sender] += amount;
-    totalRaised += amount;
-
-    emit Contribution(msg.sender, amount, totalRaised);
-}`}</pre>
+                  <div className="bg-gray-50 rounded p-4 mb-3">
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <div className="font-mono text-xs bg-white p-2 rounded border border-gray-200">
+                        C<sub>lender</sub> ← C<sub>lender</sub> + amount
+                      </div>
+                      <div className="font-mono text-xs bg-white p-2 rounded border border-gray-200">
+                        R<sub>total</sub> ← R<sub>total</sub> + amount
+                      </div>
+                      <div className="text-xs text-gray-600 mt-2">
+                        Where C<sub>lender</sub> = cumulative contribution from this lender<br/>
+                        And R<sub>total</sub> = total raised across all lenders
+                      </div>
+                    </div>
                   </div>
                   <p className="text-sm text-gray-600">
-                    No trust calculation here—just recording who gave what. Trust scores are shown in the UI (off-chain).
+                    Trust scores are calculated off-chain and displayed in the UI. The contract only tracks capital flow.
                   </p>
                 </div>
               </div>
@@ -193,18 +252,15 @@ require(!hasActiveLoan[borrower], "borrower has active loan");`}</pre>
                   <p className="text-gray-700 mb-3">
                     Once fully funded, borrower can claim funds within the disbursement window:
                   </p>
-                  <div className="bg-gray-50 rounded p-3 font-mono text-xs overflow-x-auto mb-3">
-                    <pre className="text-gray-800">{`function disburse() external {
-    require(msg.sender == borrower, "only borrower");
-    require(totalRaised >= principal, "not fully funded");
-    require(block.timestamp <= fundingDeadline + disbursementWindow);
-    require(!isDisbursed, "already disbursed");
-
-    isDisbursed = true;
-    usdc.transfer(borrower, totalRaised);
-
-    emit Disbursed(borrower, totalRaised);
-}`}</pre>
+                  <div className="bg-gray-50 rounded p-4 mb-3">
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <div><strong>Condition 1:</strong> R<sub>total</sub> ≥ P (fully funded)</div>
+                      <div><strong>Condition 2:</strong> T<sub>current</sub> ≤ T<sub>deadline</sub> + 14 days</div>
+                      <div><strong>Condition 3:</strong> Funds not yet disbursed</div>
+                      <div className="pt-2 border-t border-gray-300 mt-2">
+                        <strong>Action:</strong> Transfer R<sub>total</sub> to borrower
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -219,22 +275,37 @@ require(!hasActiveLoan[borrower], "borrower has active loan");`}</pre>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Repayment & Claims</h3>
                   <p className="text-gray-700 mb-3">
-                    Borrower repays flexibly. Lenders claim their pro-rata share using an <strong>accumulator pattern</strong> (gas-efficient):
+                    Borrower repays flexibly. Lenders claim their pro-rata share using an <strong>accumulator pattern</strong> for gas efficiency:
                   </p>
-                  <div className="bg-gray-50 rounded p-3 font-mono text-xs overflow-x-auto mb-3">
-                    <pre className="text-gray-800">{`// On repayment:
-accRepaidPerShare += (amount * ACC_PRECISION) / principal;
 
-// Claimable calculation per lender:
-function claimableAmount(address contributor) public view returns (uint256) {
-    uint256 accumulated = (contributions[contributor] * accRepaidPerShare) / ACC_PRECISION;
-    return accumulated - userRewardDebt[contributor];
-}
+                  <div className="bg-gray-50 rounded p-4 mb-3">
+                    <div className="font-semibold text-gray-900 mb-2">On Each Repayment:</div>
+                    <div className="bg-white p-3 rounded border border-gray-200 font-mono text-xs mb-3">
+                      A ← A + (r × k) / P
+                    </div>
+                    <div className="text-xs text-gray-600 mb-4">
+                      Where:<br/>
+                      • A = accumulator (tracks total repaid per $1 of principal)<br/>
+                      • r = repayment amount<br/>
+                      • k = precision constant (10<sup>18</sup>)<br/>
+                      • P = original principal
+                    </div>
 
-// Where ACC_PRECISION = 1e18`}</pre>
+                    <div className="font-semibold text-gray-900 mb-2 pt-3 border-t border-gray-300">Claimable Amount per Lender:</div>
+                    <div className="bg-white p-3 rounded border border-gray-200 font-mono text-xs mb-3">
+                      Claimable = (C<sub>lender</sub> × A) / k − D<sub>lender</sub>
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      Where:<br/>
+                      • C<sub>lender</sub> = lender's contribution<br/>
+                      • D<sub>lender</sub> = amount already claimed by lender<br/>
+                      • Result is proportional to contribution share
+                    </div>
                   </div>
+
                   <p className="text-sm text-gray-600">
-                    This distributes repayments proportionally without iterating over all lenders. If borrower overpays, lenders receive the bonus pro-rata.
+                    This approach calculates pro-rata shares in O(1) time per lender, rather than iterating over all lenders.
+                    Overpayments automatically distribute as bonuses.
                   </p>
                 </div>
               </div>
@@ -258,28 +329,31 @@ function claimableAmount(address contributor) public view returns (uint256) {
           </div>
 
           <div className="bg-gray-50 rounded-xl p-6 mb-6">
-            <h4 className="font-bold text-gray-900 mb-3">Actual Implementation</h4>
+            <h4 className="font-bold text-gray-900 mb-3">Displayed Information</h4>
             <p className="text-gray-700 mb-3">
-              The social proximity algorithm runs off-chain for each lender-borrower pair. The UI shows:
+              The UI calculates and displays for each lender-borrower pair:
             </p>
-            <div className="bg-white rounded-lg p-4 font-mono text-xs overflow-x-auto">
-              <pre className="text-gray-800">{`// For each lender:
-{
-  address: "0x1234...",
-  contribution: 50_000000,        // $50 in USDC (6 decimals)
-  mutualConnections: 12,
-  socialDistance: 75,             // 0-100 score
-  riskTier: "LOW",                // LOW, MEDIUM, HIGH
-  isConnected: true
-}
-
-// Aggregated for the whole loan:
-{
-  supportStrength: "STRONG",      // 60%+ lenders have connections
-  averageMutualConnections: 8.4,
-  percentageFromNetwork: 65%
-}`}</pre>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">M</div>
+                <div className="text-xs text-gray-600">Mutual connections count</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">S<sub>total</sub></div>
+                <div className="text-xs text-gray-600">Social distance score (0-100)</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">Risk Tier</div>
+                <div className="text-xs text-gray-600">LOW / MEDIUM / HIGH</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">P<sub>network</sub></div>
+                <div className="text-xs text-gray-600">Loan-level support %</div>
+              </div>
             </div>
+            <p className="text-xs text-gray-500 mt-3">
+              All calculations run off-chain with a 30-minute cache. Results guide lender decisions but don't affect smart contract logic.
+            </p>
           </div>
 
           <div className="space-y-4">
@@ -347,52 +421,92 @@ function claimableAmount(address contributor) public view returns (uint256) {
           <div className="bg-gray-50 rounded-xl p-6 mb-6">
             <h4 className="font-bold text-gray-900 mb-3">What's On-Chain Now</h4>
             <p className="text-gray-700 mb-3">
-              Each MicroLoan contract records:
+              Each loan contract permanently stores:
             </p>
-            <div className="bg-white rounded-lg p-4 font-mono text-xs overflow-x-auto">
-              <pre className="text-gray-800">{`// Per-loan tracking (on-chain):
-{
-  borrower: address,
-  principal: uint256,
-  totalRaised: uint256,
-  totalRepaid: uint256,
-  isDisbursed: bool,
-  maturityDate: uint256,
-  contributions: mapping(address => uint256),
-  claims: mapping(address => uint256)
-}
-
-// Factory tracks active loans:
-hasActiveLoan[borrower] = true;  // Prevents multiple active loans`}</pre>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">P</div>
+                <div className="text-xs text-gray-600">Principal requested</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">R<sub>total</sub></div>
+                <div className="text-xs text-gray-600">Total raised</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">R<sub>paid</sub></div>
+                <div className="text-xs text-gray-600">Total repaid</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">T<sub>maturity</sub></div>
+                <div className="text-xs text-gray-600">Maturity timestamp</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">C<sub>i</sub></div>
+                <div className="text-xs text-gray-600">Each lender's contribution</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-gray-200">
+                <div className="font-semibold text-sm text-gray-900">D<sub>i</sub></div>
+                <div className="text-xs text-gray-600">Each lender's claims</div>
+              </div>
             </div>
+            <p className="text-xs text-gray-500 mt-3">
+              Factory contract enforces: one active loan per borrower at a time
+            </p>
           </div>
 
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Planned Reputation Algorithm</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Planned Reputation Formula</h3>
             <p className="text-gray-700 mb-4">
-              Once we have sufficient repayment data (target: 100+ loans), we'll implement a weighted reputation score:
+              Once we have sufficient repayment data (target: 100+ loans), reputation will be calculated as a weighted score:
             </p>
 
-            <div className="space-y-3 text-sm text-gray-800">
-              <div className="flex items-start gap-2">
-                <div className="font-bold min-w-[140px]">Repayment Ratio:</div>
-                <div>(Total Repaid / Total Borrowed) × 40%</div>
+            <div className="bg-white rounded-lg p-4 mb-4">
+              <div className="font-mono text-sm mb-3">
+                Rep = w₁·Ratio + w₂·Time + w₃·Count + w₄·Trust + w₅·Volume
               </div>
-              <div className="flex items-start gap-2">
-                <div className="font-bold min-w-[140px]">Timeliness:</div>
-                <div>Days early/late relative to maturity × 30%</div>
+              <div className="text-xs text-gray-600 space-y-2">
+                <div className="border-l-2 border-purple-300 pl-3">
+                  <strong>Ratio</strong> = Σ(R<sub>paid</sub>) / Σ(R<sub>total</sub>) across all loans
+                </div>
+                <div className="border-l-2 border-purple-300 pl-3">
+                  <strong>Time</strong> = avg(T<sub>repay</sub> − T<sub>maturity</sub>) normalized to [-1, 1]<br/>
+                  <span className="text-[10px]">(early = positive, late = negative)</span>
+                </div>
+                <div className="border-l-2 border-purple-300 pl-3">
+                  <strong>Count</strong> = log(N<sub>loans</sub> + 1) to reward repeated success
+                </div>
+                <div className="border-l-2 border-purple-300 pl-3">
+                  <strong>Trust</strong> = avg(P<sub>network</sub>) across all loans
+                </div>
+                <div className="border-l-2 border-purple-300 pl-3">
+                  <strong>Volume</strong> = log(Σ(P) + 1) total principal borrowed
+                </div>
               </div>
-              <div className="flex items-start gap-2">
-                <div className="font-bold min-w-[140px]">Loan Count:</div>
-                <div>Number of successful repayments × 15%</div>
-              </div>
-              <div className="flex items-start gap-2">
-                <div className="font-bold min-w-[140px]">Network Quality:</div>
-                <div>Avg trust scores across all loans × 10%</div>
-              </div>
-              <div className="flex items-start gap-2">
-                <div className="font-bold min-w-[140px]">Amount Borrowed:</div>
-                <div>Total principal over time × 5%</div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4">
+              <div className="font-semibold text-gray-900 mb-2">Proposed Weights (subject to tuning):</div>
+              <div className="grid grid-cols-5 gap-2 text-xs text-center">
+                <div className="bg-purple-50 p-2 rounded">
+                  <div className="font-bold">w₁ = 40%</div>
+                  <div className="text-[10px] text-gray-600">Repayment</div>
+                </div>
+                <div className="bg-purple-50 p-2 rounded">
+                  <div className="font-bold">w₂ = 30%</div>
+                  <div className="text-[10px] text-gray-600">Timing</div>
+                </div>
+                <div className="bg-purple-50 p-2 rounded">
+                  <div className="font-bold">w₃ = 15%</div>
+                  <div className="text-[10px] text-gray-600">Count</div>
+                </div>
+                <div className="bg-purple-50 p-2 rounded">
+                  <div className="font-bold">w₄ = 10%</div>
+                  <div className="text-[10px] text-gray-600">Trust</div>
+                </div>
+                <div className="bg-purple-50 p-2 rounded">
+                  <div className="font-bold">w₅ = 5%</div>
+                  <div className="text-[10px] text-gray-600">Volume</div>
+                </div>
               </div>
             </div>
 
@@ -510,13 +624,24 @@ hasActiveLoan[borrower] = true;  // Prevents multiple active loans`}</pre>
           </div>
 
           <div className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-xl p-6 mt-6">
-            <h4 className="font-bold text-gray-900 mb-3">Repository Structure</h4>
-            <div className="font-mono text-xs text-gray-700 space-y-1">
-              <div>📁 /contracts — Solidity smart contracts (MicroLoan.sol, MicroLoanFactory.sol)</div>
-              <div>📁 /apps/web — Next.js web app</div>
-              <div>📁 /apps/farcaster — Farcaster Frame integration</div>
-              <div>📁 /apps/web/src/lib/socialProximity.ts — Trust score algorithm</div>
-              <div>📁 /apps/web/src/hooks/useLoanSocialSupport.ts — Aggregate support calculation</div>
+            <h4 className="font-bold text-gray-900 mb-3">Key Parameters</h4>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="bg-white p-3 rounded border border-gray-200">
+                <div className="font-semibold text-gray-900">Cache TTL</div>
+                <div className="text-xs text-gray-600">30 minutes for trust scores</div>
+              </div>
+              <div className="bg-white p-3 rounded border border-gray-200">
+                <div className="font-semibold text-gray-900">Gas Optimization</div>
+                <div className="text-xs text-gray-600">O(1) repayment distribution</div>
+              </div>
+              <div className="bg-white p-3 rounded border border-gray-200">
+                <div className="font-semibold text-gray-900">Precision</div>
+                <div className="text-xs text-gray-600">k = 10<sup>18</sup> for fixed-point math</div>
+              </div>
+              <div className="bg-white p-3 rounded border border-gray-200">
+                <div className="font-semibold text-gray-900">Network Fees</div>
+                <div className="text-xs text-gray-600">~$0.01 per transaction on Base L2</div>
+              </div>
             </div>
           </div>
         </section>
