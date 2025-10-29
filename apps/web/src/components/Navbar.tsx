@@ -223,6 +223,13 @@ export default function Navbar() {
                         About LendFriend
                       </Link>
                       <Link
+                        href="/how-it-works"
+                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        How It Works
+                      </Link>
+                      <Link
                         href="/vision"
                         className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
@@ -316,6 +323,13 @@ export default function Navbar() {
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     About LendFriend
+                  </Link>
+                  <Link
+                    href="/how-it-works"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    How It Works
                   </Link>
                   <Link
                     href="/vision"
