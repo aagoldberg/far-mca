@@ -21,10 +21,8 @@ See our complete [Academic Research](references.md) for full citations and metho
 
 ### [How It Works](how-it-works/overview.md)
 Deep dive into the technical mechanics behind reputation-backed lending:
-- **Trust Score Algorithm** - How we measure social proximity on Farcaster
+- **Social Trust Scoring** - How we measure social proximity using the Adamic-Adar Index
 - **Smart Contract Flow** - Zero-interest loan contracts on Base L2
-- **Vouching Mechanics** - How contributions signal trust
-- **Reputation System** - Building credit history on-chain
 - **Risk & Defaults** - Transparent, social accountability
 
 ### [Vision & Roadmap](vision.md)
@@ -48,7 +46,7 @@ Complete bibliography of research supporting our mechanics, with 15+ academic pa
 
 ## Getting Started
 
-New to LendFriend? Start with our [Overview](how-it-works/overview.md) to understand the core mechanics, then dive into the [Trust Score Algorithm](how-it-works/trust-score-algorithm.md) to see how social proximity creates creditworthiness.
+New to LendFriend? Start with our [Overview](how-it-works/overview.md) to understand the core mechanics, then dive into [Social Trust Scoring](how-it-works/social-trust-scoring.md) to see how social proximity creates creditworthiness.
 
 ---
 

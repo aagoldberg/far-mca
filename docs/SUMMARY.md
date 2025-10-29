@@ -5,10 +5,8 @@
 ## How It Works
 
 * [Overview](how-it-works/overview.md)
-* [Trust Score Algorithm](how-it-works/trust-score-algorithm.md)
+* [Social Trust Scoring](how-it-works/social-trust-scoring.md)
 * [Smart Contract Flow](how-it-works/smart-contract-flow.md)
-* [Vouching Mechanics](how-it-works/vouching-mechanics.md)
-* [Reputation System](how-it-works/reputation-system.md)
 * [Risk & Default Handling](how-it-works/risk-and-defaults.md)
 * [Technical Stack](how-it-works/technical-stack.md)
 

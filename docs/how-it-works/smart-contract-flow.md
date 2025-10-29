@@ -157,4 +157,4 @@ With Base L2 gas at ~$0.01 per 40,000 gas, our method keeps costs constant regar
 
 ---
 
-**Next**: Learn how [Vouching Mechanics](vouching-mechanics.md) signal trust
+**Next**: Learn how [Social Trust Scoring](social-trust-scoring.md) enables uncollateralized lending
