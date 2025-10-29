@@ -182,6 +182,44 @@ export default function HowItWorksPage() {
             </p>
           </div>
 
+          {/* Interface Definitions */}
+          <div className="bg-gray-900 rounded-xl p-6 mb-8">
+            <h3 className="text-lg font-bold text-white mb-4">Contract Interfaces</h3>
+
+            <div className="space-y-4">
+              <div className="bg-gray-800 rounded-lg p-4">
+                <div className="text-xs text-gray-400 mb-2">IMicroLoanFactory.sol</div>
+                <pre className="text-sm text-green-300 font-mono overflow-x-auto">
+{`interface IMicroLoanFactory {
+    function createLoan(
+        address borrower,
+        string calldata metadataURI,
+        uint256 principal,
+        uint256 loanDuration,
+        uint256 fundraisingDeadline
+    ) external returns (address loanAddress);
+}`}
+                </pre>
+                <p className="text-xs text-gray-400 mt-3">Deploys individual loan contracts with validation constraints</p>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg p-4">
+                <div className="text-xs text-gray-400 mb-2">IMicroLoan.sol</div>
+                <pre className="text-sm text-green-300 font-mono overflow-x-auto">
+{`interface IMicroLoan {
+    function contribute(uint256 amount) external;
+    function disburse() external;
+    function repay(uint256 amount) external;
+    function claimableAmount(address contributor)
+        external view returns (uint256);
+    function claim() external;
+}`}
+                </pre>
+                <p className="text-xs text-gray-400 mt-3">Core loan lifecycle: fundraising → disbursement → repayment → claims</p>
+              </div>
+            </div>
+          </div>
+
           <div className="space-y-6">
             {/* Loan Creation */}
             <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
@@ -191,6 +229,19 @@ export default function HowItWorksPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Loan Deployed via Factory</h3>
+
+                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                    <pre className="text-xs text-green-300 font-mono overflow-x-auto">
+{`function createLoan(
+    address borrower,
+    string calldata metadataURI,
+    uint256 principal,
+    uint256 loanDuration,
+    uint256 fundraisingDeadline
+) external returns (address loanAddress)`}
+                    </pre>
+                  </div>
+
                   <p className="text-gray-700 mb-3">
                     A factory contract deploys individual loan contracts with the following constraints:
                   </p>
@@ -217,6 +268,13 @@ export default function HowItWorksPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Lenders Contribute</h3>
+
+                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                    <pre className="text-xs text-green-300 font-mono overflow-x-auto">
+{`function contribute(uint256 amount) external`}
+                    </pre>
+                  </div>
+
                   <p className="text-gray-700 mb-3">
                     Lenders send funds to the contract. Each contribution updates:
                   </p>
@@ -249,6 +307,13 @@ export default function HowItWorksPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Funds Disbursed to Borrower</h3>
+
+                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                    <pre className="text-xs text-green-300 font-mono overflow-x-auto">
+{`function disburse() external`}
+                    </pre>
+                  </div>
+
                   <p className="text-gray-700 mb-3">
                     Once fully funded, borrower can claim funds within the disbursement window:
                   </p>
@@ -274,6 +339,18 @@ export default function HowItWorksPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Repayment & Claims</h3>
+
+                  <div className="bg-gray-900 rounded-lg p-3 mb-3">
+                    <pre className="text-xs text-green-300 font-mono overflow-x-auto">
+{`function repay(uint256 amount) external
+
+function claimableAmount(address contributor)
+    external view returns (uint256)
+
+function claim() external`}
+                    </pre>
+                  </div>
+
                   <p className="text-gray-700 mb-3">
                     Borrower repays flexibly. Lenders claim their pro-rata share using an <strong>accumulator pattern</strong> for gas efficiency:
                   </p>
