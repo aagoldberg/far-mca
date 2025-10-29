@@ -1,0 +1,9 @@
+root: ./
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md
+
+redirects:
+  # Redirect old paths to new structure
+  how-it-works: how-it-works/overview.md
