@@ -207,16 +207,6 @@ All loan history publicly queryable on-chain, creating portable credit history a
 
 ---
 
-## Further Reading
-
-- [Grameen Bank Methodology](https://grameenbank.org/methodology/)
-- [Kiva Research & Learning](https://www.kiva.org/about/due-diligence/methodology)
-- [Akhuwat Impact Report](https://akhuwat.org.pk/impact/)
-- [Federal Reserve: Social Networks and Financial Decisions](https://www.federalreserve.gov/econres/feds/files/2018025pap.pdf)
-- [MIT: Building Social Capital Through Microfinance](https://economics.mit.edu/files/4384)
-
----
-
 **Last Updated**: November 2024
 
 For questions about research methodology or to suggest additional citations, contact the LendFriend team.
