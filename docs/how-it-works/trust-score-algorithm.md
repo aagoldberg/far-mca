@@ -2,7 +2,7 @@
 
 ## Social Proximity Measurement
 
-We calculate social distance between borrower and lender by measuring mutual connections on Farcaster. The algorithm is based on research from Kiva and Grameen Bank showing that **20+ friend/family lenders achieve 98% repayment vs 88% with 0 friend/family lenders**<sup>[[1]](../references.md#grameen-bank)</sup>—a 10% improvement from social proximity alone.
+We calculate social distance between borrower and lender by measuring mutual connections on Farcaster. The algorithm is based on research from Kiva and Grameen Bank showing that **20+ friend/family lenders achieve 98% repayment vs 88% with 0 friend/family lenders—a 10% improvement from social proximity alone.**
 
 ## The Algorithm
 
@@ -86,20 +86,20 @@ P_network = (N_connected / N_total) × 100
 
 This algorithm is grounded in microfinance research:
 
-- **Grameen Bank**: 97-98% repayment rate across 9.6M borrowers using group lending with social ties<sup>[[1]](../references.md#grameen-bank)</sup>
-- **Kiva**: 96.3% repayment rate with loans showing 20+ friend/family lenders achieving 98% vs 88% with zero social connections<sup>[[2]](../references.md#kiva)</sup>
-- **Besley & Coate (1995)**: Foundational paper establishing that social collateral can substitute for traditional collateral<sup>[[3]](../references.md#group-lending-and-social-collateral)</sup>
-- **Peer-to-Peer Lending**: Friend endorsements reduce default rates by 22% (Iyer et al., 2016)<sup>[[4]](../references.md#peer-to-peer-lending-and-reputation)</sup>
-- **Social Connectedness**: Increases lending by 24.5% and reduces defaults (Kuchler et al., 2022)<sup>[[5]](../references.md#social-capital-and-network-effects)</sup>
+- **Grameen Bank**: 97-98% repayment rate across 9.6M borrowers using group lending with social ties
+- **Kiva**: 96.3% repayment rate with loans showing 20+ friend/family lenders achieving 98% vs 88% with zero social connections
+- **Besley & Coate (1995)**: Foundational paper establishing that social collateral can substitute for traditional collateral
+- **Peer-to-Peer Lending**: Friend endorsements reduce default rates by 22% (Iyer et al., 2016)
+- **Social Connectedness**: Increases lending by 24.5% and reduces defaults (Kuchler et al., 2022)
 
 {% hint style="info" %}
-**See full research citations**: [Academic Research](../references.md)
+**See full citations**: [Academic Research](../references.md) — Complete bibliography with DOIs, institutional case studies, and peer-reviewed papers
 {% endhint %}
 
 ## Why It Works
 
-1. **Information Asymmetry**: Friends know you better than strangers—social ties reduce information gaps<sup>[[6]](../references.md#peer-to-peer-lending-and-reputation)</sup>
-2. **Social Pressure**: You care about maintaining reputation with your network<sup>[[7]](../references.md#social-capital-and-network-effects)</sup>
+1. **Information Asymmetry**: Friends know you better than strangers—social ties reduce information gaps
+2. **Social Pressure**: You care about maintaining reputation with your network
 3. **Verifiable**: Farcaster provides cryptographic proof of social connections (solving identity verification at scale)
 4. **Sybil Resistant**: Quality scores filter fake accounts, overlap bonus requires real networks
 

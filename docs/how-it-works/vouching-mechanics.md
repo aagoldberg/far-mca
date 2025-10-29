@@ -71,12 +71,12 @@ This pattern mirrors traditional lending: you ask family first, then friends, th
 
 Trust cascades are supported by microfinance research:
 
-- **Peer Monitoring**: Group members monitor each other's behavior, reducing moral hazard<sup>[[1]](../references.md#group-lending-and-social-collateral)</sup>
-- **Social Sanctions**: Network connections create enforcement through reputation damage<sup>[[2]](../references.md#social-capital-and-network-effects)</sup>
-- **Information Cascades**: Early endorsements by trusted connections influence subsequent lenders<sup>[[3]](../references.md#peer-to-peer-lending-and-reputation)</sup>
+- **Peer Monitoring**: Group members monitor each other's behavior, reducing moral hazard
+- **Social Sanctions**: Network connections create enforcement through reputation damage
+- **Information Cascades**: Early endorsements by trusted connections influence subsequent lenders
 
 {% hint style="info" %}
-Feigenberg et al. (2013) found that increased meeting frequency in lending groups builds social capital and information sharing, improving repayment by creating persistent social ties.
+**Research shows**: Increased meeting frequency in lending groups builds social capital and information sharing, improving repayment by creating persistent social ties (Feigenberg et al., 2013). [See complete research](../references.md)
 {% endhint %}
 
 ## Anti-Patterns

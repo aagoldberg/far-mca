@@ -55,12 +55,12 @@ Zero interest aligns incentives and follows proven models:
 
 Zero-interest lending is not experimental—it has proven track records:
 
-- **Akhuwat (Islamic Microfinance)**: 99.9% repayment rate using completely interest-free loans (Qard Hassan) distributed through mosques<sup>[[1]](../references.md#akhuwat-islamic-microfinance)</sup>
-- **Kiva**: Zero interest to borrowers, 96.3% repayment rate across $1.8B+ in loans<sup>[[2]](../references.md#kiva)</sup>
-- **Islamic Finance Research**: Interest-free models create stronger social accountability and community bonds<sup>[[3]](../references.md#zero-interest-lending-models)</sup>
+- **Akhuwat (Islamic Microfinance)**: 99.9% repayment rate using completely interest-free loans (Qard Hassan) distributed through mosques
+- **Kiva**: Zero interest to borrowers, 96.3% repayment rate across $1.8B+ in loans
+- **Islamic Finance Research**: Interest-free models create stronger social accountability and community bonds
 
 {% hint style="success" %}
-**Key insight**: Removing the profit motive from lending strengthens social bonds and trust, leading to HIGHER repayment rates, not lower.
+**Key insight**: Removing the profit motive from lending strengthens social bonds and trust, leading to HIGHER repayment rates, not lower. ([See research](../references.md))
 {% endhint %}
 
 ## Default Scenarios
@@ -134,9 +134,9 @@ Based on established microfinance research:
 
 | Loan Type | Expected Default Rate | Research Basis |
 |-----------|----------------------|----------------|
-| **Strong social support** (P_network ≥ 60%) | 2-5% | Grameen: 2-3% default<sup>[[4]](../references.md#grameen-bank)</sup> |
-| **Moderate support** (30-60%) | 10-15% | Mixed social ties research<sup>[[5]](../references.md#social-capital-and-network-effects)</sup> |
-| **Weak/No support** (<30%) | 20-40% | Baseline P2P lending rates<sup>[[6]](../references.md#peer-to-peer-lending-and-reputation)</sup> |
+| **Strong social support** (P_network ≥ 60%) | 2-5% | Grameen: 2-3% default |
+| **Moderate support** (30-60%) | 10-15% | Mixed social ties research |
+| **Weak/No support** (<30%) | 20-40% | Baseline P2P lending rates |
 | **Overall portfolio** (mixed) | 8-12% | Conservative estimate |
 
 These are estimates based on academic research. **Actual rates will be tracked and published quarterly** on-chain.
@@ -145,12 +145,12 @@ These are estimates based on academic research. **Actual rates will be tracked a
 
 | Institution | Repayment Rate | Default Rate | Model |
 |------------|---------------|--------------|-------|
-| **Grameen Bank** | 97-98% | 2-3% | Group lending<sup>[[4]](../references.md#grameen-bank)</sup> |
-| **Kiva** | 96.3% | 3.7% | P2P crowdfunding<sup>[[2]](../references.md#kiva)</sup> |
-| **Akhuwat** | 99.9% | 0.1% | Zero-interest, mosque-based<sup>[[1]](../references.md#akhuwat-islamic-microfinance)</sup> |
+| **Grameen Bank** | 97-98% | 2-3% | Group lending |
+| **Kiva** | 96.3% | 3.7% | P2P crowdfunding |
+| **Akhuwat** | 99.9% | 0.1% | Zero-interest, mosque-based |
 
 {% hint style="info" %}
-LendFriend combines elements from all three models: zero-interest (Akhuwat/Kiva), social connections (Grameen), and peer-to-peer crowdfunding (Kiva).
+LendFriend combines elements from all three models: zero-interest (Akhuwat/Kiva), social connections (Grameen), and peer-to-peer crowdfunding (Kiva). [See complete research](../references.md)
 {% endhint %}
 
 ## Lender Risk Acceptance
