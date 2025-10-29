@@ -46,7 +46,7 @@ Complete bibliography of research supporting our mechanics, with 15+ academic pa
 
 ## Getting Started
 
-New to LendFriend? Start with our [Overview](how-it-works/overview.md) to understand the core mechanics, then dive into [Social Trust Scoring](how-it-works/social-trust-scoring.md) to see how social proximity creates creditworthiness.
+New to LendFriend? Start with our [Overview](how-it-works/overview.md) to understand the core mechanics, then dive into [Social Trust Scoring](how-it-works/social-trust-scoring/README.md) to see how social proximity creates creditworthiness.
 
 ---
 

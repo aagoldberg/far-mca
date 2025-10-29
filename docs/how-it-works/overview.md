@@ -15,7 +15,7 @@ When someone contributes to your loan, they're providing both capital and social
 
 Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve **10% higher repayment rates**—proving that social proximity is a powerful predictor of creditworthiness.
 
-[→ Learn about Social Trust Scoring](social-trust-scoring.md)
+[→ Learn about Social Trust Scoring](social-trust-scoring/README.md)
 
 ### 2. Smart Contract Flow
 Zero-interest loan contracts deployed on Base L2. Trust scores are calculated off-chain to keep gas costs low (~$0.01 per transaction). Smart contracts handle money movement, not social graph analysis.
@@ -49,6 +49,6 @@ Social proximity is quantified mathematically, not guessed subjectively.
 
 ## Next Steps
 
-- **New to LendFriend?** Start with [Social Trust Scoring](social-trust-scoring.md)
+- **New to LendFriend?** Start with [Social Trust Scoring](social-trust-scoring/README.md)
 - **Want technical details?** Check out [Smart Contract Flow](smart-contract-flow.md)
 - **Building on LendFriend?** See [Technical Stack](technical-stack.md)
