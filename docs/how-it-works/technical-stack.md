@@ -36,7 +36,7 @@ graph TB
 
     style D fill:#0052FF
     style I fill:#8A63D2
-    style A fill:#000000
+    style A fill:#E5E7EB
 ```
 
 ---
