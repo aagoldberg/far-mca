@@ -26,8 +26,9 @@ graph TB
     end
 
     A --> B
+    A --> C
     B --> D
-    A --> H
+    C --> H
     H --> I
     H --> J
     E --> F
