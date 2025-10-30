@@ -14,9 +14,7 @@ When creating a loan request, borrowers share:
 
 **Purpose:** Visual identification and humanization of the borrower.
 
-**Research backing:** Profile pictures are standard practice in P2P lending platforms. **Kiva requires borrowers to appear in photos with their business**, and won't approve loans without the borrower in the photo, rejecting selfies, headshots, logos, or photoshopped images. Prosper.com encouraged borrowers to post photos, believing personalization is consistent with the social aspect of P2P lending.
-
-**Important consideration:** Research by Pope & Sydnor (2011) found evidence of discrimination based on borrower photos on Prosper.com, with loan listings showing racial disparities in funding rates and interest rates. However, research also shows that "borrowers who look happier, more beautiful, or more trustworthy" receive better lending terms, indicating visual cues provide trust signals lenders value.
+**Research backing:** Research shows that borrowers who appear more trustworthy receive better lending terms—higher funding rates and ~50 basis points lower interest rates (Duarte et al. 2012). Visual cues provide trust signals lenders value.
 
 **LendFriend's approach:** Profile pictures are pulled from verified Farcaster accounts (not self-uploaded), providing consistency with their social identity and reducing fake profile risks.
 
@@ -138,6 +136,12 @@ Pope & Sydnor (2011) documented racial discrimination on Prosper.com based on bo
 ---
 
 ## Key Research Citations
+
+**Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
+
+> Examines how appearance-based impressions affect P2P lending using Prosper.com photographs. Found that borrowers appearing more trustworthy have higher funding probabilities and receive ~50 basis points lower interest rates. Importantly, appearance predicted actual credit quality—trustworthy-looking borrowers indeed had better credit scores and lower default rates.
+
+---
 
 **Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research*, 48(SPL), S138-S149.
 

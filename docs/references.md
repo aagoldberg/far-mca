@@ -56,10 +56,17 @@ DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
 ---
 
+**Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
+DOI: [10.1093/rfs/hhs071](https://doi.org/10.1093/rfs/hhs071)
+
+> Examines how appearance-based impressions affect financial transactions using photographs from Prosper.com. **Key findings:** (1) Borrowers appearing more trustworthy have higher funding probabilities and receive **~50 basis points lower interest rates**; (2) Appearance correlates with actual credit quality—trustworthy-looking borrowers had better credit scores and lower default rates; (3) Visual trust signals matter in financial transactions because they predict both investor and borrower behavior. Shows that appearance provides legitimate information about creditworthiness, not just bias.
+
+---
+
 **Pope, D. G., & Sydnor, J. R. (2011)**. What's in a Picture? Evidence of Discrimination from Prosper.com. *Journal of Human Resources*, 46(1), 53-92.
 DOI: [10.3368/jhr.46.1.53](https://doi.org/10.3368/jhr.46.1.53)
 
-> Documents racial discrimination in P2P lending based on borrower profile photos on Prosper.com. **Key findings:** (1) Loan listings with Black borrowers were **25-35% less likely** to receive funding than whites with similar credit profiles; (2) Black borrowers paid **60-80 basis points higher** interest rates; (3) Discrimination persisted even after controlling for credit quality. Critical evidence that visual information can introduce bias into lending decisions, though research also shows lenders value visual trust signals (borrowers who look "happier, more trustworthy" receive better terms).
+> Documents racial discrimination in P2P lending based on borrower profile photos on Prosper.com. **Key findings:** (1) Loan listings with Black borrowers were **25-35% less likely** to receive funding than whites with similar credit profiles; (2) Black borrowers paid **60-80 basis points higher** interest rates; (3) Discrimination persisted even after controlling for credit quality. Critical evidence that visual information can introduce bias into lending decisions.
 
 ---
 
