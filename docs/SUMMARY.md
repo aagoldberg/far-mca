@@ -13,6 +13,8 @@
   * [Implementation](how-it-works/social-trust-scoring/implementation.md)
 * [Risk Scoring](how-it-works/risk-scoring/README.md)
   * [Risk Grades](how-it-works/risk-scoring/risk-grades.md)
+  * [Calculation](how-it-works/risk-scoring/calculation.md)
+  * [Examples](how-it-works/risk-scoring/examples.md)
   * [Lender Warnings](how-it-works/risk-scoring/lender-warnings.md)
   * [Loan Constraints](how-it-works/risk-scoring/loan-constraints.md)
   * [Implementation](how-it-works/risk-scoring/implementation.md)
