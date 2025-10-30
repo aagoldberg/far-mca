@@ -29,11 +29,11 @@ We'll continually refine the model as we collect more repayment data. Lenders se
 
 **Our model draws from:**
 
-- **Prosper (2006-2020)**: Pioneered transparent risk grades (AA-HR) without loan amount restrictions. Proved market-based filtering works at scale—lenders could see risk and decide for themselves, creating natural market equilibrium.
+- **[Prosper](https://www.prosper.com/) (2006-2020)**: Pioneered transparent risk grades (AA-HR) without loan amount restrictions. Proved market-based filtering works at scale—lenders could see risk and decide for themselves, creating natural market equilibrium.
 
-- **Grameen Bank (1983-present)**: 97-98% repayment rate using social collateral instead of traditional collateral. Demonstrated that social accountability can substitute for financial guarantees in lending.
+- **[Grameen Bank](https://grameenbank.org/) (1983-present)**: 97-98% repayment rate using social collateral instead of traditional collateral. Demonstrated that social accountability can substitute for financial guarantees in lending. [See research](../../references.md#institutional-evidence)
 
-- **Iyer et al. (2016)**: Research on Prosper.com showing loans with friend endorsements have 22% lower default rates. This is why our Social Trust Score carries 30% weight in the risk model.
+- **[Iyer et al. (2016)](../../references.md#peer-to-peer-lending-and-reputation)**: Research on Prosper.com showing loans with friend endorsements have 22% lower default rates. This is why our Social Trust Score carries 30% weight in the risk model.
 
 **Why short loan terms?** MVP uses 30-90 day durations (microfinance best practice) to create fast feedback loops for gathering behavioral data and refining the model.
 
