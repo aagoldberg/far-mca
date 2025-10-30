@@ -110,9 +110,9 @@ function calculateGrade(params) {
 
 ## Monitoring
 
-Track actual default rates by grade quarterly:
+Track actual default rates by grade quarterly to validate and refine the algorithm.
 
-**Targets:**
+**Initial estimates (to be validated):**
 - Grade A: <5%
 - Grade B: 5-10%
 - Grade C: 10-20%
@@ -120,7 +120,7 @@ Track actual default rates by grade quarterly:
 - Grade E: 35-50%
 - Grade HR: >50%
 
-Adjust formula if actual rates diverge.
+We'll adjust the formula as real data comes in.
 
 ---
 

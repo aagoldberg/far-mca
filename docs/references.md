@@ -52,7 +52,7 @@ DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 **Lin, M., Prabhala, N. R., & Viswanathan, S. (2013)**. Judging borrowers by the company they keep: Friendship networks and information asymmetry in online peer-to-peer lending. *Management Science, 59*(1), 17-35.
 DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 
-> Demonstrates that borrowers with strong social network ties on Prosper.com receive 1) more bids, 2) lower interest rates, and 3) have better repayment performance. Social connections reduce information asymmetry. **Shows 16% improvement in default prediction** when using network-weighted features (similar to Adamic-Adar approach).
+> Demonstrates that borrowers with strong social network ties on Prosper.com receive 1) more bids, 2) lower interest rates, and 3) have better repayment performance. Social connections reduce information asymmetry and improve default prediction.
 
 ---
 

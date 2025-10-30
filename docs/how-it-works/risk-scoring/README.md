@@ -12,24 +12,6 @@ LendFriend doesn't artificially limit loan amounts. Instead, we provide comprehe
 
 Traditional P2P platforms like Prosper and LendingClub use risk grades (AA-HR, A-G) to disclose risk **without restricting loan amounts**. We follow the same model.
 
-### Key Principles
-
-**🎯 No Amount Limits**
-- Borrowers request any amount they need
-- Close friends can lend $1,000+ to first-timers
-- Proven borrowers access capital immediately
-
-**⏱️ Duration Limits Only**
-- MVP Phase 1: 30 days max (all loans)
-- MVP Phase 2: 60 days max
-- MVP Phase 3: 90 days max
-- **Why?** Fast feedback loop for behavioral data
-
-**🔍 Risk Disclosure**
-- Every loan gets Risk Grade (A-HR)
-- Lenders see warnings and risk flags
-- Market decides through funding behavior
-
 ---
 
 ## The Risk Grade System
@@ -53,6 +35,8 @@ Risk Grade = f(
 | **D** 🟡 | Elevated | 20-35% | Limited history, weak ties |
 | **E** 🔴 | High | 35-50% | No history + large loan |
 | **HR** 🔴 | Very High | >50% | First loan >$500, weak ties |
+
+**Note:** These weights and thresholds are initial estimates based on P2P lending research. We'll continually refine the algorithm as we collect more repayment data.
 
 [→ Learn about Risk Grades](risk-grades.md)
 

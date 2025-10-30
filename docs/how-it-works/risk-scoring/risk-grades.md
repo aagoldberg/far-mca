@@ -33,6 +33,8 @@ Total points (0-100) → Grade:
 - 35-49 points = D
 - 20-34 points = E
 - 0-19 points = HR
+
+Note: These weights and thresholds are initial estimates that we'll refine as we collect data.
 ```
 
 [→ See detailed calculation](calculation.md)

@@ -32,7 +32,7 @@ Based on [Social Trust Scoring](../social-trust-scoring/README.md) - Adamic-Adar
 | 20-39 (Weak) | 12 |
 | 0-19 (Minimal) | 6 |
 
-**Why it matters:** Close friends provide social accountability - research shows 22% lower default rates with friend endorsements.
+**Why it matters:** Close friends provide social accountability - research shows friend endorsements significantly reduce default rates in P2P lending.
 
 ---
 
@@ -75,10 +75,14 @@ Farcaster account health (Neynar quality score).
 
 ## Why These Weights?
 
-- **History = 40%**: Most predictive in P2P lending research
-- **Social = 30%**: Powerful in crypto lending, compensates for no history
-- **Size = 20%**: Progressive lending indicator
-- **Quality = 10%**: Sybil resistance, but legitimate users vary 0.5-1.0
+These are our initial design choices informed by P2P lending research:
+
+- **History = 40%**: Research shows repayment history is the strongest predictor
+- **Social = 30%**: Social ties reduce defaults and compensate for no history
+- **Size = 20%**: Progressive lending reduces risk
+- **Quality = 10%**: Sybil resistance, though legitimate users vary widely
+
+**Note:** We'll continually refine these weights as we collect repayment data.
 
 ---
 
