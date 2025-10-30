@@ -42,10 +42,24 @@ DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 
 ### Peer-to-Peer Lending and Reputation
 
+**Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research, 48*(SPL), S138-S149.
+DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
+
+> Seminal study on how borrower narratives affect P2P lending decisions on Prosper.com. **Key findings:** (1) As number of identity claims in narratives increases, loan funding increases but repayment performance suffers; (2) Unverifiable soft information affects lending decisions above and beyond objective, verifiable information; (3) Identity claims about being "trustworthy" or "successful" increased funding but ironically were less predictive of actual repayment compared to "moral hardship" narratives. Demonstrated that storytelling significantly impacts lender behavior in unsecured lending.
+
+---
+
 **Iyer, R., Khwaja, A. I., Luttmer, E. F., & Shue, K. (2016)**. Screening peers softly: Inferring the quality of small borrowers. *Management Science, 62*(6), 1554-1577.
 DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
-> Analyzes Prosper.com data showing that lenders use social information (friendships, group memberships) to screen borrowers. Finds that loans with friend endorsements have 22% lower default rates.
+> Analyzes Prosper.com data showing that lenders use social information (friendships, group memberships) to screen borrowers. **Key findings:** (1) Loans with friend endorsements have 22% lower default rates; (2) Lenders using soft information (narratives, social connections) predict default with **45% greater accuracy** than credit scores alone; (3) Soft information is relatively more important when screening borrowers of lower credit quality.
+
+---
+
+**Pope, D. G., & Sydnor, J. R. (2011)**. What's in a Picture? Evidence of Discrimination from Prosper.com. *Journal of Human Resources*, 46(1), 53-92.
+DOI: [10.3368/jhr.46.1.53](https://doi.org/10.3368/jhr.46.1.53)
+
+> Documents racial discrimination in P2P lending based on borrower profile photos on Prosper.com. **Key findings:** (1) Loan listings with Black borrowers were **25-35% less likely** to receive funding than whites with similar credit profiles; (2) Black borrowers paid **60-80 basis points higher** interest rates; (3) Discrimination persisted even after controlling for credit quality. Critical evidence that visual information can introduce bias into lending decisions, though research also shows lenders value visual trust signals (borrowers who look "happier, more trustworthy" receive better terms).
 
 ---
 
@@ -152,6 +166,15 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 ---
 
 ## Supporting Research
+
+### Soft Information in Lending
+
+**Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
+DOI: [10.1093/rcfs/cfy009](https://doi.org/10.1093/rcfs/cfy009)
+
+> Comprehensive review distinguishing hard information (quantitative, easily transmitted) from soft information (qualitative, context-dependent). **Key findings:** (1) Soft information (personal narratives, relationship data) reduces information asymmetry in lending; (2) Considering soft data in equal measure as hard information improves creditworthiness assessment; (3) Soft information is especially valuable for small borrowers and those without extensive credit history; (4) Technology (P2P platforms) enables soft information to be transmitted at scale, challenging traditional assumptions that soft information requires in-person relationships.
+
+---
 
 ### Joint Liability Mechanisms
 

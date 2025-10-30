@@ -5,6 +5,7 @@
 ## How It Works
 
 * [Overview](how-it-works/overview.md)
+* [Borrower Profiles & Identity](how-it-works/borrower-profiles.md)
 * [Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
   * [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md)
   * [Risk Tiers](how-it-works/social-trust-scoring/risk-tiers.md)
