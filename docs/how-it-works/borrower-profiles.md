@@ -109,36 +109,6 @@ When you publicly state your loan purpose, share your story, and post your pictu
 
 ---
 
-## Research on Discrimination & Bias
-
-### The Challenge
-
-Pope & Sydnor (2011) documented racial discrimination on Prosper.com based on borrower photos:
-- Loan listings with Black borrowers were **25-35% less likely** to receive funding
-- Interest rates paid by Black borrowers were **60-80 basis points higher**
-- Discrimination persisted even after controlling for credit profiles
-
-### Mitigation Strategies
-
-**What doesn't work:**
-- Removing photos entirely (reduces trust, hurts legitimate borrowers)
-- Blind screening (loses valuable soft information)
-
-**What research shows helps:**
-1. **Algorithmic scoring**: Combining soft + hard data into objective scores reduces bias
-2. **Transparency**: Public loan history creates accountability for repayment behavior
-3. **Community-based lending**: Social connections matter more than appearance (Bjorkegren & Grissen 2020 found only "BFFs"—real interactive relationships—predict defaults, not appearance)
-4. **Social vouching**: When friends contribute, they vouch for authenticity—misrepresentation damages real relationships
-
-**LendFriend's approach:**
-- **Social vouching mechanism**: When friends contribute, they vouch for the borrower's story and picture—misrepresentation damages real relationships, not just anonymous ratings
-- Risk scoring algorithm combines multiple factors (40% repayment history, 30% social trust, 20% loan size, 10% account quality)
-- Social connections are quantified algorithmically using Adamic-Adar Index
-- Public on-chain repayment history creates transparent track records
-- Verified Farcaster identity links borrowers to their persistent social graph
-
----
-
 ## Key Research Citations
 
 **Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
@@ -150,12 +120,6 @@ Pope & Sydnor (2011) documented racial discrimination on Prosper.com based on bo
 **Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research*, 48(SPL), S138-S149.
 
 > Seminal study on Prosper.com showing narratives significantly affect lending decisions. Found that identity claims increase funding but can decrease repayment if over-promising. Established that soft information matters beyond hard credit data.
-
----
-
-**Pope, D. G., & Sydnor, J. R. (2011)**. What's in a Picture? Evidence of Discrimination from Prosper.com. *Journal of Human Resources*, 46(1), 53-92.
-
-> Documented racial discrimination in P2P lending based on borrower photos. Showed 25-35% lower funding rates and 60-80 basis points higher interest rates for Black borrowers with similar credit profiles. Critical evidence that visual information can introduce bias.
 
 ---
 
