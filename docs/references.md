@@ -93,6 +93,24 @@ DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11
 
 ---
 
+### Emotional Connection and Charitable Giving
+
+<span id="small-et-al-2007"></span>
+**Small, D. A., Loewenstein, G., & Slovic, P. (2007)**. Sympathy and callousness: The impact of deliberative thought on donations to identifiable and statistical victims. *Organizational Behavior and Human Decision Processes*, 102(2), 143-153.
+DOI: [10.1016/j.obhdp.2006.01.005](https://doi.org/10.1016/j.obhdp.2006.01.005)
+
+> Foundational research on the **identifiable victim effect**: people donate significantly more to an identified individual with a story than to statistical information about a group. Shows that emotional engagement with specific people (not abstract numbers) drives prosocial behavior. Classic study demonstrated donors gave more when shown "Rokia, a 7-year-old girl from Mali" than when presented with statistics about millions of African children at risk. Critical insight: combining emotional stories with statistics actually reduces donations compared to stories alone—people connect to individuals, not data.
+
+---
+
+<span id="genevsky-and-knutson-2015"></span>
+**Genevsky, A., & Knutson, B. (2015)**. Neural affective mechanisms predict market-level microlending. *Psychological Science*, 26(9), 1411-1422.
+DOI: [10.1177/0956797615588467](https://doi.org/10.1177/0956797615588467)
+
+> Neural research examining how Kiva borrower photographs and stories affect lending decisions. Found that **positive arousal from viewing borrower photos directly predicts lending success** at market scale. Brain imaging showed nucleus accumbens (reward center) activation when viewing borrower profiles predicted both individual willingness to lend and aggregate lending rates across thousands of loans. Demonstrates that emotional engagement isn't just psychological—it's measurable in neural response and correlates with actual financial decisions.
+
+---
+
 ### Social Capital and Network Effects
 
 <span id="karlan-et-al-2009"></span>
