@@ -11,6 +11,7 @@
   * [Trust Cascades](how-it-works/social-trust-scoring/trust-cascades.md)
   * [Sybil Resistance](how-it-works/social-trust-scoring/sybil-resistance.md)
   * [Implementation](how-it-works/social-trust-scoring/implementation.md)
+* [Creditworthiness Scoring](how-it-works/creditworthiness-scoring.md)
 * [Smart Contract Flow](how-it-works/smart-contract-flow.md)
 * [Risk & Default Handling](how-it-works/risk-and-defaults.md)
 * [Technical Stack](how-it-works/technical-stack.md)
