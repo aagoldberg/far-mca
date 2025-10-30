@@ -204,7 +204,7 @@ export default function VisionPage() {
                 <ul className="space-y-2">
                   <li className="flex gap-3">
                     <span className="text-[#3B9B7F] font-bold">→</span>
-                    <span><strong>Cross-platform expansion:</strong> Extend beyond Farcaster to broader web3 identity</span>
+                    <span><strong>Multi-platform expansion:</strong> Bluesky (2026), Twitter/X (2027) with adapted risk models</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="text-[#3B9B7F] font-bold">→</span>
@@ -223,6 +223,126 @@ export default function VisionPage() {
                     <span><strong>Global accessibility:</strong> Serving the 1.7B unbanked worldwide</span>
                   </li>
                 </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Platform Expansion Strategy */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Platform Expansion Strategy</h2>
+          <p className="text-gray-600 text-center mb-8">
+            Research-backed approach to maintaining signal quality across platforms
+          </p>
+
+          <div className="space-y-6">
+            {/* Farcaster */}
+            <div className="bg-green-50 border-2 border-green-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-2xl">✅</div>
+                <h3 className="text-xl font-bold text-green-900">Farcaster (Phase 1-2: 2025-2026)</h3>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <h4 className="font-semibold text-green-900 mb-2">Why It's Strongest</h4>
+                  <ul className="text-sm text-green-800 space-y-1">
+                    <li>• Wallet-based identity (crypto signatures)</li>
+                    <li>• Crypto-native community (shared context)</li>
+                    <li>• Neynar quality scores filter spam/bots</li>
+                    <li>• Real relationships in tight-knit community</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900 mb-2">Risk Model Weights</h4>
+                  <ul className="text-sm text-green-800 space-y-1">
+                    <li>• Repayment History: 40%</li>
+                    <li>• Social Trust Score: 30% (high confidence)</li>
+                    <li>• Loan Size Risk: 20%</li>
+                    <li>• Account Quality: 10%</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Bluesky */}
+            <div className="bg-blue-50 border-2 border-blue-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-2xl">⚠️</div>
+                <h3 className="text-xl font-bold text-blue-900">Bluesky (Phase 2-3: 2026)</h3>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <h4 className="font-semibold text-blue-900 mb-2">Signal Characteristics</h4>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    <li>• Domain-based verification (e.g., yourname.com)</li>
+                    <li>• AT Protocol (decentralized, self-authenticating)</li>
+                    <li>• Mix of real connections + strangers</li>
+                    <li>• Better than Twitter, worse than Farcaster</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-blue-900 mb-2">Adapted Risk Model</h4>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    <li>• Repayment History: 50% (↑10%)</li>
+                    <li>• Social Trust Score: 20% (↓10%)</li>
+                    <li>• Loan Size Risk: 20%</li>
+                    <li>• Account Quality: 10% (+ domain verification)</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="bg-blue-100 rounded-lg p-3">
+                <p className="text-sm text-blue-900">
+                  <strong>Mitigation:</strong> Weight domain-verified accounts higher. Cross-platform verification bonus (same user on Farcaster + Bluesky = more trustworthy).
+                </p>
+              </div>
+            </div>
+
+            {/* Twitter/X */}
+            <div className="bg-amber-50 border-2 border-amber-400 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-2xl">🚨</div>
+                <h3 className="text-xl font-bold text-amber-900">Twitter/X (Phase 3: 2027)</h3>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <h4 className="font-semibold text-amber-900 mb-2">Signal Challenges</h4>
+                  <ul className="text-sm text-amber-800 space-y-1">
+                    <li>• Research: ~64% of accounts are bots</li>
+                    <li>• "Less about real life friendships" (research)</li>
+                    <li>• Follow-for-follow gaming common</li>
+                    <li>• Anonymous accounts, email-based identity</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-amber-900 mb-2">Heavily Adapted Model</h4>
+                  <ul className="text-sm text-amber-800 space-y-1">
+                    <li>• Repayment History: 60% (↑20%)</li>
+                    <li>• Social Trust Score: 10% (↓20%)</li>
+                    <li>• Loan Size Risk: 20%</li>
+                    <li>• Account Quality: 10% (require verification)</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="bg-amber-100 rounded-lg p-3">
+                <p className="text-sm text-amber-900">
+                  <strong>Requirements:</strong> Twitter Blue verification required (paid = Sybil resistance). Use Twitter as supplementary data only, not primary. Connections don't create social accountability because they're not real relationships.
+                </p>
+              </div>
+            </div>
+
+            {/* Research Foundation */}
+            <div className="bg-gray-50 border-2 border-gray-300 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-3">📊 Research Foundation</h3>
+              <div className="space-y-3 text-sm text-gray-700">
+                <p>
+                  <strong>Facebook vs Twitter research:</strong> "Facebook is more focused towards making social connections, while Twitter is all about staying informed... Facebook is typically full of people users have met... while Twitter is less about 'real life' friendships, and it's normal to connect with strangers."
+                </p>
+                <p>
+                  <strong>Credit scoring implications:</strong> Twitter connections don't create social accountability because they're not real relationships. Research shows lenders using Facebook connections see predictive value, but Twitter follows are noise.
+                </p>
+                <p>
+                  <strong>Key insight:</strong> As we expand platforms, shift from social trust → repayment history. Farcaster lets us bootstrap with social trust because connections are real. Twitter requires traditional credit history because connections are noise.
+                </p>
               </div>
             </div>
           </div>
