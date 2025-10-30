@@ -22,22 +22,20 @@ We'll continually refine the model as we collect more repayment data. Lenders se
 
 ## Why This Approach?
 
-### Research-Backed
-
-| Principle | Source | Application |
-|-----------|--------|-------------|
-| **Risk grades, no limits** | Prosper, LendingClub | A-HR grading system |
-| **Transparency reduces defaults** | P2P research | Comprehensive warnings |
-| **Short-term for MVP** | Microfinance | 30-90 day duration limits |
-| **Market efficiency** | P2P platforms | Lenders decide risk tolerance |
-| **Social offsets no history** | Grameen Bank | High trust = better grade |
-
-### Key Insight
-
 **From P2P lending research:** Platforms that provide detailed risk information see lower default rates because:
 1. Lenders make informed decisions
 2. High-risk loans get filtered by market (don't fund)
 3. Borrowers self-select appropriate loan sizes
+
+**Our model draws from:**
+
+- **Prosper (2006-2020)**: Pioneered transparent risk grades (AA-HR) without loan amount restrictions. Proved market-based filtering works at scale—lenders could see risk and decide for themselves, creating natural market equilibrium.
+
+- **Grameen Bank (1983-present)**: 97-98% repayment rate using social collateral instead of traditional collateral. Demonstrated that social accountability can substitute for financial guarantees in lending.
+
+- **Iyer et al. (2016)**: Research on Prosper.com showing loans with friend endorsements have 22% lower default rates. This is why our Social Trust Score carries 30% weight in the risk model.
+
+**Why short loan terms?** MVP uses 30-90 day durations (microfinance best practice) to create fast feedback loops for gathering behavioral data and refining the model.
 
 ---
 
