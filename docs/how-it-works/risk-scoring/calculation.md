@@ -86,4 +86,21 @@ These are our initial design choices informed by P2P lending research:
 
 ---
 
+## Grade Thresholds
+
+After calculating points from all four factors, the total score (0-100) maps to a letter grade:
+
+| Total Points | Grade | Risk Level |
+|--------------|-------|------------|
+| 80-100 | **A** 🟢 | Minimal |
+| 65-79 | **B** 🟢 | Low |
+| 50-64 | **C** 🟡 | Moderate |
+| 35-49 | **D** 🟡 | Elevated |
+| 20-34 | **E** 🔴 | High |
+| 0-19 | **HR** 🔴 | Very High |
+
+**Note:** These thresholds are initial design choices that we'll adjust as we collect repayment data and observe actual default patterns by grade.
+
+---
+
 **See examples:** [Calculation Examples](examples.md) | **Back to:** [Risk Grades](risk-grades.md)

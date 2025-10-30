@@ -23,31 +23,23 @@ Every loan gets a grade from A (minimal risk) to HR (very high risk).
 
 ---
 
-## How Grades Are Calculated
+## How Are Grades Calculated?
 
-Based on 4 weighted factors:
+Grades are calculated using four weighted factors:
+- **Repayment History** (40%) - Past loan performance
+- **Social Trust Score** (30%) - Connection strength to lender
+- **Loan Size Risk** (20%) - Amount relative to history
+- **Account Quality** (10%) - Farcaster account health
 
-```
-Grade = History (40%) + Social Trust (30%) + Loan Size (20%) + Quality (10%)
+Points from each factor are combined into a total score (0-100), which maps to a letter grade.
 
-Total points (0-100) → Grade:
-- 80-100 points = A
-- 65-79 points = B
-- 50-64 points = C
-- 35-49 points = D
-- 20-34 points = E
-- 0-19 points = HR
-```
-
-**Important:** These weights (40%, 30%, 20%, 10%) and grade thresholds are initial estimates informed by P2P lending research. As we collect actual repayment data, we'll update the model parameters to improve accuracy.
-
-[→ See detailed calculation](calculation.md) | [→ See examples](examples.md)
+**For the detailed scoring methodology and grade thresholds,** see [Calculation](calculation.md).
 
 ---
 
 **Learn More:**
-- [How Calculation Works](calculation.md)
-- [Calculation Examples](examples.md)
-- [Lender Warnings](lender-warnings.md)
+- [Calculation](calculation.md) - Detailed scoring methodology and thresholds
+- [Examples](examples.md) - Real calculation scenarios
+- [Lender Warnings](lender-warnings.md) - What lenders see
 
 **Back to:** [Risk Scoring](README.md)
