@@ -4,6 +4,8 @@
 
 Every loan gets a grade from A (minimal risk) to HR (very high risk).
 
+**Note:** These grades, weights, and default rate estimates are initial parameters based on P2P lending research. We'll continuously refine the model and adjust parameters as we collect more repayment data.
+
 ---
 
 ## Grade Meanings
@@ -33,9 +35,9 @@ Total points (0-100) → Grade:
 - 35-49 points = D
 - 20-34 points = E
 - 0-19 points = HR
-
-Note: These weights and thresholds are initial estimates that we'll refine as we collect data.
 ```
+
+**Important:** These weights (40%, 30%, 20%, 10%) and grade thresholds are initial estimates informed by P2P lending research. As we collect actual repayment data, we'll update the model parameters to improve accuracy.
 
 [→ See detailed calculation](calculation.md) | [→ See examples](examples.md)
 
