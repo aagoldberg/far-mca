@@ -1,63 +1,75 @@
 # Borrower Profiles & Identity
 
-## Why Personal Information Matters
+## The Role of Soft Information
 
-LendFriend uses both hard information (verifiable credit data) and soft information (personal narratives, photos, business descriptions) to help lenders make decisions. Combining both types improves default prediction by **45%** compared to credit scores alone [[3]](../references.md#iyer-et-al-2016).
+LendFriend combines hard information (verifiable credit data) with soft information (narratives, photos, business descriptions). This hybrid approach improves default prediction accuracy by **45%** compared to credit scores alone [[3]](../references.md#iyer-et-al-2016).
+
+Traditional P2P platforms like Prosper and LendingClub demonstrated that soft information affects lending decisions above and beyond objective credit metrics [[2]](../references.md#herzenstein-et-al-2011). LendFriend builds on this research but adds a critical mechanism: **social vouching by the borrower's actual network**.
 
 ---
 
-## What Borrowers Share
+## Profile Components
 
 ### Profile Picture
 
-Your face humanizes the loan request. Borrowers who appear trustworthy receive better terms—about 50 basis points lower interest rates [[1]](../references.md#duarte-et-al-2012). But here's the key difference from platforms like Prosper: when your friends contribute, they're vouching for both your story and your picture. Misrepresenting yourself doesn't just hurt an anonymous rating—it damages relationships with people who actually know you.
+Borrowers upload a photo when creating a loan request. Research shows borrowers appearing more trustworthy receive ~50 basis points lower interest rates [[1]](../references.md#duarte-et-al-2012), indicating that visual cues provide legitimate trust signals to lenders.
 
----
+**The social vouching mechanism:** When friends from the borrower's Farcaster network contribute to the loan, they implicitly vouch for the authenticity of both the narrative and the photo. This creates accountability to the borrower's actual social circle, not just anonymous platform ratings. Misrepresentation carries social cost with people who know the borrower personally.
 
-### About You
+### Personal Narrative ("About You")
 
-Tell lenders who you are. Are you a DAO contributor with irregular income? A freelancer growing your business? Someone hit by unexpected expenses? Personal narratives help lenders understand context that credit scores can't capture [[5]](../references.md#liberti-and-petersen-2018).
+Borrowers provide context about their situation—employment type (DAO contributor, freelancer, traditional), life circumstances, or business background. This addresses information asymmetry: credit scores can't capture non-traditional income patterns or context around why the loan is needed [[5]](../references.md#liberti-and-petersen-2018).
 
-**What works:** Honest, specific stories about your situation.
-**What doesn't:** Over-promising. Borrowers making many "trustworthy" claims actually had worse repayment rates [[2]](../references.md#herzenstein-et-al-2011). Lenders learn to spot this.
+**Screening insight:** Over-promising backfires. Research found that borrowers making many "trustworthy" identity claims actually had worse repayment performance [[2]](../references.md#herzenstein-et-al-2011). Lenders learn to identify authenticity versus over-selling, making specificity and honesty more valuable than vague promises.
 
----
+### Loan Purpose ("About This Loan")
 
-### About This Loan
+Borrowers specify what the loan will fund and what they expect to achieve. Clear, specific purposes ("purchasing $500 of fabric to fulfill holiday orders") outperform vague requests ("need money for business") in both funding rates and repayment performance [[2]](../references.md#herzenstein-et-al-2011).
 
-What will you use the money for? What will it help you achieve?
-
-Clear, specific purposes work better than vague ones. "Purchasing $500 of fabric to fulfill holiday orders" beats "need money for business." Specificity helps lenders assess legitimacy and shows you've thought this through [[2]](../references.md#herzenstein-et-al-2011).
-
-Kiva has funded $1.68B+ with 96.3% repayment by helping lenders feel connected to real stories—Armenian bakers, Moroccan bricklayers, actual people with actual plans.
-
----
+This transparency creates accountability—public statements about loan use that the borrower's network can see. Kiva's success ($1.68B+ funded, 96.3% repayment) demonstrates that connecting lenders to specific, tangible purposes drives both funding and repayment.
 
 ### Business Information (Optional)
 
-Link your website, Twitter, or other active accounts. Verifiable social network information helps predict repayment beyond credit scores [[4]](../references.md#freedman-and-jin-2017). Active online presence signals legitimacy and ongoing operations.
-
-Multiple verified platforms increase trust—covered more in [Social Trust Scoring](social-trust-scoring/README.md).
+Website links, Twitter handles, or other active social accounts. Verifiable social network information predicts default probability beyond credit scores [[4]](../references.md#freedman-and-jin-2017). Active online presence signals legitimacy and ongoing operations, particularly valuable for borrowers with non-traditional businesses.
 
 ---
 
-## How This Changes Lending
+## How the System Works
 
-### Friends Know You Better Than Credit Scores
+### Social Accountability vs Anonymous Ratings
 
-In traditional P2P lending (Prosper, LendingClub), lenders are strangers evaluating anonymous profiles. There's no social cost to exaggerating or misrepresenting—just an algorithm score.
+Traditional P2P lending (Prosper, LendingClub) connects strangers. Lenders evaluate anonymous profiles; borrowers face no social cost for misrepresentation beyond algorithmic reputation scores.
 
-LendFriend works differently. Your friends see your loan request first. When they contribute, they're putting their reputation on the line. This creates accountability to people whose opinion you actually care about. Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009)—and that's just the start.
+LendFriend's key innovation: **friends see and fund first**. When connections from the borrower's Farcaster network contribute, they're putting their own reputation on the line. This transforms the accountability mechanism:
 
-### Lenders Screen More Effectively
+- **Traditional P2P:** Default = lower platform score
+- **LendFriend:** Default = damaged relationships with actual friends who vouched for you
 
-When evaluating your loan, lenders look for:
+Research shows social proximity reduces default risk by 13% in lending groups [[6]](../references.md#karlan-et-al-2009). LendFriend extends this by making friends explicit co-signers through their contributions.
 
-- **Consistency**: Does your story match your social profile?
-- **Specificity**: Real plans vs vague promises
-- **Authenticity**: Are you being genuine or over-selling?
+### Improved Screening Accuracy
 
-Combining your narrative with your social connections, lenders can screen more accurately than any credit score alone [[3]](../references.md#iyer-et-al-2016).
+Lenders evaluate borrowers across multiple dimensions:
+
+- **Identity consistency**: Does the narrative align with the borrower's Farcaster profile and social connections?
+- **Specificity**: Concrete plans versus vague claims
+- **Network validation**: Are friends contributing? What does the social graph reveal?
+
+Combining soft information with social network data enables lenders to screen with 45% greater accuracy than credit scores alone [[3]](../references.md#iyer-et-al-2016). The platform doesn't just provide more information—it provides **verifiable information validated by the borrower's actual network**.
+
+---
+
+## Design Rationale
+
+This approach addresses three core challenges in uncollateralized lending:
+
+1. **Information asymmetry**: Personal narratives provide context credit scores miss, especially for non-traditional earners (crypto-native workers, freelancers, DAO contributors)
+
+2. **Moral hazard**: Social vouching by friends creates reputational cost for default beyond platform ratings
+
+3. **Adverse selection**: Borrowers self-select into the platform knowing their friends will see the request, filtering out those unwilling to face social scrutiny
+
+The system leverages cryptographically verifiable social graphs (Farcaster) to enable peer-to-peer lending with stronger accountability mechanisms than previous-generation P2P platforms.
 
 ---
 
@@ -74,8 +86,8 @@ Combining your narrative with your social connections, lenders can screen more a
 
 ## Next Steps
 
-→ [Social Trust Scoring](social-trust-scoring/README.md) - How we quantify social connections
-→ [Risk Scoring](risk-scoring/README.md) - How profiles factor into risk assessment
+→ [Social Trust Scoring](social-trust-scoring/README.md) - Quantifying social connections with Adamic-Adar
+→ [Risk Scoring](risk-scoring/README.md) - How profiles integrate into the risk model
 → [Academic Research](../references.md) - Complete bibliography
 
 ---
