@@ -4,20 +4,22 @@
 
 Every loan gets a grade from A (minimal risk) to HR (very high risk).
 
-**Note:** These grades, weights, and default rate estimates are initial parameters based on P2P lending research. We'll continuously refine the model and adjust parameters as we collect more repayment data.
+**Note:** These grades and weights are initial parameters based on P2P lending research. We'll continuously refine the model and adjust parameters as we collect more repayment data.
 
 ---
 
 ## Grade Meanings
 
-| Grade | Risk | Est. Default | Description |
-|-------|------|-------------|-------------|
-| **A** 🟢 | Minimal | <5% | Excellent history + strong ties |
-| **B** 🟢 | Low | 5-10% | Good history OR strong ties |
-| **C** 🟡 | Moderate | 10-20% | Some history, moderate ties |
-| **D** 🟡 | Elevated | 20-35% | Limited history or weak ties |
-| **E** 🔴 | High | 35-50% | No history + large loan |
-| **HR** 🔴 | Very High | >50% | High risk situation or recovery |
+| Grade | Risk | Description |
+|-------|------|-------------|
+| **A** 🟢 | Minimal | Excellent history + strong ties |
+| **B** 🟢 | Low | Good history OR strong ties |
+| **C** 🟡 | Moderate | Some history, moderate ties |
+| **D** 🟡 | Elevated | Limited history or weak ties |
+| **E** 🔴 | High | No history + large loan |
+| **HR** 🔴 | Very High | High risk situation or recovery |
+
+**Note on default rates:** Once we collect sufficient repayment data, we'll publish estimated default rates by grade to help lenders make informed decisions.
 
 ---
 
