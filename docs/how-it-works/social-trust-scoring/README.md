@@ -14,13 +14,13 @@ Traditional lending requires collateral or credit history. LendFriend uses **soc
 📊 **Research-Backed Performance**
 
 Microfinance institutions using social collateral achieve:
-- **Grameen Bank**: 97-98% repayment rate (9.6M borrowers)
-- **Kiva**: 96.3% repayment rate ($1.8B+ loans)
+- **Grameen Bank**: 97-98% repayment rate (9.6M borrowers) [[9]](../../references.md#grameen-bank)
+- **Kiva**: 96.3% repayment rate ($1.8B+ loans) [[10]](../../references.md#kiva)
 - **Akhuwat**: 99.9% repayment rate (interest-free)
 
-Social proximity improves repayment rates by **10 percentage points**.
+Social proximity improves repayment rates by **10 percentage points** [[6]](../../references.md#karlan-et-al-2009).
 
-*Source: [Academic Research](../../references.md)*
+*Full research: [Academic Research](../../references.md)*
 {% endhint %}
 
 ---
@@ -121,9 +121,9 @@ LendFriend combines multiple proven techniques:
 
 | Approach | Research Foundation |
 |----------|---------------------|
-| **Adamic-Adar weighting** | 82% improvement over simple counting in link prediction (Adamic & Adar 2003) |
+| **Adamic-Adar weighting** | 82% improvement over simple counting in link prediction [[7]](../../references.md#adamic-and-adar-2003) |
 | **Quality filtering** | Reduces spam/bot influence on network metrics |
-| **Social collateral** | Strong social ties reduce default rates in P2P lending (Lin et al. 2013, Iyer et al. 2016) |
+| **Social collateral** | Strong social ties reduce default rates in P2P lending [[8]](../../references.md#lin-et-al-2013) [[3]](../../references.md#iyer-et-al-2016) |
 
 This multi-layered approach leverages established network science and lending research, though LendFriend is the first to combine Adamic-Adar with on-chain lending
 

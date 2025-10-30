@@ -10,6 +10,7 @@ This page contains the research supporting LendFriend's uncollateralized lending
 
 ### Adamic-Adar Index and Link Prediction
 
+<span id="adamic-and-adar-2003"></span>
 **Adamic, L. A., & Adar, E. (2003)**. Friends and neighbors on the Web. *Social Networks, 25*(3), 211-230.
 DOI: [10.1016/S0378-8733(03)00009-1](https://doi.org/10.1016/S0378-8733(03)00009-1)
 
@@ -17,6 +18,7 @@ DOI: [10.1016/S0378-8733(03)00009-1](https://doi.org/10.1016/S0378-8733(03)00009
 
 ---
 
+<span id="liben-nowell-and-kleinberg-2007"></span>
 **Liben-Nowell, D., & Kleinberg, J. (2007)**. The link-prediction problem for social networks. *Journal of the American Society for Information Science and Technology, 58*(7), 1019-1031.
 DOI: [10.1002/asi.20591](https://doi.org/10.1002/asi.20591)
 
@@ -26,6 +28,7 @@ DOI: [10.1002/asi.20591](https://doi.org/10.1002/asi.20591)
 
 ### Group Lending and Social Collateral
 
+<span id="besley-and-coate-1995"></span>
 **Besley, T., & Coate, S. (1995)**. Group lending, repayment incentives and social collateral. *Journal of Development Economics, 46*(1), 1-18.
 DOI: [10.1016/0304-3878(94)00045-E](https://doi.org/10.1016/0304-3878(94)00045-E)
 
@@ -33,6 +36,7 @@ DOI: [10.1016/0304-3878(94)00045-E](https://doi.org/10.1016/0304-3878(94)00045-E
 
 ---
 
+<span id="feigenberg-et-al-2013"></span>
 **Feigenberg, B., Field, E., & Pande, R. (2013)**. The economic returns to social interaction: Experimental evidence from microfinance. *The Review of Economic Studies, 80*(4), 1459-1483.
 DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 
@@ -73,6 +77,7 @@ DOI: [10.3368/jhr.46.1.53](https://doi.org/10.3368/jhr.46.1.53)
 
 ---
 
+<span id="lin-et-al-2013"></span>
 **Lin, M., Prabhala, N. R., & Viswanathan, S. (2013)**. Judging borrowers by the company they keep: Friendship networks and information asymmetry in online peer-to-peer lending. *Management Science, 59*(1), 17-35.
 DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 
@@ -113,8 +118,11 @@ DOI: [10.1016/j.jdeveco.2013.11.003](https://doi.org/10.1016/j.jdeveco.2013.11.0
 
 ## Institutional Evidence
 
+<span id="institutional-evidence"></span>
+
 ### Grameen Bank
 
+<span id="grameen-bank"></span>
 **Grameen Bank Annual Report (2022)**. Grameen Bank, Bangladesh.
 URL: [grameen.org](https://grameenbank.org)
 
@@ -136,6 +144,7 @@ URL: [grameen.org](https://grameenbank.org)
 
 ### Kiva
 
+<span id="kiva"></span>
 **Kiva Annual Report (2023)**. Kiva Microfunds, San Francisco, CA.
 URL: [kiva.org/about/financials](https://www.kiva.org/about/financials)
 
