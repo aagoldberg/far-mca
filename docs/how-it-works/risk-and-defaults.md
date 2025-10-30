@@ -128,18 +128,17 @@ Example:
 - Build real-world credit score
 - Bridge crypto reputation to TradFi
 
-## Default Rate Projections
+## Performance Expectations
 
-Based on established microfinance research:
+Based on established microfinance research, repayment performance correlates strongly with social support:
 
-| Loan Type | Expected Default Rate | Research Basis |
+| Loan Type | Expected Performance | Research Basis |
 |-----------|----------------------|----------------|
-| **Strong social support** (P_network ≥ 60%) | 2-5% | Grameen: 2-3% default |
-| **Moderate support** (30-60%) | 10-15% | Mixed social ties research |
-| **Weak/No support** (<30%) | 20-40% | Baseline P2P lending rates |
-| **Overall portfolio** (mixed) | 8-12% | Conservative estimate |
+| **Strong social support** (P_network ≥ 60%) | Best repayment rates | Grameen Bank: 97-98% repayment |
+| **Moderate support** (30-60%) | Moderate repayment rates | Mixed social ties show intermediate performance |
+| **Weak/No support** (<30%) | Higher default risk | Minimal social accountability |
 
-These are estimates based on academic research. **Actual rates will be tracked and published quarterly** on-chain.
+**Actual performance will be tracked and published quarterly** on-chain as the platform builds real-world data.
 
 ### Benchmarks from Established Institutions
 

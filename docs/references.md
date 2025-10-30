@@ -229,15 +229,14 @@ Anyone with a Farcaster account can borrow or lend—no geographic restrictions,
 **Transparent Reputation**
 All loan history publicly queryable on-chain, creating portable credit history across DeFi.
 
-### Research-Backed Expected Performance
+### LendFriend's Innovation
 
-Based on academic studies:
-- **Simple mutual counting**: Baseline accuracy
-- **+ Adamic-Adar weighting**: 15-25% improvement (link prediction benchmarks)
-- **+ Quality filtering**: Additional 10-15% improvement (spam/bot reduction)
-- **Combined approach**: Expected 25-40% better default prediction vs simple counting
+LendFriend is the first platform to apply Adamic-Adar Index weighting to on-chain reputation-backed lending, combining:
+- **Network science**: Proven link prediction algorithms (Adamic-Adar outperforms simple counting)
+- **Social collateral research**: Strong social ties significantly reduce default rates in P2P lending
+- **Quality filtering**: Spam/bot detection improves signal reliability
 
-LendFriend is the first to apply Adamic-Adar to on-chain reputation-backed lending.
+This multi-layered approach builds on decades of research in network analysis and microfinance, adapted for decentralized on-chain lending.
 
 ---
 

@@ -60,10 +60,10 @@ P_network = (N_connected / N_total) × 100
 {% hint style="success" %}
 **Research-Backed Performance**
 
-**STRONG support loans:** 2-5% default rate
-**WEAK/NONE support loans:** 20-40% default rate
+**STRONG support loans:** Significantly lower default rates
+**WEAK/NONE support loans:** Higher default rates
 
-Social validation is the strongest predictor of repayment.
+Research consistently shows social validation is a strong predictor of repayment in P2P lending.
 {% endhint %}
 
 ---

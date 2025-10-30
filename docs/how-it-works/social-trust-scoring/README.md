@@ -115,18 +115,17 @@ Farcaster provides unforgeable proof of social connections, solving identity ver
 
 ---
 
-## Expected Performance
+## Research-Backed Approach
 
-Based on academic research and LendFriend's hybrid approach:
+LendFriend combines multiple proven techniques:
 
-| Approach | Expected Improvement |
+| Approach | Research Foundation |
 |----------|---------------------|
-| **Simple mutual counting** | Baseline |
-| **+ Adamic-Adar weighting** | +15-25% accuracy |
-| **+ Quality filtering** | +10-15% accuracy |
-| **Combined (LendFriend)** | **+25-40% better default prediction** |
+| **Adamic-Adar weighting** | 82% improvement over simple counting in link prediction (Adamic & Adar 2003) |
+| **Quality filtering** | Reduces spam/bot influence on network metrics |
+| **Social collateral** | Strong social ties reduce default rates in P2P lending (Lin et al. 2013, Iyer et al. 2016) |
 
-**LendFriend target**: 5-12% default rate (Phase 1)
+This multi-layered approach leverages established network science and lending research, though LendFriend is the first to combine Adamic-Adar with on-chain lending
 
 ---
 
