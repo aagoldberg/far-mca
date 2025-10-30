@@ -330,6 +330,38 @@ export default function VisionPage() {
               </div>
             </div>
 
+            {/* Why Not Facebook */}
+            <div className="bg-red-50 border-2 border-red-400 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-2xl">❌</div>
+                <h3 className="text-xl font-bold text-red-900">Why Not Facebook?</h3>
+              </div>
+              <div className="space-y-3 text-sm text-gray-700">
+                <div>
+                  <h4 className="font-semibold text-red-900 mb-1">API Access Blockers</h4>
+                  <ul className="text-sm text-red-800 space-y-1 ml-4">
+                    <li>• <code className="bg-red-100 px-1 rounded">user_friends</code> permission restricted to "limited partners"</li>
+                    <li>• Even if approved, only shows friends who also use your app (circular dependency)</li>
+                    <li>• 2016: Facebook stopped letting lenders access data post-Cambridge Analytica</li>
+                    <li>• Only ~20% user opt-in rate for friend permissions</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-red-900 mb-1">Signal Quality Issues</h4>
+                  <ul className="text-sm text-red-800 space-y-1 ml-4">
+                    <li>• Research: Only BFFs (friends who actually interact) predict defaults</li>
+                    <li>• Facebook API doesn't provide interaction data—only friend lists</li>
+                    <li>• Nominal connections have no predictive value</li>
+                  </ul>
+                </div>
+                <div className="bg-red-100 rounded-lg p-3">
+                  <p className="text-sm text-red-900">
+                    <strong>The Mutual App Problem:</strong> Can't get social graph data until both borrower AND lender already use LendFriend—a bootstrapping death spiral.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Research Foundation */}
             <div className="bg-gray-50 border-2 border-gray-300 rounded-xl p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-3">📊 Research Foundation</h3>
@@ -338,7 +370,10 @@ export default function VisionPage() {
                   <strong>Facebook vs Twitter research:</strong> "Facebook is more focused towards making social connections, while Twitter is all about staying informed... Facebook is typically full of people users have met... while Twitter is less about 'real life' friendships, and it's normal to connect with strangers."
                 </p>
                 <p>
-                  <strong>Credit scoring implications:</strong> Twitter connections don't create social accountability because they're not real relationships. Research shows lenders using Facebook connections see predictive value, but Twitter follows are noise.
+                  <strong>BFF vs nominal friends (Bjorkegren & Grissen 2020):</strong> Only BFFs (friends who actually interact) predict loan defaults. Nominal friend connections and interest-based data performed equally well—meaning nominal connections have no unique value.
+                </p>
+                <p>
+                  <strong>Real-life connections matter (Yum et al. 2012):</strong> Social lending groups only reduce default risk "if membership holds the possibility of real-life personal connections." Online-only groups behave like arm's-length transactions.
                 </p>
                 <p>
                   <strong>Key insight:</strong> As we expand platforms, shift from social trust → repayment history. Farcaster lets us bootstrap with social trust because connections are real. Twitter requires traditional credit history because connections are noise.

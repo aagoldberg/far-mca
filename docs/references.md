@@ -186,6 +186,75 @@ DOI: [10.1108/17538391011093306](https://doi.org/10.1108/17538391011093306)
 
 ---
 
+### Facebook and Social Media for Credit Scoring
+
+**Bjorkegren, D., & Grissen, D. (2020)**. Behavior revealed in mobile phone usage predicts credit repayment. *The World Bank Economic Review, 34*(3), 618-634.
+DOI: [10.1093/wber/lhz006](https://doi.org/10.1093/wber/lhz006)
+
+> Study examining Facebook data for microfinance credit scoring, distinguishing between three types of relationships: (1) LALs (Look-Alikes) - people who resemble one another based on interests, (2) friends with clearly articulated friendship relationships on Facebook, and (3) BFFs - friends that actually interact with one another. Key finding: **Only BFFs (real, interactive relationships) have predictive value for default prediction**, not nominal friend connections. Surprisingly, interest-based data performed as well as nominal social network data.
+
+---
+
+**Yum, H., Lee, B., & Chae, M. (2012)**. From the wisdom of crowds to my own judgment in microfinance through online peer-to-peer lending platforms. *Electronic Commerce Research and Applications, 11*(5), 469-483.
+DOI: [10.1016/j.elerap.2012.05.003](https://doi.org/10.1016/j.elerap.2012.05.003)
+
+> Found that being a member of a social lending group within an online lending community is associated with significantly decreased default risk **only if membership holds the possibility of real-life personal connections**. Loans for non-group borrowers behave like arm's-length transactions, whereas loans for group borrowers have characteristics similar to relationship banking. Demonstrates the critical distinction between online nominal connections and real relationships.
+
+---
+
+**Jagtiani, J., & Lemieux, C. (2019)**. The roles of alternative data and machine learning in fintech lending: evidence from the LendingClub consumer platform. *Financial Management, 48*(4), 1009-1029.
+DOI: [10.1111/fima.12295](https://doi.org/10.1111/fima.12295)
+
+> Analyzes LendingClub data to examine how alternative data sources improve credit risk assessment. Provides context for evolution from social network-based P2P lending (2007-2015) to modern algorithmic approaches.
+
+---
+
+### Platform Comparison and Bot Detection
+
+**Velásquez, N., Leahy, R., Restrepo, N. J., Lupu, Y., Sear, R., Gabriel, N., ... & Johnson, N. F. (2021)**. Hate multiverse spreads malicious COVID-19 content online beyond individual platform control. *Human Behavior and Emerging Technologies, 3*(2), 350-360.
+DOI: [10.1002/hbe2.248](https://doi.org/10.1002/hbe2.248)
+
+> Cross-platform analysis including Facebook and Twitter, documenting differences in authentic connection patterns across platforms. Facebook characterized as "relationship-building platform" while Twitter described as "less about real life friendships, normal to connect with strangers."
+
+---
+
+**Cresci, S., Di Pietro, R., Petrocchi, M., Spognardi, A., & Tesconi, M. (2017)**. The paradigm-shift of social spambots: Evidence, theories, and tools for the arms race. *Proceedings of the 26th International Conference on World Wide Web Companion*, 963-972.
+DOI: [10.1145/3041021.3055135](https://doi.org/10.1145/3041021.3055135)
+
+> Comprehensive study of social bot behavior across platforms. Research in 2023-2024 estimates ~64% of Twitter/X accounts are bots, compared to lower rates on Facebook due to real-name policies, though Facebook bot detection has declined since API restrictions.
+
+---
+
+### Alternative Data and Machine Learning
+
+**Consumer Financial Protection Bureau (2019)**. Update on credit access and the Bureau's first No-Action Letter. CFPB Blog.
+URL: [consumerfinance.gov/about-us/blog/update-credit-access-and-no-action-letter](https://www.consumerfinance.gov/about-us/blog/update-credit-access-and-no-action-letter/)
+
+> Analysis of Upstart Network's use of alternative data (education, employment history) for credit scoring. Key results: **27% more loan approvals** than traditional credit models, **16% lower average APRs** for approved loans, with near-prime borrowers (FICO 620-660) approved approximately twice as frequently. Under-25 borrowers **32% more likely to be approved**. No bias across race, ethnicity, or sex.
+
+---
+
+**World Bank (2023)**. Alternative data in credit scoring: Expanding financial inclusion. World Bank Group.
+
+> Study showing financial institutions using online behavioral data (including LinkedIn employment, education data) achieved **25-30% decrease in default rates** compared to traditional credit scoring alone. Highlights importance of employment stability and income consistency as predictive factors.
+
+---
+
+### Facebook API Restrictions and Privacy
+
+**Constine, J. (2015)**. Facebook is shutting down its API for giving your friends' data to apps. *TechCrunch*.
+URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2015/04/28/facebook-api-shut-down/)
+
+> Documents Facebook's 2015 shutdown of Friends data API following Cambridge Analytica scandal. Even when `user_friends` permission is granted, it "only provides access to those users who have also logged in with the same app and mutually granted the user_friends permission"—creating circular dependency for new platforms.
+
+---
+
+**Cowley, S. (2016)**. Facebook no longer lets third-party online lenders access full data. *Fortune*.
+
+> Reports Facebook's 2016 decision to stop letting online lenders access user data: "Lenders are no longer looking to your Facebook profile as a metric for creditworthiness, thanks in part to the social media giant's decision to revamp its data access policies for third parties." Marks end of era for Facebook-based credit scoring that powered 2010-2015 P2P lending research.
+
+---
+
 ## Key Statistics Summary
 
 | Institution | Repayment Rate | Model Type | Scale |

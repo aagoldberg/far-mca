@@ -67,6 +67,28 @@ LendFriend starts on Farcaster and expands thoughtfully to other platforms, adap
 
 ---
 
+### Why Not Facebook? ❌
+
+**API Access Blockers:**
+- `user_friends` permission restricted to "limited partners" requiring Facebook review
+- Even if approved, only shows friends who **also use your app** (circular dependency)
+- 2016: Facebook explicitly stopped letting lenders access user data post-Cambridge Analytica
+- Only ~20% user opt-in rate for friend permissions under current policies
+
+**Signal Quality Issues:**
+- Research shows only **BFFs** (friends who actually interact) predict defaults, not nominal connections
+- Facebook API doesn't provide interaction data—only friend lists
+- Microfinance study found interest-based data performed as well as nominal friend networks
+
+**The Mutual App Problem:**
+> "user_friends only provides access to those users who have also logged in with the same app and mutually granted the user_friends permission"
+
+This creates a bootstrapping death spiral: can't get social graph data until both borrower AND lender already use LendFriend.
+
+**Better alternatives:** On-chain reputation (ENS, POAPs, DAO participation), Icebreaker credentials, LinkedIn professional connections.
+
+---
+
 ## Research Foundation
 
 **Facebook vs Twitter study findings:**
