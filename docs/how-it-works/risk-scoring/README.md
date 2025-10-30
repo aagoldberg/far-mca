@@ -2,7 +2,7 @@
 
 ## Market-Driven Lending with Transparent Risk Assessment
 
-LendFriend doesn't artificially limit loan amounts. Instead, we provide comprehensive risk information to lenders, who decide what risk they're comfortable with.
+LendFriend provides comprehensive risk information to lenders, who decide what risk they're comfortable with. Borrowers can request any amount they need.
 
 **Core Philosophy:** Transparency over restriction. Let the market find equilibrium.
 
