@@ -330,6 +330,42 @@ export default function VisionPage() {
               </div>
             </div>
 
+            {/* On-Chain Reputation */}
+            <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-2xl">✅</div>
+                <h3 className="text-xl font-bold text-purple-900">On-Chain Reputation (Phase 2-3: 2026-2027)</h3>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <h4 className="font-semibold text-purple-900 mb-2">Why It's Powerful</h4>
+                  <ul className="text-sm text-purple-800 space-y-1">
+                    <li>• Cryptographically verifiable (can't fake)</li>
+                    <li>• Crypto-native signals for crypto users</li>
+                    <li>• No API restrictions/permissions</li>
+                    <li>• Complements social trust</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-purple-900 mb-2">Data Sources</h4>
+                  <ul className="text-sm text-purple-800 space-y-1">
+                    <li>• ENS ownership (long-held domains)</li>
+                    <li>• POAP collections (event attendance)</li>
+                    <li>• DAO participation (voting, treasury)</li>
+                    <li>• GitHub contributions (dev work)</li>
+                    <li>• Base L2 transaction history</li>
+                    <li>• Icebreaker credentials</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="bg-purple-100 rounded-lg p-3">
+                <p className="text-sm text-purple-900">
+                  <strong>Why it matters:</strong> Many crypto borrowers have non-traditional employment (DAO contributors, freelance devs).
+                  Traditional employment data would penalize them. On-chain reputation captures their actual economic activity and community standing.
+                </p>
+              </div>
+            </div>
+
             {/* Why Not Facebook */}
             <div className="bg-red-50 border-2 border-red-400 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-3">

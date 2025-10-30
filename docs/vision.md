@@ -67,6 +67,38 @@ LendFriend starts on Farcaster and expands thoughtfully to other platforms, adap
 
 ---
 
+### Phase 2-3: On-Chain Reputation (2026-2027) ✅
+
+**Why it's powerful:**
+- Cryptographically verifiable credentials (can't fake)
+- Crypto-native signals for crypto-native users
+- No API restrictions or permissions needed
+- Complements social trust with professional/community proof
+
+**Data Sources:**
+- **ENS ownership** - Long-held domains signal commitment
+- **POAP collections** - Event attendance, community participation
+- **DAO participation** - Governance voting, treasury contributions
+- **GitHub contributions** - Verified developer work (for tech borrowers)
+- **Base L2 transaction history** - On-chain income/spending patterns
+- **Icebreaker credentials** - Verified work/education on Farcaster
+
+**Risk Model Integration:**
+- Repayment History: 40-50%
+- Social Trust Score: 20-30%
+- Loan Size Risk: 20%
+- **On-Chain Reputation: 10-20%** (NEW)
+
+**Why this matters:**
+Many crypto borrowers have non-traditional employment (DAO contributors, freelance devs, indie projects). Traditional employment/education data would penalize them. On-chain reputation captures their actual economic activity and community standing.
+
+**Example signals:**
+- Holds ENS domain >2 years + 50+ POAPs + active DAO voter = high reputation
+- Regular Base L2 transactions for 6+ months = consistent income
+- Icebreaker verified credentials + GitHub contributions = professional proof
+
+---
+
 ### Why Not Facebook? ❌
 
 **API Access Blockers:**
