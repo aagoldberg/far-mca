@@ -1,7 +1,5 @@
 # How It Works
 
-## Overview
-
 LendFriend enables uncollateralized lending by quantifying social trust. Your network doesn't just vouch for you—they algorithmically prove your creditworthiness through measurable social proximity.
 
 Here's exactly how we turn relationships into credit scores.
@@ -13,7 +11,7 @@ We calculate social distance between borrower and lender by measuring mutual con
 
 When someone contributes to your loan, they're providing both capital and social proof. The UI displays each lender's social proximity to the borrower, creating transparent trust signals that enable uncollateralized lending.
 
-Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve **10% higher repayment rates**—proving that social proximity is a powerful predictor of creditworthiness.
+Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve significantly higher repayment rates—proving that social proximity is a powerful predictor of creditworthiness.
 
 [→ Learn about Social Trust Scoring](social-trust-scoring/README.md)
 

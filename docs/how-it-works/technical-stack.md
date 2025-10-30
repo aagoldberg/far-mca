@@ -1,7 +1,5 @@
 # Technical Stack
 
-## Architecture Overview
-
 LendFriend is built on modern web3 infrastructure, prioritizing low costs, transparency, and developer experience.
 
 ```mermaid

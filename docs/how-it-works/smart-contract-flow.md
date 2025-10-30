@@ -1,7 +1,5 @@
 # Smart Contract Flow
 
-## Overview
-
 Trust scores are calculated **off-chain** using the algorithm in the previous section. The smart contracts handle money movement, not social graph analysis. This keeps gas costs low (Base L2 fees are ~$0.01 per transaction).
 
 ## Contract Interfaces
