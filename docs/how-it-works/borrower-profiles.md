@@ -16,7 +16,7 @@ When creating a loan request, borrowers share:
 
 **Research backing:** Research shows that borrowers who appear more trustworthy receive better lending terms—higher funding rates and ~50 basis points lower interest rates (Duarte et al. 2012). Visual cues provide trust signals lenders value.
 
-**LendFriend's approach:** Profile pictures are pulled from verified Farcaster accounts (not self-uploaded), providing consistency with their social identity and reducing fake profile risks.
+**LendFriend's approach:** Borrowers self-upload their profile picture when creating a loan. **Social accountability mechanism:** When friends contribute to a loan, they're vouching for both the story AND the picture—misrepresenting yourself damages your reputation with your actual network, not just strangers.
 
 ---
 
@@ -86,12 +86,15 @@ Lenders know very little about borrowers initially. Personal narratives and busi
 
 **The mechanism:**
 
-When you publicly state your loan purpose and personal story:
+When you publicly state your loan purpose, share your story, and post your picture:
 - Your network sees what you're borrowing for
-- Misrepresentation damages your reputation
-- Repayment becomes a matter of personal integrity
+- Friends who contribute are **vouching for your story and picture**—they're putting their reputation on the line
+- Misrepresenting yourself (fake photo, false story) damages relationships with people who know you
+- Repayment becomes a matter of personal integrity with your actual social circle
 
-**Research foundation:** Karlan et al. (2009) showed that social proximity and trust reduce default risk by **13%** in lending groups. Public narratives extend this accountability beyond immediate connections.
+**Why this matters:** In traditional P2P lending (Prosper, LendingClub), lenders are strangers—there's no social cost to misrepresentation beyond an anonymous rating. In LendFriend, your friends see everything and contribute first, creating direct accountability to people whose opinion you care about.
+
+**Research foundation:** Karlan et al. (2009) showed that social proximity and trust reduce default risk by **13%** in lending groups. LendFriend extends this by making friends explicit co-signers through their contributions—they vouch for you with their money and reputation.
 
 ---
 
@@ -125,13 +128,14 @@ Pope & Sydnor (2011) documented racial discrimination on Prosper.com based on bo
 1. **Algorithmic scoring**: Combining soft + hard data into objective scores reduces bias
 2. **Transparency**: Public loan history creates accountability for repayment behavior
 3. **Community-based lending**: Social connections matter more than appearance (Bjorkegren & Grissen 2020 found only "BFFs"—real interactive relationships—predict defaults, not appearance)
-4. **Verified identity**: LendFriend uses Farcaster-verified profiles (not self-uploaded photos), reducing fake profiles and linking borrowers to their social reputation
+4. **Social vouching**: When friends contribute, they vouch for authenticity—misrepresentation damages real relationships
 
 **LendFriend's approach:**
-- Profile pictures come from verified Farcaster accounts (consistency with social identity)
+- **Social vouching mechanism**: When friends contribute, they vouch for the borrower's story and picture—misrepresentation damages real relationships, not just anonymous ratings
 - Risk scoring algorithm combines multiple factors (40% repayment history, 30% social trust, 20% loan size, 10% account quality)
 - Social connections are quantified algorithmically using Adamic-Adar Index
 - Public on-chain repayment history creates transparent track records
+- Verified Farcaster identity links borrowers to their persistent social graph
 
 ---
 
