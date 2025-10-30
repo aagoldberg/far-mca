@@ -1,8 +1,20 @@
 # Grade Calculation
 
+## How Grades Are Calculated
+
+Grades are calculated using four weighted factors:
+- **Repayment History (40%)** - Past loan performance
+- **Social Trust Score (30%)** - Connection strength to lender
+- **Loan Size Risk (20%)** - Amount relative to history
+- **Account Quality (10%)** - Farcaster account health
+
+Points from each factor are combined into a total score (0-100), which maps to a letter grade (see [Grade Thresholds](#grade-thresholds) below).
+
+---
+
 ## How the 4 Factors Work
 
-Risk grades come from 4 weighted factors totaling 100 points.
+Each factor contributes points totaling 100 points maximum.
 
 ---
 
