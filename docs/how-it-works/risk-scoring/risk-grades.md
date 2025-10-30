@@ -37,38 +37,7 @@ Total points (0-100) → Grade:
 Note: These weights and thresholds are initial estimates that we'll refine as we collect data.
 ```
 
-[→ See detailed calculation](calculation.md)
-
----
-
-## Quick Examples
-
-**Grade A:**
-- 10 successful loans, requesting $500
-- Close friend, high-quality account
-
-**Grade C:**
-- First loan, requesting $200
-- Friend-of-friend connection
-
-**Grade HR:**
-- First loan, requesting $1,500
-- Stranger, no social connection
-
-[→ See complete examples](examples.md)
-
----
-
-## Expected Distribution
-
-| Grade | % of Loans | Typical Scenario |
-|-------|-----------|------------------|
-| A | 10-15% | Proven borrowers |
-| B | 20-30% | Close friends, first small loans |
-| C | 25-35% | Moderate history/ties |
-| D | 15-20% | First loans, moderate amounts |
-| E | 5-10% | High-risk situations |
-| HR | 5-10% | Very high risk |
+[→ See detailed calculation](calculation.md) | [→ See examples](examples.md)
 
 ---
 
