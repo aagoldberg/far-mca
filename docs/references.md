@@ -42,6 +42,7 @@ DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 
 ### Peer-to-Peer Lending and Reputation
 
+<span id="herzenstein-et-al-2011"></span>
 **Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research, 48*(SPL), S138-S149.
 DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
 
@@ -49,6 +50,7 @@ DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
 
 ---
 
+<span id="iyer-et-al-2016"></span>
 **Iyer, R., Khwaja, A. I., Luttmer, E. F., & Shue, K. (2016)**. Screening peers softly: Inferring the quality of small borrowers. *Management Science, 62*(6), 1554-1577.
 DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
@@ -56,6 +58,7 @@ DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
 ---
 
+<span id="duarte-et-al-2012"></span>
 **Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
 DOI: [10.1093/rfs/hhs071](https://doi.org/10.1093/rfs/hhs071)
 
@@ -77,6 +80,7 @@ DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 
 ---
 
+<span id="freedman-and-jin-2017"></span>
 **Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization, 51*, 185-222.
 DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11.008)
 
@@ -86,6 +90,7 @@ DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11
 
 ### Social Capital and Network Effects
 
+<span id="karlan-et-al-2009"></span>
 **Karlan, D., Mobius, M., Rosenblat, T., & Szeidl, A. (2009)**. Trust and social collateral. *The Quarterly Journal of Economics, 124*(3), 1307-1361.
 DOI: [10.1162/qjec.2009.124.3.1307](https://doi.org/10.1162/qjec.2009.124.3.1307)
 
@@ -176,6 +181,7 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 ### Soft Information in Lending
 
+<span id="liberti-and-petersen-2018"></span>
 **Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
 DOI: [10.1093/rcfs/cfy009](https://doi.org/10.1093/rcfs/cfy009)
 

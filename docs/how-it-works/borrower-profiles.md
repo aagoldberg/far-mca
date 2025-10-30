@@ -14,7 +14,7 @@ When creating a loan request, borrowers share:
 
 **Purpose:** Visual identification and humanization of the borrower.
 
-**Research backing:** Research shows that borrowers who appear more trustworthy receive better lending terms—higher funding rates and ~50 basis points lower interest rates (Duarte et al. 2012). Visual cues provide trust signals lenders value.
+**Research backing:** Research shows that borrowers who appear more trustworthy receive better lending terms—higher funding rates and ~50 basis points lower interest rates [[1]](../references.md#duarte-et-al-2012). Visual cues provide trust signals lenders value.
 
 **LendFriend's approach:** Borrowers self-upload their profile picture when creating a loan. **Social accountability mechanism:** When friends contribute to a loan, they're vouching for both the story AND the picture—misrepresenting yourself damages your reputation with your actual network, not just strangers.
 
@@ -26,12 +26,12 @@ When creating a loan request, borrowers share:
 
 **Purpose:** Helps lenders understand who the borrower is beyond credit scores.
 
-**Research backing:** Herzenstein, Sonenshein & Dholakia (2011) found in their seminal study "Tell Me a Good Story and I May Lend You Money" that:
+**Research backing:** Research shows that personal narratives significantly affect P2P lending decisions [[2]](../references.md#herzenstein-et-al-2011):
 - **Narratives significantly affect funding**: More identity claims in loan narratives increased loan funding success on Prosper.com
 - **Soft information matters**: Unverifiable personal information affects lending decisions *above and beyond* objective, verifiable credit data
 - **Trust signals**: Identity claims about being "trustworthy" or "successful" increased loan funding rates
 
-**Key finding:** Lenders use soft information to predict default with **45% greater accuracy** than credit scores alone (Iyer et al. 2016). Personal narratives reduce information asymmetry—friends know you better than strangers.
+**Key finding:** Lenders use soft information to predict default with **45% greater accuracy** than credit scores alone [[3]](../references.md#iyer-et-al-2016). Personal narratives reduce information asymmetry—friends know you better than strangers.
 
 ---
 
@@ -43,7 +43,7 @@ When creating a loan request, borrowers share:
 
 **Research backing:**
 - **Kiva's success**: Borrower stories about "Armenian bakers and Moroccan bricklayers" helped lenders feel connected to something larger. Kiva has funded $1.68B+ with a 96.3% repayment rate, demonstrating storytelling effectiveness.
-- **Purpose transparency**: Herzenstein et al. (2011) found that loans with clear purpose descriptions ("economic hardship" and "moral integrity" narratives) had better repayment performance than vague "trustworthy" claims.
+- **Purpose transparency**: Research found that loans with clear purpose descriptions ("economic hardship" and "moral integrity" narratives) had better repayment performance than vague "trustworthy" claims [[2]](../references.md#herzenstein-et-al-2011).
 - **Accountability mechanism**: Stating what you'll use money for creates social accountability—borrowers who misrepresent loan purpose damage their reputation.
 
 **Why it matters:** Clear loan purpose helps lenders assess:
@@ -62,7 +62,7 @@ When creating a loan request, borrowers share:
 **Purpose:** Additional verification of business legitimacy and activity.
 
 **Research backing:**
-- **Verifiable signals**: Freedman & Jin (2017) found that verifiable social network information (like active social media accounts) significantly predicts loan default probability beyond credit scores alone.
+- **Verifiable signals**: Research shows that verifiable social network information (like active social media accounts) significantly predicts loan default probability beyond credit scores alone [[4]](../references.md#freedman-and-jin-2017).
 - **Business presence**: Active business websites and social accounts signal legitimacy and ongoing operations.
 - **Cross-platform verification**: Multiple verified platforms increase trust (covered in [Social Trust Scoring](social-trust-scoring/README.md)).
 
@@ -78,7 +78,7 @@ Lenders know very little about borrowers initially. Personal narratives and busi
 - **Life circumstances**: Unexpected expenses, business growth opportunity, community project
 - **Character signals**: Communication style, transparency, thoughtfulness
 
-**Research:** Borrowers using soft data in equal measure as hard information reduces information asymmetry and helps assess creditworthiness more accurately (Liberti & Petersen 2018).
+**Research:** Borrowers using soft data in equal measure as hard information reduces information asymmetry and helps assess creditworthiness more accurately [[5]](../references.md#liberti-and-petersen-2018).
 
 ---
 
@@ -94,56 +94,31 @@ When you publicly state your loan purpose, share your story, and post your pictu
 
 **Why this matters:** In traditional P2P lending (Prosper, LendingClub), lenders are strangers—there's no social cost to misrepresentation beyond an anonymous rating. In LendFriend, your friends see everything and contribute first, creating direct accountability to people whose opinion you care about.
 
-**Research foundation:** Karlan et al. (2009) showed that social proximity and trust reduce default risk by **13%** in lending groups. LendFriend extends this by making friends explicit co-signers through their contributions—they vouch for you with their money and reputation.
+**Research foundation:** Research shows that social proximity and trust reduce default risk by **13%** in lending groups [[6]](../references.md#karlan-et-al-2009). LendFriend extends this by making friends explicit co-signers through their contributions—they vouch for you with their money and reputation.
 
 ---
 
 ### 3. Enables Better Screening
 
-**45% better accuracy:** Research shows lenders combining hard and soft information predict defaults with 45% greater accuracy than credit scores alone (Iyer et al. 2016).
+**45% better accuracy:** Research shows lenders combining hard and soft information predict defaults with 45% greater accuracy than credit scores alone [[3]](../references.md#iyer-et-al-2016).
 
 **What lenders screen for:**
 - **Identity consistency**: Does the narrative match their social profile?
 - **Specificity**: Vague requests ("need money for business") vs specific plans ("purchasing $500 of fabric to fulfill holiday orders")
-- **Risk signals**: Herzenstein et al. found that borrowers making many "trustworthy" claims actually had *worse* repayment performance—lenders learn to spot over-promising
+- **Risk signals**: Research found that borrowers making many "trustworthy" claims actually had *worse* repayment performance—lenders learn to spot over-promising [[2]](../references.md#herzenstein-et-al-2011)
 
 ---
 
-## Key Research Citations
+## References
 
-**Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
+All research citations can be found in the [Academic Research](../references.md) section:
 
-> Examines how appearance-based impressions affect P2P lending using Prosper.com photographs. Found that borrowers appearing more trustworthy have higher funding probabilities and receive ~50 basis points lower interest rates. Importantly, appearance predicted actual credit quality—trustworthy-looking borrowers indeed had better credit scores and lower default rates.
-
----
-
-**Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research*, 48(SPL), S138-S149.
-
-> Seminal study on Prosper.com showing narratives significantly affect lending decisions. Found that identity claims increase funding but can decrease repayment if over-promising. Established that soft information matters beyond hard credit data.
-
----
-
-**Iyer, R., Khwaja, A. I., Luttmer, E. F., & Shue, K. (2016)**. Screening peers softly: Inferring the quality of small borrowers. *Management Science*, 62(6), 1554-1577.
-
-> Found lenders using soft information (narratives, social connections) predict default with **45% greater accuracy** than credit scores alone. Demonstrated that soft information is relatively more important when screening lower-credit-quality borrowers.
-
----
-
-**Bjorkegren, D., & Grissen, D. (2020)**. Behavior revealed in mobile phone usage predicts credit repayment. *The World Bank Economic Review*, 34(3), 618-634.
-
-> Studied Facebook data for microfinance credit scoring. **Key finding: Only BFFs (real, interactive relationships) have predictive value**, not nominal friend connections or appearance. Surprisingly, interest-based data performed as well as nominal social network data for default prediction.
-
----
-
-**Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
-
-> Comprehensive review of hard vs soft information in lending. Found that soft information (personal narratives, relationship data) reduces information asymmetry and improves creditworthiness assessment when used alongside hard financial data.
-
----
-
-**Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization*, 51, 185-222.
-
-> Demonstrated that verifiable social network information (e.g., active social media accounts) significantly predicts loan default probability beyond credit scores. Social reputation systems work when connections are verifiable.
+1. [Duarte et al. (2012)](../references.md#duarte-et-al-2012) - Trust and Credit: Appearance in P2P Lending
+2. [Herzenstein et al. (2011)](../references.md#herzenstein-et-al-2011) - Tell Me a Good Story
+3. [Iyer et al. (2016)](../references.md#iyer-et-al-2016) - Screening Peers Softly
+4. [Freedman & Jin (2017)](../references.md#freedman-and-jin-2017) - Information Value of Social Networks
+5. [Liberti & Petersen (2018)](../references.md#liberti-and-petersen-2018) - Information: Hard and Soft
+6. [Karlan et al. (2009)](../references.md#karlan-et-al-2009) - Trust and Social Collateral
 
 ---
 
