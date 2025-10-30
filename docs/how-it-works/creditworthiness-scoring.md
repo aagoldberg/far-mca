@@ -16,17 +16,17 @@ Based on microfinance research (Grameen Bank, progressive lending theory), LendF
 
 Every borrower has a public, verifiable on-chain reputation based on:
 
-| Metric | Description | Data Source |
-|--------|-------------|-------------|
-| **Total Loans** | Number of loans taken | Factory contract events |
-| **Completed Loans** | Successfully repaid in full | MicroLoan contract events |
-| **Defaulted Loans** | Failed to repay by maturity | MicroLoan contract state |
-| **Active Loans** | Currently outstanding | Factory contract state |
-| **On-Time Rate** | % repaid before/on maturity date | MicroLoan timestamps |
-| **Total Borrowed** | Cumulative principal borrowed (USDC) | Sum of loan principals |
-| **Total Repaid** | Cumulative principal repaid (USDC) | Sum of repayments |
-| **Loan Cycle** | Number of completed loan cycles | Derived from completed loans |
-| **Current Tier** | Credit tier (Starter/Builder/Established) | Calculated from history |
+| Metric | Description |
+|--------|-------------|
+| **Total Loans** | Number of loans taken |
+| **Completed Loans** | Successfully repaid in full |
+| **Defaulted Loans** | Failed to repay by maturity |
+| **Active Loans** | Currently outstanding |
+| **On-Time Rate** | % repaid before/on maturity date |
+| **Total Borrowed** | Cumulative principal borrowed (USDC) |
+| **Total Repaid** | Cumulative principal repaid (USDC) |
+| **Loan Cycle** | Number of completed loan cycles |
+| **Current Tier** | Credit tier (Starter/Builder/Established/Premium) |
 
 All metrics are **queryable on-chain** via smart contract view functions and subgraph indexing.
 
