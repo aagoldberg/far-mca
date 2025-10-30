@@ -162,6 +162,15 @@ DOI: [10.1111/j.1468-0297.2007.02014.x](https://doi.org/10.1111/j.1468-0297.2007
 
 ---
 
+### Repayment Structure and Frequency
+
+**Field, E., & Pande, R. (2008)**. Repayment frequency and default in microfinance: Evidence from India. *Journal of the European Economic Association, 6*(2-3), 501-509.
+DOI: [10.1162/JEEA.2008.6.2-3.501](https://doi.org/10.1162/JEEA.2008.6.2-3.501)
+
+> Randomized trial with 1,026 first-time microfinance borrowers in India testing repayment frequency. **Key finding: Less frequent repayments (monthly vs weekly) did not increase defaults**. Monthly repayments had same default rates as traditional weekly installments while reducing borrower stress and collection costs. Grace periods (delaying first payment) slightly increased defaults but enabled better business investments. Challenges traditional microfinance assumption that frequent installments are necessary for repayment discipline.
+
+---
+
 ### Social Distance and Default
 
 **Bailey, M., Cao, R., Kuchler, T., & Stroebel, J. (2018)**. The economic effects of social networks: Evidence from the housing market. *Journal of Political Economy, 126*(6), 2224-2276.

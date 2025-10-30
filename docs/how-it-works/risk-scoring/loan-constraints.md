@@ -6,15 +6,31 @@ LendFriend limits loan **duration** but not **amount**.
 
 ---
 
-## MVP Duration Limits
+## Duration Approach
 
-| Phase | Max Duration | Why |
-|-------|-------------|-----|
-| **Phase 1** | 30 days | Fast feedback (12× per year vs 1×) |
-| **Phase 2** | 60 days | Expand based on data |
-| **Phase 3** | 90 days | Mature system |
+**Starting point:** Loans begin at **90-day terms** (3 months), with lump sum repayment at maturity.
+
+**Future expansion:** As the platform matures and collects repayment data, we can incrementally elongate terms (6 months, 12 months, etc.) for qualified borrowers.
 
 **All borrowers** get same duration limit regardless of history.
+
+---
+
+## Why Lump Sum Repayment (No Installments)?
+
+**Initial approach:** Single payment at maturity rather than weekly/monthly installments.
+
+**Research backing:** Field & Pande (2008) found that **less frequent repayments did not increase defaults** in microfinance lending. Their randomized trial with 1,026 first-time borrowers in India showed monthly repayments had the same default rates as traditional weekly installments, while reducing borrower stress and collection costs.
+
+**Why this works for 90-day loans:**
+- Simpler for borrowers (one payment vs multiple)
+- Reduces transaction costs and cognitive load
+- Research shows frequency doesn't affect repayment
+- Appropriate for short-term loans
+
+**With maturity:** As we elongate terms (6+ months), we can introduce installment options for borrowers who prefer gradual repayment. Research shows installments become more valuable for longer durations.
+
+[See research: Field, E., & Pande, R. (2008). "Repayment Frequency and Default in Microfinance: Evidence From India." *Journal of the European Economic Association*, 6(2-3), 501-509.]
 
 ---
 
