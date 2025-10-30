@@ -2,7 +2,7 @@
 
 ## The Core Innovation
 
-LendFriend combines hard information (credit data) with soft information (narratives, photos, business descriptions). This hybrid approach improves default prediction by **45%** compared to credit scores alone [[3]](../references.md#iyer-et-al-2016).
+LendFriend uses soft information (narratives, photos, business descriptions) to help lenders make decisions. Research shows combining soft information with social network data improves default prediction by **45%** compared to credit scores alone [[3]](../references.md#iyer-et-al-2016).
 
 The key difference from traditional P2P platforms: **social vouching by the borrower's actual network**. When friends contribute, they implicitly vouch for the borrower's authenticity. Misrepresentation carries social cost with people who know you personally, not just anonymous ratings.
 
@@ -32,7 +32,7 @@ Website links, social accounts. Verifiable social network information predicts d
 
 **LendFriend:** Friends see and fund first. Default damages actual relationships, not just platform scores. Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009)—and that's before accounting for the friend vouching mechanism.
 
-**Screening improvement:** Combining soft information with social network data enables 45% greater accuracy than credit scores alone [[3]](../references.md#iyer-et-al-2016). The platform provides verifiable information validated by the borrower's network.
+**Screening improvement:** Combining soft information with social network data enables 45% greater accuracy than credit scores alone [[3]](../references.md#iyer-et-al-2016). Verifiable information validated by the borrower's network beats anonymous profiles.
 
 ---
 
