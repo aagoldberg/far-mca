@@ -13,12 +13,12 @@ LendFriend doesn't artificially limit loan amounts. Instead, we provide comprehe
 Traditional P2P platforms like Prosper and LendingClub use risk grades (AA-HR, A-G) to disclose risk **without restricting loan amounts**. We follow the same model.
 
 Every loan receives a grade from **A (minimal risk) to HR (very high risk)** based on four factors:
-- **Repayment History (40%)** - Past loan performance
-- **Social Trust Score (30%)** - Connection strength to lender
-- **Loan Size Risk (20%)** - Amount relative to history
-- **Account Quality (10%)** - Farcaster account health
+- **Repayment History** - Past loan performance
+- **Social Trust Score** - Connection strength to lender
+- **Loan Size Risk** - Amount relative to history
+- **Account Quality** - Farcaster account health
 
-Lenders see clear warnings before contributing. The market naturally filters high-risk loans through slower funding or no funding at all.
+We'll continually refine the model as we collect more repayment data. Lenders see clear warnings before contributing, and the market naturally filters high-risk loans through slower funding or no funding at all.
 
 ---
 
