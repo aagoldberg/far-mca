@@ -1,6 +1,6 @@
 # 🚀 Virality & Growth
 
-LendFriend starts on Farcaster, then expands to Bluesky, Twitter/X, and beyond.
+LendFriend starts on Farcaster, with cross-platform sharing from day 1.
 
 ---
 
@@ -29,60 +29,79 @@ When Farcaster launched mini apps (evolved from Frames), DAU jumped 10× in two 
 
 ---
 
-## Four Growth Mechanisms
+## Growth Mechanisms
 
-### [1. Viral Funding Mechanics](viral-funding-mechanics.md)
+### Farcaster Native
 
-Research-backed principles:
+Mini apps enable full web experiences inside Farcaster posts. Users discover loans in their feed, view Trust Scores, and contribute—all without leaving Farcaster.
+
+→ [Learn about Farcaster mini apps, Cast Actions, and Composer Actions](farcaster-virality.md)
+
+### Cross-Platform Sharing
+
+Every loan has a shareable web page. Borrowers share to any platform, and anyone can donate via web without Farcaster:
+
+**Share to:**
+- Twitter/X
+- WhatsApp
+- Telegram
+- Facebook
+- LinkedIn
+- Email
+- Discord
+- Farcaster
+- Bluesky
+- Reddit
+- And more...
+
+**Anyone can donate:**
+- Social login (Google/email)
+- Credit card → USDC conversion
+- Mobile-optimized, 4-field form
+- No crypto knowledge needed
+
+→ [See conversion optimization and mobile design](cross-platform-growth.md)
+
+### Viral Funding Principles
+
+Research-backed mechanisms that make loans spread:
 - First 10 days critical [[11]](../../references.md#crowdfunding-first-10-days)
 - 70% = tipping point for completion
 - Stories increase funding 78% [[2]](../../references.md#herzenstein-et-al-2011)
 - Trust cascades: friends → network → strangers
 
-### [2. Farcaster Virality](farcaster-virality.md)
+→ [Read the research on viral funding](viral-funding-mechanics.md)
 
-Platform features that eliminate friction:
-- Mini apps = full web experiences inside posts
-- Cast Actions = one-tap funding
-- Open social graph for real-time Trust Scores
+### Platform Scaling
 
-### [3. Cross-Platform Growth](cross-platform-growth.md)
-
-Reaching non-crypto users:
-- Shareable pages (Twitter, Telegram, WhatsApp)
-- Social login (Google/email)
-- Mobile-optimized (62% traffic [[12]](../../references.md#gofundme-conversion-2024))
-- 4-field forms = 120% conversion boost [[12]](../../references.md#gofundme-conversion-2024)
-
-Only 42% own crypto [[14]](../../references.md#web3-adoption-2024)—we meet users where they are.
-
-### [4. Platform Scaling](platform-scaling.md)
-
-Network effects drive exponential growth:
-- Kiva: 0 → 800K lenders [[16]](../../references.md#kiva-prosper-growth)
-- Prosper: 300K → 800K via referrals [[16]](../../references.md#kiva-prosper-growth)
+Network effects drive exponential growth when K-factor > 1:
+- Kiva: 0 → 800K lenders via referrals [[16]](../../references.md#kiva-prosper-growth)
+- Prosper: 300K → 800K through incentives [[16]](../../references.md#kiva-prosper-growth)
 - P2P market: $209B → $1T by 2032 [[15]](../../references.md#p2p-market-2024)
 
-When K-factor > 1, growth compounds without paid acquisition.
+→ [Understand network effects and K-factors](platform-scaling.md)
 
 ---
 
-## Expansion Path
+## Expansion Strategy
 
-**Phase 1: Farcaster (2025-2026)**
-- Prove lending primitive works
-- 90%+ repayment rate
-- 500-1,000 users
+**Phase 1: Farcaster + Web (2025-2026)**
+- Native mini apps on Farcaster
+- Cross-platform sharing (Twitter, WhatsApp, Telegram, etc.)
+- Web donations with social login
+- 500-1,000 users, 90%+ repayment
 
-**Phase 2: Web + Bluesky (2026+)**
-- Shareable pages for non-crypto users
-- Social login, fiat on-ramps
+**Phase 2: Expanded Reach (2026+)**
+- Native integrations on other platforms (Bluesky, etc.)
+- Fiat on-ramps (credit cards, Apple Pay, Google Pay)
+- Referral bonuses and incentives
 - 50%+ lenders from outside Farcaster
 
 **Phase 3: Referral Marketplace (2027+)**
-- Multi-platform expansion
-- Referral bonuses, team competitions
+- Multi-platform native experiences
+- Team competitions and gamification
 - K-factor > 1, exponential growth
+- Self-sustaining without paid acquisition
 
 → [Full roadmap](../../vision.md)
 
@@ -90,7 +109,7 @@ When K-factor > 1, growth compounds without paid acquisition.
 
 ## Next Steps
 
-- [Viral Funding Mechanics](viral-funding-mechanics.md)
-- [Farcaster Virality](farcaster-virality.md)
-- [Cross-Platform Growth](cross-platform-growth.md)
-- [Platform Scaling](platform-scaling.md)
+- [Farcaster Virality](farcaster-virality.md) - Mini apps, Cast Actions, social graph
+- [Cross-Platform Growth](cross-platform-growth.md) - Web donations, conversion optimization
+- [Viral Funding Mechanics](viral-funding-mechanics.md) - Research-backed principles
+- [Platform Scaling](platform-scaling.md) - Network effects, K-factors
