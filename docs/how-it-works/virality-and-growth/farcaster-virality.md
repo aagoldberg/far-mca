@@ -29,16 +29,6 @@ When Farcaster launched mini apps (evolved from Frames), DAU jumped 10× in two 
 
 ---
 
-## Why Farcaster Architecture Enables Virality
-
-**Traditional platforms:** See post → Click link → Leave app → View content → Act
-- Each step loses 50-70% of users
-
-**Farcaster:** See post → Tap → Act
-- Everything happens in-feed
-
----
-
 ## Mini Apps (formerly Frames v2)
 
 **What they are:** Full web applications that run inside Farcaster posts via iframe.
