@@ -38,16 +38,4 @@ Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al
 
 ---
 
-## Why This Matters
-
-Traditional lending fails because credit scores miss context and strangers can't judge trustworthiness as well as friends.
-
-LendFriend succeeds because:
-- **Faces and stories** create emotional connection
-- **Specific needs** help lenders visualize impact
-- **Friend vouching** transforms empathy into social accountability
-- **Cryptographic social graphs** (Farcaster) make connections verifiable
-
----
-
 **Next:** [Social Trust Scoring](social-trust-scoring/README.md) · [Risk Scoring](risk-scoring/README.md) · [Academic Research](../references.md)
