@@ -2,63 +2,58 @@
 
 ## How Loans Spread and How LendFriend Scales
 
-LendFriend isn't just a lending protocol—it's a social funding mechanism designed to spread through networks. When borrowers share loan requests, they trigger viral mechanics that drive both individual loan funding and platform growth.
+Loan requests trigger viral mechanics that drive both individual loan funding and platform growth.
 
 ---
 
 ## Why Start with Farcaster?
 
-LendFriend will eventually expand to **Bluesky, Twitter/X, and beyond** (see [Vision & Roadmap](../../vision.md)), but we're starting exclusively on Farcaster for critical strategic reasons:
+LendFriend will expand to Bluesky, Twitter/X, and beyond (see [Vision](../../vision.md)), but starts exclusively on Farcaster for strategic reasons:
 
 ### 1. Strongest Trust Signals
 
-{% hint style="success" %}
 **Farcaster has the highest-quality social graph for lending:**
+- **Wallet-based identity** - Cryptographic signatures (unforgeable)
+- **Real relationships** - Tight-knit crypto community
+- **Quality filtering** - Neynar scores remove spam/bots
+- **Verified connections** - Proof of social ties
 
-- **Wallet-based identity** - Cryptographic signatures (can't be faked)
-- **Real relationships** - Tight-knit crypto community with shared context
-- **Quality filtering** - Neynar scores remove spam/bots from network analysis
-- **Verified connections** - Unforgeable proof of social ties
-
-Other platforms will require adapted risk models with lower trust weights (see [Vision](../../vision.md#platform-expansion-strategy)).
-{% endhint %}
+Other platforms require adapted risk models with lower trust weights.
 
 ### 2. Crypto-Native Users
 
 **Target users already understand:**
 - Wallet-based transactions (no onboarding friction)
-- On-chain transparency (reputation matters)
-- Smart contract mechanics (trust in code)
-- Token-based incentives (tipping, rewards)
+- On-chain transparency
+- Smart contract mechanics
+- Token-based incentives
 
-**Result:** We can bootstrap the primitive without educating users on crypto basics.
+Result: Bootstrap the primitive without educating users on crypto basics.
 
 ### 3. Built for Virality
-
-Farcaster's architecture is designed for social apps to spread:
 
 | Feature | Why It Matters |
 |---------|----------------|
 | **Frames** | Interactive mini-apps inside posts (no external clicks) |
 | **Cast Actions** | Right-click any cast → "Fund this loan" |
-| **Composer Actions** | Create loan requests directly from compose box |
+| **Composer Actions** | Create loan requests from compose box |
 | **Social graph API** | Calculate Trust Scores instantly via Neynar |
 
-When Frames launched in January 2024, Farcaster DAU jumped from **2,000 → 20,000+ in weeks** [[13]](../../references.md#farcaster-frames-2024). LendFriend leverages these same viral mechanics.
+When Frames launched January 2024, Farcaster DAU jumped from 2,000 → 20,000+ in weeks [[13]](../../references.md#farcaster-frames-2024).
 
 ### 4. Solves the Cold Start Problem
 
-**Traditional P2P lending platforms face chicken-and-egg:**
+**Traditional P2P platforms:**
 - Borrowers won't join without lenders
 - Lenders won't join without quality borrowers
 - Takes years to build liquidity
 
 **Farcaster bootstraps both sides:**
-- Borrowers bring their network with them (friends = first lenders)
-- Each loan introduces new lenders to the platform
-- Trust Scores make strangers comfortable funding publicly
+- Borrowers bring their network (friends = first lenders)
+- Each loan introduces new lenders to platform
+- Trust Scores make strangers comfortable funding
 
-**Once we prove the model works** (500-1,000 users, 90%+ repayment), we expand to larger platforms with adapted risk models.
+Once we prove the model works (500-1,000 users, 90%+ repayment), we expand with adapted risk models.
 
 ---
 
@@ -66,58 +61,46 @@ When Frames launched in January 2024, Farcaster DAU jumped from **2,000 → 20,0
 
 ### 1. [Viral Funding Mechanics](viral-funding-mechanics.md)
 
-How individual loan requests spread through networks:
-
+How individual loan requests spread:
 - **Social proof** - Early contributions trigger participation cascades
 - **Emotional storytelling** - Personal narratives increase funding 78% [[2]](../../references.md#herzenstein-et-al-2011)
 - **Trust cascades** - Friends → extended network → strangers
 
-Research shows the **first 10 days are critical** for campaign success [[11]](../../references.md#crowdfunding-first-10-days), with early donors signaling quality to later contributors.
-
-→ [Learn how loan requests go viral](viral-funding-mechanics.md)
+The **first 10 days are critical** [[11]](../../references.md#crowdfunding-first-10-days), with early donors signaling quality to later contributors.
 
 ---
 
 ### 2. [Farcaster Virality](farcaster-virality.md)
 
-Platform-native features that reduce friction and accelerate sharing:
-
+Platform-native features that reduce friction:
 - **Frames** turn loan posts into interactive mini-apps
 - **Cast Actions** enable one-tap contributions
-- **In-app discovery** through social feed (passive browsing)
+- **In-app discovery** through social feed
 
-Case study: Degen memecoin used tip-to-share mechanics to trigger Farcaster's first viral moment.
-
-→ [Explore Farcaster-native growth](farcaster-virality.md)
+When Frames launched, DAU jumped 10× in two weeks.
 
 ---
 
 ### 3. [Cross-Platform Growth](cross-platform-growth.md)
 
 Reaching beyond Farcaster to onboard non-crypto users:
-
 - **Shareable web pages** for Twitter, Telegram, WhatsApp
 - **Social login** (Google/email) for wallet-less contributions
 - **Mobile-first design** (62% of web traffic [[12]](../../references.md#gofundme-conversion-2024))
-- **Conversion optimization** (120% boost by reducing form fields [[12]](../../references.md#gofundme-conversion-2024))
+- **Form optimization** (120% boost by reducing fields [[12]](../../references.md#gofundme-conversion-2024))
 
-Only 4.2% of internet users own crypto [[14]](../../references.md#web3-adoption-2024)—we meet them where they are.
-
-→ [Understand cross-platform strategy](cross-platform-growth.md)
+Only 42% of internet users own crypto [[14]](../../references.md#web3-adoption-2024)—we meet them where they are.
 
 ---
 
 ### 4. [Platform Scaling](platform-scaling.md)
 
 How network effects drive exponential growth:
-
 - **Kiva**: 0 → 800K lenders via referral program [[16]](../../references.md#kiva-prosper-growth)
-- **Prosper**: 300K → 800K through social groups [[16]](../../references.md#kiva-prosper-growth)
-- **P2P lending market**: $246B → $1.95T by 2032 [[15]](../../references.md#p2p-market-2024)
+- **Prosper**: 300K → 800K through referral incentives [[16]](../../references.md#kiva-prosper-growth)
+- **P2P market**: $209B → $1T by 2032 [[15]](../../references.md#p2p-market-2024)
 
 When each user brings 1+ new users (K > 1), growth compounds.
-
-→ [See scaling strategies & metrics](platform-scaling.md)
 
 ---
 
@@ -125,8 +108,8 @@ When each user brings 1+ new users (K > 1), growth compounds.
 
 ```
 Phase 1: Farcaster (2025-2026)
-  ├─ Prove the lending primitive works
-  ├─ Bootstrap liquidity through crypto-native community
+  ├─ Prove lending primitive works
+  ├─ Bootstrap liquidity through crypto community
   ├─ Build reputation data for risk models
   └─ Achieve 90%+ repayment rate
        │
@@ -145,16 +128,16 @@ Phase 3: Twitter/X + Referral Marketplace (2027+)
   └─ Serve the 1.7B unbanked globally
 ```
 
-→ [Full roadmap in Vision & Roadmap](../../vision.md)
+→ [Full roadmap in Vision](../../vision.md)
 
 ---
 
 ## Why This Matters
 
-Traditional lending platforms take **years** to bootstrap liquidity and validate credit models. LendFriend uses social networks to:
+Traditional lending platforms take **years** to bootstrap liquidity. LendFriend uses social networks to:
 
 - **Solve cold start** - Borrowers bring their own liquidity (friends)
-- **Validate trust signals** - Build reputation data on a proven community
+- **Validate trust signals** - Build reputation data on proven community
 - **Achieve product-market fit** - Test primitives before scaling
 - **Expand strategically** - Adapt risk models based on platform signal quality
 
@@ -164,7 +147,6 @@ Traditional lending platforms take **years** to bootstrap liquidity and validate
 
 ## Key Principles
 
-{% hint style="info" %}
 **Start Small, Scale Smart**
 
 Farcaster's 61K+ DAU [[13]](../../references.md#farcaster-frames-2024) may seem small, but:
@@ -174,24 +156,13 @@ Farcaster's 61K+ DAU [[13]](../../references.md#farcaster-frames-2024) may seem 
 - Proof-of-concept before mass-market expansion
 
 Once we prove 0% interest loans work at small scale, we'll adapt the model for billions of users.
-{% endhint %}
 
 ---
 
 ## Next Steps
 
-- **Understand viral funding?** Read [Viral Funding Mechanics](viral-funding-mechanics.md)
-- **Curious about Farcaster features?** See [Farcaster Virality](farcaster-virality.md)
-- **Want to reach non-crypto users?** Check [Cross-Platform Growth](cross-platform-growth.md)
-- **Interested in scaling strategy?** Explore [Platform Scaling](platform-scaling.md)
-- **Wondering about platform expansion?** Review [Vision & Roadmap](../../vision.md)
-
----
-
-{% hint style="success" %}
-**Research Foundation**
-
-Our viral mechanics are backed by Kiva's 800K lender growth [[16]](../../references.md#kiva-prosper-growth), Prosper's referral program success [[16]](../../references.md#kiva-prosper-growth), Farcaster's Frame-driven adoption (2K→20K DAU) [[13]](../../references.md#farcaster-frames-2024), and academic research on crowdfunding psychology [[11]](../../references.md#crowdfunding-first-10-days).
-
-All strategies are adaptable as we expand beyond Farcaster to serve global markets.
-{% endhint %}
+- [Viral Funding Mechanics](viral-funding-mechanics.md) - How individual loans spread
+- [Farcaster Virality](farcaster-virality.md) - Platform-native features
+- [Cross-Platform Growth](cross-platform-growth.md) - Reaching non-crypto users
+- [Platform Scaling](platform-scaling.md) - Network effects and metrics
+- [Vision & Roadmap](../../vision.md) - Platform expansion strategy
