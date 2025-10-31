@@ -2,7 +2,7 @@
 
 ## Why Borrower Profiles Work
 
-People don't lend to statistics—they lend to people. Research shows donors give significantly more to an identified individual with a story than to statistical information [[11]](../references.md#small-et-al-2007). This is the **identifiable victim effect**: we connect emotionally with specific people, not abstract numbers.
+People don't lend to statistics—they lend to people. Research shows donors give significantly more to an identified individual with a story than to statistical information [[11]](../references.md#small-et-al-2007). We connect emotionally with specific people, not abstract numbers.
 
 Kiva funded $1.68B+ by connecting lenders to real stories. Neural research shows positive arousal from borrower photographs directly predicts lending success [[12]](../references.md#genevsky-and-knutson-2015). Emotional storytelling increases donations by 70% compared to statistics.
 
