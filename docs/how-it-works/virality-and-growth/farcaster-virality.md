@@ -34,13 +34,11 @@ Frames turn any Farcaster post (cast) into an **interactive mini-app**. Instead 
 {% hint style="success" %}
 **Real-World Viral Growth**
 
-When Farcaster released Frames on **January 26, 2024**:
+When Farcaster released Frames on **January 26, 2024** [[Source]](../../references.md#farcaster-frames-2024):
 - Daily active users **jumped from <2,000 → 20,000+** in weeks
 - DAU now **>61,500** thanks to Frame-driven adoption
 - Eliminated friction of leaving the app
 - Made content discovery passive (scrolling feed vs. visiting sites)
-
-*Source: Dune Analytics, Farcaster growth metrics 2024*
 {% endhint %}
 
 ### How LendFriend Uses Frames
@@ -80,7 +78,7 @@ When Farcaster released Frames on **January 26, 2024**:
 | Traditional Flow | Frame Flow | Improvement |
 |------------------|------------|-------------|
 | 1. See post → 2. Click link → 3. Load website → 4. Read loan → 5. Create account → 6. Contribute | 1. See Frame → 2. Tap contribute | **5 steps eliminated** |
-| ~5-10% conversion | ~20-30% conversion | **2-4× higher** |
+| Estimated 5-10% conversion | Estimated 20-30% conversion | **Estimated 2-4× higher** |
 | Must return to social app to share | One-tap share from Frame | **Instant virality** |
 
 ---
@@ -263,9 +261,9 @@ Both leverage **reciprocity** and **social reward mechanisms** built into Farcas
 | Metric | Traditional Platform | Farcaster Frames |
 |--------|---------------------|------------------|
 | **Discovery friction** | High (must visit site) | Low (appears in feed) |
-| **Conversion rate** | 5-10% | 20-30% |
-| **Sharing rate** | <5% | 15-25% |
-| **Time to contribution** | 3-5 minutes | 10-30 seconds |
+| **Conversion rate** | Estimated 5-10% | Estimated 20-30% |
+| **Sharing rate** | Estimated <5% | Estimated 15-25% |
+| **Time to contribution** | Estimated 3-5 minutes | Estimated 10-30 seconds |
 
 **Result:** Loans spread faster, fund quicker, and reach more potential lenders.
 
@@ -300,7 +298,7 @@ Both leverage **reciprocity** and **social reward mechanisms** built into Farcas
    [Loop repeats with new borrowers]
 ```
 
-**K-Factor:** Each loan request introduces **3-5 new users** to the platform.
+**Estimated K-Factor:** Each loan request could introduce **approximately 3-5 new users** to the platform.
 
 When K > 1, growth becomes exponential.
 

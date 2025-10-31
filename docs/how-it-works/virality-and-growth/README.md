@@ -44,7 +44,7 @@ Farcaster's architecture is designed for social apps to spread:
 | **Composer Actions** | Create loan requests directly from compose box |
 | **Social graph API** | Calculate Trust Scores instantly via Neynar |
 
-When Frames launched in January 2024, Farcaster DAU jumped from **2,000 → 20,000+ in weeks**. LendFriend leverages these same viral mechanics.
+When Frames launched in January 2024, Farcaster DAU jumped from **2,000 → 20,000+ in weeks** [[Source]](../../references.md#farcaster-frames-2024). LendFriend leverages these same viral mechanics.
 
 ### 4. Solves the Cold Start Problem
 
@@ -69,10 +69,10 @@ When Frames launched in January 2024, Farcaster DAU jumped from **2,000 → 20,0
 How individual loan requests spread through networks:
 
 - **Social proof** - Early contributions trigger participation cascades
-- **Emotional storytelling** - Personal narratives increase funding 78%
+- **Emotional storytelling** - Personal narratives increase funding 78% [[Source]](../../references.md#herzenstein-et-al-2011)
 - **Trust cascades** - Friends → extended network → strangers
 
-Research shows the **first 10 days are critical** for campaign success, with early donors signaling quality to later contributors.
+Research shows the **first 10 days are critical** for campaign success [[Source]](../../references.md#crowdfunding-first-10-days), with early donors signaling quality to later contributors.
 
 → [Learn how loan requests go viral](viral-funding-mechanics.md)
 
@@ -98,10 +98,10 @@ Reaching beyond Farcaster to onboard non-crypto users:
 
 - **Shareable web pages** for Twitter, Telegram, WhatsApp
 - **Social login** (Google/email) for wallet-less contributions
-- **Mobile-first design** (62% of web traffic)
-- **Conversion optimization** (120% boost by reducing form fields)
+- **Mobile-first design** (62% of web traffic [[Source]](../../references.md#gofundme-conversion-2024))
+- **Conversion optimization** (120% boost by reducing form fields [[Source]](../../references.md#gofundme-conversion-2024))
 
-Only 4.2% of internet users own crypto—we meet them where they are.
+Only 4.2% of internet users own crypto [[Source]](../../references.md#web3-adoption-2024)—we meet them where they are.
 
 → [Understand cross-platform strategy](cross-platform-growth.md)
 
@@ -111,9 +111,9 @@ Only 4.2% of internet users own crypto—we meet them where they are.
 
 How network effects drive exponential growth:
 
-- **Kiva**: 0 → 800K lenders via referral program
-- **Prosper**: 300K → 800K through social groups
-- **P2P lending market**: $246B → $1.95T by 2032
+- **Kiva**: 0 → 800K lenders via referral program [[Source]](../../references.md#kiva-prosper-growth)
+- **Prosper**: 300K → 800K through social groups [[Source]](../../references.md#kiva-prosper-growth)
+- **P2P lending market**: $246B → $1.95T by 2032 [[Source]](../../references.md#p2p-market-2024)
 
 When each user brings 1+ new users (K > 1), growth compounds.
 
@@ -167,8 +167,8 @@ Traditional lending platforms take **years** to bootstrap liquidity and validate
 {% hint style="info" %}
 **Start Small, Scale Smart**
 
-Farcaster's 61K+ DAU may seem small, but:
-- Higher trust signal quality than Twitter (64% bots)
+Farcaster's 61K+ DAU [[Source]](../../references.md#farcaster-frames-2024) may seem small, but:
+- Higher trust signal quality than Twitter (estimated 64% bots [[Source]](../../references.md#cresci-et-al-2017))
 - Crypto-native users (no wallet onboarding)
 - Built-in viral features (Frames, Cast Actions)
 - Proof-of-concept before mass-market expansion
@@ -191,7 +191,7 @@ Once we prove 0% interest loans work at small scale, we'll adapt the model for b
 {% hint style="success" %}
 **Research Foundation**
 
-Our viral mechanics are backed by Kiva's 800K lender growth, Prosper's referral program success, Farcaster's Frame-driven adoption (2K→20K DAU), and academic research on crowdfunding psychology.
+Our viral mechanics are backed by Kiva's 800K lender growth [[Source]](../../references.md#kiva-prosper-growth), Prosper's referral program success [[Source]](../../references.md#kiva-prosper-growth), Farcaster's Frame-driven adoption (2K→20K DAU) [[Source]](../../references.md#farcaster-frames-2024), and academic research on crowdfunding psychology [[Source]](../../references.md#crowdfunding-first-10-days).
 
 All strategies are adaptable as we expand beyond Farcaster to serve global markets.
 {% endhint %}

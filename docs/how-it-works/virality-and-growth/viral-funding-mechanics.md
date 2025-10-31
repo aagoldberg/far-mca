@@ -219,7 +219,7 @@ For platform design:
 - [ ] **Show funding progress above fold** (don't make users scroll)
 - [ ] **Display lender count + Trust Scores** (social proof)
 - [ ] **Highlight recent contributions** (creates momentum perception)
-- [ ] **Mobile-optimized** (62% of web traffic)
+- [ ] **Mobile-optimized** (62% of web traffic [[Source]](../../references.md#gofundme-conversion-2024))
 - [ ] **Share buttons prominent** (above and below loan details)
 - [ ] **Pre-written share text** (easy for borrowers to spread)
 
@@ -237,7 +237,7 @@ For platform design:
 5. **Design for emotion** - Relatable situations spread faster
 6. **Social proof compounds** - Each contribution makes the next easier
 
-**Research shows these principles work across Kiva (800K lenders), Prosper (800K members), and crowdfunding platforms globally.**
+**Research shows these principles work across Kiva (800K lenders [[Source]](../../references.md#kiva-prosper-growth)), Prosper (800K members [[Source]](../../references.md#kiva-prosper-growth)), and crowdfunding platforms globally.**
 {% endhint %}
 
 ---

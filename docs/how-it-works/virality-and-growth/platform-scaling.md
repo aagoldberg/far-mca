@@ -53,29 +53,29 @@ K = (invites per user) × (conversion rate)
 
 ### LendFriend's K-Factor Calculation
 
-**Borrower acquisition:**
+**Borrower acquisition (estimated):**
 
 | User Action | New Users Acquired | Conversion Rate | K-Factor |
 |-------------|-------------------|-----------------|----------|
-| Shares loan to 10 friends | 10 | 30% fund | **3.0** |
-| 3 lenders discover platform | 3 | 20% create loans | **0.6** |
-| **Combined K-Factor** | — | — | **3.6** |
+| Shares loan to 10 friends | 10 | Estimated 30% fund | **Estimated 3.0** |
+| 3 lenders discover platform | 3 | Estimated 20% create loans | **Estimated 0.6** |
+| **Combined K-Factor** | — | — | **Estimated 3.6** |
 
-**Result:** Each borrower brings 3.6 new users on average.
+**Estimated result:** Each borrower could bring approximately 3.6 new users on average.
 
-**Lender acquisition:**
+**Lender acquisition (estimated):**
 
 | User Action | New Users Acquired | Conversion Rate | K-Factor |
 |-------------|-------------------|-----------------|----------|
-| Browses 5 loans | 5 | 10% fund | **0.5** |
-| Successful repayment | 2 referrals | 50% sign up | **1.0** |
-| **Combined K-Factor** | — | — | **1.5** |
+| Browses 5 loans | 5 | Estimated 10% fund | **Estimated 0.5** |
+| Successful repayment | 2 referrals | Estimated 50% sign up | **Estimated 1.0** |
+| **Combined K-Factor** | — | — | **Estimated 1.5** |
 
-**Result:** Each lender brings 1.5 new users on average.
+**Estimated result:** Each lender could bring approximately 1.5 new users on average.
 
 ### Critical Threshold
 
-With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended K-factor is **~2.5**.
+With **estimated K = 3.6** for borrowers and **estimated K = 1.5** for lenders, LendFriend's blended K-factor could be **approximately 2.5**.
 
 **This means:** Every 100 users bring 250 new users, who bring 625, who bring 1,562...
 
@@ -87,10 +87,10 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 
 ### How Kiva Grew to 800,000 Lenders
 
-**Background:**
+**Background:** [[Source]](../../references.md#kiva-prosper-growth)
 - Founded 2005
 - Microfinance P2P lending
-- $350M+ in loans
+- $350M+ in loans (note: exceeded $1.8B+ by 2023 [[Source]](../../references.md#kiva))
 - 800,000+ lenders
 
 ### Viral Growth Strategies
@@ -104,7 +104,7 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 
 **Result:** Social competition drives engagement.
 
-**Top teams:**
+**Top teams:** [[Source]](../../references.md#kiva-prosper-growth)
 - Kiva Christians: 30,000+ members
 - Atheists, Agnostics, Skeptics: 25,000+ members
 - Kiva Friends: 20,000+ members
@@ -155,7 +155,7 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 2010: 800,000 lenders (viral loop established)
 ```
 
-**K-Factor:** Estimated **1.2-1.5** once referral program launched.
+**Estimated K-Factor:** Approximately **1.2-1.5** once referral program launched.
 
 ---
 
@@ -163,7 +163,7 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 
 ### How Prosper Scaled Through Social Groups
 
-**Background:**
+**Background:** [[Source]](../../references.md#kiva-prosper-growth)
 - Founded 2006
 - First US P2P lending platform
 - 300,000 members → 800,000+ post-referral program
@@ -215,7 +215,7 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 - Exponential growth
 - Reduced customer acquisition cost (CAC)
 
-**K-Factor:** Estimated **1.3-1.8** post-referral program.
+**Estimated K-Factor:** Approximately **1.3-1.8** post-referral program.
 
 ---
 
@@ -300,7 +300,7 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 ### Explosive Industry Growth
 
 {% hint style="success" %}
-**P2P Lending Market Projections**
+**P2P Lending Market Projections** [[Source]](../../references.md#p2p-market-2024)
 
 | Year | Market Size | Growth Rate |
 |------|-------------|-------------|
@@ -312,8 +312,6 @@ With **K = 3.6** for borrowers and **K = 1.5** for lenders, LendFriend's blended
 |------|-------------|-------------|
 | **2024** | $10.55 billion | Baseline |
 | **2030** | $44.49 billion | **27.7% CAGR** |
-
-*Sources: Global Market Insights, Grand View Research, 2024*
 {% endhint %}
 
 **What this means:**

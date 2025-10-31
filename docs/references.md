@@ -440,4 +440,109 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 
 ---
 
+---
+
+## Virality & Growth Research
+
+### Crowdfunding Psychology and Campaign Dynamics
+
+<span id="crowdfunding-first-10-days"></span>
+**Social media's influence on crowdfunding campaigns (2022)**. University of Texas at Dallas research study.
+
+> Study analyzing crowdfunding campaign dynamics found that social media is **most effective in the first 10 days** of a campaign, with the average number of donors, amount donated, and amount per donor highest during this period. Campaigns that don't perform well at the outset are unlikely to succeed. **Critical finding:** If a campaign does not reach at least **70% of its goal after 20 days** since launch, it is not likely to be successful.
+
+**Key findings:**
+- First 10 days determine campaign trajectory
+- 70% funding = psychological tipping point
+- Early participation triggers more participation
+- Late-stage contributions accelerate above 70%
+
+---
+
+### Fundraising Conversion Optimization
+
+<span id="gofundme-conversion-2024"></span>
+**GoFundMe Pro fundraising optimization research (2024)**. Industry best practices report.
+
+> Comprehensive analysis of donation page optimization showing **average conversion rate of 12%** for standard pages and **15-25% for well-optimized** pages. **Key optimization:** Reducing form fields from 11 to 4 led to **120% increase in conversions**.
+
+**Mobile optimization data:**
+- **62% of web traffic** is mobile
+- Mobile users show **25% higher conversion** on optimized pages
+- Forms must work on screens as small as 375px width
+
+**Intelligent ask amounts:**
+- Donors presented with Intelligent Ask Amounts gave **4-7% more** during 2024 giving season
+- Personalized default amounts based on user context improve outcomes
+
+---
+
+### Farcaster Platform Growth
+
+<span id="farcaster-frames-2024"></span>
+**Farcaster growth metrics (2024)**. Dune Analytics dashboard data.
+
+> When Farcaster released Frames feature on January 26, 2024, daily active users **jumped from fewer than 2,000 to nearly 20,000** in weeks following launch. As of 2024, DAU exceeds **61,500 users**.
+
+**Growth drivers:**
+- Frames enabled interactive apps inside posts
+- Eliminated friction of external clicks
+- Made content discovery passive (in-feed vs. website visits)
+
+---
+
+### Web3 Adoption Barriers
+
+<span id="web3-adoption-2024"></span>
+**Web3 adoption and onboarding challenges (2024)**. Industry research compilation.
+
+> Global blockchain adoption rate stands at **4.2%** of internet users. **Less than 10%** of users have ever used a Web3 application. Survey found **44% of non-owners stated they would never buy cryptocurrency**, citing unstable values and lack of government protections.
+
+**Primary barriers:**
+- Wallet complexity: **40% of users abandon** during setup process
+- Security concerns: Over **$200M lost to hacks** in 2024 across 32 incidents
+- Seed phrase confusion: Users fear losing funds
+- Unfamiliar UX compared to Web2 applications
+
+---
+
+### P2P Lending Market Projections
+
+<span id="p2p-market-2024"></span>
+**Global P2P Lending Market Reports (2024)**. Market research by Global Market Insights and Grand View Research.
+
+> **Peer-to-Peer Lending Market:**
+> - 2024: $246.6 billion
+> - 2032 projection: $1.95 trillion
+> - Growth rate: 25% CAGR
+
+> **Digital Lending Platforms:**
+> - 2024: $10.55 billion
+> - 2030 projection: $44.49 billion
+> - Growth rate: 27.7% CAGR
+
+---
+
+### Kiva and Prosper Platform Growth
+
+<span id="kiva-prosper-growth"></span>
+**Kiva and Prosper referral program success**. Platform growth data from industry case studies.
+
+> **Kiva** grew from founding in 2005 to over **800,000 lenders** by 2010 primarily through:
+> - Referral program ($25 credit for referrer and new user)
+> - Team-based lending competitions with leaderboards
+> - Tracking dashboard showing impact of each user's referrals
+
+> **Prosper** scaled from approximately **300,000 members to 800,000+** following launch of referral program:
+> - $25 bonus for referring lenders
+> - 0.5% of loan amount for referring borrowers
+> - Promotional tools (buttons, banners, text links)
+
+**Top Kiva teams:**
+- Kiva Christians: 30,000+ members
+- Atheists, Agnostics, Skeptics: 25,000+ members
+- Kiva Friends: 20,000+ members
+
+---
+
 **Last Updated**: January 2025
