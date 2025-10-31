@@ -59,6 +59,23 @@ Research shows less frequent repayments don't increase default rates while reduc
 
 ---
 
+### Can I tip my lenders when I repay?
+
+Yes! You can repay more than the principal amount, and the extra automatically distributes proportionally among all lenders as a tip.
+
+**Example:**
+- You borrowed $100 total ($30 from Alice, $70 from Bob)
+- You repay $110 ($10 tip)
+- Alice receives $33 ($3 tip), Bob receives $77 ($7 tip)
+
+Tips show gratitude, strengthen your reputation, and signal financial health. Even small tips (5-10%) make a significant impression on future loan applications.
+
+{% hint style="success" %}
+**Impact on Reputation**: Borrowers who tip build stronger social connections and typically see faster funding on subsequent loans.
+{% endhint %}
+
+---
+
 ### How do I get a better risk grade?
 
 Your risk grade improves through:
@@ -132,6 +149,24 @@ Not currently. LendFriend starts with **zero-interest loans** to bootstrap socia
 This will evolve through community governance as the platform matures and collects repayment data.
 
 → [Learn more about our evolution strategy](../vision.md)
+
+---
+
+### Can borrowers tip me when they repay?
+
+Yes. Borrowers can repay more than the principal amount, and any overpayment automatically distributes proportionally among all lenders.
+
+**How it works:**
+- Borrower repays 110% instead of 100%
+- Your share: (your contribution / total principal) × total repayment
+- If you funded 30% of the loan, you receive 30% of the 110%
+
+Tips are voluntary and signal:
+- Borrower's financial health
+- Gratitude for your support
+- Strong social accountability
+
+While loans are zero-interest, tips provide a way for borrowers to express appreciation and build reputation.
 
 ---
 

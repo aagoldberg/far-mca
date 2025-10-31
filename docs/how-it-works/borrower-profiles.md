@@ -40,6 +40,10 @@ Platforms like Kiva and GoFundMe have proven that emotional storytelling works f
 
 Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009). Combining emotional narratives with social network validation improves default prediction by 45% compared to credit scores [[3]](../references.md#iyer-et-al-2016)—because emotional connection + social accountability changes behavior.
 
+{% hint style="success" %}
+**Building Reputation**: Borrowers who tip on repayment (105-110% of principal) signal financial health and gratitude. Tips distribute proportionally among lenders and strengthen your social reputation for future loans.
+{% endhint %}
+
 ---
 
 **Next:** [Social Trust Scoring](social-trust-scoring/README.md) · [Risk Scoring](risk-scoring/README.md) · [Academic Research](../references.md)

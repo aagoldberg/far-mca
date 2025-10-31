@@ -125,6 +125,30 @@ Where:
 
 This approach calculates pro-rata shares in **O(1) time per lender**, rather than iterating over all lenders. Overpayments automatically distribute as bonuses.
 
+---
+
+### Tipping on Repayment
+
+Borrowers can express gratitude by repaying more than the principal amount. The smart contract automatically distributes tips proportionally among all lenders.
+
+**How it works:**
+```solidity
+// Borrower repays $110 on $100 loan
+repay(110); // $10 tip automatically distributed
+
+// Each lender receives: (contribution / principal) × total_repaid
+// Lender who gave $30 receives: ($30 / $100) × $110 = $33 ($3 tip)
+// Lender who gave $70 receives: ($70 / $100) × $110 = $77 ($7 tip)
+```
+
+The accumulator pattern handles this automatically—any repayment amount distributes proportionally, whether it's 50%, 100%, or 110% of principal.
+
+{% hint style="success" %}
+**Pro Tip**: Tips strengthen your reputation and show gratitude to supporters. Even small tips (5-10%) signal reliability and appreciation.
+{% endhint %}
+
+---
+
 ## Gas Optimization
 
 The accumulator pattern is crucial for scalability:

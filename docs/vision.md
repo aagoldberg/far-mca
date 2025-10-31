@@ -148,9 +148,10 @@ Pure altruistic lending at 0% interest to prove the primitive works.
 - Transparent on-chain repayments
 
 **What we're learning:**
-- Repayment behavior patterns
+- Repayment behavior patterns (on-time, early, tipping %)
 - Trust network topology
 - Social signal predictiveness
+- Tipping behavior as reliability signal
 - Community dynamics at scale
 
 **Success metric:** 500-1,000 users, 3-6 months of clean behavioral data, proven that reputation-backed 0% interest loans can work.

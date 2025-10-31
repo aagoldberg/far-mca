@@ -30,6 +30,9 @@ Phase 1 uses 0% interest, letting lenders give out of generosity while we gather
 **Zero Interest (Phase 1)**
 Lenders give because they want to help, not chase returns. This creates pure behavioral data for future underwriting.
 
+**Gratitude-Based Returns**
+While loans are zero-interest, borrowers can voluntarily tip when repaying. Tips distribute proportionally among lenders, strengthening social bonds and borrower reputation.
+
 **On-Chain Transparency**
 All loans and repayments are publicly visible on Base L2. No hidden fees, no middlemen.
 

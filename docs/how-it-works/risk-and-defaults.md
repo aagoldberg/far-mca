@@ -89,13 +89,23 @@ Zero-interest lending is not experimental—it has proven track records:
 - ⚠️ Future loans may have shorter maturity periods
 - ✅ Still considered better than default
 
+### Scenario 4: Overpayment / Tipping
+**What happens**: Borrower repays 110% of loan ($110 on $100 principal)
+
+- ✅ Lenders receive their contribution + proportional tip
+- 📊 Borrower's reputation shows 110% repayment (exceptional)
+- 🌟 Builds stronger relationships with lenders
+- ✅ Signals financial health and gratitude
+- 🚀 Future loans likely to fund faster with better support
+
 ## Risk Mitigation Strategies
 
 ### For Borrowers
 1. **Start small**: Request $100-500 for first loan
 2. **Overfund buffer**: Request slightly less than needed
 3. **Early repayment**: Pay back early to build trust
-4. **Regular updates**: Keep lenders informed
+4. **Add a tip**: Repay 105-110% to show gratitude and strengthen reputation
+5. **Regular updates**: Keep lenders informed
 
 ### For Lenders
 1. **Check trust scores**: Only fund borrowers with social connections
