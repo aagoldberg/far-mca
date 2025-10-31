@@ -6,7 +6,7 @@ People don't lend to statistics—they lend to people. Research shows donors giv
 
 Kiva funded $1.68B+ by connecting lenders to real stories. Neural research shows positive arousal from borrower photographs directly predicts lending success [[12]](../references.md#genevsky-and-knutson-2015). Emotional storytelling increases donations by 70% compared to statistics.
 
-**LendFriend's approach:** Borrowers create profiles with photos, stories, and specific loan purposes. Unlike Kiva (strangers) or Prosper (anonymous profiles), your friends see your request first and vouch for someone they know. This transforms emotional connection into social accountability.
+**LendFriend's approach:** Borrowers create profiles with photos, stories, and specific loan purposes. Your friends see your request first and vouch for someone they know. This transforms emotional connection into social accountability.
 
 ---
 
@@ -30,13 +30,9 @@ Link your website, Twitter, ongoing work. Active online presence signals legitim
 
 ---
 
-## The Social Vouching Difference
+## The Social Vouching Mechanism
 
-**Traditional crowdfunding (Kiva, GoFundMe):** Emotional stories attract stranger donations. High empathy, minimal accountability.
-
-**Traditional P2P (Prosper, LendingClub):** Anonymous profiles optimize for algorithms. Low emotional connection, strangers evaluating strangers.
-
-**LendFriend:** Friends see your story first. When they contribute, they vouch with money and reputation. This combines emotional connection with social accountability—misrepresenting yourself damages relationships with people who know you.
+Platforms like Kiva and GoFundMe have proven that emotional storytelling works for attracting funding. LendFriend adds a layer: your friends see your request first. When they contribute, they vouch with money and reputation—misrepresenting yourself damages relationships with people who know you.
 
 Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009). Combining emotional narratives with social network validation improves default prediction by 45% compared to credit scores [[3]](../references.md#iyer-et-al-2016)—because emotional connection + social accountability changes behavior.
 
