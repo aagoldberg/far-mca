@@ -87,10 +87,10 @@ With **estimated K = 3.6** for borrowers and **estimated K = 1.5** for lenders, 
 
 ### How Kiva Grew to 800,000 Lenders
 
-**Background:** [[Source]](../../references.md#kiva-prosper-growth)
+**Background:** [[16]](../../references.md#kiva-prosper-growth)
 - Founded 2005
 - Microfinance P2P lending
-- $350M+ in loans (note: exceeded $1.8B+ by 2023 [[Source]](../../references.md#kiva))
+- $350M+ in loans (note: exceeded $1.8B+ by 2023 [[1]](../../references.md#kiva))
 - 800,000+ lenders
 
 ### Viral Growth Strategies
@@ -104,7 +104,7 @@ With **estimated K = 3.6** for borrowers and **estimated K = 1.5** for lenders, 
 
 **Result:** Social competition drives engagement.
 
-**Top teams:** [[Source]](../../references.md#kiva-prosper-growth)
+**Top teams:** [[16]](../../references.md#kiva-prosper-growth)
 - Kiva Christians: 30,000+ members
 - Atheists, Agnostics, Skeptics: 25,000+ members
 - Kiva Friends: 20,000+ members
@@ -163,7 +163,7 @@ With **estimated K = 3.6** for borrowers and **estimated K = 1.5** for lenders, 
 
 ### How Prosper Scaled Through Social Groups
 
-**Background:** [[Source]](../../references.md#kiva-prosper-growth)
+**Background:** [[16]](../../references.md#kiva-prosper-growth)
 - Founded 2006
 - First US P2P lending platform
 - 300,000 members → 800,000+ post-referral program
@@ -300,7 +300,7 @@ With **estimated K = 3.6** for borrowers and **estimated K = 1.5** for lenders, 
 ### Explosive Industry Growth
 
 {% hint style="success" %}
-**P2P Lending Market Projections** [[Source]](../../references.md#p2p-market-2024)
+**P2P Lending Market Projections** [[15]](../../references.md#p2p-market-2024)
 
 | Year | Market Size | Growth Rate |
 |------|-------------|-------------|

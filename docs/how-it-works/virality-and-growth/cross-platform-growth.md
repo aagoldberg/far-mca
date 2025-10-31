@@ -2,7 +2,7 @@
 
 ## Reaching Beyond Farcaster to Onboard the World
 
-Farcaster has 61K+ daily active users [[Source]](../../references.md#farcaster-frames-2024). **The world has 5.3 billion internet users.** While Farcaster is the perfect starting point (see [main page](README.md#why-start-with-farcaster)), reaching mainstream adoption requires meeting non-crypto users where they are.
+Farcaster has 61K+ daily active users [[13]](../../references.md#farcaster-frames-2024). **The world has 5.3 billion internet users.** While Farcaster is the perfect starting point (see [main page](README.md#why-start-with-farcaster)), reaching mainstream adoption requires meeting non-crypto users where they are.
 
 ---
 
@@ -11,7 +11,7 @@ Farcaster has 61K+ daily active users [[Source]](../../references.md#farcaster-f
 ### Adoption Barriers
 
 {% hint style="warning" %}
-**Web3 Onboarding is Broken** [[Source]](../../references.md#web3-adoption-2024)
+**Web3 Onboarding is Broken** [[14]](../../references.md#web3-adoption-2024)
 
 - **Only 4.2%** of global internet users own cryptocurrency
 - **Less than 10%** have ever used a Web3 app
@@ -23,10 +23,10 @@ Farcaster has 61K+ daily active users [[Source]](../../references.md#farcaster-f
 
 | Barrier | Impact | LendFriend Solution |
 |---------|--------|-------------------|
-| **Wallet complexity** | 40% abandon during setup [[Source]](../../references.md#web3-adoption-2024) | Social login (Google, email) |
+| **Wallet complexity** | 40% abandon during setup [[14]](../../references.md#web3-adoption-2024) | Social login (Google, email) |
 | **Seed phrase confusion** | Users fear losing funds | Custodial wallets for new users |
 | **Unfamiliar UX** | Different from Web2 apps | Web2-style interface, progressive disclosure |
-| **Security concerns** | $200M+ lost to hacks in 2024 [[Source]](../../references.md#web3-adoption-2024) | Clear security education, insurance (future) |
+| **Security concerns** | $200M+ lost to hacks in 2024 [[14]](../../references.md#web3-adoption-2024) | Clear security education, insurance (future) |
 | **"Why crypto?"** | No clear benefit over Venmo | Transparent on-chain repayments, lower fees |
 
 ---
@@ -95,12 +95,12 @@ Transaction complete (user doesn't see blockchain complexity)
 
 ## Conversion-Optimized Design
 
-Based on research showing **12% average conversion** for donation pages (15-25% for optimized) [[Source]](../../references.md#gofundme-conversion-2024):
+Based on research showing **12% average conversion** for donation pages (15-25% for optimized) [[12]](../../references.md#gofundme-conversion-2024):
 
 ### Mobile-First (62% of Traffic)
 
 {% hint style="info" %}
-**Mobile Optimization is Critical** [[Source]](../../references.md#gofundme-conversion-2024)
+**Mobile Optimization is Critical** [[12]](../../references.md#gofundme-conversion-2024)
 
 - **62%** of web traffic is mobile
 - Mobile users have **25% higher** conversion on optimized pages
@@ -117,7 +117,7 @@ Based on research showing **12% average conversion** for donation pages (15-25% 
 ### Form Field Reduction
 
 {% hint style="success" %}
-**Reducing form fields from 11 → 4 led to 120% increase in conversions.** [[Source]](../../references.md#gofundme-conversion-2024)
+**Reducing form fields from 11 → 4 led to 120% increase in conversions.** [[12]](../../references.md#gofundme-conversion-2024)
 {% endhint %}
 
 **Our contribution form (4 fields):**
@@ -148,7 +148,7 @@ Based on research showing **12% average conversion** for donation pages (15-25% 
 ### Intelligent Ask Amounts
 
 {% hint style="info" %}
-**Donors presented with Intelligent Ask Amounts gave 4-7% more during the 2024 giving season.** [[Source]](../../references.md#gofundme-conversion-2024)
+**Donors presented with Intelligent Ask Amounts gave 4-7% more during the 2024 giving season.** [[12]](../../references.md#gofundme-conversion-2024)
 {% endhint %}
 
 **How we calculate smart defaults:**
@@ -174,7 +174,7 @@ calculate_ask_amounts(loan, user) {
 ### Remove Distractions
 
 {% hint style="warning" %}
-**One of the biggest killers of conversions are distractions on the page, such as sidebar menus, navigation buttons, or links to articles.** [[Source]](../../references.md#gofundme-conversion-2024)
+**One of the biggest killers of conversions are distractions on the page, such as sidebar menus, navigation buttons, or links to articles.** [[12]](../../references.md#gofundme-conversion-2024)
 {% endhint %}
 
 **Loan page = single focus:**

@@ -219,7 +219,7 @@ For platform design:
 - [ ] **Show funding progress above fold** (don't make users scroll)
 - [ ] **Display lender count + Trust Scores** (social proof)
 - [ ] **Highlight recent contributions** (creates momentum perception)
-- [ ] **Mobile-optimized** (62% of web traffic [[Source]](../../references.md#gofundme-conversion-2024))
+- [ ] **Mobile-optimized** (62% of web traffic [[12]](../../references.md#gofundme-conversion-2024))
 - [ ] **Share buttons prominent** (above and below loan details)
 - [ ] **Pre-written share text** (easy for borrowers to spread)
 

@@ -34,7 +34,7 @@ Frames turn any Farcaster post (cast) into an **interactive mini-app**. Instead 
 {% hint style="success" %}
 **Real-World Viral Growth**
 
-When Farcaster released Frames on **January 26, 2024** [[Source]](../../references.md#farcaster-frames-2024):
+When Farcaster released Frames on **January 26, 2024** [[13]](../../references.md#farcaster-frames-2024):
 - Daily active users **jumped from <2,000 → 20,000+** in weeks
 - DAU now **>61,500** thanks to Frame-driven adoption
 - Eliminated friction of leaving the app
