@@ -447,9 +447,11 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Crowdfunding Psychology and Campaign Dynamics
 
 <span id="crowdfunding-first-10-days"></span>
-**[11] Social media's influence on crowdfunding campaigns (2022)**. University of Texas at Dallas research study.
+**[11] Dehdashti, Y., Namin, A., Ratchford, B. T., & Chonko, L. B. (2022)**. The Unanticipated Dynamics of Promoting Crowdfunding Donation Campaigns on Social Media. *Journal of Interactive Marketing, 57*(1), 73-91.
+DOI: [10.1177/10949968221074726](https://doi.org/10.1177/10949968221074726)
+URL: [news.utdallas.edu/business-management/social-media-crowdfunding-2022](https://news.utdallas.edu/business-management/social-media-crowdfunding-2022/)
 
-> Study analyzing crowdfunding campaign dynamics found that social media is **most effective in the first 10 days** of a campaign, with the average number of donors, amount donated, and amount per donor highest during this period. Campaigns that don't perform well at the outset are unlikely to succeed. **Critical finding:** If a campaign does not reach at least **70% of its goal after 20 days** since launch, it is not likely to be successful.
+> University of Texas at Dallas study analyzing crowdfunding campaign dynamics found that social media is **most effective in the first 10 days** of a campaign, with the average number of donors, amount donated, and amount per donor highest during this period. Campaigns that don't perform well at the outset are unlikely to succeed. **Critical finding:** If a campaign does not reach at least **70% of its goal after 20 days** since launch, it is not likely to be successful.
 
 **Key findings:**
 - First 10 days determine campaign trajectory
@@ -462,7 +464,8 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Fundraising Conversion Optimization
 
 <span id="gofundme-conversion-2024"></span>
-**[12] GoFundMe Pro fundraising optimization research (2024)**. Industry best practices report.
+**[12] GoFundMe Pro (2024)**. The Ultimate Guide to High-Converting Donation Forms. Industry best practices report.
+URL: [pro.gofundme.com/c/blog/donation-form-conversion](https://pro.gofundme.com/c/blog/donation-form-conversion/)
 
 > Comprehensive analysis of donation page optimization showing **average conversion rate of 12%** for standard pages and **15-25% for well-optimized** pages. **Key optimization:** Reducing form fields from 11 to 4 led to **120% increase in conversions**.
 
@@ -475,12 +478,17 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 - Donors presented with Intelligent Ask Amounts gave **4-7% more** during 2024 giving season
 - Personalized default amounts based on user context improve outcomes
 
+Also see:
+- [Campaign Mobile Optimization Guide](https://pro.gofundme.com/c/blog/campaign-mobile-optimization/)
+- [Boost Fundraising Conversion Rate](https://pro.gofundme.com/c/blog/boost-fundraising-conversion-rate/)
+
 ---
 
 ### Farcaster Platform Growth
 
 <span id="farcaster-frames-2024"></span>
-**[13] Farcaster growth metrics (2024)**. Dune Analytics dashboard data.
+**[13] Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
+URL: [dune.com/pixelhack/farcaster](https://dune.com/pixelhack/farcaster)
 
 > When Farcaster released Frames feature on January 26, 2024, daily active users **jumped from fewer than 2,000 to nearly 20,000** in weeks following launch. As of 2024, DAU exceeds **61,500 users**.
 
@@ -489,56 +497,83 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 - Eliminated friction of external clicks
 - Made content discovery passive (in-feed vs. website visits)
 
+Also see:
+- [TechCrunch coverage](https://techcrunch.com/2024/02/06/farcaster-decentralized-social-network-mass-adoption/)
+- [Cointelegraph: 400% increase in DAU](https://cointelegraph.com/news/farcaster-daily-active-users-warpcast-frames)
+
 ---
 
 ### Web3 Adoption Barriers
 
 <span id="web3-adoption-2024"></span>
-**[14] Web3 adoption and onboarding challenges (2024)**. Industry research compilation.
+**[14] Consensys (2024)**. Web3 and Crypto Global Survey 2024. Industry research report.
+URL: [consensys.io/insight-report/web3-and-crypto-global-survey](https://consensys.io/insight-report/web3-and-crypto-global-survey)
 
-> Global blockchain adoption rate stands at **4.2%** of internet users. **Less than 10%** of users have ever used a Web3 application. Survey found **44% of non-owners stated they would never buy cryptocurrency**, citing unstable values and lack of government protections.
+> Global survey showing **42% of respondents currently own or have previously bought cryptocurrencies**. Over half the population in Nigeria (84%), South Africa (66%), Vietnam (60%), the Philippines (54%) and India (50%) report owning a crypto wallet, while wallet ownership in developed markets remains significantly lower.
 
 **Primary barriers:**
-- Wallet complexity: **40% of users abandon** during setup process
-- Security concerns: Over **$200M lost to hacks** in 2024 across 32 incidents
+- Wallet complexity and private key management (contributing to 40% of 2024 security incidents)
+- Security concerns: Over **$930M lost** to key management issues in 2024
 - Seed phrase confusion: Users fear losing funds
 - Unfamiliar UX compared to Web2 applications
+
+Also see:
+- [Passive Secrets: 40+ Useful Web3 Statistics](https://passivesecrets.com/web3-statistics/)
+- [Security.org: 2025 Cryptocurrency Adoption Report](https://www.security.org/digital-security/cryptocurrency-annual-consumer-report/)
 
 ---
 
 ### P2P Lending Market Projections
 
 <span id="p2p-market-2024"></span>
-**[15] Global P2P Lending Market Reports (2024)**. Market research by Global Market Insights and Grand View Research.
+**[15] Global Market Insights (2024)**. Peer to Peer Lending Market Size, Industry Forecasts 2024-2032.
+URL: [gminsights.com/industry-analysis/peer-to-peer-lending-market](https://www.gminsights.com/industry-analysis/peer-to-peer-lending-market)
 
 > **Peer-to-Peer Lending Market:**
-> - 2024: $246.6 billion
-> - 2032 projection: $1.95 trillion
-> - Growth rate: 25% CAGR
+> - 2023: $209.4 billion
+> - 2032 projection: Over $1 trillion
+> - Growth rate: Over 25% CAGR from 2024 to 2032
 
-> **Digital Lending Platforms:**
-> - 2024: $10.55 billion
-> - 2030 projection: $44.49 billion
-> - Growth rate: 27.7% CAGR
+**Grand View Research (2024)**. Peer-to-Peer Lending Market Size And Share Report, 2030.
+URL: [grandviewresearch.com/industry-analysis/peer-to-peer-lending-market-report](https://www.grandviewresearch.com/industry-analysis/peer-to-peer-lending-market-report)
+
+> - 2022: $5.07 billion (narrower definition)
+> - 2030 projection: $21.42 billion
+> - Growth rate: 20.2% CAGR from 2023 to 2030
+
+*Note: Market size estimates vary significantly based on methodology and P2P lending definition*
 
 ---
 
 ### Kiva and Prosper Platform Growth
 
 <span id="kiva-prosper-growth"></span>
-**[16] Kiva and Prosper referral program success**. Platform growth data from industry case studies.
+**[16] Kiva referral and team lending case studies**. Platform growth analysis from Ambassador and academic research.
 
-> **Kiva** grew from founding in 2005 to over **800,000 lenders** by 2010 primarily through:
-> - Referral program ($25 credit for referrer and new user)
+**Ambassador (2020)**. How Learning From Kiva Can Improve Your Referral Program.
+URL: [getambassador.com/blog/how-to-improve-your-referral-program](https://getambassador.com/blog/how-to-improve-your-referral-program/?hs_amp=true)
+
+> Case study documenting Kiva's growth to **over 800,000 lenders and $350M+ in loans** since founding in 2005 through referral and team-based strategies:
+> - Referral program offering incentives for new lender acquisition
 > - Team-based lending competitions with leaderboards
-> - Tracking dashboard showing impact of each user's referrals
+> - "Lending Team Playbook" to help teams grow and increase referrals
+> - Lenders who join teams contribute **1.2 more loans ($30–$42) per month** than those who do not
 
-> **Prosper** scaled from approximately **300,000 members to 800,000+** following launch of referral program:
-> - $25 bonus for referring lenders
-> - 0.5% of loan amount for referring borrowers
-> - Promotional tools (buttons, banners, text links)
+**Chen, Y., Harper, F. M., Konstan, J., & Li, S. X. (2015)**. Does team competition increase pro-social lending? Evidence from online microfinance. *Games and Economic Behavior, 90*, 217-234.
+DOI: [10.1016/j.geb.2014.12.005](https://doi.org/10.1016/j.geb.2014.12.005)
 
-**Top Kiva teams:**
+> Academic study of Kiva's team lending program (launched August 2008) found that lenders make significantly more loans when exposed to goal-setting and team coordination mechanisms.
+
+**Prosper Referral Program (2007-present)**. P2P-Banking services documentation.
+URL: [p2p-banking.com/services/prosper-prosper-referral-program](https://www.p2p-banking.com/services/prosper-prosper-referral-program/)
+
+> Prosper's referral program structure:
+> - $25 bonus for referring lenders (paid when first loan bid originates)
+> - 0.5% of loan amount (up to $125) for referring borrowers
+> - Promotional tools (buttons, banners, text links) provided to members
+> - As of 2024, Prosper has facilitated over $23 billion in loans to 1.4M+ clients
+
+**Top Kiva lending teams** (from Ambassador case study):
 - Kiva Christians: 30,000+ members
 - Atheists, Agnostics, Skeptics: 25,000+ members
 - Kiva Friends: 20,000+ members
