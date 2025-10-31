@@ -6,26 +6,9 @@ LendFriend starts on Farcaster, with cross-platform sharing from day 1.
 
 ## Why Start with Farcaster?
 
-**1. Strongest Trust Signals**
-- Wallet-based identity (unforgeable)
-- Quality filtering removes bots/spam
-- Real relationships in crypto community
+Farcaster offers the strongest trust signals (wallet-based identity, quality filtering), crypto-native users (no onboarding friction), architecture built for virality (mini apps, Cast Actions, open social graph), and solves the cold start problem (borrowers bring their own lenders).
 
-**2. Crypto-Native Users**
-- Already understand wallets, on-chain transactions
-- No onboarding friction
-
-**3. Built for Virality**
-- Mini apps run inside posts (no external clicks)
-- Cast Actions enable one-tap contributions
-- Open social graph API for instant Trust Scores
-
-When Farcaster launched mini apps (evolved from Frames), DAU jumped 10× in two weeks [[13]](../../references.md#farcaster-frames-2024).
-
-**4. Solves Cold Start**
-- Borrowers bring their own lenders (friends)
-- Each loan introduces new lenders
-- Trust Scores make strangers comfortable funding
+→ [Learn why Farcaster is the ideal starting point](farcaster-virality.md#why-start-with-farcaster)
 
 ---
 

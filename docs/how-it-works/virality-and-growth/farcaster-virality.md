@@ -4,6 +4,31 @@ Farcaster's architecture enables apps to run inside posts, eliminating the frict
 
 ---
 
+## Why Start with Farcaster?
+
+**1. Strongest Trust Signals**
+- Wallet-based identity (unforgeable)
+- Quality filtering removes bots/spam
+- Real relationships in crypto community
+
+**2. Crypto-Native Users**
+- Already understand wallets, on-chain transactions
+- No onboarding friction
+
+**3. Built for Virality**
+- Mini apps run inside posts (no external clicks)
+- Cast Actions enable one-tap contributions
+- Open social graph API for instant Trust Scores
+
+When Farcaster launched mini apps (evolved from Frames), DAU jumped 10× in two weeks [[13]](../../references.md#farcaster-frames-2024).
+
+**4. Solves Cold Start**
+- Borrowers bring their own lenders (friends)
+- Each loan introduces new lenders
+- Trust Scores make strangers comfortable funding
+
+---
+
 ## Why Farcaster Architecture Enables Virality
 
 **Traditional platforms:** See post → Click link → Leave app → View content → Act
