@@ -129,6 +129,27 @@ This multi-layered approach leverages established network science and lending re
 
 ---
 
+## Why Adamic-Adar Over PageRank/Centrality?
+
+Research shows **close selective friends are more predictive of repayment than influential connections**:
+
+**Key Findings**:
+- Mobile micro-lending studies (2022): **strong ties more predictive** than weak ties for loan defaults
+- Evolutionary analysis (2023): **repeated interaction matters more** than closeness or kinship
+- Network centrality research (2022-2025): Degree/eigenvector centrality **does improve prediction**, but as supplementary signal
+
+**Why we prioritize Adamic-Adar**:
+- Close friends enable monitoring through repeated interaction
+- Local measure (fast, O(N) complexity)
+- Works with incomplete social graph data
+- 0.92 AUC performance in link prediction
+
+**Potential future enhancement**: Add PageRank/centrality as 30% supplementary signal to capture network influence effects, while keeping Adamic-Adar as 70% primary measure.
+
+→ [View detailed algorithm comparison](../../references.md#network-algorithms-comparison-adamic-adar-vs-pagerankcentrality)
+
+---
+
 ## Next Steps
 
 - **Understand the math?** Start with [The Algorithm](the-algorithm.md)

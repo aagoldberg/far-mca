@@ -29,7 +29,6 @@
 
 ## 📚 Resources
 
-* [🔬 Research](research.md)
-* [📄 White Paper](whitepaper.md)
 * [📖 Academic Research](references.md)
+* [📄 White Paper](whitepaper.md)
 * [❓ FAQ](resources/faq.md)
