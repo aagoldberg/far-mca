@@ -447,7 +447,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Crowdfunding Psychology and Campaign Dynamics
 
 <span id="crowdfunding-first-10-days"></span>
-**Social media's influence on crowdfunding campaigns (2022)**. University of Texas at Dallas research study.
+**[11] Social media's influence on crowdfunding campaigns (2022)**. University of Texas at Dallas research study.
 
 > Study analyzing crowdfunding campaign dynamics found that social media is **most effective in the first 10 days** of a campaign, with the average number of donors, amount donated, and amount per donor highest during this period. Campaigns that don't perform well at the outset are unlikely to succeed. **Critical finding:** If a campaign does not reach at least **70% of its goal after 20 days** since launch, it is not likely to be successful.
 
@@ -462,7 +462,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Fundraising Conversion Optimization
 
 <span id="gofundme-conversion-2024"></span>
-**GoFundMe Pro fundraising optimization research (2024)**. Industry best practices report.
+**[12] GoFundMe Pro fundraising optimization research (2024)**. Industry best practices report.
 
 > Comprehensive analysis of donation page optimization showing **average conversion rate of 12%** for standard pages and **15-25% for well-optimized** pages. **Key optimization:** Reducing form fields from 11 to 4 led to **120% increase in conversions**.
 
@@ -480,7 +480,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Farcaster Platform Growth
 
 <span id="farcaster-frames-2024"></span>
-**Farcaster growth metrics (2024)**. Dune Analytics dashboard data.
+**[13] Farcaster growth metrics (2024)**. Dune Analytics dashboard data.
 
 > When Farcaster released Frames feature on January 26, 2024, daily active users **jumped from fewer than 2,000 to nearly 20,000** in weeks following launch. As of 2024, DAU exceeds **61,500 users**.
 
@@ -494,7 +494,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Web3 Adoption Barriers
 
 <span id="web3-adoption-2024"></span>
-**Web3 adoption and onboarding challenges (2024)**. Industry research compilation.
+**[14] Web3 adoption and onboarding challenges (2024)**. Industry research compilation.
 
 > Global blockchain adoption rate stands at **4.2%** of internet users. **Less than 10%** of users have ever used a Web3 application. Survey found **44% of non-owners stated they would never buy cryptocurrency**, citing unstable values and lack of government protections.
 
@@ -509,7 +509,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### P2P Lending Market Projections
 
 <span id="p2p-market-2024"></span>
-**Global P2P Lending Market Reports (2024)**. Market research by Global Market Insights and Grand View Research.
+**[15] Global P2P Lending Market Reports (2024)**. Market research by Global Market Insights and Grand View Research.
 
 > **Peer-to-Peer Lending Market:**
 > - 2024: $246.6 billion
@@ -526,7 +526,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Kiva and Prosper Platform Growth
 
 <span id="kiva-prosper-growth"></span>
-**Kiva and Prosper referral program success**. Platform growth data from industry case studies.
+**[16] Kiva and Prosper referral program success**. Platform growth data from industry case studies.
 
 > **Kiva** grew from founding in 2005 to over **800,000 lenders** by 2010 primarily through:
 > - Referral program ($25 credit for referrer and new user)
