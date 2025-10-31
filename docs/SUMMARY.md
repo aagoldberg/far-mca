@@ -6,7 +6,11 @@
 
 * [Overview](how-it-works/overview.md)
 * [👤 Borrower Profiles & Identity](how-it-works/borrower-profiles.md)
-* [🚀 Virality & Growth](how-it-works/virality-and-growth.md)
+* [🚀 Virality & Growth](how-it-works/virality-and-growth/README.md)
+  * [Viral Funding Mechanics](how-it-works/virality-and-growth/viral-funding-mechanics.md)
+  * [Farcaster Virality](how-it-works/virality-and-growth/farcaster-virality.md)
+  * [Cross-Platform Growth](how-it-works/virality-and-growth/cross-platform-growth.md)
+  * [Platform Scaling](how-it-works/virality-and-growth/platform-scaling.md)
 * [🤝 Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
   * [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md)
   * [Risk Tiers](how-it-works/social-trust-scoring/risk-tiers.md)
