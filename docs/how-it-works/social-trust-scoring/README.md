@@ -2,7 +2,7 @@
 
 ## How We Turn Relationships into Trust Scores
 
-LendFriend enables uncollateralized lending by quantifying social trust. Your network doesn't just contribute—they prove you're trustworthy. We measure how close those connections are to generate your trust score.
+LendFriend enables uncollateralized lending by quantifying social trust. Your network doesn't just contribute—they signal you're trustworthy. We measure how close those connections are to generate your trust score.
 
 ---
 
