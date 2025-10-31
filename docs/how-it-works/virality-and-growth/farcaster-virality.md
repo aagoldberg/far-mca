@@ -46,20 +46,10 @@ Funding becomes as easy as liking a post.
 
 ## Social Graph API (Neynar)
 
-Calculate Trust Scores instantly when users interact:
-
-```typescript
-user_clicks_contribute(loan) {
-  trust_score = calculate_adamic_adar(lender_fid, borrower_fid)
-  mutual_friends = get_mutual_connections(lender_fid, borrower_fid)
-
-  display_modal({
-    trust_score,
-    mutual_friends,
-    suggested_amount: smart_default(trust_score)
-  })
-}
-```
+Farcaster's open social graph enables instant Trust Score calculations when users view loans:
+- Shows social proximity to borrower
+- Displays mutual friends
+- Suggests contribution amounts based on relationship strength
 
 Neynar filters bots and fake accounts, ensuring Trust Scores reflect real relationships.
 
