@@ -121,7 +121,7 @@ LendFriend combines multiple proven techniques:
 
 | Approach | Research Foundation |
 |----------|---------------------|
-| **Adamic-Adar weighting** | 82% improvement over simple counting in link prediction [[7]](../../references.md#adamic-and-adar-2003) |
+| **Adamic-Adar weighting** | 82% more accurate than simple counting for predicting social network connections [[7]](../../references.md#adamic-and-adar-2003) |
 | **Quality filtering** | Reduces spam/bot influence on network metrics |
 | **Social collateral** | Strong social ties reduce default rates in P2P lending [[8]](../../references.md#lin-et-al-2013) [[3]](../../references.md#iyer-et-al-2016) |
 
