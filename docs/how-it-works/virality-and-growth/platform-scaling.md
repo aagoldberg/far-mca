@@ -15,21 +15,19 @@ Each borrower brings lenders, each lender discovers borrowers, and each successf
 - **K = 1** = Linear growth
 - **K > 1** = Exponential growth (self-sustaining)
 
-### LendFriend's Estimated K-Factor
+### LendFriend's Viral Growth Potential
 
-**Borrowers:** Estimated K = 3.6
-- Shares loan to 10 friends
-- ~30% fund (estimated)
-- 3 lenders discover platform
-- ~20% become borrowers (estimated)
+**Borrowers drive organic acquisition:**
+- Share loans to friends and social networks
+- Early lenders discover the platform through personal connections
+- Successful repayment stories convert lenders into borrowers
 
-**Lenders:** Estimated K = 1.5
-- Browse loans, successful repayment triggers referrals
-- ~50% sign up (estimated)
+**Lenders become advocates:**
+- Browse other loans after funding their first
+- Share success stories when loans are repaid
+- Some lenders create their own loans
 
-**Blended K-factor:** ~2.5
-
-With K = 2.5, every 100 users bring 250, who bring 625, who bring 1,562...
+**Goal:** Achieve K-factor > 1 for self-sustaining growth without paid acquisition.
 
 ---
 
@@ -44,7 +42,7 @@ Grew from 2005 founding to **800,000+ lenders** by 2010 [[16]](../../references.
 2. **Referral program** - $25 credit for referrer + new user
 3. **Tracking dashboard** - Shows which shares generated loans
 
-**Estimated K-Factor:** 1.2-1.5 post-referral program
+**Result:** Achieved exponential growth and scaled to 800K+ lenders primarily through organic, viral referrals.
 
 ---
 
@@ -60,7 +58,7 @@ Grew to **800,000+ members** through referral program [[16]](../../references.md
 **Before referral program:** 300K members, linear growth, heavy marketing spend
 **After referral program:** 800K+ members, exponential growth, reduced CAC
 
-**Estimated K-Factor:** 1.3-1.8 post-referral program
+**Result:** Referral program transformed growth from linear (requiring paid acquisition) to exponential (self-sustaining).
 
 ---
 
@@ -79,14 +77,14 @@ Grew to **800,000+ members** through referral program [[16]](../../references.md
 **Goal:** Prove the lending primitive works
 
 **Tactics:**
-- Frame-based loan discovery
+- Mini app-based loan discovery
 - Cast Actions for one-tap funding
 - 0% interest (altruistic phase)
 
 **Success metrics:**
 - 500-1,000 users
 - 90%+ repayment rate
-- K-factor > 1.5
+- Viral growth (K-factor > 1)
 
 ---
 
@@ -100,7 +98,7 @@ Grew to **800,000+ members** through referral program [[16]](../../references.md
 
 **Success metrics:**
 - 50%+ lenders from outside Farcaster
-- K-factor > 2.0
+- Accelerating viral growth
 - 10,000+ active users
 
 ---
@@ -115,9 +113,9 @@ Grew to **800,000+ members** through referral program [[16]](../../references.md
 - Lending streaks and gamification
 
 **Success metrics:**
-- K-factor > 3.0
+- Strong exponential growth
 - 100,000+ active users
-- Self-sustaining growth (no paid acquisition)
+- Self-sustaining (no paid acquisition)
 
 ---
 
@@ -138,7 +136,7 @@ Each funded loan creates 2 advocates → Advocates share stories → Stories att
 
 | Metric | Target |
 |--------|--------|
-| **K-Factor** | >1.5 (Phase 1), >2.0 (Phase 2) |
+| **K-Factor** | >1 (exponential growth) |
 | **CAC** | $0 (organic viral growth) |
 | **Repayment rate** | >90% |
 | **Invitation rate** | >40% of users invite others |

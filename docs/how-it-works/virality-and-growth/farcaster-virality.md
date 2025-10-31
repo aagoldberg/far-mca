@@ -70,7 +70,7 @@ Neynar filters bots and fake accounts, ensuring Trust Scores reflect real relati
 
 Borrower creates loan → Posts as mini app → Friends contribute → Activity appears in feeds → Extended network discovers → Lenders share success → New users join
 
-**Estimated K-Factor:** Each loan introduces ~3-5 new users.
+**Goal:** Each loan introduces multiple new users, creating viral growth through personal networks.
 
 ---
 
