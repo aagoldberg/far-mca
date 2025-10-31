@@ -1,6 +1,6 @@
 # Social Trust Scoring
 
-## How We Turn Relationships into Credit Scores
+## How We Turn Relationships into Trust Scores
 
 LendFriend enables uncollateralized lending by quantifying social trust. Your network doesn't just vouch for you—we algorithmically prove your creditworthiness through measurable social proximity.
 
@@ -104,7 +104,7 @@ Friends know you better than strangers. Social ties reduce information gaps and 
 {% hint style="info" %}
 **Social Pressure**
 
-You care about maintaining reputation with your network. Defaulting damages relationships, not just credit scores.
+You care about maintaining reputation with your network. Defaulting damages relationships, not just Trust Scores.
 {% endhint %}
 
 {% hint style="info" %}
