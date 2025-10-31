@@ -22,15 +22,30 @@ Farcaster has 61K+ DAU [[13]](../../references.md#farcaster-frames-2024). The wo
 
 Every loan gets a public webpage: `lendfriend.org/loan/[loan-id]`
 
+**Share to 12+ platforms:**
+- Twitter/X
+- WhatsApp
+- Telegram
+- Facebook
+- LinkedIn
+- Email
+- Discord
+- Farcaster
+- Bluesky
+- Reddit
+- TikTok
+- Snapchat
+
 **Anyone can view without:**
 - Creating account
 - Installing wallet
 - Connecting to Web3
 
-**To contribute:**
+**Anyone can donate:**
 - Social login (Google/Twitter/email)
 - Wallet created automatically in background
 - Pay via credit card (Stripe → USDC) or crypto
+- Mobile-optimized, 4-field form
 - User never sees blockchain complexity
 
 ---

@@ -22,28 +22,9 @@ Mini apps enable full web experiences inside Farcaster posts. Users discover loa
 
 ### Cross-Platform Sharing
 
-Every loan has a shareable web page. Borrowers share to any platform, and anyone can donate via web without Farcaster:
+Every loan has a shareable web page. Borrowers can share to Twitter, WhatsApp, Telegram, Facebook, and 8+ other platforms. Anyone can donate via web without Farcaster using social login and credit card—no crypto knowledge needed.
 
-**Share to:**
-- Twitter/X
-- WhatsApp
-- Telegram
-- Facebook
-- LinkedIn
-- Email
-- Discord
-- Farcaster
-- Bluesky
-- Reddit
-- And more...
-
-**Anyone can donate:**
-- Social login (Google/email)
-- Credit card → USDC conversion
-- Mobile-optimized, 4-field form
-- No crypto knowledge needed
-
-→ [See conversion optimization and mobile design](cross-platform-growth.md)
+→ [See all platforms, conversion optimization, and mobile design](cross-platform-growth.md)
 
 ### Viral Funding Principles
 
