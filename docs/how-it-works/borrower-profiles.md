@@ -20,6 +20,10 @@ A photo humanizes your request. Research shows borrowers appearing trustworthy r
 
 Personal narratives help lenders understand your context and feel empathy. Honest, specific stories resonate ("I'm a freelance designer who just lost my biggest client"). Over-promising doesn't—borrowers making many "trustworthy" claims had worse repayment [[2]](../references.md#herzenstein-et-al-2011).
 
+{% hint style="success" %}
+**Pro Tip**: Honest, specific stories get funded faster. Research shows over-promising reduces repayment rates—lenders sense authenticity.
+{% endhint %}
+
 ### Your Plan
 
 Specific loan purposes create emotional engagement. "Purchasing $500 of fabric for holiday orders" lets lenders visualize impact. Vague requests ("need money for business") don't [[2]](../references.md#herzenstein-et-al-2011).

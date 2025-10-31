@@ -14,6 +14,10 @@ LendFriend limits loan **duration** but not **amount**.
 
 **All borrowers** get same duration limit regardless of history.
 
+{% hint style="info" %}
+**Why 90 days?** Short-term loans reduce risk for first-time borrowers while keeping repayment manageable. Research shows 3-month terms work well for building initial trust.
+{% endhint %}
+
 ---
 
 ## Why Lump Sum Repayment (No Installments)?

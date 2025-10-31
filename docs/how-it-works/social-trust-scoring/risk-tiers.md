@@ -8,6 +8,10 @@ Every lender-borrower pair gets a numerical trust score (0-100) and a risk class
 
 ## Individual Risk Classification
 
+{% hint style="warning" %}
+**Important for Lenders**: A trust score of 60+ (LOW RISK) means you share a tight-knit community with the borrower. Scores below 30 (HIGH RISK) indicate minimal social connection—only fund if you can afford to lose it.
+{% endhint %}
+
 | Risk Level | Criteria | What It Means |
 |-----------|----------|---------------|
 | 🟢 **LOW RISK** | AA_eff ≥ 10 **OR** S_total ≥ 60 | Close social ties, strong confidence in repayment |

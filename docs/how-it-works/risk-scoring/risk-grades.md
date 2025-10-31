@@ -19,6 +19,14 @@ Every loan gets a grade from A (minimal risk) to HR (very high risk).
 | **E** 🔴 | High | No history + large loan |
 | **HR** 🔴 | Very High | High risk situation or recovery |
 
+{% hint style="danger" %}
+**High Risk Grades (E-HR)**: These loans may not fund successfully. Borrowers should consider starting with smaller amounts or building their social network first. Lenders should only fund if prepared for potential loss.
+{% endhint %}
+
+{% hint style="success" %}
+**Low Risk Grades (A-B)**: These loans typically fund within 1-3 days. Strong social connections and/or proven repayment history create high confidence.
+{% endhint %}
+
 **Note on default rates:** Once we collect sufficient repayment data, we'll publish estimated default rates by grade to help lenders make informed decisions.
 
 **How are these calculated?** See [Calculation](calculation.md) for the detailed scoring methodology.
