@@ -2,7 +2,7 @@
 
 ## Reaching Beyond Farcaster
 
-Farcaster has 61K+ DAU [[13]](../../references.md#farcaster-frames-2024). The world has 5.3 billion internet users. Cross-platform sharing enables mainstream adoption.
+The world has 5.3 billion internet users. Cross-platform sharing enables mainstream adoption beyond Farcaster.
 
 ---
 

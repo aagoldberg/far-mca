@@ -20,8 +20,6 @@ Farcaster's architecture enables apps to run inside posts, eliminating the frict
 - Cast Actions enable one-tap contributions
 - Open social graph API for instant Trust Scores
 
-When Farcaster launched mini apps (evolved from Frames), DAU jumped 10× in two weeks [[13]](../../references.md#farcaster-frames-2024).
-
 **4. Solves Cold Start**
 - Borrowers bring their own lenders (friends)
 - Each loan introduces new lenders
@@ -32,8 +30,6 @@ When Farcaster launched mini apps (evolved from Frames), DAU jumped 10× in two 
 ## Mini Apps (formerly Frames v2)
 
 **What they are:** Full web applications that run inside Farcaster posts via iframe.
-
-**When launched (January 2024):** DAU jumped from <2,000 → 20,000+ in weeks [[13]](../../references.md#farcaster-frames-2024). Now >61,500 DAU.
 
 **Key capabilities:**
 - **Context-aware** - Access user identity, cast origins, wallet data
