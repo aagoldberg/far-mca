@@ -44,18 +44,6 @@ Funding becomes as easy as liking a post.
 
 ---
 
-## Composer Actions
-
-Borrowers create loan requests directly from Farcaster's compose box:
-1. Click compose
-2. Select "LendFriend: Request Loan"
-3. Fill form
-4. Publish as mini app
-
-No external website needed.
-
----
-
 ## Social Graph API (Neynar)
 
 Calculate Trust Scores instantly when users interact:
