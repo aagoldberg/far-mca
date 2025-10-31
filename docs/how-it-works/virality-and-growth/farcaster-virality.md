@@ -85,18 +85,6 @@ Borrower creates loan → Posts as mini app → Friends contribute → Activity 
 
 ---
 
-## Why Twitter/X Can't Replicate This
-
-| Feature | Farcaster | Twitter/X |
-|---------|-----------|-----------|
-| **In-feed apps** | ✅ Mini apps | ❌ Static cards |
-| **Custom actions** | ✅ Cast Actions | ❌ Limited |
-| **Compose tools** | ✅ Composer Actions | ❌ Text only |
-| **Social graph API** | ✅ Open | ❌ Restricted |
-| **Wallet integration** | ✅ Native | ❌ Not built-in |
-
----
-
 ## Key Takeaways
 
 1. **Mini apps eliminate friction** - Full web apps inside posts
