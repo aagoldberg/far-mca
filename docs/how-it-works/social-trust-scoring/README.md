@@ -27,11 +27,20 @@ Social proximity improves repayment rates by **10 percentage points** [[6]](../.
 
 ## How It Works
 
+**The Basic Flow:**
+
+1. **You request a loan** and share it to your Farcaster network
+2. **Your connections contribute** to fund your loan—their financial backing vouches for your trustworthiness
+3. **We measure relationship strength** between you and each lender using your shared connections
+4. **Other lenders see the trust signals** and decide whether to contribute based on how well-connected you are
+
+The closer your mutual connections, the stronger the trust signal. Someone with 20 selective friends carries more weight than a distant follower of an influencer with 10,000 connections.
+
+---
+
 ### 1. [The Algorithm](the-algorithm.md)
 
-We calculate social distance using the **Adamic-Adar Index**, which weights mutual connections by how "selective" they are. A mutual friend with 20 connections is weighted **3× higher** than an influencer with 10,000 connections.
-
-**Key Innovation:** First lending protocol to combine Adamic-Adar weighting with quality filtering and cryptographic social proof.
+We use the **Adamic-Adar Index** to weight connections by how selective they are, combined with quality filtering and cryptographic social proof.
 
 → [Learn the technical details](the-algorithm.md)
 
