@@ -1,407 +1,399 @@
-# Phase 2: Automate Repayment
+# Phase 2: Technical Implementation
 
+**Status:** Future
 **Timeline:** 2026-2027
-**Prerequisites:** Phase 1 success (cashflow model validated, pools active, hybrid risk scoring proven)
+**Prerequisites:** Phase 1 validated (pools active, cashflow underwriting proven, 85%+ repayment)
 
 ---
 
-## The Vision
+{% hint style="info" %}
+**For High-Level Overview**
 
-Loans that repay themselves.
+This page contains technical implementation details for Phase 2.
 
-No payment reminders. No manual transfers. No stress about missing deadlines. Just passive repayment that happens in the background as you earn.
-
-**The promise:** Borrow based on verified cashflow, and as that cash flows in, your loan automatically repays itself.
-
----
-
-## What We're Building
-
-### Automated Wallet Repayment
-
-**For crypto-native earners:**
-
-Your smart wallet receives income (DAO contributions, protocol fees, NFT sales, stablecoin salary). A payment stream plugin automatically deducts a small percentage and sends it to lenders.
-
-**How it works:**
-1. Get approved for loan based on on-chain income verification
-2. Opt into auto-repayment stream during loan setup
-3. Choose percentage to auto-deduct (e.g., 10% of incoming stablecoin transfers)
-4. Smart wallet handles repayment automatically
-5. You never think about it again
-
-**User experience:**
-- "I want to borrow $5K and auto-repay 10% of my DAO income"
-- Approve once, repays automatically
-- Monthly email: "You've repaid $X this month, $Y remaining"
-- Early payoff option always available
-
-**Technical requirements:**
-- Account abstraction (ERC-4337) maturity
-- Payment stream plugins for smart wallets
-- Income detection logic (recurring vs. one-time)
-- Failsafe if income stops (pause, don't overdraft)
-
-### Automated Merchant Repayment
-
-**For small business owners:**
-
-Your Square or Shopify account processes sales. A small percentage of each transaction automatically repays your loan. Like a merchant cash advance, but fair.
-
-**How it works:**
-1. Get approved based on verified merchant revenue
-2. Connect Square/Shopify account during loan acceptance
-3. Choose daily repayment rate (e.g., 3% of sales)
-4. As you make sales, loan repays itself
-5. Higher sales days = faster repayment, slow days = smaller payments
-
-**User experience:**
-- "I need $10K for inventory and will repay 5% of daily sales"
-- Revenue-based repayment (not fixed schedule)
-- Automatically adjusts to business performance
-- Pay off early if you have a great month
-
-**Why this is better than MCAs:**
-- **Transparent pricing:** No hidden "factor rates" (effective APRs of 60%+)
-- **Lower cost:** Target 8-15% APR vs. 60-200% for MCAs
-- **Fair terms:** Clear interest, not confusing factor multipliers
-- **Borrower-friendly:** Can prepay without penalty
-
-**Technical requirements:**
-- Square API integration (open and documented)
-- Shopify API integration (more challenging, improving)
-- OAuth connection for read-only sales data
-- Automated fund transfer from merchant to loan contract
-- Accounting for refunds/chargebacks
+For vision, goals, and roadmap → [lendfriend.org/vision](https://lendfriend.org/vision)
+{% endhint %}
 
 ---
 
-## Technical Implementation
+## Overview
 
-### Account Abstraction (Wallets)
+Phase 2 automates loan repayment using account abstraction (smart wallets) and merchant revenue integrations, removing manual repayment friction.
+
+**Technical focus:** ERC-4337 payment stream plugins, Square/Shopify API integrations for revenue-based repayment, automated deduction logic.
+
+---
+
+## Automated Repayment Architecture
+
+### Wallet-Based Auto-Repayment
+
+**Target users:** Crypto-native earners (DAO contributors, protocol developers, NFT creators)
+
+**Mechanism:** Smart wallet plugin automatically deducts percentage of incoming USDC/stablecoin transfers and routes to loan contract.
+
+**Technical implementation:**
+
+```typescript
+interface AutoRepaymentConfig {
+  loanAddress: string;
+  walletAddress: string;
+  deductionPercentage: number;  // e.g., 10 = 10%
+  minTransactionAmount: number;  // Don't deduct from transfers < $X
+  whitelistedSources?: string[];  // Only deduct from these addresses
+  maxMonthlyDeduction?: number;  // Cap monthly auto-deduction
+  pausable: boolean;
+}
+
+// ERC-4337 UserOperation plugin
+contract AutoRepaymentPlugin {
+  mapping(address => AutoRepaymentConfig) public configs;
+
+  // Executes on every incoming USDC transfer
+  function afterTransfer(
+    address from,
+    address to,
+    uint256 amount
+  ) external {
+    AutoRepaymentConfig memory config = configs[to];
+    if (!config.enabled) return;
+
+    // Check if transfer qualifies for deduction
+    if (amount < config.minTransactionAmount) return;
+    if (config.whitelistedSources.length > 0 && !isWhitelisted(from)) return;
+
+    // Calculate deduction
+    uint256 deductionAmount = (amount * config.deductionPercentage) / 100;
+
+    // Check monthly cap
+    if (config.maxMonthlyDeduction > 0) {
+      uint256 thisMonthDeducted = getMonthlyDeducted(to);
+      if (thisMonthDeducted + deductionAmount > config.maxMonthlyDeduction) {
+        deductionAmount = config.maxMonthlyDeduction - thisMonthDeducted;
+      }
+    }
+
+    // Execute repayment
+    if (deductionAmount > 0) {
+      USDC.transfer(config.loanAddress, deductionAmount);
+      emit AutoRepayment(to, config.loanAddress, deductionAmount);
+    }
+  }
+
+  function pause() external;
+  function resume() external;
+  function updateConfig(AutoRepaymentConfig calldata newConfig) external;
+}
+```
+
+**Setup flow:**
+1. User approves loan with auto-repayment option
+2. Smart wallet plugin installed (one-time approval)
+3. Configure: deduction %, sources, caps
+4. Plugin activates upon loan disbursement
+5. Automatic deduction on each qualifying income transfer
+
+**Safety features:**
+- Minimum transaction threshold (don't deduct from small transfers)
+- Monthly deduction cap (prevent over-deduction)
+- Source whitelist (only deduct from known income sources)
+- Pause/resume controls (user can stop anytime)
+- Emergency circuit breaker (protocol can disable if bug detected)
+
+### Merchant Revenue-Based Repayment
+
+**Target users:** Small merchants (Square, Shopify, physical retail)
+
+**Mechanism:** Daily automated deduction of percentage of merchant sales revenue, transferred to loan contract.
+
+**Technical implementation (Square):**
+
+```typescript
+interface MerchantRepaymentConfig {
+  loanAddress: string;
+  merchantId: string;
+  squareAccessToken: string;  // Encrypted OAuth token
+  repaymentPercentage: number;  // e.g., 5 = 5% of daily sales
+  minDailyDeduction: number;  // Minimum deduction per day
+  maxDailyDeduction: number;  // Cap daily deduction
+  refundBuffer: number;  // Reserve % for potential refunds (e.g., 10%)
+}
+
+// Off-chain service (runs daily)
+async function processSquareMerchantRepayment(config: MerchantRepaymentConfig) {
+  // Fetch yesterday's settled sales
+  const sales = await square.listPayments({
+    begin_time: yesterday(),
+    end_time: today(),
+    status: 'COMPLETED'
+  });
+
+  // Calculate total revenue (minus refunds)
+  const totalRevenue = sales.reduce((sum, payment) => sum + payment.amount, 0);
+  const refunds = await square.listRefunds({ date: yesterday() });
+  const netRevenue = totalRevenue - refunds.total;
+
+  // Calculate repayment amount
+  let repaymentAmount = (netRevenue * config.repaymentPercentage) / 100;
+
+  // Apply refund buffer
+  repaymentAmount = repaymentAmount * (1 - config.refundBuffer / 100);
+
+  // Apply min/max caps
+  repaymentAmount = Math.max(config.minDailyDeduction, repaymentAmount);
+  repaymentAmount = Math.min(config.maxDailyDeduction, repaymentAmount);
+
+  // Execute transfer
+  if (repaymentAmount > 0) {
+    // Option A: ACH from Square balance to protocol bank account → convert to USDC → repay loan
+    await initiateACH(config.merchantId, repaymentAmount);
+
+    // Option B (future): Square crypto balance → direct USDC transfer
+    // await square.transferCrypto(config.merchantId, config.loanAddress, repaymentAmount);
+
+    // Record on-chain
+    await loanContract.recordRepayment(config.loanAddress, repaymentAmount);
+  }
+}
+```
+
+**Daily process:**
+1. Cron job runs at 2am (after sales settle)
+2. Query Square API for previous day's sales
+3. Calculate net revenue (sales - refunds)
+4. Apply repayment % with refund buffer
+5. Initiate ACH transfer from Square balance
+6. Convert fiat to USDC (if needed)
+7. Record repayment on-chain
+
+**Challenges and mitigations:**
+
+| Challenge | Mitigation |
+|-----------|------------|
+| Sales take 1-2 days to settle | Use settled funds only, not pending |
+| Refunds reverse revenue after deduction | Apply 10% refund buffer to calculations |
+| Chargebacks claw back funds | Reserve final 10% of loan, manual settlement |
+| ACH delays (2-3 days) | Acceptable; repayment timing not critical |
+| Square API limits | Rate limiting, retry logic, error handling |
+
+**Economics vs. Merchant Cash Advances:**
+- MCA factor rate: 1.4x = $14K repaid on $10K borrowed = 140% in 6 months = ~280% APR
+- LendFriend: 12% APR = $10,600 repaid on $10K over 6 months
+- Savings: ~268% APR reduction for merchants
+
+---
+
+## Infrastructure Requirements
+
+### ERC-4337 Account Abstraction
 
 **Current state (2024-2025):**
-- ERC-4337 is live but adoption is early
-- Smart wallets exist (Safe, Argent, Coinbase Smart Wallet)
-- Payment streams are conceptual, not widely implemented
-- Most wallets don't support auto-deduction plugins
+- ERC-4337 live on mainnet and L2s
+- Smart wallets: Safe, Argent, Coinbase Smart Wallet, Privy
+- Payment stream plugins: Conceptual, not standardized
+- Adoption: <5% of wallets are smart accounts
 
-**What needs to mature:**
-1. **Payment stream standards**
-   - Define plugin interface for auto-deduction
-   - Security model (spending limits, pause/cancel)
-   - Multi-token support (USDC, USDT, DAI, etc.)
+**Technical requirements for Phase 2:**
 
-2. **Wallet adoption**
-   - Mainstream wallets add smart account features
-   - Users comfortable with "set it and forget it" payments
-   - Trust in automated systems
+```solidity
+// IPaymentStreamPlugin interface (to be standardized)
+interface IPaymentStreamPlugin {
+  struct StreamConfig {
+    address recipient;
+    uint256 percentage;  // Basis points (e.g., 1000 = 10%)
+    uint256 minAmount;
+    uint256 maxMonthly;
+    address[] whitelistedSources;
+    bool active;
+  }
 
-3. **Income detection**
-   - Smart contracts that recognize "this is income, not a trade"
-   - Differentiate DAO payment from NFT sale from DeFi swap
-   - Whitelist trusted senders (e.g., DAO treasury addresses)
+  function createStream(StreamConfig calldata config) external;
+  function pauseStream(uint256 streamId) external;
+  function resumeStream(uint256 streamId) external;
+  function closeStream(uint256 streamId) external;
 
-**Our approach:**
-- **Phase 2 early (2026):** Partner with one smart wallet provider to build proof-of-concept
-- **Phase 2 mid (2026-2027):** Expand to multiple wallets as standards emerge
-- **Phase 2 late (2027):** Offer auto-repayment as default option for crypto borrowers
-
-**Fallback:** If account abstraction isn't ready, use recurring payment approvals (user approves monthly, contract pulls funds). Less ideal UX but works today.
-
-### Merchant Integration (Square)
-
-**Why Square first:**
-- Open, well-documented API
-- OAuth flow for merchant authorization
-- Read sales data, trigger transfers
-- Large user base (millions of merchants)
-
-**Integration steps:**
-
-**1. Merchant Authorization (Loan Setup)**
-```
-User applies for loan →
-Redirected to Square OAuth →
-Grants LendFriend read-only sales data + transfer permissions →
-Returns to loan application
+  // Called by smart wallet on every incoming transfer
+  function afterTransfer(address from, uint256 amount) external;
+}
 ```
 
-**2. Revenue Verification (Underwriting)**
+**Maturity timeline:**
+- **2026 Q1-Q2:** Partner with one wallet (likely Safe or Privy) for POC
+- **2026 Q3-Q4:** Propose ERC for payment stream standard
+- **2027:** Multi-wallet support as standard gains adoption
+
+**Fallback:** ERC-20 recurring approvals (user approves, contract pulls monthly). Less seamless but works today.
+
+### Square API Integration
+
+**API:** Square REST API v2 (Payments, Merchants, OAuth)
+**Access level:** Read-only sales data + transfer permissions
+
+**Integration components:**
+
+| Component | Implementation | Status |
+|-----------|---------------|--------|
+| OAuth authorization | Square Connect OAuth 2.0 | Documented, stable |
+| Payment data | GET /v2/payments (read sales) | Available |
+| Transfer capability | POST /v2/transfers (future) | Not yet available |
+| ACH fallback | Stripe Connect → ACH → convert to USDC | Available today |
+
+**Implementation phases:**
+
+**Phase 2a (Launch):** ACH-based repayment
+```typescript
+// Daily cron job
+async function processMerchantRepayments() {
+  const merchants = await getMerchantsWithActiveLoans();
+
+  for (const merchant of merchants) {
+    // Fetch settled sales
+    const sales = await square.listPayments({
+      merchant_id: merchant.squareId,
+      begin_time: yesterday(),
+      status: 'COMPLETED'
+    });
+
+    // Calculate repayment
+    const netSales = calculateNetSales(sales);  // Sales - refunds
+    const repayment = netSales * merchant.repaymentRate * 0.9;  // 10% refund buffer
+
+    // Initiate ACH transfer
+    await stripe.createTransfer({
+      amount: repayment,
+      destination: protocolBankAccount,
+      metadata: { merchant_id: merchant.id, loan_address: merchant.loanAddress }
+    });
+
+    // Convert fiat → USDC (Coinbase Commerce or Circle)
+    const usdc = await convertToUSDC(repayment);
+
+    // Record on-chain
+    await loanContract.recordRepayment(merchant.loanAddress, usdc);
+  }
+}
 ```
-Fetch last 3-6 months of sales data →
-Calculate average daily revenue →
-Determine repayment capacity →
-Offer loan (amount based on revenue)
+
+**Phase 2b (Future):** Direct crypto transfer (if Square adds crypto balance support)
+```typescript
+// If Square enables USDC balance
+const transfer = await square.createCryptoTransfer({
+  merchant_id: merchant.squareId,
+  amount_usdc: repaymentAmount,
+  destination_address: merchant.loanAddress,
+  chain: 'base'
+});
 ```
 
-**3. Auto-Repayment Execution (Daily)**
+### Shopify API Integration
+
+**API:** Shopify Admin API (GraphQL)
+**Access level:** Shopify App + merchant authorization
+**Status:** More complex than Square (requires app approval process)
+
+**Current challenges:**
+- App review process (2-4 weeks)
+- Limited financial data access without Shopify Payments
+- No direct transfer API (ACH fallback required)
+- Crypto wallet features experimental
+
+**Integration approach:**
+
+**Phase 2a (2026):** Manual verification + ACH
+```typescript
+// GraphQL query for order data
+const ORDERS_QUERY = `
+  query($startDate: DateTime!) {
+    orders(query: "created_at:>$startDate") {
+      edges {
+        node {
+          id
+          totalPriceSet { shopMoney { amount } }
+          displayFinancialStatus
+          refunds { id, totalRefunded }
+        }
+      }
+    }
+  }
+`;
+
+// Weekly calculation (manual ACH initiation)
+async function calculateShopifyRepayment(merchant: Merchant) {
+  const orders = await shopify.graphql(ORDERS_QUERY, { startDate: lastWeek() });
+
+  const netRevenue = orders.reduce((sum, order) => {
+    const refunded = order.refunds.reduce((r, refund) => r + refund.totalRefunded, 0);
+    return sum + (order.totalPrice - refunded);
+  }, 0);
+
+  const repayment = netRevenue * merchant.repaymentRate;
+
+  // Send email to merchant: "Approve ACH transfer of $X"
+  await sendRepaymentRequest(merchant, repayment);
+}
 ```
-End of day: Query Square API for today's sales →
-Calculate repayment amount (sales × repayment %) →
-Trigger transfer from Square balance to loan contract →
-Update loan repayment progress on-chain
-```
 
-**4. Merchant Experience**
-- Dashboard shows: "Today's sales: $500 → Auto-repaid: $25"
-- Weekly summary: "This week repaid $X, $Y remaining"
-- Pause option if emergency (temporarily disable auto-repay)
+**Phase 2b (2027+):** Crypto-native (if Shopify ships wallet features)
+- Shopify Payments settles in USDC
+- Direct on-chain transfer to loan contract
+- Same mechanism as wallet auto-repayment
 
-**Challenges:**
-- **Transfer timing:** Square balance takes 1-2 days to settle
-  - Solution: Calculate on settled funds, not pending
-- **Refunds:** Sales reversed after repayment triggered
-  - Solution: Account for average refund rate in repayment calculation
-- **Chargebacks:** Disputed transactions claw back funds
-  - Solution: Reserve buffer (e.g., only auto-repay 90% of owed amount, user pays final 10% manually)
+**Monitoring:** Shopify's crypto roadmap (Tobi Lütke publicly crypto-positive, likely to ship wallet features)
 
-**Precedent:** Merchant cash advances already do this, but with predatory rates. We're bringing transparency and fair pricing.
+### Payment Rails Convergence
 
-### Merchant Integration (Shopify)
+**Current:** Crypto (instant, on-chain) vs. Fiat (ACH, slow, off-chain)
 
-**Why harder than Square:**
-- API less open (requires app approval)
-- Transfer mechanics rely on ACH (slower, more complex)
-- Integration with Shopify Payments needed
+**Trend:** Stablecoin merchant payment adoption (Stripe crypto, Coinbase Commerce, Shopify crypto wallets)
 
-**Current opportunity:**
-- Shopify aggressively moving toward crypto wallets
-- CEO Tobi Lütke is crypto-friendly
-- Shopify Payments expanding stablecoin support
-- Opportunity to be early partner when wallet features launch
+**Impact on Phase 2:**
+- If merchants accept USDC: Direct on-chain repayment (no ACH conversion)
+- Unified repayment mechanism for all income types (crypto + merchant)
+- Reduced friction and cost
 
-**Integration paths:**
-
-**Path A (Interim): Manual + ACH**
-- Merchant grants read-only sales data access
-- LendFriend calculates owed amount weekly
-- Merchant authorizes ACH transfer to LendFriend bank account
-- LendFriend converts to USDC and repays loan on-chain
-- Clunky but functional
-
-**Path B (Future): Crypto-Native**
-- Shopify enables merchant crypto wallets
-- Sales settled in USDC directly
-- Auto-repayment via smart contract (same as wallet repayment)
-- Seamless, on-chain, instant
-- Waiting on Shopify infrastructure
-
-**Our approach:**
-- **2026:** Build Path A to serve Shopify merchants (large market)
-- **2027+:** Migrate to Path B as Shopify crypto features mature
-- **Monitor:** Shopify's crypto roadmap closely, partner early if possible
-
-### Payment Rails Evolution
-
-**Current state:**
-- Crypto payments: Instant, cheap, global (but low merchant adoption)
-- Fiat payments: Slow, expensive, friction (but universal acceptance)
-
-**Future state (2027+):**
-- Stripe adds crypto wallet support (in progress)
-- Coinbase aggressively pushing stablecoin ecommerce payments
-- More merchants accept USDC directly
-- Gap between "crypto income" and "merchant sales" shrinks
-
-**Why this matters for LendFriend:**
-- If merchants accept stablecoins, auto-repayment becomes trivial
-- No ACH needed, no bank conversion, just wallet → wallet transfer
-- Shopify merchants on crypto can repay via smart contract
-- All income (crypto + merchant) flows through same rails
-
-**We're betting on:** Stablecoin adoption for ecommerce accelerating 2026-2028. If that happens, auto-repayment becomes much easier.
+**Timeline bet:** Significant stablecoin ecommerce adoption by 2027-2028
 
 ---
 
-## User Experience
+## Technical Risks and Mitigations
 
-### For Borrowers
-
-**Loan Application (Enhanced from Phase 1):**
-
-1. **Apply with cashflow verification**
-   - Connect bank (Plaid) or merchant account (Square/Shopify)
-   - Verify income automatically
-   - Get instant loan offer
-
-2. **Choose repayment method**
-   - **Manual:** I'll repay myself on schedule (Phase 0/1 style)
-   - **Auto-wallet:** Deduct 10% of incoming stablecoin transfers
-   - **Auto-merchant:** Deduct 5% of daily sales
-   - **Hybrid:** Auto-deduct, I'll top up manually if needed
-
-3. **Configure auto-repayment**
-   - Set percentage (slider: 5-25%)
-   - Preview: "Based on your income, this will repay your loan in ~6 months"
-   - Confirm and authorize
-
-4. **Receive funds + forget about it**
-   - Loan disbursed to your wallet
-   - Auto-repayment starts immediately
-   - Monthly emails keep you informed
-   - Early payoff anytime
-
-**Repayment Experience:**
-- No reminders, no manual transfers
-- Check dashboard: "65% repaid, 35% remaining"
-- Pause if needed (emergency button)
-- Celebrate when fully repaid (on-chain credit boost)
-
-### For Lenders
-
-**Nothing changes from Phase 1:**
-- Deposit USDC into pools
-- Earn passive yield
-- Defaults spread across participants
-- Withdraw anytime from reserves
-
-**New visibility:**
-- Pool dashboard: "85% of borrowers on auto-repay (lower default risk!)"
-- Metrics: Average repayment speed for auto vs. manual
-- Performance: Pools offering auto-repay option attract more LP capital
-
----
-
-## Why This Matters
-
-### Removes Biggest Friction in P2P Lending
-
-**Traditional P2P lending problems:**
-1. Borrowers forget to repay → late fees, defaults
-2. Lenders stress about chasing payments
-3. Manual repayment = high cognitive load
-
-**Auto-repayment solutions:**
-1. Borrowers never miss payments → better credit history
-2. Lenders receive predictable cash flows → happier LPs
-3. Set-and-forget = zero cognitive load
-
-**Result:** Lower default rates, happier users, better economics for everyone.
-
-### Unlocks Merchant Lending Market
-
-**Current merchant financing (MCAs):**
-- $100B+ annual market in US alone
-- Predatory pricing (60-200% effective APR)
-- Confusing factor rates (e.g., "pay back $14,000 on $10,000 borrowed")
-- No transparency, high default rates
-
-**LendFriend's merchant lending:**
-- Transparent interest (e.g., 12% APR)
-- Revenue-based repayment (auto-adjusts to sales)
-- Fair terms (prepay without penalty)
-- On-chain accountability (can't hide defaults)
-
-**Market opportunity:** If we capture even 1% of MCA market with fair pricing, that's $1B+ in annual loan volume.
-
-### Proves Crypto Enables New UX
-
-**What traditional finance can't do:**
-- Banks can't auto-deduct from wallets (they don't exist)
-- ACH recurring payments are clunky and fail often
-- Credit cards enable auto-pay but charge merchants 3%+
-
-**What crypto enables:**
-- Smart contracts auto-deduct from wallets with user authorization
-- Instant settlement, no payment failures
-- Programmable money that "just works"
-
-**LendFriend becomes proof:** Crypto isn't just "payments but decentralized." It's "financial UX impossible in TradFi."
-
----
-
-## Risks and Mitigations
-
-### Risk: Account Abstraction Not Ready
-
-**If smart wallets don't mature by 2027:**
-
-**Fallback options:**
-1. **Recurring approvals:** User approves contract to pull monthly payment
-   - Less seamless but works with existing wallets
-   - Requires user to maintain approval, but auto-pulls funds
-2. **Scheduled reminders + 1-click repay:** Automate reminder, minimize friction
-   - Email: "Click here to pay this month" → 1-click approval
-   - Better than manual but not true auto-repay
-
-**Our approach:** Build for account abstraction future, keep fallback ready.
-
-### Risk: Merchant Integration Too Complex
-
-**If Square/Shopify APIs don't cooperate:**
-
-**Fallback options:**
-1. **Manual merchant reporting:** Merchants submit sales reports, we verify manually
-   - Labor-intensive but validates demand
-2. **Crypto-native merchants only:** Focus on merchants already accepting stablecoins
-   - Smaller market but easier integration
-3. **Partner with existing platforms:** e.g., Stripe crypto integration (if they open API)
-
-**Our approach:** Start with one merchant platform, prove demand, iterate.
-
-### Risk: Borrowers Opt Out of Auto-Repay
-
-**If users don't trust automated systems:**
-
-**Mitigations:**
-1. **Make it optional:** Manual repayment always available
-2. **Educational content:** Show data that auto-repay = lower defaults = better rates
-3. **Incentivize:** Offer 0.5% interest discount for auto-repay (reduces lender risk)
-4. **Transparency:** Dashboard shows exactly when/how much was deducted
-5. **Control:** Pause button for emergencies, adjust percentage anytime
-
-**Our approach:** Nudge toward auto-repay but never force it.
+| Risk | Likelihood | Mitigation |
+|------|-----------|-----------|
+| ERC-4337 adoption insufficient | Medium | Fallback to ERC-20 recurring approvals (user approves, contract pulls monthly) |
+| Square/Shopify API restrictions | Medium | Start with manual merchant verification; pivot to crypto-native merchants only if needed |
+| Low borrower auto-repay adoption | Low | Make optional; incentivize with 0.5% rate discount; provide pause/control features |
+| Payment stream standard not adopted | High | Build custom plugin for POC; propose ERC standard; expand as wallets adopt |
+| Merchant API changes break integration | Medium | Version API calls; monitor changelogs; maintain ACH fallback path |
 
 ---
 
 ## Success Metrics
 
-**Quantitative:**
-- 50%+ of new loans use auto-repayment
-- 30% lower default rate for auto-repay vs. manual
-- $5M+ in merchant loans originated (Square/Shopify)
+**Quantitative targets:**
+- 50%+ of new loans opt into auto-repayment
+- 30% reduction in default rate (auto-repay vs. manual)
+- $5M+ in merchant loans originated
 - 100,000+ active users
 - $10M+ TVL in liquidity pools
+- <2% auto-repay system failures (bugs, missed deductions)
 
-**Qualitative:**
-- Users report "I forgot I even had a loan, it just repaid itself"
-- Merchants prefer LendFriend over MCAs (pricing + UX)
-- Wallet providers partner with us (validates auto-repay demand)
-- Media coverage: "This is what crypto is for"
+**Technical validation:**
+- Payment stream plugin successfully deployed on 2+ wallet providers
+- Merchant integration processes 90%+ of repayments automatically (minimal manual intervention)
+- Auto-repay borrowers complete loans 20%+ faster than manual borrowers
+- Smart contract gas costs <$5 per auto-repay transaction on Base L2
 
-**Key milestone:** If 50%+ of loans use auto-repay and default rates drop significantly, we've created a fundamentally better lending experience than traditional finance.
-
----
-
-## Beyond Phase 2
-
-### Phase 3+ (2027+): The Credit Network
-
-When auto-repayment works at scale, we become infrastructure:
-
-**Portable credit scores:**
-- Your LendFriend repayment history becomes on-chain credit score
-- Other DeFi protocols use it for underwriting
-- LendFriend reputation = collateral across ecosystem
-
-**Institutional liquidity:**
-- Traditional lenders see our low default rates
-- Provide capital to pools at wholesale rates
-- We pass savings to borrowers (lower APRs)
-
-**Global expansion:**
-- Multi-platform (Bluesky, Twitter, etc.)
-- Multi-currency (EUR, GBP, local stablecoins)
-- Multi-region (regulatory compliance per jurisdiction)
-
-**The end game:** Uncollateralized lending becomes a primitive. Not just a product, but infrastructure that anyone can build on.
+**Key milestone:** 50%+ auto-repay adoption with 30%+ default reduction proves automated repayment creates superior lending infrastructure.
 
 ---
 
-## Related Pages
+## Related Documentation
 
-- [Phase 0: Prove Trust Works](phase-0-social-trust.md) - Social trust foundation
-- [Phase 1: Scale with Cashflow](phase-1-cashflow.md) - Cashflow verification and pools
-- [Vision](../vision.md) - The complete roadmap
-- [Platform Expansion](../platform-expansion.md) - Multi-platform strategy
+**High-level context:**
+- [Vision & roadmap](https://lendfriend.org/vision) — The future we're building
+- [Phase 0 implementation](phase-0-social-trust.md) — Social trust foundation
+- [Phase 1 implementation](phase-1-cashflow.md) — Cashflow verification and pools
+
+**Technical deep dives:**
+- [Smart Contract Reference](../developers/contract-api.md) — API documentation
+- [Risk Scoring](../how-it-works/risk-scoring/README.md) — Complete risk model
