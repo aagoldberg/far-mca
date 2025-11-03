@@ -2,6 +2,13 @@
 
 * [👋 Welcome](README.md)
 
+## 🎯 Vision & Roadmap
+
+* [Vision & Roadmap](vision.md)
+  * [Phase 0: Prove Trust Works](vision/phase-0-social-trust.md)
+  * [Phase 1: Scale with Cashflow](vision/phase-1-cashflow.md)
+  * [Phase 2: Automate Repayment](vision/phase-2-automation.md)
+
 ## 📖 How It Works
 
 * [💡 Motivation](motivation.md)
@@ -28,13 +35,6 @@
 * [⚡ Smart Contract Flow](how-it-works/smart-contract-flow.md)
 * [⚠️ Risk & Default Handling](how-it-works/risk-and-defaults.md)
 * [🔧 Technical Stack](how-it-works/technical-stack.md)
-
-## 🎯 Vision & Roadmap
-
-* [Vision & Roadmap](vision.md)
-  * [Phase 0: Prove Trust Works](vision/phase-0-social-trust.md)
-  * [Phase 1: Scale with Cashflow](vision/phase-1-cashflow.md)
-  * [Phase 2: Automate Repayment](vision/phase-2-automation.md)
 
 ## 📚 Resources
 
