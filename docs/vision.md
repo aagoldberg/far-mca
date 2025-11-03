@@ -64,47 +64,15 @@ This section provides technical implementation documentation for our three-phase
 
 ## Risk Model Evolution
 
-How underwriting changes as we scale from social trust to data-driven credit.
-
-### Phase 0: Pure Social Trust
-**Focus:** Prove reputation can replace collateral
-
-| Component | Weight | Why |
-|-----------|--------|-----|
-| 🤝 **Social Trust** | **60%** | Primary signal - connections & proximity |
-| 📊 **Repayment History** | **30%** | Track record (when available) |
-| 💰 **Loan Size Risk** | **10%** | Smaller loans = lower stakes |
-| 💵 **Cashflow Verification** | **0%** | Not yet implemented |
-
-**Rationale:** Test if social accountability alone can achieve 90%+ repayment.
-
----
-
-### Phase 1: Hybrid Model
-**Focus:** Scale with objective data
-
-| Component | Weight | Why |
-|-----------|--------|-----|
-| 🤝 **Social Trust** | **30%** ↓ | Still important, weighted lower |
-| 💵 **Cashflow Verification** | **30%** ↑ | Bank/merchant data added |
-| 📊 **Repayment History** | **30%** → | Now most predictive signal |
-| 💰 **Loan Size Risk** | **10%** → | Consistent baseline |
-
-**Rationale:** Enable larger loans to strangers by adding verifiable income data.
-
----
-
-### Phase 2: Data-Driven Credit
-**Focus:** Prioritize track record & cashflow
-
-| Component | Weight | Why |
-|-----------|--------|-----|
-| 💵 **Cashflow Verification** | **40%** ↑ | Primary underwriting factor |
-| 📊 **Repayment History** | **40%** ↑ | Proven track record matters most |
-| 🤝 **Social Trust** | **15%** ↓ | Supplementary signal only |
-| 💰 **Loan Size Risk** | **5%** ↓ | Risk mitigation mature |
-
-**Rationale:** With automation and pools, objective data becomes primary. Social trust remains as Sybil resistance.
+| Component | Phase 0 | Phase 1 | Phase 2 | Evolution |
+|-----------|---------|---------|---------|-----------|
+| **Social Trust** | **60%** | **30%** | **15%** | Primary → supplementary as data matures |
+| **Cashflow Verification** | 0% | **30%** | **40%** | Added in Phase 1, becomes primary driver |
+| **Repayment History** | **30%** | **30%** | **40%** | Consistent signal, grows with data |
+| **Loan Size Risk** | 10% | 10% | 5% | Decreases as risk management improves |
+| | | | | |
+| **Focus** | Pure social trust | Hybrid model | Data-driven credit |
+| **Goal** | Prove reputation works | Scale beyond networks | Automate underwriting |
 
 ---
 
