@@ -6,56 +6,6 @@ This section provides technical implementation documentation for our three-phase
 
 ---
 
-## Technical Architecture
-
-```mermaid
-graph TB
-    subgraph Frontend["Frontend Layer"]
-        Web[Web App<br/>Next.js 15]
-        Frame[Farcaster Mini App<br/>Frame SDK]
-    end
-
-    subgraph Identity["Identity & Social"]
-        FC[Farcaster<br/>Neynar API]
-        Privy[Privy<br/>Auth + Wallets]
-        Social[Social Graph<br/>Trust Scoring]
-    end
-
-    subgraph Blockchain["Blockchain Layer (Base L2)"]
-        Factory[MicroLoanFactory<br/>Deploys loans]
-        Loan[MicroLoan<br/>Individual contracts]
-        USDC[USDC Token<br/>ERC-20]
-    end
-
-    subgraph Data["Data & Indexing"]
-        Graph[The Graph<br/>Subgraph]
-        IPFS[IPFS<br/>Pinata]
-    end
-
-    Web --> FC
-    Web --> Privy
-    Frame --> FC
-
-    FC --> Social
-    Privy --> Loan
-
-    Social -.Trust Score.-> Web
-
-    Factory --> Loan
-    Loan --> USDC
-
-    Loan --> Graph
-    Web --> IPFS
-    Graph --> Web
-
-    style Frontend fill:#dbeafe
-    style Identity fill:#fef3c7
-    style Blockchain fill:#d1fae5
-    style Data fill:#e9d5ff
-```
-
----
-
 ## Phase Documentation
 
 ### Phase 0: Prove Trust Works (2024-2025)
@@ -112,13 +62,49 @@ graph TB
 
 ---
 
-## Evolution: Risk Model by Phase
+## Risk Model Evolution
 
-| Phase | Social Trust | Cashflow | Repayment History | Loan Size | Rationale |
-|-------|-------------|----------|-------------------|-----------|-----------|
-| **Phase 0** | 60% | 0% | 30% | 10% | Test pure social accountability |
-| **Phase 1** | 30% | 30% | 30% | 10% | Add objective data as loans scale |
-| **Phase 2** | 15% | 40% | 40% | 5% | Prioritize verifiable cashflow and track record |
+How underwriting changes as we scale from social trust to data-driven credit.
+
+### Phase 0: Pure Social Trust
+**Focus:** Prove reputation can replace collateral
+
+| Component | Weight | Why |
+|-----------|--------|-----|
+| 🤝 **Social Trust** | **60%** | Primary signal - connections & proximity |
+| 📊 **Repayment History** | **30%** | Track record (when available) |
+| 💰 **Loan Size Risk** | **10%** | Smaller loans = lower stakes |
+| 💵 **Cashflow Verification** | **0%** | Not yet implemented |
+
+**Rationale:** Test if social accountability alone can achieve 90%+ repayment.
+
+---
+
+### Phase 1: Hybrid Model
+**Focus:** Scale with objective data
+
+| Component | Weight | Why |
+|-----------|--------|-----|
+| 🤝 **Social Trust** | **30%** ↓ | Still important, weighted lower |
+| 💵 **Cashflow Verification** | **30%** ↑ | Bank/merchant data added |
+| 📊 **Repayment History** | **30%** → | Now most predictive signal |
+| 💰 **Loan Size Risk** | **10%** → | Consistent baseline |
+
+**Rationale:** Enable larger loans to strangers by adding verifiable income data.
+
+---
+
+### Phase 2: Data-Driven Credit
+**Focus:** Prioritize track record & cashflow
+
+| Component | Weight | Why |
+|-----------|--------|-----|
+| 💵 **Cashflow Verification** | **40%** ↑ | Primary underwriting factor |
+| 📊 **Repayment History** | **40%** ↑ | Proven track record matters most |
+| 🤝 **Social Trust** | **15%** ↓ | Supplementary signal only |
+| 💰 **Loan Size Risk** | **5%** ↓ | Risk mitigation mature |
+
+**Rationale:** With automation and pools, objective data becomes primary. Social trust remains as Sybil resistance.
 
 ---
 

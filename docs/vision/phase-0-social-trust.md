@@ -26,6 +26,62 @@ Phase 0 tests zero-interest microloans ($100-$5K) backed by social trust signals
 
 ---
 
+## System Architecture
+
+```mermaid
+graph TB
+    subgraph Frontend["Frontend Layer"]
+        Web[Web App<br/>Next.js 15]
+        Frame[Farcaster Mini App<br/>Frame SDK]
+    end
+
+    subgraph Identity["Identity & Social"]
+        FC[Farcaster<br/>Neynar API]
+        Privy[Privy<br/>Auth + Wallets]
+        Social[Social Graph<br/>Trust Scoring]
+    end
+
+    subgraph Blockchain["Blockchain Layer (Base L2)"]
+        Factory[MicroLoanFactory<br/>Deploys loans]
+        Loan[MicroLoan<br/>Individual contracts]
+        USDC[USDC Token<br/>ERC-20]
+    end
+
+    subgraph Data["Data & Indexing"]
+        Graph[The Graph<br/>Subgraph]
+        IPFS[IPFS<br/>Pinata]
+    end
+
+    Web --> FC
+    Web --> Privy
+    Frame --> FC
+
+    FC --> Social
+    Privy --> Loan
+
+    Social -.Trust Score.-> Web
+
+    Factory --> Loan
+    Loan --> USDC
+
+    Loan --> Graph
+    Web --> IPFS
+    Graph --> Web
+
+    style Frontend fill:#dbeafe
+    style Identity fill:#fef3c7
+    style Blockchain fill:#d1fae5
+    style Data fill:#e9d5ff
+```
+
+**Four-layer architecture:**
+- **Frontend:** Web app and Farcaster mini app for user interaction
+- **Identity & Social:** Farcaster integration for social graph and trust scoring
+- **Blockchain:** Smart contracts on Base L2 for loan management
+- **Data:** The Graph for indexing, IPFS for metadata storage
+
+---
+
 ## Smart Contract Architecture
 
 ### Deployed Contracts (Base Sepolia)
