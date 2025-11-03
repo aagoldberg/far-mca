@@ -65,7 +65,7 @@ This section provides technical implementation documentation for our three-phase
 ## Risk Model Evolution
 
 | Component | Phase 0 | Phase 1 | Phase 2 |
-|-----------|---------|---------|---------|
+|-----------|:-------:|:-------:|:-------:|
 | **Social Trust** | 60% | 30% | 15% |
 | **Cashflow Verification** | 0% | 30% | 40% |
 | **Repayment History** | 30% | 30% | 40% |
