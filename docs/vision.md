@@ -77,20 +77,15 @@ With objective cashflow data:
 
 **Technical Foundation:**
 
-{% tabs %}
-{% tab title="Data Sources" %}
-- **Plaid** — Bank account cashflow
-- **Square/Shopify** — Merchant revenue
+**Data Sources:**
+- **Plaid** — Bank account cashflow verification
+- **Square/Shopify** — Merchant revenue and sales data
 - **On-chain** — Wallet transaction history
-{% endtab %}
 
-{% tab title="Risk Model" %}
-**Hybrid approach:**
+**Risk Model:** Hybrid approach combining:
 - Social trust (weighted lower for large loans)
-- Cashflow verification (weighted higher)
-- Repayment history (most predictive)
-{% endtab %}
-{% endtabs %}
+- Cashflow verification (weighted higher for large loans)
+- Repayment history (most predictive signal)
 
 **Goal:** Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
 
@@ -106,16 +101,18 @@ With objective cashflow data:
 
 **The Vision:**
 
-| Step | What Happens |
-|------|--------------|
-| 1 | Get approved based on social trust + verified cashflow |
-| 2 | Choose "auto-repay from my Square sales" or "auto-deduct from my wallet" |
-| 3 | As you earn, small amounts automatically flow to lenders |
-| 4 | No payment reminders, no stress, no late fees |
-| 5 | Just passive repayment as your business grows |
+**Step 1:** Get approved based on social trust + verified cashflow
 
-{% tabs %}
-{% tab title="Merchants (Easier)" %}
+**Step 2:** Choose "auto-repay from my Square sales" or "auto-deduct from my wallet"
+
+**Step 3:** As you earn, small amounts automatically flow to lenders
+
+**Step 4:** No payment reminders, no stress, no late fees
+
+**Step 5:** Just passive repayment as your business grows
+
+### For Merchants (Easier, Shipping First)
+
 **Square Integration:**
 - Open APIs available today
 - Revenue share model: 2-5% of daily sales auto-repays loan
@@ -124,9 +121,9 @@ With objective cashflow data:
 **Shopify Integration:**
 - Currently harder (requires ACH rails)
 - Shopify moving toward crypto wallets aggressively
-{% endtab %}
 
-{% tab title="Wallets (Developing)" %}
+### For Wallet Holders (Developing)
+
 **Account Abstraction:**
 - Payment streams plugins maturing
 - Auto-deduct from incoming stablecoin transfers
@@ -136,8 +133,6 @@ With objective cashflow data:
 - Loan auto-deducts configured percentage
 - No manual transfers
 - Seamless repayment
-{% endtab %}
-{% endtabs %}
 
 {% hint style="success" %}
 **Why This Matters**

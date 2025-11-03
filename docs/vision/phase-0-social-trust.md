@@ -100,40 +100,36 @@ A mutual connection with 20 total friends is a **stronger signal** than someone 
 
 ### Platform-Specific Trust Signals
 
-{% tabs %}
-{% tab title="Farcaster (Primary)" %}
-**Why Farcaster first:**
+**Farcaster (Primary Platform)**
+
+Why Farcaster first:
 - Wallet-based identity (unforgeable crypto signatures)
 - Neynar quality scores filter bots/spam (0-1 scale)
 - Real relationships in crypto community
 - Power Badge verification
 - On-chain transaction history via wallet address
 
-**Strongest trust signals available.**
-{% endtab %}
+*Strongest trust signals available.*
 
-{% tab title="Bluesky (Expanding)" %}
-**Integration status:** In progress
+**Bluesky (Expanding)**
 
+Integration status: In progress
 - Domain-based verification (yourname.com)
 - AT Protocol decentralized identity
 - Account age, follower count, engagement scoring
 - Profile completeness analysis
 - Quality tiers: High (70+), Medium (40-70), Low (<40)
 
-**Better than Twitter, not as tight as Farcaster.**
-{% endtab %}
+*Better than Twitter, not as tight as Farcaster.*
 
-{% tab title="Web (via Privy)" %}
-**For non-crypto users:**
+**Web (via Privy)**
 
+For non-crypto users:
 - Social login (Google, email, Twitter)
 - Wallet creation for on-chain transactions
 - Progressive disclosure (contribute first, learn crypto later)
 
-**Onboarding path for mainstream users.**
-{% endtab %}
-{% endtabs %}
+*Onboarding path for mainstream users.*
 
 ---
 
@@ -209,23 +205,19 @@ A mutual connection with 20 total friends is a **stronger signal** than someone 
 
 ### Payment Infrastructure
 
-{% tabs %}
-{% tab title="Payment Methods" %}
-**Current options:**
-- **Coinbase Pay:** Card-to-crypto conversion with fiat onramp
-- **Privy:** Wallet funding + social login
-- **Direct wallet:** Connect wallet and send USDC
-- **Gasless approvals:** ERC-4337 smart account abstraction via Pimlico
-{% endtab %}
+**Current payment options:**
+- **Coinbase Pay** — Card-to-crypto conversion with fiat onramp
+- **Privy** — Wallet funding + social login
+- **Direct wallet** — Connect wallet and send USDC
+- **Gasless approvals** — ERC-4337 smart account abstraction via Pimlico
 
-{% tab title="Why Gasless?" %}
 {% hint style="success" %}
+**Why Gasless Matters**
+
 New users can fund loans without holding ETH for gas. This reduces friction significantly and enables true one-click contributions.
 
 Powered by Pimlico (ERC-4337 bundler).
 {% endhint %}
-{% endtab %}
-{% endtabs %}
 
 ### Data & Indexing
 
