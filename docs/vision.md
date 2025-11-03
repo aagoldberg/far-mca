@@ -6,33 +6,7 @@ This section provides technical implementation documentation for our three-phase
 
 ---
 
-## Three-Phase Technical Evolution
-
-```mermaid
-graph LR
-    A[Phase 0<br/>Social Trust<br/>2024-2025] --> B[Phase 1<br/>Cashflow Data<br/>2025-2026]
-    B --> C[Phase 2<br/>Automation<br/>2026-2027]
-
-    A --> A1[Zero-interest loans<br/>$100-$5K]
-    A --> A2[Farcaster identity<br/>Social graph]
-    A --> A3[On-chain reputation<br/>Base L2]
-
-    B --> B1[Cashflow verification<br/>Plaid/Square]
-    B --> B2[Liquidity pools<br/>Passive lending]
-    B --> B3[Interest 0-8%<br/>$5K-$50K+]
-
-    C --> C1[Auto-repayment<br/>Smart wallets]
-    C --> C2[Merchant integration<br/>Square/Shopify]
-    C --> C3[Payment streams<br/>ERC-4337]
-
-    style A fill:#a7f3d0
-    style B fill:#ddd6fe
-    style C fill:#e5e7eb
-```
-
----
-
-## Technical Architecture Overview
+## Technical Architecture
 
 ```mermaid
 graph TB
@@ -84,160 +58,67 @@ graph TB
 
 ## Phase Documentation
 
-### Phase 0: Prove Trust Works
+### Phase 0: Prove Trust Works (2024-2025)
 
-**Focus:** Zero-interest loans backed by social trust signals
+**Status:** Live on Base Sepolia Testnet
 
-**Key Technical Components:**
+**Focus:** Zero-interest loans ($100-$5K) backed by social trust signals
+
+**Key Components:**
 - Smart contracts (MicroLoan.sol, MicroLoanFactory.sol)
-- Farcaster social graph integration
+- Farcaster social graph integration (Neynar API)
 - Trust scoring algorithm (Adamic-Adar weighted)
-- Base L2 deployment
-- The Graph subgraph indexing
+- Base L2 deployment with The Graph indexing
+
+**Goal:** 500-1,000 users demonstrating 90%+ repayment rate to prove social accountability can replace collateral.
 
 → [Phase 0 Technical Implementation](vision/phase-0-social-trust.md)
 
 ---
 
-### Phase 1: Scale with Cashflow
+### Phase 1: Scale with Cashflow (2025-2026)
 
-**Focus:** Hybrid underwriting with cashflow verification
+**Status:** Planned
 
-**Key Technical Components:**
-- Plaid API integration (bank accounts)
-- Square/Shopify API integration (merchant revenue)
-- Liquidity pool smart contracts
-- Interest calculation and accrual
-- Hybrid risk scoring model
+**Focus:** Larger loans ($5K-$50K+) using hybrid social + cashflow underwriting
+
+**Key Components:**
+- Cashflow verification APIs (Plaid for banks, Square/Shopify for merchants)
+- Liquidity pool smart contracts for passive lending
+- Interest calculation (0-8% APR based on risk)
+- Hybrid risk scoring (social trust + verified cashflow + repayment history)
+
+**Goal:** Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
 
 → [Phase 1 Technical Implementation](vision/phase-1-cashflow.md)
 
 ---
 
-### Phase 2: Automate Repayment
+### Phase 2: Automate Repayment (2026-2027)
 
-**Focus:** Programmable repayment automation
+**Status:** Future
 
-**Key Technical Components:**
-- ERC-4337 account abstraction
-- Payment stream plugins
-- Merchant OAuth and auto-deduction
-- Revenue-based repayment logic
-- Smart wallet integrations
+**Focus:** Loans that repay themselves automatically from wallets or business revenue
+
+**Key Components:**
+- ERC-4337 account abstraction for smart wallet auto-deduction
+- Merchant OAuth and revenue-based repayment (Square/Shopify APIs)
+- Payment stream plugins for programmable wallets
+- Automated repayment logic (2-5% of daily sales or 10% of incoming transfers)
+
+**Goal:** Remove repayment friction entirely—borrowers never miss payments, lenders get predictable returns.
 
 → [Phase 2 Technical Implementation](vision/phase-2-automation.md)
 
 ---
 
-## Risk Model Evolution
+## Evolution: Risk Model by Phase
 
-```mermaid
-graph LR
-    subgraph Phase0["Phase 0: Pure Social Trust"]
-        S0[Social Trust 60%]
-        R0[Repayment History 30%]
-        L0[Loan Size 10%]
-    end
-
-    subgraph Phase1["Phase 1: Hybrid Model"]
-        S1[Social Trust 30%]
-        C1[Cashflow 30%]
-        R1[Repayment History 30%]
-        L1[Loan Size 10%]
-    end
-
-    subgraph Phase2["Phase 2: Data-Driven"]
-        C2[Cashflow 40%]
-        R2[Repayment History 40%]
-        S2[Social Trust 15%]
-        L2[Loan Size 5%]
-    end
-
-    Phase0 --> Phase1
-    Phase1 --> Phase2
-
-    style Phase0 fill:#a7f3d0
-    style Phase1 fill:#ddd6fe
-    style Phase2 fill:#e5e7eb
-```
-
-**Evolution rationale:**
-- **Phase 0:** Test pure social accountability
-- **Phase 1:** Add objective data as loans scale
-- **Phase 2:** Prioritize verifiable cashflow and track record
-
----
-
-## Infrastructure Readiness
-
-```mermaid
-graph TD
-    subgraph Ready["Available Today"]
-        FC[Farcaster API<br/>Social graph]
-        Base[Base L2<br/>$0.01 txns]
-        USDC[USDC Stablecoin<br/>ERC-20]
-        Plaid[Plaid API<br/>Bank data]
-        Square[Square API<br/>Merchant sales]
-    end
-
-    subgraph Developing["Maturing 2025-2026"]
-        AA[Account Abstraction<br/>ERC-4337]
-        Streams[Payment Streams<br/>Plugins]
-        Shopify[Shopify Crypto<br/>Wallets]
-    end
-
-    subgraph Future["Future 2026+"]
-        zkTLS[zkTLS Proofs<br/>Privacy]
-        Credit[Credit Scoring<br/>Portable]
-        Multi[Multi-chain<br/>Expansion]
-    end
-
-    Ready --> Developing
-    Developing --> Future
-
-    style Ready fill:#d1fae5
-    style Developing fill:#fef3c7
-    style Future fill:#e5e7eb
-```
-
----
-
-## Data Flow: Loan Lifecycle
-
-```mermaid
-sequenceDiagram
-    participant B as Borrower
-    participant W as Web App
-    participant F as Factory Contract
-    participant L as Loan Contract
-    participant Le as Lender
-    participant G as The Graph
-
-    B->>W: Create loan request
-    W->>F: Deploy new loan
-    F->>L: Create MicroLoan contract
-    L->>G: Emit LoanCreated event
-
-    Le->>W: View loan + trust score
-    W-->>Le: Display social proximity
-    Le->>L: Contribute USDC
-    L->>G: Emit Contribution event
-
-    Note over L: Fundraising complete
-
-    B->>L: Disburse funds
-    L->>B: Transfer USDC
-    L->>G: Emit Disbursed event
-
-    Note over B: Borrower earns/repays
-
-    B->>L: Repay (flexible timing)
-    L->>G: Emit Repayment event
-
-    Le->>L: Claim pro-rata share
-    L->>Le: Transfer repayment
-    L->>G: Emit Claimed event
-```
+| Phase | Social Trust | Cashflow | Repayment History | Loan Size | Rationale |
+|-------|-------------|----------|-------------------|-----------|-----------|
+| **Phase 0** | 60% | 0% | 30% | 10% | Test pure social accountability |
+| **Phase 1** | 30% | 30% | 30% | 10% | Add objective data as loans scale |
+| **Phase 2** | 15% | 40% | 40% | 5% | Prioritize verifiable cashflow and track record |
 
 ---
 
@@ -254,10 +135,31 @@ sequenceDiagram
 
 ---
 
+## Infrastructure Readiness
+
+**Available Today:**
+- Farcaster API (social graph with Neynar)
+- Base L2 ($0.01 transactions)
+- USDC stablecoin (ERC-20)
+- Plaid API (bank account data)
+- Square API (merchant sales data)
+
+**Maturing 2025-2026:**
+- Account Abstraction (ERC-4337)
+- Payment stream plugins
+- Shopify crypto wallets
+
+**Future 2026+:**
+- zkTLS proofs for privacy
+- Portable on-chain credit scores
+- Multi-chain expansion
+
+---
+
 ## Related Documentation
 
 **For non-technical overview:**
-- [Vision & roadmap](https://lendfriend.org/vision) — High-level strategy
+- [Vision & roadmap](https://lendfriend.org/vision) — High-level strategy for investors/community
 - [How it works](https://lendfriend.org/how-it-works) — User-friendly explanation
 - [Whitepaper](https://lendfriend.org/whitepaper) — Complete manifesto
 
