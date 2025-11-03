@@ -64,15 +64,14 @@ This section provides technical implementation documentation for our three-phase
 
 ## Risk Model Evolution
 
-| Component | Phase 0 | Phase 1 | Phase 2 | Evolution |
-|-----------|---------|---------|---------|-----------|
-| **Social Trust** | **60%** | **30%** | **15%** | Primary → supplementary as data matures |
-| **Cashflow Verification** | 0% | **30%** | **40%** | Added in Phase 1, becomes primary driver |
-| **Repayment History** | **30%** | **30%** | **40%** | Consistent signal, grows with data |
-| **Loan Size Risk** | 10% | 10% | 5% | Decreases as risk management improves |
-| | | | | |
-| **Focus** | Pure social trust | Hybrid model | Data-driven credit |
-| **Goal** | Prove reputation works | Scale beyond networks | Automate underwriting |
+| Component | Phase 0 | Phase 1 | Phase 2 |
+|-----------|---------|---------|---------|
+| **Social Trust** | 60% | 30% | 15% |
+| **Cashflow Verification** | 0% | 30% | 40% |
+| **Repayment History** | 30% | 30% | 40% |
+| **Loan Size Risk** | 10% | 10% | 5% |
+
+**Evolution:** Social trust decreases as primary signal (60% → 15%), while cashflow verification is added and becomes dominant (0% → 40%). Repayment history remains consistent and grows with scale.
 
 ---
 
