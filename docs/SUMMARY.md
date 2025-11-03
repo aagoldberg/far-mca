@@ -35,6 +35,9 @@
 * [⚡ Smart Contract Flow](how-it-works/smart-contract-flow.md)
 * [⚠️ Risk & Default Handling](how-it-works/risk-and-defaults.md)
 * [🔧 Technical Stack](how-it-works/technical-stack.md)
+* [💾 Data Infrastructure](how-it-works/data-infrastructure.md)
+* [💳 Payment Methods](how-it-works/payment-methods.md)
+* [📱 Farcaster Mini App](how-it-works/farcaster-miniapp.md)
 
 ## 📚 Resources
 
