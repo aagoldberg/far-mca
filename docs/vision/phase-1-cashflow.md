@@ -52,55 +52,24 @@ Phase 1 adds cashflow verification to the social trust foundation from Phase 0, 
 - Direct deposit patterns (employment verification)
 - Debt service coverage ratio calculation
 
-**Implementation:**
+**Proposed flow:**
+1. User initiates Plaid Link OAuth flow
+2. Grant read-only access to transaction history (90-730 days)
+3. Backend fetches transactions via Plaid API
+4. Calculate income metrics:
+   - Monthly average income from deposits
+   - Income stability score (consistency over time)
+   - Debt-to-income ratio estimation
+5. Create privacy-preserving attestation with income range buckets
+6. Store attestation hash on IPFS
+7. Expire verification after 90 days (requires renewal)
 
-```typescript
-interface PlaidVerification {
-  userId: string;
-  accessToken: string;  // OAuth access token (encrypted)
-  verificationData: {
-    monthlyIncome: number;
-    incomeStability: number;  // 0-100 score
-    accountAge: number;  // months
-    debtToIncomeRatio: number;
-  };
-  attestationCID?: string;  // IPFS hash of attestation
-  expiresAt: number;  // timestamp
-}
-
-async function verifyBankAccount(
-  userId: string,
-  plaidPublicToken: string
-): Promise<PlaidVerification> {
-  // Exchange public token for access token
-  const accessToken = await plaid.exchangePublicToken(plaidPublicToken);
-
-  // Fetch transactions (last 6 months)
-  const transactions = await plaid.getTransactions(accessToken, 180);
-
-  // Calculate income metrics
-  const monthlyIncome = calculateMonthlyIncome(transactions);
-  const incomeStability = calculateStability(transactions);
-
-  // Create privacy-preserving attestation
-  const attestation = {
-    income_range: getBucket(monthlyIncome),  // e.g., "$3K-$5K/month"
-    verified_at: Date.now(),
-    method: "plaid_bank"
-  };
-
-  // Upload to IPFS
-  const attestationCID = await uploadToIPFS(attestation);
-
-  return {
-    userId,
-    accessToken: encrypt(accessToken),
-    verificationData: { monthlyIncome, incomeStability, ... },
-    attestationCID,
-    expiresAt: Date.now() + 90 * 24 * 60 * 60 * 1000  // 90 days
-  };
-}
-```
+**Data structure (proposed):**
+- User ID + encrypted Plaid access token
+- Verification data: monthly income, stability score, account age, DTI ratio
+- Attestation: Income range (e.g., "$3K-$5K/month"), verification timestamp, method
+- IPFS CID for attestation
+- Expiration timestamp
 
 **Privacy model:**
 - OAuth grants read-only access (user controls scope)
@@ -117,68 +86,27 @@ async function verifyBankAccount(
 - Refund and chargeback rates
 - Daily/weekly/monthly revenue aggregates
 
-**Implementation:**
-
-```typescript
-interface SquareVerification {
-  userId: string;
-  merchantId: string;
-  accessToken: string;  // OAuth access token (encrypted)
-  verificationData: {
-    avgMonthlyRevenue: number;
-    revenueGrowth: number;  // % growth last 3 months
-    transactionVolume: number;
-    avgTicketSize: number;
-    refundRate: number;  // % of transactions refunded
-  };
-  attestationCID: string;
-  expiresAt: number;
-}
-
-async function verifySquareMerchant(
-  userId: string,
-  squareAuthCode: string
-): Promise<SquareVerification> {
-  // Exchange auth code for access token
-  const { access_token, merchant_id } = await square.obtainToken(squareAuthCode);
-
-  // Fetch payments (last 6 months)
-  const payments = await square.listPayments({
-    begin_time: sixMonthsAgo(),
-    end_time: now()
-  });
-
-  // Calculate revenue metrics
-  const avgMonthlyRevenue = calculateMonthlyAverage(payments);
-  const revenueGrowth = calculateGrowthRate(payments);
-
-  // Create attestation
-  const attestation = {
-    revenue_range: getBucket(avgMonthlyRevenue),
-    merchant_type: "square",
-    verified_at: Date.now()
-  };
-
-  const attestationCID = await uploadToIPFS(attestation);
-
-  return {
-    userId,
-    merchantId: merchant_id,
-    accessToken: encrypt(access_token),
-    verificationData: { avgMonthlyRevenue, revenueGrowth, ... },
-    attestationCID,
-    expiresAt: Date.now() + 90 * 24 * 60 * 60 * 1000
-  };
-}
-```
-
-**OAuth flow:**
+**Proposed OAuth flow:**
 1. User clicks "Verify Square Account"
 2. Redirected to Square authorization page
 3. User grants read-only payment data access
 4. Redirected back with auth code
-5. Exchange auth code for access token
-6. Fetch payment data and create attestation
+5. Backend exchanges auth code for access token
+6. Fetch payment data (last 6 months) via Square Payments API
+7. Calculate revenue metrics and create attestation
+
+**Metrics calculated:**
+- Average monthly revenue
+- Revenue growth rate (last 3 months)
+- Transaction volume and average ticket size
+- Refund rate (percentage of transactions refunded)
+
+**Data structure (proposed):**
+- User ID + merchant ID + encrypted Square access token
+- Verification data: avg monthly revenue, revenue growth, transaction volume, ticket size, refund rate
+- Attestation: Revenue range bucket, merchant type, verification timestamp
+- IPFS CID for attestation
+- Expiration (90 days)
 
 ---
 
@@ -218,7 +146,7 @@ async function verifySquareMerchant(
 ### On-Chain Income Verification
 
 **Data source:** Base L2 blockchain (primary), Ethereum mainnet (secondary)
-**Implementation:** Already available via wallet connection
+**Implementation:** Wallet connection (already available in Phase 0)
 
 **Data analyzed:**
 - Transaction history (incoming transfers, frequencies)
@@ -227,53 +155,24 @@ async function verifySquareMerchant(
 - NFT sales and creator royalties
 - DAO treasury payments
 
-**Analysis algorithm:**
+**Proposed analysis flow:**
+1. Fetch wallet transaction history (last 6 months)
+2. Classify transactions by type (recurring vs. one-time)
+3. Identify recurring payment sources (DAO treasuries, protocol addresses)
+4. Calculate income stability score based on consistency
+5. Sum total monthly income with weighted categories
 
-```typescript
-interface OnChainIncomeAnalysis {
-  walletAddress: string;
-  recurringIncome: {
-    frequency: 'daily' | 'weekly' | 'monthly';
-    avgAmount: number;
-    sources: string[];  // DAO treasuries, protocol addresses
-  }[];
-  oneTimeIncome: {
-    type: 'nft_sale' | 'defi_yield' | 'other';
-    amount: number;
-    timestamp: number;
-  }[];
-  totalMonthlyIncome: number;
-  incomeStability: number;  // 0-100 score
-}
-
-async function analyzeOnChainIncome(
-  walletAddress: string,
-  chainId: number = 8453  // Base
-): Promise<OnChainIncomeAnalysis> {
-  // Fetch last 6 months of transactions
-  const transactions = await fetchTransactions(walletAddress, chainId, 180);
-
-  // Classify income sources
-  const recurring = identifyRecurringPayments(transactions);
-  const oneTime = transactions.filter(tx => !isRecurring(tx));
-
-  // Calculate stability score (higher for consistent recurring income)
-  const stability = calculateStabilityScore(recurring);
-
-  return {
-    walletAddress,
-    recurringIncome: recurring,
-    oneTimeIncome: oneTime,
-    totalMonthlyIncome: sumMonthlyIncome(recurring, oneTime),
-    incomeStability: stability
-  };
-}
-```
-
-**Weighting logic:**
+**Income classification:**
 - Recurring income (DAO salaries, protocol fees): 100% weight
 - DeFi yield (consistent for 3+ months): 75% weight
 - NFT sales and one-time payments: 25% weight
+
+**Data structure (proposed):**
+- Wallet address
+- Recurring income streams: frequency (daily/weekly/monthly), average amount, source addresses
+- One-time income events: type, amount, timestamp
+- Total monthly income (weighted)
+- Income stability score (0-100)
 
 **Enhanced signals:**
 - ENS domain ownership (identity verification)
@@ -289,7 +188,7 @@ Phase 1 introduces liquidity pools for passive capital deployment, enabled by st
 
 ### Smart Contract Design
 
-**Pool tiers:**
+**Proposed pool tiers:**
 
 | Pool | Risk Levels Accepted | Target APY | Reserve Ratio |
 |------|---------------------|-----------|---------------|
@@ -297,49 +196,33 @@ Phase 1 introduces liquidity pools for passive capital deployment, enabled by st
 | Balanced | LOW + MEDIUM (50+) | 6-8% | 15% |
 | Aggressive | All tiers (40+) | 8-12% | 20% |
 
-**Core contract:**
+**Smart contract architecture (proposed):**
 
-```solidity
-contract LiquidityPool {
-    IERC20 public immutable usdc;
-    uint256 public totalDeposits;
-    uint256 public totalLent;
-    uint256 public totalRepaid;
-    uint256 public reserveRatio;  // e.g., 10% = 1000 (basis points)
+**State variables:**
+- USDC token address (immutable)
+- Total deposits, total lent, total repaid
+- Reserve ratio (basis points)
+- Lender deposits and LP share mappings
+- Active loans list and approval mapping
 
-    mapping(address => uint256) public deposits;
-    mapping(address => uint256) public shares;  // LP tokens
-
-    address[] public activeLoans;
-    mapping(address => bool) public approvedLoans;
-
-    // Lender actions
-    function deposit(uint256 amount) external;
-    function withdraw(uint256 shares) external;
-    function claimYield() external;
-
-    // Protocol actions (off-chain risk engine approval required)
-    function fundLoan(address loanAddress, uint256 amount) external onlyApproved;
-    function recordRepayment(address loanAddress, uint256 amount) external;
-    function recordDefault(address loanAddress, uint256 amount) external;
-
-    // View functions
-    function availableLiquidity() public view returns (uint256);
-    function poolAPY() public view returns (uint256);
-    function lenderYield(address lender) public view returns (uint256);
-}
-```
+**Core functions:**
+- `deposit()` - Lenders deposit USDC, receive LP tokens
+- `withdraw()` - Burn LP tokens, receive USDC (if liquidity available)
+- `claimYield()` - Claim accrued interest
+- `fundLoan()` - Protocol-only, disburse to approved loan
+- `recordRepayment()` - Record loan repayment to pool
+- `recordDefault()` - Handle defaults, spread losses
 
 **Lender flow:**
-1. `deposit(amount)` → Receive LP tokens proportional to share
+1. Deposit USDC → Receive LP tokens proportional to pool share
 2. Yield accrues as loans are repaid with interest
-3. `withdraw(shares)` → Burn LP tokens, receive USDC (if liquidity available)
+3. Withdraw LP tokens → Burn tokens, receive USDC (if liquidity available)
 4. Defaults reduce pool value, spread across all LP holders
 
 **Borrower flow:**
 1. Complete verification (social trust + cashflow)
 2. Off-chain risk engine calculates score and loan offer
-3. Accept offer → `fundLoan()` called by protocol
+3. Accept offer → Protocol calls `fundLoan()`
 4. USDC disbursed from pool to loan contract
 5. Repayments flow back to pool
 
@@ -368,72 +251,42 @@ Phase 1 combines social trust (Phase 0) with cashflow data for multi-signal risk
 
 ### Risk Score Calculation
 
-```typescript
-interface RiskScoreInputs {
-  repaymentHistory: {
-    completedLoans: number;
-    onTimeRate: number;  // % of payments made on time
-    avgTipRate: number;  // % tip on past loans
-    defaults: number;
-  };
-  socialTrust: {
-    effectiveMutuals: number;
-    socialDistance: number;  // 0-100
-    platformQuality: number;  // Neynar score, Power Badge, etc.
-  };
-  cashflowVerification: {
-    monthlyIncome: number;
-    incomeStability: number;  // 0-100
-    debtToIncomeRatio?: number;
-    verificationMethod: 'plaid' | 'square' | 'shopify' | 'onchain';
-  };
-  loanAmount: number;
-}
+**Input signals:**
 
-interface RiskScore {
-  totalScore: number;  // 0-100
-  tier: 'AAA' | 'AA' | 'A' | 'BBB' | 'DECLINE';
-  interestRate: number;  // APR %
-  maxLoanAmount: number;
-  components: {
-    repaymentScore: number;
-    socialScore: number;
-    cashflowScore: number;
-    loanSizeScore: number;
-  };
-}
+1. **Repayment History:**
+   - Completed loans count
+   - On-time payment rate (%)
+   - Average tip rate (%) on past loans
+   - Number of defaults
 
-function calculateRiskScore(inputs: RiskScoreInputs): RiskScore {
-  // Calculate component scores (0-100 each)
-  const repaymentScore = calculateRepaymentScore(inputs.repaymentHistory);
-  const socialScore = calculateSocialScore(inputs.socialTrust);
-  const cashflowScore = calculateCashflowScore(inputs.cashflowVerification);
-  const loanSizeScore = calculateLoanSizeRisk(inputs.loanAmount);
+2. **Social Trust:**
+   - Effective mutual connections (Adamic-Adar weighted)
+   - Social distance score (0-100)
+   - Platform quality (Neynar score, Power Badge, account age)
 
-  // Get weights based on loan amount
-  const weights = getWeights(inputs.loanAmount);
+3. **Cashflow Verification:**
+   - Monthly income amount
+   - Income stability score (0-100)
+   - Debt-to-income ratio (if available)
+   - Verification method (plaid/square/shopify/onchain)
 
-  // Weighted average
-  const totalScore =
-    repaymentScore * weights.repayment +
-    socialScore * weights.social +
-    cashflowScore * weights.cashflow -
-    loanSizeScore * weights.loanSize;
+4. **Loan Size:**
+   - Requested loan amount
 
-  // Determine tier and interest rate
-  const tier = getTier(totalScore);
-  const interestRate = getInterestRate(tier, inputs.loanAmount);
-  const maxLoanAmount = getMaxLoan(totalScore, inputs.cashflowVerification.monthlyIncome);
+**Proposed calculation algorithm:**
+1. Calculate component scores (0-100 for each signal category)
+2. Get weights based on loan amount (see table above)
+3. Compute weighted average: `score = (repayment × wR) + (social × wS) + (cashflow × wC) - (loanSize × wL)`
+4. Determine risk tier based on total score
+5. Calculate interest rate based on tier and loan amount
+6. Calculate max loan amount based on score and monthly income
 
-  return {
-    totalScore,
-    tier,
-    interestRate,
-    maxLoanAmount,
-    components: { repaymentScore, socialScore, cashflowScore, loanSizeScore }
-  };
-}
-```
+**Output:**
+- Total risk score (0-100)
+- Risk tier (AAA/AA/A/BBB/DECLINE)
+- Interest rate (APR %)
+- Maximum approved loan amount
+- Component breakdown (repayment, social, cashflow, loan size scores)
 
 ### Risk Tiers
 
@@ -468,20 +321,11 @@ function calculateRiskScore(inputs: RiskScoreInputs): RiskScore {
 - Liquidity pool dashboard for lenders
 - Advanced loan filtering and discovery
 
-**Viral mechanics:**
-```typescript
-// Shareable loan links
-const loanURL = `https://lendfriend.org/loan/${loanAddress}`;
-
-// Generate social share with Open Graph metadata
-const shareData = {
-  title: `Help ${borrower.name} fund their ${loanTitle}`,
-  text: `${borrower.name} needs $${principal} for ${purpose}. They're ${trustScore}% connected to your network.`,
-  url: loanURL
-};
-
-await navigator.share(shareData);  // Native share on mobile
-```
+**Proposed viral mechanics:**
+- Shareable loan links: `lendfriend.org/loan/{loanAddress}`
+- Open Graph metadata with borrower name, loan amount, trust score
+- Native Web Share API for mobile sharing
+- Social share targets: WhatsApp, Twitter, Telegram, Facebook, etc.
 
 **User acquisition flow:**
 1. Borrower creates loan, shares link to non-crypto network
@@ -510,32 +354,21 @@ await navigator.share(shareData);  // Native share on mobile
 - Domain verification bonus: +5 points to social score
 - Cross-platform: +10 points if same user verified on Farcaster + Bluesky
 
-**Implementation:**
-```typescript
-interface BlueskyIdentity {
-  did: string;  // AT Protocol DID
-  handle: string;
-  displayName: string;
-  domainVerified: boolean;  // handle === owned domain
-  followers: number;
-  following: number;
-  posts: number;
-  accountAge: number;  // days since creation
-}
+**Proposed implementation flow:**
+1. User connects Bluesky account
+2. Resolve AT Protocol DID from handle
+3. Fetch profile data (followers, following, posts, account age)
+4. Check domain verification (handle === owned domain)
+5. Calculate social trust score (similar to Farcaster, adjusted weights)
+6. Store identity verification
 
-async function verifyBlueskyIdentity(handle: string): Promise<BlueskyIdentity> {
-  // Resolve AT Protocol DID
-  const did = await atproto.resolveDID(handle);
-
-  // Fetch profile data
-  const profile = await bluesky.getProfile(did);
-
-  // Check domain verification
-  const domainVerified = await checkDomainOwnership(handle);
-
-  return { did, handle, domainVerified, ...profile };
-}
-```
+**Data structure (proposed):**
+- AT Protocol DID
+- Handle and display name
+- Domain verification status
+- Follower/following counts
+- Post count and account age
+- Social graph (mutual connections)
 
 **Twitter/X:** Delayed to Phase 2+ due to bot prevalence and low signal quality
 
@@ -547,17 +380,14 @@ async function verifyBlueskyIdentity(handle: string): Promise<BlueskyIdentity> {
 
 **Phase 1a (MVP):** Direct API integration with off-chain attestation storage
 
-```typescript
-interface CashflowAttestation {
-  userId: string;
-  verificationMethod: 'plaid' | 'square' | 'shopify' | 'onchain';
-  incomeRange: string;  // e.g., "$3K-$5K/month"
-  verifiedAt: number;
-  expiresAt: number;
-  attestationHash: string;  // IPFS CID
-  signature: string;  // Protocol signature
-}
-```
+**Attestation data structure (proposed):**
+- User ID
+- Verification method (plaid/square/shopify/onchain)
+- Income range bucket (e.g., "$3K-$5K/month")
+- Verification timestamp
+- Expiration timestamp
+- IPFS hash of attestation
+- Protocol signature
 
 **Phase 1b (Future):** Decentralized attestations via Chainlink or zkTLS
 
