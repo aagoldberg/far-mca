@@ -1,322 +1,464 @@
-# Phase 0: Prove Trust Works
+# Phase 0: Technical Implementation
 
-Live on Base Sepolia Testnet • 2024-2025
+**Status:** Live on Base Sepolia Testnet
+**Timeline:** 2024-2025
+**Network:** Base Sepolia (Chain ID: 84532)
 
 ---
 
 {% hint style="info" %}
-**At a Glance**
+**For High-Level Overview**
 
-Testing zero-interest loans ($100-$5K) backed by social trust on Farcaster. Goal: Prove 90%+ repayment rate with no collateral.
+This page contains technical implementation details for Phase 0.
 
-**Status:** Live on testnet, launching mainnet 2025
+For vision, goals, and roadmap → [lendfriend.org/vision](https://lendfriend.org/vision)
 {% endhint %}
 
 ---
 
-## Core Thesis
+## Overview
 
-Can uncollateralized lending work when reputation is at stake?
+Phase 0 tests zero-interest microloans ($100-$5K) backed by social trust signals from Farcaster.
 
-Phase 0 is designed to answer this question with zero-interest loans backed purely by social signals. No credit checks. No collateral. Just trust, quantified through your network.
+**Core hypothesis:** Reputation-based lending can achieve 90%+ repayment without collateral or interest.
 
-{% hint style="warning" %}
-Before building complex cashflow integrations or automated repayment systems, we need to prove the fundamental primitive: **people will repay loans when their reputation matters.**
-{% endhint %}
+**Technical focus:** Building foundational smart contracts, social graph integration, and data collection infrastructure.
 
 ---
 
-## What We're Building
+## Smart Contract Architecture
 
-### Zero-Interest Microloans
+### Deployed Contracts (Base Sepolia)
 
-| Feature | Details |
-|---------|---------|
-| **Loan sizes** | $100 - $5,000 |
-| **Interest** | 0% (altruistic phase) |
-| **Repayment** | Flexible timing, single maturity date |
-| **Platform** | Farcaster mini apps + web interface |
+| Contract | Address | Lines | Purpose |
+|----------|---------|-------|---------|
+| **MicroLoanFactory** | `0x747988...bFff` | 146 | Loan contract deployment and policy |
+| **MicroLoan** (template) | - | 416 | Zero-interest, single-maturity lending |
+| **TestUSDC** | `0x2d04a1...aaFe` | - | Sepolia testnet token with faucet |
 
-**How it works:**
+→ [View contracts on GitHub](https://github.com/...)
 
-1. **Borrow** from your network by sharing a loan request
-2. **Get funded** by friends and community members who trust you
-3. **Repay** on your own schedule before maturity
-4. **Build reputation** through timely repayment and optional tipping
+---
 
-<details>
-<summary><strong>Technical Implementation</strong></summary>
+### MicroLoan.sol
 
-**MicroLoan.sol** (Single-maturity model, 416 lines):
-- Crowdfunding phase until fully funded
-- Disburse to borrower when goal reached
-- Flexible repayment (any amount, anytime)
-- Accumulator-based distribution for gas efficiency
+**Contract model:** Individual loan contracts deployed via factory pattern
+
+**Key features:**
+- Zero-interest hardcoded (1.0x repayment multiplier)
+- Single maturity date (no installments)
+- Flexible repayment (any amount, anytime before or after maturity)
+- Accumulator-based distribution for gas-efficient claims
 - On-chain default recording if unpaid at maturity
-
-**MicroLoanFactory.sol** (146 lines):
-- Creates individual loan contracts per request
-- Enforces policy bounds (min principal, duration limits)
-- Prevents multiple active loans per borrower
-- Pausable emergency controls
-- On-chain loan registry
-
-</details>
-
----
-
-## Social Trust Scoring
-
-### The Algorithm: Adamic-Adar Weighted Connections
-
-We don't just count mutual friends—we weight them by rarity.
-
-{% hint style="success" %}
-**Key Insight**
-
-A mutual connection with 20 total friends is a **stronger signal** than someone with 20,000 followers. Rare, genuine relationships predict repayment better than social media popularity.
-{% endhint %}
-
-**Research Foundation:** Calibrated on Kiva and Grameen Bank data showing social proximity drives 10% better repayment rates.
-
-**Scoring Components:**
-- **Mutual connections** (0-60 points) — Weighted by Adamic-Adar algorithm
-- **Network overlap** (0-30 points) — Percentage of shared connections
-- **Follow relationship** (0-10 points) — Mutual follow > one-way follow
-
-**Total Trust Score:** 0-100
-
-### Risk Tiers
-
-| Tier | Criteria | Expected Repayment |
-|------|----------|-------------------|
-| **Low Risk** | Effective mutuals ≥9 OR social distance ≥60 | 98%+ (Kiva: 20+ friend lenders) |
-| **Medium Risk** | Effective mutuals ≥2.5 OR social distance ≥30 | 85-95% |
-| **High Risk** | Below medium thresholds | <85%, higher monitoring |
-
-**Definitions:**
-- **Effective mutuals** = Adamic-Adar weighted count (rare friends worth more)
-- **Social distance** = 0-100 score based on network overlap and relationship strength
-
-### Platform-Specific Trust Signals
-
-**Farcaster (Primary Platform)**
-
-Why Farcaster first:
-- Wallet-based identity (unforgeable crypto signatures)
-- Neynar quality scores filter bots/spam (0-1 scale)
-- Real relationships in crypto community
-- Power Badge verification
-- On-chain transaction history via wallet address
-
-*Strongest trust signals available.*
-
-**Bluesky (Expanding)**
-
-Integration status: In progress
-- Domain-based verification (yourname.com)
-- AT Protocol decentralized identity
-- Account age, follower count, engagement scoring
-- Profile completeness analysis
-- Quality tiers: High (70+), Medium (40-70), Low (<40)
-
-*Better than Twitter, not as tight as Farcaster.*
-
-**Web (via Privy)**
-
-For non-crypto users:
-- Social login (Google, email, Twitter)
-- Wallet creation for on-chain transactions
-- Progressive disclosure (contribute first, learn crypto later)
-
-*Onboarding path for mainstream users.*
-
----
-
-## Why Start with Farcaster?
-
-**Strongest Trust Signals**
-- Crypto-native users already understand wallets and on-chain transactions
-- Quality filtering removes bots and spam via Neynar
-- Real relationships (not follow-for-follow games like Twitter)
-- Open social graph API enables instant Trust Score calculation
-
-**Solves Cold Start**
-- Borrowers bring their own lenders (friends)
-- Each loan introduces new lenders to the platform
-- Trust Scores make strangers comfortable funding
-
-**Built for Virality**
-- Mini apps run inside posts (no external clicks)
-- Cast Actions enable one-tap contributions
-- Activity appears in feeds organically
-
-> Farcaster launched mini apps in January 2024 and saw massive engagement. The platform proves crypto users will use financial apps embedded in social feeds.
-
----
-
-## Technical Implementation
-
-### Smart Contracts (Base Sepolia)
-
-| Contract | Lines | Purpose |
-|----------|-------|---------|
-| **MicroLoan.sol** | 416 | Zero-interest, single-maturity lending |
-| **MicroLoanFactory.sol** | 146 | Loan contract deployment and policy |
-| **TestUSDC** | - | Sepolia testnet token with airdrop |
-
-<details>
-<summary><strong>Full Contract Features</strong></summary>
-
-**MicroLoan.sol:**
-- Zero-interest, single-maturity lending
-- Flexible repayment (any amount, anytime before/after maturity)
-- Accumulator-based distribution (gas-efficient lender claims)
-- IPFS metadata for borrower communication
-- On-chain default handling (no grace period in v1)
 - Overpayment distribution to lenders as bonus
-- Refund mechanism if fundraising fails
+- Refund mechanism if fundraising goal not met
 
-**MicroLoanFactory.sol:**
-- Creates individual loan contracts per request
-- Enforces policy bounds (min principal, duration limits)
-- Prevents multiple active loans per borrower
-- Pausable emergency controls
-- On-chain loan registry
+**State variables:**
 
-</details>
+```solidity
+address public immutable borrower;
+address public immutable token;  // USDC
+uint256 public immutable principal;
+uint256 public immutable maturityDate;
+uint256 public totalRaised;
+uint256 public totalRepaid;
+uint256 public accumulator;  // For pro-rata distribution
+mapping(address => uint256) public contributions;
+mapping(address => uint256) public claimed;
+```
 
-### Frontend Applications
+**Core functions:**
 
-**Web App** (Next.js 15 + React 19):
-- Multi-step loan creation form with validation
-- Loan discovery and filtering (status, amount, progress)
-- Funding flow with USDC approval
-- Repayment tracking and claim interface
-- Trust signals display (Farcaster, Bluesky profiles)
-- Social sharing to 12+ platforms
+```solidity
+function contribute(uint256 amount) external
+function disburse() external
+function repay(uint256 amount) external
+function claimableAmount(address contributor) public view returns (uint256)
+function claim() external
+```
 
-**Farcaster Mini App:**
-- Native mini app SDK integration
-- Tab-based interface optimized for mobile
-- Create and manage loans from Farcaster
-- Fund loans without leaving the app
-- Automatic Farcaster profile lookup
+**Gas optimization:** Accumulator pattern enables O(1) repayment distribution instead of O(n) iteration over lenders.
 
-### Payment Infrastructure
-
-**Current payment options:**
-- **Coinbase Pay** — Card-to-crypto conversion with fiat onramp
-- **Privy** — Wallet funding + social login
-- **Direct wallet** — Connect wallet and send USDC
-- **Gasless approvals** — ERC-4337 smart account abstraction via Pimlico
-
-{% hint style="success" %}
-**Why Gasless Matters**
-
-New users can fund loans without holding ETH for gas. This reduces friction significantly and enables true one-click contributions.
-
-Powered by Pimlico (ERC-4337 bundler).
-{% endhint %}
-
-### Data & Indexing
-
-**The Graph subgraph:**
-- Indexes all loan events (created, funded, repaid, defaulted)
-- Enables fast queries without scanning blockchain
-- Powers loan discovery and status updates
-
-**IPFS storage:**
-- Loan metadata (title, description, photos)
-- Borrower information and budget breakdown
-- Immutable, decentralized storage
+→ [Complete contract reference](../developers/contract-api.md)
 
 ---
 
-## What We're Learning
+### MicroLoanFactory.sol
 
-This phase is data gathering, not just product validation.
+**Purpose:** Deploys and manages individual loan contracts
 
-### Behavioral Patterns
-- How quickly do loans get funded?
-- What Trust Score threshold predicts timely repayment?
-- Do borrowers tip beyond principal? (Signal of gratitude/reliability)
-- How does social proximity affect funding speed?
+**Policy constraints:**
+- Minimum principal: $100 USDC
+- Loan duration: 7-365 days
+- One active loan per borrower
+- Pausable for emergency controls
 
-### Network Topology
-- Which community clusters fund each other?
-- Do strangers fund loans outside their network?
-- What trust cascades look like (close friends → extended network → platform users)
+**Key functions:**
 
-### Signal Predictiveness
-- Does Farcaster's quality score correlate with repayment?
-- Do Power Badge holders repay more reliably?
-- Does on-chain wallet history add predictive value?
+```solidity
+function createLoan(
+    address borrower,
+    string calldata metadataURI,
+    uint256 principal,
+    uint256 loanDuration,
+    uint256 fundraisingDeadline
+) external returns (address loanAddress)
+```
 
-### Community Dynamics
-- Will lenders browse loans or only fund friends?
-- Do successful repayments create repeat borrowers/lenders?
-- How viral is organic sharing?
+**Events emitted:**
 
----
-
-## Success Metrics
-
-### Quantitative Goals
-- 500-1,000 users (borrowers + lenders)
-- 90%+ repayment rate at maturity
-- 3-6 months of clean behavioral data
-- Viral growth (K-factor > 1)
-
-### Qualitative Goals
-- Proof that reputation-backed loans work
-- Community feedback on Trust Score fairness
-- Understanding of default triggers (life events, bad actors, miscalculation)
-- Validation that social accountability matters
-
-{% hint style="success" %}
-**Key Milestone**
-
-If we demonstrate **90%+ repayment** with zero interest and zero collateral, we've proven the primitive works. That unlocks Phase 1 (cashflow + interest).
-{% endhint %}
+```solidity
+event LoanCreated(
+    address indexed loanAddress,
+    address indexed borrower,
+    uint256 principal,
+    uint256 maturityDate
+);
+```
 
 ---
 
-## Current Limitations (By Design)
+## Social Trust Scoring Implementation
 
-{% hint style="warning" %}
-**Phase 0 Constraints**
+→ **Algorithm overview:** [lendfriend.org/how-it-works](https://lendfriend.org/how-it-works#trust-score-algorithm)
 
-- **No interest** — Altruistic phase, testing trust alone
-- **No installments** — Single maturity keeps contracts simple
-- **No cashflow verification** — Pure social trust
-- **No automated repayment** — Tests if social pressure drives action
-- **Single platform focus** — Farcaster first (highest signal quality)
+→ **Research foundation:** [Academic papers](../references.md)
 
-These limitations are intentional. We're testing the core primitive before adding complexity.
-{% endhint %}
+### Technical Architecture
+
+**Computation:** Off-chain (too expensive for on-chain social graph analysis)
+
+**Data source:** Farcaster social graph via Neynar API
+
+**Caching:** 30-minute TTL via React Query
+
+**Algorithm:** Adamic-Adar weighted mutual connections
+
+### Implementation
+
+```typescript
+interface TrustScoreInput {
+  borrowerFid: number;
+  lenderFid: number;
+}
+
+interface TrustScoreOutput {
+  mutualConnections: number;
+  effectiveMutuals: number;      // Adamic-Adar weighted
+  socialDistance: number;         // 0-100
+  riskTier: 'LOW' | 'MEDIUM' | 'HIGH';
+}
+
+async function calculateTrustScore(
+  input: TrustScoreInput
+): Promise<TrustScoreOutput>
+```
+
+**Scoring formula:**
+
+```
+S_base = f(M_effective)           // 0-60 points based on weighted mutuals
+S_overlap = (M / min(|B|, |L|)) × 30   // 0-30 points network overlap
+S_mutual = follows_both ? 10 : 5       // 0-10 points mutual follow
+
+S_total = min(S_base + S_overlap + S_mutual, 100)
+```
+
+**Risk tier classification:**
+
+```typescript
+if (effectiveMutuals >= 9 || socialDistance >= 60) return 'LOW';
+if (effectiveMutuals >= 2.5 || socialDistance >= 30) return 'MEDIUM';
+return 'HIGH';
+```
+
+**Data flow:**
+
+1. User connects Farcaster account (Privy auth)
+2. Frontend fetches social graph (Neynar API)
+3. Calculate trust scores for borrower-lender pairs
+4. Display in UI (not stored on-chain)
+5. Cache results for 30 minutes
+
+→ [Complete algorithm details](../how-it-works/social-trust-scoring/the-algorithm.md)
+
+### Platform Integration
+
+**Farcaster (Primary)**
+
+**API:** Neynar REST API
+**Authentication:** Privy embedded wallet + Farcaster sign-in
+**Data accessed:**
+- User FID (Farcaster ID)
+- Follower/following graph
+- Neynar quality score (0-1 spam filter)
+- Power Badge status (verified accounts)
+- Cast history and engagement
+
+**Trust signals:**
+- Mutual connections (weighted by rarity)
+- Power Badge verification (boolean)
+- Neynar quality score (filters bots)
+- Account age (via FID creation date)
+- On-chain wallet history (linked address)
+
+**Implementation:**
+
+```typescript
+interface FarcasterUser {
+  fid: number;
+  username: string;
+  displayName: string;
+  pfp: string;
+  verifications: string[];  // Linked wallet addresses
+  followerCount: number;
+  followingCount: number;
+}
+
+// Fetch social graph
+const followData = await neynar.fetchBulkUsers(fids);
+const mutualConnections = intersection(
+  borrower.following,
+  lender.following
+);
+```
+
+→ [Farcaster integration guide](../developers/farcaster-integration.md)
+
+**Bluesky (Future)**
+
+Integration status: Planned for 2026
+- AT Protocol decentralized identity
+- Domain verification (handle = domain)
+- Account quality scoring (similar to Neynar)
+
+→ [Platform expansion strategy](https://lendfriend.org/vision#platform-expansion)
 
 ---
 
-## What's Next
+## Frontend Applications
 
-**When Phase 0 succeeds** (90%+ repayment, 500+ users), we move to Phase 1:
+### Web App
+
+**Stack:** Next.js 15, React 19, TypeScript
+**Styling:** Tailwind CSS
+**State:** React Query, Zustand
+**Web3:** wagmi v2, viem
+**Auth:** Privy (wallet + social login)
+
+**Key pages:**
+- `/` — Loan discovery and list
+- `/create-loan` — Multi-step loan creation form
+- `/loan/[address]` — Loan detail and funding
+- `/portfolio` — Lender's funding dashboard
+- `/my-loans` — Borrower's loan management
+
+**Payment methods:**
+- USDC direct (wallet connect)
+- Coinbase Pay (card-to-crypto)
+- Privy fiat onramp
+- Gasless approvals (ERC-4337 via Pimlico)
+
+**Key features:**
+- Trust score display (real-time calculation)
+- Social sharing (12+ platforms)
+- IPFS metadata upload
+- Transaction history
+
+→ [Frontend integration guide](../developers/frontend-integration.md)
+
+---
+
+### Farcaster Mini App
+
+**Stack:** Next.js 15, @farcaster/frame-sdk
+**Deployment:** Vercel edge functions
+**Network:** Base Sepolia
+
+**Features:**
+- Native mini app (runs inside Farcaster)
+- Tab-based mobile interface
+- Create/fund loans without leaving app
+- Automatic FID lookup
+- Cast Actions for one-tap contributions
+
+→ [Farcaster mini app guide](../developers/farcaster-miniapp.md)
+
+---
+
+## Data Infrastructure
+
+### The Graph Subgraph
+
+**Subgraph ID:** `lendfriend-base-sepolia`
+**Network:** Base Sepolia
+**Indexing:** Real-time loan events
+
+**Entities indexed:**
+
+```graphql
+type Loan @entity {
+  id: ID!
+  borrower: Bytes!
+  principal: BigInt!
+  totalRaised: BigInt!
+  totalRepaid: BigInt!
+  maturityDate: BigInt!
+  createdAt: BigInt!
+  status: LoanStatus!
+  contributions: [Contribution!]! @derivedFrom(field: "loan")
+}
+
+type Contribution @entity {
+  id: ID!
+  loan: Loan!
+  lender: Bytes!
+  amount: BigInt!
+  timestamp: BigInt!
+}
+```
+
+**Queries:**
+
+```graphql
+# Get all loans for a borrower
+{
+  loans(where: { borrower: "0x..." }) {
+    id
+    principal
+    totalRaised
+    maturityDate
+  }
+}
+
+# Get lender's contributions
+{
+  contributions(where: { lender: "0x..." }) {
+    loan { id }
+    amount
+    timestamp
+  }
+}
+```
+
+→ [Subgraph schema](../developers/subgraph.md)
+
+---
+
+### IPFS Metadata Storage
+
+**Provider:** Pinata
+**Storage:** Immutable loan metadata
+
+**Metadata schema:**
+
+```typescript
+interface LoanMetadata {
+  title: string;
+  description: string;
+  images?: string[];
+  budgetBreakdown?: {
+    category: string;
+    amount: number;
+  }[];
+  borrowerInfo: {
+    fid: number;
+    username: string;
+  };
+  createdAt: number;
+}
+```
+
+**Upload flow:**
+
+1. User submits loan form
+2. Frontend uploads images to IPFS
+3. Metadata JSON uploaded to IPFS
+4. IPFS CID stored in loan contract (`metadataURI`)
+
+→ [IPFS integration guide](../developers/ipfs.md)
+
+---
+
+## Data Collection
+
+Phase 0 is designed for behavioral data gathering.
+
+**On-chain data tracked:**
+- Loan creation events
+- Contribution amounts and timestamps
+- Repayment amounts and timing
+- Default status at maturity
+- Lender claim patterns
+
+**Off-chain data tracked:**
+- Trust scores at time of loan creation
+- Social graph snapshots
+- User acquisition sources
+- Funding completion time
+- Share/viral metrics
+
+**Analytics queries:**
+
+```typescript
+// Example: Analyze repayment correlation with trust scores
+SELECT
+  trust_score_bucket,
+  AVG(repayment_ratio) as avg_repayment,
+  COUNT(*) as loan_count
+FROM loans
+WHERE maturity_date < NOW()
+GROUP BY trust_score_bucket
+```
+
+→ [Research methodology](../research/methodology.md)
+
+---
+
+## Technical Constraints
+
+**Phase 0 design decisions:**
+
+| Constraint | Rationale |
+|-----------|-----------|
+| **Zero interest** | Simplifies contracts, tests pure social accountability |
+| **Single maturity** | No installment logic, simpler state management |
+| **Farcaster only** | Highest quality trust signals, smaller attack surface |
+| **No cashflow verification** | Focus on social trust primitive first |
+| **Manual repayment** | Tests if reputation incentive is sufficient |
+
+These constraints are intentional. Phase 1 will add cashflow verification and interest for larger loans.
+
+→ [Vision & roadmap](https://lendfriend.org/vision)
+
+---
+
+## Next Phase
 
 → [Phase 1: Scale with Cashflow](phase-1-cashflow.md)
 
-**New capabilities:**
-- Add cashflow verification (Plaid, Square, Shopify)
-- Enable larger loan amounts ($5K-$50K+)
-- Introduce liquidity pools for passive lenders
-- Interest-based lending for sustainability
+**New technical capabilities:**
+- Cashflow verification APIs (Plaid, Square, Shopify)
+- Liquidity pool smart contracts
+- Interest calculation and accrual
+- Hybrid risk scoring (social + financial signals)
 
-**Why this sequence matters:** Social trust works for small loans among tight communities. To scale beyond personal networks, we need objective cashflow data. Phase 0 gathers the behavioral data to build that hybrid model.
+**Prerequisites for Phase 1:**
+- 100+ completed loans
+- 3-6 months of repayment data
+- Validated trust score correlation with repayment
+- Proven 85%+ repayment rate
 
 ---
 
-## Related Pages
+## Related Documentation
 
-- [Vision](../vision.md) — The future we're building
-- [Motivation](../motivation.md) — Why uncollateralized lending matters
-- [Social Trust Scoring](../how-it-works/social-trust-scoring/README.md) — Algorithm details
-- [Farcaster Virality](../how-it-works/virality-and-growth/farcaster-virality.md) — Platform integration
+**High-level context:**
+- [Vision & roadmap](https://lendfriend.org/vision) — The future we're building
+- [How it works](https://lendfriend.org/how-it-works) — User-friendly algorithm explanation
+- [Whitepaper](https://lendfriend.org/whitepaper) — Full manifesto and research
+
+**Technical deep dives:**
+- [Social Trust Scoring](../how-it-works/social-trust-scoring/README.md) — Algorithm calibration
+- [Smart Contract Reference](../developers/contract-api.md) — Complete API documentation
+- [Academic Research](../references.md) — 30+ peer-reviewed papers
