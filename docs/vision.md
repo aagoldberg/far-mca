@@ -1,224 +1,175 @@
-# Vision & Roadmap
+# Vision
 
-## Our Vision
+## The Future We're Building
 
-A world where **your reputation is your collateral**, your network is your credit history, and your community is your underwriter.
+**Imagine a world where your reputation replaces your credit score, your cashflow replaces collateral, and loans repay themselves automatically from your wallet.**
 
----
+No credit checks. No collateral. No late payment stress.
 
-## Platform Expansion Strategy
+Just trust, verified by your network and your business activity—repaying seamlessly in the background as you earn.
 
-LendFriend starts on Farcaster and expands thoughtfully to other platforms, adapting our risk model based on signal quality research.
-
-### Phase 1-2: Farcaster (2025-2026) ✅
-
-**Why it's strongest:**
-- Wallet-based identity (crypto signatures)
-- Crypto-native community with shared context
-- Neynar quality scores filter spam/bots
-- Real relationships in tight-knit community
-
-**Risk Model:**
-- Repayment History: 40%
-- Social Trust Score: 30% (high confidence)
-- Loan Size Risk: 20%
-- Account Quality: 10%
+This is where LendFriend is going.
 
 ---
 
-### Phase 2-3: Bluesky (2026) ⚠️
+## The Journey
 
-**Signal characteristics:**
-- Domain-based verification (e.g., yourname.com)
-- AT Protocol (decentralized, self-authenticating)
-- Mix of real connections + strangers
-- Better than Twitter, worse than Farcaster
+### **Phase 0: Prove Trust Works** (Testnet Now → 2025)
 
-**Adapted Risk Model:**
-- Repayment History: 50% (↑10%)
-- Social Trust Score: 20% (↓10%)
-- Loan Size Risk: 20%
-- Account Quality: 10% (+ domain verification bonus)
+**What:** 0% interest loans backed purely by social signals
 
-**Mitigation strategies:**
-- Weight domain-verified accounts higher
-- Cross-platform verification bonus (same user on Farcaster + Bluesky = more trustworthy)
+**Where:** Farcaster mini apps (launching on mainnet soon)
 
----
+**How it works:**
+- Borrow $100-$5,000 from your network
+- Your Trust Score comes from real relationships and on-chain reputation
+- Repay on your own schedule—no interest, just trust
+- Build reputation through timely repayment and optional tipping
 
-### Phase 3: Twitter/X (2027) 🚨
+**Why start here:** We need to prove that uncollateralized lending works when reputation is at stake. Farcaster gives us crypto-native users who understand wallets, strong social signals from real relationships, and a community that will give us honest feedback.
 
-**Signal challenges:**
-- Research shows ~64% of accounts are bots
-- "Less about real life friendships" (academic research)
-- Follow-for-follow gaming common
-- Anonymous accounts, email-based identity
-
-**Heavily Adapted Model:**
-- Repayment History: 60% (↑20%)
-- Social Trust Score: 10% (↓20%)
-- Loan Size Risk: 20%
-- Account Quality: 10% (require verification)
-
-**Requirements:**
-- Twitter Blue verification required (paid = Sybil resistance)
-- Use Twitter as supplementary data only, not primary
-- Connections don't create social accountability because they're not real relationships
+**Goal:** 500-1,000 users demonstrating that social accountability can replace collateral.
 
 ---
 
-### Phase 2-3: On-Chain Reputation (2026-2027) ✅
+### **Phase 1: Scale with Cashflow** (2025-2026)
 
-**Why it's powerful:**
-- Cryptographically verifiable credentials (can't fake)
-- Crypto-native signals for crypto-native users
-- No API restrictions or permissions needed
-- Complements social trust with professional/community proof
-
-**Data Sources:**
-- **ENS ownership** - Long-held domains signal commitment
-- **POAP collections** - Event attendance, community participation
-- **DAO participation** - Governance voting, treasury contributions
-- **GitHub contributions** - Verified developer work (for tech borrowers)
-- **Base L2 transaction history** - On-chain income/spending patterns
-- **Icebreaker credentials** - Verified work/education on Farcaster
-
-**Risk Model Integration:**
-- Repayment History: 40-50%
-- Social Trust Score: 20-30%
-- Loan Size Risk: 20%
-- **On-Chain Reputation: 10-20%** (NEW)
-
-**Why this matters:**
-Many crypto borrowers have non-traditional employment (DAO contributors, freelance devs, indie projects). Traditional employment/education data would penalize them. On-chain reputation captures their actual economic activity and community standing.
-
-**Example signals:**
-- Holds ENS domain >2 years + 50+ POAPs + active DAO voter = high reputation
-- Regular Base L2 transactions for 6+ months = consistent income
-- Icebreaker verified credentials + GitHub contributions = professional proof
-
----
-
-### Why Not Facebook? ❌
-
-**API Access Blockers:**
-- `user_friends` permission restricted to "limited partners" requiring Facebook review
-- Even if approved, only shows friends who **also use your app** (circular dependency)
-- 2016: Facebook explicitly stopped letting lenders access user data post-Cambridge Analytica
-- Only ~20% user opt-in rate for friend permissions under current policies
-
-**Signal Quality Issues:**
-- Research shows only **BFFs** (friends who actually interact) predict defaults, not nominal connections
-- Facebook API doesn't provide interaction data—only friend lists
-- Microfinance study found interest-based data performed as well as nominal friend networks
-
-**The Mutual App Problem:**
-> "user_friends only provides access to those users who have also logged in with the same app and mutually granted the user_friends permission"
-
-This creates a bootstrapping death spiral: can't get social graph data until both borrower AND lender already use LendFriend.
-
-**Better alternatives:** On-chain reputation (ENS, POAPs, DAO participation), Icebreaker credentials, LinkedIn professional connections.
-
----
-
-## Research Foundation
-
-**Facebook vs Twitter study findings:**
-> "Facebook is more focused towards making social connections, while Twitter is all about staying informed... Facebook is typically full of people users have met... while Twitter is less about 'real life' friendships, and it's normal to connect with strangers."
-
-**Credit scoring implications:**
-- Twitter connections don't create social accountability because they're not real relationships
-- Research shows lenders using Facebook connections see predictive value, but Twitter follows are noise
-
-**Key insight:**
-As we expand platforms, we shift from social trust → repayment history. Farcaster lets us bootstrap with social trust because connections are real. Twitter requires traditional credit history because connections are noise.
-
----
-
-## The Three Phases
-
-### Phase 1: Bootstrap Trust (Q4 2025 - Q1 2026)
-
-Pure altruistic lending at 0% interest to prove the primitive works.
-
-**What we're building:**
-- $100-$5,000 community loans
-- Farcaster-native identity
-- Multi-signal reputation scoring
-- Transparent on-chain repayments
-
-**What we're learning:**
-- Repayment behavior patterns (on-time, early, tipping %)
-- Trust network topology
-- Social signal predictiveness
-- Tipping behavior as reliability signal
-- Community dynamics at scale
-
-**Success metric:** 500-1,000 users, 3-6 months of clean behavioral data, proven that reputation-backed 0% interest loans can work.
-
----
-
-### Phase 2: Scale with Algorithms (Q2 2026+)
-
-Layer in cash flow data for larger loans with socially-appropriate interest.
+**What:** Larger loans using social signals + verified cashflow data
 
 **New capabilities:**
-- $10k-$25k+ loan sizes
-- Bank account cash flow (Plaid)
-- On-chain revenue verification
-- Algorithmic underwriting (0-5%)
-- Revenue-based repayment
+- Larger loan amounts ($5K-$50K+)
+- Bank account cashflow verification (Plaid)
+- Small business revenue verification (Square, Shopify)
+- Cross-platform sharing (website, Twitter, WhatsApp, Telegram)
+- **Liquidity pools** for passive lenders
 
-**The model:**
-- Hybrid social + financial signals
-- Proven AUC ≈ 0.72-0.80 accuracy
-- Auto-approval for qualified loans
-- Dynamic risk-based pricing
-- Continuous model improvement
+**Why cashflow matters:** Social trust works for small loans, but larger amounts need more signal. Traditional credit scores are outdated and exclusionary. Cashflow is a better proxy—it shows actual income, not past debt. This unlocks lending for gig workers, DAO contributors, and small businesses that banks ignore.
 
-**This isn't theory:** Prosper, Branch, and Tala all followed this exact evolution—start with social proof, gather data, scale with algorithms. We're doing the same, but transparent and on-chain.
+**Why pools become possible:** With verified cashflow data, risk assessment becomes more objective and less dependent on social relationships. This means:
+- Lenders don't need to personally know borrowers
+- Anonymous capital can fund loans through pools
+- Passive investors can earn yields without active loan selection
+- Liquidity scales beyond personal networks
 
----
+Cashflow verification transforms lending from "I trust my friend" to "I trust the data"—enabling traditional liquidity pool mechanics.
 
-### Phase 3: The Credit Network (2027+)
+**Technical foundation:**
+- **Plaid** for bank account cashflow
+- **Square/Shopify APIs** for merchant revenue data
+- Social signals remain important, but weighted lower as amounts increase
+- Hybrid model: trust + cashflow = accurate risk assessment
 
-Transform multi-platform social graphs into a full credit network.
-
-**Vision:**
-- Multi-platform expansion (Bluesky, Twitter/X)
-- Credit scoring primitive (portable reputation scores used across DeFi)
-- Liquidity markets (secondary markets for loan participation)
-- Institutional integration (traditional lenders using our risk models)
-- Global accessibility (serving the 1.7B unbanked worldwide)
+**Goal:** Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
 
 ---
 
-## Why This Matters
+### **Phase 2: Automate Repayment** (2026-2027)
 
-- **1.7B** unbanked adults globally
-- **$100B+** annual payday loan market (US)
-- **300%+** typical payday loan APR
+**What:** Loans that repay themselves automatically from your wallet or business revenue
 
-Traditional finance has failed to serve billions of people. Web3 has the tools to fix this—persistent identity, transparent transactions, programmable trust—but until now, no one has built the primitive for uncollateralized lending.
+**The vision:**
+1. Get approved for a loan based on social trust + verified cashflow
+2. Choose "auto-repay from my Square sales" or "auto-deduct from my wallet"
+3. As you earn, small amounts automatically flow to lenders
+4. No payment reminders, no stress, no late fees
+5. Just passive repayment as your business grows
 
-LendFriend is that primitive. We're proving that **reputation can be collateral**, that **communities can be underwriters**, and that **algorithms can scale trust** without extracting predatory profits.
+**Technical approach:**
+
+**For merchants (easier, shipping first):**
+- **Square** has open APIs—we can integrate auto-deduction today
+- Revenue share model: 2-5% of daily sales auto-repays loan
+- As merchant earns, loan repays itself
+- **Shopify** currently harder (requires ACH rails), but they're moving toward crypto wallets aggressively
+
+**For wallet holders (developing):**
+- **Account abstraction** is maturing fast—"payment streams" plugins coming
+- **Stripe** working on crypto wallet integrations
+- **Coinbase** pushing stablecoin ecommerce payments
+- When wallets receive income, loan auto-deducts
+- No manual transfers, just seamless repayment
+
+**Why this matters:** Removes the biggest friction in P2P lending—remembering to repay. Borrowers never miss payments. Lenders get passive, predictable returns. Everyone wins.
+
+**Goal:** Make uncollateralized lending feel invisible—you borrow, you earn, it repays itself.
 
 ---
 
-## Our Principles
+## Why This Works Now
 
-### 🔍 Transparent by Default
-All loans, repayments, and reputation scoring are on-chain and publicly auditable. No black boxes, no hidden fees, no surprises.
+Five years ago, this wasn't possible. Today, the infrastructure exists:
 
-### 📊 Research-Driven
-Every decision is backed by academic research and proven fintech evolution. We're not guessing—we're following the data.
+**1. Open Social Graphs**
+- Farcaster, Bluesky: public relationship data
+- Can calculate trust without invasive API permissions
 
-### 🤝 Community-Governed
-Borrowers and lenders are real people with persistent identities. Reputation matters. Community accountability matters.
+**2. Stablecoin Adoption**
+- USDC on Base: fast, cheap, stable
+- Ecommerce platforms adding crypto payments
+- Wallets becoming mainstream
 
-### 💚 Mission-First
-We start altruistic (0% interest) and evolve to sustainable (0-5% for larger loans). Not extractive. Not predatory. Just fair.
+**3. Cashflow Data APIs**
+- Plaid, Square, Shopify APIs are mature
+- Can verify income without traditional employment
+
+**4. Account Abstraction**
+- Programmable wallets coming to market
+- Payment streams, auto-deduction plugins
+- Smart accounts that can "set it and forget it"
+
+**5. On-Chain Reputation**
+- ENS, POAPs, DAO participation verifiable
+- Captures crypto-native work traditional systems miss
+
+The pieces exist. We're assembling them into something new.
 
 ---
 
-**For the full interactive vision page,** visit [lendfriend.org/vision](https://lendfriend.org/vision)
+## What Makes This Hard (And Achievable)
+
+**Challenge 1: Auto-deduction tech isn't mature yet**
+- **Solution:** Start with Square (open APIs), wait for Shopify/wallet infrastructure to catch up
+- Shopify is aggressively moving to crypto wallets
+- Account abstraction developing fast
+- We build the model now, tech catches up soon
+
+**Challenge 2: Cashflow attestations are complex**
+- **Easiest:** Direct API integrations (Plaid, Square)
+- **Medium:** Chainlink oracles for bank data
+- **Harder:** Zero-knowledge proofs (zkTLS, Reclaim Protocol)
+- **Solution:** Start with easy integrations, layer in privacy later
+
+**Challenge 3: Consumer wallet onboarding**
+- **Solution:** Privy social login (Google, email) for web users
+- Farcaster users already have wallets
+- Progressive disclosure: contribute first, learn crypto later
+
+**We're not waiting for perfect infrastructure. We're building with what exists today and upgrading as the ecosystem matures.**
+
+---
+
+## The Path Forward
+
+**Today (Testnet):** Proving social trust works with 0% interest loans
+
+**2025:** Launch on mainnet, grow to 1,000 users, gather repayment data
+
+**2025-2026:** Add website, cashflow verification, liquidity pools, scale to larger loans
+
+**2026-2027:** Integrate auto-deduction with Square, experiment with wallet streams, make repayment invisible
+
+**Beyond:** Multi-platform expansion, institutional pool liquidity, portable credit scores across DeFi
+
+---
+
+## Join Us
+
+We're building the future of uncollateralized lending—transparent, fair, and community-driven.
+
+If you believe reputation should replace collateral, if you think communities can be better underwriters than algorithms, if you want to help create a lending system that serves people traditional finance ignores—**support the launch, spread the word, and help us prove this works.**
+
+**The MVP is live on testnet.** Mainnet coming soon.
+
+→ [How It Works](how-it-works/README.md)
+→ [Platform Expansion Strategy](platform-expansion.md)
+→ [Virality & Growth](how-it-works/virality-and-growth/README.md)
