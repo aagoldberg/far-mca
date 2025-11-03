@@ -32,6 +32,9 @@
 ## 🎯 Vision & Roadmap
 
 * [Vision & Roadmap](vision.md)
+  * [Phase 0: Prove Trust Works](vision/phase-0-social-trust.md)
+  * [Phase 1: Scale with Cashflow](vision/phase-1-cashflow.md)
+  * [Phase 2: Automate Repayment](vision/phase-2-automation.md)
 
 ## 📚 Resources
 

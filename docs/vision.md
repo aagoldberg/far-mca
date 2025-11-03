@@ -32,6 +32,8 @@ Uncollateralized lending expands who can access crypto, funds real economic acti
 
 **Goal:** 500-1,000 users demonstrating that social accountability can replace collateral.
 
+→ [Read detailed Phase 0 plan](vision/phase-0-social-trust.md)
+
 ---
 
 ### **Phase 1: Scale with Cashflow** (2025-2026)
@@ -62,6 +64,8 @@ Cashflow verification transforms lending from "I trust my friend" to "I trust th
 - Hybrid model: trust + cashflow = accurate risk assessment
 
 **Goal:** Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
+
+→ [Read detailed Phase 1 plan](vision/phase-1-cashflow.md)
 
 ---
 
@@ -94,6 +98,8 @@ Cashflow verification transforms lending from "I trust my friend" to "I trust th
 **Why this matters:** Removes the biggest friction in P2P lending—remembering to repay. Borrowers never miss payments. Lenders get passive, predictable returns. Everyone wins.
 
 **Goal:** Make uncollateralized lending feel invisible—you borrow, you earn, it repays itself.
+
+→ [Read detailed Phase 2 plan](vision/phase-2-automation.md)
 
 ---
 
