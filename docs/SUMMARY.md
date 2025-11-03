@@ -4,6 +4,7 @@
 
 ## 📖 How It Works
 
+* [💡 Motivation](motivation.md)
 * [Overview](how-it-works/overview.md)
 * [👤 Borrower Profiles & Identity](how-it-works/borrower-profiles.md)
 * [🚀 Virality & Growth](how-it-works/virality-and-growth/README.md)
