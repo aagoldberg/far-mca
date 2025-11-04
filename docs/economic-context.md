@@ -22,7 +22,7 @@ By 2025, three pieces converged. Stablecoins reached $305B supply with $27.6T in
 
 ## 5. LendFriend Bridges the Gap
 
-We combine the pieces platform lenders couldn't: social trust from Farcaster with cashflow verification (Plaid, merchant APIs, wallet analysis). We use stablecoin infrastructure for instant, low-cost repayment instead of expensive ACH rails. We tap global liquidity pools earning 4-8% yields instead of VC equity demanding 20%+ returns. Result: same cashflow underwriting at 50-70% lower operational cost, delivering 8-15% APR to borrowers (vs. 20-50% APR from platform lenders). Same underwriting model, different infrastructure, better economics.
+Platform lenders like Shopify and Stripe solved cashflow verification—they see every transaction. But they're constrained by expensive infrastructure: ACH rails for repayment, VC equity demanding 20%+ returns, high operational overhead. We unlock better economics through different infrastructure: stablecoins for instant, low-cost repayment; global liquidity pools earning 4-8% yields; and social trust from Farcaster to supplement cashflow data. Result: 50-70% lower operational cost, delivering 8-15% APR to borrowers (vs. 20-50% APR from platform lenders). Better infrastructure, better economics.
 
 ---
 
