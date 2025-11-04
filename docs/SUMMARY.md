@@ -2,6 +2,7 @@
 
 * [👋 Welcome](README.md)
 * [💡 Motivation](motivation.md)
+* [📈 Economic Context: Why Now?](economic-context.md)
 
 ## 🎯 Vision & Roadmap
 
