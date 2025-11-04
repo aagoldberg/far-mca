@@ -31,7 +31,7 @@ export default function EconomicContextPage() {
                 <strong className="text-blue-600">Wave 1 (2010-2025): Work went global.</strong> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<a href="#ref1" className="text-blue-600 hover:text-blue-800"><sup>[1]</sup></a>. AI accelerated this: 68% of small businesses use AI in 2025<a href="#ref2" className="text-blue-600 hover:text-blue-800"><sup>[2]</sup></a>, enabling solo entrepreneurs to run $50K-$500K businesses.
               </p>
               <p>
-                <strong className="text-red-600">Wave 2 (2020-2025): Capital didn't follow.</strong> While work globalized, finance stayed local. 77% of small businesses struggle to access capital<a href="#ref3" className="text-blue-600 hover:text-blue-800"><sup>[3]</sup></a>. Banks reject 1 in 4 borrowers<a href="#ref4" className="text-blue-600 hover:text-blue-800"><sup>[4]</sup></a>—not because they're not creditworthy, but because underwriting can't assess platform income, on-chain earnings, or social trust. The gap: hundreds of billions. The result: predatory lenders charging 280-400% APR.
+                <strong className="text-red-600">Wave 2 (2020-2025): Capital didn't follow.</strong> While work globalized, finance stayed expensive. 77% of small businesses struggle to access capital<a href="#ref3" className="text-blue-600 hover:text-blue-800"><sup>[3]</sup></a>. Banks reject 1 in 4 borrowers<a href="#ref4" className="text-blue-600 hover:text-blue-800"><sup>[4]</sup></a>. Platform lenders (Shopify, Stripe, PayPal) solved cashflow visibility but charge 20-50% APR due to ACH rails, VC capital costs, and operational overhead. The gap: affordable credit for the new economy.
               </p>
               <p>
                 <strong className="text-green-600">Wave 3 (2024-2025): The infrastructure arrived.</strong> Stablecoins hit $305B supply with $27.6T in transfers<a href="#ref5" className="text-blue-600 hover:text-blue-800"><sup>[5]</sup></a> (surpassing Visa + Mastercard). DeFi collateralized lending proved the technical model works ($50B TVL, &lt;5% defaults)<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a>. Social verification protocols scaled to billions of users. For the first time, all the pieces exist to build uncollateralized lending for the new economy.
@@ -352,12 +352,76 @@ export default function EconomicContextPage() {
               </div>
             </div>
 
+            {/* Platform Lenders: Progress, But Expensive */}
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Platform Lenders: Progress, But Expensive</h3>
+              <div className="bg-white border border-gray-200 rounded-lg p-6">
+                <p className="text-gray-700 mb-4 leading-relaxed">
+                  Platform companies (Shopify, Stripe, PayPal) <strong>can</strong> assess cashflow—they see every transaction. But rates stay high due to infrastructure costs:
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-5">
+                    <h4 className="font-bold text-amber-900 mb-3">Shopify Capital<a href="#ref30" className="text-blue-600 hover:text-blue-800"><sup>[30]</sup></a></h4>
+                    <ul className="text-sm text-gray-700 space-y-2">
+                      <li>• <strong>Factor rates 1.1-1.13</strong></li>
+                      <li>• <strong>→ 20-50% APR</strong> equivalent</li>
+                      <li>• Revenue-based repayment</li>
+                      <li>• $200-$1M loans</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+                    <h4 className="font-bold text-blue-900 mb-3">Stripe Capital<a href="#ref31" className="text-blue-600 hover:text-blue-800"><sup>[31]</sup></a></h4>
+                    <ul className="text-sm text-gray-700 space-y-2">
+                      <li>• <strong>Factor rates 1.06-1.20</strong></li>
+                      <li>• <strong>→ 10-45% APR</strong> equivalent</li>
+                      <li>• 10% flat fee typical</li>
+                      <li>• Daily sales deduction</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-5">
+                    <h4 className="font-bold text-green-900 mb-3">PayPal Business<a href="#ref32" className="text-blue-600 hover:text-blue-800"><sup>[32]</sup></a></h4>
+                    <ul className="text-sm text-gray-700 space-y-2">
+                      <li>• <strong>10-18% APR</strong></li>
+                      <li>• Fixed fee on Working Capital</li>
+                      <li>• $1K-$500K loans</li>
+                      <li>• 17-52 week terms</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-amber-50 border border-amber-300 rounded-lg p-5">
+                  <h4 className="font-bold text-amber-900 mb-3">Why Platform Lending Is Still Expensive<a href="#ref33" className="text-blue-600 hover:text-blue-800"><sup>[33]</sup></a></h4>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                    <ul className="space-y-2">
+                      <li><strong>1. ACH rail costs:</strong> $0.10-$0.50/transaction, 1-3 day settlement, NSF/chargeback risk</li>
+                      <li><strong>2. Capital costs:</strong> Debt facilities at 8-15% + need 20%+ returns for VC equity</li>
+                      <li><strong>3. Operational overhead:</strong> $200K-$500K salaries, $60K-$200K infrastructure, underwriting teams</li>
+                    </ul>
+                    <ul className="space-y-2">
+                      <li><strong>4. Tech stack:</strong> $500K-$2.5M to launch, BaaS fees, credit bureau integrations</li>
+                      <li><strong>5. Compliance:</strong> KYC/AML systems, legal teams, state licensing</li>
+                      <li><strong>6. Working capital:</strong> Money locked in loans for months earning nothing</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-blue-100 border-2 border-blue-400 rounded-lg p-5 mt-4">
+                  <p className="text-blue-900 font-semibold text-center">
+                    Platform lenders solved the <strong>underwriting</strong> problem. But traditional financial rails keep costs high.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* The Predatory Alternative */}
             <div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-4">The Predatory Alternative</h3>
               <div className="bg-white border border-red-300 rounded-lg p-6">
                 <p className="text-gray-700 mb-4 leading-relaxed">
-                  When banks say no, $100B+ in predatory lending fills the gap:
+                  For those outside platform ecosystems, options are worse—$100B+ in predatory lending:
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -373,20 +437,20 @@ export default function EconomicContextPage() {
                   </div>
 
                   <div className="bg-red-50 border border-red-200 rounded-lg p-5">
-                    <h4 className="font-bold text-red-900 mb-3">Merchant Cash Advances</h4>
+                    <h4 className="font-bold text-red-900 mb-3">Traditional MCAs</h4>
                     <ul className="text-sm text-gray-700 space-y-2">
-                      <li>• <strong>280% effective APR</strong> average</li>
+                      <li>• <strong>150-350% effective APR</strong><a href="#ref34" className="text-blue-600 hover:text-blue-800"><sup>[34]</sup></a></li>
                       <li>• <strong>$15B+ market</strong> and growing</li>
-                      <li>• <strong>Confusing pricing</strong> ("factor rates" hide true cost)</li>
-                      <li>• <strong>Daily payments</strong> drain cashflow</li>
+                      <li>• <strong>Confusing pricing</strong> (factor rates 1.3-1.5)</li>
+                      <li>• <strong>Daily ACH withdrawals</strong> drain cashflow</li>
                     </ul>
-                    <p className="text-xs text-red-800 mt-3 italic">Merchants pay $14K for $5K advance</p>
+                    <p className="text-xs text-red-800 mt-3 italic">Merchants pay $14K to borrow $10K</p>
                   </div>
                 </div>
 
                 <div className="bg-red-100 border-2 border-red-400 rounded-lg p-5 mt-4">
                   <p className="text-red-900 font-bold text-center text-lg">
-                    This $100B+ predatory market exists because there's no other option for new economy workers
+                    The choice: expensive platform loans (10-50% APR) or predatory MCAs/payday loans (150-400% APR)
                   </p>
                 </div>
               </div>
@@ -568,6 +632,144 @@ export default function EconomicContextPage() {
                   <p className="text-purple-900 text-sm">
                     <strong>Why this matters:</strong> For the first time, we can quantify social trust at scale without centralized gatekeepers.
                     Banks don't have social graphs. DeFi doesn't have persistent identity. We combine both.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Why Crypto Infrastructure Is More Elegant */}
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Why Crypto Infrastructure Is More Elegant</h3>
+              <div className="bg-white border border-gray-200 rounded-lg p-6">
+                <p className="text-gray-700 mb-4 leading-relaxed">
+                  Platform lenders (Shopify, Stripe, PayPal) proved cashflow-based lending works. But crypto infrastructure offers the same underwriting at <strong>50-70% lower cost</strong>:
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <h4 className="font-bold text-red-900 mb-4">Traditional Platform Lending Costs</h4>
+                    <div className="space-y-3">
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="font-semibold text-red-900 mb-2">💸 ACH Rails</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>• $0.10-$0.50 per transaction</li>
+                          <li>• 1-3 day settlement (working capital costs)</li>
+                          <li>• NSF/chargeback risk</li>
+                          <li>• Reconciliation overhead</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="font-semibold text-red-900 mb-2">💰 Capital Costs</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>• Debt facilities: 8-15% interest</li>
+                          <li>• VC equity: need 20%+ returns</li>
+                          <li>• Raise rounds every 18-24 months</li>
+                          <li>• Dilution pressure</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="font-semibold text-red-900 mb-2">👥 Operational Overhead</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>• Team salaries: $200K-$500K/year</li>
+                          <li>• Cloud infrastructure: $60K-$200K/year</li>
+                          <li>• Underwriting teams</li>
+                          <li>• Customer support 24/7</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="font-semibold text-red-900 mb-2">🏛️ Tech + Compliance</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>• $500K-$2.5M to launch</li>
+                          <li>• BaaS fees ($100-$5K/month)</li>
+                          <li>• KYC/AML systems</li>
+                          <li>• State-by-state licensing</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="bg-red-100 border-2 border-red-400 rounded-lg p-4 mt-4">
+                      <p className="text-red-900 font-bold text-center">
+                        Result: 20-50% APR to borrowers
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold text-green-900 mb-4">Crypto Infrastructure Advantages</h4>
+                    <div className="space-y-3">
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p className="font-semibold text-green-900 mb-2">⚡ Instant Settlement</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>✓ Stablecoins settle in seconds</li>
+                          <li>✓ No working capital locked for days</li>
+                          <li>✓ No NSF/chargeback risk</li>
+                          <li>✓ Automatic reconciliation</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p className="font-semibold text-green-900 mb-2">🌍 Global Capital Pools</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>✓ $305B stablecoin supply available</li>
+                          <li>✓ Lenders earn 4-8% yields (not 20%+ VC returns)</li>
+                          <li>✓ Permissionless liquidity</li>
+                          <li>✓ No raise cycles or dilution</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p className="font-semibold text-green-900 mb-2">🤖 Programmable Repayment</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>✓ Smart contracts automate deductions</li>
+                          <li>✓ No manual reconciliation</li>
+                          <li>✓ Eliminates payment processing fees</li>
+                          <li>✓ Transparent on-chain accounting</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p className="font-semibold text-green-900 mb-2">🔗 Portable Reputation</p>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>✓ On-chain credit history follows you</li>
+                          <li>✓ Reduces underwriting costs</li>
+                          <li>✓ Cross-platform composability</li>
+                          <li>✓ No credit bureau fees</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="bg-green-100 border-2 border-green-400 rounded-lg p-4 mt-4">
+                      <p className="text-green-900 font-bold text-center">
+                        Result: 8-15% APR to borrowers
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-blue-50 to-green-50 border-2 border-blue-400 rounded-lg p-6">
+                  <h4 className="font-bold text-gray-900 mb-4 text-lg text-center">The Crypto Lending Advantage</h4>
+                  <div className="grid md:grid-cols-3 gap-4 text-center">
+                    <div>
+                      <div className="text-3xl font-bold text-blue-600 mb-2">50-70%</div>
+                      <div className="text-sm text-gray-700">Lower operational costs</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-green-600 mb-2">10-40%</div>
+                      <div className="text-sm text-gray-700">Lower APR to borrowers</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+                      <div className="text-sm text-gray-700">Global, permissionless access</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-100 border-2 border-blue-400 rounded-lg p-5 mt-6">
+                  <p className="text-blue-900 font-semibold text-center text-lg">
+                    <strong>Same underwriting (cashflow + social trust).</strong> Different infrastructure. <strong>Better economics.</strong>
                   </p>
                 </div>
               </div>
@@ -871,6 +1073,36 @@ export default function EconomicContextPage() {
                 <p className="font-semibold text-gray-900">[29] Flash Loan Statistics</p>
                 <p className="text-gray-700">Bank of Canada, "Risk-Free Uncollateralized Lending in Decentralized Markets" - 24M flash loan events, $3T+ volume</p>
                 <a href="https://www.bankofcanada.ca/wp-content/uploads/2025/03/sdp2025-6.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">https://www.bankofcanada.ca/wp-content/uploads/2025/03/sdp2025-6.pdf</a>
+              </div>
+
+              <div id="ref30" className="scroll-mt-20">
+                <p className="font-semibold text-gray-900">[30] Shopify Capital Rates and Terms</p>
+                <p className="text-gray-700">Shopify, "Understanding Shopify Capital Loan Interest Rate" - Factor rates 1.1-1.13, equivalent to 20-50% APR depending on repayment speed</p>
+                <a href="https://www.hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-loan-interest-rate-a-comprehensive-guide" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-loan-interest-rate</a>
+              </div>
+
+              <div id="ref31" className="scroll-mt-20">
+                <p className="font-semibold text-gray-900">[31] Stripe Capital Financing Costs</p>
+                <p className="text-gray-700">Stripe, "Stripe Capital Review 2025" - Factor rates 1.06-1.20, 10% flat fee typical, APR equivalents 10-45%</p>
+                <a href="https://www.unitedcapitalsource.com/business-loans/lender-reviews/stripe-capital-review/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">unitedcapitalsource.com/business-loans/lender-reviews/stripe-capital-review</a>
+              </div>
+
+              <div id="ref32" className="scroll-mt-20">
+                <p className="font-semibold text-gray-900">[32] PayPal Business Loan Rates</p>
+                <p className="text-gray-700">PayPal, "PayPal Business Loans Review" - 10-18% APR on business loans, fixed fees on Working Capital product</p>
+                <a href="https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review</a>
+              </div>
+
+              <div id="ref33" className="scroll-mt-20">
+                <p className="font-semibold text-gray-900">[33] Fintech Lending Cost Structure</p>
+                <p className="text-gray-700">Multiple sources - ACH fees ($0.10-$0.50/transaction), BaaS setup ($500-$5K), operational costs ($200K-$500K salaries, $60K-$200K infrastructure), startup costs ($500K-$2.5M)</p>
+                <a href="https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending</a>
+              </div>
+
+              <div id="ref34" className="scroll-mt-20">
+                <p className="font-semibold text-gray-900">[34] Merchant Cash Advance Costs</p>
+                <p className="text-gray-700">Shield Funding & Multiple Sources, "True Costs of Merchant Cash Advances" - Factor rates 1.3-1.5, effective APRs 150-350%, industry analysis 2024</p>
+                <a href="https://shieldfunding.com/merchant-cash-advance/true-costs-mca/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">shieldfunding.com/merchant-cash-advance/true-costs-mca</a>
               </div>
             </div>
           </div>
