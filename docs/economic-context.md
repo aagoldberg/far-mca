@@ -6,11 +6,11 @@ The gap between where people earn and where they can borrow has never been wider
 
 ## 1. A New Economy Emerged
 
-Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy where 1.6 billion people now earn income borderlessly[[1]](#ref1). AI tools enabled solo entrepreneurs to run $50K-$500K businesses—68% of small businesses now use AI[[2]](#ref2). This new workforce earns through platform fees, merchant sales, creator subscriptions, and DAO payments. Their income is real and verifiable on platforms, but traditional banks lack the infrastructure to underwrite it—legacy systems built for W-2 employees can't integrate with platform payouts, and 70% of gig workers struggle to get approval for financial products[[19]](#ref19).
+Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy where 1.6 billion people now earn income borderlessly[[1]](#ref1). AI tools enabled solo entrepreneurs to run $50K-$500K businesses—68% of small businesses now use AI[[2]](#ref2). This new workforce earns through platform fees, merchant sales, creator subscriptions, and DAO payments. Their income is real, growing, and verifiable on the platforms themselves.
 
 ## 2. Traditional Finance Couldn't Adapt
 
-Banks still underwrite based on W-2s, FICO scores, and debt-to-income ratios. 77% of small businesses struggle to access capital[[3]](#ref3), and banks reject 1 in 4 borrowers[[4]](#ref4)—not because they can't repay, but because traditional underwriting can't process platform income. Banks lack the systems, the APIs, and the willingness to adapt. The result: a massive capital gap for the new economy.
+Banks still underwrite based on W-2s, FICO scores, and debt-to-income ratios—systems built for a different era. Legacy bank infrastructure can't integrate with platform payouts from Upwork, Shopify, or Stripe, and 70% of gig workers struggle to get approval for financial products[[19]](#ref19). 77% of small businesses struggle to access capital[[3]](#ref3), and banks reject 1 in 4 borrowers[[4]](#ref4)—not because they can't repay, but because traditional underwriting can't process their income. The result: a massive capital gap for the new economy.
 
 ## 3. Platform Lenders Charged Too Much
 
