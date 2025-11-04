@@ -12,7 +12,7 @@ Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global econom
 
 Banks still underwrite based on W-2s, FICO scores, and debt-to-income ratios—systems built for a different era. Legacy bank infrastructure can't integrate with platform payouts from Upwork, Shopify, or Stripe, and 70% of gig workers struggle to get approval for financial products[[19]](#ref19). 77% of small businesses struggle to access capital[[3]](#ref3), and banks reject 1 in 4 borrowers[[4]](#ref4)—not because they can't repay, but because traditional underwriting can't process their income. The result: a massive capital gap for the new economy.
 
-## 3. Ecommerce and Fintech Lenders Could Underwrite—But Charged Too Much
+## 3. Fintech Lenders Could Underwrite—But Charged Too Much
 
 Platform companies like Shopify, Stripe, and PayPal solved the underwriting problem—they see every transaction. But they charge 10-50% APR: Shopify Capital at 20-50% APR equivalent[[6]](#ref6), Stripe Capital at 10-45% APR[[7]](#ref7), PayPal at 10-18% APR[[8]](#ref8). Why so expensive? ACH rails cost $0.10-$0.50 per transaction with 1-3 day settlement[[5]](#ref5), VC equity demands 20%+ returns, and operational overhead runs $500K-$2.5M to launch plus $200K-$500K annually[[5]](#ref5). They solved underwriting but couldn't solve infrastructure costs.
 
