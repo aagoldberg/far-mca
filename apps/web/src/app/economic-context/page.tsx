@@ -9,10 +9,10 @@ export default function EconomicContextPage() {
       <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            The Three Waves
+            Bridging the Capital Gap
           </h1>
           <p className="text-xl md:text-2xl font-light">
-            From global work to global capital—why uncollateralized crypto lending works now
+            How we got here—and why crypto infrastructure finally solves it
           </p>
         </div>
       </div>
@@ -24,21 +24,21 @@ export default function EconomicContextPage() {
         <section className="mb-16">
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-blue-600 rounded-xl p-8">
             <p className="text-2xl text-gray-900 font-bold mb-4">
-              Three waves have shaped the future of capital:
+              The gap between where people earn and where they can borrow has never been wider:
             </p>
             <div className="space-y-3 text-lg text-gray-700">
               <p>
-                <strong className="text-blue-600">Wave 1 (2010-2025): Work went global.</strong> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<a href="#ref1" className="text-blue-600 hover:text-blue-800"><sup>[1]</sup></a>. AI accelerated this: 68% of small businesses use AI in 2025<a href="#ref2" className="text-blue-600 hover:text-blue-800"><sup>[2]</sup></a>, enabling solo entrepreneurs to run $50K-$500K businesses.
+                <strong className="text-blue-600">Wave 1 (2010-2025): A new economy emerged.</strong> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<a href="#ref1" className="text-blue-600 hover:text-blue-800"><sup>[1]</sup></a>. AI accelerated this: 68% of small businesses use AI in 2025<a href="#ref2" className="text-blue-600 hover:text-blue-800"><sup>[2]</sup></a>, enabling solo entrepreneurs to run $50K-$500K businesses. But traditional banks can't underwrite platform income.
               </p>
               <p>
-                <strong className="text-red-600">Wave 2 (2020-2025): Capital didn't follow.</strong> While work globalized, finance stayed expensive. 77% of small businesses struggle to access capital<a href="#ref3" className="text-blue-600 hover:text-blue-800"><sup>[3]</sup></a>. Banks reject 1 in 4 borrowers<a href="#ref4" className="text-blue-600 hover:text-blue-800"><sup>[4]</sup></a>. Platform lenders (Shopify, Stripe, PayPal) solved cashflow visibility but charge 20-50% APR due to ACH rails, VC capital costs, and operational overhead. The gap: affordable credit for the new economy.
+                <strong className="text-red-600">Wave 2 (2020-2025): Finance couldn't adapt.</strong> Banks reject 1 in 4 borrowers<a href="#ref4" className="text-blue-600 hover:text-blue-800"><sup>[4]</sup></a>—not because they can't repay, but because traditional underwriting can't process platform income. 77% of small businesses struggle to access capital<a href="#ref3" className="text-blue-600 hover:text-blue-800"><sup>[3]</sup></a>. Platform lenders (Shopify, Stripe, PayPal) solved underwriting but charge 20-50% APR due to ACH rails, VC capital costs, and operational overhead. The gap: affordable credit for the new economy.
               </p>
               <p>
-                <strong className="text-green-600">Wave 3 (2024-2025): The infrastructure arrived.</strong> Stablecoins hit $305B supply with $27.6T in transfers<a href="#ref5" className="text-blue-600 hover:text-blue-800"><sup>[5]</sup></a> (surpassing Visa + Mastercard). DeFi collateralized lending proved the technical model works ($50B TVL, &lt;5% defaults)<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a>. Social verification protocols scaled to billions of users. For the first time, all the pieces exist to build uncollateralized lending for the new economy.
+                <strong className="text-green-600">Wave 3 (2024-2025): The infrastructure arrived.</strong> Stablecoins hit $305B supply with $27.6T in transfers<a href="#ref5" className="text-blue-600 hover:text-blue-800"><sup>[5]</sup></a> (surpassing Visa + Mastercard). DeFi collateralized lending proved the technical model works ($50B TVL, &lt;5% defaults)<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a>. Social verification protocols scaled to billions of users. For the first time, all the pieces exist to bridge the gap with uncollateralized lending at 8-15% APR.
               </p>
             </div>
             <p className="text-2xl font-bold text-gray-900 mt-6">
-              LendFriend is Wave 3 infrastructure.
+              LendFriend bridges the gap.
             </p>
           </div>
         </section>
@@ -49,7 +49,7 @@ export default function EconomicContextPage() {
             <div className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-xl">
               Wave 1
             </div>
-            <h2 className="text-3xl font-bold text-blue-900">Work Went Global (2010-2025)</h2>
+            <h2 className="text-3xl font-bold text-blue-900">A New Economy Emerged (2010-2025)</h2>
           </div>
 
           <div className="space-y-8">
@@ -202,7 +202,7 @@ export default function EconomicContextPage() {
             <div className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-xl">
               Wave 2
             </div>
-            <h2 className="text-3xl font-bold text-red-900">Capital Didn't Follow (2020-2025)</h2>
+            <h2 className="text-3xl font-bold text-red-900">Finance Couldn't Adapt (2020-2025)</h2>
           </div>
 
           <div className="space-y-8">
@@ -821,7 +821,7 @@ export default function EconomicContextPage() {
 
         {/* LendFriend: Wave 3 Infrastructure */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">LendFriend: Wave 3 Infrastructure</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">LendFriend Bridges the Gap</h2>
 
           <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] rounded-xl p-8 text-white mb-8">
             <p className="text-2xl font-bold mb-4 text-center">
