@@ -529,16 +529,6 @@ export default function EconomicContextPage() {
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
-                    <h4 className="font-bold text-purple-900 mb-3">TrueFi</h4>
-                    <ul className="text-sm text-gray-700 space-y-2">
-                      <li>• <strong>$1.7B originated</strong> in uncollateralized loans<a href="#ref26" className="text-blue-600 hover:text-blue-800"><sup>[26]</sup></a></li>
-                      <li>• <strong>1-4% default rate</strong> (comparable to traditional)<a href="#ref26" className="text-blue-600 hover:text-blue-800"><sup>[26]</sup></a></li>
-                      <li>• <strong>$200M TVL</strong> (October 2025)<a href="#ref26" className="text-blue-600 hover:text-blue-800"><sup>[26]</sup></a></li>
-                      <li>• <strong>Vetted borrowers</strong> with on-chain reputation</li>
-                    </ul>
-                  </div>
-
                   <div className="bg-green-50 border border-green-200 rounded-lg p-5">
                     <h4 className="font-bold text-green-900 mb-3">Maple Finance</h4>
                     <ul className="text-sm text-gray-700 space-y-2">
@@ -572,7 +562,7 @@ export default function EconomicContextPage() {
 
                 <div className="bg-green-100 border border-green-300 rounded-lg p-4">
                   <p className="text-green-900 text-sm">
-                    <strong>Key insight:</strong> DeFi proved lending works technically (collateralized at $50B scale). Early uncollateralized protocols (TrueFi, Goldfinch, Maple) proved credit models work on-chain. The missing piece: scaling uncollateralized lending beyond institutions to individuals.
+                    <strong>Key insight:</strong> DeFi proved lending works technically (collateralized at $50B scale). Early uncollateralized protocols (Goldfinch, Maple) showed credit models can work on-chain with institutional borrowers. The missing piece: scaling uncollateralized lending to individuals with social trust + cashflow.
                   </p>
                 </div>
               </div>
@@ -1049,12 +1039,6 @@ export default function EconomicContextPage() {
                 <p className="font-semibold text-gray-900">[25] Remitly Stablecoin Integration</p>
                 <p className="text-gray-700">Remitly Newsroom, "Remitly Harnesses the Power of Stablecoins for Cross-Border Payments"</p>
                 <a href="https://news.remitly.com/innovation/remitly-harnesses-stablecoins/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">https://news.remitly.com/innovation/remitly-harnesses-stablecoins/</a>
-              </div>
-
-              <div id="ref26" className="scroll-mt-20">
-                <p className="font-semibold text-gray-900">[26] TrueFi Protocol Statistics</p>
-                <p className="text-gray-700">CoinGecko Research, "Undercollateralized Loans - The Future of DeFi Lending?"</p>
-                <a href="https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending</a>
               </div>
 
               <div id="ref27" className="scroll-mt-20">
