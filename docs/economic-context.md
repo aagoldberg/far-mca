@@ -6,7 +6,7 @@ Five economic and technological trends converged in 2024-2025 to make uncollater
 
 ## 1. Work Went Global
 
-Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy where 1.6 billion people now earn income borderlessly[[1]](#ref1). AI tools enabled solo entrepreneurs to run $50K-$500K businesses—68% of small businesses now use AI[[2]](#ref2). This new workforce operates outside traditional employment: no W-2s, no fixed salaries, income from platform fees, merchant sales, creator subscriptions, and DAO payments. Their income is real and verifiable, but invisible to traditional finance.
+Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy where 1.6 billion people now earn income borderlessly[[1]](#ref1). AI tools enabled solo entrepreneurs to run $50K-$500K businesses—68% of small businesses now use AI[[2]](#ref2). This new workforce operates outside traditional employment: no W-2s, no fixed salaries, income from platform fees, merchant sales, creator subscriptions, and DAO payments. Their income is real and verifiable on platforms, but traditional banks lack the systems to underwrite it—no APIs to Upwork or Shopify, no FICO scores for creator revenue, underwriting models built for W-2 employment only.
 
 ## 2. Capital Didn't Follow
 
