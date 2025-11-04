@@ -34,7 +34,7 @@ export default function EconomicContextPage() {
                 <strong className="text-red-600">Wave 2 (2020-2025): Capital didn't follow.</strong> While work globalized, finance stayed local. 77% of small businesses struggle to access capital<a href="#ref3" className="text-blue-600 hover:text-blue-800"><sup>[3]</sup></a>. Banks reject 1 in 4 borrowers<a href="#ref4" className="text-blue-600 hover:text-blue-800"><sup>[4]</sup></a>—not because they're not creditworthy, but because underwriting can't assess platform income, on-chain earnings, or social trust. The gap: hundreds of billions. The result: predatory lenders charging 280-400% APR.
               </p>
               <p>
-                <strong className="text-green-600">Wave 3 (2024-2025): The infrastructure arrived.</strong> Stablecoins hit $305B supply with $27.6T in transfers<a href="#ref5" className="text-blue-600 hover:text-blue-800"><sup>[5]</sup></a> (surpassing Visa + Mastercard). DeFi uncollateralized lending reached $50B TVL<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a> with &lt;5% default rates. Social verification protocols scaled to billions of users. For the first time, all the pieces exist to build capital infrastructure for the new economy.
+                <strong className="text-green-600">Wave 3 (2024-2025): The infrastructure arrived.</strong> Stablecoins hit $305B supply with $27.6T in transfers<a href="#ref5" className="text-blue-600 hover:text-blue-800"><sup>[5]</sup></a> (surpassing Visa + Mastercard). DeFi collateralized lending proved the technical model works ($50B TVL, &lt;5% defaults)<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a>. Social verification protocols scaled to billions of users. For the first time, all the pieces exist to build uncollateralized lending for the new economy.
               </p>
             </div>
             <p className="text-2xl font-bold text-gray-900 mt-6">
@@ -498,8 +498,8 @@ export default function EconomicContextPage() {
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-5">
                     <h4 className="font-bold text-amber-900 mb-3">Overall DeFi Lending</h4>
                     <ul className="text-sm text-gray-700 space-y-2">
-                      <li>• <strong>$50B total TVL</strong> (January 2025)<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a></li>
-                      <li>• <strong>$3T flash loans</strong> (uncollateralized proof)<a href="#ref29" className="text-blue-600 hover:text-blue-800"><sup>[29]</sup></a></li>
+                      <li>• <strong>$50B collateralized TVL</strong> (Aave, Compound - proven tech)<a href="#ref6" className="text-blue-600 hover:text-blue-800"><sup>[6]</sup></a></li>
+                      <li>• <strong>$3T flash loans</strong> (uncollateralized proof of concept)<a href="#ref29" className="text-blue-600 hover:text-blue-800"><sup>[29]</sup></a></li>
                       <li>• <strong>Maturing models</strong> for credit scoring</li>
                       <li>• <strong>Institutional entry</strong> signals legitimacy</li>
                     </ul>
@@ -508,8 +508,7 @@ export default function EconomicContextPage() {
 
                 <div className="bg-green-100 border border-green-300 rounded-lg p-4">
                   <p className="text-green-900 text-sm">
-                    <strong>Key insight:</strong> Uncollateralized on-chain lending is no longer experimental.
-                    It's proven at billions-of-dollars scale with default rates comparable to traditional finance.
+                    <strong>Key insight:</strong> DeFi proved lending works technically (collateralized at $50B scale). Early uncollateralized protocols (TrueFi, Goldfinch, Maple) proved credit models work on-chain. The missing piece: scaling uncollateralized lending beyond institutions to individuals.
                   </p>
                 </div>
               </div>
@@ -598,7 +597,7 @@ export default function EconomicContextPage() {
                     <h4 className="font-bold text-gray-900 mb-3">Why We Can Build This Now (2025):</h4>
                     <ul className="text-sm text-gray-700 space-y-2">
                       <li>✓ Stablecoins $305B supply, mainstream adoption</li>
-                      <li>✓ $50B DeFi TVL, proven &lt;5% defaults</li>
+                      <li>✓ $50B collateralized DeFi, proven technical model</li>
                       <li>✓ Farcaster, Bluesky providing social verification</li>
                       <li>✓ Mature cashflow APIs (Plaid, Stripe, Square)</li>
                       <li>✓ Account abstraction enabling better UX</li>
@@ -731,8 +730,8 @@ export default function EconomicContextPage() {
               </div>
 
               <div id="ref6" className="scroll-mt-20">
-                <p className="font-semibold text-gray-900">[6] DeFi Lending TVL (2025)</p>
-                <p className="text-gray-700">CoinLaw, "Crypto Lending and Borrowing Statistics 2025: Top Metrics"</p>
+                <p className="font-semibold text-gray-900">[6] DeFi Collateralized Lending TVL (2025)</p>
+                <p className="text-gray-700">CoinLaw, "Crypto Lending and Borrowing Statistics 2025: Top Metrics" - $50B TVL primarily from collateralized protocols (Aave, Compound, etc.)</p>
                 <a href="https://coinlaw.io/crypto-lending-and-borrowing-statistics/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs break-all">https://coinlaw.io/crypto-lending-and-borrowing-statistics/</a>
               </div>
 
