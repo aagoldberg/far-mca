@@ -6,7 +6,7 @@ The gap between where people earn and where they can borrow has never been wider
 
 ## 1. A New Economy Emerged
 
-Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy where 1.6 billion people now earn income borderlessly[[1]](#ref1). AI tools enabled solo entrepreneurs to run $50K-$500K businesses—68% of small businesses now use AI[[2]](#ref2). This new workforce earns through platform fees, merchant sales, creator subscriptions, and DAO payments. Their income is real and verifiable on platforms, but traditional banks lack the infrastructure to underwrite it—no APIs to Upwork or Shopify, no FICO scores for creator revenue, underwriting models built for W-2 employment only.
+Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy where 1.6 billion people now earn income borderlessly[[1]](#ref1). AI tools enabled solo entrepreneurs to run $50K-$500K businesses—68% of small businesses now use AI[[2]](#ref2). This new workforce earns through platform fees, merchant sales, creator subscriptions, and DAO payments. Their income is real and verifiable on platforms, but traditional banks lack the infrastructure to underwrite it—legacy systems built for W-2 employees can't integrate with platform payouts, and 70% of gig workers struggle to get approval for financial products[[19]](#ref19).
 
 ## 2. Traditional Finance Couldn't Adapt
 
@@ -169,5 +169,13 @@ Farcaster Network Stats - 1M+ active users (2025)
 **[18] Bluesky User Statistics**
 Bluesky Social - 20M+ users (2025)
 [https://bsky.app/](https://bsky.app/)
+
+</div>
+
+<div id="ref19">
+
+**[19] Gig Worker Financial Access Challenges**
+Financial IT & Rollee Gig Economy Equality Gap Report - 70% of UK gig workers struggle to receive approval for financial products, 66% denied loans, banks operate on legacy systems built for W-2 employees
+[https://financialit.net/blog/banking-data/achieving-financial-parity-gig-workers-how-banks-are-embracing-fintech-bridge-gap](https://financialit.net/blog/banking-data/achieving-financial-parity-gig-workers-how-banks-are-embracing-fintech-bridge-gap)
 
 </div>
