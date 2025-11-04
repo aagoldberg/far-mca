@@ -26,7 +26,7 @@ Platform lenders like Shopify and Stripe solved cashflow verification—they see
 
 ---
 
-## Academic Research
+## References
 
 <div id="ref1">
 
