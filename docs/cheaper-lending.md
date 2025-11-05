@@ -4,6 +4,82 @@ Platform lenders like Shopify Capital and Stripe Capital charge 10-50% APR. Not 
 
 ---
 
+## How Lending Companies Get Money (And Why It Matters)
+
+Before we dive into costs, let's understand how different lenders raise capital—because this drives a huge portion of APR.
+
+### How Standalone Fintech Lenders Raise Money
+
+**Step 1: Raise VC Equity ($10M)**
+- VCs invest $10M, take 25% of the company
+- VCs want their $10M to become $100M (10x return in 7 years)
+- Company needs to generate HUGE profits to hit this target
+- **Result:** Pressure to charge borrowers MORE to achieve VC returns
+
+**Step 2: Get Debt Facility ($50M)**
+- Borrow from banks/institutional lenders at 12-15% interest[[3]](#ref3)
+- Plus: origination fees (~1%)
+- Plus: reserve requirements (need $5M sitting idle for safety)
+- Plus: covenants (can't lend to certain borrowers, must maintain ratios)
+- **All-in cost: 12-15%**
+
+**Total capital: $60M**
+- $10M equity (VCs want 20-30% annual returns)
+- $50M debt (costs 12-15%)
+
+**Example loan math:**
+```
+Lend $1,000 at 25% APR = $250 revenue
+- Pay debt interest: 12% × $1,000 = $120
+- Pay defaults: 13.6% × $1,000 = $136
+- Pay operations: 3% × $1,000 = $30
+= Profit: -$36 (losing money!)
+
+Need to charge even MORE to hit VC return targets
+```
+
+### How Community Lending Works (LendFriend Model)
+
+**Community lenders put in money directly:**
+- Jane puts in $1,000
+- Bob puts in $5,000
+- 100 people collectively lend $50,000
+- They want 8-12% return (normal lending return, not VC-level)
+- **No VC equity dilution, no debt facility overhead**
+
+**Example loan math:**
+```
+Lend $1,000 at 12% APR = $120 revenue
+- Pay lenders their yield: 8% × $1,000 = $80
+- Pay defaults: 10% × $1,000 = $100 (lower due to social trust)
+- Pay operations: 1% × $1,000 = $10 (lower due to crypto infrastructure)
+= Profit: -$70
+
+Still tight, but sustainable with scale and lower defaults from social trust
+```
+
+### Where The Capital Structure Savings Come From
+
+**1. No VC Dilution Pressure (5-8pp savings)**
+- VCs demand 20-30% returns on their equity stake
+- P2P lenders happy with 8-12% yields
+- Difference: **10-15 percentage points** lower return requirement
+- **Savings: 5-8pp** (accounting for their smaller share of capital structure)
+
+**2. No Warehouse Facility Overhead (2-3pp savings)**
+- Debt facilities have fees, covenants, reserve requirements
+- Direct P2P lending avoids these costs
+- **Savings: 2-3pp**
+
+**Important caveat:** When macro interest rates go up (like 2022-2023), even P2P lenders want higher returns:
+- If Treasury bonds pay 5%, P2P lenders want 10-13%
+- So the advantage shrinks in high-rate environments
+- **Capital savings: 5-8pp in normal times, 2-3pp in high-rate times**
+
+**Key insight:** The big savings come from removing VC return pressure, not escaping market interest rates entirely.
+
+---
+
 ## The Traditional Lending Cost Structure
 
 When a traditional bank makes a **10% APR loan**, the rate breaks down as follows[[1]](#ref1):
