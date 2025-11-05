@@ -68,8 +68,7 @@ export default function VisionPage() {
           <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-xl p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Our Vision</h2>
             <p className="text-xl text-gray-800 mb-6 text-center leading-relaxed">
-              A world where <strong className="text-[#2E7D68]">your reputation is your collateral</strong>,
-              your cashflow is your credit history, and your community is your underwriter.
+              Fair access to credit built on <strong className="text-[#2E7D68]">stablecoin rails, not legacy banking infrastructure</strong>. Lower costs, fair rates, transparent terms—community-driven underwriting at scale.
             </p>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
