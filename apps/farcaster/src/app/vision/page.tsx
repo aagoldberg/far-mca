@@ -48,12 +48,10 @@ export default function VisionPage() {
           <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-lg p-4">
             <h2 className="text-lg font-bold text-gray-900 mb-2 text-center">Our Vision</h2>
             <p className="text-sm text-gray-800 mb-3 text-center leading-relaxed">
-              A world where <strong className="text-[#2E7D68]">your reputation is your collateral</strong>,
-              your network is your credit history, and your community is your underwriter.
+              Uncollateralized lending with <strong className="text-[#2E7D68]">fundamentally better economics</strong>. We solve expensive lending capital with <strong className="text-[#2E7D68]">peer-to-peer community funding</strong>, replace legacy infrastructure with <strong className="text-[#2E7D68]">stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>.
             </p>
             <p className="text-xs text-gray-700 leading-relaxed">
-              We're building web3-native uncollateralized lending powered by persistent identity and reputation.
-              Not extractive, not restrictive—but fair, transparent, and community-driven.
+              Result: 8-15% lower APR at scale. From friends helping friends to scalable infrastructure serving millions.
             </p>
           </div>
         </section>

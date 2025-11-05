@@ -69,14 +69,9 @@ export default function VisionPage() {
           <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-xl p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Our Vision</h2>
             <p className="text-xl text-gray-800 mb-6 text-center leading-relaxed">
-              Fair access to credit built on <strong className="text-[#2E7D68]">stablecoin rails, not legacy banking infrastructure</strong>. Lower costs, fair rates, transparent terms—community-driven underwriting at scale.
+              Uncollateralized lending with <strong className="text-[#2E7D68]">fundamentally better economics</strong>. We solve expensive lending capital with <strong className="text-[#2E7D68]">peer-to-peer community funding</strong>, replace legacy infrastructure with <strong className="text-[#2E7D68]">stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>. Result: 8-15% lower APR at scale.
             </p>
             <div className="space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                We're building the primitive that Vitalik described: <strong>web3-native uncollateralized lending</strong>
-                powered by persistent identity and quantifiable reputation. Not extractive payday lending. Not restrictive traditional banking.
-                But fair, transparent, community-driven credit.
-              </p>
               <p>
                 This starts simple—friends helping friends at 0% interest—then evolves through three phases to become
                 scalable infrastructure that serves millions while maintaining social accountability.
