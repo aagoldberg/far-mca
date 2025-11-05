@@ -12,7 +12,7 @@ export default function VisionPage() {
             The Vision
           </h1>
           <p className="text-xl md:text-2xl font-light">
-            Building the infrastructure for reputation-backed credit—from social trust to global scale
+            Building the infrastructure for uncollateralized credit—from community lending to global markets
           </p>
         </div>
       </div>
