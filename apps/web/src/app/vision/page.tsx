@@ -24,7 +24,7 @@ export default function VisionPage() {
         <section className="mb-16">
           <p className="text-2xl text-gray-800 leading-relaxed text-center mb-4 font-light">
             Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>,
-            your cashflow replaces collateral, and loans repay themselves automatically from your wallet.
+            your cashflow replaces collateral, and loans repay themselves automatically as you earn.
           </p>
         </section>
 
