@@ -37,6 +37,7 @@ export default function VisionPage() {
             </p>
             <ul className="ml-6 space-y-2">
               <li>• <strong>Banks</strong> exclude billions who lack credit history or collateral</li>
+              <li>• <strong>Fintech lenders</strong> verify income but charge 10-50% APR—infrastructure costs, not risk</li>
               <li>• <strong>Payday lenders</strong> prey on the vulnerable with 300%+ APR</li>
               <li>• <strong>DeFi</strong> requires 125% overcollateralization, defeating the purpose of credit</li>
             </ul>
