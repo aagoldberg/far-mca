@@ -23,7 +23,7 @@ export default function VisionPage() {
           <h2 className="text-xl font-bold text-gray-900 mb-3">The Problem</h2>
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
             Traditional lending excludes billions without credit history. Payday lenders charge 300%+ APR.
-            DeFi requires 150% overcollateralization, defeating the purpose of credit.
+            DeFi requires 125% overcollateralization, defeating the purpose of credit.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">
             Meanwhile, we trust people based on reputation daily—<strong>but this social capital has never been
