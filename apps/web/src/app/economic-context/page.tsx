@@ -33,10 +33,10 @@ export default function EconomicContextPage() {
               <span className="font-bold text-[#2E7D68]">Wave 1 (2010-2025):</span> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. AI accelerated this—68% of small businesses use AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. But banks can't underwrite platform income.
             </p>
             <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-              <span className="font-bold text-amber-600">Wave 2 (2020-2025):</span> Banks reject 1 in 4 borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because traditional underwriting can't process platform income. 77% of small businesses struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders solved underwriting but charge 20-50% APR due to infrastructure costs.
+              <span className="font-bold text-rose-600">Wave 2 (2020-2025):</span> Banks reject 1 in 4 borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because traditional underwriting can't process platform income. 77% of small businesses struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders solved underwriting but charge 20-50% APR due to infrastructure costs.
             </p>
             <p className="text-xl text-gray-700 leading-relaxed">
-              <span className="font-bold text-gray-900">Wave 3 (2024-2025):</span> Stablecoins hit $305B supply with $27.6T in transfers<sup className="text-[#3B9B7F]">[5]</sup> (surpassing Visa + Mastercard). DeFi proved the technical model works ($50B TVL)<sup className="text-[#3B9B7F]">[6]</sup>. Social protocols scaled to millions. All the pieces exist to bridge the gap.
+              <span className="font-bold text-blue-700">Wave 3 (2024-2025):</span> Stablecoins hit $305B supply with $27.6T in transfers<sup className="text-[#3B9B7F]">[5]</sup> (surpassing Visa + Mastercard). DeFi proved the technical model works ($50B TVL)<sup className="text-[#3B9B7F]">[6]</sup>. Social protocols scaled to millions. All the pieces exist to bridge the gap.
             </p>
           </div>
 
@@ -124,8 +124,8 @@ export default function EconomicContextPage() {
           </div>
 
           {/* The Paradox */}
-          <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50 border-l-4 border-amber-500 rounded-r-lg p-8 my-12">
-            <h3 className="text-2xl font-bold text-amber-900 mb-4">The Income Verification Paradox</h3>
+          <div className="bg-gradient-to-br from-rose-50 to-red-50 border-l-4 border-rose-500 rounded-r-lg p-8 my-12">
+            <h3 className="text-2xl font-bold text-rose-900 mb-4">The Income Verification Paradox</h3>
             <p className="text-lg text-gray-800 mb-6">
               Platform income is <em>more verifiable</em> than traditional employment. Yet banks won't accept it.
             </p>
@@ -145,7 +145,7 @@ export default function EconomicContextPage() {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-rose-500 rounded-full"></div>
                   <h4 className="font-bold text-gray-900">Traditional (Banks Require)</h4>
                 </div>
                 <ul className="space-y-2 text-sm text-gray-700">
@@ -162,7 +162,7 @@ export default function EconomicContextPage() {
         {/* Wave 2: Finance Couldn't Adapt */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-8">
-            <div className="bg-gradient-to-br from-amber-500 to-orange-500 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
+            <div className="bg-gradient-to-br from-rose-500 to-red-600 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
               Wave 2
             </div>
             <h2 className="text-3xl font-bold text-gray-900">Finance Couldn't Adapt</h2>
@@ -244,8 +244,8 @@ export default function EconomicContextPage() {
               </table>
             </div>
 
-            <div className="bg-amber-100 border-l-4 border-amber-500 rounded-r-lg p-6">
-              <h4 className="font-bold text-amber-900 mb-3">Why costs stay high:<sup className="text-[#3B9B7F]">[33]</sup></h4>
+            <div className="bg-rose-50 border-l-4 border-rose-500 rounded-r-lg p-6">
+              <h4 className="font-bold text-rose-900 mb-3">Why costs stay high:<sup className="text-[#3B9B7F]">[33]</sup></h4>
               <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-800">
                 <div>
                   <p className="font-semibold mb-1">Capital Costs</p>
@@ -267,7 +267,7 @@ export default function EconomicContextPage() {
         {/* Wave 3: Infrastructure Arrived */}
         <section className="mb-20">
           <div className="flex items-center gap-4 mb-8">
-            <div className="bg-gradient-to-br from-gray-700 to-gray-900 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
               Wave 3
             </div>
             <h2 className="text-3xl font-bold text-gray-900">The Infrastructure Arrived</h2>
@@ -277,7 +277,7 @@ export default function EconomicContextPage() {
           <div className="mb-16">
             <h3 className="text-2xl font-semibold text-gray-900 mb-6">Stablecoins Reached Scale</h3>
 
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 mb-8 border border-gray-200">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 mb-8 border border-blue-200">
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div>
                   <div className="text-5xl font-bold text-gray-900 mb-2">$305B<sup className="text-[#3B9B7F] text-xl">[5]</sup></div>
@@ -368,22 +368,22 @@ export default function EconomicContextPage() {
               </div>
             </div>
 
-            <p className="text-gray-700 bg-gray-50 p-4 rounded-lg border-l-4 border-[#3B9B7F]">
+            <p className="text-gray-700 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
               <strong>The breakthrough:</strong> For the first time, we can quantify social trust at scale without centralized gatekeepers. Banks don't have social graphs. DeFi doesn't have persistent identity. We combine both.
             </p>
           </div>
 
           {/* The Convergence */}
-          <div className="bg-gradient-to-br from-slate-900 to-gray-800 text-white rounded-xl p-10 mb-8">
+          <div className="bg-gradient-to-br from-blue-900 to-indigo-800 text-white rounded-xl p-10 mb-8">
             <h3 className="text-3xl font-bold mb-6 text-center">The Convergence: Now</h3>
-            <p className="text-xl text-center mb-8 text-gray-300">
+            <p className="text-xl text-center mb-8 text-blue-100">
               All infrastructure pieces exist for the first time in 2025
             </p>
 
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h4 className="font-bold text-amber-300 mb-3">Why we couldn't build this in 2020:</h4>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <h4 className="font-bold text-rose-300 mb-3">Why we couldn't build this in 2020:</h4>
+                <ul className="space-y-2 text-blue-100 text-sm">
                   <li>✗ Stablecoins &lt;$10B supply</li>
                   <li>✗ DeFi uncollateralized lending unproven</li>
                   <li>✗ No decentralized social graphs at scale</li>
@@ -393,8 +393,8 @@ export default function EconomicContextPage() {
               </div>
 
               <div>
-                <h4 className="font-bold text-green-300 mb-3">Why we can build this now (2025):</h4>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <h4 className="font-bold text-emerald-300 mb-3">Why we can build this now (2025):</h4>
+                <ul className="space-y-2 text-blue-100 text-sm">
                   <li>✓ Stablecoins $305B supply, mainstream</li>
                   <li>✓ $50B collateralized DeFi, proven model</li>
                   <li>✓ Farcaster, Bluesky providing verification</li>
