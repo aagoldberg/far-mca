@@ -63,7 +63,7 @@ export default function VisionPage() {
           <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-xl p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Our Vision</h2>
             <p className="text-xl text-gray-800 mb-6 text-center leading-relaxed">
-              Uncollateralized lending with <strong className="text-[#2E7D68]">fundamentally better economics</strong>. We solve expensive lending capital with <strong className="text-[#2E7D68]">peer-to-peer community funding</strong>, replace legacy infrastructure with <strong className="text-[#2E7D68]">stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>. Result: 8-15% lower APR at scale.
+              Uncollateralized lending with <strong className="text-[#2E7D68]">fundamentally better economics</strong>. We eliminate VC and debt middlemen with <strong className="text-[#2E7D68]">community capital</strong>, replace costly payment rails with <strong className="text-[#2E7D68]">instant, low-cost stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>. Result: 8-15% lower APR at scale.
             </p>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
