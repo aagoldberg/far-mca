@@ -73,21 +73,6 @@ export default function VisionPage() {
             <p className="text-xl text-gray-800 mb-6 text-center leading-relaxed">
               We make uncollateralized lending work by solving fintech's core problems. We eliminate VC and debt middlemen with <strong className="text-[#2E7D68]">community capital</strong>, replace costly payment rails with <strong className="text-[#2E7D68]">instant, low-cost stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>. Result: 8-15% lower APR at scale.
             </p>
-
-            {/* Social vs Traditional Collateral Illustration */}
-            <div className="my-8 flex justify-center">
-              <div className="max-w-3xl w-full">
-                <Image
-                  src="/images/credit_social.png"
-                  alt="Social collateral vs traditional collateral - community trust replacing physical assets"
-                  width={1200}
-                  height={600}
-                  className="rounded-xl w-full h-auto shadow-md"
-                  priority
-                />
-              </div>
-            </div>
-
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
                 We start with 0% loans to prove trust works, then evolve to sustainable revenue-based financing as we scale. Fair rates, transparent terms, real accountability.

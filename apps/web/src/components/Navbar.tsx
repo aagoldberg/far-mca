@@ -229,6 +229,13 @@ export default function Navbar() {
                       >
                         Vision & Roadmap
                       </Link>
+                      <Link
+                        href="/economic-context"
+                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Background
+                      </Link>
                       <a
                         href="https://docs.lendfriend.org"
                         target="_blank"
@@ -318,6 +325,13 @@ export default function Navbar() {
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     Vision & Roadmap
+                  </Link>
+                  <Link
+                    href="/economic-context"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    Background
                   </Link>
                   <a
                     href="https://docs.lendfriend.org"
