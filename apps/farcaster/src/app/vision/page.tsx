@@ -22,8 +22,12 @@ export default function VisionPage() {
         <section>
           <h2 className="text-xl font-bold text-gray-900 mb-3">The Problem</h2>
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
-            Traditional lending excludes billions without credit history. Fintech lenders struggle with expensive lending capital and legacy infrastructure. Payday lenders charge 300%+ APR.
-            DeFi requires 125% overcollateralization, defeating the purpose of credit.
+            Digital platforms have enabled millions of entrepreneurs to earn borderlessly—merchants accepting payments online,
+            freelancers working globally, crypto workers in DAOs. Together they've built a $1+ trillion economy with verifiable
+            income. AI tools are making it easier than ever to scale, and they need capital to grow: equipment, inventory, working capital.
+          </p>
+          <p className="text-sm text-gray-700 leading-relaxed mb-3">
+            But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive lending capital and legacy infrastructure, payday lenders charge 300%+ APR, and DeFi requires 125% overcollateralization.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">
             Meanwhile, we trust people based on reputation daily—<strong>but this social capital has never been
@@ -67,40 +71,44 @@ export default function VisionPage() {
                 Phase 1
               </div>
               <div>
-                <h3 className="text-base font-bold text-[#2E7D68]">Bootstrap Trust</h3>
-                <p className="text-[10px] text-gray-600">Q4 2025 - Q1 2026</p>
+                <h3 className="text-base font-bold text-[#2E7D68]">Bootstrap Trust Networks</h3>
+                <p className="text-[10px] text-gray-600">Launching 2025</p>
               </div>
             </div>
 
             <p className="text-xs text-gray-700 mb-3">
-              Pure 0% interest lending to prove the primitive works
+              Pure social lending at 0% to bootstrap the network
             </p>
 
             <div className="grid grid-cols-2 gap-2 mb-3">
               <div className="bg-green-50 border border-green-200 rounded p-2">
                 <h4 className="text-[10px] font-semibold text-green-900 mb-1">Building</h4>
                 <ul className="text-[9px] text-green-800 space-y-0.5">
-                  <li>• $100-$5k loans</li>
-                  <li>• Farcaster identity</li>
-                  <li>• Multi-signal reputation</li>
-                  <li>• On-chain repayments</li>
+                  <li>• $100-$5k loans at 0% interest</li>
+                  <li>• Optional tipping</li>
+                  <li>• <strong>Primary: Farcaster</strong> (Base app + platforms)</li>
+                  <li>• Exploring: Bluesky, Twitter, Reddit</li>
+                  <li>• Wallet verification + social signals</li>
+                  <li>• On-chain repayment tracking</li>
                 </ul>
               </div>
 
               <div className="bg-blue-50 border border-blue-200 rounded p-2">
                 <h4 className="text-[10px] font-semibold text-blue-900 mb-1">Learning</h4>
                 <ul className="text-[9px] text-blue-800 space-y-0.5">
-                  <li>• Repayment patterns</li>
-                  <li>• Trust networks</li>
-                  <li>• Signal predictiveness</li>
-                  <li>• Community dynamics</li>
+                  <li>• Which networks have demand?</li>
+                  <li>• Community clusters vs. broad</li>
+                  <li>• Repayment rates w/o interest</li>
+                  <li>• Social proximity effects</li>
+                  <li>• Trust cascade patterns</li>
+                  <li>• Viral growth mechanics</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-amber-50 border border-amber-300 rounded p-2">
-              <p className="text-[10px] text-amber-900">
-                <strong>Goal:</strong> 500-1,000 users, 3-6 months of data
+            <div className="bg-green-50 border border-green-300 rounded p-2">
+              <p className="text-[10px] text-green-900">
+                <strong>What Happens Next:</strong> We move to Phase 2 (cashflow + interest) with learnings about what borrowers need and where demand exists. Every loan teaches us something valuable.
               </p>
             </div>
           </div>
@@ -118,7 +126,7 @@ export default function VisionPage() {
             </div>
 
             <p className="text-xs text-gray-700 mb-3">
-              Layer in cash flow data for larger loans with socially-appropriate interest (0-5%)
+              Layer in cashflow data for larger loans with fair revenue-based terms
             </p>
 
             <div className="grid grid-cols-2 gap-2 mb-3">
