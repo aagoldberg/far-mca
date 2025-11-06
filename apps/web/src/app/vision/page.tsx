@@ -448,32 +448,7 @@ export default function VisionPage() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Why This Matters</h2>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-[#3B9B7F] mb-2">1.7B</div>
-              <p className="text-sm text-gray-600">Unbanked adults globally</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-[#3B9B7F] mb-2">$100B+</div>
-              <p className="text-sm text-gray-600">Annual payday loan market (US)</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-[#3B9B7F] mb-2">300%+</div>
-              <p className="text-sm text-gray-600">Typical payday loan APR</p>
-            </div>
-          </div>
-
           <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-            <p>
-              Millions of small businesses, freelancers, and crypto-native workers need capital to grow—equipment,
-              inventory, working capital—but can't qualify for traditional loans. But traditional lending is
-              fundamentally broken: banks won't serve them, fintech lenders charge 20-50% APR, and DeFi requires
-              overcollateralization.
-            </p>
-            <p>
-              Web3 has the tools to fix this—persistent identity, transparent transactions, programmable trust—but
-              until now, no one has built the primitive for uncollateralized lending.
-            </p>
             <p>
               LendFriend is that primitive. We're proving that <strong>reputation can be collateral</strong>,
               that <strong>communities can be underwriters</strong>, and that <strong>algorithms can scale trust</strong>
