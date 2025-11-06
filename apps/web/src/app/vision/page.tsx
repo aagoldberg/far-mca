@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function VisionPage() {
   return (
@@ -83,118 +84,121 @@ export default function VisionPage() {
         {/* Economics Comparison */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">How We Lower Costs</h3>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Traditional Fintech */}
-            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6">
-              <h4 className="text-xl font-bold text-red-900 mb-6 text-center">Traditional Fintech</h4>
-              <p className="text-sm text-gray-700 text-center mb-4 italic">Cashflow underwriting, but still 7-12% defaults</p>
-              <div className="space-y-4">
+            <div className="bg-gradient-to-br from-red-50 to-pink-50 border-2 border-red-300 rounded-xl p-5">
+              <h4 className="text-lg font-bold text-red-900 mb-1">Traditional Fintech</h4>
+              <p className="text-xs text-gray-600 italic mb-4">Cashflow underwriting, but still 7-12% defaults</p>
+
+              <div className="space-y-3">
                 {/* Expensive Capital */}
-                <div className="bg-white rounded-lg p-4 border border-red-200">
-                  <div className="flex items-center gap-3 mb-2">
-                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-lg p-3 border-2 border-red-200">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
-                    <span className="font-semibold text-gray-900">Expensive Capital Sources</span>
+                    <span className="font-semibold text-gray-900 text-sm">Expensive Capital Sources</span>
                   </div>
-                  <p className="text-sm text-gray-600">Borrow from VC (20%+) or banks (12-15%)</p>
+                  <p className="text-xs text-gray-600">Borrow from VC (20%+) or banks (12-15%)</p>
                 </div>
 
-                <div className="flex justify-center text-2xl text-red-600">+</div>
+                <div className="flex justify-center text-xl text-red-600 font-bold">+</div>
 
                 {/* ACH Rails */}
-                <div className="bg-white rounded-lg p-4 border border-red-200">
-                  <div className="flex items-center gap-3 mb-2">
-                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-lg p-3 border-2 border-red-200">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                     </svg>
-                    <span className="font-semibold text-gray-900">Expensive Payment Rails</span>
+                    <span className="font-semibold text-gray-900 text-sm">Expensive Payment Rails</span>
                   </div>
-                  <p className="text-sm text-gray-600">ACH: $0.50/transaction, 1-3 day delays</p>
+                  <p className="text-xs text-gray-600">ACH: $0.50/transaction, 1-3 day delays</p>
                 </div>
 
-                <div className="flex justify-center text-2xl text-red-600">+</div>
+                <div className="flex justify-center text-xl text-red-600 font-bold">+</div>
 
                 {/* Operational Overhead */}
-                <div className="bg-white rounded-lg p-4 border border-red-200">
-                  <div className="flex items-center gap-3 mb-2">
-                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-lg p-3 border-2 border-red-200">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
-                    <span className="font-semibold text-gray-900">Operational Overhead</span>
+                    <span className="font-semibold text-gray-900 text-sm">Operational Overhead</span>
                   </div>
-                  <p className="text-sm text-gray-600">$500K-$2.5M to launch, $200K-$500K/year</p>
+                  <p className="text-xs text-gray-600">$500K-$2.5M to launch, $200K-$500K/year</p>
                 </div>
 
-                <div className="flex justify-center">
-                  <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex justify-center py-1">
+                  <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
 
                 {/* Result */}
-                <div className="bg-red-100 rounded-lg p-4 border-2 border-red-300">
+                <div className="bg-red-100 rounded-lg p-4 border-2 border-red-400">
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-red-900 mb-1">~20-50%</p>
-                    <p className="text-sm text-red-700">APR to cover capital + infrastructure + defaults</p>
+                    <p className="text-3xl font-bold text-red-900">~20-50%</p>
+                    <p className="text-xs text-red-700 mt-1">APR to cover capital + infrastructure + defaults</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* LendFriend */}
-            <div className="bg-green-50 border-2 border-[#3B9B7F] rounded-xl p-6">
-              <h4 className="text-xl font-bold text-[#2E7D68] mb-6 text-center">LendFriend</h4>
-              <p className="text-sm text-gray-700 text-center mb-4 italic">Cashflow + social trust to reduce defaults</p>
-              <div className="space-y-4">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-[#3B9B7F] rounded-xl p-5">
+              <h4 className="text-lg font-bold text-[#2E7D68]">LendFriend</h4>
+              <p className="text-xs text-gray-600 italic mb-4">Cashflow + social trust to reduce defaults</p>
+
+              <div className="space-y-3">
                 {/* Community Capital */}
-                <div className="bg-white rounded-lg p-4 border border-[#3B9B7F]">
-                  <div className="flex items-center gap-3 mb-2">
-                    <svg className="w-6 h-6 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-lg p-3 border-2 border-[#3B9B7F]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <span className="font-semibold text-gray-900">Low-Cost Capital Sources</span>
+                    <span className="font-semibold text-gray-900 text-sm">Low-Cost Capital Sources</span>
                   </div>
-                  <p className="text-sm text-gray-600">Community capital, DeFi (5-10%)</p>
+                  <p className="text-xs text-gray-600">Community capital, DeFi (5-10%)</p>
                 </div>
 
-                <div className="flex justify-center text-2xl text-[#3B9B7F]">+</div>
+                <div className="flex justify-center text-xl text-[#3B9B7F] font-bold">+</div>
 
                 {/* Stablecoins */}
-                <div className="bg-white rounded-lg p-4 border border-[#3B9B7F]">
-                  <div className="flex items-center gap-3 mb-2">
-                    <svg className="w-6 h-6 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-lg p-3 border-2 border-[#3B9B7F]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
-                    <span className="font-semibold text-gray-900">Low-Cost Payment Rails</span>
+                    <span className="font-semibold text-gray-900 text-sm">Low-Cost Payment Rails</span>
                   </div>
-                  <p className="text-sm text-gray-600">Stablecoins: $0.01/transaction, instant settlement</p>
+                  <p className="text-xs text-gray-600">Stablecoins: $0.01/transaction, instant settlement</p>
                 </div>
 
-                <div className="flex justify-center text-2xl text-[#3B9B7F]">+</div>
+                <div className="flex justify-center text-xl text-[#3B9B7F] font-bold">+</div>
 
                 {/* Minimal Overhead */}
-                <div className="bg-white rounded-lg p-4 border border-[#3B9B7F]">
-                  <div className="flex items-center gap-3 mb-2">
-                    <svg className="w-6 h-6 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white rounded-lg p-3 border-2 border-[#3B9B7F]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
-                    <span className="font-semibold text-gray-900">Minimal Overhead</span>
+                    <span className="font-semibold text-gray-900 text-sm">Minimal Overhead</span>
                   </div>
-                  <p className="text-sm text-gray-600">Minimal: Smart contracts, {'<'}$100K setup, {'<'}$50K/year</p>
+                  <p className="text-xs text-gray-600">Minimal: Smart contracts, {'<'}$100K setup, {'<'}$50K/year</p>
                 </div>
 
-                <div className="flex justify-center">
-                  <svg className="w-6 h-6 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex justify-center py-1">
+                  <svg className="w-5 h-5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
 
                 {/* Result */}
-                <div className="bg-[#ECFDF5] rounded-lg p-4 border-2 border-[#3B9B7F]">
+                <div className="bg-green-100 rounded-lg p-4 border-2 border-[#3B9B7F]">
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-[#2E7D68] mb-1">~10-40%</p>
-                    <p className="text-sm text-[#065F46]">APR via better capital + infrastructure + defaults</p>
+                    <p className="text-3xl font-bold text-[#2E7D68]">~10-40%</p>
+                    <p className="text-xs text-[#065F46] mt-1">APR via better capital + infrastructure + defaults</p>
                   </div>
                 </div>
               </div>
@@ -246,39 +250,33 @@ export default function VisionPage() {
           </div>
 
           {/* Why It Works */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-br from-[#ECFDF5] to-white border-2 border-[#3B9B7F] rounded-xl p-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-14 h-14 bg-[#3B9B7F] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="grid md:grid-cols-[2fr_3fr] gap-6">
+            <div className="bg-gradient-to-br from-[#ECFDF5] to-white border-2 border-[#3B9B7F] rounded-xl p-6 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-[#3B9B7F] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
                 <div>
                   <h4 className="text-2xl font-bold text-[#2E7D68]">0.7-1.2</h4>
-                  <p className="text-sm text-gray-600">Viral Coefficient</p>
+                  <p className="text-sm text-gray-600 font-medium">Viral Coefficient</p>
                 </div>
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 leading-relaxed">
                 Each user brings 0.7-1.2 new users. Outstanding viral growth potential.
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-green-50 to-white border-2 border-[#2E7D68] rounded-xl p-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-14 h-14 bg-[#2E7D68] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-2xl font-bold text-[#065F46]">∞</h4>
-                  <p className="text-sm text-gray-600">Network Effects</p>
-                </div>
-              </div>
-              <p className="text-gray-700">
-                More borrowers = more lenders = more liquidity = more loans.
-              </p>
+            <div className="bg-gradient-to-br from-[#ECFDF5] to-white border-2 border-[#3B9B7F] rounded-xl p-4 flex items-center justify-center">
+              <Image
+                src="/images/viral.png"
+                alt="Viral Growth Network Effect"
+                width={600}
+                height={400}
+                className="rounded-lg w-full h-auto"
+                priority
+              />
             </div>
           </div>
         </section>
