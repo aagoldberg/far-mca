@@ -28,16 +28,24 @@ export default function EconomicContextPage() {
             </p>
           </div>
 
-          <div className="prose prose-lg max-w-none">
-            <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-              <span className="font-bold text-[#2E7D68]">Wave 1 (2010-2025):</span> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. AI accelerated this—68% of small businesses use AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. But banks can't underwrite platform income.
-            </p>
-            <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-              <span className="font-bold text-rose-600">Wave 2 (2020-2025):</span> Banks reject 1 in 4 borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because traditional underwriting can't process platform income. 77% of small businesses struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders solved underwriting but charge 20-50% APR due to infrastructure costs.
-            </p>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              <span className="font-bold text-blue-700">Wave 3 (2024-2025):</span> Stablecoins hit $305B supply with $27.6T in transfers<sup className="text-[#3B9B7F]">[5]</sup> (surpassing Visa + Mastercard). DeFi proved the technical model works ($50B TVL)<sup className="text-[#3B9B7F]">[6]</sup>. Social protocols scaled to millions. All the pieces exist to bridge the gap.
-            </p>
+          <div className="space-y-6">
+            <div className="border-l-4 border-gray-300 pl-6 py-2">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                <span className="font-bold text-gray-900">Wave 1 (2010-2025):</span> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. AI accelerated this—68% of small businesses use AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. But banks can't underwrite platform income.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-gray-300 pl-6 py-2">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                <span className="font-bold text-gray-900">Wave 2 (2020-2025):</span> Banks reject 1 in 4 borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because traditional underwriting can't process platform income. 77% of small businesses struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders solved underwriting but charge 20-50% APR due to infrastructure costs.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-gray-300 pl-6 py-2">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                <span className="font-bold text-gray-900">Wave 3 (2024-2025):</span> Stablecoins hit $305B supply with $27.6T in transfers<sup className="text-[#3B9B7F]">[5]</sup> (surpassing Visa + Mastercard). DeFi proved the technical model works ($50B TVL)<sup className="text-[#3B9B7F]">[6]</sup>. Social protocols scaled to millions. All the pieces exist to bridge the gap.
+              </p>
+            </div>
           </div>
 
           <div className="mt-10 text-center">
