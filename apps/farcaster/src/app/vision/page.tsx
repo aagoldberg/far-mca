@@ -29,10 +29,6 @@ export default function VisionPage() {
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
             But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive lending capital and legacy infrastructure, and DeFi requires 125% overcollateralization.
           </p>
-          <p className="text-sm text-gray-700 leading-relaxed">
-            Meanwhile, we trust people based on reputation daily—<strong>but this social capital has never been
-            systematized for credit at scale.</strong>
-          </p>
 
           {/* Vitalik Quote */}
           <div className="mt-4 bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-[#2E7D68] rounded-r-lg p-4">

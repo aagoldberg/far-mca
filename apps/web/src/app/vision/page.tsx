@@ -45,10 +45,6 @@ export default function VisionPage() {
               <li>• <strong>Fintech lenders</strong> struggle with expensive lending capital and legacy infrastructure</li>
               <li>• <strong>DeFi</strong> requires 125% overcollateralization, defeating the purpose of credit</li>
             </ul>
-            <p className="pt-4">
-              Meanwhile, we all trust people based on reputation every day—who we hire, who we do business with,
-              who we lend to informally. <strong>But this social capital has never been systematized for credit at scale.</strong>
-            </p>
           </div>
 
           {/* Vitalik Quote */}
