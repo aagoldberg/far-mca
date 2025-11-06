@@ -48,7 +48,7 @@ export default function EconomicContextPage() {
         </section>
 
         {/* Wave 1: The New Economy */}
-        <section className="mb-20">
+        <section className="mb-20 pb-20 border-b-4 border-gray-200">
           <div className="flex items-center gap-4 mb-8">
             <div className="bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
               Wave 1
@@ -160,7 +160,7 @@ export default function EconomicContextPage() {
         </section>
 
         {/* Wave 2: Finance Couldn't Adapt */}
-        <section className="mb-20">
+        <section className="mb-20 pb-20 border-b-4 border-gray-200">
           <div className="flex items-center gap-4 mb-8">
             <div className="bg-gradient-to-br from-rose-500 to-red-600 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
               Wave 2
@@ -198,9 +198,9 @@ export default function EconomicContextPage() {
               </div>
             </div>
 
-            <div className="bg-gray-900 text-white rounded-lg p-8">
-              <p className="font-bold text-lg mb-3">US Treasury Department (January 2025):</p>
-              <ul className="space-y-2 text-gray-300">
+            <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-8">
+              <p className="font-bold text-lg mb-3 text-gray-900">US Treasury Department (January 2025):</p>
+              <ul className="space-y-2 text-gray-700">
                 <li>"Gaps in capital providers' knowledge of small business creditworthiness"</li>
                 <li>"Limited connection to small business capital sources"</li>
                 <li>"Lack of trust in capital providers by groups historically subject to discrimination"</li>
@@ -265,7 +265,7 @@ export default function EconomicContextPage() {
         </section>
 
         {/* Wave 3: Infrastructure Arrived */}
-        <section className="mb-20">
+        <section className="mb-20 pb-20 border-b-4 border-gray-200">
           <div className="flex items-center gap-4 mb-8">
             <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-lg">
               Wave 3
@@ -374,16 +374,16 @@ export default function EconomicContextPage() {
           </div>
 
           {/* The Convergence */}
-          <div className="bg-gradient-to-br from-blue-900 to-indigo-800 text-white rounded-xl p-10 mb-8">
-            <h3 className="text-3xl font-bold mb-6 text-center">The Convergence: Now</h3>
-            <p className="text-xl text-center mb-8 text-blue-100">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-10 mb-8">
+            <h3 className="text-3xl font-bold mb-6 text-center text-gray-900">The Convergence: Now</h3>
+            <p className="text-xl text-center mb-8 text-gray-700">
               All infrastructure pieces exist for the first time in 2025
             </p>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h4 className="font-bold text-rose-300 mb-3">Why we couldn't build this in 2020:</h4>
-                <ul className="space-y-2 text-blue-100 text-sm">
+              <div className="bg-white rounded-lg p-6 border border-rose-200">
+                <h4 className="font-bold text-rose-700 mb-3">Why we couldn't build this in 2020:</h4>
+                <ul className="space-y-2 text-gray-700 text-sm">
                   <li>✗ Stablecoins &lt;$10B supply</li>
                   <li>✗ DeFi uncollateralized lending unproven</li>
                   <li>✗ No decentralized social graphs at scale</li>
@@ -392,9 +392,9 @@ export default function EconomicContextPage() {
                 </ul>
               </div>
 
-              <div>
-                <h4 className="font-bold text-emerald-300 mb-3">Why we can build this now (2025):</h4>
-                <ul className="space-y-2 text-blue-100 text-sm">
+              <div className="bg-white rounded-lg p-6 border border-green-200">
+                <h4 className="font-bold text-[#2E7D68] mb-3">Why we can build this now (2025):</h4>
+                <ul className="space-y-2 text-gray-700 text-sm">
                   <li>✓ Stablecoins $305B supply, mainstream</li>
                   <li>✓ $50B collateralized DeFi, proven model</li>
                   <li>✓ Farcaster, Bluesky providing verification</li>
