@@ -26,12 +26,14 @@ export default function VisionPage() {
             They have customer reviews, social media followings, and verifiable income streams. Together they've built a $1+ trillion
             economy, and AI tools are accelerating their growth. They need capital to scale: equipment, inventory, working capital.
           </p>
-          <p className="text-sm text-gray-700 leading-relaxed mb-3">
+          <p className="text-sm text-gray-700 leading-relaxed">
             But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive funding and legacy payment rails (charging 20-40% APR), and DeFi requires 125% overcollateralization.
           </p>
+        </section>
 
-          {/* Vitalik Quote */}
-          <div className="mt-4 bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-[#2E7D68] rounded-r-lg p-4">
+        {/* Vitalik Quote */}
+        <section>
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-[#2E7D68] rounded-r-lg p-4">
             <p className="text-xs text-gray-800 italic mb-2 leading-relaxed">
               "Perhaps the largest financial value built directly on reputation is credit and
               uncollateralized lending... the Web 3 ecosystem cannot replicate even the

@@ -20,14 +20,6 @@ export default function VisionPage() {
       {/* Content */}
       <div className="w-full max-w-4xl mx-auto px-6 py-12">
 
-        {/* Intro Quote */}
-        <section className="mb-16">
-          <p className="text-2xl text-gray-800 leading-relaxed text-center mb-4 font-light">
-            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>,
-            your cashflow replaces collateral, and loans repay themselves automatically as you earn.
-          </p>
-        </section>
-
         {/* The Problem */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">The Problem We're Solving</h2>
@@ -46,9 +38,11 @@ export default function VisionPage() {
               <li>• <strong>DeFi</strong> requires 125% overcollateralization, defeating the purpose of credit</li>
             </ul>
           </div>
+        </section>
 
-          {/* Vitalik Quote */}
-          <div className="mt-8 bg-white border-l-4 border-[#2E7D68] rounded-r-lg shadow-md p-6">
+        {/* Vitalik Quote */}
+        <section className="mb-16">
+          <div className="bg-white border-l-4 border-[#2E7D68] rounded-r-lg shadow-md p-6">
             <p className="text-gray-800 text-lg italic mb-4 leading-relaxed">
               "Perhaps the largest financial value built directly on reputation is credit and
               uncollateralized lending. Currently, the Web 3 ecosystem cannot replicate even the
@@ -78,6 +72,14 @@ export default function VisionPage() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* Aspirational Vision */}
+        <section className="mb-16">
+          <p className="text-2xl text-gray-800 leading-relaxed text-center mb-4 font-light">
+            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>,
+            your cashflow replaces collateral, and loans repay themselves automatically as you earn.
+          </p>
         </section>
 
         {/* Three-Phase Journey */}
