@@ -22,9 +22,9 @@ export default function VisionPage() {
         <section>
           <h2 className="text-xl font-bold text-gray-900 mb-3">The Problem</h2>
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
-            Digital platforms have enabled millions of entrepreneurs to earn borderlessly—merchants accepting payments online,
-            freelancers working globally, crypto workers in DAOs. Together they've built a $1+ trillion economy with verifiable
-            income. AI tools are making it easier than ever to scale, and they need capital to grow: equipment, inventory, working capital.
+            Millions of entrepreneurs now run real businesses with public online profiles—merchants, freelancers, creators, crypto builders.
+            They have customer reviews, social media followings, and verifiable income streams. Together they've built a $1+ trillion
+            economy, and AI tools are accelerating their growth. They need capital to scale: equipment, inventory, working capital.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
             But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive lending capital and legacy infrastructure, and DeFi requires 125% overcollateralization.
