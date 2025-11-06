@@ -159,7 +159,7 @@ export default function VisionPage() {
                   </div>
                 </div>
 
-                <div className="bg-[#FEF3C7] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
+                <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
                   <p className="text-sm text-gray-900">
                     <strong className="text-[#92400E]">What Happens Next:</strong> We move to Phase 1 (cashflow + interest) with learnings about what borrowers need
                     and where demand exists. Every loan teaches us something valuable about making this work at scale.
@@ -254,7 +254,7 @@ export default function VisionPage() {
                   </div>
                 </div>
 
-                <div className="bg-[#FEF3C7] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
+                <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
                   <p className="text-sm text-gray-900">
                     <strong className="text-[#92400E]">Goal:</strong> Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
                     Prove that hybrid underwriting can scale while maintaining fairness.
@@ -359,7 +359,7 @@ export default function VisionPage() {
 
                 <div>
                   <h4 className="font-bold text-gray-900 mb-3">Why This Matters</h4>
-                  <div className="bg-[#FEF3C7] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
+                  <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
                     <p className="text-gray-900 mb-2">
                       Removes the biggest friction in P2P lending: <strong className="text-[#92400E]">remembering to repay</strong>.
                     </p>

@@ -239,7 +239,7 @@ export default function VisionPage() {
             </div>
           </div>
 
-          <div className="bg-amber-50 border border-amber-300 rounded-lg p-3">
+          <div className="bg-[#FFFBEB] border border-amber-300 rounded-lg p-3">
             <p className="text-xs text-amber-900 leading-relaxed">
               <strong>The magic:</strong> Borrowers aren't sharing "an app"—they're sharing their personal story
               and asking for help. This emotional connection drives 10-100x better engagement than traditional
