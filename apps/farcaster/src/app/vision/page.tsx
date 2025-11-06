@@ -27,7 +27,7 @@ export default function VisionPage() {
             income. AI tools are making it easier than ever to scale, and they need capital to grow: equipment, inventory, working capital.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
-            But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive lending capital and legacy infrastructure, payday lenders charge 300%+ APR, and DeFi requires 125% overcollateralization.
+            But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive lending capital and legacy infrastructure, and DeFi requires 125% overcollateralization.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">
             Meanwhile, we trust people based on reputation daily—<strong>but this social capital has never been
