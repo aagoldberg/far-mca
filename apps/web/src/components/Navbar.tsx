@@ -223,33 +223,21 @@ export default function Navbar() {
                         About LendFriend
                       </Link>
                       <Link
-                        href="/how-it-works"
-                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        How It Works
-                      </Link>
-                      <Link
                         href="/vision"
                         className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Vision & Roadmap
                       </Link>
-                      <Link
-                        href="/research"
+                      <a
+                        href="https://docs.lendfriend.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Research
-                      </Link>
-                      <Link
-                        href="/whitepaper"
-                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        White Paper
-                      </Link>
+                        Documentation
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -325,33 +313,21 @@ export default function Navbar() {
                     About LendFriend
                   </Link>
                   <Link
-                    href="/how-it-works"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
-                    onClick={() => setAboutDropdownOpen(false)}
-                  >
-                    How It Works
-                  </Link>
-                  <Link
                     href="/vision"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     Vision & Roadmap
                   </Link>
-                  <Link
-                    href="/research"
+                  <a
+                    href="https://docs.lendfriend.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
-                    Research
-                  </Link>
-                  <Link
-                    href="/whitepaper"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
-                    onClick={() => setAboutDropdownOpen(false)}
-                  >
-                    White Paper
-                  </Link>
+                    Documentation
+                  </a>
                 </div>
               )}
             </div>
