@@ -444,22 +444,6 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* Why This Matters */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Why This Matters</h2>
-
-          <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-            <p>
-              LendFriend is that primitive. We're proving that <strong>reputation can be collateral</strong>,
-              that <strong>communities can be underwriters</strong>, and that <strong>algorithms can scale trust</strong>
-              without extracting predatory profits.
-            </p>
-            <p className="text-xl font-semibold text-gray-900">
-              This isn't just a product. It's infrastructure for a fairer financial system.
-            </p>
-          </div>
-        </section>
-
         {/* Principles */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Principles</h2>
