@@ -27,7 +27,7 @@ export default function VisionPage() {
             economy, and AI tools are accelerating their growth. They need capital to scale: equipment, inventory, working capital.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
-            But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive funding sources and legacy payment rails (often charging 20-40% APR), and DeFi requires 125% overcollateralization.
+            But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive funding and legacy payment rails (charging 20-40% APR), and DeFi requires 125% overcollateralization.
           </p>
 
           {/* Vitalik Quote */}
