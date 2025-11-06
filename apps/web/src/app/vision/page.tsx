@@ -42,7 +42,7 @@ export default function VisionPage() {
             </p>
             <ul className="ml-6 space-y-2">
               <li>• <strong>Banks</strong> exclude billions who lack credit history or collateral</li>
-              <li>• <strong>Fintech lenders</strong> struggle with expensive lending capital and legacy payment rails</li>
+              <li>• <strong>Fintech lenders</strong> struggle with expensive funding sources and legacy payment rails</li>
               <li>• <strong>DeFi</strong> requires 125% overcollateralization, defeating the purpose of credit</li>
             </ul>
           </div>
