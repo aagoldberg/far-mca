@@ -10,7 +10,7 @@ export default function VisionPage() {
         <div className="max-w-2xl mx-auto px-4">
           <h1 className="text-2xl font-bold mb-2">The Vision</h1>
           <p className="text-sm opacity-90">
-            Building reputation-backed credit infrastructure
+            Building the Web3 infrastructure for uncollateralized credit—from community lending to global markets
           </p>
         </div>
       </div>
@@ -20,9 +20,8 @@ export default function VisionPage() {
 
         {/* Aspirational Vision */}
         <section>
-          <p className="text-base text-gray-800 leading-relaxed text-center font-light">
-            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>,
-            your cashflow replaces collateral, and loans repay themselves automatically as you earn.
+          <p className="text-base text-gray-800 leading-relaxed text-center font-light max-w-xl mx-auto">
+            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>, your cashflow replaces collateral, and loans repay themselves automatically as you earn.
           </p>
         </section>
 
@@ -32,7 +31,7 @@ export default function VisionPage() {
           <p className="text-sm text-gray-700 leading-relaxed mb-3">
             Millions of entrepreneurs now run real businesses with public online profiles—merchants, freelancers, creators, crypto builders.
             They have customer reviews, social media followings, and verifiable income streams. Together they've built a $1+ trillion
-            economy, and AI tools are accelerating their growth. They need capital to scale: equipment, inventory, working capital.
+            economy, and AI tools are accelerating their growth. To grow, they need capital for equipment, inventory, and operations.
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">
             But traditional lending is fundamentally broken: banks exclude billions without credit history, fintech lenders struggle with expensive funding and legacy payment rails (charging 20-40% APR), and DeFi requires 125% overcollateralization.
@@ -61,7 +60,7 @@ export default function VisionPage() {
               We make uncollateralized lending work by solving fintech's core problems. We eliminate VC and debt middlemen with <strong className="text-[#2E7D68]">community capital</strong>, replace costly payment rails with <strong className="text-[#2E7D68]">instant, low-cost stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>.
             </p>
             <p className="text-xs text-gray-700 leading-relaxed">
-              Result: 8-15% lower APR at scale. From friends helping friends to scalable infrastructure serving millions.
+              We start with 0% loans to prove trust works, then evolve to sustainable revenue-based financing as we scale. Fair rates, transparent terms, real accountability.
             </p>
           </div>
         </section>
@@ -69,47 +68,32 @@ export default function VisionPage() {
         {/* Economics Comparison */}
         <section>
           <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">How We Lower Costs</h3>
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
             {/* Traditional Fintech */}
-            <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4">
-              <h4 className="text-base font-bold text-red-900 mb-2 text-center">Traditional Fintech</h4>
-              <p className="text-xs text-gray-700 text-center mb-3 italic">Cashflow underwriting, but 7-12% defaults</p>
-              <div className="space-y-3">
+            <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3">
+              <h4 className="text-sm font-bold text-red-900 mb-2 text-center">Traditional Fintech</h4>
+              <p className="text-[10px] text-gray-700 text-center mb-3 italic leading-tight">Cashflow underwriting, but 7-12% defaults</p>
+              <div className="space-y-2.5">
                 {/* Expensive Capital */}
-                <div className="bg-white rounded-lg p-3 border border-red-200">
-                  <div className="flex items-center gap-2 mb-1">
-                    <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                    </svg>
-                    <span className="font-semibold text-gray-900 text-sm">Expensive Capital</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Borrow from VC (20%+) or banks (12-15%)</p>
+                <div className="bg-white rounded p-2 border border-red-200">
+                  <p className="font-semibold text-gray-900 text-sm mb-1">Capital</p>
+                  <p className="text-xs text-gray-600 leading-tight">VC (20%+) or banks (12-15%)</p>
                 </div>
 
-                <div className="flex justify-center text-lg text-red-600 font-bold">+</div>
+                <div className="flex justify-center text-base text-red-600 font-bold">+</div>
 
                 {/* Expensive Rails */}
-                <div className="bg-white rounded-lg p-3 border border-red-200">
-                  <div className="flex items-center gap-2 mb-1">
-                    <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                    </svg>
-                    <span className="font-semibold text-gray-900 text-sm">Expensive Rails</span>
-                  </div>
-                  <p className="text-xs text-gray-600">ACH $0.50/tx, 1-3 days</p>
+                <div className="bg-white rounded p-2 border border-red-200">
+                  <p className="font-semibold text-gray-900 text-sm mb-1">Rails</p>
+                  <p className="text-xs text-gray-600 leading-tight">ACH $0.50/tx, 1-3 days</p>
                 </div>
 
-                <div className="flex justify-center text-lg text-red-600 font-bold">+</div>
+                <div className="flex justify-center text-base text-red-600 font-bold">+</div>
 
                 {/* Operational Overhead */}
-                <div className="bg-white rounded-lg p-3 border border-red-200">
-                  <div className="flex items-center gap-2 mb-1">
-                    <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                    <span className="font-semibold text-gray-900 text-sm">Overhead</span>
-                  </div>
-                  <p className="text-xs text-gray-600">$500K-$2.5M setup, $200K-$500K/yr</p>
+                <div className="bg-white rounded p-2 border border-red-200">
+                  <p className="font-semibold text-gray-900 text-sm mb-1">Overhead</p>
+                  <p className="text-xs text-gray-600 leading-tight">$500K-$2.5M setup, $200K-$500K/yr</p>
                 </div>
 
                 <div className="flex justify-center">
@@ -119,55 +103,40 @@ export default function VisionPage() {
                 </div>
 
                 {/* Result */}
-                <div className="bg-red-100 rounded-lg p-3 border-2 border-red-300">
+                <div className="bg-red-100 rounded p-2.5 border-2 border-red-300">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-red-900">~20-50%</p>
-                    <p className="text-xs text-red-700">To cover capital + infrastructure + defaults</p>
+                    <p className="text-xl font-bold text-red-900">~20-50%</p>
+                    <p className="text-[10px] text-red-700 leading-tight">capital + infrastructure + defaults</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* LendFriend */}
-            <div className="bg-green-50 border-2 border-[#3B9B7F] rounded-lg p-4">
-              <h4 className="text-base font-bold text-[#2E7D68] mb-2 text-center">LendFriend</h4>
-              <p className="text-xs text-gray-700 text-center mb-3 italic">Cashflow + social trust to reduce defaults</p>
-              <div className="space-y-3">
+            <div className="bg-green-50 border-2 border-[#3B9B7F] rounded-lg p-3">
+              <h4 className="text-sm font-bold text-[#2E7D68] mb-2 text-center">LendFriend</h4>
+              <p className="text-[10px] text-gray-700 text-center mb-3 italic leading-tight">Cashflow + social trust to reduce defaults</p>
+              <div className="space-y-2.5">
                 {/* Low-Cost Capital */}
-                <div className="bg-white rounded-lg p-3 border border-[#3B9B7F]">
-                  <div className="flex items-center gap-2 mb-1">
-                    <svg className="w-5 h-5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                    <span className="font-semibold text-gray-900 text-sm">Low-Cost Capital</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Community capital, DeFi (5-10%)</p>
+                <div className="bg-white rounded p-2 border border-[#3B9B7F]">
+                  <p className="font-semibold text-gray-900 text-sm mb-1">Capital</p>
+                  <p className="text-xs text-gray-600 leading-tight">Community, DeFi (5-10%)</p>
                 </div>
 
-                <div className="flex justify-center text-lg text-[#3B9B7F] font-bold">+</div>
+                <div className="flex justify-center text-base text-[#3B9B7F] font-bold">+</div>
 
                 {/* Low-Cost Rails */}
-                <div className="bg-white rounded-lg p-3 border border-[#3B9B7F]">
-                  <div className="flex items-center gap-2 mb-1">
-                    <svg className="w-5 h-5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    <span className="font-semibold text-gray-900 text-sm">Low-Cost Rails</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Stablecoins $0.01/tx, instant</p>
+                <div className="bg-white rounded p-2 border border-[#3B9B7F]">
+                  <p className="font-semibold text-gray-900 text-sm mb-1">Rails</p>
+                  <p className="text-xs text-gray-600 leading-tight">Stablecoins $0.01/tx, instant</p>
                 </div>
 
-                <div className="flex justify-center text-lg text-[#3B9B7F] font-bold">+</div>
+                <div className="flex justify-center text-base text-[#3B9B7F] font-bold">+</div>
 
                 {/* Minimal Overhead */}
-                <div className="bg-white rounded-lg p-3 border border-[#3B9B7F]">
-                  <div className="flex items-center gap-2 mb-1">
-                    <svg className="w-5 h-5 text-[#3B9B7F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    <span className="font-semibold text-gray-900 text-sm">Minimal Overhead</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Smart contracts automate</p>
+                <div className="bg-white rounded p-2 border border-[#3B9B7F]">
+                  <p className="font-semibold text-gray-900 text-sm mb-1">Overhead</p>
+                  <p className="text-xs text-gray-600 leading-tight">{'<'}$100K setup, {'<'}$50K/yr</p>
                 </div>
 
                 <div className="flex justify-center">
@@ -177,10 +146,10 @@ export default function VisionPage() {
                 </div>
 
                 {/* Result */}
-                <div className="bg-[#ECFDF5] rounded-lg p-3 border-2 border-[#3B9B7F]">
+                <div className="bg-[#ECFDF5] rounded p-2.5 border-2 border-[#3B9B7F]">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-[#2E7D68]">~10-40%</p>
-                    <p className="text-xs text-[#065F46]">APR via better capital + infrastructure + defaults</p>
+                    <p className="text-xl font-bold text-[#2E7D68]">~10-40%</p>
+                    <p className="text-[10px] text-[#065F46] leading-tight">capital + infrastructure + defaults</p>
                   </div>
                 </div>
               </div>

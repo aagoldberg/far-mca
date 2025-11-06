@@ -12,7 +12,7 @@ export default function VisionPage() {
             The Vision
           </h1>
           <p className="text-xl md:text-2xl font-light">
-            Building the infrastructure for uncollateralized credit—from community lending to global markets
+            Building the Web3 infrastructure for uncollateralized credit—from community lending to global markets
           </p>
         </div>
       </div>
@@ -22,9 +22,8 @@ export default function VisionPage() {
 
         {/* Aspirational Vision */}
         <section className="mb-16">
-          <p className="text-2xl text-gray-800 leading-relaxed text-center mb-4 font-light">
-            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>,
-            your cashflow replaces collateral, and loans repay themselves automatically as you earn.
+          <p className="text-2xl text-gray-800 leading-relaxed text-center mb-4 font-light max-w-[46rem] mx-auto">
+            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>, your cashflow replaces collateral, and loans repay themselves automatically as you earn.
           </p>
         </section>
 
@@ -35,7 +34,7 @@ export default function VisionPage() {
             <p>
               Millions of entrepreneurs now run real businesses with public online profiles—merchants, freelancers, creators, crypto builders.
               They have customer reviews, social media followings, and verifiable income streams. Together they've built a $1+ trillion
-              economy, and AI tools are accelerating their growth. They need capital to scale: equipment, inventory, working capital.
+              economy, and AI tools are accelerating their growth. To grow, they need capital for equipment, inventory, and operations.
             </p>
             <p>
               But traditional lending is fundamentally broken:
@@ -75,8 +74,7 @@ export default function VisionPage() {
             </p>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
-                This starts simple—friends helping friends at 0% interest—then evolves through three phases to become
-                scalable infrastructure that serves millions while maintaining social accountability.
+                We start with 0% loans to prove trust works, then evolve to sustainable revenue-based financing as we scale. Fair rates, transparent terms, real accountability.
               </p>
             </div>
           </div>
@@ -183,7 +181,7 @@ export default function VisionPage() {
                     </svg>
                     <span className="font-semibold text-gray-900">Minimal Overhead</span>
                   </div>
-                  <p className="text-sm text-gray-600">Smart contracts automate operations</p>
+                  <p className="text-sm text-gray-600">Minimal: Smart contracts, {'<'}$100K setup, {'<'}$50K/year</p>
                 </div>
 
                 <div className="flex justify-center">
@@ -200,6 +198,87 @@ export default function VisionPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Built-In Viral Growth */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Built-In Viral Growth</h2>
+          <p className="text-gray-600 text-center mb-8 text-lg">
+            Every borrower becomes a growth engine by sharing their personal story
+          </p>
+
+          {/* The Viral Loop */}
+          <div className="bg-gradient-to-r from-[#ECFDF5] to-green-50 border-2 border-[#3B9B7F] rounded-xl p-8 mb-8">
+            <div className="grid md:grid-cols-4 gap-6 mb-6">
+              <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                <p className="text-gray-900 font-bold text-lg mb-1">Create</p>
+                <p className="text-sm text-gray-600">Borrower posts loan</p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-[#2E7D68] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                <p className="text-gray-900 font-bold text-lg mb-1">Share</p>
+                <p className="text-sm text-gray-600">50-200 people see it</p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-[#065F46] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                <p className="text-gray-900 font-bold text-lg mb-1">Convert</p>
+                <p className="text-sm text-gray-600">10-20% become lenders</p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">4</div>
+                <p className="text-gray-900 font-bold text-lg mb-1">Repeat</p>
+                <p className="text-sm text-gray-600">Lenders → borrowers</p>
+              </div>
+            </div>
+
+            <div className="bg-[#ECFDF5] rounded-lg p-6 border-l-4 border-[#3B9B7F]">
+              <p className="text-gray-700 text-lg leading-relaxed text-center">
+                <strong className="text-[#2E7D68]">The magic:</strong> Emotional connection drives 10-100x better engagement.
+                Each funded loan creates social proof that accelerates growth.
+              </p>
+            </div>
+          </div>
+
+          {/* Why It Works */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-br from-[#ECFDF5] to-white border-2 border-[#3B9B7F] rounded-xl p-8">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 bg-[#3B9B7F] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-2xl font-bold text-[#2E7D68]">0.7-1.2</h4>
+                  <p className="text-sm text-gray-600">Viral Coefficient</p>
+                </div>
+              </div>
+              <p className="text-gray-700">
+                Each user brings 0.7-1.2 new users. Outstanding viral growth potential.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-green-50 to-white border-2 border-[#2E7D68] rounded-xl p-8">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 bg-[#2E7D68] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-2xl font-bold text-[#065F46]">∞</h4>
+                  <p className="text-sm text-gray-600">Network Effects</p>
+                </div>
+              </div>
+              <p className="text-gray-700">
+                More borrowers = more lenders = more liquidity = more loans.
+              </p>
             </div>
           </div>
         </section>
