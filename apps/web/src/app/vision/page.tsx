@@ -89,6 +89,82 @@ export default function VisionPage() {
             A research-backed evolution from social trust to automated, scalable credit infrastructure
           </p>
 
+          {/* Visual Timeline */}
+          <div className="mb-12 relative">
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Phase 0 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-[#ECFDF5] to-white border-2 border-[#3B9B7F] rounded-xl p-6 h-full">
+                  <div className="bg-[#3B9B7F] text-white px-4 py-2 rounded-lg font-bold text-sm inline-block mb-3">
+                    Phase 0
+                  </div>
+                  <h3 className="text-xl font-bold text-[#2E7D68] mb-2">Bootstrap Trust</h3>
+                  <div className="text-sm text-gray-600 mb-4">Launching 2025</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl font-bold text-[#2E7D68]">0%</span>
+                      <span className="text-sm text-gray-600">Interest</span>
+                    </div>
+                    <p className="text-sm text-gray-700">Pure social lending to prove trust works</p>
+                  </div>
+                </div>
+                {/* Arrow */}
+                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#3B9B7F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Phase 1 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-[#EFF6FF] to-white border-2 border-[#3B82F6] rounded-xl p-6 h-full">
+                  <div className="bg-[#1E40AF] text-white px-4 py-2 rounded-lg font-bold text-sm inline-block mb-3">
+                    Phase 1
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1E40AF] mb-2">Add Cashflow</h3>
+                  <div className="text-sm text-gray-600 mb-4">2025-2026</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl font-bold text-[#1E40AF]">RBF</span>
+                    </div>
+                    <p className="text-sm text-gray-700">Revenue-based financing with hybrid underwriting</p>
+                  </div>
+                </div>
+                {/* Arrow */}
+                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Phase 2 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-[#F3F4F6] to-white border-2 border-gray-400 rounded-xl p-6 h-full">
+                  <div className="bg-gray-600 text-white px-4 py-2 rounded-lg font-bold text-sm inline-block mb-3">
+                    Phase 2
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Automate Repayment</h3>
+                  <div className="text-sm text-gray-600 mb-4">2-3 years out</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl font-bold text-gray-900">⚡</span>
+                    </div>
+                    <p className="text-sm text-gray-700">Revenue integration & agentic payments</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile arrows */}
+            <div className="md:hidden flex justify-center my-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="#3B9B7F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
           {/* Phase 0 */}
           <div className="mb-8">
             <div className="bg-white border-2 border-[#3B9B7F] rounded-xl p-8 shadow-sm">
