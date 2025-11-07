@@ -15,7 +15,7 @@ Phase 1 scales beyond personal networks by adding **cashflow verification** to t
 - Cashflow-based underwriting (not just social trust)
 - Liquidity pools for passive lending
 - Interest rates: 0-8% APR
-- Multi-platform expansion (Bluesky)
+- Potential multi-platform expansion (PMF-dependent)
 
 **Goal:** Serve 10,000+ users with $1M+ in loans originated, proving hybrid trust + cashflow model works at scale.
 
@@ -98,18 +98,14 @@ Phase 1 introduces passive lending through liquidity pools—lenders deposit cap
 
 **Pool mechanics** (deposit strategies, withdrawal rules, auto-approval thresholds) will be designed based on Phase 0 learnings.
 
-### 4. Cross-Platform Expansion
+### 4. Platform Expansion
 
-**Bluesky integration (late 2025):**[[66]](../references.md#ref66)
-- AT Protocol decentralized identity
-- Domain verification (handle = owned domain)
-- Social graph for trust scoring
-- Expand beyond Farcaster-only user base
+LendFriend starts on Farcaster and may expand to other social platforms (Bluesky, Reddit, Twitter/X) based on growth and product-market fit.
 
 **Web platform enhancements:**
 - Fiat onramps for non-crypto users (Coinbase Pay, Privy)
 - Social login (Google, Twitter, email)
-- Cross-platform sharing (WhatsApp, Telegram, etc.)
+- Cross-platform loan sharing (WhatsApp, Telegram, etc.)
 
 ---
 

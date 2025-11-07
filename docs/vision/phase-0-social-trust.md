@@ -144,7 +144,7 @@ These constraints are intentional design decisions:
 |-----------|-----------|
 | **Zero interest** | Simplifies contracts, tests pure social accountability |
 | **Single maturity** | No installment logic, simpler state management |
-| **Farcaster only** | Highest quality trust signals, smaller attack surface |
+| **Starts with Farcaster** | Highest quality trust signals, smaller attack surface—may expand to other platforms based on growth |
 | **No cashflow verification** | Focus on social trust primitive first |
 | **Manual repayment** | Tests if reputation incentive is sufficient |
 

@@ -85,7 +85,7 @@ Loans that repay themselves automatically from wallets (ERC-4337) or merchant re
 | **Interest** | 0% (hardcoded) | 0-8% variable | 0-15% variable |
 | **Loan Size** | $100-$5K | $5K-$50K+ | $10K-$100K+ |
 | **Repayment** | Manual, single maturity | Manual, installments | Auto-deduction |
-| **Identity** | Farcaster only | Farcaster + Bluesky | Multi-platform |
+| **Identity** | Starts with Farcaster | Multi-platform (PMF-dependent) | Multi-platform |
 | **Verification** | Social trust only | Social + cashflow | Cashflow primary |
 | **Liquidity** | Direct P2P | Pools + P2P | Pools only |
 

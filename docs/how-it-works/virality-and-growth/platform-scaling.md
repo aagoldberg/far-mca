@@ -73,48 +73,53 @@ Grew to **800,000+ members** through referral program [[16]](../../references.md
 
 ## LendFriend's Growth Strategy
 
-### Phase 1: Farcaster Bootstrap (2025-2026)
+### Phase 0: Bootstrap on Farcaster (2024-2025)
 **Goal:** Prove the lending primitive works
 
 **Tactics:**
 - Mini app-based loan discovery
 - Cast Actions for one-tap funding
 - 0% interest (altruistic phase)
+- Cross-platform loan sharing from day 1
+
+**Expansion:** May expand to other platforms (Bluesky, Reddit, Twitter) based on growth and PMF
 
 **Success metrics:**
-- 500-1,000 users
-- 90%+ repayment rate
-- Viral growth (K-factor > 1)
+- Gather behavioral data
+- Viral growth potential (K-factor > 1)
+- Strong repayment rates
 
 ---
 
-### Phase 2: Cross-Platform Expansion (2026+)
-**Goal:** Reach non-crypto users
+### Phase 1: Scale with Cashflow (2025-2026)
+**Goal:** Reach 10K+ users with larger loans
 
 **Tactics:**
-- Shareable loan pages (Twitter, Telegram, WhatsApp)
-- Social login
+- Cashflow verification (Plaid, Square, Shopify)
+- Liquidity pools
+- 8-12% APR
+- Social login for non-crypto users
 - Referral bonuses
 
 **Success metrics:**
-- 50%+ lenders from outside Farcaster
-- Accelerating viral growth
 - 10,000+ active users
+- $1M+ in loans originated
+- 50%+ lenders from outside initial platform
 
 ---
 
-### Phase 3: Referral Marketplace (2027+)
-**Goal:** Exponential growth through incentivized sharing
+### Phase 2: Automate Repayment (2026-2027)
+**Goal:** Exponential growth through automated infrastructure
 
 **Tactics:**
-- Lender referral bonuses ($5-25)
-- Borrower recruitment rewards (0.5% of loan)
+- Wallet auto-deduction
+- Merchant revenue auto-deduction
 - Team lending competitions
 - Lending streaks and gamification
 
 **Success metrics:**
-- Strong exponential growth
 - 100,000+ active users
+- 50%+ loans use auto-repayment
 - Self-sustaining (no paid acquisition)
 
 ---

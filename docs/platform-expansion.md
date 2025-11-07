@@ -8,17 +8,17 @@ A world where **your reputation is your collateral**, your network is your credi
 
 ## Platform Expansion Strategy
 
-LendFriend starts on Farcaster and expands thoughtfully to other platforms, adapting our risk model based on signal quality research.
+LendFriend starts on Farcaster and may expand to other platforms based on growth and product-market fit. Expansion timing depends on Phase 0-1 learnings, not a fixed timeline.
 
-### Phase 1-2: Farcaster (2025-2026) ✅
+### Starting Platform: Farcaster ✅
 
-**Why it's strongest:**
+**Why start here:**
 - Wallet-based identity (crypto signatures)
 - Crypto-native community with shared context
 - Neynar quality scores filter spam/bots
 - Real relationships in tight-knit community
 
-**Risk Model:**
+**Initial Risk Model:**
 - Repayment History: 40%
 - Social Trust Score: 30% (high confidence)
 - Loan Size Risk: 20%
@@ -26,7 +26,9 @@ LendFriend starts on Farcaster and expands thoughtfully to other platforms, adap
 
 ---
 
-### Phase 2-3: Bluesky (2026) ⚠️
+### Potential Expansion: Bluesky ⚠️
+
+**Timeline:** Phase 0 or 1, depending on PMF
 
 **Signal characteristics:**
 - Domain-based verification (e.g., yourname.com)
@@ -46,7 +48,9 @@ LendFriend starts on Farcaster and expands thoughtfully to other platforms, adap
 
 ---
 
-### Phase 3: Twitter/X (2027) 🚨
+### Potential Expansion: Twitter/X 🚨
+
+**Timeline:** Phase 0 or 1, depending on PMF
 
 **Signal challenges:**
 - Research shows ~64% of accounts are bots
@@ -67,7 +71,19 @@ LendFriend starts on Farcaster and expands thoughtfully to other platforms, adap
 
 ---
 
-### Phase 2-3: On-Chain Reputation (2026-2027) ✅
+### Potential Expansion: Reddit ⚠️
+
+**Timeline:** Phase 0 or 1, depending on PMF
+
+**Signal characteristics:**
+- Subreddit-based communities
+- Karma and account age signals
+- Mix of pseudonymous and real identities
+- Strong community moderation
+
+---
+
+### Always Available: On-Chain Reputation ✅
 
 **Why it's powerful:**
 - Cryptographically verifiable credentials (can't fake)
@@ -137,13 +153,13 @@ As we expand platforms, we shift from social trust → repayment history. Farcas
 
 ## The Three Phases
 
-### Phase 1: Bootstrap Trust (Q4 2025 - Q1 2026)
+### Phase 0: Prove Trust Works (2024-2025)
 
 Pure altruistic lending at 0% interest to prove the primitive works.
 
 **What we're building:**
 - $100-$5,000 community loans
-- Farcaster-native identity
+- Starts with Farcaster, may expand based on growth
 - Multi-signal reputation scoring
 - Transparent on-chain repayments
 
@@ -154,24 +170,24 @@ Pure altruistic lending at 0% interest to prove the primitive works.
 - Tipping behavior as reliability signal
 - Community dynamics at scale
 
-**Success metric:** 500-1,000 users, 3-6 months of clean behavioral data, proven that reputation-backed 0% interest loans can work.
+**Success metric:** Gather behavioral data to inform Phase 1 risk models. Phase 1 begins once we have enough data, regardless of specific metrics.
 
 ---
 
-### Phase 2: Scale with Algorithms (Q2 2026+)
+### Phase 1: Scale with Cashflow (2025-2026)
 
-Layer in cash flow data for larger loans with socially-appropriate interest.
+Layer in cash flow data for larger loans with interest.
 
 **New capabilities:**
-- $10k-$25k+ loan sizes
+- $5k-$50k+ loan sizes
 - Bank account cash flow (Plaid)
+- Merchant revenue verification (Square/Shopify)
 - On-chain revenue verification
-- Algorithmic underwriting (0-5%)
-- Revenue-based repayment
+- Liquidity pools for passive lending
+- 8-12% APR
 
 **The model:**
 - Hybrid social + financial signals
-- Proven AUC ≈ 0.72-0.80 accuracy
 - Auto-approval for qualified loans
 - Dynamic risk-based pricing
 - Continuous model improvement
@@ -180,16 +196,16 @@ Layer in cash flow data for larger loans with socially-appropriate interest.
 
 ---
 
-### Phase 3: The Credit Network (2027+)
+### Phase 2: Automate Repayment (2026-2027)
 
-Transform multi-platform social graphs into a full credit network.
+Loans that repay themselves automatically from income.
 
 **Vision:**
-- Multi-platform expansion (Bluesky, Twitter/X)
-- Credit scoring primitive (portable reputation scores used across DeFi)
-- Liquidity markets (secondary markets for loan participation)
-- Institutional integration (traditional lenders using our risk models)
-- Global accessibility (serving the 1.7B unbanked worldwide)
+- Wallet auto-deduction (ERC-4337 smart wallets)
+- Merchant revenue auto-deduction (Square/Shopify)
+- 50%+ loans use auto-repayment
+- 30% lower default rate vs manual
+- 100K+ active users
 
 ---
 
