@@ -103,9 +103,9 @@ Phase 2 succeeds if:
 
 ## Technology Dependencies
 
-**ERC-4337 smart wallets:** Early adoption today, needs payment stream standards (2026-2027). Fallback: recurring ERC-20 approvals.
+**ERC-4337 smart wallets:** Early adoption today, needs payment stream standards (2026-2027).
 
-**Merchant rails:** Square API ready now, Shopify waiting for crypto features. Fallback: manual reporting.
+**Merchant rails:** Square API ready now, Shopify waiting for crypto features.
 
 ---
 
