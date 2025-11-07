@@ -1,27 +1,26 @@
 # Welcome to LendFriend
 
-> Uncollateralized lending powered by social trust. Your network proves your creditworthiness.
+> Uncollateralized lending powered by social trust. Your network is your credit score.
 
 ---
 
 ## 🚀 Quick Start
 
-{% hint style="info" %}
-**New to LendFriend?** Choose your path below to get started.
-{% endhint %}
+**I want to borrow 💰**
 
-### I want to borrow 💰
-Create your profile and request a loan from friends. Build repayment history to access larger amounts.
+Create a loan request and share with your network. Friends vouch for you with both money and reputation.
 
 → [Learn about borrowing](how-it-works/borrower-profiles.md)
 
-### I want to lend 🤝
-Support friends and help build a reputation-backed lending network. Start small and diversify.
+**I want to lend 🤝**
+
+Support friends and help build trust-based credit. See trust scores before you contribute.
 
 → [Understand trust scores](how-it-works/social-trust-scoring/README.md)
 
-### How it works 🔬
-Understand the science behind social collateral and algorithmic trust measurement.
+**How it works 🔬**
+
+Explore the algorithm, smart contracts, and research behind social collateral.
 
 → [Read the overview](how-it-works/overview.md)
 
@@ -30,60 +29,78 @@ Understand the science behind social collateral and algorithmic trust measuremen
 ## Built on Proven Research
 
 {% hint style="success" %}
-**97-98% repayment rates** - Grameen Bank (9.6M borrowers)
-**96.3% repayment rates** - Kiva ($1.8B+ loans)
-**99.9% repayment rates** - Akhuwat (interest-free)
+**Grameen Bank:** 97-98% repayment rates (9.6M borrowers)
+**Kiva:** 96.3% repayment rates ($1.8B+ loans)
+**Akhuwat:** 99.9% repayment rates (interest-free model)
 
-Social collateral works. **30+ peer-reviewed papers** back our approach.
+Social collateral works. 30+ peer-reviewed studies back our approach.
 
-→ [View complete research](references.md)
+→ [View research foundation](references.md)
 {% endhint %}
 
 ---
 
 ## What Makes LendFriend Different
 
-| Traditional Banks | Other P2P Platforms | **LendFriend** |
-|------------------|---------------------|------------|
-| Credit scores required | Anonymous profiles | **Friend vouching** |
-| Collateral required | Stranger evaluation | **Social accountability** |
-| Complex applications | Algorithm-driven | **Network-based trust** |
-| High barriers | Geographic limits | **Farcaster identity** |
+| Traditional Banks | Other P2P | **LendFriend** |
+|------------------|-----------|------------|
+| Credit scores | Anonymous | **Friend vouching** |
+| Collateral required | Algorithm-based | **Social accountability** |
+| Complex applications | Geographic limits | **Farcaster identity** |
+| High barriers | Strangers only | **Network trust** |
+
+---
 
 ## Documentation Sections
 
-### 📖 [How It Works](how-it-works/overview.md)
-Technical mechanics: social trust scoring, risk grading, smart contracts, and default handling.
+**📖 [How It Works](how-it-works/overview.md)**
+Social trust scoring, risk grading, smart contracts, and on-chain transparency.
 
-### 🎯 [Vision & Roadmap](vision.md)
-Our evolution from zero-interest bootstrap to market-rate reputation-backed lending at scale.
+**🎯 [Vision & Roadmap](vision.md)**
+Three-phase evolution from zero-interest bootstrap to market-rate lending at scale.
 
-### 📚 [Academic Research](references.md)
-Complete bibliography: 15+ peer-reviewed papers and institutional case studies backing our approach.
+**📈 [Economic Context](economic-context.md)**
+Why now? Credit card debt, rising interest rates, and the cost of exclusion.
 
-### 📄 [White Paper](whitepaper.md)
-Philosophical and economic foundations of reputation-backed finance.
+**💰 [Web3 Cost Advantage](cheaper-lending.md)**
+How blockchain reduces costs from 15-30% to near zero.
 
-### ❓ [FAQ](resources/faq.md)
+**📚 [Research Foundation](references.md)**
+45+ peer-reviewed papers and case studies backing our approach.
+
+**❓ [FAQ](resources/faq.md)**
 Common questions for borrowers, lenders, and developers.
 
 ---
 
 {% hint style="info" %}
-**For Developers**: Explore our [Technical Stack](how-it-works/technical-stack.md) and [Smart Contract Flow](how-it-works/smart-contract-flow.md). View [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md) for trust score calculations.
+**For Developers:** Start with [Technical Stack](how-it-works/technical-stack.md) and [Smart Contract Flow](how-it-works/smart-contract-flow.md). Deep dive into [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md) for trust score calculations.
 {% endhint %}
 
 ---
 
-## Community & Links
+## Phase 0: Bootstrapping Trust
 
-- **Main Site**: [lendfriend.org](https://lendfriend.org)
-- **GitHub**: [github.com/your-org/far-mca](https://github.com)
-- **Farcaster**: [@lendfriend](https://warpcast.com/lendfriend)
-- **Twitter**: [@lendfriend](https://twitter.com)
+We're starting with **0% interest loans** to gather clean behavioral data and prove social trust works in practice.
+
+**Current focus:**
+- Loans up to $5,000
+- 30-90 day terms
+- Farcaster-native experience
+- Building repayment history on-chain
+
+→ [Read Phase 0 details](vision/phase-0-social-trust.md)
+
+---
+
+## Community
+
+- **App:** [lendfriend.org](https://lendfriend.org)
+- **Code:** [github.com/aagoldberg/far-mca](https://github.com/aagoldberg/far-mca)
+- **Farcaster:** [@lendfriend](https://warpcast.com/lendfriend)
 
 ---
 
 💚 **Open Source & Community Driven**
 
-LendFriend is building the future of reputation-backed finance. Join us in creating a more inclusive financial system.
+LendFriend is building the future of trust-based finance. All code is MIT licensed.
