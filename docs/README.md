@@ -15,21 +15,19 @@ We measure trust algorithmically, testing whether close friends with small netwo
 
 ---
 
-## Documentation
-
-### Vision & Context
+## Vision & Context
 - [Vision & Roadmap](vision.md)
 - [Economic Context](economic-context.md)
 - [Web3 Cost Advantage](cheaper-lending.md)
 - [Research Foundation](references.md)
 
-### Protocol Mechanics
+## Protocol Mechanics
 - [Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
 - [Risk Scoring](how-it-works/risk-scoring/README.md)
 - [Smart Contract Flow](how-it-works/smart-contract-flow.md)
 - [Risk & Default Handling](how-it-works/risk-and-defaults.md)
 
-### Infrastructure
+## Infrastructure
 - [Technical Stack](how-it-works/technical-stack.md)
 - [Payment Methods](how-it-works/payment-methods.md)
 - [Farcaster Mini App](how-it-works/farcaster-miniapp.md)
