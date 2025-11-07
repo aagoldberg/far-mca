@@ -112,11 +112,13 @@ By contributing, lenders acknowledge:
 
 ## Our Philosophy
 
-**We don't:** Shame defaulters publicly (beyond on-chain data), sell debt to collections, sue borrowers, or block access permanently.
+**Phase 0 approach:**
+- Record behavior transparently on-chain
+- Let community decide who to fund
+- Allow redemption through smaller loans
+- No legal recourse or traditional collections
 
-**We do:** Record behavior transparently, let community decide who to fund, allow redemption through smaller loans.
-
-Financial exclusion got borrowers here. We won't exclude them further for struggling.
+**As we learn:** We'll let the data guide what's needed. Our priority is helping people access credit while protecting lenders. If defaults become systemic, we're open to exploring additional mechanisms - but we start with social accountability first.
 
 ---
 
