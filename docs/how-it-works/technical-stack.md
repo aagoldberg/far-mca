@@ -62,82 +62,6 @@ All loans live on [Base](https://base.org) - an Ethereum Layer 2 blockchain back
 
 ---
 
-### Smart Contracts
-
-**Factory pattern:** One factory deploys individual loan contracts.
-
-```mermaid
-graph TD
-    A[MicroLoanFactory] -->|deploys| B[MicroLoan 1]
-    A -->|deploys| C[MicroLoan 2]
-    A -->|deploys| D[MicroLoan N]
-    B -->|uses| E[USDC]
-    C -->|uses| E
-    D -->|uses| E
-
-    style A fill:#2E7D32
-    style B fill:#1976D2
-    style C fill:#1976D2
-    style D fill:#1976D2
-    style E fill:#2196F3
-```
-
-**MicroLoanFactory** - Creates and tracks loans
-- Enforces constraints (min $100, max 365 days)
-- One active loan per borrower
-- Tracks all loans on-chain
-
-**MicroLoan** (per loan) - Handles the money
-- Accepts USDC contributions from lenders
-- Disburses when fully funded
-- Tracks repayments
-- Enables pro-rata claims
-
-**Security:**
-- OpenZeppelin standards (battle-tested code)
-- Reentrancy protection
-- Gas optimized for low fees
-- Open source and auditable
-
----
-
-### Currency: USDC
-
-**Contract:** `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
-
-**Why USDC?**
-- Dollar-pegged (no crypto volatility)
-- Trusted issuer (Circle)
-- Easy on/off ramps (Coinbase, exchanges)
-- Native Base support
-
----
-
-## Identity & Social Data
-
-### Farcaster Protocol
-
-Farcaster provides the social layer - verifiable identities and connections.
-
-**What it gives us:**
-- Decentralized social network (150k+ users)
-- On-chain identities that can't be faked
-- Cryptographic proof of connections
-- Spam/bot filtering (quality scores)
-
-**Why Farcaster?**
-- Verifiable social graphs (can't game with fake followers)
-- Quality scores filter bots
-- Decentralized (no platform risk)
-- Growing community of early adopters
-
-**Data via Neynar API:**
-- Follower/following relationships
-- User profiles and quality scores
-- Connection strength metrics
-
----
-
 ## Data Layer
 
 ### The Graph (Blockchain Indexing)
@@ -183,40 +107,6 @@ Each loan has an IPFS link stored on-chain. Once uploaded, metadata **cannot be 
 
 ---
 
-## Trust Score Calculation
-
-Social trust scores are computed off-chain using the [Adamic-Adar algorithm](social-trust-scoring/the-algorithm.md).
-
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant API as API Route
-    participant Cache as Redis
-    participant N as Neynar
-
-    C->>API: Calculate trust score
-    API->>Cache: Check cache
-    alt Cache Hit
-        Cache-->>API: Return cached score
-        API-->>C: Score (cached)
-    else Cache Miss
-        API->>N: Fetch social data
-        N-->>API: Followers, following
-        API->>API: Calculate Adamic-Adar
-        API->>Cache: Store result (30min TTL)
-        API-->>C: Score (fresh)
-    end
-```
-
-**Performance:**
-- Calculation: <100ms
-- Cached for 30 minutes (Redis)
-- 60-80% cache hit rate
-
-Keeps the UI fast while minimizing API costs.
-
----
-
 ## Infrastructure
 
 **Hosting:**
@@ -258,4 +148,4 @@ All code is MIT licensed:
 
 ---
 
-**Next:** [Smart Contract Flow](smart-contract-flow.md) · [Risk & Default Handling](risk-and-defaults.md)
+**Next:** [Smart Contract Flow](smart-contract-flow.md) · [Social Trust Scoring](social-trust-scoring/README.md) · [Risk & Default Handling](risk-and-defaults.md)
