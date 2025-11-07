@@ -7,9 +7,7 @@
 - **Can't expand the economy** - Just shuffling existing capital among the already-wealthy
 - **Can't fulfill crypto's promise** - "Financial access without banks"—but only if you're already rich
 
-Meanwhile, 1.7 billion people remain unbanked[^1]. Payday lenders charge 300%+ APR. Traditional credit scores exclude billions. And crypto—with all its infrastructure for global, permissionless payments—can't help them.
-
-[^1]: World Bank Global Findex Database 2021
+Meanwhile, [1.7 billion people remain unbanked](references.md#world-bank-global-findex-2021). Payday lenders charge 300%+ APR. Traditional credit scores exclude billions. And crypto—with all its infrastructure for global, permissionless payments—can't help them.
 
 ---
 

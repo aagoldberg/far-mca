@@ -1,8 +1,19 @@
-# References
+# Research Foundation
 
 ## Academic Foundations
 
 This page contains the research supporting LendFriend's uncollateralized lending mechanics.
+
+---
+
+## Global Financial Inclusion Data
+
+<span id="world-bank-global-findex-2021"></span>
+**World Bank (2021)**. The Global Findex Database 2021: Financial Inclusion, Digital Payments, and Resilience in the Age of COVID-19. World Bank Group, Washington, DC.
+DOI: [10.1596/978-1-4648-1897-4](https://doi.org/10.1596/978-1-4648-1897-4)
+URL: [globalfindex.worldbank.org](https://www.worldbank.org/en/publication/globalfindex)
+
+> Comprehensive survey documenting that **1.7 billion adults remain unbanked** globally (24% of the world's adult population). Key findings: (1) 76% of adults globally have an account at a financial institution or through a mobile money provider, up from 68% in 2017; (2) Account ownership varies dramatically by region—high-income economies 94%, developing economies 71%, Sub-Saharan Africa 55%; (3) Main barriers: insufficient money (64%), cost (26%), distance (22%), lack of documentation (20%); (4) Traditional credit scoring and collateral requirements exclude billions from formal lending despite having income and repayment capacity.
 
 ---
 
