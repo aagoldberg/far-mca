@@ -2,12 +2,14 @@
 
 **DeFi lending is stuck.** To borrow $1,000, you need to lock up $1,500 in collateral. This works for leverage trading, but it fundamentally limits crypto's growth:
 
-- **Can't onboard new people** - They don't have crypto assets to use as collateral
-- **Can't fund real economic activity** - Small businesses, equipment purchases, working capital all impossible
-- **Can't expand the economy** - Just redistributing existing capital among people who already have it
-- **Can't deliver on crypto's promise** - Financial access without banks, but only if you're already wealthy
+- **Can't onboard new people** - No crypto assets = no collateral = no access
+- **Can't fund productive activity** - Small businesses, inventory, working capital: all locked out
+- **Can't expand the economy** - Just shuffling existing capital among the already-wealthy
+- **Can't fulfill crypto's promise** - "Financial access without banks"—but only if you're already rich
 
-Meanwhile, 1.7 billion people remain unbanked. Payday lenders charge 300%+ APR. Traditional credit scores exclude billions. And crypto—with all its infrastructure for global, permissionless payments—can't help them.
+Meanwhile, 1.7 billion people remain unbanked[^1]. Payday lenders charge 300%+ APR. Traditional credit scores exclude billions. And crypto—with all its infrastructure for global, permissionless payments—can't help them.
+
+[^1]: World Bank Global Findex Database 2021
 
 ---
 
@@ -15,13 +17,13 @@ Meanwhile, 1.7 billion people remain unbanked. Payday lenders charge 300%+ APR. 
 
 It's how crypto grows beyond speculation into a real economy.
 
-**Economic expansion:** Create new credit, don't just leverage existing assets. Fund businesses, bridge to fiat, enable productive activity.
+**Economic expansion:** A Shopify merchant borrows $2,000 for inventory, sells it, repays lenders, and everyone grows. That's new economic activity—not just leveraging existing assets for more leverage trades.
 
-**User onboarding:** Your friend shares a loan on WhatsApp. Non-crypto people contribute via web. They discover stablecoins, wallets, DeFi—through lending, not trading.
+**User onboarding:** Someone shares their loan request on social media. Non-crypto people contribute $20 with a credit card. They discover stablecoins, wallets, on-chain settlement—through helping a friend, not trading.
 
 **Crypto's core value proposition:** Global financial access without traditional institutions. We have the payment layer (stablecoins). Now we need the credit layer.
 
-**The infrastructure is ready:** On-chain reputation, social graphs, cashflow oracles, programmable wallets, instant settlement. All the pieces exist to make uncollateralized lending work.
+**The infrastructure exists for the first time:** Stablecoins at scale, decentralized social graphs, cashflow APIs, programmable wallets, instant settlement. All the pieces needed to *attempt* crypto-native uncollateralized lending now exist.
 
 LendFriend is assembling them.
 
