@@ -1,79 +1,55 @@
-# 🚀 Virality & Growth
+# Virality & Growth
 
-LendFriend starts on Farcaster, with cross-platform sharing from day 1.
-
----
-
-## Why Start with Farcaster?
-
-Farcaster offers the strongest trust signals (wallet-based identity, quality filtering), crypto-native users (no onboarding friction), architecture built for virality (mini apps, Cast Actions, open social graph), and solves the cold start problem (borrowers bring their own lenders).
-
-→ [Learn why Farcaster is the ideal starting point](farcaster-virality.md#why-start-with-farcaster)
+Loans spread through social networks. Borrowers share requests with friends, friends vouch with money and reputation, and each successful loan creates advocates who share success stories.
 
 ---
 
-## Growth Mechanisms
+## Why Loans Go Viral
 
-### Farcaster Native
+{% hint style="success" %}
+**Research shows:**
+- First 10 days are critical—early contributions trigger participation cascades [[11]](../../references.md#crowdfunding-first-10-days)
+- 70% funding = psychological tipping point for completion [[11]](../../references.md#crowdfunding-first-10-days)
+- Emotional storytelling increases donations by 70% [[11]](../../references.md#small-et-al-2007)
+- Social proximity reduces default risk by 13% [[6]](../../references.md#karlan-et-al-2009)
+{% endhint %}
 
-Mini apps enable full web experiences inside Farcaster posts. Users discover loans in their feed, view Trust Scores, and contribute—all without leaving Farcaster.
+**How it works:**
 
-→ [Learn about Farcaster mini apps, Cast Actions, and Composer Actions](farcaster-virality.md)
+Borrower creates loan → Friends contribute first → Extended network sees activity → Strangers join at 70%+ → Loan completes → Success stories spread
 
-### Cross-Platform Sharing
-
-Every loan has a shareable web page. Borrowers can share to Twitter, WhatsApp, Telegram, Facebook, and 8+ other platforms. Anyone can donate via web without Farcaster using social login and credit card—no crypto knowledge needed.
-
-→ [See all platforms, conversion optimization, and mobile design](cross-platform-growth.md)
-
-### Viral Funding Principles
-
-Research-backed mechanisms that make loans spread:
-- First 10 days critical [[11]](../../references.md#crowdfunding-first-10-days)
-- 70% = tipping point for completion
-- Stories increase funding 78% [[2]](../../references.md#herzenstein-et-al-2011)
-- Trust cascades: friends → network → strangers
-
-→ [Read the research on viral funding](viral-funding-mechanics.md)
-
-### Platform Scaling
-
-Network effects drive exponential growth when K-factor > 1:
-- Kiva: 0 → 800K lenders via referrals [[16]](../../references.md#kiva-prosper-growth)
-- Prosper: 300K → 800K through incentives [[16]](../../references.md#kiva-prosper-growth)
-- P2P market: $209B → $1T by 2032 [[15]](../../references.md#p2p-market-2024)
-
-→ [Understand network effects and K-factors](platform-scaling.md)
+Each loan introduces new lenders. Some lenders become borrowers. The cycle compounds.
 
 ---
 
-## Expansion Strategy
+## How to Share
 
-**Phase 1: Farcaster + Web (2025-2026)**
-- Native mini apps on Farcaster
-- Cross-platform sharing (Twitter, WhatsApp, Telegram, etc.)
-- Web donations with social login
-- 500-1,000 users, 90%+ repayment
+**On Farcaster:**
 
-**Phase 2: Expanded Reach (2026+)**
-- Native integrations on other platforms (Bluesky, etc.)
-- Fiat on-ramps (credit cards, Apple Pay, Google Pay)
-- Referral bonuses and incentives
-- 50%+ lenders from outside Farcaster
+Mini apps let users view loan details, Trust Scores, and contribute—all inside their feed. No external clicks, no wallet connecting. Funding is as easy as liking a post.
 
-**Phase 3: Referral Marketplace (2027+)**
-- Multi-platform native experiences
-- Team competitions and gamification
-- K-factor > 1, exponential growth
-- Self-sustaining without paid acquisition
+**Everywhere else:**
 
-→ [Full roadmap](../../vision.md)
+Every loan gets a shareable web page: `lendfriend.org/loan/[loan-id]`
+
+Share to Twitter, WhatsApp, Telegram, Facebook, LinkedIn, and more. Anyone can contribute via web using social login and credit card—no crypto knowledge needed.
 
 ---
 
-## Next Steps
+## The Growth Loop
 
-- [Farcaster Virality](farcaster-virality.md) - Mini apps, Cast Actions, social graph
-- [Cross-Platform Growth](cross-platform-growth.md) - Web donations, conversion optimization
-- [Viral Funding Mechanics](viral-funding-mechanics.md) - Research-backed principles
-- [Platform Scaling](platform-scaling.md) - Network effects, K-factors
+1. Borrowers bring their own lenders (friends)
+2. Lenders discover other loans on the platform
+3. Some lenders become borrowers
+4. Each borrower brings more lenders
+5. Network effects compound
+
+**Goal:** Each user brings 1+ new users for exponential growth.
+
+---
+
+**Case studies:** Kiva grew to 800K+ lenders through referrals [[16]](../../references.md#kiva-prosper-growth). Prosper grew from 300K to 800K+ through incentive programs [[16]](../../references.md#kiva-prosper-growth). P2P lending market: $209B → $1T by 2032 [[15]](../../references.md#p2p-market-2024).
+
+---
+
+**Next:** [Social Trust Scoring](../social-trust-scoring/README.md) · [Risk Scoring](../risk-scoring/README.md) · [Roadmap](../../vision.md)

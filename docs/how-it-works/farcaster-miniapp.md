@@ -470,5 +470,5 @@ trackEvent('loan_shared', { loanAddress, platform: 'farcaster' });
 
 - [Borrower Profiles](borrower-profiles.md) — How Farcaster identity is used
 - [Social Trust Scoring](social-trust-scoring/README.md) — Trust score algorithm
-- [Virality & Growth](virality-and-growth/farcaster-virality.md) — How mini app drives growth
+- [Virality & Growth](virality-and-growth/README.md) — How loans spread through networks
 - [Payment Methods](payment-methods.md) — How contributions work
