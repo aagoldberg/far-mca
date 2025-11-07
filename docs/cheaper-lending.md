@@ -104,12 +104,11 @@ This isn't charity—it's infrastructure arbitrage. Same borrowers, same default
 Five years ago, this wasn't possible. Today, the infrastructure converged:
 
 1. **Stablecoins reached $305B supply** with $27.6T transfer volume[[57]](references.md#ref57)
-2. **Social protocols scaled:** Farcaster 1M+ users[[65]](references.md#ref65), Bluesky 20M+ users[[66]](references.md#ref66)
+2. **Social protocols emerging:** Farcaster (1M+ users[[65]](references.md#ref65)), Bluesky (20M+ users[[66]](references.md#ref66)) prove crypto-native identity can gain traction
 3. **Smart contracts proven at scale:** $50B+ collateralized lending[[62]](references.md#ref62)
 4. **Oracle networks and ZK proofs** enable secure platform data access (Shopify, Stripe, Coinbase Commerce)
-5. **Account abstraction** enables programmable payment streams
 
-All the pieces exist. We're assembling them for uncollateralized lending for the first time.
+All the pieces exist for the first time. We're assembling them to *attempt* uncollateralized lending.
 
 ---
 
