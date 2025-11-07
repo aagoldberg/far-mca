@@ -21,10 +21,6 @@ It's how crypto grows beyond speculation into a real economy.
 
 **Crypto's core value proposition:** Global financial access without traditional institutions. We have the payment layer (stablecoins). Now we need the credit layer.
 
-**The infrastructure exists for the first time:** Stablecoins at scale, decentralized social graphs, cashflow APIs, programmable wallets, instant settlement. All the pieces needed for crypto-native uncollateralized lending now exist.
-
-LendFriend is assembling them.
-
 ---
 
 ## Next Steps
