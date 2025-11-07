@@ -90,18 +90,45 @@ Risk scoring in Phase 0 is simplified to focus on social signals:
 
 ## User Experience
 
-**Borrowers:**
+### Loan Lifecycle (Visual)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  1. CREATE              2. SHARE              3. FUND           │
+│  ────────               ────────              ────────          │
+│  👤 Borrower            🔗 Viral              💰 Lenders        │
+│  Connect Farcaster      Share on socials     Contribute USDC   │
+│  Request $2,000         Trust score visible   See trust score  │
+│  30-day term            12+ platforms         Direct P2P        │
+│  0% interest            ↓                     ↓                 │
+│  ↓                      Friends see loan      $2,000 funded    │
+│                                                                 │
+│  4. RECEIVE             5. REPAY              6. COMPLETE       │
+│  ────────               ────────              ────────          │
+│  ✅ Funds released      📅 Before maturity    ⭐ Build rep     │
+│  Smart contract         Manual payment        On-chain history │
+│  Auto to wallet         Grace period: 7 days  Future loans     │
+│                         or → DEFAULT 🚫       Trust increases  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### For Borrowers
+
 - Create loan with Farcaster identity
-- Share loan link across social platforms
-- Receive funds when fully funded
-- Repay before maturity date
+- Share loan link across social platforms (12+ platforms)
+- Receive funds automatically when fully funded
+- Repay before maturity date (7-day grace period)
 
 → [Borrower profiles and identity](../how-it-works/borrower-profiles.md)
 
-**Viral mechanics:**
-- Shareable loan links with trust scores
-- Cross-platform sharing (12+ platforms)
-- Progressive crypto onboarding for lenders
+### For Lenders
+
+- Discover loans through social connections
+- See trust score before contributing
+- Earn 0% interest (Phase 0), building reputation for future phases
+- Track repayment on-chain
 
 → [Virality and growth mechanics](../how-it-works/virality-and-growth/README.md) | [Farcaster virality](../how-it-works/virality-and-growth/farcaster-virality.md)
 
@@ -190,6 +217,6 @@ Before moving to Phase 1 (cashflow-based lending):
 - [Risk Scoring](../how-it-works/risk-scoring/README.md)
 
 **Research and context:**
-- [Academic Research](../references.md) — 30+ peer-reviewed papers
+- [Research Foundation](../references.md) — 80+ citations and peer-reviewed papers
 - [Motivation](../motivation.md) — Why this matters
 - [Whitepaper](https://lendfriend.org/whitepaper) — Complete manifesto

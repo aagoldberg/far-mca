@@ -30,32 +30,57 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 ## Why This Matters
 
+### Comparison: Manual vs Auto-Repayment
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│  📅 MANUAL REPAYMENT            ⚡ AUTO-REPAYMENT                │
+│  ─────────────────             ──────────────────                │
+│                                                                  │
+│  🧠 Remember payment date       ✅ Set once, forget               │
+│  📱 Open app monthly            🤖 Deducts automatically          │
+│  💳 Manual transfer             💰 % of daily income             │
+│  ⏰ Late payment risk           ⏱️ Always on-time                 │
+│  😰 Cognitive load              😌 Zero mental overhead          │
+│                                                                  │
+│  BORROWER:                      BORROWER:                        │
+│  "Did I pay this month?"        "What loan?"                     │
+│                                                                  │
+│  LENDER:                        LENDER:                          │
+│  Chasing late payments          Predictable yield                │
+│                                                                  │
+│  DEFAULT RATE: 15%              DEFAULT RATE: 10% (30% lower)    │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
 ### The Problem with Manual Repayment
 
 Even with great intentions, manual repayment creates friction:
-- Borrowers forget → late payments → defaults
-- Lenders chase payments → stress and uncertainty
-- Cognitive load → "did I remember to pay this month?"
+- **Forgetfulness:** Borrowers forget due dates → late payments → unnecessary defaults
+- **Chasing:** Lenders waste time following up → stress and uncertainty
+- **Cognitive load:** "Did I remember to pay this month?" → mental overhead
 
 **Result:** Preventable defaults from forgetfulness, not inability to pay.
 
 ### What Auto-Repayment Solves
 
 **For borrowers:**
-- Never miss a payment (automatic)
-- Never think about repayment (set and forget)
-- Build perfect credit history (100% on-time)
+- Never miss a payment (automatic from wallet or revenue)
+- Set once, forget forever (zero mental overhead)
+- Build perfect credit history (100% on-time payments)
 - Repay faster (no procrastination)
 
 **For lenders:**
-- Predictable cash flows (no chasing)
-- Lower default risk (30%+ reduction)
-- Higher yield (better repayment rates)
+- Predictable cash flows (no manual collections)
+- 30% lower default risk (proven by Phase 2 data)
+- Higher effective yields (better repayment rates)
 
 **For merchants:**
-- Better than MCAs (12% APR vs. 280% APR)
-- Revenue-based (slow days = smaller payments)
-- Transparent pricing (no hidden factor rates)
+- 12% APR vs 280% APR for merchant cash advances
+- Revenue-based repayment (slow days = smaller payments, not fixed)
+- Transparent pricing (no confusing factor rates)
 
 ---
 

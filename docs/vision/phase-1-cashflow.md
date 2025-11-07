@@ -96,22 +96,50 @@ Combine social trust (Phase 0) with financial data:
 
 ### 3. Liquidity Pools
 
+**How Pools Work:**
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│                                                                │
+│  LENDERS DEPOSIT           →        BORROWERS REQUEST          │
+│  ───────────────                    ─────────────────          │
+│                                                                │
+│  🏦 Conservative Pool              📊 Risk Score: 85%          │
+│     4-6% APR target                   ↓                        │
+│     $100K TVL                      ✅ Auto-approved             │
+│     ↓                                  ↓                       │
+│  💼 Balanced Pool                  💰 $10K loan @ 8% APR       │
+│     6-8% APR target                   ↓                        │
+│     $250K TVL                      📅 12-month repayment       │
+│     ↓                                                          │
+│  🚀 Aggressive Pool                                            │
+│     8-12% APR target                                           │
+│     $150K TVL                                                  │
+│                                                                │
+│  PASSIVE YIELD             ←        AUTO-DISBURSEMENT          │
+│  ───────────────                    ─────────────────          │
+│  Diversified returns               Instant funding             │
+│  Withdraw anytime                  Build credit history        │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+```
+
 **For lenders:**
 - Deposit USDC into risk-stratified pools (Conservative, Balanced, Aggressive)
-- Earn passive yield (4-8% APR target)
+- Earn passive yield (4-8% APR target based on risk tolerance)
 - Withdraw anytime from unallocated reserves
-- Defaults spread across pool (diversification)
+- Defaults spread across pool (auto-diversification)
 
 **For borrowers:**
 - Get approved based on hybrid risk score
 - Receive instant loan offer (amount, rate, terms)
 - Funds disbursed from pool automatically
-- Repay on schedule, build credit history
+- Repay on schedule, build on-chain credit history
 
-**Pools enable scale:**
-- Don't need to find individual lenders
-- Capital available 24/7
-- Anonymous liquidity (market-sized, not network-sized)
+**Why pools enable scale:**
+- No need to find individual lenders for each loan
+- Capital available 24/7 (not dependent on personal networks)
+- Market-sized liquidity, not network-sized
 
 ### 4. Cross-Platform Expansion
 

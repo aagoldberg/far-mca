@@ -6,57 +6,66 @@ This section provides technical implementation documentation for our three-phase
 
 ---
 
+## The Three-Phase Journey
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│  Phase 0                Phase 1                 Phase 2                │
+│  ────────────          ────────────           ────────────             │
+│  Social Trust          Add Cashflow           Automate                 │
+│                                                                        │
+│  🤝 $100-$5K           💰 $5K-$50K+           ⚡ $10K-$100K+          │
+│  0% interest           8-12% APR              8-15% APR                │
+│  Friends & family      Strangers OK           Auto-repayment           │
+│  500-1K users          10K+ users             100K+ users              │
+│                                                                        │
+│  [●●●●●●●●] LIVE      [○○○○○○○○] 2025-26    [○○○○○○○○] 2026-27       │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## Phase Documentation
 
-### Phase 0: Prove Trust Works (2024-2025)
+### 🤝 Phase 0: Prove Trust Works (2024-2025)
 
-**Status:** Live on Base Sepolia Testnet
+**Status:** 🟢 Live on Base Sepolia Testnet
 
-**Focus:** Zero-interest loans ($100-$5K) backed by social trust signals
+Zero-interest loans ($100-$5K) backed by social trust to prove reputation can replace collateral.
 
-**Key Components:**
-- Smart contracts (MicroLoan.sol, MicroLoanFactory.sol)
-- Farcaster social graph integration (Neynar API)
-- Trust scoring algorithm (Adamic-Adar weighted)
-- Base L2 deployment with The Graph indexing
+**Key Components:** Smart contracts, Farcaster social graph, Adamic-Adar trust scoring
 
-**Goal:** 500-1,000 users demonstrating 90%+ repayment rate to prove social accountability can replace collateral.
+**Goal:** 500-1,000 users, 90%+ repayment rate
 
 → [Phase 0 Technical Implementation](vision/phase-0-social-trust.md)
 
 ---
 
-### Phase 1: Scale with Cashflow (2025-2026)
+### 💰 Phase 1: Scale with Cashflow (2025-2026)
 
-**Status:** Planned
+**Status:** 🟡 Planned
 
-**Focus:** Larger loans ($5K-$50K+) using hybrid social + cashflow underwriting
+Larger loans ($5K-$50K+) combining social trust + cashflow verification from Plaid/Square/Shopify.
 
-**Key Components:**
-- Cashflow verification APIs (Plaid for banks, Square/Shopify for merchants)
-- Liquidity pool smart contracts for passive lending
-- Interest calculation (0-8% APR based on risk)
-- Hybrid risk scoring (social trust + verified cashflow + repayment history)
+**Key Components:** Cashflow APIs, liquidity pools, 8-12% APR, hybrid risk scoring
 
-**Goal:** Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
+**Goal:** 10K+ users, $1M+ originated, prove crypto lending scales
 
 → [Phase 1 Technical Implementation](vision/phase-1-cashflow.md)
 
 ---
 
-### Phase 2: Automate Repayment (2026-2027)
+### ⚡ Phase 2: Automate Repayment (2026-2027)
 
-**Status:** Future
+**Status:** ⚪ Future
 
-**Focus:** Loans that repay themselves automatically from wallets or business revenue
+Loans that repay themselves automatically from wallets (ERC-4337) or merchant revenue (Square/Shopify).
 
-**Key Components:**
-- ERC-4337 account abstraction for smart wallet auto-deduction
-- Merchant OAuth and revenue-based repayment (Square/Shopify APIs)
-- Payment stream plugins for programmable wallets
-- Automated repayment logic (2-5% of daily sales or 10% of incoming transfers)
+**Key Components:** Smart wallet plugins, merchant OAuth, auto-deduction (2-5% of sales)
 
-**Goal:** Remove repayment friction entirely—borrowers never miss payments, lenders get predictable returns.
+**Goal:** 50%+ auto-repayment adoption, 30% lower defaults, 100K+ users
 
 → [Phase 2 Technical Implementation](vision/phase-2-automation.md)
 
@@ -90,22 +99,22 @@ This section provides technical implementation documentation for our three-phase
 
 ## Infrastructure Readiness
 
-**Available Today:**
-- Farcaster API (social graph with Neynar)
-- Base L2 ($0.01 transactions)
-- USDC stablecoin (ERC-20)
-- Plaid API (bank account data)
-- Square API (merchant sales data)
-
-**Maturing 2025-2026:**
-- Account Abstraction (ERC-4337)
-- Payment stream plugins
-- Shopify crypto wallets
-
-**Future 2026+:**
-- zkTLS proofs for privacy
-- Portable on-chain credit scores
-- Multi-chain expansion
+| Technology | Status | Used In |
+|------------|--------|---------|
+| **🟢 Ready Today** | | |
+| Farcaster API (Neynar) | ✅ Production | Phase 0, 1, 2 |
+| Base L2 ($0.01 txs) | ✅ Production | Phase 0, 1, 2 |
+| USDC stablecoin | ✅ Production | Phase 0, 1, 2 |
+| Plaid API (bank data) | ✅ Production | Phase 1, 2 |
+| Square API (merchant) | ✅ Production | Phase 1, 2 |
+| **🟡 Maturing 2025-26** | | |
+| ERC-4337 (smart wallets) | 🔨 Early adoption | Phase 2 |
+| Payment stream plugins | 🔨 Standards forming | Phase 2 |
+| Shopify crypto wallets | 🔨 In development | Phase 2 |
+| **⚪ Future 2026+** | | |
+| zkTLS proofs | 📋 Research | Phase 3+ |
+| On-chain credit scores | 📋 Design | Phase 3+ |
+| Multi-chain expansion | 📋 Planned | Phase 3+ |
 
 ---
 
@@ -123,5 +132,5 @@ This section provides technical implementation documentation for our three-phase
 - [Technical Stack](how-it-works/technical-stack.md)
 
 **Research foundation:**
-- [Academic Research](references.md) — 30+ peer-reviewed papers
+- [Research Foundation](references.md) — 80+ citations and peer-reviewed papers
 - [Motivation](motivation.md) — Why uncollateralized lending matters
