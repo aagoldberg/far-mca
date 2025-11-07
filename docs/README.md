@@ -1,16 +1,17 @@
-# LendFriend Technical Documentation
+# LendFriend Protocol
 
 > Your network is your credit score.
 
 ---
 
-## What This Is
+## Overview
 
-LendFriend enables uncollateralized lending using social relationships as collateral. When friends vouch for a borrower with both money and reputation, the strength of those connections predicts repayment.
+LendFriend enables uncollateralized lending by replacing credit bureaus with social relationships. When friends vouch for a borrower—with both capital and reputation—the strength of those connections predicts repayment.
 
-We use the Adamic-Adar algorithm to weight social ties—close friends with selective networks matter more than distant followers. All loan activity records permanently on-chain, building verifiable reputation across DeFi.
+We measure trust algorithmically. Close friends with small networks signal stronger accountability than distant followers with massive audiences. Every loan records permanently on-chain, creating verifiable reputation that follows borrowers across DeFi.
 
-**Current phase:** 0% interest loans on Farcaster to prove social trust works. Future phases add cashflow data and AI underwriting.
+**Today:** Zero-interest loans on Farcaster to prove the model works.
+**Tomorrow:** Market-rate lending powered by social trust + cashflow data + AI underwriting.
 
 ---
 
