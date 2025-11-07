@@ -23,9 +23,21 @@ export default function VisionPage() {
 
         {/* Aspirational Vision */}
         <section className="mb-16">
-          <p className="text-2xl text-gray-800 leading-relaxed text-center mb-4 font-light max-w-[46rem] mx-auto">
+          <p className="text-2xl text-gray-800 leading-relaxed text-center mb-8 font-light max-w-[46rem] mx-auto">
             Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>, your cashflow replaces collateral, and loans repay themselves automatically as you earn.
           </p>
+
+          {/* Visual: Credit Score vs Social Trust */}
+          <div className="max-w-3xl mx-auto">
+            <Image
+              src="/images/credit_social.png"
+              alt="Credit score vs social lending - transforming from individual debt stress to community support"
+              width={800}
+              height={400}
+              className="rounded-xl shadow-lg w-full h-auto"
+              priority
+            />
+          </div>
         </section>
 
         {/* The Problem */}
