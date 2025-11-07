@@ -1,6 +1,6 @@
 # Table of contents
 
-* [👋 Welcome](README.md)
+* [LendFriend Protocol](README.md)
 * [💡 Motivation](motivation.md)
 * [📈 Economic Context: Why Now?](economic-context.md)
 * [💰 Web3 Cost Advantage](cheaper-lending.md)
