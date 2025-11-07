@@ -492,7 +492,7 @@ export default function EconomicContextPage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="text-center">
               <div className="text-5xl mb-3">🌊</div>
               <h3 className="font-bold text-lg text-gray-900 mb-2">Wave 1: Global Work</h3>
@@ -507,6 +507,100 @@ export default function EconomicContextPage() {
               <div className="text-5xl mb-3">🌊</div>
               <h3 className="font-bold text-lg text-gray-900 mb-2">Wave 3: Infrastructure</h3>
               <p className="text-gray-600">We combine all the pieces</p>
+            </div>
+          </div>
+
+          {/* Why We Succeed Where Standalone RBF Failed */}
+          <div className="mb-16">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-[#3B9B7F] rounded-lg p-8">
+              <h3 className="text-2xl font-bold text-[#2E7D68] mb-6">Why LendFriend Succeeds Where Standalone RBF Failed</h3>
+
+              <div className="space-y-6 text-gray-700">
+                <div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-3">We Solve the Revenue Diversion Problem Differently</h4>
+                  <p className="mb-3">
+                    Standalone RBF lenders failed because borrowers could route sales through unmonitored channels. Embedded lenders solved this by controlling payment rails, but gatekept access to one platform.
+                  </p>
+                  <p className="font-semibold text-[#065F46]">
+                    → LendFriend uses <strong>social accountability</strong> instead of payment control:
+                  </p>
+                  <ul className="mt-2 space-y-2 ml-4">
+                    <li>✓ <strong>Reputation on the line:</strong> Public, on-chain loan history. Default = visible to your entire social graph</li>
+                    <li>✓ <strong>Community vouching:</strong> People who know you contribute. They trust you'll repay</li>
+                    <li>✓ <strong>Transparent repayment:</strong> All transactions on-chain. Can't hide from lenders</li>
+                    <li>✓ <strong>Future opportunities:</strong> Building reputation unlocks larger loans, better terms, and DeFi access</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-3">We Combine Embedded + Standalone Advantages</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-white rounded-lg p-4 border border-green-200">
+                      <p className="font-semibold text-gray-900 mb-2">Like Embedded Lenders:</p>
+                      <ul className="text-sm space-y-1">
+                        <li>✓ Verify platform income (Shopify, Upwork, Stripe APIs)</li>
+                        <li>✓ Real-time cashflow data</li>
+                        <li>✓ Can assess creditworthiness banks can't</li>
+                      </ul>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 border border-green-200">
+                      <p className="font-semibold text-gray-900 mb-2">Like Standalone (But Better):</p>
+                      <ul className="text-sm space-y-1">
+                        <li>✓ Work across ALL platforms, not gatekept</li>
+                        <li>✓ Available to freelancers, multi-channel sellers</li>
+                        <li>✓ Don't exclude based on which payment processor you use</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-3">We Have Structural Cost Advantages</h4>
+                  <div className="bg-white rounded-lg p-4 border border-green-200">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left py-2 font-bold">Cost Factor</th>
+                          <th className="text-left py-2 font-bold">Standalone RBF</th>
+                          <th className="text-left py-2 font-bold text-[#2E7D68]">LendFriend</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-gray-700">
+                        <tr className="border-b border-gray-100">
+                          <td className="py-2">Capital Source</td>
+                          <td className="py-2">VC equity (20%+ returns needed)</td>
+                          <td className="py-2 text-[#065F46] font-semibold">Community (0% initially)</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-2">Payment Rails</td>
+                          <td className="py-2">ACH ($0.10-$0.50/tx, 1-3 days)</td>
+                          <td className="py-2 text-[#065F46] font-semibold">Stablecoins (pennies, instant)</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-2">Customer Acquisition</td>
+                          <td className="py-2">Marketing, sales team</td>
+                          <td className="py-2 text-[#065F46] font-semibold">Viral social sharing</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2">Underwriting</td>
+                          <td className="py-2">Manual review, risk models</td>
+                          <td className="py-2 text-[#065F46] font-semibold">Algorithmic social trust + platform data</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg p-6 border-2 border-[#3B9B7F]">
+                  <p className="text-lg font-bold text-gray-900 mb-3">The Key Insight:</p>
+                  <p className="text-gray-800 leading-relaxed">
+                    Standalone RBF tried to replace <em>payment control</em> with bank account monitoring. It didn't work. We replace payment control with <strong>social accountability</strong> and <strong>reputation incentives</strong>. Borrowers repay not because we control their money, but because defaulting is <em>publicly visible</em> and destroys future access to capital.
+                  </p>
+                  <p className="text-gray-800 mt-4 font-semibold">
+                    → This is only possible because Wave 3 gave us on-chain transparency + decentralized social graphs.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
