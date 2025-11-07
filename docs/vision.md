@@ -16,8 +16,8 @@ This section provides technical implementation documentation for our three-phase
 | **Interest** | 0% | 8-12% APR | 8-15% APR |
 | **Underwriting** | Social trust only | Social + cashflow | Social + cashflow + auto-repay |
 | **Scale** | Friends & family | Strangers OK | Mass market |
-| **Target Users** | 500-1K | 10K+ | 100K+ |
-| **Key Innovation** | Prove reputation works | Add liquidity pools | Automate repayment |
+| **Target Users** | Early adopters | 10K+ | 100K+ |
+| **Key Innovation** | Gather trust data | Add liquidity pools | Automate repayment |
 
 ---
 
@@ -27,11 +27,11 @@ This section provides technical implementation documentation for our three-phase
 
 **Status:** 🟢 Live on Base Sepolia Testnet
 
-Zero-interest loans ($100-$5K) backed by social trust to prove reputation can replace collateral.
+Zero-interest loans ($100-$5K) backed by social trust to gather real-world data on reputation-based lending.
 
 **Key Components:** Smart contracts, Farcaster social graph, Adamic-Adar trust scoring
 
-**Goal:** 500-1,000 users, 90%+ repayment rate
+**Goal:** Launch product, reduce friction, collect behavioral data for Phase 1 risk models
 
 → [Phase 0 Technical Implementation](vision/phase-0-social-trust.md)
 

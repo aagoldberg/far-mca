@@ -2,7 +2,7 @@
 
 **Status:** Planned
 **Timeline:** 2025-2026
-**Prerequisites:** Phase 0 success (100+ loans, 3-6 months repayment data, 85%+ repayment rate)
+**Prerequisites:** Phase 0 complete (product stable, initial data collected, user feedback incorporated)
 
 ---
 

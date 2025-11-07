@@ -18,11 +18,11 @@ For vision, goals, and roadmap → [lendfriend.org/vision](https://lendfriend.or
 
 ## Overview
 
-Phase 0 tests zero-interest microloans ($100-$5K) backed by social trust signals from Farcaster.
+Phase 0 launches zero-interest microloans ($100-$5K) backed by social trust signals from Farcaster.
 
-**Core hypothesis:** Reputation-based lending can achieve 85%+ repayment without collateral or interest.
+**Core hypothesis:** Social trust signals provide useful underwriting data for uncollateralized lending.
 
-**Goal:** 500-1,000 users demonstrating 85%+ repayment rate to prove social accountability can replace collateral.
+**Goal:** Launch product, reduce friction, gather real-world behavioral data to inform Phase 1 risk models.
 
 → [Why uncollateralized lending matters](../motivation.md)
 
@@ -184,11 +184,13 @@ Phase 0 is designed for behavioral data gathering to validate the social trust h
 
 Before moving to Phase 1 (cashflow-based lending):
 
-- ✅ 100+ completed loans
-- ✅ 3-6 months of repayment data
-- ✅ Validated trust score correlation with repayment
-- ✅ Proven 85%+ repayment rate
-- ✅ Mainnet deployment successful
+- ✅ Product launched and stable
+- ✅ Sufficient loan data collected (ideally 50+ loans)
+- ✅ Trust score and repayment patterns analyzed
+- ✅ User feedback incorporated
+- ✅ Mainnet deployment complete
+
+Phase 1 will begin once we have enough data to refine risk models, regardless of specific metrics. Phase 0 is about learning and iteration.
 
 ---
 

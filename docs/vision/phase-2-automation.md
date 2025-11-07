@@ -2,7 +2,7 @@
 
 **Status:** Future
 **Timeline:** 2026-2027
-**Prerequisites:** Phase 1 validated (pools active, cashflow underwriting proven, 85%+ repayment)
+**Prerequisites:** Phase 1 validated (pools active, cashflow underwriting working, sufficient scale)
 
 ---
 
