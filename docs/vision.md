@@ -8,30 +8,16 @@ This section provides technical implementation documentation for our three-phase
 
 ## The Three-Phase Journey
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F','primaryTextColor':'#fff','primaryBorderColor':'#2E7D68'}}}%%
-graph LR
-    subgraph P0["Phase 0: Social Trust<br/>2024-2025 | 🟢 LIVE"]
-        P0A["$100-$5K loans<br/>0% interest<br/>Friends & family<br/>500-1K users"]
-    end
-
-    subgraph P1["Phase 1: Add Cashflow<br/>2025-2026 | 🟡 Planned"]
-        P1A["$5K-$50K+ loans<br/>8-12% APR<br/>Strangers OK<br/>10K+ users"]
-    end
-
-    subgraph P2["Phase 2: Automate<br/>2026-2027 | ⚪ Future"]
-        P2A["$10K-$100K+ loans<br/>8-15% APR<br/>Auto-repayment<br/>100K+ users"]
-    end
-
-    P0 --> P1 --> P2
-
-    style P0 fill:#10B981,stroke:#059669,color:#fff
-    style P1 fill:#F59E0B,stroke:#D97706,color:#fff
-    style P2 fill:#6B7280,stroke:#4B5563,color:#fff
-    style P0A fill:#D1FAE5,stroke:#059669,color:#000
-    style P1A fill:#FEF3C7,stroke:#D97706,color:#000
-    style P2A fill:#F3F4F6,stroke:#4B5563,color:#000
-```
+| | **Phase 0: Social Trust** | **Phase 1: Add Cashflow** | **Phase 2: Automate** |
+|---|---|---|---|
+| **Timeline** | 2024-2025 | 2025-2026 | 2026-2027 |
+| **Status** | 🟢 **LIVE** | 🟡 Planned | ⚪ Future |
+| **Loan Size** | $100-$5K | $5K-$50K+ | $10K-$100K+ |
+| **Interest** | 0% | 8-12% APR | 8-15% APR |
+| **Underwriting** | Social trust only | Social + cashflow | Social + cashflow + auto-repay |
+| **Scale** | Friends & family | Strangers OK | Mass market |
+| **Target Users** | 500-1K | 10K+ | 100K+ |
+| **Key Innovation** | Prove reputation works | Add liquidity pools | Automate repayment |
 
 ---
 
