@@ -9,7 +9,7 @@ This page contains the research supporting LendFriend's uncollateralized lending
 ## Global Financial Inclusion Data
 
 <span id="world-bank-global-findex-2021"></span>
-**World Bank (2021)**. The Global Findex Database 2021: Financial Inclusion, Digital Payments, and Resilience in the Age of COVID-19. World Bank Group, Washington, DC.
+**[1] World Bank (2021)**. The Global Findex Database 2021: Financial Inclusion, Digital Payments, and Resilience in the Age of COVID-19. World Bank Group, Washington, DC.
 DOI: [10.1596/978-1-4648-1897-4](https://doi.org/10.1596/978-1-4648-1897-4)
 URL: [globalfindex.worldbank.org](https://www.worldbank.org/en/publication/globalfindex)
 
@@ -22,7 +22,7 @@ URL: [globalfindex.worldbank.org](https://www.worldbank.org/en/publication/globa
 ### Adamic-Adar Index and Link Prediction
 
 <span id="adamic-and-adar-2003"></span>
-**Adamic, L. A., & Adar, E. (2003)**. Friends and neighbors on the Web. *Social Networks, 25*(3), 211-230.
+**[2] Adamic, L. A., & Adar, E. (2003)**. Friends and neighbors on the Web. *Social Networks, 25*(3), 211-230.
 DOI: [10.1016/S0378-8733(03)00009-1](https://doi.org/10.1016/S0378-8733(03)00009-1)
 
 > **Original Adamic-Adar paper**. Introduces the Adamic-Adar index for measuring similarity in social networks based on common features. Demonstrates that weighting common neighbors inversely by their degree significantly improves link prediction accuracy. Shows 82% improvement over simple mutual connection counting.
@@ -30,7 +30,7 @@ DOI: [10.1016/S0378-8733(03)00009-1](https://doi.org/10.1016/S0378-8733(03)00009
 ---
 
 <span id="liben-nowell-and-kleinberg-2007"></span>
-**Liben-Nowell, D., & Kleinberg, J. (2007)**. The link-prediction problem for social networks. *Journal of the American Society for Information Science and Technology, 58*(7), 1019-1031.
+**[3] Liben-Nowell, D., & Kleinberg, J. (2007)**. The link-prediction problem for social networks. *Journal of the American Society for Information Science and Technology, 58*(7), 1019-1031.
 DOI: [10.1002/asi.20591](https://doi.org/10.1002/asi.20591)
 
 > Comprehensive benchmark study comparing 20+ link prediction algorithms. Adamic-Adar consistently ranks in top-3 performers across multiple social networks. Demonstrates that local similarity measures often outperform global metrics for predicting new connections.
@@ -46,7 +46,7 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 #### Strong Ties vs Influential Connections (2022)
 
 <span id="mobile-micro-lending-2022"></span>
-**Social capital, phone call activities and borrower default in mobile micro-lending (2022)**. *Applied Economics*
+**[4] Social capital, phone call activities and borrower default in mobile micro-lending (2022)**. *Applied Economics*
 
 > Study on mobile micro-lending found that calling activities associated with **stronger social ties have greater predictive power for loan defaults** than those associated with weaker ties. Strong ties (people on the borrower's contact list) were more powerful predictors than weak ties.
 
@@ -57,7 +57,7 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 #### What Actually Drives Repayment: Repeated Interaction > Closeness
 
 <span id="banking-on-cooperation-2023"></span>
-**Banking on cooperation: an evolutionary analysis of microfinance loan repayment behaviour (2023)**. *Evolutionary Human Sciences*
+**[5] Banking on cooperation: an evolutionary analysis of microfinance loan repayment behaviour (2023)**. *Evolutionary Human Sciences*
 
 > Evolutionary analysis found that **mechanisms enabling monitoring and enforcement through repeated interaction matter more** than emotional closeness or kinship.
 
@@ -74,12 +74,12 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 #### Network Centrality Predicts Default Risk (2022-2025)
 
 <span id="chen-et-al-2022"></span>
-**Chen et al. (2022)**. Network centrality effects in peer to peer lending. *Physica A: Statistical Mechanics and its Applications*
+**[6] Chen et al. (2022)**. Network centrality effects in peer to peer lending. *Physica A: Statistical Mechanics and its Applications*
 
 > First study testing degree, betweenness, and eigenvector centrality in P2P lending credit default modeling. **Key findings:** (1) Borrower's network position positively contributes to classification of default risk; (2) Degree centrality enhances predictive power in default models; (3) Network topological features add value beyond traditional credit features.
 
 <span id="network-centrality-credit-risk-2025"></span>
-**Network centrality and credit risk: A comprehensive analysis (2025)**. *Journal of Marketing Analytics*
+**[7] Network centrality and credit risk: A comprehensive analysis (2025)**. *Journal of Marketing Analytics*
 
 > Recent analysis using Renrendai (Chinese P2P platform) data: (1) Degree centrality (number of connections) improves default prediction; (2) Eigenvector centrality (connections to influential people) positively moderated funding success; (3) Borrowers with higher connectivity had better repayment rates.
 
@@ -110,7 +110,7 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 #### The Double-Edged Sword of Social Pressure
 
 <span id="social-ties-crisis-2024"></span>
-**Microfinance borrowers' social ties can bring stability or chaos (2024)**. Crisis analysis
+**[8] Microfinance borrowers' social ties can bring stability or chaos (2024)**. Crisis analysis
 
 > **Critical finding**: Social pressures that ensure repayment in good times can **accelerate defaults during crises**. Joint liability can spread defaults across groups during liquidity crunches—the same social mechanisms that create accountability can transmit failure.
 
@@ -153,7 +153,7 @@ Where Centrality = Borrower PageRank, Lender PageRank, or Mutual Connection Cent
 ### Group Lending and Social Collateral
 
 <span id="besley-and-coate-1995"></span>
-**Besley, T., & Coate, S. (1995)**. Group lending, repayment incentives and social collateral. *Journal of Development Economics, 46*(1), 1-18.
+**[9] Besley, T., & Coate, S. (1995)**. Group lending, repayment incentives and social collateral. *Journal of Development Economics, 46*(1), 1-18.
 DOI: [10.1016/0304-3878(94)00045-E](https://doi.org/10.1016/0304-3878(94)00045-E)
 
 > **Foundational paper** establishing that social collateral can substitute for traditional collateral in lending. Demonstrates how group lending creates peer monitoring and social sanctions that improve repayment rates.
@@ -161,7 +161,7 @@ DOI: [10.1016/0304-3878(94)00045-E](https://doi.org/10.1016/0304-3878(94)00045-E
 ---
 
 <span id="feigenberg-et-al-2013"></span>
-**Feigenberg, B., Field, E., & Pande, R. (2013)**. The economic returns to social interaction: Experimental evidence from microfinance. *The Review of Economic Studies, 80*(4), 1459-1483.
+**[10] Feigenberg, B., Field, E., & Pande, R. (2013)**. The economic returns to social interaction: Experimental evidence from microfinance. *The Review of Economic Studies, 80*(4), 1459-1483.
 DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 
 > Shows that increased meeting frequency in microfinance groups builds social capital and improves repayment rates by creating persistent social ties and information sharing networks.
@@ -171,7 +171,7 @@ DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 ### Peer-to-Peer Lending and Reputation
 
 <span id="herzenstein-et-al-2011"></span>
-**Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research, 48*(SPL), S138-S149.
+**[11] Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research, 48*(SPL), S138-S149.
 DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
 
 > Seminal study on how borrower narratives affect P2P lending decisions on Prosper.com. **Key findings:** (1) As number of identity claims in narratives increases, loan funding increases but repayment performance suffers; (2) Unverifiable soft information affects lending decisions above and beyond objective, verifiable information; (3) Identity claims about being "trustworthy" or "successful" increased funding but ironically were less predictive of actual repayment compared to "moral hardship" narratives. Demonstrated that storytelling significantly impacts lender behavior in unsecured lending.
@@ -179,7 +179,7 @@ DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
 ---
 
 <span id="iyer-et-al-2016"></span>
-**Iyer, R., Khwaja, A. I., Luttmer, E. F., & Shue, K. (2016)**. Screening peers softly: Inferring the quality of small borrowers. *Management Science, 62*(6), 1554-1577.
+**[12] Iyer, R., Khwaja, A. I., Luttmer, E. F., & Shue, K. (2016)**. Screening peers softly: Inferring the quality of small borrowers. *Management Science, 62*(6), 1554-1577.
 DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
 > Analyzes Prosper.com data showing that lenders use social information (friendships, group memberships) to screen borrowers. **Key findings:** (1) Loans with friend endorsements have 22% lower default rates; (2) Lenders using soft information (narratives, social connections) predict default with **45% greater accuracy** than credit scores alone; (3) Soft information is relatively more important when screening borrowers of lower credit quality.
@@ -187,14 +187,14 @@ DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 ---
 
 <span id="duarte-et-al-2012"></span>
-**Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
+**[13] Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
 DOI: [10.1093/rfs/hhs071](https://doi.org/10.1093/rfs/hhs071)
 
 > Examines how appearance-based impressions affect financial transactions using photographs from Prosper.com. **Key findings:** (1) Borrowers appearing more trustworthy have higher funding probabilities and receive **~50 basis points lower interest rates**; (2) Appearance correlates with actual credit quality—trustworthy-looking borrowers had better credit scores and lower default rates; (3) Visual trust signals matter in financial transactions because they predict both investor and borrower behavior. Shows that appearance provides legitimate information about creditworthiness, not just bias.
 
 ---
 
-**Pope, D. G., & Sydnor, J. R. (2011)**. What's in a Picture? Evidence of Discrimination from Prosper.com. *Journal of Human Resources*, 46(1), 53-92.
+**[14] Pope, D. G., & Sydnor, J. R. (2011)**. What's in a Picture? Evidence of Discrimination from Prosper.com. *Journal of Human Resources*, 46(1), 53-92.
 DOI: [10.3368/jhr.46.1.53](https://doi.org/10.3368/jhr.46.1.53)
 
 > Documents racial discrimination in P2P lending based on borrower profile photos on Prosper.com. **Key findings:** (1) Loan listings with Black borrowers were **25-35% less likely** to receive funding than whites with similar credit profiles; (2) Black borrowers paid **60-80 basis points higher** interest rates; (3) Discrimination persisted even after controlling for credit quality. Critical evidence that visual information can introduce bias into lending decisions.
@@ -202,7 +202,7 @@ DOI: [10.3368/jhr.46.1.53](https://doi.org/10.3368/jhr.46.1.53)
 ---
 
 <span id="lin-et-al-2013"></span>
-**Lin, M., Prabhala, N. R., & Viswanathan, S. (2013)**. Judging borrowers by the company they keep: Friendship networks and information asymmetry in online peer-to-peer lending. *Management Science, 59*(1), 17-35.
+**[15] Lin, M., Prabhala, N. R., & Viswanathan, S. (2013)**. Judging borrowers by the company they keep: Friendship networks and information asymmetry in online peer-to-peer lending. *Management Science, 59*(1), 17-35.
 DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 
 > Demonstrates that borrowers with strong social network ties on Prosper.com receive 1) more bids, 2) lower interest rates, and 3) have better repayment performance. Social connections reduce information asymmetry and improve default prediction.
@@ -210,7 +210,7 @@ DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 ---
 
 <span id="freedman-and-jin-2017"></span>
-**Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization, 51*, 185-222.
+**[16] Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization, 51*, 185-222.
 DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11.008)
 
 > Finds that verifiable social network information (e.g., Facebook connections) significantly predicts loan default probability beyond credit scores alone. Social reputation systems work.
@@ -220,7 +220,7 @@ DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11
 ### Emotional Connection and Charitable Giving
 
 <span id="small-et-al-2007"></span>
-**Small, D. A., Loewenstein, G., & Slovic, P. (2007)**. Sympathy and callousness: The impact of deliberative thought on donations to identifiable and statistical victims. *Organizational Behavior and Human Decision Processes*, 102(2), 143-153.
+**[17] Small, D. A., Loewenstein, G., & Slovic, P. (2007)**. Sympathy and callousness: The impact of deliberative thought on donations to identifiable and statistical victims. *Organizational Behavior and Human Decision Processes*, 102(2), 143-153.
 DOI: [10.1016/j.obhdp.2006.01.005](https://doi.org/10.1016/j.obhdp.2006.01.005)
 
 > Foundational research on the **identifiable victim effect**: people donate significantly more to an identified individual with a story than to statistical information about a group. Shows that emotional engagement with specific people (not abstract numbers) drives prosocial behavior. Classic study demonstrated donors gave more when shown "Rokia, a 7-year-old girl from Mali" than when presented with statistics about millions of African children at risk. Critical insight: combining emotional stories with statistics actually reduces donations compared to stories alone—people connect to individuals, not data.
@@ -228,7 +228,7 @@ DOI: [10.1016/j.obhdp.2006.01.005](https://doi.org/10.1016/j.obhdp.2006.01.005)
 ---
 
 <span id="genevsky-and-knutson-2015"></span>
-**Genevsky, A., & Knutson, B. (2015)**. Neural affective mechanisms predict market-level microlending. *Psychological Science*, 26(9), 1411-1422.
+**[18] Genevsky, A., & Knutson, B. (2015)**. Neural affective mechanisms predict market-level microlending. *Psychological Science*, 26(9), 1411-1422.
 DOI: [10.1177/0956797615588467](https://doi.org/10.1177/0956797615588467)
 
 > Neural research examining how Kiva borrower photographs and stories affect lending decisions. Found that **positive arousal from viewing borrower photos directly predicts lending success** at market scale. Brain imaging showed nucleus accumbens (reward center) activation when viewing borrower profiles predicted both individual willingness to lend and aggregate lending rates across thousands of loans. Demonstrates that emotional engagement isn't just psychological—it's measurable in neural response and correlates with actual financial decisions.
@@ -238,21 +238,21 @@ DOI: [10.1177/0956797615588467](https://doi.org/10.1177/0956797615588467)
 ### Social Capital and Network Effects
 
 <span id="karlan-et-al-2009"></span>
-**Karlan, D., Mobius, M., Rosenblat, T., & Szeidl, A. (2009)**. Trust and social collateral. *The Quarterly Journal of Economics, 124*(3), 1307-1361.
+**[19] Karlan, D., Mobius, M., Rosenblat, T., & Szeidl, A. (2009)**. Trust and social collateral. *The Quarterly Journal of Economics, 124*(3), 1307-1361.
 DOI: [10.1162/qjec.2009.124.3.1307](https://doi.org/10.1162/qjec.2009.124.3.1307)
 
 > Field experiment in Peru showing that social proximity (measured by geographic distance and relationship strength) strongly predicts loan repayment. Trust between borrowers in lending groups reduces default risk by 13%.
 
 ---
 
-**Gine, X., & Karlan, D. S. (2014)**. Group versus individual liability: Short and long term evidence from Philippine microcredit lending groups. *Journal of Development Economics, 107*, 65-83.
+**[20] Gine, X., & Karlan, D. S. (2014)**. Group versus individual liability: Short and long term evidence from Philippine microcredit lending groups. *Journal of Development Economics, 107*, 65-83.
 DOI: [10.1016/j.jdeveco.2013.11.003](https://doi.org/10.1016/j.jdeveco.2013.11.003)
 
 > Randomized controlled trial showing that individual liability performs as well as group liability when social ties are strong. Social capital matters more than formal liability structure.
 
 ---
 
-**Kuchler, T., Piazzesi, M., & Stroebel, J. (2022)**. Using Facebook social connectedness data to measure and explain economic outcomes. *Working Paper, Stanford University*.
+**[21] Kuchler, T., Piazzesi, M., & Stroebel, J. (2022)**. Using Facebook social connectedness data to measure and explain economic outcomes. *Working Paper, Stanford University*.
 
 > Uses Facebook Social Connectedness Index to show that social proximity increases lending by 24.5% and reduces default rates. Networks provide both information and enforcement mechanisms.
 
@@ -265,7 +265,7 @@ DOI: [10.1016/j.jdeveco.2013.11.003](https://doi.org/10.1016/j.jdeveco.2013.11.0
 ### Grameen Bank
 
 <span id="grameen-bank"></span>
-**Grameen Bank Annual Report (2022)**. Grameen Bank, Bangladesh.
+**[22] Grameen Bank Annual Report (2022)**. Grameen Bank, Bangladesh.
 URL: [grameen.org](https://grameenbank.org)
 
 > **Repayment rate: 97-98%** across 9.6 million borrowers. Group lending model with joint liability and peer monitoring. Demonstrates scalability of social collateral at massive scale.
@@ -278,7 +278,7 @@ URL: [grameen.org](https://grameenbank.org)
 
 ---
 
-**Yunus, M. (2007)**. *Banker to the Poor: Micro-Lending and the Battle Against World Poverty*. PublicAffairs.
+**[23] Yunus, M. (2007)**. *Banker to the Poor: Micro-Lending and the Battle Against World Poverty*. PublicAffairs.
 
 > Foundational text by Nobel Peace Prize winner explaining Grameen Bank's philosophy. Core insight: "The poor are creditworthy when you eliminate the structural barriers that exclude them from traditional finance."
 
@@ -287,7 +287,7 @@ URL: [grameen.org](https://grameenbank.org)
 ### Kiva
 
 <span id="kiva"></span>
-**Kiva Annual Report (2023)**. Kiva Microfunds, San Francisco, CA.
+**[24] Kiva Annual Report (2023)**. Kiva Microfunds, San Francisco, CA.
 URL: [kiva.org/about/financials](https://www.kiva.org/about/financials)
 
 > **Repayment rate: 96.3%** across $1.8B+ in loans to 4M+ borrowers. Peer-to-peer crowdfunding model shows high repayment despite geographic distance.
@@ -300,7 +300,7 @@ URL: [kiva.org/about/financials](https://www.kiva.org/about/financials)
 
 ---
 
-**Flannery, M., & Zhao, Y. (2017)**. Relationship lending in online peer-to-peer platforms: Evidence from Kiva. *Working Paper, University of Florida*.
+**[25] Flannery, M., & Zhao, Y. (2017)**. Relationship lending in online peer-to-peer platforms: Evidence from Kiva. *Working Paper, University of Florida*.
 
 > Analyzes 630,000+ Kiva loans showing that social connections (measured by lender teams and repeat lending) predict repayment rates. Network effects are real and measurable.
 
@@ -308,7 +308,7 @@ URL: [kiva.org/about/financials](https://www.kiva.org/about/financials)
 
 ### Akhuwat (Islamic Microfinance)
 
-**Akhuwat Foundation Annual Report (2022)**. Akhuwat, Lahore, Pakistan.
+**[26] Akhuwat Foundation Annual Report (2022)**. Akhuwat, Lahore, Pakistan.
 URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 > **Repayment rate: 99.9%** using zero-interest loans (Qard Hassan) distributed through mosques. Strongest evidence that uncollateralized, zero-interest lending can achieve exceptional repayment when structured around community values.
@@ -322,7 +322,7 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 ---
 
-**Obaidullah, M., & Shirazi, N. S. (2015)**. Islamic Social Finance Report 2015. *Islamic Research and Training Institute (IRTI)*.
+**[27] Obaidullah, M., & Shirazi, N. S. (2015)**. Islamic Social Finance Report 2015. *Islamic Research and Training Institute (IRTI)*.
 
 > Comprehensive review of Islamic microfinance showing that qard hassan (benevolent loans) achieve comparable or better repayment than conventional microfinance when embedded in social/religious communities.
 
@@ -333,7 +333,7 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 ### Soft Information in Lending
 
 <span id="liberti-and-petersen-2018"></span>
-**Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
+**[28] Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
 DOI: [10.1093/rcfs/cfy009](https://doi.org/10.1093/rcfs/cfy009)
 
 > Comprehensive review distinguishing hard information (quantitative, easily transmitted) from soft information (qualitative, context-dependent). **Key findings:** (1) Soft information (personal narratives, relationship data) reduces information asymmetry in lending; (2) Considering soft data in equal measure as hard information improves creditworthiness assessment; (3) Soft information is especially valuable for small borrowers and those without extensive credit history; (4) Technology (P2P platforms) enables soft information to be transmitted at scale, challenging traditional assumptions that soft information requires in-person relationships.
@@ -342,7 +342,7 @@ DOI: [10.1093/rcfs/cfy009](https://doi.org/10.1093/rcfs/cfy009)
 
 ### Joint Liability Mechanisms
 
-**Ahlin, C., & Townsend, R. M. (2007)**. Using repayment data to test across models of joint liability lending. *The Economic Journal, 117*(517), F11-F51.
+**[29] Ahlin, C., & Townsend, R. M. (2007)**. Using repayment data to test across models of joint liability lending. *The Economic Journal, 117*(517), F11-F51.
 DOI: [10.1111/j.1468-0297.2007.02014.x](https://doi.org/10.1111/j.1468-0297.2007.02014.x)
 
 > Tests competing theories of joint liability using Thai microfinance data. Finds evidence supporting peer monitoring and social sanctions models.
@@ -351,7 +351,7 @@ DOI: [10.1111/j.1468-0297.2007.02014.x](https://doi.org/10.1111/j.1468-0297.2007
 
 ### Repayment Structure and Frequency
 
-**Field, E., & Pande, R. (2008)**. Repayment frequency and default in microfinance: Evidence from India. *Journal of the European Economic Association, 6*(2-3), 501-509.
+**[30] Field, E., & Pande, R. (2008)**. Repayment frequency and default in microfinance: Evidence from India. *Journal of the European Economic Association, 6*(2-3), 501-509.
 DOI: [10.1162/JEEA.2008.6.2-3.501](https://doi.org/10.1162/JEEA.2008.6.2-3.501)
 
 > Randomized trial with 1,026 first-time microfinance borrowers in India testing repayment frequency. **Key finding: Less frequent repayments (monthly vs weekly) did not increase defaults**. Monthly repayments had same default rates as traditional weekly installments while reducing borrower stress and collection costs. Grace periods (delaying first payment) slightly increased defaults but enabled better business investments. Challenges traditional microfinance assumption that frequent installments are necessary for repayment discipline.
@@ -360,7 +360,7 @@ DOI: [10.1162/JEEA.2008.6.2-3.501](https://doi.org/10.1162/JEEA.2008.6.2-3.501)
 
 ### Social Distance and Default
 
-**Bailey, M., Cao, R., Kuchler, T., & Stroebel, J. (2018)**. The economic effects of social networks: Evidence from the housing market. *Journal of Political Economy, 126*(6), 2224-2276.
+**[31] Bailey, M., Cao, R., Kuchler, T., & Stroebel, J. (2018)**. The economic effects of social networks: Evidence from the housing market. *Journal of Political Economy, 126*(6), 2224-2276.
 DOI: [10.1086/700073](https://doi.org/10.1086/700073)
 
 > Uses Facebook Social Connectedness Index to measure social proximity effects. Social ties reduce information asymmetry and improve economic outcomes across multiple markets.
@@ -369,14 +369,14 @@ DOI: [10.1086/700073](https://doi.org/10.1086/700073)
 
 ### Zero-Interest Lending Models
 
-**Smolo, E., & Mirakhor, A. (2010)**. The global financial crisis and its implications for the Islamic financial industry. *International Journal of Islamic and Middle Eastern Finance and Management, 3*(4), 372-385.
+**[32] Smolo, E., & Mirakhor, A. (2010)**. The global financial crisis and its implications for the Islamic financial industry. *International Journal of Islamic and Middle Eastern Finance and Management, 3*(4), 372-385.
 DOI: [10.1108/17538391011093306](https://doi.org/10.1108/17538391011093306)
 
 > Analyzes why Islamic finance (which prohibits interest) weathered the 2008 financial crisis better than conventional finance. Community-based risk sharing and social accountability create stability.
 
 ---
 
-**Ahmed, H. (2004)**. Frontiers of Islamic Banks: A Synthesis of Social Role and Microfinance. *European Journal of Management and Public Policy, 3*(1).
+**[33] Ahmed, H. (2004)**. Frontiers of Islamic Banks: A Synthesis of Social Role and Microfinance. *European Journal of Management and Public Policy, 3*(1).
 
 > Theoretical framework for interest-free microfinance based on social solidarity. Argues that removing profit motive from lending strengthens social bonds and trust.
 
@@ -384,21 +384,21 @@ DOI: [10.1108/17538391011093306](https://doi.org/10.1108/17538391011093306)
 
 ### Facebook and Social Media for Credit Scoring
 
-**Bjorkegren, D., & Grissen, D. (2020)**. Behavior revealed in mobile phone usage predicts credit repayment. *The World Bank Economic Review, 34*(3), 618-634.
+**[34] Bjorkegren, D., & Grissen, D. (2020)**. Behavior revealed in mobile phone usage predicts credit repayment. *The World Bank Economic Review, 34*(3), 618-634.
 DOI: [10.1093/wber/lhz006](https://doi.org/10.1093/wber/lhz006)
 
 > Study examining Facebook data for microfinance credit scoring, distinguishing between three types of relationships: (1) LALs (Look-Alikes) - people who resemble one another based on interests, (2) friends with clearly articulated friendship relationships on Facebook, and (3) BFFs - friends that actually interact with one another. Key finding: **Only BFFs (real, interactive relationships) have predictive value for default prediction**, not nominal friend connections. Surprisingly, interest-based data performed as well as nominal social network data.
 
 ---
 
-**Yum, H., Lee, B., & Chae, M. (2012)**. From the wisdom of crowds to my own judgment in microfinance through online peer-to-peer lending platforms. *Electronic Commerce Research and Applications, 11*(5), 469-483.
+**[35] Yum, H., Lee, B., & Chae, M. (2012)**. From the wisdom of crowds to my own judgment in microfinance through online peer-to-peer lending platforms. *Electronic Commerce Research and Applications, 11*(5), 469-483.
 DOI: [10.1016/j.elerap.2012.05.003](https://doi.org/10.1016/j.elerap.2012.05.003)
 
 > Found that being a member of a social lending group within an online lending community is associated with significantly decreased default risk **only if membership holds the possibility of real-life personal connections**. Loans for non-group borrowers behave like arm's-length transactions, whereas loans for group borrowers have characteristics similar to relationship banking. Demonstrates the critical distinction between online nominal connections and real relationships.
 
 ---
 
-**Jagtiani, J., & Lemieux, C. (2019)**. The roles of alternative data and machine learning in fintech lending: evidence from the LendingClub consumer platform. *Financial Management, 48*(4), 1009-1029.
+**[36] Jagtiani, J., & Lemieux, C. (2019)**. The roles of alternative data and machine learning in fintech lending: evidence from the LendingClub consumer platform. *Financial Management, 48*(4), 1009-1029.
 DOI: [10.1111/fima.12295](https://doi.org/10.1111/fima.12295)
 
 > Analyzes LendingClub data to examine how alternative data sources improve credit risk assessment. Provides context for evolution from social network-based P2P lending (2007-2015) to modern algorithmic approaches.
@@ -407,14 +407,14 @@ DOI: [10.1111/fima.12295](https://doi.org/10.1111/fima.12295)
 
 ### Platform Comparison and Bot Detection
 
-**Velásquez, N., Leahy, R., Restrepo, N. J., Lupu, Y., Sear, R., Gabriel, N., ... & Johnson, N. F. (2021)**. Hate multiverse spreads malicious COVID-19 content online beyond individual platform control. *Human Behavior and Emerging Technologies, 3*(2), 350-360.
+**[37] Velásquez, N., Leahy, R., Restrepo, N. J., Lupu, Y., Sear, R., Gabriel, N., ... & Johnson, N. F. (2021)**. Hate multiverse spreads malicious COVID-19 content online beyond individual platform control. *Human Behavior and Emerging Technologies, 3*(2), 350-360.
 DOI: [10.1002/hbe2.248](https://doi.org/10.1002/hbe2.248)
 
 > Cross-platform analysis including Facebook and Twitter, documenting differences in authentic connection patterns across platforms. Facebook characterized as "relationship-building platform" while Twitter described as "less about real life friendships, normal to connect with strangers."
 
 ---
 
-**Cresci, S., Di Pietro, R., Petrocchi, M., Spognardi, A., & Tesconi, M. (2017)**. The paradigm-shift of social spambots: Evidence, theories, and tools for the arms race. *Proceedings of the 26th International Conference on World Wide Web Companion*, 963-972.
+**[38] Cresci, S., Di Pietro, R., Petrocchi, M., Spognardi, A., & Tesconi, M. (2017)**. The paradigm-shift of social spambots: Evidence, theories, and tools for the arms race. *Proceedings of the 26th International Conference on World Wide Web Companion*, 963-972.
 DOI: [10.1145/3041021.3055135](https://doi.org/10.1145/3041021.3055135)
 
 > Comprehensive study of social bot behavior across platforms. Research in 2023-2024 estimates ~64% of Twitter/X accounts are bots, compared to lower rates on Facebook due to real-name policies, though Facebook bot detection has declined since API restrictions.
@@ -423,14 +423,14 @@ DOI: [10.1145/3041021.3055135](https://doi.org/10.1145/3041021.3055135)
 
 ### Alternative Data and Machine Learning
 
-**Consumer Financial Protection Bureau (2019)**. Update on credit access and the Bureau's first No-Action Letter. CFPB Blog.
+**[39] Consumer Financial Protection Bureau (2019)**. Update on credit access and the Bureau's first No-Action Letter. CFPB Blog.
 URL: [consumerfinance.gov/about-us/blog/update-credit-access-and-no-action-letter](https://www.consumerfinance.gov/about-us/blog/update-credit-access-and-no-action-letter/)
 
 > Analysis of Upstart Network's use of alternative data (education, employment history) for credit scoring. Key results: **27% more loan approvals** than traditional credit models, **16% lower average APRs** for approved loans, with near-prime borrowers (FICO 620-660) approved approximately twice as frequently. Under-25 borrowers **32% more likely to be approved**. No bias across race, ethnicity, or sex.
 
 ---
 
-**World Bank (2023)**. Alternative data in credit scoring: Expanding financial inclusion. World Bank Group.
+**[40] World Bank (2023)**. Alternative data in credit scoring: Expanding financial inclusion. World Bank Group.
 
 > Study showing financial institutions using online behavioral data (including LinkedIn employment, education data) achieved **25-30% decrease in default rates** compared to traditional credit scoring alone. Highlights importance of employment stability and income consistency as predictive factors.
 
@@ -438,14 +438,14 @@ URL: [consumerfinance.gov/about-us/blog/update-credit-access-and-no-action-lette
 
 ### Facebook API Restrictions and Privacy
 
-**Constine, J. (2015)**. Facebook is shutting down its API for giving your friends' data to apps. *TechCrunch*.
+**[41] Constine, J. (2015)**. Facebook is shutting down its API for giving your friends' data to apps. *TechCrunch*.
 URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2015/04/28/facebook-api-shut-down/)
 
 > Documents Facebook's 2015 shutdown of Friends data API following Cambridge Analytica scandal. Even when `user_friends` permission is granted, it "only provides access to those users who have also logged in with the same app and mutually granted the user_friends permission"—creating circular dependency for new platforms.
 
 ---
 
-**Cowley, S. (2016)**. Facebook no longer lets third-party online lenders access full data. *Fortune*.
+**[42] Cowley, S. (2016)**. Facebook no longer lets third-party online lenders access full data. *Fortune*.
 
 > Reports Facebook's 2016 decision to stop letting online lenders access user data: "Lenders are no longer looking to your Facebook profile as a metric for creditworthiness, thanks in part to the social media giant's decision to revamp its data access policies for third parties." Marks end of era for Facebook-based credit scoring that powered 2010-2015 P2P lending research.
 
@@ -458,7 +458,7 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 ### Crowdfunding Psychology and Campaign Dynamics
 
 <span id="crowdfunding-first-10-days"></span>
-**[11] Dehdashti, Y., Namin, A., Ratchford, B. T., & Chonko, L. B. (2022)**. The Unanticipated Dynamics of Promoting Crowdfunding Donation Campaigns on Social Media. *Journal of Interactive Marketing, 57*(1), 73-91.
+**[43] Dehdashti, Y., Namin, A., Ratchford, B. T., & Chonko, L. B. (2022)**. The Unanticipated Dynamics of Promoting Crowdfunding Donation Campaigns on Social Media. *Journal of Interactive Marketing, 57*(1), 73-91.
 DOI: [10.1177/10949968221074726](https://doi.org/10.1177/10949968221074726)
 URL: [news.utdallas.edu/business-management/social-media-crowdfunding-2022](https://news.utdallas.edu/business-management/social-media-crowdfunding-2022/)
 
@@ -475,7 +475,7 @@ URL: [news.utdallas.edu/business-management/social-media-crowdfunding-2022](http
 ### Fundraising Conversion Optimization
 
 <span id="gofundme-conversion-2024"></span>
-**[12] GoFundMe Pro (2024)**. The Ultimate Guide to High-Converting Donation Forms. Industry best practices report.
+**[44] GoFundMe Pro (2024)**. The Ultimate Guide to High-Converting Donation Forms. Industry best practices report.
 URL: [pro.gofundme.com/c/blog/donation-form-conversion](https://pro.gofundme.com/c/blog/donation-form-conversion/)
 
 > Comprehensive analysis of donation page optimization showing **average conversion rate of 12%** for standard pages and **15-25% for well-optimized** pages. **Key optimization:** Reducing form fields from 11 to 4 led to **120% increase in conversions**.
@@ -498,7 +498,7 @@ Also see:
 ### Farcaster Platform Growth
 
 <span id="farcaster-frames-2024"></span>
-**[13] Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
+**[45] Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
 URL: [dune.com/pixelhack/farcaster](https://dune.com/pixelhack/farcaster)
 
 > When Farcaster released Frames feature on January 26, 2024, daily active users **jumped from fewer than 2,000 to nearly 20,000** in weeks following launch. As of 2024, DAU exceeds **61,500 users**.
@@ -517,7 +517,7 @@ Also see:
 ### Web3 Adoption Barriers
 
 <span id="web3-adoption-2024"></span>
-**[14] Consensys (2024)**. Web3 and Crypto Global Survey 2024. Industry research report.
+**[46] Consensys (2024)**. Web3 and Crypto Global Survey 2024. Industry research report.
 URL: [consensys.io/insight-report/web3-and-crypto-global-survey](https://consensys.io/insight-report/web3-and-crypto-global-survey)
 
 > Global survey showing **42% of respondents currently own or have previously bought cryptocurrencies**. Over half the population in Nigeria (84%), South Africa (66%), Vietnam (60%), the Philippines (54%) and India (50%) report owning a crypto wallet, while wallet ownership in developed markets remains significantly lower.
@@ -537,7 +537,7 @@ Also see:
 ### P2P Lending Market Projections
 
 <span id="p2p-market-2024"></span>
-**[15] Global Market Insights (2024)**. Peer to Peer Lending Market Size, Industry Forecasts 2024-2032.
+**[47] Global Market Insights (2024)**. Peer to Peer Lending Market Size, Industry Forecasts 2024-2032.
 URL: [gminsights.com/industry-analysis/peer-to-peer-lending-market](https://www.gminsights.com/industry-analysis/peer-to-peer-lending-market)
 
 > **Peer-to-Peer Lending Market:**
@@ -559,7 +559,7 @@ URL: [grandviewresearch.com/industry-analysis/peer-to-peer-lending-market-report
 ### Kiva and Prosper Platform Growth
 
 <span id="kiva-prosper-growth"></span>
-**[16] Kiva referral and team lending case studies**. Platform growth analysis from Ambassador and academic research.
+**[48] Kiva referral and team lending case studies**. Platform growth analysis from Ambassador and academic research.
 
 **Ambassador (2020)**. How Learning From Kiva Can Improve Your Referral Program.
 URL: [getambassador.com/blog/how-to-improve-your-referral-program](https://getambassador.com/blog/how-to-improve-your-referral-program/?hs_amp=true)
