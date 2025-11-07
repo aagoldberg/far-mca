@@ -6,21 +6,11 @@
 
 ---
 
-{% hint style="info" %}
-**For High-Level Overview**
-
-This page contains Phase 0 deployment status and technical specifications.
-
-For vision, goals, and roadmap → [lendfriend.org/vision](https://lendfriend.org/vision)
-{% endhint %}
-
----
-
 ## Overview
 
 Phase 0 launches zero-interest microloans ($100-$5K) backed by social trust signals from Farcaster.
 
-**Core hypothesis:** Social trust signals provide useful underwriting data for uncollateralized lending.
+**Core hypothesis:** Social trust signals provide useful underwriting data for uncollateralized lending.[[9]](../references.md#ref9)[[19]](../references.md#ref19)
 
 **Goal:** Launch product, reduce friction, gather real-world behavioral data to inform Phase 1 risk models.
 
@@ -62,7 +52,7 @@ Phase 0 implements the core LendFriend protocol on Base L2 with Farcaster identi
 
 Phase 0 uses social trust as the primary underwriting signal. Trust scores are calculated off-chain using Farcaster social graph data.
 
-**Algorithm:** Adamic-Adar weighted mutual connections
+**Algorithm:** Adamic-Adar weighted mutual connections[[2]](../references.md#ref2)
 
 → [Trust scoring algorithm](../how-it-works/social-trust-scoring/the-algorithm.md) | [Implementation details](../how-it-works/social-trust-scoring/implementation.md) | [Sybil resistance](../how-it-works/social-trust-scoring/sybil-resistance.md)
 

@@ -6,14 +6,6 @@
 
 ---
 
-{% hint style="info" %}
-**For High-Level Overview**
-
-For complete vision and strategy → [lendfriend.org/vision](https://lendfriend.org/vision)
-{% endhint %}
-
----
-
 ## What We're Building
 
 Phase 2 automates loan repayment, removing all manual repayment friction.
@@ -37,7 +29,7 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 | **Payment Process** | 🧠 Remember payment date<br/>📱 Open app monthly<br/>💳 Manual transfer | ✅ Set once, forget<br/>🤖 Deducts automatically<br/>💰 % of daily income |
 | **Borrower Experience** | ⏰ Late payment risk<br/>😰 Cognitive load<br/>💭 *"Did I pay this month?"* | ⏱️ Always on-time<br/>😌 Zero mental overhead<br/>💭 *"What loan?"* |
 | **Lender Experience** | 📞 Chasing late payments<br/>❓ Uncertainty | 📊 Predictable yield<br/>✅ Reliable cashflow |
-| **Default Rate** | ❌ **15%** | ✅ **10%** (30% lower) |
+| **Default Rate** | ❌ **15%**[[74]](../references.md#ref74) | ✅ **10%** (30% lower) |
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
@@ -73,11 +65,11 @@ Even with great intentions, manual repayment creates friction:
 
 **For lenders:**
 - Predictable cash flows (no manual collections)
-- 30% lower default risk (proven by Phase 2 data)
+- 30% lower default risk (projected based on auto-payment research)
 - Higher effective yields (better repayment rates)
 
 **For merchants:**
-- 12% APR vs 280% APR for merchant cash advances
+- 12% APR vs 280% APR for merchant cash advances[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
 - Revenue-based repayment (slow days = smaller payments, not fixed)
 - Transparent pricing (no confusing factor rates)
 
@@ -126,7 +118,7 @@ Even with great intentions, manual repayment creates friction:
 - Adjusts to business performance (high sales = faster repayment)
 
 **Better than MCAs:**
-- Fair pricing: 12% APR vs. 280% APR for merchant cash advances
+- Fair pricing: 12% APR vs. 280% APR for merchant cash advances[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
 - Transparent: Clear interest, not confusing factor rates
 - Flexible: Prepay without penalty
 - Revenue-based: Slow days = smaller payments (not fixed)

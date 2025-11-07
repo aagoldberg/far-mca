@@ -6,14 +6,6 @@
 
 ---
 
-{% hint style="info" %}
-**For High-Level Overview**
-
-For complete vision and strategy → [lendfriend.org/vision](https://lendfriend.org/vision)
-{% endhint %}
-
----
-
 ## What We're Building
 
 Phase 1 scales beyond personal networks by adding **cashflow verification** to the social trust foundation from Phase 0.
@@ -52,9 +44,9 @@ Phase 0 proves social trust works for small loans, but has constraints:
 - Capital scales beyond personal networks
 
 **Fair pricing:**
-- 4-8% APR (vs. 60-200% for payday loans/MCAs)
+- 8-12% APR vs. 20-50% for platform lenders[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
 - Transparent interest, no hidden fees
-- Borrowers build real credit history
+- Borrowers build on-chain credit history
 
 ---
 
@@ -158,7 +150,7 @@ graph TB
 
 ### 4. Cross-Platform Expansion
 
-**Bluesky integration (late 2025):**
+**Bluesky integration (late 2025):**[[66]](../references.md#ref66)
 - AT Protocol decentralized identity
 - Domain verification (handle = owned domain)
 - Social graph for trust scoring
@@ -186,7 +178,7 @@ graph TB
 - Pools attract passive capital from crypto investors
 - Borrowers choose LendFriend over traditional payday loans
 
-**Key validation:** If pools reach $500K TVL with 70%+ utilization and <15% default rate, we've proven uncollateralized crypto lending can scale.
+**Key validation:** If pools reach $500K TVL with 70%+ utilization and <15% default rate[[74]](../references.md#ref74), we've proven uncollateralized crypto lending can scale.
 
 ---
 
