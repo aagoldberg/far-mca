@@ -218,30 +218,45 @@ export default function EconomicContextPage() {
 
           {/* Two Attempts to Fill the Gap */}
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8">Two Different Attempts to Fill the Gap</h3>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">Two Different Attempts to Fill the Gap</h3>
 
             {/* Embedded Lenders: Successful but Gatekept */}
-            <div className="mb-12">
-              <h4 className="text-xl font-bold text-gray-900 mb-4">Embedded Lenders: Successful, But Selective & Expensive</h4>
+            <div className="mb-12 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-8 border-2 border-green-200">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="text-3xl">✓</div>
+                <h4 className="text-2xl font-bold text-[#065F46]">Embedded Lenders: Successful, But Selective & Expensive</h4>
+              </div>
 
-              <p className="text-lg text-gray-700 mb-6">
+              <p className="text-lg text-gray-800 mb-6">
                 Platform lenders like Shopify, Stripe, and PayPal <strong>solved</strong> underwriting by controlling payment rails—they see every transaction and auto-deduct repayments. It works. Merchants funded by Shopify Capital see 36% higher sales growth<sup className="text-[#3B9B7F]">[35]</sup>. But they're gatekept and costly:
               </p>
 
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-[#3B9B7F] rounded-r-lg p-6 mb-6">
-                <h5 className="font-bold text-[#065F46] mb-3">Why embedded lending works:</h5>
-                <ul className="space-y-2 text-sm text-gray-800">
-                  <li>✓ <strong>Control payment rails</strong>: Auto-deduct before merchant receives funds—revenue can't be diverted</li>
-                  <li>✓ <strong>Complete data visibility</strong>: See 100% of on-platform transactions in real-time</li>
-                  <li>✓ <strong>Cherry-pick winners</strong>: Only invite merchants with proven sales history (PayPal requires $15K+ annual sales<sup className="text-[#3B9B7F]">[36]</sup>)</li>
-                  <li>✓ <strong>Low customer acquisition cost</strong>: Merchants already on platform</li>
+              <div className="bg-white border-2 border-[#3B9B7F] rounded-lg p-6 mb-6">
+                <h5 className="font-bold text-[#065F46] mb-4 text-lg">Why embedded lending works:</h5>
+                <ul className="space-y-3 text-gray-800">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <div><strong>Control payment rails:</strong> Auto-deduct before merchant receives funds—revenue can't be diverted</div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <div><strong>Complete data visibility:</strong> See 100% of on-platform transactions in real-time</div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <div><strong>Cherry-pick winners:</strong> Only invite merchants with proven sales history (PayPal requires $15K+ annual sales<sup className="text-[#3B9B7F]">[36]</sup>)</div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <div><strong>Low customer acquisition cost:</strong> Merchants already on platform</div>
+                  </li>
                 </ul>
               </div>
 
               <div className="overflow-x-auto mb-6">
-                <table className="w-full">
+                <table className="w-full bg-white rounded-lg overflow-hidden">
                   <thead>
-                    <tr className="border-b-2 border-gray-300">
+                    <tr className="bg-gradient-to-r from-green-100 to-emerald-100 border-b-2 border-green-300">
                       <th className="text-left py-3 px-4 font-bold text-gray-900">Platform</th>
                       <th className="text-left py-3 px-4 font-bold text-gray-900">Eligibility</th>
                       <th className="text-left py-3 px-4 font-bold text-gray-900">APR</th>
@@ -267,50 +282,67 @@ export default function EconomicContextPage() {
                 </table>
               </div>
 
-              <p className="text-gray-700 italic">
-                <strong>The problem:</strong> Gatekept to platform users only. If you sell on multiple channels, work freelance, or earn through platforms these lenders don't integrate with, you're excluded.
-              </p>
+              <div className="bg-white border-l-4 border-amber-500 rounded-r-lg p-4">
+                <p className="text-gray-800">
+                  <strong className="text-amber-700">⚠️ The problem:</strong> Gatekept to platform users only. If you sell on multiple channels, work freelance, or earn through platforms these lenders don't integrate with, you're excluded.
+                </p>
+              </div>
             </div>
 
             {/* Standalone RBF: Spectacular Failures */}
-            <div className="mb-12">
-              <h4 className="text-xl font-bold text-gray-900 mb-4">Standalone Revenue-Based Financing: Spectacular Failures</h4>
+            <div className="mb-12 bg-gradient-to-br from-rose-50 to-red-50 rounded-xl p-8 border-2 border-rose-300">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="text-3xl">✗</div>
+                <h4 className="text-2xl font-bold text-rose-900">Standalone Revenue-Based Financing: Spectacular Failures</h4>
+              </div>
 
-              <p className="text-lg text-gray-700 mb-6">
+              <p className="text-lg text-gray-800 mb-6">
                 Standalone lenders (Clearco, Wayflyer, Pipe, Uncapped) tried to offer RBF <em>without</em> controlling payment rails. The model collapsed across the board:
               </p>
 
               <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
-                  <h5 className="font-bold text-rose-700 mb-2">Clearco<sup className="text-[#3B9B7F]">[37]</sup></h5>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                <div className="bg-white border-2 border-rose-300 rounded-lg p-5 shadow-sm">
+                  <h5 className="font-bold text-rose-700 mb-3 text-lg flex items-center gap-2">
+                    <span className="text-rose-500">✗</span>
+                    Clearco<sup className="text-[#3B9B7F]">[37]</sup>
+                  </h5>
+                  <ul className="text-sm text-gray-700 space-y-2">
                     <li>• 90% valuation wipeout ($2B → $200M)</li>
                     <li>• CEO resigned, 500 → 140 employees</li>
                     <li>• "Still unprofitable due to cost of capital and default rates"</li>
                   </ul>
                 </div>
 
-                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
-                  <h5 className="font-bold text-rose-700 mb-2">Wayflyer<sup className="text-[#3B9B7F]">[38]</sup></h5>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                <div className="bg-white border-2 border-rose-300 rounded-lg p-5 shadow-sm">
+                  <h5 className="font-bold text-rose-700 mb-3 text-lg flex items-center gap-2">
+                    <span className="text-rose-500">✗</span>
+                    Wayflyer<sup className="text-[#3B9B7F]">[38]</sup>
+                  </h5>
+                  <ul className="text-sm text-gray-700 space-y-2">
                     <li>• €40.9M operating loss (2023)</li>
                     <li>• Cut 200 jobs (2022)</li>
                     <li>• "Monthly profitability" = one month, Oct 2023</li>
                   </ul>
                 </div>
 
-                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
-                  <h5 className="font-bold text-rose-700 mb-2">Pipe<sup className="text-[#3B9B7F]">[39]</sup></h5>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                <div className="bg-white border-2 border-rose-300 rounded-lg p-5 shadow-sm">
+                  <h5 className="font-bold text-rose-700 mb-3 text-lg flex items-center gap-2">
+                    <span className="text-rose-500">✗</span>
+                    Pipe<sup className="text-[#3B9B7F]">[39]</sup>
+                  </h5>
+                  <ul className="text-sm text-gray-700 space-y-2">
                     <li>• All co-founders resigned (Nov 2022)</li>
                     <li>• Pivoted away from core RBF model</li>
                     <li>• "Model faltered when expanding into riskier segments"</li>
                   </ul>
                 </div>
 
-                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
-                  <h5 className="font-bold text-rose-700 mb-2">Uncapped<sup className="text-[#3B9B7F]">[40]</sup></h5>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                <div className="bg-white border-2 border-rose-300 rounded-lg p-5 shadow-sm">
+                  <h5 className="font-bold text-rose-700 mb-3 text-lg flex items-center gap-2">
+                    <span className="text-rose-500">✗</span>
+                    Uncapped<sup className="text-[#3B9B7F]">[40]</sup>
+                  </h5>
+                  <ul className="text-sm text-gray-700 space-y-2">
                     <li>• <strong>Completely stopped offering RBF (2023)</strong></li>
                     <li>• "RBF loans are not the best funding product"</li>
                     <li>• Switched to fixed-term loans</li>
@@ -318,21 +350,32 @@ export default function EconomicContextPage() {
                 </div>
               </div>
 
-              <div className="bg-rose-50 border-l-4 border-rose-500 rounded-r-lg p-6">
-                <h5 className="font-bold text-rose-900 mb-3">Why standalone RBF failed:</h5>
-                <div className="space-y-3 text-gray-800">
-                  <p>
-                    <strong>1. Moral hazard & revenue diversion:</strong> Harvard research on South African RBF found firms process 16% less revenue through monitored platforms after taking financing<sup className="text-[#3B9B7F]">[41]</sup>. Borrowers route sales through unmonitored channels—cash, alternative payment processors, different bank accounts. Auto-deduction only works on revenue you can see.
-                  </p>
-                  <p>
-                    <strong>2. Selection problem:</strong> Can't cherry-pick like embedded lenders. Need volume to justify infrastructure costs. End up lending to riskier borrowers banks reject.
-                  </p>
-                  <p>
-                    <strong>3. High capital costs:</strong> VC-backed companies need 20%+ returns. Debt financing at 8-15%. Even at 20-50% APR, "cost of capital + default rates = unprofitable."
-                  </p>
-                  <p className="italic pt-2">
-                    → <strong>Same repayment structure (% of revenue), opposite outcomes.</strong> Embedded = works. Standalone = fails.
-                  </p>
+              <div className="bg-white border-2 border-rose-500 rounded-lg p-6">
+                <h5 className="font-bold text-rose-900 mb-4 text-lg">Why standalone RBF failed:</h5>
+                <div className="space-y-4 text-gray-800">
+                  <div className="flex items-start gap-3">
+                    <span className="text-rose-600 font-bold text-xl">1.</span>
+                    <p>
+                      <strong>Moral hazard & revenue diversion:</strong> Harvard research on South African RBF found firms process 16% less revenue through monitored platforms after taking financing<sup className="text-[#3B9B7F]">[41]</sup>. Borrowers route sales through unmonitored channels—cash, alternative payment processors, different bank accounts. Auto-deduction only works on revenue you can see.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-rose-600 font-bold text-xl">2.</span>
+                    <p>
+                      <strong>Selection problem:</strong> Can't cherry-pick like embedded lenders. Need volume to justify infrastructure costs. End up lending to riskier borrowers banks reject.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-rose-600 font-bold text-xl">3.</span>
+                    <p>
+                      <strong>High capital costs:</strong> VC-backed companies need 20%+ returns. Debt financing at 8-15%. Even at 20-50% APR, "cost of capital + default rates = unprofitable."
+                    </p>
+                  </div>
+                  <div className="bg-rose-100 rounded-lg p-4 mt-4">
+                    <p className="font-bold text-rose-900">
+                      → Same repayment structure (% of revenue), opposite outcomes. Embedded = works. Standalone = fails.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
