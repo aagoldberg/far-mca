@@ -16,7 +16,7 @@ Kiva funded $1.68B+ by connecting lenders to real stories. Neural research shows
 
 **Your face:** Photos create emotional connection. When friends contribute, they vouch for someone they recognize [[1]](../references.md#duarte-et-al-2012).
 
-**Your story:** Honest, specific narratives resonate. "I'm a freelance designer who just lost my biggest client" works. Over-promising doesn't—borrowers making many "trustworthy" claims had worse repayment [[2]](../references.md#herzenstein-et-al-2011).
+**Your story:** Honest, specific narratives resonate. "I'm a freelance designer who just lost my biggest client" works. Over-promising doesn't—borrowers making many "trustworthy" claims had worse repayment [[2]](../references.md#herzenstein-et-al-2011). Research shows stories with 400+ words receive more donations [[45]](../references.md#optimal-story-length).
 
 **Your plan:** Specific purposes let lenders visualize impact. "Purchasing $500 of fabric for holiday orders" engages. Vague requests ("need money for business") don't [[2]](../references.md#herzenstein-et-al-2011).
 

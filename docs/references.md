@@ -790,10 +790,26 @@ Also see:
 
 ---
 
+<span id="optimal-story-length"></span>
+**[45] GoFundMe (2024)**. Craft Your Story: Crowdfunding Storytelling Best Practices. Platform guidance on fundraiser narrative optimization.
+URL: [gofundme.com/en-ca/c/crowdfunding-lessons/story](https://www.gofundme.com/en-ca/c/crowdfunding-lessons/story)
+
+> GoFundMe's platform data shows fundraiser descriptions with **400 words or more receive more donations**. Research also shows fundraiser titles with **4-8 words make the most money**. The guidance emphasizes that while length matters, authentic storytelling quality ultimately drives donation success.
+
+**Key recommendations:**
+- Minimum 400 words for fundraiser descriptions
+- Answer donor questions upfront (who you are, why it matters)
+- Explain transparently how donations will be used
+- Break text into sections with subheadings for readability
+
+**Academic support:** Lagazio and Querci (2018) found that reward-based crowdfunding campaigns should use "at least 500 words" in textual descriptions, as detailed text is more persuasive than videos. However, Barbi and Bigelli (2017) cautioned that excessively wordy descriptions could denote a lack of conciseness that harms reader attention.
+
+---
+
 ### Farcaster Platform Growth
 
 <span id="farcaster-frames-2024"></span>
-**[45] Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
+**[46] Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
 URL: [dune.com/pixelhack/farcaster](https://dune.com/pixelhack/farcaster)
 
 > When Farcaster released Frames feature on January 26, 2024, daily active users **jumped from fewer than 2,000 to nearly 20,000** in weeks following launch. As of 2024, DAU exceeds **61,500 users**.
