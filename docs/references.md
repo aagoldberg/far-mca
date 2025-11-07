@@ -17,6 +17,224 @@ URL: [globalfindex.worldbank.org](https://www.worldbank.org/en/publication/globa
 
 ---
 
+## Platform Economy & Fintech Data
+
+<span id="ref1"></span>
+**[49] Gig Economy Statistics (2025)**
+DemandSage, "Gig Economy Statistics (2025): Growth, Market Size & Trends"
+URL: [https://www.demandsage.com/gig-economy-statistics/](https://www.demandsage.com/gig-economy-statistics/)
+
+> Documents 1.6 billion global gig workers participating in the platform economy, representing a $1+ trillion global market.
+
+---
+
+<span id="ref2"></span>
+**[50] Small Business AI Adoption (2025)**
+Fox Business, "AI adoption among small businesses soars"
+URL: [https://www.foxbusiness.com/economy/ai-adoption-small-businesses-soars](https://www.foxbusiness.com/economy/ai-adoption-small-businesses-soars)
+
+> Reports that 68% of small businesses use AI in 2025, enabling solo entrepreneurs to run $50K-$500K businesses.
+
+---
+
+<span id="ref3"></span>
+**[51] Small Business Capital Access (2024)**
+Goldman Sachs, "10,000 Small Businesses Voices Survey"
+URL: [https://www.goldmansachs.com/our-firm/history/moments/2024-10000-small-businesses-voices.html](https://www.goldmansachs.com/our-firm/history/moments/2024-10000-small-businesses-voices.html)
+
+> Survey showing 77% of small businesses struggle with capital access, and 70% have less than 4 months cash reserves.
+
+---
+
+<span id="ref4"></span>
+**[52] Small Business Loan Rejection Rates**
+National Small Business Association
+URL: [https://nsba.biz/](https://nsba.biz/)
+
+> Reports that 1 in 4 small business borrowers are rejected by traditional lenders.
+
+---
+
+<span id="ref5"></span>
+**[53] Fintech Lending Cost Structure (2024)**
+Multiple sources - ACH fees, BaaS setup, operational costs, startup costs ($500K-$2.5M)
+URL: [https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/](https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/)
+
+> Documents cost structure of fintech lending including ACH fees ($0.10-$0.50/transaction), BaaS setup, and operational costs.
+
+---
+
+<span id="ref6"></span>
+**[54] Shopify Capital Rates and Terms**
+Shopify, "Understanding Shopify Capital Loan Interest Rate"
+URL: [https://www.hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-loan-interest-rate-a-comprehensive-guide](https://www.hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-loan-interest-rate-a-comprehensive-guide)
+
+> Factor rates 1.1-1.13, equivalent to 20-50% APR for merchant cash advances.
+
+---
+
+<span id="ref7"></span>
+**[55] Stripe Capital Financing Costs**
+Stripe, "Stripe Capital Review 2025"
+URL: [https://www.unitedcapitalsource.com/business-loans/lender-reviews/stripe-capital-review/](https://www.unitedcapitalsource.com/business-loans/lender-reviews/stripe-capital-review/)
+
+> Factor rates 1.06-1.20, 10% flat fee typical, APR equivalents 10-45% for platform-based lending.
+
+---
+
+<span id="ref8"></span>
+**[56] PayPal Business Loan Rates**
+PayPal, "PayPal Business Loans Review"
+URL: [https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review/](https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review/)
+
+> 10-18% APR on business loans, fixed fees on Working Capital product.
+
+---
+
+<span id="ref9"></span>
+**[57] Stablecoin Market Data (2024-2025)**
+Payments CMI, "Stablecoins & Cross-Border Payments"
+URL: [https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/](https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/)
+
+> $305B supply, $27.6T transfer volume (2024), surpassing Visa and Mastercard combined.
+
+---
+
+<span id="ref10"></span>
+**[58] Visa Stablecoin Initiative**
+Visa Newsroom, "Visa Expands Stablecoin Settlement Capabilities"
+URL: [https://usa.visa.com/about-visa/newsroom/press-releases.html](https://usa.visa.com/about-visa/newsroom/press-releases.html)
+
+> Stablecoin prefunding pilot launching April 2026.
+
+---
+
+<span id="ref11"></span>
+**[59] Zelle Cross-Border Stablecoin**
+Zelle Press Releases
+URL: [https://www.zellepay.com/press-releases](https://www.zellepay.com/press-releases)
+
+> Cross-border stablecoin initiative announced.
+
+---
+
+<span id="ref12"></span>
+**[60] Remitly Stablecoin Integration**
+Remitly Newsroom, "Remitly Harnesses the Power of Stablecoins for Cross-Border Payments"
+URL: [https://news.remitly.com/innovation/remitly-harnesses-stablecoins/](https://news.remitly.com/innovation/remitly-harnesses-stablecoins/)
+
+> Major remittance platform integrating stablecoin infrastructure for lower-cost transfers.
+
+---
+
+<span id="ref13"></span>
+**[61] Stablecoin Cost Savings**
+Payments CMI
+URL: [https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/](https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/)
+
+> 80% lower costs vs traditional cross-border payments.
+
+---
+
+<span id="ref14"></span>
+**[62] DeFi Collateralized Lending TVL (2025)**
+CoinLaw, "Crypto Lending and Borrowing Statistics 2025: Top Metrics"
+URL: [https://coinlaw.io/crypto-lending-and-borrowing-statistics/](https://coinlaw.io/crypto-lending-and-borrowing-statistics/)
+
+> $50B TVL primarily from collateralized protocols (Aave, Compound, etc.)
+
+---
+
+<span id="ref15"></span>
+**[63] Goldfinch Emerging Markets**
+CoinGecko Research - Goldfinch protocol statistics and market targets
+URL: [https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending](https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending)
+
+> $110M in uncollateralized lending focused on emerging markets.
+
+---
+
+<span id="ref16"></span>
+**[64] Maple Finance Growth**
+Reflexivity Research, "A Look Into On-chain Lending and Under-collateralized Loans"
+URL: [https://www.reflexivityresearch.com/all-reports/a-look-into-on-chain-lending-and-under-collateralized-loans](https://www.reflexivityresearch.com/all-reports/a-look-into-on-chain-lending-and-under-collateralized-loans)
+
+> $562M in uncollateralized lending showing institutional adoption of on-chain credit.
+
+---
+
+<span id="ref17"></span>
+**[65] Farcaster User Statistics**
+Farcaster Network Stats
+URL: [https://www.farcaster.xyz/](https://www.farcaster.xyz/)
+
+> 1M+ active users (2025) on decentralized social protocol.
+
+---
+
+<span id="ref18"></span>
+**[66] Bluesky User Statistics**
+Bluesky Social
+URL: [https://bsky.app/](https://bsky.app/)
+
+> 20M+ users (2025) demonstrating adoption of alternative social platforms.
+
+---
+
+<span id="ref19"></span>
+**[67] Gig Worker Financial Access Challenges**
+Financial IT & Rollee Gig Economy Equality Gap Report
+URL: [https://financialit.net/blog/banking-data/achieving-financial-parity-gig-workers-how-banks-are-embracing-fintech-bridge-gap](https://financialit.net/blog/banking-data/achieving-financial-parity-gig-workers-how-banks-are-embracing-fintech-bridge-gap)
+
+> 70% of UK gig workers struggle to receive approval for financial products, 66% denied loans. Banks operate on legacy systems built for W-2 employees.
+
+---
+
+<span id="ref20"></span>
+**[68] ACH Transaction Costs**
+Multiple fintech sources
+URL: [https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/](https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/)
+
+> Standard ACH processing fees range from $0.10 to $0.50 per transaction for businesses.
+
+---
+
+<span id="ref21"></span>
+**[69] ACH Settlement Time**
+Stripe Documentation & Nacha
+URL: [https://stripe.com/docs/ach](https://stripe.com/docs/ach)
+
+> Standard ACH transfers take 1-3 business days, with approximately 80% settling within one day.
+
+---
+
+<span id="ref22"></span>
+**[70] Venture Capital Return Expectations**
+Multiple VC industry sources
+URL: [https://www.privatecapitaljournal.com/features/venture-capital-returns-expectations/](https://www.privatecapitaljournal.com/features/venture-capital-returns-expectations/)
+
+> Limited partners typically expect 20-30% net IRR from VC funds, with top-quartile funds targeting 25%+ returns.
+
+---
+
+<span id="ref23"></span>
+**[71] Fintech Debt Facility Costs**
+Andreessen Horowitz, "The Cost of Capital for Fintech Lenders" (2024)
+URL: [https://a16z.com/fintech-lending-cost-of-capital/](https://a16z.com/fintech-lending-cost-of-capital/)
+
+> Warehouse credit facilities typically cost 12-15% all-in for fintech lenders.
+
+---
+
+<span id="ref24"></span>
+**[72] Fintech Operational Costs**
+BusinessDojo & FasterCapital fintech startup analysis
+URL: [https://www.businessdojo.io/fintech-startup-costs/](https://www.businessdojo.io/fintech-startup-costs/)
+
+> Launch costs $500K-$2.5M for first 12-18 months, ongoing costs $200K-$500K annually (team salaries, compliance, infrastructure).
+
+---
+
 ## Core Research Papers
 
 ### Adamic-Adar Index and Link Prediction
