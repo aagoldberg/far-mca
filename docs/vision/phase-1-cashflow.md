@@ -17,7 +17,7 @@ Phase 1 scales beyond personal networks by adding **cashflow verification** to t
 - Interest rates: 0-8% APR
 - Potential multi-platform expansion (PMF-dependent)
 
-**Goal:** Serve 10,000+ users with $1M+ in loans originated, proving hybrid trust + cashflow model works at scale.
+**Goal:** Prove the hybrid trust + cashflow model works at scale.
 
 ---
 
@@ -61,12 +61,11 @@ Starts on Farcaster, may expand to other platforms (Bluesky, Reddit, Twitter/X) 
 
 ## Success Metrics
 
-- 10,000+ users, $1M+ originated, $500K+ TVL in pools
-- 70%+ pool utilization, 85%+ repayment rate
-- Cashflow verification predicts repayment (statistical significance)
-- Borrowers choose LendFriend over traditional lenders
-
-**Key validation:** $500K TVL with 70%+ utilization and <15% default rate[[74]](../references.md#ref74) proves uncollateralized crypto lending can scale.
+Phase 1 succeeds if:
+- Cashflow verification meaningfully predicts repayment behavior
+- Liquidity pools attract passive capital and enable larger loans
+- Borrowers choose LendFriend over traditional alternatives
+- The hybrid trust + cashflow model proves viable at scale
 
 ---
 

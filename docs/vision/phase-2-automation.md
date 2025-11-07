@@ -16,20 +16,20 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 1. **Wallet auto-deduction** — Deduct % of incoming crypto transfers automatically
 2. **Merchant revenue sharing** — Deduct % of daily sales automatically
 
-**Goal:** 50%+ of loans use auto-repayment, with 30% lower default rate vs. manual repayment.
+**Goal:** Significantly reduce defaults by eliminating manual repayment friction.
 
 ---
 
 ## Why This Matters
 
-Manual repayment creates preventable defaults from forgetfulness, not inability to pay. Borrowers forget due dates, lenders chase late payments, and everyone experiences unnecessary friction. Auto-repayment eliminates this: set once, deducts automatically from income, and reduces defaults by 30%.
+Manual repayment creates preventable defaults from forgetfulness, not inability to pay. Borrowers forget due dates, lenders chase late payments, and everyone experiences unnecessary friction. Auto-repayment eliminates this: set once, deducts automatically from income, and reduces defaults.
 
 | Aspect | 📅 Manual Repayment | ⚡ Auto-Repayment |
 |--------|---------------------|-------------------|
 | **Payment Process** | 🧠 Remember payment date<br/>📱 Open app monthly<br/>💳 Manual transfer | ✅ Set once, forget<br/>🤖 Deducts automatically<br/>💰 % of daily income |
 | **Borrower Experience** | ⏰ Late payment risk<br/>😰 Cognitive load<br/>💭 *"Did I pay this month?"* | ⏱️ Always on-time<br/>😌 Zero mental overhead<br/>💭 *"What loan?"* |
 | **Lender Experience** | 📞 Chasing late payments<br/>❓ Uncertainty | 📊 Predictable yield<br/>✅ Reliable cashflow |
-| **Default Rate** | ❌ **15%**[[74]](../references.md#ref74) | ✅ **10%** (30% lower) |
+| **Default Risk** | ❌ Higher (forgetfulness) | ✅ Lower (automated) |
 
 **Why merchants choose LendFriend over MCAs:**
 - **Fair pricing:** 12% APR vs 280% APR for merchant cash advances[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
@@ -56,12 +56,11 @@ For small businesses: Connect Square/Shopify account, choose daily repayment rat
 
 ## Success Metrics
 
-- 50%+ loans use auto-repayment
-- 30% default reduction vs. manual
-- 100K+ users, $5M+ merchant loans, $10M+ TVL
+Phase 2 succeeds if:
+- Auto-repayment significantly reduces defaults vs. manual repayment
+- Borrowers prefer automated repayment over manual
+- Merchants choose LendFriend over traditional MCAs
 - Users report "forgot I had a loan, it just repaid itself"
-
-**Key validation:** 50%+ adoption + 30% default reduction proves fundamentally better lending infrastructure.
 
 ---
 
