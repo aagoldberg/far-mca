@@ -216,56 +216,123 @@ export default function EconomicContextPage() {
             </div>
           </div>
 
-          {/* Platform Lenders - Table */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">Platform Lenders: Progress, But Expensive</h3>
-            <p className="text-lg text-gray-700 mb-8">
-              Shopify, Stripe, and PayPal <strong>can</strong> assess cashflow—they see every transaction. But infrastructure costs keep rates high:
-            </p>
+          {/* Two Attempts to Fill the Gap */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-8">Two Different Attempts to Fill the Gap</h3>
 
-            <div className="overflow-x-auto mb-8">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b-2 border-gray-300">
-                    <th className="text-left py-3 px-4 font-bold text-gray-900">Platform</th>
-                    <th className="text-left py-3 px-4 font-bold text-gray-900">Cost Structure</th>
-                    <th className="text-left py-3 px-4 font-bold text-gray-900">APR Equivalent</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-700">
-                  <tr className="border-b border-gray-200">
-                    <td className="py-4 px-4 font-semibold">Shopify Capital<sup className="text-[#3B9B7F]">[30]</sup></td>
-                    <td className="py-4 px-4">Factor rates 1.1-1.13</td>
-                    <td className="py-4 px-4"><span className="font-bold text-amber-600">20-50%</span></td>
-                  </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="py-4 px-4 font-semibold">Stripe Capital<sup className="text-[#3B9B7F]">[31]</sup></td>
-                    <td className="py-4 px-4">Factor rates 1.06-1.20</td>
-                    <td className="py-4 px-4"><span className="font-bold text-amber-600">10-45%</span></td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-4 font-semibold">PayPal Business<sup className="text-[#3B9B7F]">[32]</sup></td>
-                    <td className="py-4 px-4">Fixed fees, 17-52 weeks</td>
-                    <td className="py-4 px-4"><span className="font-bold text-amber-600">10-18%</span></td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* Embedded Lenders: Successful but Gatekept */}
+            <div className="mb-12">
+              <h4 className="text-xl font-bold text-gray-900 mb-4">Embedded Lenders: Successful, But Selective & Expensive</h4>
+
+              <p className="text-lg text-gray-700 mb-6">
+                Platform lenders like Shopify, Stripe, and PayPal <strong>solved</strong> underwriting by controlling payment rails—they see every transaction and auto-deduct repayments. It works. Merchants funded by Shopify Capital see 36% higher sales growth<sup className="text-[#3B9B7F]">[35]</sup>. But they're gatekept and costly:
+              </p>
+
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-[#3B9B7F] rounded-r-lg p-6 mb-6">
+                <h5 className="font-bold text-[#065F46] mb-3">Why embedded lending works:</h5>
+                <ul className="space-y-2 text-sm text-gray-800">
+                  <li>✓ <strong>Control payment rails</strong>: Auto-deduct before merchant receives funds—revenue can't be diverted</li>
+                  <li>✓ <strong>Complete data visibility</strong>: See 100% of on-platform transactions in real-time</li>
+                  <li>✓ <strong>Cherry-pick winners</strong>: Only invite merchants with proven sales history (PayPal requires $15K+ annual sales<sup className="text-[#3B9B7F]">[36]</sup>)</li>
+                  <li>✓ <strong>Low customer acquisition cost</strong>: Merchants already on platform</li>
+                </ul>
+              </div>
+
+              <div className="overflow-x-auto mb-6">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b-2 border-gray-300">
+                      <th className="text-left py-3 px-4 font-bold text-gray-900">Platform</th>
+                      <th className="text-left py-3 px-4 font-bold text-gray-900">Eligibility</th>
+                      <th className="text-left py-3 px-4 font-bold text-gray-900">APR</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    <tr className="border-b border-gray-200">
+                      <td className="py-4 px-4 font-semibold">Shopify Capital<sup className="text-[#3B9B7F]">[30]</sup></td>
+                      <td className="py-4 px-4">Invite-only, 90+ days selling</td>
+                      <td className="py-4 px-4"><span className="font-bold text-rose-600">20-50%</span></td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td className="py-4 px-4 font-semibold">Stripe Capital<sup className="text-[#3B9B7F]">[31]</sup></td>
+                      <td className="py-4 px-4">Invite-only, high processing volume</td>
+                      <td className="py-4 px-4"><span className="font-bold text-rose-600">10-45%</span></td>
+                    </tr>
+                    <tr>
+                      <td className="py-4 px-4 font-semibold">PayPal Working Capital<sup className="text-[#3B9B7F]">[32]</sup></td>
+                      <td className="py-4 px-4">$15K-$20K min. annual sales</td>
+                      <td className="py-4 px-4"><span className="font-bold text-rose-600">10-18%</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p className="text-gray-700 italic">
+                <strong>The problem:</strong> Gatekept to platform users only. If you sell on multiple channels, work freelance, or earn through platforms these lenders don't integrate with, you're excluded.
+              </p>
             </div>
 
-            <div className="bg-rose-50 border-l-4 border-rose-500 rounded-r-lg p-6">
-              <h4 className="font-bold text-rose-900 mb-3">Why costs stay high:<sup className="text-[#3B9B7F]">[33]</sup></h4>
-              <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-800">
-                <div>
-                  <p className="font-semibold mb-1">Capital Costs</p>
-                  <p>Debt at 8-15%<br />VC equity needs 20%+ returns</p>
+            {/* Standalone RBF: Spectacular Failures */}
+            <div className="mb-12">
+              <h4 className="text-xl font-bold text-gray-900 mb-4">Standalone Revenue-Based Financing: Spectacular Failures</h4>
+
+              <p className="text-lg text-gray-700 mb-6">
+                Standalone lenders (Clearco, Wayflyer, Pipe, Uncapped) tried to offer RBF <em>without</em> controlling payment rails. The model collapsed across the board:
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
+                  <h5 className="font-bold text-rose-700 mb-2">Clearco<sup className="text-[#3B9B7F]">[37]</sup></h5>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• 90% valuation wipeout ($2B → $200M)</li>
+                    <li>• CEO resigned, 500 → 140 employees</li>
+                    <li>• "Still unprofitable due to cost of capital and default rates"</li>
+                  </ul>
                 </div>
-                <div>
-                  <p className="font-semibold mb-1">Payment Rails</p>
-                  <p>ACH: $0.10-$0.50/transaction<br />1-3 day settlement</p>
+
+                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
+                  <h5 className="font-bold text-rose-700 mb-2">Wayflyer<sup className="text-[#3B9B7F]">[38]</sup></h5>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• €40.9M operating loss (2023)</li>
+                    <li>• Cut 200 jobs (2022)</li>
+                    <li>• "Monthly profitability" = one month, Oct 2023</li>
+                  </ul>
                 </div>
-                <div>
-                  <p className="font-semibold mb-1">Operations</p>
-                  <p>$500K-$2.5M to launch<br />$200K-$500K/year ongoing</p>
+
+                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
+                  <h5 className="font-bold text-rose-700 mb-2">Pipe<sup className="text-[#3B9B7F]">[39]</sup></h5>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• All co-founders resigned (Nov 2022)</li>
+                    <li>• Pivoted away from core RBF model</li>
+                    <li>• "Model faltered when expanding into riskier segments"</li>
+                  </ul>
+                </div>
+
+                <div className="bg-white border-2 border-rose-200 rounded-lg p-5">
+                  <h5 className="font-bold text-rose-700 mb-2">Uncapped<sup className="text-[#3B9B7F]">[40]</sup></h5>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• <strong>Completely stopped offering RBF (2023)</strong></li>
+                    <li>• "RBF loans are not the best funding product"</li>
+                    <li>• Switched to fixed-term loans</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-rose-50 border-l-4 border-rose-500 rounded-r-lg p-6">
+                <h5 className="font-bold text-rose-900 mb-3">Why standalone RBF failed:</h5>
+                <div className="space-y-3 text-gray-800">
+                  <p>
+                    <strong>1. Moral hazard & revenue diversion:</strong> Harvard research on South African RBF found firms process 16% less revenue through monitored platforms after taking financing<sup className="text-[#3B9B7F]">[41]</sup>. Borrowers route sales through unmonitored channels—cash, alternative payment processors, different bank accounts. Auto-deduction only works on revenue you can see.
+                  </p>
+                  <p>
+                    <strong>2. Selection problem:</strong> Can't cherry-pick like embedded lenders. Need volume to justify infrastructure costs. End up lending to riskier borrowers banks reject.
+                  </p>
+                  <p>
+                    <strong>3. High capital costs:</strong> VC-backed companies need 20%+ returns. Debt financing at 8-15%. Even at 20-50% APR, "cost of capital + default rates = unprofitable."
+                  </p>
+                  <p className="italic pt-2">
+                    → <strong>Same repayment structure (% of revenue), opposite outcomes.</strong> Embedded = works. Standalone = fails.
+                  </p>
                 </div>
               </div>
             </div>
@@ -508,6 +575,13 @@ export default function EconomicContextPage() {
                 { id: 32, title: "PayPal Business Loans", url: "https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review/" },
                 { id: 33, title: "Fintech Cost Structure", url: "https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/" },
                 { id: 34, title: "Merchant Cash Advance Costs", url: "https://shieldfunding.com/merchant-cash-advance/true-costs-mca/" },
+                { id: 35, title: "Shopify Capital Impact on Merchant Growth", url: "https://www.shopify.com/blog/capital-effect-on-business-growth" },
+                { id: 36, title: "PayPal Working Capital Eligibility Requirements", url: "https://www.paypal.com/us/business/financial-services/working-capital-loan" },
+                { id: 37, title: "Clearco Recapitalization and Valuation Collapse", url: "https://betakit.com/clearco-secures-new-equity-financing-from-existing-investors-and-an-asset-backed-facility-as-struggling-fintech-executes-complex-recapitalization-plan/" },
+                { id: 38, title: "Wayflyer Financial Performance and Losses", url: "https://www.irishtimes.com/business/2024/11/26/wayflyer-sees-losses-narrow-amid-efficiency-drive/" },
+                { id: 39, title: "Pipe Co-founders Resignation and Pivot", url: "https://davefriedman.substack.com/p/what-happened-at-pipe" },
+                { id: 40, title: "Uncapped Discontinues Revenue-Based Financing", url: "https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering" },
+                { id: 41, title: "Revenue-Based Financing: Moral Hazard and Adverse Selection", source: "Russel, D., Shi, C., Clarke, R. (2023). Harvard Business School Working Paper" },
               ].map((ref) => (
                 <div key={ref.id} id={`ref${ref.id}`} className="scroll-mt-20">
                   <span className="font-semibold text-gray-900">[{ref.id}]</span>{' '}
