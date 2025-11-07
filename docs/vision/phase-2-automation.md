@@ -22,28 +22,13 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 ## Why This Matters
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
-graph LR
-    subgraph Manual["❌ Manual Repayment"]
-        M1[Borrower<br/>Forgets] --> M2[Late<br/>Payment] --> M3[Default]
-    end
-
-    subgraph Auto["✅ Auto-Repayment"]
-        A1[Income<br/>Arrives] --> A2[Auto<br/>Deduct] --> A3[On-time<br/>Payment]
-    end
-
-    style M1 fill:#EF4444,stroke:#DC2626,color:#fff
-    style M2 fill:#EF4444,stroke:#DC2626,color:#fff
-    style M3 fill:#EF4444,stroke:#DC2626,color:#fff
-    style A1 fill:#10B981,stroke:#059669,color:#fff
-    style A2 fill:#10B981,stroke:#059669,color:#fff
-    style A3 fill:#10B981,stroke:#059669,color:#fff
-```
-
 **The problem:** Borrowers forget to pay. Not because they can't afford it—they just forget.
 
+→ Borrower forgets → Late payment → Default
+
 **The solution:** Set it once, forget it. Money automatically deducts from your income.
+
+→ Income arrives → Auto-deduct → On-time payment
 
 **For borrowers:**
 - Never worry about due dates
@@ -62,28 +47,17 @@ graph LR
 
 ## How It Works
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
-graph TB
-    subgraph Wallet["💰 Wallet Auto-Deduction"]
-        W1[DAO pays you<br/>$2,000 USDC] --> W2[Plugin deducts<br/>10% = $200] --> W3[Sent to<br/>loan contract]
-        W1 --> W4[You keep<br/>$1,800]
-    end
+**Wallet Auto-Deduction** (for crypto earners)
 
-    subgraph Merchant["🏪 Merchant Auto-Deduction"]
-        M1[Daily sales:<br/>$1,000] --> M2[System deducts<br/>5% = $50] --> M3[Sent to<br/>loan contract]
-        M1 --> M4[You keep<br/>$950]
-    end
+Example: DAO pays you $2,000 USDC → Plugin deducts 10% ($200) → Sent to loan → You keep $1,800
 
-    style W2 fill:#3B9B7F,stroke:#2E7D68,color:#fff
-    style W3 fill:#3B9B7F,stroke:#2E7D68,color:#fff
-    style M2 fill:#3B9B7F,stroke:#2E7D68,color:#fff
-    style M3 fill:#3B9B7F,stroke:#2E7D68,color:#fff
-```
+Smart wallet plugin deducts a % of incoming stablecoins automatically. Safety controls: minimum threshold, monthly cap, pause button.
 
-**Wallet Auto-Deduction:** For crypto earners (DAOs, protocols). Smart wallet plugin deducts a % of incoming stablecoins automatically. Safety: minimum threshold, monthly cap, pause button.
+**Merchant Auto-Deduction** (for small businesses)
 
-**Merchant Auto-Deduction:** For small businesses (Square/Shopify). Choose daily rate (e.g., 5% of sales). Bad day = smaller payment. Good day = pays off faster.
+Example: Daily sales $1,000 → System deducts 5% ($50) → Sent to loan → You keep $950
+
+Connect Square/Shopify account, choose daily rate. Bad sales day = smaller payment. Good day = pays off faster.
 
 **Why merchants choose this:** 12% APR vs. 280% APR (MCAs)[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56), transparent pricing, prepay without penalty.
 
