@@ -1,66 +1,76 @@
 # Risk Scoring
 
-## Market-Driven Lending with Transparent Risk Assessment
-
-LendFriend provides comprehensive risk information to lenders, who decide what risk they're comfortable with.
+LendFriend provides transparent risk assessment to lenders, who decide what risk they're comfortable with. We follow Prosper and LendingClub's model: disclose risk clearly, let the market decide.
 
 ---
 
-## How It Works
+## Risk Grades
 
-Traditional P2P platforms like Prosper and LendingClub use risk grades (AA-HR, A-G) to disclose risk **without restricting loan amounts**. We follow the same model.
+Every loan receives a grade from **A (minimal risk) to HR (very high risk)**:
 
-Every loan receives a grade from **A (minimal risk) to HR (very high risk)** based on four factors:
-- **Repayment History** - Past loan performance
-- **Social Trust Score** - Connection strength to lender
-- **Loan Size Risk** - Amount relative to history
-- **Account Quality** - Farcaster account health
+| Grade | Risk | Description |
+|-------|------|-------------|
+| **A** 🟢 | Minimal | Excellent history + strong ties |
+| **B** 🟢 | Low | Good history OR strong ties |
+| **C** 🟡 | Moderate | Some history, moderate ties |
+| **D** 🟡 | Elevated | Limited history or weak ties |
+| **E** 🔴 | High | No history + large loan |
+| **HR** 🔴 | Very High | High risk situation or recovery |
 
-We'll continually refine the model as we collect more repayment data. Lenders see clear warnings before contributing, and the market naturally filters high-risk loans through slower funding or no funding at all.
-
----
-
-## Why This Approach?
-
-**From P2P lending research:** Platforms that provide detailed risk information see lower default rates because:
-1. Lenders make informed decisions
-2. High-risk loans get filtered by market (don't fund)
-3. Borrowers self-select appropriate loan sizes
-
-**Our model draws from:**
-
-- **[Prosper](https://www.prosper.com/) (2006-2020)**: Pioneered transparent risk grades (AA-HR) without loan amount restrictions. Proved market-based filtering works at scale—lenders could see risk and decide for themselves, creating natural market equilibrium.
-
-- **[Grameen Bank](https://grameenbank.org/) (1983-present)**: 97-98% repayment rate using social collateral instead of traditional collateral. Demonstrated that social accountability can substitute for financial guarantees in lending. [See research](../../references.md#institutional-evidence)
-
-- **[Iyer et al. (2016)](../../references.md#peer-to-peer-lending-and-reputation)**: Research on Prosper.com showing loans with friend endorsements have 22% lower default rates. This is why our Social Trust Score carries 30% weight in the risk model.
-
-**Why short loan terms?** MVP uses 30-90 day durations (microfinance best practice) to create fast feedback loops for gathering behavioral data and refining the model.
+**High risk grades (E-HR)** may not fund successfully. Borrowers should start smaller or build their network first.
 
 ---
 
-## Learn More
+## How Grades Are Calculated
 
-**Understand the grades:**
-- [Risk Grades](risk-grades.md) - How A-HR grades are calculated
-- [Calculation](calculation.md) - The 4 factors explained
-- [Examples](examples.md) - Real calculation scenarios
+Four weighted factors (0-100 points total):
 
-**See what lenders see:**
-- [Lender Warnings](lender-warnings.md) - Warning system and risk flags
+**1. Repayment History (40%)**
+- 10+ loans, 0 defaults: 40 points
+- 4-9 loans, 0 defaults: 32 points
+- 1-3 loans, 0 defaults: 24 points
+- First-time borrower: 12 points
+- Any defaults: 0-8 points
 
-**Understand constraints:**
-- [Loan Constraints](loan-constraints.md) - Duration limits and borrower incentives
+**2. Social Trust Score (30%)**
+- Based on Adamic-Adar algorithm (see [Social Trust Scoring](../social-trust-scoring/README.md))
+- Close connections: 30 points
+- Some connections: 15-25 points
+- No connections: 0-10 points
 
-**Technical details:**
-- [Implementation](implementation.md) - API, smart contracts, phases
+**3. Loan Size Risk (20%)**
+- Small relative to history: 20 points
+- Medium: 10-15 points
+- Large for borrower: 0-10 points
+
+**4. Account Quality (10%)**
+- Active, verified account: 10 points
+- Basic account: 5 points
+- Low quality: 0-5 points
+
+Total points map to grades: 90+ = A, 80+ = B, 70+ = C, 60+ = D, 50+ = E, <50 = HR
 
 ---
 
-## Related Topics
+## Why This Works
 
-- **Social trust affects risk:** [Social Trust Scoring](../social-trust-scoring/README.md)
-- **What happens on default:** [Risk & Default Handling](../risk-and-defaults.md)
-- **Technical implementation:** [Smart Contract Flow](../smart-contract-flow.md)
+**Research shows:**
+- Prosper proved transparent risk grades work at scale [[36]](../../references.md#peer-to-peer-lending-and-reputation)
+- Loans with friend endorsements have 22% lower defaults [[3]](../../references.md#iyer-et-al-2016)
+- Market-based filtering reduces defaults (high-risk loans don't fund)
 
-**Questions?** Join our [Discord](https://discord.gg/lendfriend) or file an issue on [GitHub](https://github.com/aagoldberg/far-mca).
+**Key principles:**
+- Lenders make informed decisions
+- Market naturally filters high-risk loans
+- Borrowers self-select appropriate amounts
+- Short terms (30-90 days) create fast feedback loops
+
+---
+
+## Lender Warnings
+
+Before contributing, lenders see clear warnings based on risk level. [View warning system →](lender-warnings.md)
+
+---
+
+**Next:** [Social Trust Scoring](../social-trust-scoring/README.md) · [Lender Warnings](lender-warnings.md) · [Research](../../references.md)

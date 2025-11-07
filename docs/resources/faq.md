@@ -17,7 +17,7 @@ LendFriend doesn't set hard limits on loan amounts. Instead, the market decides 
 
 **First-time borrowers** typically start with $50-200 loans. As you build repayment history, larger amounts become viable.
 
-→ [Learn more about loan constraints](../how-it-works/risk-scoring/loan-constraints.md)
+→ [Learn more about risk scoring](../how-it-works/risk-scoring/README.md)
 
 ---
 
@@ -47,7 +47,7 @@ All loans currently have **90-day terms** (3 months) with lump sum repayment at 
 
 As the platform matures, we'll introduce longer terms (6 months, 12 months) for qualified borrowers with proven repayment history.
 
-→ [Learn more about loan duration](../how-it-works/risk-scoring/loan-constraints.md)
+→ [Learn more about risk scoring](../how-it-works/risk-scoring/README.md)
 
 ---
 
@@ -88,7 +88,7 @@ Your risk grade improves through:
 **Pro Tip**: Ask close friends to contribute first. Their participation signals trust to other potential lenders.
 {% endhint %}
 
-→ [Learn more about risk grades](../how-it-works/risk-scoring/risk-grades.md)
+→ [Learn more about risk grades](../how-it-works/risk-scoring/README.md)
 
 ---
 
@@ -118,7 +118,7 @@ Check two key metrics:
    - **30-59%** (🟡 MODERATE): Some network validation
    - **<30%** (🟠 WEAK): Few connections, high risk
 
-→ [Learn more about risk tiers](../how-it-works/social-trust-scoring/risk-tiers.md)
+→ [Learn more about risk tiers](../how-it-works/social-trust-scoring/README.md)
 
 ---
 
@@ -247,7 +247,7 @@ Trust scores are calculated **off-chain** using Farcaster social graph data via 
 
 Results guide UI displays but don't affect smart contract execution.
 
-→ [See technical implementation](../how-it-works/social-trust-scoring/implementation.md)
+→ [See the algorithm](../how-it-works/social-trust-scoring/the-algorithm.md)
 
 ---
 

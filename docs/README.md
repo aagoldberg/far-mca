@@ -70,7 +70,7 @@ Common questions for borrowers, lenders, and developers.
 ---
 
 {% hint style="info" %}
-**For Developers**: Explore our [Technical Stack](how-it-works/technical-stack.md) and [Smart Contract Flow](how-it-works/smart-contract-flow.md). View the [Implementation](how-it-works/social-trust-scoring/implementation.md) details for trust score calculations.
+**For Developers**: Explore our [Technical Stack](how-it-works/technical-stack.md) and [Smart Contract Flow](how-it-works/smart-contract-flow.md). View [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md) for trust score calculations.
 {% endhint %}
 
 ---
