@@ -22,9 +22,28 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 ## Why This Matters
 
-**The problem:** Borrowers forget to pay. Not because they can't afford it—they just forget. Result: late payments, chasing, defaults.
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
+graph LR
+    subgraph Manual["❌ Manual Repayment"]
+        M1[Borrower<br/>Forgets] --> M2[Late<br/>Payment] --> M3[Default]
+    end
 
-**The solution:** Loans that repay themselves. Set it once, forget it. Money automatically deducts from your income. Never miss a payment again.
+    subgraph Auto["✅ Auto-Repayment"]
+        A1[Income<br/>Arrives] --> A2[Auto<br/>Deduct] --> A3[On-time<br/>Payment]
+    end
+
+    style M1 fill:#EF4444,stroke:#DC2626,color:#fff
+    style M2 fill:#EF4444,stroke:#DC2626,color:#fff
+    style M3 fill:#EF4444,stroke:#DC2626,color:#fff
+    style A1 fill:#10B981,stroke:#059669,color:#fff
+    style A2 fill:#10B981,stroke:#059669,color:#fff
+    style A3 fill:#10B981,stroke:#059669,color:#fff
+```
+
+**The problem:** Borrowers forget to pay. Not because they can't afford it—they just forget.
+
+**The solution:** Set it once, forget it. Money automatically deducts from your income.
 
 **For borrowers:**
 - Never worry about due dates
@@ -34,26 +53,39 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 **For merchants:**
 - 12% APR instead of 280% APR (MCAs)[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
 - Bad sales day? Smaller payment. Good day? Pays off faster.
-- No hidden fees or confusing rates
 
 **For lenders:**
 - No chasing late payments
-- Predictable, reliable yield
-- Lower defaults = better returns
+- Predictable yield, lower defaults
 
 ---
 
 ## How It Works
 
-**1. Wallet Auto-Deduction**
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
+graph TB
+    subgraph Wallet["💰 Wallet Auto-Deduction"]
+        W1[DAO pays you<br/>$2,000 USDC] --> W2[Plugin deducts<br/>10% = $200] --> W3[Sent to<br/>loan contract]
+        W1 --> W4[You keep<br/>$1,800]
+    end
 
-For crypto-native earners: Smart wallet plugin (ERC-4337) automatically deducts configured % of incoming stablecoin transfers and sends to loan contract. Safety controls: minimum threshold, monthly cap, whitelisted sources, pause button.
+    subgraph Merchant["🏪 Merchant Auto-Deduction"]
+        M1[Daily sales:<br/>$1,000] --> M2[System deducts<br/>5% = $50] --> M3[Sent to<br/>loan contract]
+        M1 --> M4[You keep<br/>$950]
+    end
 
-**2. Merchant Revenue Auto-Deduction**
+    style W2 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style W3 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style M2 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style M3 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+```
 
-For small businesses: Connect Square/Shopify account, choose daily repayment rate (e.g., 5% of sales). System deducts automatically from daily net sales. Revenue-based: slow days = smaller payments.
+**Wallet Auto-Deduction:** For crypto earners (DAOs, protocols). Smart wallet plugin deducts a % of incoming stablecoins automatically. Safety: minimum threshold, monthly cap, pause button.
 
-**Better than MCAs:** 12% APR vs. 280% APR[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56), transparent pricing, prepay without penalty.
+**Merchant Auto-Deduction:** For small businesses (Square/Shopify). Choose daily rate (e.g., 5% of sales). Bad day = smaller payment. Good day = pays off faster.
+
+**Why merchants choose this:** 12% APR vs. 280% APR (MCAs)[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56), transparent pricing, prepay without penalty.
 
 **Implementation:** Square first (open API), then Shopify (waiting for crypto features).
 
