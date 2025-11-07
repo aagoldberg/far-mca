@@ -20,7 +20,7 @@ Platform companies like Shopify, Stripe, and PayPal solved the underwriting prob
 
 ## 4. The Infrastructure Finally Arrived
 
-By 2025, three pieces converged for the first time in history. Stablecoins reached $305B supply with $27.6T in transfer volume[[57]](references.md#ref9), surpassing Visa and Mastercard—instant settlement, no ACH fees, 80% lower cross-border costs[[61]](references.md#ref13). DeFi proved smart contracts work at scale: $50B collateralized lending[[62]](references.md#ref14), while Goldfinch ($110M[[63]](references.md#ref15)) and Maple ($562M[[64]](references.md#ref16)) showed uncollateralized models work on-chain. Social protocols like Farcaster (1M+ users[[65]](references.md#ref17)) and Bluesky (20M+ users[[66]](references.md#ref18)) brought persistent identity and verifiable trust to crypto. All the pieces exist for the first time.
+By 2025, three pieces converged for the first time in history. Stablecoins reached $305B supply with $27.6T in transfer volume[[57]](references.md#ref9), surpassing Visa and Mastercard—instant settlement, no ACH fees, 80% lower cross-border costs[[61]](references.md#ref13). DeFi proved smart contracts work at scale: $50B collateralized lending[[62]](references.md#ref14). Social protocols like Farcaster (1M+ users[[65]](references.md#ref17)) and Bluesky (20M+ users[[66]](references.md#ref18)) brought persistent identity and verifiable trust to crypto. And oracle networks like Chainlink plus zero-knowledge proofs enable Web3 apps to securely access platform data from Shopify, Stripe, Coinbase Commerce—seeing every transaction just like embedded lenders do, but settling on-chain. All the pieces exist for the first time.
 
 ## 5. LendFriend Bridges the Gap
 
