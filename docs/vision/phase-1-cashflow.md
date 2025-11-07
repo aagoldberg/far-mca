@@ -59,6 +59,15 @@ Starts on Farcaster, may expand to other platforms (Bluesky, Reddit, Twitter/X) 
 
 ---
 
+## What We're Learning
+
+Phase 1 helps us dial in:
+- How cashflow data predicts repayment for larger loans in our model
+- The optimal structure for liquidity pools to attract passive capital
+- How to balance social trust + cashflow for lending to strangers
+
+---
+
 ## Next: Phase 2
 
 → [Phase 2: Automate Repayment](phase-2-automation.md)
