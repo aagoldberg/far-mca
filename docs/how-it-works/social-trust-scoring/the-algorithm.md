@@ -86,6 +86,12 @@ Bonus = min(P_overlap × 3, 30) if P_overlap > 10%
 S_total = min(S_base + S_overlap + S_mutual, 100)
 ```
 
+{% hint style="info" %}
+**Ongoing Refinement**
+
+The specific thresholds (≥20, ≥10, etc.), bonus multipliers, and score caps are initial parameters based on network science research. We'll continuously refine these as we collect repayment data to optimize prediction accuracy.
+{% endhint %}
+
 ---
 
 ## Example

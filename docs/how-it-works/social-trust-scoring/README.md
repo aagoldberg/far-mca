@@ -37,6 +37,8 @@ Trust Score = Σ weights × quality_scores
 
 Research shows Adamic-Adar is 82% more accurate than simple friend counting [[7]](../../references.md#adamic-and-adar-2003).
 
+**The specific thresholds and bonuses will be refined as we collect repayment data.** Phase 0 focuses on gathering behavioral data to understand which trust signals best predict repayment.
+
 → [View technical details](the-algorithm.md)
 
 ---
