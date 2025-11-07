@@ -3,7 +3,7 @@
 * [👋 Welcome](README.md)
 * [💡 Motivation](motivation.md)
 * [📈 Economic Context: Why Now?](economic-context.md)
-* [💰 Why Crypto Lending Can Be Cheaper](cheaper-lending.md)
+* [💰 Web3 Cost Advantage](cheaper-lending.md)
 
 ## 🎯 Vision & Roadmap
 

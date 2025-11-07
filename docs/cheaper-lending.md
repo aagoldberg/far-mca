@@ -1,4 +1,4 @@
-# Why Crypto Lending Can Be Cheaper
+# Web3 Cost Advantage
 
 Platform lenders like Shopify Capital and Stripe Capital charge 20-50% APR[[54]](references.md#ref54)[[55]](references.md#ref55)[[56]](references.md#ref56). Not because borrowers are risky—but because traditional financial infrastructure and VC-backed capital are expensive. Here's where those costs actually go, and how crypto infrastructure changes the equation.
 
