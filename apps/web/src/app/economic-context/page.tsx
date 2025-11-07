@@ -37,7 +37,7 @@ export default function EconomicContextPage() {
 
             <div className="border-l-4 border-gray-300 pl-6 py-2">
               <p className="text-lg text-gray-700 leading-relaxed">
-                <span className="font-bold text-gray-900">Wave 2 (2020-2025):</span> Traditional finance couldn't adapt. Banks reject 1 in 4 small business borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because legacy underwriting can't process platform income. 77% struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders like Shopify and Stripe filled the gap, but only for their own users, at brutal rates: 20-50% APR.
+                <span className="font-bold text-gray-900">Wave 2 (2020-2025):</span> Traditional finance couldn't adapt. Banks reject 1 in 4 small business borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because legacy underwriting can't process platform income. 77% struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders like Shopify and Stripe filled the gap, but only for their own users, at brutal rates: 20-50% APR due to expensive VC-backed capital.
               </p>
             </div>
 
