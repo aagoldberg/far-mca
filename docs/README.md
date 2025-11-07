@@ -6,7 +6,7 @@
 
 ## Overview
 
-LendFriend enables uncollateralized lending by replacing credit bureaus with social relationships. When friends vouch for a borrower—with both capital and reputation—the strength of those connections should signal repayment likelihood.
+LendFriend enables uncollateralized lending by replacing credit bureaus with social relationships. When friends vouch for a borrower—with both capital and reputation—the strength of those connections correlates with repayment.
 
 We measure trust algorithmically. Close friends with small networks signal stronger accountability than distant followers with massive audiences. Every loan records permanently on-chain, creating verifiable reputation that follows borrowers across DeFi.
 
