@@ -1,6 +1,6 @@
 # LendFriend Protocol
 
-> Your network is your credit score.
+Your network is your credit score.
 
 ---
 
