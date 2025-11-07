@@ -2,47 +2,36 @@
 
 ## Why Borrower Profiles Work
 
-People don't lend to statistics—they lend to people. Research shows donors give significantly more to an identified individual with a story than to statistical information [[11]](../references.md#small-et-al-2007). We connect emotionally with specific people, not abstract numbers.
+People don't lend to statistics—they lend to people.
 
-Kiva funded **$1.68B+** by connecting lenders to real stories. **Neural research shows positive arousal from borrower photographs directly predicts lending success** [[12]](../references.md#genevsky-and-knutson-2015). **Emotional storytelling increases donations by 70%** compared to statistics.
+Kiva funded **$1.68B+** by connecting lenders to real stories. **Neural research shows positive arousal from borrower photographs directly predicts lending success** [[12]](../references.md#genevsky-and-knutson-2015). **Emotional storytelling increases donations by 70%** compared to statistics [[11]](../references.md#small-et-al-2007).
 
-**LendFriend's approach:** Borrowers create profiles with photos, stories, and specific loan purposes. Your friends see your request first and vouch for someone they know. This transforms emotional connection into social accountability.
+**LendFriend's approach:** Your friends see your request first. When they contribute, they vouch for someone they know—transforming emotional connection into social accountability.
 
 ---
 
 ## What Borrowers Share
 
-### Your Face
+**Your face:** Photos create emotional connection. When friends contribute, they vouch for someone they recognize [[1]](../references.md#duarte-et-al-2012).
 
-A photo humanizes your request. Research shows borrowers appearing trustworthy receive better terms [[1]](../references.md#duarte-et-al-2012), but the real impact is emotional—faces create connection. When friends contribute, they vouch for someone they recognize.
+**Your story:** Honest, specific narratives resonate. "I'm a freelance designer who just lost my biggest client" works. Over-promising doesn't—borrowers making many "trustworthy" claims had worse repayment [[2]](../references.md#herzenstein-et-al-2011).
 
-### Your Story
+**Your plan:** Specific purposes let lenders visualize impact. "Purchasing $500 of fabric for holiday orders" engages. Vague requests ("need money for business") don't [[2]](../references.md#herzenstein-et-al-2011).
 
-Personal narratives help lenders understand your context and feel empathy. Honest, specific stories resonate ("I'm a freelance designer who just lost my biggest client"). Over-promising doesn't—borrowers making many "trustworthy" claims had worse repayment [[2]](../references.md#herzenstein-et-al-2011).
-
-{% hint style="success" %}
-**Pro Tip**: Honest, specific stories get funded faster. Research shows over-promising reduces repayment rates—lenders sense authenticity.
-{% endhint %}
-
-### Your Plan
-
-Specific loan purposes create emotional engagement. "Purchasing $500 of fabric for holiday orders" lets lenders visualize impact. Vague requests ("need money for business") don't [[2]](../references.md#herzenstein-et-al-2011).
-
-### Your Presence (Optional)
-
-Link your website, Twitter, ongoing work. Active online presence signals legitimacy [[4]](../references.md#freedman-and-jin-2017).
+**Your presence (optional):** Link your website, social media, ongoing work. Active online presence signals legitimacy [[4]](../references.md#freedman-and-jin-2017).
 
 ---
 
-## The Social Vouching Mechanism
+## How Social Vouching Works
 
-Platforms like Kiva and GoFundMe have proven that emotional storytelling works for attracting funding. LendFriend adds a layer: your friends see your request first. When they contribute, they vouch with money and reputation—misrepresenting yourself damages relationships with people who know you.
+Kiva and GoFundMe prove emotional storytelling attracts funding. LendFriend adds a layer: **your friends see your request first**.
 
-Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009). Combining emotional narratives with social network validation improves default prediction by 45% compared to credit scores [[3]](../references.md#iyer-et-al-2016)—because emotional connection + social accountability changes behavior.
+When they contribute, they vouch with money and reputation. Misrepresenting yourself damages real relationships.
 
-{% hint style="success" %}
-**Building Reputation**: Borrowers who tip on repayment (105-110% of principal) signal financial health and gratitude. Tips distribute proportionally among lenders and strengthen your social reputation for future loans.
-{% endhint %}
+**The impact:**
+- Social proximity reduces default risk by **13%** [[6]](../references.md#karlan-et-al-2009)
+- Emotional narratives + social validation improve default prediction by **45%** vs. credit scores [[3]](../references.md#iyer-et-al-2016)
+- Borrowers who tip on repayment (5-10% extra) signal financial health and strengthen reputation for future loans
 
 ---
 
