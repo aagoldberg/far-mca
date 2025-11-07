@@ -23,32 +23,27 @@ Every loan receives a grade from **A (minimal risk) to HR (very high risk)**:
 
 ## How Grades Are Calculated
 
-Four weighted factors (0-100 points total):
+Grades are based on four factors:
 
-**1. Repayment History (40%)**
-- 10+ loans, 0 defaults: 40 points
-- 4-9 loans, 0 defaults: 32 points
-- 1-3 loans, 0 defaults: 24 points
-- First-time borrower: 12 points
-- Any defaults: 0-8 points
+**1. Repayment History**
+- Past loan performance (on-time, late, defaults)
+- Number of completed loans
+- Most predictive factor for future behavior
 
-**2. Social Trust Score (30%)**
+**2. Social Trust Score**
+- Connection strength between lender and borrower
 - Based on Adamic-Adar algorithm (see [Social Trust Scoring](../social-trust-scoring/README.md))
-- Close connections: 30 points
-- Some connections: 15-25 points
-- No connections: 0-10 points
+- Weights selective mutual friends higher
 
-**3. Loan Size Risk (20%)**
-- Small relative to history: 20 points
-- Medium: 10-15 points
-- Large for borrower: 0-10 points
+**3. Loan Size Risk**
+- Amount requested relative to borrower's history
+- Larger loans for new borrowers = higher risk
 
-**4. Account Quality (10%)**
-- Active, verified account: 10 points
-- Basic account: 5 points
-- Low quality: 0-5 points
+**4. Account Quality**
+- Farcaster account age and activity
+- Filters spam/bot accounts
 
-Total points map to grades: 90+ = A, 80+ = B, 70+ = C, 60+ = D, 50+ = E, <50 = HR
+**The exact weighting and scoring formulas will be refined as we collect repayment data.** Phase 0 focuses on gathering behavioral data to build a robust risk model informed by actual performance, not assumptions.
 
 ---
 
