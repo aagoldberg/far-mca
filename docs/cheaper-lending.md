@@ -37,7 +37,7 @@ Between 2022-2024, fintech lending investment dropped to $51.9B—**the lowest s
 
 ---
 
-## How Crypto Infrastructure Reduces Costs
+## Web3 Cost Advantage
 
 LendFriend solves what platform lenders couldn't: **capital costs and infrastructure costs**.
 
