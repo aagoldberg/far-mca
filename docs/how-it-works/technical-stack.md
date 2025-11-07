@@ -2,6 +2,46 @@
 
 LendFriend is built on modern web3 infrastructure, prioritizing low costs, transparency, and ease of use.
 
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[Next.js Web App]
+        B[Privy Wallets]
+        C[React Query]
+    end
+
+    subgraph "Blockchain Layer"
+        D[Base L2]
+        E[MicroLoanFactory]
+        F[MicroLoan Contracts]
+        G[USDC Token]
+    end
+
+    subgraph "Off-Chain Layer"
+        H[Trust Score API]
+        I[Neynar/Farcaster]
+        J[Redis Cache]
+        K[The Graph]
+        L[IPFS]
+    end
+
+    A --> B
+    A --> C
+    B --> D
+    C --> H
+    H --> I
+    H --> J
+    E --> F
+    F --> G
+    D --> E
+    K --> D
+    L --> D
+
+    style D fill:#0052FF
+    style I fill:#8A63D2
+    style A fill:#E5E7EB
+```
+
 ---
 
 ## Blockchain
@@ -25,6 +65,22 @@ All loans live on [Base](https://base.org) - an Ethereum Layer 2 blockchain back
 ### Smart Contracts
 
 **Factory pattern:** One factory deploys individual loan contracts.
+
+```mermaid
+graph TD
+    A[MicroLoanFactory] -->|deploys| B[MicroLoan 1]
+    A -->|deploys| C[MicroLoan 2]
+    A -->|deploys| D[MicroLoan N]
+    B -->|uses| E[USDC]
+    C -->|uses| E
+    D -->|uses| E
+
+    style A fill:#2E7D32
+    style B fill:#1976D2
+    style C fill:#1976D2
+    style D fill:#1976D2
+    style E fill:#2196F3
+```
 
 **MicroLoanFactory** - Creates and tracks loans
 - Enforces constraints (min $100, max 365 days)
@@ -130,6 +186,27 @@ Each loan has an IPFS link stored on-chain. Once uploaded, metadata **cannot be 
 ## Trust Score Calculation
 
 Social trust scores are computed off-chain using the [Adamic-Adar algorithm](social-trust-scoring/the-algorithm.md).
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant API as API Route
+    participant Cache as Redis
+    participant N as Neynar
+
+    C->>API: Calculate trust score
+    API->>Cache: Check cache
+    alt Cache Hit
+        Cache-->>API: Return cached score
+        API-->>C: Score (cached)
+    else Cache Miss
+        API->>N: Fetch social data
+        N-->>API: Followers, following
+        API->>API: Calculate Adamic-Adar
+        API->>Cache: Store result (30min TTL)
+        API-->>C: Score (fresh)
+    end
+```
 
 **Performance:**
 - Calculation: <100ms
