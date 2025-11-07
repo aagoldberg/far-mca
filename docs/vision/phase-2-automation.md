@@ -24,17 +24,17 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 Manual repayment creates preventable defaults from forgetfulness, not inability to pay. Borrowers forget due dates, lenders chase late payments, and everyone experiences unnecessary friction. Auto-repayment eliminates this: set once, deducts automatically from income, and reduces defaults.
 
-| Aspect | 📅 Manual Repayment | ⚡ Auto-Repayment |
-|--------|---------------------|-------------------|
-| **Payment Process** | 🧠 Remember payment date<br/>📱 Open app monthly<br/>💳 Manual transfer | ✅ Set once, forget<br/>🤖 Deducts automatically<br/>💰 % of daily income |
-| **Borrower Experience** | ⏰ Late payment risk<br/>😰 Cognitive load<br/>💭 *"Did I pay this month?"* | ⏱️ Always on-time<br/>😌 Zero mental overhead<br/>💭 *"What loan?"* |
-| **Lender Experience** | 📞 Chasing late payments<br/>❓ Uncertainty | 📊 Predictable yield<br/>✅ Reliable cashflow |
-| **Default Risk** | ❌ Higher (forgetfulness) | ✅ Lower (automated) |
+| | Manual Repayment | Auto-Repayment |
+|---|---|---|
+| **Payment** | Remember dates, open app monthly, manual transfer | Set once, automatic deduction from income |
+| **Borrower** | Late payment risk, cognitive load, "Did I pay?" | Always on-time, zero mental overhead |
+| **Lender** | Chase late payments, uncertainty | Predictable yield, reliable cashflow |
+| **Defaults** | Higher (forgetfulness) | Lower (automated) |
 
-**Why merchants choose LendFriend over MCAs:**
-- **Fair pricing:** 12% APR vs 280% APR for merchant cash advances[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
-- **Revenue-based:** Slow days = smaller payments (not fixed installments)
-- **Transparent:** Clear interest rates, no confusing factor rates
+**Why merchants choose this over MCAs:**
+- Fair pricing: 12% APR vs 280% APR[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
+- Revenue-based: Slow days = smaller payments
+- Transparent: Clear interest, no confusing factor rates
 
 ---
 
