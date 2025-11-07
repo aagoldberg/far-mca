@@ -31,7 +31,7 @@ export default function EconomicContextPage() {
           <div className="space-y-6">
             <div className="border-l-4 border-gray-300 pl-6 py-2">
               <p className="text-lg text-gray-700 leading-relaxed">
-                <span className="font-bold text-gray-900">Wave 1 (2010-2025):</span> Digital platforms built a $1+ trillion global economy. 1.6 billion people now earn income from Upwork, Shopify, YouTube, and thousands of other platforms—borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. Then AI turbocharged it: 68% of small businesses adopted AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. A new economy emerged. But banks still can't underwrite it.
+                <span className="font-bold text-gray-900">Wave 1 (2010-2025):</span> Digital platforms built a $1+ trillion global economy. 1.6 billion people now earn income from Upwork, Shopify, YouTube, and thousands of other platforms—borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. Then AI turbocharged it: 68% of small businesses adopted AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. A new economy emerged.
               </p>
             </div>
 
