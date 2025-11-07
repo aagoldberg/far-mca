@@ -61,31 +61,37 @@ LendFriend solves what platform lenders couldn't: **capital costs and infrastruc
 
 ---
 
-### Visual Breakdown: Where Your 25% APR Goes
+### Visual Breakdown: Where Your APR Goes
 
-**Platform Lender:**
-```
-Borrower pays → 25% APR
-                ├─ 12-15% → Debt facility interest
-                ├─ 3-5%   → Operations (ACH, manual systems)
-                ├─ 2-5%   → VC return pressure
-                ├─ 10-13% → Defaults (covered by margin)
-                └─ 3%     → Actual profit
-```
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
+graph TB
+    subgraph Platform["Platform Lender: 25% APR"]
+        P1[Borrower Pays 25%] --> P2[Debt Facility: 12-15%]
+        P1 --> P3[Operations: 3-5%]
+        P1 --> P4[VC Pressure: 2-5%]
+        P1 --> P5[Defaults: 10-13%]
+        P1 --> P6[Profit: 3%]
+    end
 
-**LendFriend (Phase 0 - Social Trust Proof):**
-```
-Borrower pays → 0% APR
-                └─ 0%     → No interest, proving trust works
-```
+    subgraph Phase0["LendFriend Phase 0: 0% APR"]
+        L0[Borrower Pays 0%]
+        L0 --> L01[Proving Trust Works]
+    end
 
-**LendFriend (Phase 1-2 - With Yield):**
-```
-Borrower pays → 12-17% APR
-                ├─ 8-12%  → Lenders (direct yield)
-                ├─ 0-2%   → Operations (smart contracts, stablecoins)
-                ├─ 8-11%  → Defaults (absorbed by lender yields)
-                └─ 2-5%   → Platform margin
+    subgraph Phase12["LendFriend Phase 1-2: 12-17% APR"]
+        L1[Borrower Pays 12-17%] --> L2[Lenders: 8-12%]
+        L1 --> L3[Operations: 0-2%]
+        L1 --> L4[Defaults: 8-11%]
+        L1 --> L5[Platform: 2-5%]
+    end
+
+    style P2 fill:#EF4444,stroke:#DC2626,color:#fff
+    style P3 fill:#F59E0B,stroke:#D97706,color:#fff
+    style P4 fill:#F59E0B,stroke:#D97706,color:#fff
+    style L01 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style L2 fill:#10B981,stroke:#059669,color:#fff
+    style L3 fill:#3B9B7F,stroke:#2E7D68,color:#fff
 ```
 
 ### Savings Breakdown

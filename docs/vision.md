@@ -8,21 +8,28 @@ This section provides technical implementation documentation for our three-phase
 
 ## The Three-Phase Journey
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                                                                        │
-│  Phase 0                Phase 1                 Phase 2                │
-│  ────────────          ────────────           ────────────             │
-│  Social Trust          Add Cashflow           Automate                 │
-│                                                                        │
-│  🤝 $100-$5K           💰 $5K-$50K+           ⚡ $10K-$100K+          │
-│  0% interest           8-12% APR              8-15% APR                │
-│  Friends & family      Strangers OK           Auto-repayment           │
-│  500-1K users          10K+ users             100K+ users              │
-│                                                                        │
-│  [●●●●●●●●] LIVE      [○○○○○○○○] 2025-26    [○○○○○○○○] 2026-27       │
-│                                                                        │
-└────────────────────────────────────────────────────────────────────────┘
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F','primaryTextColor':'#fff','primaryBorderColor':'#2E7D68','lineColor':'#3B9B7F','secondaryColor':'#F3F4F6','tertiaryColor':'#fff'}}}%%
+timeline
+    title LendFriend Evolution
+    section Phase 0: Social Trust
+        2024-2025 : 🟢 LIVE
+                  : $100-$5K loans
+                  : 0% interest
+                  : Friends & family
+                  : 500-1K users
+    section Phase 1: Add Cashflow
+        2025-2026 : 🟡 Planned
+                  : $5K-$50K+ loans
+                  : 8-12% APR
+                  : Strangers OK
+                  : 10K+ users
+    section Phase 2: Automate
+        2026-2027 : ⚪ Future
+                  : $10K-$100K+ loans
+                  : 8-15% APR
+                  : Auto-repayment
+                  : 100K+ users
 ```
 
 ---

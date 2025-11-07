@@ -98,30 +98,45 @@ Combine social trust (Phase 0) with financial data:
 
 **How Pools Work:**
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                                                                │
-│  LENDERS DEPOSIT           →        BORROWERS REQUEST          │
-│  ───────────────                    ─────────────────          │
-│                                                                │
-│  🏦 Conservative Pool              📊 Risk Score: 85%          │
-│     4-6% APR target                   ↓                        │
-│     $100K TVL                      ✅ Auto-approved             │
-│     ↓                                  ↓                       │
-│  💼 Balanced Pool                  💰 $10K loan @ 8% APR       │
-│     6-8% APR target                   ↓                        │
-│     $250K TVL                      📅 12-month repayment       │
-│     ↓                                                          │
-│  🚀 Aggressive Pool                                            │
-│     8-12% APR target                                           │
-│     $150K TVL                                                  │
-│                                                                │
-│  PASSIVE YIELD             ←        AUTO-DISBURSEMENT          │
-│  ───────────────                    ─────────────────          │
-│  Diversified returns               Instant funding             │
-│  Withdraw anytime                  Build credit history        │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F','primaryTextColor':'#fff','primaryBorderColor':'#2E7D68','lineColor':'#3B9B7F'}}}%%
+graph TB
+    subgraph Lenders["💰 LENDERS"]
+        L1[Deposit USDC]
+        L2[Earn Passive Yield]
+        L3[Withdraw Anytime]
+    end
+
+    subgraph Pools["📊 LIQUIDITY POOLS"]
+        P1["🏦 Conservative<br/>4-6% APR<br/>$100K TVL"]
+        P2["💼 Balanced<br/>6-8% APR<br/>$250K TVL"]
+        P3["🚀 Aggressive<br/>8-12% APR<br/>$150K TVL"]
+    end
+
+    subgraph Borrowers["👤 BORROWERS"]
+        B1[Submit Application]
+        B2[Risk Score: 85%]
+        B3[Auto-Approved]
+        B4[Receive $10K @ 8% APR]
+        B5[Repay Over 12 Months]
+    end
+
+    L1 --> P1
+    L1 --> P2
+    L1 --> P3
+
+    P1 --> B3
+    P2 --> B3
+    P3 --> B3
+
+    B1 --> B2 --> B3 --> B4 --> B5
+
+    B5 --> L2
+
+    style P1 fill:#60A5FA,stroke:#3B82F6,color:#fff
+    style P2 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style P3 fill:#F59E0B,stroke:#D97706,color:#fff
+    style B3 fill:#10B981,stroke:#059669,color:#fff
 ```
 
 **For lenders:**

@@ -32,27 +32,26 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 ### Comparison: Manual vs Auto-Repayment
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                                                                  │
-│  📅 MANUAL REPAYMENT            ⚡ AUTO-REPAYMENT                │
-│  ─────────────────             ──────────────────                │
-│                                                                  │
-│  🧠 Remember payment date       ✅ Set once, forget               │
-│  📱 Open app monthly            🤖 Deducts automatically          │
-│  💳 Manual transfer             💰 % of daily income             │
-│  ⏰ Late payment risk           ⏱️ Always on-time                 │
-│  😰 Cognitive load              😌 Zero mental overhead          │
-│                                                                  │
-│  BORROWER:                      BORROWER:                        │
-│  "Did I pay this month?"        "What loan?"                     │
-│                                                                  │
-│  LENDER:                        LENDER:                          │
-│  Chasing late payments          Predictable yield                │
-│                                                                  │
-│  DEFAULT RATE: 15%              DEFAULT RATE: 10% (30% lower)    │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
+| Aspect | 📅 Manual Repayment | ⚡ Auto-Repayment |
+|--------|---------------------|-------------------|
+| **Payment Process** | 🧠 Remember payment date<br/>📱 Open app monthly<br/>💳 Manual transfer | ✅ Set once, forget<br/>🤖 Deducts automatically<br/>💰 % of daily income |
+| **Borrower Experience** | ⏰ Late payment risk<br/>😰 Cognitive load<br/>💭 *"Did I pay this month?"* | ⏱️ Always on-time<br/>😌 Zero mental overhead<br/>💭 *"What loan?"* |
+| **Lender Experience** | 📞 Chasing late payments<br/>❓ Uncertainty | 📊 Predictable yield<br/>✅ Reliable cashflow |
+| **Default Rate** | ❌ **15%** | ✅ **10%** (30% lower) |
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
+graph LR
+    subgraph Manual["📅 MANUAL (15% default)"]
+        M1[Borrower<br/>Forgets] --> M2[Late<br/>Payment] --> M3[❌<br/>Default]
+    end
+
+    subgraph Auto["⚡ AUTO (10% default)"]
+        A1[Income<br/>Arrives] --> A2[Auto<br/>Deduct] --> A3[✅<br/>On-time]
+    end
+
+    style M3 fill:#EF4444,stroke:#DC2626,color:#fff
+    style A3 fill:#10B981,stroke:#059669,color:#fff
 ```
 
 ### The Problem with Manual Repayment

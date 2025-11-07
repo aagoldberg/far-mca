@@ -90,28 +90,25 @@ Risk scoring in Phase 0 is simplified to focus on social signals:
 
 ## User Experience
 
-### Loan Lifecycle (Visual)
+### Loan Lifecycle
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│  1. CREATE              2. SHARE              3. FUND           │
-│  ────────               ────────              ────────          │
-│  👤 Borrower            🔗 Viral              💰 Lenders        │
-│  Connect Farcaster      Share on socials     Contribute USDC   │
-│  Request $2,000         Trust score visible   See trust score  │
-│  30-day term            12+ platforms         Direct P2P        │
-│  0% interest            ↓                     ↓                 │
-│  ↓                      Friends see loan      $2,000 funded    │
-│                                                                 │
-│  4. RECEIVE             5. REPAY              6. COMPLETE       │
-│  ────────               ────────              ────────          │
-│  ✅ Funds released      📅 Before maturity    ⭐ Build rep     │
-│  Smart contract         Manual payment        On-chain history │
-│  Auto to wallet         Grace period: 7 days  Future loans     │
-│                         or → DEFAULT 🚫       Trust increases  │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F','primaryTextColor':'#fff','primaryBorderColor':'#2E7D68','lineColor':'#3B9B7F','fontSize':'14px'}}}%%
+graph LR
+    A[👤 CREATE<br/>Connect Farcaster<br/>Request $2,000<br/>30-day term<br/>0% interest] --> B[🔗 SHARE<br/>Share on socials<br/>Trust score visible<br/>12+ platforms]
+    B --> C[💰 FUND<br/>Lenders contribute<br/>See trust score<br/>Direct P2P]
+    C --> D[✅ RECEIVE<br/>Funds released<br/>Auto to wallet<br/>Smart contract]
+    D --> E[📅 REPAY<br/>Before maturity<br/>Manual payment<br/>7-day grace]
+    E --> F[⭐ COMPLETE<br/>On-chain history<br/>Trust increases<br/>Future loans]
+    E -.-> G[🚫 DEFAULT<br/>Permanent record<br/>Reputation damage<br/>No future loans]
+
+    style A fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style B fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style C fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style D fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style E fill:#F59E0B,stroke:#D97706,color:#fff
+    style F fill:#10B981,stroke:#059669,color:#fff
+    style G fill:#EF4444,stroke:#DC2626,color:#fff
 ```
 
 ### For Borrowers
