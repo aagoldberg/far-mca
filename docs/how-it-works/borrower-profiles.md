@@ -4,7 +4,7 @@
 
 People don't lend to statistics—they lend to people. Research shows donors give significantly more to an identified individual with a story than to statistical information [[11]](../references.md#small-et-al-2007). We connect emotionally with specific people, not abstract numbers.
 
-Kiva funded $1.68B+ by connecting lenders to real stories. Neural research shows positive arousal from borrower photographs directly predicts lending success [[12]](../references.md#genevsky-and-knutson-2015). Emotional storytelling increases donations by 70% compared to statistics.
+Kiva funded **$1.68B+** by connecting lenders to real stories. **Neural research shows positive arousal from borrower photographs directly predicts lending success** [[12]](../references.md#genevsky-and-knutson-2015). **Emotional storytelling increases donations by 70%** compared to statistics.
 
 **LendFriend's approach:** Borrowers create profiles with photos, stories, and specific loan purposes. Your friends see your request first and vouch for someone they know. This transforms emotional connection into social accountability.
 
