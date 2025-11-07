@@ -23,57 +23,23 @@ Phase 1 scales beyond personal networks by adding **cashflow verification** to t
 
 ## Why This Matters
 
-### The Problem with Phase 0 Limits
+Phase 0 proves social trust works, but can't serve larger needs or scale beyond personal networks. Phase 1 solves this:
 
-Phase 0 proves social trust works for small loans, but has constraints:
-- **Small loans only** ($100-$5K) → Can't serve larger needs
-- **Personal networks only** → Limited to friends-of-friends
-- **No interest** → Unsustainable without lender yield
-- **Manual everything** → Doesn't scale
+**Bigger loans:** $5K-$50K+ for equipment, inventory, working capital—currently only served by predatory MCAs (20-50% APR)[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56) or rejected entirely.
 
-### What Phase 1 Unlocks
+**Passive capital:** Lenders deposit into pools and earn yield without reviewing individual loans. Capital scales beyond personal networks.
 
-**Bigger loans without collateral:**
-- Freelancer needs $15K for equipment
-- Merchant needs $25K for inventory
-- Currently: No options except predatory MCAs or rejection
-
-**Passive capital:**
-- Lenders deposit into pools, earn yield
-- Don't need to review every loan manually
-- Capital scales beyond personal networks
-
-**Fair pricing:**
-- 8-12% APR vs. 20-50% for platform lenders[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
-- Transparent interest, no hidden fees
-- Borrowers build on-chain credit history
+**Fair pricing:** 8-12% APR with transparent interest, no hidden fees, and on-chain credit history.
 
 ---
 
-## How It Works (High Level)
+## How It Works
 
-### 1. Cashflow Verification
+**1. Cashflow Verification**
 
-**Three income sources:**
+Three income sources via OAuth: bank accounts (Plaid), merchant revenue (Square/Shopify), and on-chain wallet activity. Privacy-preserving—income ranges, not full transaction history.
 
-**Bank accounts (Plaid):**
-- Connect bank via OAuth
-- Verify income from direct deposits
-- Privacy-preserving (income ranges, not full transaction history)
-
-**Merchant revenue (Square/Shopify):**
-- Connect merchant account via OAuth
-- Verify sales revenue over time
-- Assess business cashflow capacity
-
-**On-chain income (wallet analysis):**
-- Analyze wallet transaction history
-- Identify recurring income (DAO payments, protocol fees, NFT sales)
-- Weight recurring higher than one-time
-
-### 2. Hybrid Risk Scoring
-
-Combine social trust (Phase 0) with financial data:
+**2. Hybrid Risk Scoring**
 
 | Loan Size | Social Trust | Cashflow | Repayment History |
 |-----------|--------------|----------|-------------------|
@@ -81,69 +47,31 @@ Combine social trust (Phase 0) with financial data:
 | $5K-$25K | 30% | 40% | 30% |
 | $25K-$50K+ | 15% | 50% | 35% |
 
-**Why this works:**
-- Small loans among friends → weight social trust higher
-- Large loans to strangers → weight cashflow verification higher
-- Past repayment history always matters
+Small loans among friends weight social trust higher. Large loans weight cashflow higher. Repayment history always matters.
 
-### 3. Liquidity Pools
+**3. Liquidity Pools**
 
-Phase 1 introduces passive lending through liquidity pools—lenders deposit capital into shared pools, borrowers draw from pools based on risk scores, and repayments flow back to pool depositors.
+Lenders deposit into shared pools, borrowers draw based on risk scores, repayments flow back. Enables passive yield, 24/7 capital access, and market-sized liquidity. Pool mechanics designed based on Phase 0 learnings.
 
-**Why pools enable scale:**
-- Lenders earn passive yield without reviewing individual loans
-- Borrowers access capital 24/7 without finding individual lenders
-- Defaults automatically spread across pool participants
-- Market-sized liquidity, not limited to personal networks
+**4. Platform Expansion**
 
-**Pool mechanics** (deposit strategies, withdrawal rules, auto-approval thresholds) will be designed based on Phase 0 learnings.
-
-### 4. Platform Expansion
-
-LendFriend starts on Farcaster and may expand to other social platforms (Bluesky, Reddit, Twitter/X) based on growth and product-market fit.
-
-**Web platform enhancements:**
-- Fiat onramps for non-crypto users (Coinbase Pay, Privy)
-- Social login (Google, Twitter, email)
-- Cross-platform loan sharing (WhatsApp, Telegram, etc.)
+Starts on Farcaster, may expand to other platforms (Bluesky, Reddit, Twitter/X) based on PMF. Web enhancements: fiat onramps, social login, cross-platform sharing.
 
 ---
 
-## Success Criteria
+## Success Metrics
 
-**Quantitative:**
-- 10,000+ active users (10x Phase 0)
-- $1M+ in loans originated
-- $500K+ TVL in liquidity pools
-- 70%+ pool utilization rate
-- 85%+ repayment rate maintained
-
-**Qualitative:**
+- 10,000+ users, $1M+ originated, $500K+ TVL in pools
+- 70%+ pool utilization, 85%+ repayment rate
 - Cashflow verification predicts repayment (statistical significance)
-- Hybrid model outperforms pure social trust for large loans
-- Pools attract passive capital from crypto investors
-- Borrowers choose LendFriend over traditional payday loans
+- Borrowers choose LendFriend over traditional lenders
 
-**Key validation:** If pools reach $500K TVL with 70%+ utilization and <15% default rate[[74]](../references.md#ref74), we've proven uncollateralized crypto lending can scale.
+**Key validation:** $500K TVL with 70%+ utilization and <15% default rate[[74]](../references.md#ref74) proves uncollateralized crypto lending can scale.
 
 ---
 
-## What Comes After
-
-Once Phase 1 validates the cashflow model, Phase 2 adds automated repayment:
+## Next: Phase 2
 
 → [Phase 2: Automate Repayment](phase-2-automation.md)
 
-**Key addition:** Loans that repay themselves automatically from wallet income or merchant revenue, removing all manual repayment friction.
-
----
-
-## Related Documentation
-
-**Context:**
-- [Vision & Roadmap](../vision.md) — Complete three-phase strategy
-- [Phase 0: Prove Trust Works](phase-0-social-trust.md) — Social trust foundation
-- [Motivation](../motivation.md) — Why uncollateralized lending matters
-
-**For investors/community:**
-- [lendfriend.org/vision](https://lendfriend.org/vision) — High-level vision and goals
+Adds wallet auto-deduction and merchant revenue auto-deduction—loans that repay themselves automatically.
