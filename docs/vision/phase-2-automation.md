@@ -22,7 +22,7 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 ## Why This Matters
 
-### Comparison: Manual vs Auto-Repayment
+Manual repayment creates preventable defaults from forgetfulness, not inability to pay. Borrowers forget due dates, lenders chase late payments, and everyone experiences unnecessary friction. Auto-repayment eliminates this: set once, deducts automatically from income, and reduces defaults by 30%.
 
 | Aspect | 📅 Manual Repayment | ⚡ Auto-Repayment |
 |--------|---------------------|-------------------|
@@ -31,47 +31,10 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 | **Lender Experience** | 📞 Chasing late payments<br/>❓ Uncertainty | 📊 Predictable yield<br/>✅ Reliable cashflow |
 | **Default Rate** | ❌ **15%**[[74]](../references.md#ref74) | ✅ **10%** (30% lower) |
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
-graph LR
-    subgraph Manual["📅 MANUAL (15% default)"]
-        M1[Borrower<br/>Forgets] --> M2[Late<br/>Payment] --> M3[❌<br/>Default]
-    end
-
-    subgraph Auto["⚡ AUTO (10% default)"]
-        A1[Income<br/>Arrives] --> A2[Auto<br/>Deduct] --> A3[✅<br/>On-time]
-    end
-
-    style M3 fill:#EF4444,stroke:#DC2626,color:#fff
-    style A3 fill:#10B981,stroke:#059669,color:#fff
-```
-
-### The Problem with Manual Repayment
-
-Even with great intentions, manual repayment creates friction:
-- **Forgetfulness:** Borrowers forget due dates → late payments → unnecessary defaults
-- **Chasing:** Lenders waste time following up → stress and uncertainty
-- **Cognitive load:** "Did I remember to pay this month?" → mental overhead
-
-**Result:** Preventable defaults from forgetfulness, not inability to pay.
-
-### What Auto-Repayment Solves
-
-**For borrowers:**
-- Never miss a payment (automatic from wallet or revenue)
-- Set once, forget forever (zero mental overhead)
-- Build perfect credit history (100% on-time payments)
-- Repay faster (no procrastination)
-
-**For lenders:**
-- Predictable cash flows (no manual collections)
-- 30% lower default risk (projected based on auto-payment research)
-- Higher effective yields (better repayment rates)
-
-**For merchants:**
-- 12% APR vs 280% APR for merchant cash advances[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
-- Revenue-based repayment (slow days = smaller payments, not fixed)
-- Transparent pricing (no confusing factor rates)
+**Why merchants choose LendFriend over MCAs:**
+- **Fair pricing:** 12% APR vs 280% APR for merchant cash advances[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
+- **Revenue-based:** Slow days = smaller payments (not fixed installments)
+- **Transparent:** Clear interest rates, no confusing factor rates
 
 ---
 
