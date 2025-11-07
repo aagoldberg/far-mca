@@ -31,19 +31,19 @@ export default function EconomicContextPage() {
           <div className="space-y-6">
             <div className="border-l-4 border-gray-300 pl-6 py-2">
               <p className="text-lg text-gray-700 leading-relaxed">
-                <span className="font-bold text-gray-900">Wave 1 (2010-2025):</span> Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global economy. 1.6 billion people now earn income borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. AI accelerated this—68% of small businesses use AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. But banks can't underwrite platform income.
+                <span className="font-bold text-gray-900">Wave 1 (2010-2025):</span> Digital platforms built a $1+ trillion global economy. 1.6 billion people now earn income from Upwork, Shopify, YouTube, and thousands of other platforms—borderlessly<sup className="text-[#3B9B7F]">[1]</sup>. Then AI turbocharged it: 68% of small businesses adopted AI in 2025<sup className="text-[#3B9B7F]">[2]</sup>. A new economy emerged. But banks still can't underwrite it.
               </p>
             </div>
 
             <div className="border-l-4 border-gray-300 pl-6 py-2">
               <p className="text-lg text-gray-700 leading-relaxed">
-                <span className="font-bold text-gray-900">Wave 2 (2020-2025):</span> Banks reject 1 in 4 borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because traditional underwriting can't process platform income. 77% of small businesses struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders solved underwriting but charge 20-50% APR due to infrastructure costs.
+                <span className="font-bold text-gray-900">Wave 2 (2020-2025):</span> Traditional finance couldn't adapt. Banks reject 1 in 4 small business borrowers<sup className="text-[#3B9B7F]">[4]</sup>—not because they can't repay, but because legacy underwriting can't process platform income. 77% struggle to access capital<sup className="text-[#3B9B7F]">[3]</sup>. Platform lenders like Shopify and Stripe filled the gap, but only for their own users, at brutal rates: 20-50% APR.
               </p>
             </div>
 
             <div className="border-l-4 border-gray-300 pl-6 py-2">
               <p className="text-lg text-gray-700 leading-relaxed">
-                <span className="font-bold text-gray-900">Wave 3 (2024-2025):</span> Stablecoins hit $305B supply with $27.6T in transfers<sup className="text-[#3B9B7F]">[5]</sup> (surpassing Visa + Mastercard). DeFi proved the technical model works ($50B TVL)<sup className="text-[#3B9B7F]">[6]</sup>. Social protocols scaled to millions. All the pieces exist to bridge the gap.
+                <span className="font-bold text-gray-900">Wave 3 (2024-2025):</span> The infrastructure finally arrived. Stablecoins reached $305B in supply and processed $27.6T in transfers<sup className="text-[#3B9B7F]">[5]</sup>—more than Visa and Mastercard combined. DeFi proved crypto-native lending works at scale: $50B TVL, minimal defaults<sup className="text-[#3B9B7F]">[6]</sup>. Decentralized social protocols hit millions of users. For the first time, all the pieces exist to bridge the gap.
               </p>
             </div>
           </div>
