@@ -91,16 +91,6 @@ graph TB
 
 ---
 
-## Success Metrics
-
-Phase 2 succeeds if:
-- Auto-repayment significantly reduces defaults vs. manual repayment
-- Borrowers prefer automated repayment over manual
-- Merchants choose LendFriend over traditional MCAs
-- Users report "forgot I had a loan, it just repaid itself"
-
----
-
 ## Technology Dependencies
 
 **ERC-4337 smart wallets:** Early adoption today, needs payment stream standards (2026-2027).

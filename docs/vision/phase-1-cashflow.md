@@ -59,16 +59,6 @@ Starts on Farcaster, may expand to other platforms (Bluesky, Reddit, Twitter/X) 
 
 ---
 
-## Success Metrics
-
-Phase 1 succeeds if:
-- Cashflow verification meaningfully predicts repayment behavior
-- Liquidity pools attract passive capital and enable larger loans
-- Borrowers choose LendFriend over traditional alternatives
-- The hybrid trust + cashflow model proves viable at scale
-
----
-
 ## Next: Phase 2
 
 → [Phase 2: Automate Repayment](phase-2-automation.md)
