@@ -66,32 +66,43 @@ LendFriend solves what platform lenders couldn't: **capital costs and infrastruc
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F'}}}%%
 graph TB
-    subgraph Platform["Platform Lender: 25% APR"]
-        P1[Borrower Pays 25%] --> P2[Debt Facility: 12-15%]
-        P1 --> P3[Operations: 3-5%]
-        P1 --> P4[VC Pressure: 2-5%]
-        P1 --> P5[Defaults: 10-13%]
-        P1 --> P6[Profit: 3%]
+    subgraph Platform["🏦 Platform Lender: 25% APR"]
+        P1[Borrower<br/>Pays 25%] --> P2[Debt Facility<br/>12-15%]
+        P1 --> P3[Operations<br/>3-5%]
+        P1 --> P4[VC Pressure<br/>2-5%]
+        P1 --> P5[Defaults<br/>10-13%]
+        P1 --> P6[Profit<br/>3%]
     end
 
-    subgraph Phase0["LendFriend Phase 0: 0% APR"]
-        L0[Borrower Pays 0%]
-        L0 --> L01[Proving Trust Works]
+    subgraph Phase0["✨ LendFriend Phase 0: FREE (0% APR)"]
+        L0["😊 Borrower<br/>Pays Nothing"]
+        L0 --> L01["🔬 Proving<br/>Trust Works"]
+        L0 --> L02["📊 Gathering<br/>Data"]
+        L0 --> L03["🤝 Building<br/>Community"]
     end
 
-    subgraph Phase12["LendFriend Phase 1-2: 12-17% APR"]
-        L1[Borrower Pays 12-17%] --> L2[Lenders: 8-12%]
-        L1 --> L3[Operations: 0-2%]
-        L1 --> L4[Defaults: 8-11%]
-        L1 --> L5[Platform: 2-5%]
+    subgraph Phase12["💚 LendFriend Phase 1-2: 12-17% APR"]
+        L1[Borrower<br/>Pays 12-17%] --> L2[Lenders<br/>8-12%]
+        L1 --> L3[Operations<br/>0-2%]
+        L1 --> L4[Defaults<br/>8-11%]
+        L1 --> L5[Platform<br/>2-5%]
     end
 
     style P2 fill:#EF4444,stroke:#DC2626,color:#fff
     style P3 fill:#F59E0B,stroke:#D97706,color:#fff
     style P4 fill:#F59E0B,stroke:#D97706,color:#fff
-    style L01 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style P5 fill:#EF4444,stroke:#DC2626,color:#fff
+    style P6 fill:#64748B,stroke:#475569,color:#fff
+
+    style L0 fill:#8B5CF6,stroke:#7C3AED,color:#fff,stroke-width:3px
+    style L01 fill:#3B9B7F,stroke:#2E7D68,color:#fff,stroke-width:2px
+    style L02 fill:#3B9B7F,stroke:#2E7D68,color:#fff,stroke-width:2px
+    style L03 fill:#3B9B7F,stroke:#2E7D68,color:#fff,stroke-width:2px
+
     style L2 fill:#10B981,stroke:#059669,color:#fff
     style L3 fill:#3B9B7F,stroke:#2E7D68,color:#fff
+    style L4 fill:#F59E0B,stroke:#D97706,color:#fff
+    style L5 fill:#64748B,stroke:#475569,color:#fff
 ```
 
 ### Savings Breakdown
