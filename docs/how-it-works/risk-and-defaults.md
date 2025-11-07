@@ -83,13 +83,20 @@ Removing profit motive strengthens social bonds and trust, leading to HIGHER rep
 
 ## What We Expect
 
-Based on microfinance research, repayment correlates with social support:
+{% hint style="success" %}
+**Research shows:**
+- Grameen Bank achieved 97-98% repayment using group lending and social pressure [[9]](../references.md#grameen-bank)
+- Social proximity improves repayment by 10 percentage points [[6]](../references.md#karlan-et-al-2009)
+- Borrowers from regions with higher social capital have lower default rates
+{% endhint %}
 
-- **Strong social support** (60%+ lenders know borrower): Best repayment rates (Grameen: 97-98%)
-- **Moderate support** (30-60%): Moderate performance
-- **Weak/no support** (<30%): Higher default risk
+We expect repayment rates to correlate with social support strength:
 
-**Actual performance will be tracked and published on-chain** as we collect data.
+- **Strong social ties** between borrowers and lenders → better repayment
+- **Moderate connections** → moderate performance
+- **Weak or no connections** → higher risk
+
+**We'll track actual performance on-chain** to understand which trust signals best predict repayment in our model.
 
 ---
 
