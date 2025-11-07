@@ -104,6 +104,15 @@ export default function Navbar() {
                   >
                     Research
                   </Link>
+                  <a
+                    href="https://docs.lendfriend.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    onClick={() => setAboutDropdownOpen(false)}
+                  >
+                    Documentation (Draft)
+                  </a>
                 </div>
               )}
             </div>

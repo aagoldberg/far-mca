@@ -243,7 +243,7 @@ export default function Navbar() {
                         className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Documentation
+                        Documentation (Draft)
                       </a>
                     </div>
                   </div>
@@ -340,7 +340,7 @@ export default function Navbar() {
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
-                    Documentation
+                    Documentation (Draft)
                   </a>
                 </div>
               )}
