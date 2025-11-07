@@ -43,6 +43,6 @@
 
 ## 📚 Resources
 
-* [📖 Academic Research](references.md)
+* [📚 Research Foundation](references.md)
 * [📄 White Paper](whitepaper.md)
 * [❓ FAQ](resources/faq.md)
