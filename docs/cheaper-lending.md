@@ -108,7 +108,7 @@ Five years ago, this wasn't possible. Today, the infrastructure converged:
 3. **Smart contracts proven at scale:** $50B+ collateralized lending[[62]](references.md#ref62)
 4. **Oracle networks and ZK proofs** enable secure platform data access (Shopify, Stripe, Coinbase Commerce)
 
-All the pieces exist for the first time. We're assembling them to *attempt* uncollateralized lending.
+All the pieces exist for the first time. We're assembling them for uncollateralized lending.
 
 ---
 
