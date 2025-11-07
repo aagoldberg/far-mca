@@ -38,10 +38,17 @@ Same verification as Shopify. Same trust mechanisms as Grameen Bank. But with in
 
 ## What This Means
 
-**The Problem:** $1T economy that traditional banks can't serve and platform lenders serve expensively
-**The Gap:** Infrastructure costs (ACH rails, VC capital, operational overhead) prevented better rates
-**The Solution:** Web3 infrastructure (stablecoins, social graphs, smart contracts) cuts costs by 80%+
-**The Result:** First time in history all pieces exist to bridge the lending gap at scale
+**The Problem:** $1T economy that traditional banks can't serve and platform lenders serve expensively (20-50% APR)
+
+**The Gap:** Two costs platform lenders can't solve:
+- Infrastructure: ACH rails ($0.10-$0.50/tx + delays), manual operations, legacy compliance systems
+- Capital: VC-backed funding demanding 20%+ returns, debt facilities at 12-15%
+
+**The Solution:** LendFriend solves both:
+- Infrastructure: Oracle networks verify revenue like Shopify does. Smart contracts + stablecoins replace expensive operations + ACH
+- Capital: Community lenders provide 0% cost of capital vs. VC-backed 20%+
+
+**The Result:** Same revenue verification as platform lenders, but with infrastructure and capital costs that enable better rates for borrowers
 
 ---
 
