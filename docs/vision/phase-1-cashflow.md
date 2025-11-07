@@ -88,65 +88,15 @@ Combine social trust (Phase 0) with financial data:
 
 ### 3. Liquidity Pools
 
-**How Pools Work:**
-
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#3B9B7F','primaryTextColor':'#fff','primaryBorderColor':'#2E7D68','lineColor':'#3B9B7F'}}}%%
-graph TB
-    subgraph Lenders["💰 LENDERS"]
-        L1[Deposit USDC]
-        L2[Earn Passive Yield]
-        L3[Withdraw Anytime]
-    end
-
-    subgraph Pools["📊 LIQUIDITY POOLS"]
-        P1["🏦 Conservative<br/>4-6% APR<br/>$100K TVL"]
-        P2["💼 Balanced<br/>6-8% APR<br/>$250K TVL"]
-        P3["🚀 Aggressive<br/>8-12% APR<br/>$150K TVL"]
-    end
-
-    subgraph Borrowers["👤 BORROWERS"]
-        B1[Submit Application]
-        B2[Risk Score: 85%]
-        B3[Auto-Approved]
-        B4[Receive $10K @ 8% APR]
-        B5[Repay Over 12 Months]
-    end
-
-    L1 --> P1
-    L1 --> P2
-    L1 --> P3
-
-    P1 --> B3
-    P2 --> B3
-    P3 --> B3
-
-    B1 --> B2 --> B3 --> B4 --> B5
-
-    B5 --> L2
-
-    style P1 fill:#60A5FA,stroke:#3B82F6,color:#fff
-    style P2 fill:#3B9B7F,stroke:#2E7D68,color:#fff
-    style P3 fill:#F59E0B,stroke:#D97706,color:#fff
-    style B3 fill:#10B981,stroke:#059669,color:#fff
-```
-
-**For lenders:**
-- Deposit USDC into risk-stratified pools (Conservative, Balanced, Aggressive)
-- Earn passive yield (4-8% APR target based on risk tolerance)
-- Withdraw anytime from unallocated reserves
-- Defaults spread across pool (auto-diversification)
-
-**For borrowers:**
-- Get approved based on hybrid risk score
-- Receive instant loan offer (amount, rate, terms)
-- Funds disbursed from pool automatically
-- Repay on schedule, build on-chain credit history
+Phase 1 introduces passive lending through liquidity pools—lenders deposit capital into shared pools, borrowers draw from pools based on risk scores, and repayments flow back to pool depositors.
 
 **Why pools enable scale:**
-- No need to find individual lenders for each loan
-- Capital available 24/7 (not dependent on personal networks)
-- Market-sized liquidity, not network-sized
+- Lenders earn passive yield without reviewing individual loans
+- Borrowers access capital 24/7 without finding individual lenders
+- Defaults automatically spread across pool participants
+- Market-sized liquidity, not limited to personal networks
+
+**Pool mechanics** (deposit strategies, withdrawal rules, auto-approval thresholds) will be designed based on Phase 0 learnings.
 
 ### 4. Cross-Platform Expansion
 
