@@ -28,7 +28,7 @@ Platform lenders like Shopify and Stripe solved cashflow verification—they see
 
 We unlock better economics through Web3 infrastructure and community capital:
 
-**Infrastructure advantage:** Smart contracts automate operations that require reconciliation teams. Stablecoins settle instantly for pennies instead of ACH's $0.10-$0.50 + 1-3 day delays. On-chain transparency replaces manual compliance overhead.
+**Same revenue verification as Shopify—better infrastructure:** Oracle networks and zero-knowledge proofs let us verify platform income from Shopify, Stripe, or Coinbase Commerce just like embedded lenders do. But smart contracts automate operations that require reconciliation teams. Stablecoins settle instantly for pennies instead of ACH's $0.10-$0.50 + 1-3 day delays. On-chain transparency replaces manual compliance overhead.
 
 **Capital advantage:** Community lenders provide 0% cost of capital vs. VC-backed lenders needing 20%+ returns. When lenders don't demand returns, borrowers don't pay punishing rates.
 
