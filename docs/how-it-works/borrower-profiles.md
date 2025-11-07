@@ -4,7 +4,7 @@
 
 People don't lend to statistics—they lend to people.
 
-{% hint style="info" %}
+{% hint style="success" %}
 Kiva funded $1.68B+ by connecting lenders to real stories. Neural research shows positive arousal from borrower photographs directly predicts lending success [[12]](../references.md#genevsky-and-knutson-2015). Emotional storytelling increases donations by 70% compared to statistics [[11]](../references.md#small-et-al-2007).
 {% endhint %}
 
@@ -30,7 +30,7 @@ Kiva and GoFundMe prove emotional storytelling attracts funding. LendFriend adds
 
 When they contribute, they vouch with money and reputation. Misrepresenting yourself damages real relationships.
 
-{% hint style="info" %}
+{% hint style="success" %}
 **The impact:**
 - Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009)
 - Emotional narratives + social validation improve default prediction by 45% vs. credit scores [[3]](../references.md#iyer-et-al-2016)
