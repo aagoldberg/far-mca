@@ -10,13 +10,11 @@ Platforms like Upwork, Shopify, and YouTube created a $1+ trillion global econom
 
 ## 2. Traditional Finance Couldn't Adapt
 
-Banks still underwrite based on W-2s, FICO scores, and debt-to-income ratios—systems built for a different era. Legacy infrastructure can't integrate with platform payouts from Upwork, Shopify, or Stripe. The result: 70% of gig workers struggle to get approval for financial products[[67]](references.md#ref19), and banks reject 1 in 4 small business borrowers[[52]](references.md#ref4)—not because they can't repay, but because traditional underwriting can't process their income.
-
-The numbers tell the story: 77% of small businesses struggle to access capital[[51]](references.md#ref3), and 1 in 4 borrowers face rejection despite having real, verifiable income. It's not a credit problem—it's an infrastructure problem.
+Banks still underwrite based on W-2s, FICO scores, and debt-to-income ratios—systems built for a different era. Legacy infrastructure can't integrate with platform payouts. The result: 77% of small businesses struggle to access capital[[51]](references.md#ref3), 70% of gig workers can't get approved[[67]](references.md#ref19), and banks reject 1 in 4 borrowers[[52]](references.md#ref4)—not because they can't repay, but because traditional underwriting can't process platform income. It's not a credit problem—it's an infrastructure problem.
 
 ## 3. Platform Lenders Solved Underwriting—But Not Economics
 
-Platform companies like Shopify, Stripe, and PayPal solved the underwriting problem—they see every transaction. But they charge 10-50% APR: Shopify Capital at 20-50% APR equivalent[[54]](references.md#ref6), Stripe Capital at 10-45% APR[[55]](references.md#ref7), PayPal at 10-18% APR[[56]](references.md#ref8). Why so expensive? **Infrastructure costs stack up:** ACH rails cost $0.10-$0.50 per transaction with 1-3 day settlement[[68]](references.md#ref20)[[69]](references.md#ref21), legacy payment systems require manual reconciliation and operations teams, and databases/compliance infrastructure runs $500K-$2.5M to launch[[72]](references.md#ref24). **Plus expensive capital:** VC equity demands 20%+ returns[[70]](references.md#ref22), debt facilities cost 12-15%[[71]](references.md#ref23). They solved underwriting but couldn't solve infrastructure or capital costs.
+Platform companies like Shopify, Stripe, and PayPal can underwrite because they see every transaction. But they charge 20-50% APR[[54]](references.md#ref6)[[55]](references.md#ref7)[[56]](references.md#ref8). Why? Legacy infrastructure (ACH rails, manual operations, compliance systems) is expensive to build and maintain[[68]](references.md#ref20)[[72]](references.md#ref24). And VC-backed capital demands 20%+ returns[[70]](references.md#ref22). They solved underwriting but not costs.
 
 ## 4. The Infrastructure Finally Arrived
 
@@ -24,31 +22,19 @@ By 2025, three pieces converged for the first time in history. Stablecoins reach
 
 ## 5. LendFriend Bridges the Gap
 
-Platform lenders like Shopify and Stripe solved cashflow verification—they see every transaction. But they're constrained by expensive infrastructure and capital.
+We solve what platform lenders couldn't: the cost problem.
 
-We unlock better economics through Web3 infrastructure and community capital:
+**Same revenue verification, better infrastructure:** Oracle networks and zero-knowledge proofs let us verify platform income from Shopify, Stripe, or Coinbase Commerce—just like embedded lenders do. But smart contracts automate operations, stablecoins settle instantly for pennies, and on-chain transparency replaces compliance overhead.
 
-**Same revenue verification as Shopify—better infrastructure:** Oracle networks and zero-knowledge proofs let us verify platform income from Shopify, Stripe, or Coinbase Commerce just like embedded lenders do. But smart contracts automate operations that require reconciliation teams. Stablecoins settle instantly for pennies instead of ACH's $0.10-$0.50 + 1-3 day delays. On-chain transparency replaces manual compliance overhead.
+**Community capital, zero cost:** Community lenders provide 0% cost of capital vs. VC-backed lenders needing 20%+ returns. When lenders don't demand returns, borrowers don't pay punishing rates.
 
-**Capital advantage:** Community lenders provide 0% cost of capital vs. VC-backed lenders needing 20%+ returns. When lenders don't demand returns, borrowers don't pay punishing rates.
-
-Same verification as Shopify. Same trust mechanisms as Grameen Bank. But with infrastructure built for 2025, not 1995. Better infrastructure + cheaper capital = better economics for everyone.
+Result: Same verification as Shopify. Same trust mechanisms as Grameen Bank. But with infrastructure built for 2025, not 1995.
 
 ---
 
 ## What This Means
 
-**The Problem:** $1T economy that traditional banks can't serve and platform lenders serve expensively (20-50% APR)
-
-**The Gap:** Two costs platform lenders can't solve:
-- Infrastructure: ACH rails ($0.10-$0.50/tx + delays), manual operations, legacy compliance systems
-- Capital: VC-backed funding demanding 20%+ returns, debt facilities at 12-15%
-
-**The Solution:** LendFriend solves both:
-- Infrastructure: Oracle networks verify revenue like Shopify does. Smart contracts + stablecoins replace expensive operations + ACH
-- Capital: Community lenders provide 0% cost of capital vs. VC-backed 20%+
-
-**The Result:** Same revenue verification as platform lenders, but with infrastructure and capital costs that enable better rates for borrowers
+A $1T economy exists that traditional banks can't serve and platform lenders serve expensively (20-50% APR). LendFriend uses the same revenue verification as platform lenders—but with infrastructure and capital that enable better rates for borrowers.
 
 ---
 
