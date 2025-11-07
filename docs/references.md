@@ -233,6 +233,83 @@ URL: [https://www.businessdojo.io/fintech-startup-costs/](https://www.businessdo
 
 > Launch costs $500K-$2.5M for first 12-18 months, ongoing costs $200K-$500K annually (team salaries, compliance, infrastructure).
 
+<span id="ref73"></span>
+**[73] Fintech Debt Facility Costs**
+Andreessen Horowitz, "The Cost of Capital for Fintech Lenders" (2024)
+URL: [https://a16z.com/fintech-lending-cost-of-capital/](https://a16z.com/fintech-lending-cost-of-capital/)
+
+> Warehouse credit facilities typically cost 12-15% all-in for fintech lenders.
+
+<span id="ref74"></span>
+**[74] OnDeck Net Charge-Off Rates**
+OnDeck Capital Q4 2019 Financial Results
+URL: [https://www.ondeck.com/press-releases/ondeck-reports-fourth-quarter-and-full-year-2019-financial-results](https://www.ondeck.com/press-releases/ondeck-reports-fourth-quarter-and-full-year-2019-financial-results)
+
+> Net charge-off rate of 13.6% for full year 2019, provision rate 7.0%, 15+ day delinquency ratio 9.0%.
+
+<span id="ref75"></span>
+**[75] Financial Services Profit Margins**
+Investopedia, "What Is the Average Profit Margin for Financial Services Companies?" (2024)
+URL: [https://www.investopedia.com/ask/answers/031215/what-average-range-profit-margin-company-financial-services-sector.asp](https://www.investopedia.com/ask/answers/031215/what-average-range-profit-margin-company-financial-services-sector.asp)
+
+> Average profit margin for financial services businesses is around 10%.
+
+<span id="ref76"></span>
+**[76] Clearco Valuation Drop and Restructuring**
+Multiple sources (BetaKit, TechCrunch, Wikipedia)
+URL: [https://betakit.com/clearco-secures-new-equity-financing-from-existing-investors-and-an-asset-backed-facility-as-struggling-fintech-executes-complex-recapitalization-plan/](https://betakit.com/clearco-secures-new-equity-financing-from-existing-investors-and-an-asset-backed-facility-as-struggling-fintech-executes-complex-recapitalization-plan/)
+
+> Clearco valuation dropped from $2B (2021) to $200M (2023), laid off 72% of staff, both co-founders exited, complex recapitalization October 2023.
+
+<span id="ref77"></span>
+**[77] Wayflyer Financial Performance**
+Business Post & Irish Times (2024)
+URL: [https://www.businesspost.ie/tech/wayflyer-eyes-profitability-as-turnover-soars-and-losses-halve-amid-strategic-expansion/](https://www.businesspost.ie/tech/wayflyer-eyes-profitability-as-turnover-soars-and-losses-halve-amid-strategic-expansion/)
+
+> Wayflyer turnover €62.5M (2023), operating loss €40.9M (down 46% from €76.9M in 2022), achieved first monthly profitability October 2023.
+
+<span id="ref78"></span>
+**[78] Affirm Profitability Challenges**
+Nasdaq analysis (2024)
+URL: [https://www.nasdaq.com/articles/get-your-money-out-these-3-fintech-stocks-2025](https://www.nasdaq.com/articles/get-your-money-out-these-3-fintech-stocks-2025)
+
+> Affirm on pace to lose $800M in fiscal 2024, analysts predict company will remain unprofitable through at least 2026.
+
+<span id="ref79"></span>
+**[79] Uncapped Abandons RBF Model**
+Uncapped company announcement (2024)
+URL: [https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering](https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering)
+
+> Uncapped completely stopped offering Revenue Based Finance, cited structural problems with RBF model favoring lower quality businesses.
+
+<span id="ref80"></span>
+**[80] Shopify/Stripe Transaction Data Advantage**
+The Financial Brand analysis
+URL: [https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/](https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/)
+
+> Shopify has "proprietary transaction data allowing for pre-qualification of merchants, high visibility into cash flows for underwriting."
+
+<span id="ref81"></span>
+**[81] Embedded Lending Lower Customer Acquisition Cost**
+Fintech Takes & Multiple Sources
+URL: [https://fintechtakes.com/articles/2025-02-18/the-future-of-small-business-lending-is-embedded/](https://fintechtakes.com/articles/2025-02-18/the-future-of-small-business-lending-is-embedded/)
+
+> Embedded lenders gain access to pool of potential borrowers already using platform, "known entities," reduces CAC significantly.
+
+<span id="ref82"></span>
+**[82] Direct Payment Flow Access**
+The Financial Brand & Stripe Documentation
+URL: [https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/](https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/)
+
+> Embedded lenders have "direct access to payments flow to both disburse loans and deduct payments from future sales."
+
+<span id="ref83"></span>
+**[83] Fintech Investment Decline 2024**
+KPMG Pulse of Fintech H1'24
+URL: [https://assets.kpmg.com/content/dam/kpmgsites/uk/pdf/2024/08/pulse-of-fintech-h1-2024.pdf](https://assets.kpmg.com/content/dam/kpmgsites/uk/pdf/2024/08/pulse-of-fintech-h1-2024.pdf)
+
+> Global fintech investment declined from $62.3B (H2'23) to $51.9B (H1'24), lowest six months since H1'20, due to high cost of capital and geopolitical uncertainty.
+
 ---
 
 ## Core Research Papers
