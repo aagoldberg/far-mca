@@ -17,6 +17,12 @@ We measure trust algorithmically, testing whether close friends with small netwo
 
 ## Documentation
 
+### Vision & Context
+- [Vision & Roadmap](vision.md)
+- [Economic Context](economic-context.md)
+- [Web3 Cost Advantage](cheaper-lending.md)
+- [Research Foundation](references.md)
+
 ### Protocol Mechanics
 - [Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
 - [Risk Scoring](how-it-works/risk-scoring/README.md)
@@ -27,12 +33,6 @@ We measure trust algorithmically, testing whether close friends with small netwo
 - [Technical Stack](how-it-works/technical-stack.md)
 - [Payment Methods](how-it-works/payment-methods.md)
 - [Farcaster Mini App](how-it-works/farcaster-miniapp.md)
-
-### Vision & Context
-- [Vision & Roadmap](vision.md)
-- [Economic Context](economic-context.md)
-- [Web3 Cost Advantage](cheaper-lending.md)
-- [Research Foundation](references.md)
 
 ---
 
