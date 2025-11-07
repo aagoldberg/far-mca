@@ -8,7 +8,7 @@
 
 LendFriend enables uncollateralized lending by replacing credit bureaus with social relationships. When friends vouch for a borrower—with both capital and reputation—the strength of those connections correlates with repayment.
 
-We measure trust algorithmically. Close friends with small networks signal stronger accountability than distant followers with massive audiences. Every loan records permanently on-chain, creating verifiable reputation that follows borrowers across DeFi.
+We measure trust algorithmically, testing whether close friends with small networks signal stronger accountability than distant followers with massive audiences. Every loan records permanently on-chain, creating verifiable reputation that follows borrowers across DeFi.
 
 **Today:** Zero-interest loans on Farcaster to prove the model works.
 **Tomorrow:** Market-rate lending powered by social trust + cashflow data + AI underwriting.
