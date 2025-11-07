@@ -41,41 +41,64 @@ Between 2022-2024, fintech lending investment dropped to $51.9B—**the lowest s
 
 LendFriend solves what platform lenders couldn't: **capital costs and infrastructure costs**.
 
-### Cost Comparison: Platform Lenders vs LendFriend
+### Understanding Capital Structure
 
-| Cost Component | Platform Lenders | LendFriend | Savings |
-|----------------|------------------|------------|---------|
-| **💰 Capital Costs** | VC equity (20-30% returns[[70]](references.md#ref70)) + Debt facilities (12-15%[[73]](references.md#ref73)) | Community capital (0% cost*) | **5-8pp** |
-| **⚙️ Infrastructure** | ACH rails ($0.10-$0.50/tx[[68]](references.md#ref68)), manual ops, $500K-$2.5M launch[[72]](references.md#ref72) | Stablecoin settlement, smart contracts, on-chain accounting | **2-3pp** |
-| **🤝 Social Trust** | Cashflow data only | Cashflow + social graph + persistent identity | **1-2pp*** |
+**Platform Lenders (Complex Capital Stack):**
+- Raise $10M VC equity (VCs want 20-30% returns[[70]](references.md#ref70) to make investment worthwhile)
+- Borrow $50M from debt facilities at 12-15%[[73]](references.md#ref73)
+- Must charge borrowers enough to: pay 12-15% debt interest + generate VC returns + cover operations + defaults
+- Result: charge 25% APR, but only ~3% ends up as actual profit
 
-\* Community lenders choose their own yield expectations. In high-rate environments (Treasuries at 5%), they may want 10-13%, shrinking advantage to 2-3pp. But VC return pressure advantage remains.
+**LendFriend (Direct Lending):**
+- Community lenders provide capital directly (no VC, no debt facility)
+- **Phase 0:** 0% interest loans to prove social trust works
+- **Phase 1-2:** Lenders earn yield directly from borrower payments (typically 8-12%)
+- No debt facility fees on top of lender yields
+- No VC return pressure forcing higher rates
+- Result: Phase 1-2 charge 12-17% APR, lenders get better risk-adjusted returns
 
-\** Requires validation in Phase 0
+**The Difference:** Platform lenders pay 12-15% to borrow money, THEN pay that borrowed money to lenders. We skip the middleman.
 
 ---
 
-### Visual Breakdown: Where Your APR Goes
+### Visual Breakdown: Where Your 25% APR Goes
 
-**Platform Lender (25% APR):**
+**Platform Lender:**
 ```
-█████████████████████████ 25%
-├─ Capital Costs     ████████ 8-10%  ← VC demands 20-30% returns
-├─ Infrastructure    ████ 3-5%       ← ACH fees, manual ops
-├─ Defaults          ████████████ 10-13% ← Actual loan losses
-└─ Profit            ███ 2-5%       ← Business margin
-```
-
-**LendFriend (12-17% APR):**
-```
-█████████████ 12-17%
-├─ Capital Costs     █ 0-3%         ← Community capital
-├─ Infrastructure    █ 0-2%         ← Smart contracts, stablecoins
-├─ Defaults          ████████ 8-11% ← Social trust reduces defaults
-└─ Profit            ███ 2-5%      ← Same margin
+Borrower pays → 25% APR
+                ├─ 12-15% → Debt facility interest
+                ├─ 3-5%   → Operations (ACH, manual systems)
+                ├─ 2-5%   → VC return pressure
+                ├─ 10-13% → Defaults (covered by margin)
+                └─ 3%     → Actual profit
 ```
 
-**Savings:** Capital (5-8pp) + Infrastructure (2-3pp) + Social Trust (1-2pp) = **8-13 percentage points**
+**LendFriend (Phase 0 - Social Trust Proof):**
+```
+Borrower pays → 0% APR
+                └─ 0%     → No interest, proving trust works
+```
+
+**LendFriend (Phase 1-2 - With Yield):**
+```
+Borrower pays → 12-17% APR
+                ├─ 8-12%  → Lenders (direct yield)
+                ├─ 0-2%   → Operations (smart contracts, stablecoins)
+                ├─ 8-11%  → Defaults (absorbed by lender yields)
+                └─ 2-5%   → Platform margin
+```
+
+### Savings Breakdown
+
+| Component | Platform Lenders | LendFriend | Savings |
+|-----------|------------------|------------|---------|
+| **💰 Capital Structure** | VC pressure + debt facility overhead | Direct P2P lending | **5-8pp** |
+| **⚙️ Infrastructure** | ACH rails, manual ops, $500K-$2.5M launch[[68]](references.md#ref68)[[72]](references.md#ref72) | Stablecoins, smart contracts | **2-3pp** |
+| **🤝 Social Trust** | Cashflow only | Cashflow + social graph | **1-2pp*** |
+
+\* Social trust savings require Phase 0 validation
+
+**Key insight:** Community lenders may earn SIMILAR yields (8-12%) to what debt facilities charge (12-15%), but borrowers pay less because there's no VC return pressure or debt facility overhead on top.
 
 ---
 
