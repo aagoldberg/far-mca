@@ -22,19 +22,24 @@ Phase 2 automates loan repayment, removing all manual repayment friction.
 
 ## Why This Matters
 
-Manual repayment creates preventable defaults from forgetfulness, not inability to pay. Borrowers forget due dates, lenders chase late payments, and everyone experiences unnecessary friction. Auto-repayment eliminates this: set once, deducts automatically from income, and reduces defaults.
+**The problem:** Borrowers forget to pay. Not because they can't afford it—they just forget. Result: late payments, chasing, defaults.
 
-| | Manual Repayment | Auto-Repayment |
-|---|---|---|
-| **Payment** | Remember dates, open app monthly, manual transfer | Set once, automatic deduction from income |
-| **Borrower** | Late payment risk, cognitive load, "Did I pay?" | Always on-time, zero mental overhead |
-| **Lender** | Chase late payments, uncertainty | Predictable yield, reliable cashflow |
-| **Defaults** | Higher (forgetfulness) | Lower (automated) |
+**The solution:** Loans that repay themselves. Set it once, forget it. Money automatically deducts from your income. Never miss a payment again.
 
-**Why merchants choose this over MCAs:**
-- Fair pricing: 12% APR vs 280% APR[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
-- Revenue-based: Slow days = smaller payments
-- Transparent: Clear interest, no confusing factor rates
+**For borrowers:**
+- Never worry about due dates
+- Never open the app to make payments
+- Never default from forgetfulness
+
+**For merchants:**
+- 12% APR instead of 280% APR (MCAs)[[54]](../references.md#ref54)[[55]](../references.md#ref55)[[56]](../references.md#ref56)
+- Bad sales day? Smaller payment. Good day? Pays off faster.
+- No hidden fees or confusing rates
+
+**For lenders:**
+- No chasing late payments
+- Predictable, reliable yield
+- Lower defaults = better returns
 
 ---
 
