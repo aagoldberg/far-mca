@@ -4,18 +4,18 @@ We combine algorithmic filtering with economic incentives to resist manipulation
 
 **Our defense:** Quality algorithms detect fake accounts. Social network analysis catches artificial connections. But our strongest protection is economic—lenders risk their own money, so they filter bad loans naturally.
 
-**Research validates this:** Capital-backed social trust works. Kiva achieved 96.3% repayment across $1.8B+ in online P2P loans.
+**Research validates this:** Prosper.com data shows friends who contribute capital reduce defaults—capital-backed endorsements work, empty endorsements don't.
 
 ---
 
 ## Why This Model Works
 
-Research shows social proximity predicts repayment:
-- Friend contributions with money reduce defaults by 22%[[3]](../references.md#iyer-et-al-2016)
-- Social proximity improves repayment by 10 percentage points[[6]](../references.md#karlan-et-al-2009)
+Research on Prosper.com validates capital-backed social trust:
+- Friend bids (capital contributions) reduce defaults by 14%[[12]](../references.md#iyer-et-al-2016)
 - Capital-backed endorsements outperform empty endorsements[[16]](../references.md#freedman-and-jin-2017)
+- Lenders using social + financial data predict defaults 45% better than credit scores alone[[12]](../references.md#iyer-et-al-2016)
 
-Proven at scale: Kiva achieved 96.3% repayment across $1.8B+ in online P2P loans[[10]](../references.md#kiva)
+The key: friends must risk their own money, not just vouch with words.
 
 ---
 

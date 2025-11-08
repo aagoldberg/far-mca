@@ -14,10 +14,10 @@ LendFriend uses **social collateral**—your network on Farcaster—as proof of 
 Close friends with small networks carry more weight than distant followers of influencers. Someone with 20 selective friends signals stronger trust than a stranger with 10,000 connections.
 
 {% hint style="success" %}
-**Research shows it works:**
-- Grameen Bank: 97-98% repayment rate (9.6M borrowers) [[9]](../../references.md#grameen-bank)
-- Kiva: 96.3% repayment rate ($1.8B+ loans) [[10]](../../references.md#kiva)
-- Social proximity improves repayment by 10 percentage points [[6]](../../references.md#karlan-et-al-2009)
+**Research validates capital-backed social trust:**
+- Prosper.com: Friend bids (capital contributions) reduce defaults by 14% [[12]](../../references.md#iyer-et-al-2016)
+- Prosper.com: Capital-backed endorsements outperform empty endorsements [[16]](../../references.md#freedman-and-jin-2017)
+- Social + financial data predicts defaults 45% better than credit scores alone [[12]](../../references.md#iyer-et-al-2016)
 {% endhint %}
 
 ---
@@ -85,7 +85,7 @@ Creating fake accounts and gaming trust scores is a natural concern. We use algo
 
 ## Why Adamic-Adar?
 
-**Research shows social proximity predicts repayment** - close connections reduce defaults by 13% [[19]](../../references.md#karlan-et-al-2009).
+**Research from Prosper.com shows friend capital contributions reduce defaults by 14%** [[12]](../../references.md#iyer-et-al-2016).
 
 We chose Adamic-Adar because it mathematically captures what matters:
 - **Selective connections count more** than large follower lists

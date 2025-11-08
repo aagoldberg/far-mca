@@ -44,13 +44,8 @@ Zero interest lets us gather clean behavioral data and follows proven models:
 
 **For LendFriend:** Clean dataset showing intrinsic motivation, not fear of penalties
 
-{% hint style="success" %}
-**Research shows it works:**
-- Akhuwat (Islamic microfinance): **99.9% repayment rate** using interest-free loans [[9]](../references.md#grameen-bank)
-- Kiva: 96.3% repayment on $1.8B+ in zero-interest loans [[10]](../references.md#kiva)
-- Grameen Bank: 97-98% repayment using social collateral [[9]](../references.md#grameen-bank)
-
-Removing profit motive strengthens social bonds and trust, leading to HIGHER repayment rates.
+{% hint style="info" %}
+**Testing the hypothesis:** Phase 0 gathers data on whether zero-interest loans + capital-backed social trust produce high repayment rates in online P2P contexts. We're not claiming it will work—we're testing whether Prosper.com findings (friend capital contributions reduce defaults by 14%) hold in crypto-native environments.
 {% endhint %}
 
 ---
@@ -83,11 +78,8 @@ Removing profit motive strengthens social bonds and trust, leading to HIGHER rep
 
 ## What We Expect
 
-{% hint style="success" %}
-**Research shows:**
-- Grameen Bank achieved 97-98% repayment using group lending and social pressure [[9]](../references.md#grameen-bank)
-- Social proximity improves repayment by 10 percentage points [[6]](../references.md#karlan-et-al-2009)
-- Borrowers from regions with higher social capital have lower default rates
+{% hint style="info" %}
+**Hypothesis:** Prosper.com showed friend capital contributions reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016). We expect repayment rates to correlate with capital-backed social support strength in crypto-native contexts. Phase 0 data will reveal if this holds.
 {% endhint %}
 
 We expect repayment rates to correlate with social support strength:

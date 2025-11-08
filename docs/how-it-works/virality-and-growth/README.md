@@ -11,7 +11,7 @@ Loans spread through social networks. Borrowers share requests with friends, fri
 - First 10 days are critical—early contributions trigger participation cascades [[11]](../../references.md#crowdfunding-first-10-days)
 - 70% funding = psychological tipping point for completion [[11]](../../references.md#crowdfunding-first-10-days)
 - Emotional storytelling increases donations by 70% [[11]](../../references.md#small-et-al-2007)
-- Social proximity reduces default risk by 13% [[6]](../../references.md#karlan-et-al-2009)
+- Friend capital contributions reduce defaults by 14% on Prosper.com [[12]](../../references.md#iyer-et-al-2016)
 {% endhint %}
 
 **How it works:**

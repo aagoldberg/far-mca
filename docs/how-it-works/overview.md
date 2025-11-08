@@ -11,7 +11,7 @@ We calculate social distance between borrower and lender by measuring mutual con
 
 When someone contributes to your loan, they're providing both capital and social proof. The UI displays each lender's social proximity to the borrower, creating transparent trust signals that enable uncollateralized lending.
 
-Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve significantly higher repayment rates in global microfinance contexts. Phase 0 tests whether these mechanisms translate to crypto-native P2P lending.
+Research from Prosper.com shows that friend capital contributions reduce defaults by 14% in online P2P lending. Phase 0 tests whether capital-backed social trust works in crypto-native contexts.
 
 [→ Learn about Social Trust Scoring](social-trust-scoring/README.md)
 
@@ -45,7 +45,7 @@ Social proximity is quantified mathematically, not guessed subjectively.
 ---
 
 {% hint style="info" %}
-**Research Foundation**: Our mechanics are backed by decades of microfinance research. See [Academic Research](../references.md) for full citations including Grameen Bank, Kiva, and 15+ peer-reviewed papers.
+**Research Foundation**: Capital-backed social trust is validated by Prosper.com studies showing friend bids reduce defaults by 14% and capital-backed endorsements outperform empty endorsements. See [Academic Research](../references.md) for full citations.
 {% endhint %}
 
 ## Next Steps

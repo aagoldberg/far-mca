@@ -51,7 +51,7 @@ Grades are based on four factors:
 
 **Research shows:**
 - Prosper proved transparent risk grades work at scale [[36]](../../references.md#peer-to-peer-lending-and-reputation)
-- Loans with friend endorsements have 22% lower defaults [[3]](../../references.md#iyer-et-al-2016)
+- Friend bids (capital contributions) reduce defaults by 14% [[12]](../../references.md#iyer-et-al-2016)
 - Market-based filtering reduces defaults (high-risk loans don't fund)
 
 **Key principles:**

@@ -32,8 +32,8 @@ When they contribute, they vouch with money and reputation. Misrepresenting your
 
 {% hint style="success" %}
 **The impact:**
-- Social proximity reduces default risk by 13% [[6]](../references.md#karlan-et-al-2009)
-- Emotional narratives + social validation improve default prediction by 45% vs. credit scores [[3]](../references.md#iyer-et-al-2016)
+- Prosper.com: Friend bids (capital contributions) reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
+- Social + financial data predicts defaults 45% better than credit scores alone [[12]](../references.md#iyer-et-al-2016)
 - Borrowers who tip on repayment (5-10% extra) signal financial health and strengthen reputation for future loans
 {% endhint %}
 

@@ -477,7 +477,7 @@ DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
 **[12] Iyer, R., Khwaja, A. I., Luttmer, E. F., & Shue, K. (2016)**. Screening peers softly: Inferring the quality of small borrowers. *Management Science, 62*(6), 1554-1577.
 DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
-> Analyzes Prosper.com data showing that lenders use social information (friendships, group memberships) to screen borrowers. **Key findings:** (1) Loans with friend endorsements have 22% lower default rates; (2) Lenders using soft information (narratives, social connections) predict default with **45% greater accuracy** than credit scores alone; (3) Soft information is relatively more important when screening borrowers of lower credit quality.
+> Analyzes Prosper.com data showing that lenders use social information (friendships, group memberships) to screen borrowers. **Key findings:** (1) Loans with friend endorsements have 22% lower default rates overall, but critically, **friend bids (actual capital contributions) reduce defaults by 14%**—validating capital-backed social trust; (2) Lenders using soft information (narratives, social connections) predict default with **45% greater accuracy** than credit scores alone; (3) Soft information is relatively more important when screening borrowers of lower credit quality. **Critical distinction:** This complements Freedman & Jin (2017) showing only capital-backed endorsements work—Iyer et al. quantifies the magnitude of friend capital contributions.
 
 ---
 
