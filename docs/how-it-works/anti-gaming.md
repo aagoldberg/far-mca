@@ -46,20 +46,15 @@ Phase 0 gathers data on what attack patterns emerge and which defenses actually 
 - Bot/spam accounts weighted near zero
 - Research: ML achieves 99%+ bot detection accuracy
 
-### Layer 2: Network Analysis (Validated, Not Integrated)
+### Layer 2: Network Analysis (Validated, Available If Needed)
 
-**Validated methods exist if we need them:**
+**Validated methods available if attacks emerge:**
 - **SybilRank:** 90% accuracy, deployed at Tuenti (Spain's largest social network) [[85]](../references.md#sybilrank)
 - **Louvain algorithm:** 88% accuracy for fraud ring detection in financial networks [[86]](../references.md#louvain-fraud)
 - **Graph Neural Networks:** Detect collusion through network topology
 - Used in production by major platforms for Sybil/fraud detection
 
-**Current approach (simple, unproven):**
-- Using Adamic-Adar to weight small selective networks higher
-- Following 10K people = weaker signal than 20 selective friends
-- Fast to compute, easy to explain, good for Phase 0 testing
-
-**If needed:** Can upgrade to validated methods (SybilRank, Louvain, GNNs) based on Phase 0 attack patterns.
+Phase 0 focuses on economic protections (capital requirements + market filtering). If sophisticated network-based attacks emerge, we can deploy these validated methods.
 
 ### Layer 3: Temporal & On-Chain Signals (Baseline)
 
