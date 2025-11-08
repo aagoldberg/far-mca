@@ -47,6 +47,8 @@ Three income sources via OAuth: bank accounts (Plaid), merchant revenue (Square/
 | $5K-$25K | 30% | 40% | 30% |
 | $25K-$50K+ | 15% | 50% | 35% |
 
+*Initial model weights—will be refined based on Phase 0 learnings and Phase 1 performance data.*
+
 Small loans among friends weight social trust higher. Large loans weight cashflow higher. Repayment history always matters.
 
 **3. Liquidity Pools**

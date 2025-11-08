@@ -11,7 +11,7 @@ We calculate social distance between borrower and lender by measuring mutual con
 
 When someone contributes to your loan, they're providing both capital and social proof. The UI displays each lender's social proximity to the borrower, creating transparent trust signals that enable uncollateralized lending.
 
-Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve significantly higher repayment rates—proving that social proximity is a powerful predictor of creditworthiness.
+Research from Kiva and Grameen Bank shows that borrowers with strong social support achieve significantly higher repayment rates in global microfinance contexts. Phase 0 tests whether these mechanisms translate to crypto-native P2P lending.
 
 [→ Learn about Social Trust Scoring](social-trust-scoring/README.md)
 

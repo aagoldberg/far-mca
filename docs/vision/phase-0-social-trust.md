@@ -27,11 +27,14 @@ Zero-interest microloans ($100-$5K) backed by social trust signals from Farcaste
 - Data: Farcaster social graph, Power Badge status, account quality
 - → [Trust scoring details](../how-it-works/social-trust-scoring/README.md)
 
-**Risk Model:**
+**Risk Model (initial weights):**
 - 60% Social Trust Score
 - 30% Repayment History
 - 10% Loan Size Risk
-- → [Risk scoring methodology](../how-it-works/risk-scoring/README.md)
+
+These weights will be refined as we collect repayment data to optimize prediction accuracy.
+
+→ [Risk scoring methodology](../how-it-works/risk-scoring/README.md)
 
 ---
 

@@ -59,7 +59,7 @@ Loans that repay themselves automatically from wallets (ERC-4337) or merchant re
 
 **Key Components:** Smart wallet plugins, merchant OAuth, auto-deduction (2-5% of sales)
 
-**Goal:** 50%+ auto-repayment adoption, 30% lower defaults, 100K+ users
+**Goal:** 50%+ auto-repayment adoption, significantly lower defaults through automated repayment, 100K+ users
 
 → [Phase 2 Technical Implementation](vision/phase-2-automation.md)
 
@@ -73,6 +73,10 @@ Loans that repay themselves automatically from wallets (ERC-4337) or merchant re
 | **Cashflow Verification** | 0% | 30% | 40% |
 | **Repayment History** | 30% | 30% | 40% |
 | **Loan Size Risk** | 10% | 10% | 5% |
+
+{% hint style="info" %}
+**Note:** These are initial model weights to be refined with Phase 0 data. Actual weights will be optimized based on which signals best predict repayment in practice.
+{% endhint %}
 
 **Evolution:** Social trust decreases as primary signal (60% → 15%), while cashflow verification is added and becomes dominant (0% → 40%). Repayment history remains consistent and grows with scale.
 

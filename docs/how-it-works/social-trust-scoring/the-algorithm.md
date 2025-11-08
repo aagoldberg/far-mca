@@ -54,7 +54,7 @@ Quality scores (0-1 scale):
 
 ### 4. Calculate Final Score (0-100)
 
-Three components:
+Three components (initial thresholds):
 
 **A. Base Score (max 60 points)**
 
@@ -115,9 +115,11 @@ The specific thresholds (≥20, ≥10, etc.), bonus multipliers, and score caps 
 
 {% hint style="success" %}
 **Research shows:**
-- 82% improvement over simple friend counting [[7]](../../references.md#adamic-and-adar-2003)
-- 16% improvement in P2P lending default prediction [[8]](../../references.md#lin-et-al-2013)
-- Consistently top-3 performing algorithm across multiple networks
+- Adamic-Adar improves link prediction accuracy by 82% over simple friend counting [[7]](../../references.md#adamic-and-adar-2003)
+- Social network ties on Prosper.com correlate with better repayment performance [[8]](../../references.md#lin-et-al-2013)
+- Consistently top-3 performing algorithm for network similarity measurement
+
+**Note:** The algorithm was designed for link prediction, not loan defaults. We're testing whether it translates to repayment prediction in Phase 0.
 {% endhint %}
 
 **Benefits:**

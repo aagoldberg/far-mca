@@ -109,11 +109,11 @@ graph TB
 
 | Component | Platform Lenders | LendFriend | Savings |
 |-----------|------------------|------------|---------|
-| **💰 Capital Structure** | VC pressure + debt facility overhead | Direct P2P lending | **5-8pp** |
-| **⚙️ Infrastructure** | ACH rails, manual ops, $500K-$2.5M launch[[68]](references.md#ref68)[[72]](references.md#ref72) | Stablecoins, smart contracts | **2-3pp** |
+| **💰 Capital Structure** | VC pressure + debt facility overhead | Direct P2P lending | **5-8pp*** |
+| **⚙️ Infrastructure** | ACH rails, manual ops, $500K-$2.5M launch[[68]](references.md#ref68)[[72]](references.md#ref72) | Stablecoins, smart contracts | **2-3pp*** |
 | **🤝 Social Trust** | Cashflow only | Cashflow + social graph | **1-2pp*** |
 
-\* Social trust savings require Phase 0 validation
+\* Estimated savings based on cost structure analysis—will be validated with actual data
 
 **Key insight:** Community lenders may earn SIMILAR yields (8-12%) to what debt facilities charge (12-15%), but borrowers pay less because there's no VC return pressure or debt facility overhead on top.
 
@@ -129,6 +129,10 @@ Starting from a **25% APR platform loan**:
 - **Plus 2-5%** (maintaining sustainable profit margins)
 
 **Result: 12-17% APR** for similar borrower risk profile
+
+{% hint style="info" %}
+**Note:** This is a cost structure model based on industry data. Actual APR ranges will be refined as we collect operational data in Phase 1.
+{% endhint %}
 
 This isn't charity—it's infrastructure arbitrage. Same borrowers, same default risk, different payment rails and capital structure.
 
