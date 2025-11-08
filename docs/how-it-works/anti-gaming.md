@@ -1,31 +1,33 @@
 # Anti-Gaming & Sybil Resistance
 
-We combine algorithmic filtering with economic incentives to resist manipulation.
+**What's proven:** Friends who contribute capital reduce defaults by 14%. Prosper.com validated this—capital-backed endorsements work, empty ones don't.
 
-**Our defense:** Quality algorithms detect fake accounts. Social network analysis catches artificial connections. But our strongest protection is economic—lenders risk their own money, so they filter bad loans naturally.
+**What we're testing:** Whether quality filtering + network analysis + economic incentives resist Sybil attacks in crypto-native lending.
 
-**Research validates this:** Prosper.com data shows friends who contribute capital reduce defaults—capital-backed endorsements work, empty endorsements don't. See [Social Trust Scoring](social-trust-scoring/README.md#why-this-model-works) for research foundation.
+Phase 0 gathers data on what attack patterns emerge and which defenses actually work. We're not claiming proven solutions—we're testing hypotheses.
+
+---
+
+## The Honest Truth
+
+| Defense Layer | Status | Evidence |
+|---------------|--------|----------|
+| **Quality filtering** | ✅ Validated | ML achieves 99%+ bot detection |
+| **Capital requirements** | ✅ Validated | Prosper.com: 14% default reduction |
+| **Network analysis** | ⚠️ Unproven | Testing hypothesis, may not work |
+| **Market filtering** | 🤷 Logical | Makes sense, no research |
+| **On-chain reputation** | 🤷 Logical | Makes Sybils expensive, untested |
+
+**Our bet:** Layering these defenses creates resilience even if individual layers fail. Economic alignment (lenders risk capital) matters more than algorithmic perfection.
 
 ---
 
 ## Our Approach
 
-{% hint style="info" %}
-**Phase 0 is data collection**
-
-We're not claiming algorithmic perfection. We're gathering real-world behavioral data to understand:
-- Which trust signals actually predict repayment
-- What attack patterns emerge in practice
-- How lenders naturally filter high-risk loans
-- Where our assumptions were wrong
-
-The defenses below are our starting point. They'll evolve as we learn.
-{% endhint %}
-
 **Principles:**
-1. **Economic alignment > algorithmic perfection** — Lenders risk their own money, so market filtering matters most
-2. **Iterate with data** — Phase 0 reveals attack patterns, we adapt defenses
-3. **Multi-layered approach** — No single defense is perfect; layers create resilience
+1. **Economic alignment > algorithms** — Lenders risk money, so market filtering matters most
+2. **Test, don't claim** — Phase 0 reveals what works, what doesn't
+3. **Iterate with data** — Adapt defenses based on real attack patterns
 
 **Expected evolution:**
 - Phase 0: Social trust + basic Sybil resistance
@@ -35,51 +37,53 @@ The defenses below are our starting point. They'll evolve as we learn.
 
 ---
 
-## Defense Mechanisms
+## Defense Layers
 
-### Algorithmic Protections
+### Layer 1: Quality Filtering (Validated)
 
-**Quality filtering:**
-- Neynar quality scores (0-1 scale) filter spam/bot accounts
-- Low activity accounts weighted down
-- Bot/spam accounts effectively zeroed out
+**Neynar scores filter spam/bots:**
+- 0-1 scale measures account quality
+- Bot/spam accounts weighted near zero
+- Research: ML achieves 99%+ bot detection accuracy
 
-**Network structure analysis:**
-- Adamic-Adar penalizes large networks (following 10K people = weak signal)
-- Mutual friend overlap required (can't fake tight-knit clusters at scale)
-- Small selective networks weighted higher than influencer connections
+### Layer 2: Network Analysis (Unproven)
 
-**Temporal signals:**
-- Account age matters
-- Connection age and stability tracked
-- Sudden network growth patterns flagged
+**We weight small selective networks higher:**
+- Adamic-Adar algorithm penalizes large follower counts
+- Following 10K people = weaker signal than 20 selective friends
+- **Testing hypothesis:** Tight-knit networks are harder to fake at scale
 
-**On-chain constraints:**
+**Why we're uncertain:** Research on Sybil defenses (SybilGuard, SybilLimit) assumed tight communities were harder to fake. Later studies found 70% of real Sybils had zero connections to other Sybils. The assumption didn't hold.
+
+**Our bet:** Combined with quality filtering and capital requirements, network topology adds another barrier. Phase 0 will reveal if we're right.
+
+### Layer 3: Temporal & On-Chain Signals (Baseline)
+
+- Account age, connection stability, growth patterns
+- Transaction history permanently recorded
 - Loan size limits for new borrowers
-- Gradual trust building required
-- Every transaction permanently recorded
 
 ---
 
-### Economic Protections
+### Layer 4: Economic Protections (Strongest Defense)
 
-**Capital requirements:**
+**Capital requirements — validated by Prosper.com:**
 - Every contribution requires actual money, not endorsements
 - Friends risk their capital if borrower defaults
-- Aligns incentives—no "cheap talk" problem[[16]](../references.md#freedman-and-jin-2017)
+- Eliminates "cheap talk" problem [[16]](../references.md#freedman-and-jin-2017)
+- Friend bids reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
 
-**Lenders risk their own capital:**
-- Market-based filtering (lenders vet borrowers or lose money)
-- No algorithmic perfection required—humans decide
+**Market-based filtering:**
+- Lenders vet borrowers or lose money
 - High-risk loans don't fund (natural selection)
+- No algorithmic perfection required
 
-**Reputation is permanent:**
+**Permanent on-chain reputation:**
 - Default history visible to all future lenders
 - Can't create fresh identity after default
-- Borrowers self-select appropriate amounts
+- Makes Sybil attacks expensive (need capital + reputation for each identity)
 
-**Short feedback loops:**
-- 30-90 day loan terms (Phase 0)
+**Short feedback loops (30-90 day loans):**
 - Fast data on what signals predict repayment
 - Rapid iteration on defense mechanisms
 
