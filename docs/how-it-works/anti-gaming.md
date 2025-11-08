@@ -15,7 +15,7 @@ Phase 0 gathers data on what attack patterns emerge and which defenses actually 
 | **Quality filtering** | ✅ Validated | ML achieves 99%+ bot detection |
 | **Capital requirements** | ✅ Validated | Prosper.com: 14% default reduction |
 | **Market filtering** | ✅ Validated | Lenders predict 45% better than credit scores alone |
-| **Network analysis** | ⚠️ Unproven | Testing hypothesis, may not work |
+| **Network analysis** | ✅ Validated | [SybilRank: 90% accuracy](../references.md#sybilrank) (not integrated yet) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive, untested |
 
 **Our bet:** Layering these defenses creates resilience even if individual layers fail. Economic alignment (lenders risk capital) matters more than algorithmic perfection.
@@ -46,16 +46,20 @@ Phase 0 gathers data on what attack patterns emerge and which defenses actually 
 - Bot/spam accounts weighted near zero
 - Research: ML achieves 99%+ bot detection accuracy
 
-### Layer 2: Network Analysis (Unproven)
+### Layer 2: Network Analysis (Validated, Not Integrated)
 
-**We weight small selective networks higher:**
-- Adamic-Adar algorithm penalizes large follower counts
+**Validated methods exist if we need them:**
+- **SybilRank:** 90% accuracy, deployed at Tuenti (Spain's largest social network) [[85]](../references.md#sybilrank)
+- **Louvain algorithm:** 88% accuracy for fraud ring detection in financial networks [[86]](../references.md#louvain-fraud)
+- **Graph Neural Networks:** Detect collusion through network topology
+- Used in production by major platforms for Sybil/fraud detection
+
+**Current approach (simple, unproven):**
+- Using Adamic-Adar to weight small selective networks higher
 - Following 10K people = weaker signal than 20 selective friends
-- **Testing hypothesis:** Tight-knit networks are harder to fake at scale
+- Fast to compute, easy to explain, good for Phase 0 testing
 
-**Why we're uncertain:** Research on Sybil defenses (SybilGuard, SybilLimit) assumed tight communities were harder to fake. Later studies found 70% of real Sybils had zero connections to other Sybils. The assumption didn't hold.
-
-**Our bet:** Combined with quality filtering and capital requirements, network topology adds another barrier. Phase 0 will reveal if we're right.
+**If needed:** Can upgrade to validated methods (SybilRank, Louvain, GNNs) based on Phase 0 attack patterns.
 
 ### Layer 3: Temporal & On-Chain Signals (Baseline)
 

@@ -632,6 +632,22 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 ---
 
+## Network Analysis for Sybil/Fraud Detection
+
+<span id="sybilrank"></span>
+**[85] Cao, Q., Sirivianos, M., Yang, X., & Pregueiro, T. (2012)**. Aiding the Detection of Fake Accounts in Large Scale Social Online Services. *USENIX NSDI*.
+URL: [usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf](https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf)
+
+> **SybilRank deployed at Tuenti (Spain's largest social network):** Achieved **~90% accuracy** on 200K accounts flagged as fake. First 50K accounts were **100% fake**. Provided **18x efficiency improvement** over manual inspection (previously 5% accuracy). Uses early-stopping random walks with degree-normalized trust propagation. Scales to hundreds of millions of nodes. Demonstrates that graph-based Sybil detection works in production at scale.
+
+<span id="louvain-fraud"></span>
+**[86] Blondel, V. D., Guillaume, J. L., Lambiotte, R., & Lefebvre, E. (2008)**. Fast unfolding of communities in large networks. *Journal of Statistical Mechanics: Theory and Experiment*.
+DOI: [10.1088/1742-5468/2008/10/P10008](https://doi.org/10.1088/1742-5468/2008/10/P10008)
+
+> Louvain algorithm for community detection, achieving **88% accuracy** for fraud clustering in financial networks. Enables efficient identification of densely connected fraud rings through modularity optimization. Deployed in production by Neo4j and banking/finance systems for fraud ring detection. Detects communities even when not well separated, useful for overlapping fraud networks.
+
+---
+
 ## P2P Lending Fraud & Security
 
 <span id="prosper-pump-and-dump"></span>
