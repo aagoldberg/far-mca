@@ -1,14 +1,12 @@
 # Anti-Gaming & Sybil Resistance
 
-**What's proven:** Friends who contribute capital reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016). Prosper.com validated this—capital-backed endorsements work, empty ones don't [[16]](../references.md#freedman-and-jin-2017).
+We build on validated P2P lending research: capital-backed social trust reduces defaults by 14% [[12]](../references.md#iyer-et-al-2016), and lenders predict defaults 45% better than credit scores alone [[12]](../references.md#iyer-et-al-2016).
 
-**What we're testing:** Whether quality filtering + network analysis + economic incentives resist Sybil attacks in crypto-native lending.
-
-Phase 0 gathers data on what attack patterns emerge and which defenses actually work. We're not claiming proven solutions—we're testing hypotheses.
+Phase 0 validates these findings in crypto-native contexts and gathers data on emerging attack patterns, allowing us to deploy additional defenses (SybilRank, Louvain, GNNs) if sophisticated attacks emerge.
 
 ---
 
-## The Honest Truth
+## Defense Status
 
 | Defense Layer | Status | Evidence |
 |---------------|--------|----------|
