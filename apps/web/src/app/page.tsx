@@ -13,10 +13,10 @@ export default function Home() {
             Community Lending
           </h1>
           <p className="text-xl sm:text-2xl text-gray-700 max-w-4xl mx-auto mb-4 leading-relaxed font-semibold">
-            No collateral. No interest. Relationships replace credit scores.
+            Get funded from your network—and beyond. Your reputation grows as friends contribute.
           </p>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Your network stands behind you, securing funding from others.
+            Zero interest. No credit checks. Social underwriting.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link

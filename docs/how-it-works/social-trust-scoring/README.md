@@ -81,11 +81,14 @@ Creating fake accounts doesn't work because:
 
 ## Why Adamic-Adar?
 
-Research shows **close selective friends predict repayment better than influential connections**:
-- Strong ties more predictive than weak ties for loan defaults
-- Repeated interaction matters more than network size
-- Fast computation (O(N) complexity)
-- Works with incomplete social graph data
+**Research shows social proximity predicts repayment** - close connections reduce defaults by 13% [[19]](../../references.md#karlan-et-al-2009).
+
+We chose Adamic-Adar because it mathematically captures what matters:
+- **Selective connections count more** than large follower lists
+- **Mutual close friends** signal stronger accountability
+- **Fast to compute** from partial social graph data
+
+The algorithm was designed for link prediction, not lending - **we're testing whether it translates to repayment prediction in Phase 0.**
 
 ---
 
