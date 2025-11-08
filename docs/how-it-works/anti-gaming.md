@@ -4,7 +4,7 @@ We combine algorithmic filtering with economic incentives to resist manipulation
 
 **Our defense:** Quality algorithms detect fake accounts. Social network analysis catches artificial connections. But our strongest protection is economic—lenders risk their own money, so they filter bad loans naturally.
 
-**Research validates this:** Capital-backed social trust works. Proven by Grameen Bank (97-98% repayment, 9.6M borrowers) and Kiva (96.3% repayment, $1.8B+ loans).
+**Research validates this:** Capital-backed social trust works. Kiva achieved 96.3% repayment across $1.8B+ in online P2P loans.
 
 ---
 
@@ -15,7 +15,7 @@ Research shows social proximity predicts repayment:
 - Social proximity improves repayment by 10 percentage points[[6]](../references.md#karlan-et-al-2009)
 - Capital-backed endorsements outperform empty endorsements[[16]](../references.md#freedman-and-jin-2017)
 
-Proven at scale: Grameen Bank (97-98%, 9.6M borrowers)[[9]](../references.md#grameen-bank), Kiva (96.3%, $1.8B+)[[10]](../references.md#kiva)
+Proven at scale: Kiva achieved 96.3% repayment across $1.8B+ in online P2P loans[[10]](../references.md#kiva)
 
 ---
 
