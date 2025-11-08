@@ -62,10 +62,16 @@ Grades are based on four factors:
 
 ---
 
+## Security & Gaming Resistance
+
+Risk grades incorporate quality filtering and Sybil resistance mechanisms. See [Anti-Gaming & Sybil Resistance](../anti-gaming.md) for how we defend against fake accounts and coordinated manipulation.
+
+---
+
 ## Lender Warnings
 
 Before contributing, lenders see clear warnings based on risk level. [View warning system →](lender-warnings.md)
 
 ---
 
-**Next:** [Social Trust Scoring](../social-trust-scoring/README.md) · [Lender Warnings](lender-warnings.md) · [Research](../../references.md)
+**Next:** [Social Trust Scoring](../social-trust-scoring/README.md) · [Anti-Gaming](../anti-gaming.md) · [Lender Warnings](lender-warnings.md)

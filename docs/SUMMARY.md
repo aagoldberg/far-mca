@@ -21,6 +21,7 @@
   * [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md)
 * [📊 Risk Scoring](how-it-works/risk-scoring/README.md)
   * [Lender Warnings](how-it-works/risk-scoring/lender-warnings.md)
+* [🛡️ Anti-Gaming & Sybil Resistance](how-it-works/anti-gaming.md)
 * [⚡ Smart Contract Flow](how-it-works/smart-contract-flow.md)
 * [⚠️ Risk & Default Handling](how-it-works/risk-and-defaults.md)
 * [🔧 Technical Stack](how-it-works/technical-stack.md)

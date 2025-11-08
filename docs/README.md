@@ -24,6 +24,7 @@ We measure trust algorithmically, testing whether close friends with small netwo
 ## Protocol Mechanics
 - [Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
 - [Risk Scoring](how-it-works/risk-scoring/README.md)
+- [Anti-Gaming & Sybil Resistance](how-it-works/anti-gaming.md)
 - [Smart Contract Flow](how-it-works/smart-contract-flow.md)
 - [Risk & Default Handling](how-it-works/risk-and-defaults.md)
 

@@ -71,11 +71,15 @@ This mirrors traditional lending - ask family first, then friends, then institut
 
 ## Anti-Gaming
 
-Creating fake accounts doesn't work because:
+Creating fake accounts and gaming trust scores is a natural concern. We use algorithmic defenses (quality filtering, Adamic-Adar weighting) combined with economic incentives (lenders risk their own capital) to resist manipulation.
+
+**Key defenses:**
 - Quality filtering removes bots/spam
 - Adamic-Adar penalizes large networks
-- Real community overlap is required
-- No connections = zero trust score
+- Real community overlap required
+- Lenders vet borrowers (market filtering)
+
+→ **[Read full security analysis](../anti-gaming.md)** — Covers attack vectors, defenses, limitations, and our iterative approach
 
 ---
 
