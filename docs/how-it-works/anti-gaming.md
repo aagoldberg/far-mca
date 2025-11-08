@@ -2,7 +2,7 @@
 
 We combine algorithmic filtering with economic incentives to resist manipulation.
 
-**Our defense:** Quality algorithms detect fake accounts. Network analysis catches artificial connections. But our strongest protection is economic—lenders risk their own money, so they filter bad loans naturally.
+**Our defense:** Quality algorithms detect fake accounts. Social network analysis catches artificial connections. But our strongest protection is economic—lenders risk their own money, so they filter bad loans naturally.
 
 **Research validates this:** Empty endorsements on Prosper.com led to higher defaults. Capital-backed endorsements led to better repayment. We require capital, not words.
 
