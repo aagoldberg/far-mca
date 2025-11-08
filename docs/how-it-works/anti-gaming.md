@@ -1,6 +1,6 @@
 # Anti-Gaming & Sybil Resistance
 
-**What's proven:** Friends who contribute capital reduce defaults by 14%. Prosper.com validated this—capital-backed endorsements work, empty ones don't.
+**What's proven:** Friends who contribute capital reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016). Prosper.com validated this—capital-backed endorsements work, empty ones don't [[16]](../references.md#freedman-and-jin-2017).
 
 **What we're testing:** Whether quality filtering + network analysis + economic incentives resist Sybil attacks in crypto-native lending.
 
@@ -14,8 +14,8 @@ Phase 0 gathers data on what attack patterns emerge and which defenses actually 
 |---------------|--------|----------|
 | **Quality filtering** | ✅ Validated | ML achieves 99%+ bot detection |
 | **Capital requirements** | ✅ Validated | Prosper.com: 14% default reduction |
+| **Market filtering** | ✅ Validated | Lenders predict 45% better than credit scores alone |
 | **Network analysis** | ⚠️ Unproven | Testing hypothesis, may not work |
-| **Market filtering** | 🤷 Logical | Makes sense, no research |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive, untested |
 
 **Our bet:** Layering these defenses creates resilience even if individual layers fail. Economic alignment (lenders risk capital) matters more than algorithmic perfection.
@@ -73,10 +73,13 @@ Phase 0 gathers data on what attack patterns emerge and which defenses actually 
 - Eliminates "cheap talk" problem [[16]](../references.md#freedman-and-jin-2017)
 - Friend bids reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
 
-**Market-based filtering:**
-- Lenders vet borrowers or lose money
-- High-risk loans don't fund (natural selection)
-- No algorithmic perfection required
+**Market-based filtering — validated by Prosper.com:**
+- Lenders predict defaults **45% better** than credit scores alone [[12]](../references.md#iyer-et-al-2016)
+- Strategic herding improves outcomes: 1% bid increase → 15% more bids [[84]](../references.md#zhang-liu-2012)
+- Loans with more herding have **better repayment performance** [[84]](../references.md#zhang-liu-2012)
+- Early lenders signal quality, attracting informed follow-on lenders [[84]](../references.md#zhang-liu-2012)
+
+**Caveat:** Market filtering requires good information. Lenders make systematic errors when information is poor [[12]](../references.md#iyer-et-al-2016). Our trust scores + on-chain reputation provide the information environment lenders need.
 
 **Permanent on-chain reputation:**
 - Default history visible to all future lenders

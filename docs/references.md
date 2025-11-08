@@ -513,6 +513,14 @@ NBER Working Paper: [w19820](https://www.nber.org/papers/w19820)
 
 ---
 
+<span id="zhang-liu-2012"></span>
+**[84] Zhang, J., & Liu, P. (2012)**. Strategic Herding Behavior in Peer-to-Peer Loan Auctions. *Journal of Management Information Systems, 28*(4), 47-84.
+DOI: [10.2753/MIS0742-1222280402](https://doi.org/10.2753/MIS0742-1222280402)
+
+> Analyzes herding behavior in Prosper.com loan auctions, finding that **strategic herding improves lending outcomes**. Key findings: (1) A 1% increase in bids increases likelihood of additional bids by 15% (pre-funding); (2) After full funding, herding effect drops to 5%; (3) **Loans with more herding have better subsequent repayment performance**; (4) Unlike counterproductive herding in eBay auctions, herding in P2P lending is strategic and beneficial. Demonstrates that early lender participation serves as a quality signal that attracts informed follow-on lenders, creating positive information cascades.
+
+---
+
 ### Emotional Connection and Charitable Giving
 
 <span id="small-et-al-2007"></span>
