@@ -4,18 +4,7 @@ We combine algorithmic filtering with economic incentives to resist manipulation
 
 **Our defense:** Quality algorithms detect fake accounts. Social network analysis catches artificial connections. But our strongest protection is economic—lenders risk their own money, so they filter bad loans naturally.
 
-**Research validates this:** Prosper.com data shows friends who contribute capital reduce defaults—capital-backed endorsements work, empty endorsements don't.
-
----
-
-## Why This Model Works
-
-Research on Prosper.com validates capital-backed social trust:
-- Friend bids (capital contributions) reduce defaults by 14%[[12]](../references.md#iyer-et-al-2016)
-- Capital-backed endorsements outperform empty endorsements[[16]](../references.md#freedman-and-jin-2017)
-- Lenders using social + financial data predict defaults 45% better than credit scores alone[[12]](../references.md#iyer-et-al-2016)
-
-The key: friends must risk their own money, not just vouch with words.
+**Research validates this:** Prosper.com data shows friends who contribute capital reduce defaults—capital-backed endorsements work, empty endorsements don't. See [Social Trust Scoring](social-trust-scoring/README.md#why-this-model-works) for research foundation.
 
 ---
 

@@ -13,12 +13,18 @@ LendFriend uses **social collateral**—your network on Farcaster—as proof of 
 
 Close friends with small networks carry more weight than distant followers of influencers. Someone with 20 selective friends signals stronger trust than a stranger with 10,000 connections.
 
-{% hint style="success" %}
-**Research validates capital-backed social trust:**
-- Prosper.com: Friend bids (capital contributions) reduce defaults by 14% [[12]](../../references.md#iyer-et-al-2016)
-- Prosper.com: Capital-backed endorsements outperform empty endorsements [[16]](../../references.md#freedman-and-jin-2017)
-- Social + financial data predicts defaults 45% better than credit scores alone [[12]](../../references.md#iyer-et-al-2016)
-{% endhint %}
+---
+
+## Why This Model Works
+
+Research on Prosper.com validates capital-backed social trust:
+- Friend bids (capital contributions) reduce defaults by 14% [[12]](../../references.md#iyer-et-al-2016)
+- Capital-backed endorsements outperform empty endorsements [[16]](../../references.md#freedman-and-jin-2017)
+- Lenders using social + financial data predict defaults 45% better than credit scores alone [[12]](../../references.md#iyer-et-al-2016)
+
+The key: **friends must risk their own money, not just vouch with words.**
+
+This is why LendFriend requires capital contributions. Empty endorsements ("I trust this person") don't predict repayment—only capital-backed vouching works.
 
 ---
 
