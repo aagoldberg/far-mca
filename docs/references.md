@@ -634,6 +634,11 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 ## Network Analysis for Sybil/Fraud Detection
 
+<span id="quality-filtering-research"></span>
+**[87] Various ML-based bot detection studies (2020-2024)**. Machine learning approaches for social network bot detection.
+
+> Comprehensive research across multiple platforms shows machine learning algorithms achieve **99%+ accuracy** for bot detection in social networks. Key approaches: SVM (99.9% accuracy), Random Forest (99.6%), and KNN (97%). Quality scoring systems like Neynar leverage these ML methods to filter spam/bot accounts on Farcaster at scale.
+
 <span id="sybilrank"></span>
 **[85] Cao, Q., Sirivianos, M., Yang, X., & Pregueiro, T. (2012)**. Aiding the Detection of Fake Accounts in Large Scale Social Online Services. *USENIX NSDI*.
 URL: [usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf](https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf)

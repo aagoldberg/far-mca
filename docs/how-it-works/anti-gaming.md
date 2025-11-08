@@ -12,11 +12,11 @@ Phase 0 gathers data on what attack patterns emerge and which defenses actually 
 
 | Defense Layer | Status | Evidence |
 |---------------|--------|----------|
-| **Quality filtering** | ✅ Validated | ML achieves 99%+ bot detection |
-| **Capital requirements** | ✅ Validated | Prosper.com: 14% default reduction |
-| **Market filtering** | ✅ Validated | Lenders predict 45% better than credit scores alone |
+| **Quality filtering** | ✅ Validated | ML achieves [99%+ bot detection](../references.md#quality-filtering-research) |
+| **Capital requirements** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
+| **Market filtering** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
 | **Network analysis** | ✅ Validated | [SybilRank: 90% accuracy](../references.md#sybilrank) (not integrated yet) |
-| **On-chain reputation** | 🤷 Logical | Makes Sybils expensive, untested |
+| **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
 
 **Our bet:** Layering these defenses creates resilience even if individual layers fail. Economic alignment (lenders risk capital) matters more than algorithmic perfection.
 
