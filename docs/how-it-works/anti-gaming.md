@@ -1,21 +1,6 @@
 # Anti-Gaming & Sybil Resistance
 
-Uncollateralized lending based on social signals creates obvious attack vectors. Here's how we defend against gaming—and what we can't prevent.
-
----
-
-## The Attack Vectors
-
-**Basic Sybil attacks:**
-- Create fake accounts to boost trust scores
-- Build artificial social connections
-- Self-vouch through coordinated bot networks
-
-**Sophisticated attacks:**
-- Coordinated small networks (real people creating tight clusters of fake accounts)
-- Time-based reputation farming (build trust with small loans, default on large one)
-- Collusion rings (real accounts coordinate to defraud lenders and split proceeds)
-- Strategic gaming (exploit algorithm weaknesses we haven't discovered yet)
+Uncollateralized lending based on social signals requires robust defenses against manipulation. Here's how we protect lenders.
 
 ---
 
@@ -74,19 +59,6 @@ When friends contributed actual capital alongside their endorsement, repayment i
 
 ---
 
-## What We Can't Prevent
-
-**Sophisticated collusion:**
-Real people with legitimate accounts coordinating to defraud lenders. If 10 friends with genuine Farcaster profiles vouch for someone who defaults and they split the proceeds, our algorithm can't detect this—it looks like legitimate social support.
-
-**Reputation farming:**
-A borrower could successfully repay 5 small loans ($500 each) to build trust, then default on one large loan ($5K). The cumulative loss outweighs the trust built.
-
-**Zero-day exploits:**
-Attack patterns we haven't discovered yet. Every system has unknown vulnerabilities.
-
----
-
 ## Our Approach
 
 {% hint style="info" %}
@@ -104,14 +76,33 @@ The defenses above are our starting point. They'll evolve as we learn.
 **Principles:**
 1. **Economic alignment > algorithmic perfection** — Lenders risk their own money, so market filtering matters most
 2. **Iterate with data** — Phase 0 reveals attack patterns, we adapt defenses
-3. **Transparent limitations** — We acknowledge what we can't prevent
-4. **Multi-layered approach** — No single defense is perfect; layers create resilience
+3. **Multi-layered approach** — No single defense is perfect; layers create resilience
 
 **Expected evolution:**
 - Phase 0: Social trust + basic Sybil resistance
 - Phase 1: Add cashflow verification (harder to fake bank statements than social graphs)
 - Phase 2: Auto-repayment reduces strategic default incentives
 - Phase 3+: Machine learning on repayment patterns, cross-platform reputation
+
+---
+
+## What We Monitor For
+
+We actively track potential attack vectors:
+
+**Basic Sybil attacks:**
+- Fake accounts to boost trust scores
+- Artificial social connections
+- Coordinated bot networks
+
+**Sophisticated attacks:**
+- Coordinated small networks (real people creating tight clusters of fake accounts)
+- Time-based reputation farming (build trust with small loans, default on large one)
+- Collusion rings (real accounts coordinate to defraud lenders)
+- Unusual network topology (circular vouching patterns)
+- Default clustering (multiple defaults from same social cluster)
+
+Phase 0 data will reveal what attack patterns actually emerge in practice, allowing us to refine defenses accordingly.
 
 ---
 
@@ -133,11 +124,11 @@ LendFriend requires capital, not empty words. Research shows this distinction ma
 
 ## Reporting Suspicious Activity
 
-See something suspicious? We track:
-- Coordinated account creation patterns
-- Unusual network topology (circular vouching)
+See something suspicious? We track patterns that may indicate gaming:
+- Coordinated account creation
+- Unusual network topology
 - Reputation farming behaviors
-- Default clustering (multiple defaults from same social cluster)
+- Default clustering
 
 Phase 0 data will inform what "suspicious" actually looks like in practice.
 
