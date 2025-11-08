@@ -24,8 +24,8 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 
 **Principles:**
 1. **Economic alignment > algorithms** — Lenders risk money, so market filtering matters most
-2. **Test, don't claim** — Phase 0 reveals what works, what doesn't
-3. **Iterate with data** — Adapt defenses based on real attack patterns
+2. **Data-driven iteration** — Phase 0 reveals what works, we adapt accordingly
+3. **Layered defense** — Multiple protections create resilience
 
 **Expected evolution:**
 - Phase 0: Social trust + basic Sybil resistance
@@ -52,13 +52,15 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 - **Graph Neural Networks:** Detect collusion through network topology
 - Used in production by major platforms for Sybil/fraud detection
 
-Phase 0 focuses on economic protections (capital requirements + market filtering). If sophisticated network-based attacks emerge, we can deploy these validated methods.
+Phase 0 focuses on economic protections (friends vouch with capital + market filtering). If sophisticated network-based attacks emerge, we deploy these validated methods.
 
-### Layer 3: Temporal & On-Chain Signals (Baseline)
+### Layer 3: Temporal & On-Chain Signals
 
-- Account age, connection stability, growth patterns
+**Basic fraud deterrents:**
+- Account age and connection stability matter
 - Transaction history permanently recorded
 - Loan size limits for new borrowers
+- Growth patterns flagged if suspicious
 
 ---
 
@@ -76,7 +78,7 @@ Phase 0 focuses on economic protections (capital requirements + market filtering
 - Loans with more herding have **better repayment performance** [[84]](../references.md#zhang-liu-2012)
 - Early lenders signal quality, attracting informed follow-on lenders [[84]](../references.md#zhang-liu-2012)
 
-**Caveat:** Market filtering requires good information. Lenders make systematic errors when information is poor [[12]](../references.md#iyer-et-al-2016). Our trust scores + on-chain reputation provide the information environment lenders need.
+**Why it works:** Market filtering requires good information [[12]](../references.md#iyer-et-al-2016). Trust scores + on-chain reputation give lenders what they need to make smart decisions.
 
 **Permanent on-chain reputation:**
 - Default history visible to all future lenders
@@ -89,9 +91,7 @@ Phase 0 focuses on economic protections (capital requirements + market filtering
 
 ---
 
-## What We Monitor For
-
-We actively track potential attack vectors:
+## Attack Vectors We Track
 
 **Basic Sybil attacks:**
 - Fake accounts to boost trust scores
@@ -105,7 +105,7 @@ We actively track potential attack vectors:
 - Unusual network topology (circular vouching patterns)
 - Default clustering (multiple defaults from same social cluster)
 
-Phase 0 data will reveal what attack patterns emerge in practice, allowing us to refine defenses accordingly.
+Phase 0 data reveals which attacks emerge. We adapt defenses based on real patterns.
 
 ---
 
