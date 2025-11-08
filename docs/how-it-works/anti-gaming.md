@@ -47,6 +47,16 @@ Uncollateralized lending based on social signals creates obvious attack vectors.
 
 ### Economic Protections
 
+**Capital requirements (not empty endorsements):**
+
+Research on Prosper.com revealed a critical distinction: **empty friend endorsements led to worse repayment**, but **endorsements backed by capital led to better repayment**[[16]](../references.md#freedman-and-jin-2017).
+
+Early Prosper allowed friends to "endorse" borrowers without contributing money—pure social signaling. **Result:** Borrowers with these endorsements were **more likely to default**. The problem: cheap talk. Friends could vouch without consequences.
+
+When friends contributed actual capital alongside their endorsement, repayment improved significantly. **Why:** Aligned incentives. Friends lose money if the borrower defaults.
+
+**LendFriend requires capital:** Every "vouching" transaction requires friends to contribute actual money. No empty endorsements. This eliminates the cheap talk problem that plagued early P2P platforms.
+
 **Lenders risk their own capital:**
 - Market-based filtering (lenders vet borrowers or lose money)
 - No algorithmic perfection required—humans decide
@@ -105,22 +115,19 @@ The defenses above are our starting point. They'll evolve as we learn.
 
 ---
 
-## Why Lenders Should Still Trust This
+## Why This Model Works
 
-**Traditional credit scoring has fraud too:**
-- Identity theft
-- Synthetic identities
-- Credit repair scams
-- Bust-out fraud
-
-No system is perfect. The question is: **does social trust provide useful signal despite gaming attempts?**
-
-Research suggests yes:
-- Grameen Bank: 97-98% repayment with social accountability[[9]](../references.md#grameen-bank)
-- Prosper.com: Friend endorsements reduce defaults by 22%[[3]](../references.md#iyer-et-al-2016)
+**Research validation of capital-backed social trust:**
+- Empty endorsements on Prosper.com led to **higher defaults**[[16]](../references.md#freedman-and-jin-2017)
+- Capital-backed endorsements led to **better repayment**[[16]](../references.md#freedman-and-jin-2017)
 - Social proximity improves repayment by 10 percentage points[[6]](../references.md#karlan-et-al-2009)
+- Friend endorsements with money reduce defaults by 22%[[3]](../references.md#iyer-et-al-2016)
 
-Gaming exists in every lending system. Social trust isn't perfect—it's **better than the alternative** for people without traditional credit history.
+**Proven at scale:**
+- Grameen Bank: 97-98% repayment (9.6M borrowers)[[9]](../references.md#grameen-bank)
+- Kiva: 96.3% repayment ($1.8B+ loans)[[10]](../references.md#kiva)
+
+LendFriend requires capital, not empty words. Research shows this distinction matters.
 
 ---
 

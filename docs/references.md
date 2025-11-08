@@ -507,8 +507,9 @@ DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 <span id="freedman-and-jin-2017"></span>
 **[16] Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization, 51*, 185-222.
 DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11.008)
+NBER Working Paper: [w19820](https://www.nber.org/papers/w19820)
 
-> Finds that verifiable social network information (e.g., Facebook connections) significantly predicts loan default probability beyond credit scores alone. Social reputation systems work.
+> **Critical finding on empty vs. capital-backed endorsements:** Borrowers with social ties received more funding and lower interest rates, but **most borrowers with social ties were more likely to default**. The exception: **only endorsements from friends who also contributed money produced consistently better repayment**. Empty endorsements were "cheap talk" that misled lenders; capital-backed vouching aligned incentives. Suggests caution for using online social networks as quality signals unless friends have "skin in the game."
 
 ---
 
@@ -620,6 +621,40 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 **[27] Obaidullah, M., & Shirazi, N. S. (2015)**. Islamic Social Finance Report 2015. *Islamic Research and Training Institute (IRTI)*.
 
 > Comprehensive review of Islamic microfinance showing that qard hassan (benevolent loans) achieve comparable or better repayment than conventional microfinance when embedded in social/religious communities.
+
+---
+
+## P2P Lending Fraud & Security
+
+<span id="prosper-pump-and-dump"></span>
+**[80] Freedman, S., & Jin, G. Z. (2008)**. Dynamic Learning and Selection: The Early Years of Prosper.com. Working Paper.
+URL: [www.prosper.com/downloads/research/dynamic-learning-selection-062008.pdf](https://www.prosper.com/downloads/research/dynamic-learning-selection-062008.pdf)
+
+> Documents Prosper's early fraud issues including "pump and dump" bidding manipulation and group leader reward misalignment. Group leaders received ~$12 per funded loan, creating incentives to fund poor-quality loans. Research found that "the estimated returns of group loans are significantly lower than those of non-group loans" and that "group leader rewards motivated leaders to fund lower quality loans in order to earn the rewards." Approximately 18.5% of all money loaned through Prosper from February 2006 through June 2008 were in some form of delinquency. More than 35% of all loans that originated in February 2007 were in some form of delinquency.
+
+---
+
+<span id="china-p2p-fraud"></span>
+**[81] Li, J., & Wang, Y. (2022)**. Crime and crisis in China's P2P online lending market: A comparative analysis of fraud. *Crime, Law and Social Change*.
+DOI: [10.1007/s10611-022-10053-y](https://doi.org/10.1007/s10611-022-10053-y)
+
+> Comprehensive analysis of China's P2P lending collapse. By mid-2019, among 6,618 Chinese P2P platforms, 5,774 ended in bankruptcy or business failure (87.2% failure rate). Fraud was a main contributor. **Ezubao case:** 95% of projects were fake using "straw borrowers"—shell companies controlled by the Yucheng Group. The group purchased borrower information for $121.6 million to fabricate projects. On Renrendai platform, the probability of default by new borrowers was 56%. Synthetic identity fraud, loan stacking, and fake borrower schemes were prevalent. Demonstrates the catastrophic consequences of inadequate fraud prevention.
+
+---
+
+<span id="p2p-fraud-detection"></span>
+**[82] Xu, J. J., Chen, D., Chau, M., & Luo, X. (2022)**. Peer-to-peer loan fraud detection: Constructing features from transaction data. *Management Information Systems Quarterly, 46*(3), 1579-1602.
+DOI: [10.25300/MISQ/2022/16725](https://doi.org/10.25300/MISQ/2022/16725)
+
+> Machine learning approach to fraud detection on Chinese P2P platforms. Deployed on platform with 11,953,273 borrowers, identified 29,727 fraud-agents, with domain experts confirming 95.59% accuracy. Constructs behavioral features from transaction data including fraud capability, integrity, and opportunity based on loan requests, payment histories, connected peers, and activity sequences. Shows fraud detection requires analyzing network patterns, not just individual borrower characteristics.
+
+---
+
+<span id="p2p-fraud-statistics"></span>
+**[83] RiskSeal (2024)**. P2P Fraud Statistics and Trends.
+URL: [riskseal.io/glossary/p2p-fraud](https://riskseal.io/glossary/p2p-fraud)
+
+> Industry statistics: Over 57% of small business owners experienced fraud including P2P payment fraud. More than $12.5 billion lost to fraud in 2024—a 25% increase from previous year. Synthetic identity fraud accounts for 27% of all fraud. Common schemes include loan stacking (multiple simultaneous loans without disclosure) and identity theft. Modern P2P platforms employ machine learning and digital footprint analysis for detection.
 
 ---
 
