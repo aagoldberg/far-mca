@@ -11,7 +11,7 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 | Defense Layer | Status | Evidence |
 |---------------|--------|----------|
 | **Quality filtering** | ✅ Validated | ML achieves [99%+ bot detection](../references.md#quality-filtering-research) |
-| **Capital requirements** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
+| **Friends vouch with capital** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
 | **Market filtering** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
 | **Network analysis** | ✅ Validated | [SybilRank: 90% accuracy](../references.md#sybilrank) (not integrated yet) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
@@ -64,11 +64,11 @@ Phase 0 focuses on economic protections (capital requirements + market filtering
 
 ### Layer 4: Economic Protections (Strongest Defense)
 
-**Capital requirements — validated by Prosper.com:**
+**Friends vouch with capital — validated by Prosper.com:**
 - Every contribution requires actual money, not endorsements
 - Friends risk their capital if borrower defaults
 - Eliminates "cheap talk" problem [[16]](../references.md#freedman-and-jin-2017)
-- Friend bids reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
+- Friend capital contributions reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
 
 **Market-based filtering — validated by Prosper.com:**
 - Lenders predict defaults **45% better** than credit scores alone [[12]](../references.md#iyer-et-al-2016)
