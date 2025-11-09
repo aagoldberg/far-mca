@@ -10,11 +10,11 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 
 | Defense Layer | Status | Evidence |
 |---------------|--------|----------|
-| **Quality filtering** | ✅ Validated | ML achieves [99%+ bot detection](../references.md#quality-filtering-research) |
 | **Friends vouch with capital** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
 | **Market filtering** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
-| **Network analysis** | ✅ Validated | [Graph-based methods](../references.md#sybilrank) available if needed |
+| **Quality filtering** | ✅ Validated | ML achieves [99%+ bot detection](../references.md#quality-filtering-research) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
+| **Network analysis** | ✅ Validated | [Graph-based methods](../references.md#sybilrank) available if needed |
 
 **Our bet:** Layering these defenses creates resilience even if individual layers fail. Economic alignment (lenders risk capital) matters more than algorithmic perfection.
 
@@ -37,34 +37,7 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 
 ## Defense Layers
 
-### Layer 1: Quality Filtering (Validated)
-
-**Neynar scores filter spam/bots:**
-- 0-1 scale measures account quality
-- Bot/spam accounts weighted near zero
-- Research: ML achieves 99%+ bot detection accuracy
-
-### Layer 2: Network Analysis (Validated, Available If Needed)
-
-**Modern graph-based detection methods combine structural and behavioral signals:**
-- Graph neural networks (HGNNs) deployed at major financial institutions for fraud detection
-- Behavioral pattern analysis: posting cadence, interaction networks, account evolution
-- Community detection algorithms identify coordinated fraud rings
-- Farcaster-specific signals: FID history, reaction patterns, content repetition
-
-**Our stack approach:** Economic protections (Layer 4) come first. If sophisticated network attacks emerge, we deploy these validated methods used in production by major platforms.
-
-### Layer 3: Temporal & On-Chain Signals
-
-**Basic fraud deterrents:**
-- Account age and connection stability matter
-- Transaction history permanently recorded
-- Loan size limits for new borrowers
-- Growth patterns flagged if suspicious
-
----
-
-### Layer 4: Economic Protections (Strongest Defense)
+### Layer 1: Economic Protections (Strongest Defense)
 
 **Friends vouch with capital — validated by Prosper.com:**
 - Every contribution requires actual money, not endorsements
@@ -88,6 +61,33 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 **Short feedback loops (30-90 day loans):**
 - Fast data on what signals predict repayment
 - Rapid iteration on defense mechanisms
+
+---
+
+### Layer 2: Quality Filtering (Validated)
+
+**Neynar scores filter spam/bots:**
+- 0-1 scale measures account quality
+- Bot/spam accounts weighted near zero
+- Research: ML achieves 99%+ bot detection accuracy
+
+### Layer 3: Temporal & On-Chain Signals
+
+**Basic fraud deterrents:**
+- Account age and connection stability matter
+- Transaction history permanently recorded
+- Loan size limits for new borrowers
+- Growth patterns flagged if suspicious
+
+### Layer 4: Network Analysis (Validated, Available If Needed)
+
+**Modern graph-based detection methods combine structural and behavioral signals:**
+- Graph neural networks (HGNNs) deployed at major financial institutions for fraud detection
+- Behavioral pattern analysis: posting cadence, interaction networks, account evolution
+- Community detection algorithms identify coordinated fraud rings
+- Farcaster-specific signals: FID history, reaction patterns, content repetition
+
+**Our stack approach:** Economic protections come first. If sophisticated network attacks emerge, we deploy these validated methods used in production by major platforms.
 
 ---
 
