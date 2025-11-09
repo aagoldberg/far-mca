@@ -8,8 +8,9 @@ This page contains the research supporting LendFriend's uncollateralized lending
 
 ## Global Financial Inclusion Data
 
-<span id="world-bank-global-findex-2021"></span>
-**[1] World Bank (2021)**. The Global Findex Database 2021: Financial Inclusion, Digital Payments, and Resilience in the Age of COVID-19. World Bank Group, Washington, DC.
+#### [1] World Bank (2021) {#world-bank-global-findex-2021}
+
+**World Bank (2021)**. The Global Findex Database 2021: Financial Inclusion, Digital Payments, and Resilience in the Age of COVID-19. World Bank Group, Washington, DC.
 DOI: [10.1596/978-1-4648-1897-4](https://doi.org/10.1596/978-1-4648-1897-4)
 URL: [globalfindex.worldbank.org](https://www.worldbank.org/en/publication/globalfindex)
 
@@ -19,8 +20,9 @@ URL: [globalfindex.worldbank.org](https://www.worldbank.org/en/publication/globa
 
 ## Platform Economy & Fintech Data
 
-<span id="ref1"></span>
-**[49] Gig Economy Statistics (2025)**
+#### [49] Gig Economy Statistics (2025) {#ref1}
+
+**Gig Economy Statistics (2025)**
 DemandSage, "Gig Economy Statistics (2025): Growth, Market Size & Trends"
 URL: [https://www.demandsage.com/gig-economy-statistics/](https://www.demandsage.com/gig-economy-statistics/)
 
@@ -28,8 +30,9 @@ URL: [https://www.demandsage.com/gig-economy-statistics/](https://www.demandsage
 
 ---
 
-<span id="ref2"></span>
-**[50] Small Business AI Adoption (2025)**
+#### [50] Small Business AI Adoption (2025) {#ref2}
+
+**Small Business AI Adoption (2025)**
 Fox Business, "AI adoption among small businesses soars"
 URL: [https://www.foxbusiness.com/economy/ai-adoption-small-businesses-soars](https://www.foxbusiness.com/economy/ai-adoption-small-businesses-soars)
 
@@ -37,8 +40,9 @@ URL: [https://www.foxbusiness.com/economy/ai-adoption-small-businesses-soars](ht
 
 ---
 
-<span id="ref3"></span>
-**[51] Small Business Capital Access (2024)**
+#### [51] Small Business Capital Access (2024) {#ref3}
+
+**Small Business Capital Access (2024)**
 Goldman Sachs, "10,000 Small Businesses Voices Survey"
 URL: [https://www.goldmansachs.com/our-firm/history/moments/2024-10000-small-businesses-voices.html](https://www.goldmansachs.com/our-firm/history/moments/2024-10000-small-businesses-voices.html)
 
@@ -46,8 +50,9 @@ URL: [https://www.goldmansachs.com/our-firm/history/moments/2024-10000-small-bus
 
 ---
 
-<span id="ref4"></span>
-**[52] Small Business Loan Rejection Rates**
+#### [52] Small Business Loan Rejection Rates {#ref4}
+
+**Small Business Loan Rejection Rates**
 National Small Business Association
 URL: [https://nsba.biz/](https://nsba.biz/)
 
@@ -55,8 +60,9 @@ URL: [https://nsba.biz/](https://nsba.biz/)
 
 ---
 
-<span id="ref5"></span>
-**[53] Fintech Lending Cost Structure (2024)**
+#### [53] Fintech Lending Cost Structure (2024) {#ref5}
+
+**Fintech Lending Cost Structure (2024)**
 Multiple sources - ACH fees, BaaS setup, operational costs, startup costs ($500K-$2.5M)
 URL: [https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/](https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/)
 
@@ -64,8 +70,9 @@ URL: [https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-
 
 ---
 
-<span id="ref6"></span>
-**[54] Shopify Capital Rates and Terms**
+#### [54] Shopify Capital Rates and Terms {#ref6}
+
+**Shopify Capital Rates and Terms**
 Shopify, "Understanding Shopify Capital Loan Interest Rate"
 URL: [https://www.hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-loan-interest-rate-a-comprehensive-guide](https://www.hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-loan-interest-rate-a-comprehensive-guide)
 
@@ -73,8 +80,9 @@ URL: [https://www.hulkapps.com/blogs/shopify-hub/understanding-shopify-capital-l
 
 ---
 
-<span id="ref7"></span>
-**[55] Stripe Capital Financing Costs**
+#### [55] Stripe Capital Financing Costs {#ref7}
+
+**Stripe Capital Financing Costs**
 Stripe, "Stripe Capital Review 2025"
 URL: [https://www.unitedcapitalsource.com/business-loans/lender-reviews/stripe-capital-review/](https://www.unitedcapitalsource.com/business-loans/lender-reviews/stripe-capital-review/)
 
@@ -82,8 +90,9 @@ URL: [https://www.unitedcapitalsource.com/business-loans/lender-reviews/stripe-c
 
 ---
 
-<span id="ref8"></span>
-**[56] PayPal Business Loan Rates**
+#### [56] PayPal Business Loan Rates {#ref8}
+
+**PayPal Business Loan Rates**
 PayPal, "PayPal Business Loans Review"
 URL: [https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review/](https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-working-capital-review/)
 
@@ -91,8 +100,9 @@ URL: [https://www.unitedcapitalsource.com/business-loans/lender-reviews/paypal-w
 
 ---
 
-<span id="ref9"></span>
-**[57] Stablecoin Market Data (2024-2025)**
+#### [57] Stablecoin Market Data (2024-2025) {#ref9}
+
+**Stablecoin Market Data (2024-2025)**
 Payments CMI, "Stablecoins & Cross-Border Payments"
 URL: [https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/](https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/)
 
@@ -100,8 +110,9 @@ URL: [https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-s
 
 ---
 
-<span id="ref10"></span>
-**[58] Visa Stablecoin Initiative**
+#### [58] Visa Stablecoin Initiative {#ref10}
+
+**Visa Stablecoin Initiative**
 Visa Newsroom, "Visa Expands Stablecoin Settlement Capabilities"
 URL: [https://usa.visa.com/about-visa/newsroom/press-releases.html](https://usa.visa.com/about-visa/newsroom/press-releases.html)
 
@@ -109,8 +120,9 @@ URL: [https://usa.visa.com/about-visa/newsroom/press-releases.html](https://usa.
 
 ---
 
-<span id="ref11"></span>
-**[59] Zelle Cross-Border Stablecoin**
+#### [59] Zelle Cross-Border Stablecoin {#ref11}
+
+**Zelle Cross-Border Stablecoin**
 Zelle Press Releases
 URL: [https://www.zellepay.com/press-releases](https://www.zellepay.com/press-releases)
 
@@ -118,8 +130,9 @@ URL: [https://www.zellepay.com/press-releases](https://www.zellepay.com/press-re
 
 ---
 
-<span id="ref12"></span>
-**[60] Remitly Stablecoin Integration**
+#### [60] Remitly Stablecoin Integration {#ref12}
+
+**Remitly Stablecoin Integration**
 Remitly Newsroom, "Remitly Harnesses the Power of Stablecoins for Cross-Border Payments"
 URL: [https://news.remitly.com/innovation/remitly-harnesses-stablecoins/](https://news.remitly.com/innovation/remitly-harnesses-stablecoins/)
 
@@ -127,8 +140,9 @@ URL: [https://news.remitly.com/innovation/remitly-harnesses-stablecoins/](https:
 
 ---
 
-<span id="ref13"></span>
-**[61] Stablecoin Cost Savings**
+#### [61] Stablecoin Cost Savings {#ref13}
+
+**Stablecoin Cost Savings**
 Payments CMI
 URL: [https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/](https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/)
 
@@ -136,8 +150,9 @@ URL: [https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-s
 
 ---
 
-<span id="ref14"></span>
-**[62] DeFi Collateralized Lending TVL (2025)**
+#### [62] DeFi Collateralized Lending TVL (2025) {#ref14}
+
+**DeFi Collateralized Lending TVL (2025)**
 CoinLaw, "Crypto Lending and Borrowing Statistics 2025: Top Metrics"
 URL: [https://coinlaw.io/crypto-lending-and-borrowing-statistics/](https://coinlaw.io/crypto-lending-and-borrowing-statistics/)
 
@@ -145,8 +160,9 @@ URL: [https://coinlaw.io/crypto-lending-and-borrowing-statistics/](https://coinl
 
 ---
 
-<span id="ref15"></span>
-**[63] Goldfinch Emerging Markets**
+#### [63] Goldfinch Emerging Markets {#ref15}
+
+**Goldfinch Emerging Markets**
 CoinGecko Research - Goldfinch protocol statistics and market targets
 URL: [https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending](https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending)
 
@@ -154,8 +170,9 @@ URL: [https://www.coingecko.com/research/publications/undercollateralized-loans-
 
 ---
 
-<span id="ref16"></span>
-**[64] Maple Finance Growth**
+#### [64] Maple Finance Growth {#ref16}
+
+**Maple Finance Growth**
 Reflexivity Research, "A Look Into On-chain Lending and Under-collateralized Loans"
 URL: [https://www.reflexivityresearch.com/all-reports/a-look-into-on-chain-lending-and-under-collateralized-loans](https://www.reflexivityresearch.com/all-reports/a-look-into-on-chain-lending-and-under-collateralized-loans)
 
@@ -163,8 +180,9 @@ URL: [https://www.reflexivityresearch.com/all-reports/a-look-into-on-chain-lendi
 
 ---
 
-<span id="ref17"></span>
-**[65] Farcaster User Statistics**
+#### [65] Farcaster User Statistics {#ref17}
+
+**Farcaster User Statistics**
 Farcaster Network Stats
 URL: [https://www.farcaster.xyz/](https://www.farcaster.xyz/)
 
@@ -172,8 +190,9 @@ URL: [https://www.farcaster.xyz/](https://www.farcaster.xyz/)
 
 ---
 
-<span id="ref18"></span>
-**[66] Bluesky User Statistics**
+#### [66] Bluesky User Statistics {#ref18}
+
+**Bluesky User Statistics**
 Bluesky Social
 URL: [https://bsky.app/](https://bsky.app/)
 
@@ -181,8 +200,9 @@ URL: [https://bsky.app/](https://bsky.app/)
 
 ---
 
-<span id="ref19"></span>
-**[67] Gig Worker Financial Access Challenges**
+#### [67] Gig Worker Financial Access Challenges {#ref19}
+
+**Gig Worker Financial Access Challenges**
 Financial IT & Rollee Gig Economy Equality Gap Report
 URL: [https://financialit.net/blog/banking-data/achieving-financial-parity-gig-workers-how-banks-are-embracing-fintech-bridge-gap](https://financialit.net/blog/banking-data/achieving-financial-parity-gig-workers-how-banks-are-embracing-fintech-bridge-gap)
 
@@ -190,8 +210,9 @@ URL: [https://financialit.net/blog/banking-data/achieving-financial-parity-gig-w
 
 ---
 
-<span id="ref20"></span>
-**[68] ACH Transaction Costs**
+#### [68] ACH Transaction Costs {#ref20}
+
+**ACH Transaction Costs**
 Multiple fintech sources
 URL: [https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/](https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-in-consumer-lending/)
 
@@ -199,8 +220,9 @@ URL: [https://www.brytsoftware.com/how-fintech-solutions-reduce-cost-of-capital-
 
 ---
 
-<span id="ref21"></span>
-**[69] ACH Settlement Time**
+#### [69] ACH Settlement Time {#ref21}
+
+**ACH Settlement Time**
 Stripe Documentation & Nacha
 URL: [https://stripe.com/docs/ach](https://stripe.com/docs/ach)
 
@@ -208,8 +230,9 @@ URL: [https://stripe.com/docs/ach](https://stripe.com/docs/ach)
 
 ---
 
-<span id="ref22"></span>
-**[70] Venture Capital Return Expectations**
+#### [70] Venture Capital Return Expectations {#ref22}
+
+**Venture Capital Return Expectations**
 Multiple VC industry sources
 URL: [https://www.privatecapitaljournal.com/features/venture-capital-returns-expectations/](https://www.privatecapitaljournal.com/features/venture-capital-returns-expectations/)
 
@@ -217,8 +240,9 @@ URL: [https://www.privatecapitaljournal.com/features/venture-capital-returns-exp
 
 ---
 
-<span id="ref23"></span>
-**[71] Fintech Debt Facility Costs**
+#### [71] Fintech Debt Facility Costs {#ref23}
+
+**Fintech Debt Facility Costs**
 Andreessen Horowitz, "The Cost of Capital for Fintech Lenders" (2024)
 URL: [https://a16z.com/fintech-lending-cost-of-capital/](https://a16z.com/fintech-lending-cost-of-capital/)
 
@@ -226,85 +250,97 @@ URL: [https://a16z.com/fintech-lending-cost-of-capital/](https://a16z.com/fintec
 
 ---
 
-<span id="ref24"></span>
-**[72] Fintech Operational Costs**
+#### [72] Fintech Operational Costs {#ref24}
+
+**Fintech Operational Costs**
 BusinessDojo & FasterCapital fintech startup analysis
 URL: [https://www.businessdojo.io/fintech-startup-costs/](https://www.businessdojo.io/fintech-startup-costs/)
 
 > Launch costs $500K-$2.5M for first 12-18 months, ongoing costs $200K-$500K annually (team salaries, compliance, infrastructure).
 
-<span id="ref73"></span>
-**[73] Fintech Debt Facility Costs**
+#### [73] Fintech Debt Facility Costs {#ref73}
+
+**Fintech Debt Facility Costs**
 Andreessen Horowitz, "The Cost of Capital for Fintech Lenders" (2024)
 URL: [https://a16z.com/fintech-lending-cost-of-capital/](https://a16z.com/fintech-lending-cost-of-capital/)
 
 > Warehouse credit facilities typically cost 12-15% all-in for fintech lenders.
 
-<span id="ref74"></span>
-**[74] OnDeck Net Charge-Off Rates**
+#### [74] OnDeck Net Charge-Off Rates {#ref74}
+
+**OnDeck Net Charge-Off Rates**
 OnDeck Capital Q4 2019 Financial Results
 URL: [https://www.ondeck.com/press-releases/ondeck-reports-fourth-quarter-and-full-year-2019-financial-results](https://www.ondeck.com/press-releases/ondeck-reports-fourth-quarter-and-full-year-2019-financial-results)
 
 > Net charge-off rate of 13.6% for full year 2019, provision rate 7.0%, 15+ day delinquency ratio 9.0%.
 
-<span id="ref75"></span>
-**[75] Financial Services Profit Margins**
+#### [75] Financial Services Profit Margins {#ref75}
+
+**Financial Services Profit Margins**
 Investopedia, "What Is the Average Profit Margin for Financial Services Companies?" (2024)
 URL: [https://www.investopedia.com/ask/answers/031215/what-average-range-profit-margin-company-financial-services-sector.asp](https://www.investopedia.com/ask/answers/031215/what-average-range-profit-margin-company-financial-services-sector.asp)
 
 > Average profit margin for financial services businesses is around 10%.
 
-<span id="ref76"></span>
-**[76] Clearco Valuation Drop and Restructuring**
+#### [76] Clearco Valuation Drop and Restructuring {#ref76}
+
+**Clearco Valuation Drop and Restructuring**
 Multiple sources (BetaKit, TechCrunch, Wikipedia)
 URL: [https://betakit.com/clearco-secures-new-equity-financing-from-existing-investors-and-an-asset-backed-facility-as-struggling-fintech-executes-complex-recapitalization-plan/](https://betakit.com/clearco-secures-new-equity-financing-from-existing-investors-and-an-asset-backed-facility-as-struggling-fintech-executes-complex-recapitalization-plan/)
 
 > Clearco valuation dropped from $2B (2021) to $200M (2023), laid off 72% of staff, both co-founders exited, complex recapitalization October 2023.
 
-<span id="ref77"></span>
-**[77] Wayflyer Financial Performance**
+#### [77] Wayflyer Financial Performance {#ref77}
+
+**Wayflyer Financial Performance**
 Business Post & Irish Times (2024)
 URL: [https://www.businesspost.ie/tech/wayflyer-eyes-profitability-as-turnover-soars-and-losses-halve-amid-strategic-expansion/](https://www.businesspost.ie/tech/wayflyer-eyes-profitability-as-turnover-soars-and-losses-halve-amid-strategic-expansion/)
 
 > Wayflyer turnover €62.5M (2023), operating loss €40.9M (down 46% from €76.9M in 2022), achieved first monthly profitability October 2023.
 
-<span id="ref78"></span>
-**[78] Affirm Profitability Challenges**
+#### [78] Affirm Profitability Challenges {#ref78}
+
+**Affirm Profitability Challenges**
 Nasdaq analysis (2024)
 URL: [https://www.nasdaq.com/articles/get-your-money-out-these-3-fintech-stocks-2025](https://www.nasdaq.com/articles/get-your-money-out-these-3-fintech-stocks-2025)
 
 > Affirm on pace to lose $800M in fiscal 2024, analysts predict company will remain unprofitable through at least 2026.
 
-<span id="ref79"></span>
-**[79] Uncapped Abandons RBF Model**
+#### [79] Uncapped Abandons RBF Model {#ref79}
+
+**Uncapped Abandons RBF Model**
 Uncapped company announcement (2024)
 URL: [https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering](https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering)
 
 > Uncapped completely stopped offering Revenue Based Finance, cited structural problems with RBF model favoring lower quality businesses.
 
-<span id="ref80"></span>
-**[80] Shopify/Stripe Transaction Data Advantage**
+#### [80] Shopify/Stripe Transaction Data Advantage {#ref80}
+
+**Shopify/Stripe Transaction Data Advantage**
 The Financial Brand analysis
 URL: [https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/](https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/)
 
 > Shopify has "proprietary transaction data allowing for pre-qualification of merchants, high visibility into cash flows for underwriting."
 
-<span id="ref81"></span>
-**[81] Embedded Lending Lower Customer Acquisition Cost**
+#### [81] Embedded Lending Lower Customer Acquisition Cost {#ref81}
+
+**Embedded Lending Lower Customer Acquisition Cost**
 Fintech Takes & Multiple Sources
 URL: [https://fintechtakes.com/articles/2025-02-18/the-future-of-small-business-lending-is-embedded/](https://fintechtakes.com/articles/2025-02-18/the-future-of-small-business-lending-is-embedded/)
 
 > Embedded lenders gain access to pool of potential borrowers already using platform, "known entities," reduces CAC significantly.
 
-<span id="ref82"></span>
-**[82] Direct Payment Flow Access**
+#### [82] Direct Payment Flow Access {#ref82}
+
+**Direct Payment Flow Access**
 The Financial Brand & Stripe Documentation
 URL: [https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/](https://thefinancialbrand.com/104956/stripe-square-intuit-business-banking-ecosystem-shopify-platformication-payments-lending-trend/)
 
 > Embedded lenders have "direct access to payments flow to both disburse loans and deduct payments from future sales."
 
-<span id="ref83"></span>
-**[83] Fintech Investment Decline 2024**
+#### [83] Fintech Investment Decline 2024 {#ref83}
+
+**Fintech Investment Decline 2024**
 KPMG Pulse of Fintech H1'24
 URL: [https://assets.kpmg.com/content/dam/kpmgsites/uk/pdf/2024/08/pulse-of-fintech-h1-2024.pdf](https://assets.kpmg.com/content/dam/kpmgsites/uk/pdf/2024/08/pulse-of-fintech-h1-2024.pdf)
 
@@ -316,16 +352,18 @@ URL: [https://assets.kpmg.com/content/dam/kpmgsites/uk/pdf/2024/08/pulse-of-fint
 
 ### Adamic-Adar Index and Link Prediction
 
-<span id="adamic-and-adar-2003"></span>
-**[2] Adamic, L. A., & Adar, E. (2003)**. Friends and neighbors on the Web. *Social Networks, 25*(3), 211-230.
+#### [2] Adamic & Adar (2003) {#adamic-and-adar-2003}
+
+**Adamic, L. A., & Adar, E. (2003)**. Friends and neighbors on the Web. *Social Networks, 25*(3), 211-230.
 DOI: [10.1016/S0378-8733(03)00009-1](https://doi.org/10.1016/S0378-8733(03)00009-1)
 
 > **Original Adamic-Adar paper**. Introduces the Adamic-Adar index for measuring similarity in social networks based on common features. Demonstrates that weighting common neighbors inversely by their degree significantly improves link prediction accuracy. Shows 82% improvement over simple mutual connection counting.
 
 ---
 
-<span id="liben-nowell-and-kleinberg-2007"></span>
-**[3] Liben-Nowell, D., & Kleinberg, J. (2007)**. The link-prediction problem for social networks. *Journal of the American Society for Information Science and Technology, 58*(7), 1019-1031.
+#### [3] Liben-Nowell & Kleinberg (2007) {#liben-nowell-and-kleinberg-2007}
+
+**Liben-Nowell, D., & Kleinberg, J. (2007)**. The link-prediction problem for social networks. *Journal of the American Society for Information Science and Technology, 58*(7), 1019-1031.
 DOI: [10.1002/asi.20591](https://doi.org/10.1002/asi.20591)
 
 > Comprehensive benchmark study comparing 20+ link prediction algorithms. Adamic-Adar consistently ranks in top-3 performers across multiple social networks. Demonstrates that local similarity measures often outperform global metrics for predicting new connections.
@@ -340,8 +378,9 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 
 #### Strong Ties vs Influential Connections (2022)
 
-<span id="mobile-micro-lending-2022"></span>
-**[4] Social capital, phone call activities and borrower default in mobile micro-lending (2022)**. *Applied Economics*
+#### [4] Mobile Micro-Lending (2022) {#mobile-micro-lending-2022}
+
+**Social capital, phone call activities and borrower default in mobile micro-lending (2022)**. *Applied Economics*
 
 > Study on mobile micro-lending found that calling activities associated with **stronger social ties have greater predictive power for loan defaults** than those associated with weaker ties. Strong ties (people on the borrower's contact list) were more powerful predictors than weak ties.
 
@@ -351,8 +390,9 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 
 #### What Actually Drives Repayment: Repeated Interaction > Closeness
 
-<span id="banking-on-cooperation-2023"></span>
-**[5] Banking on cooperation: an evolutionary analysis of microfinance loan repayment behaviour (2023)**. *Evolutionary Human Sciences*
+#### [5] Banking on Cooperation (2023) {#banking-on-cooperation-2023}
+
+**Banking on cooperation: an evolutionary analysis of microfinance loan repayment behaviour (2023)**. *Evolutionary Human Sciences*
 
 > Evolutionary analysis found that **mechanisms enabling monitoring and enforcement through repeated interaction matter more** than emotional closeness or kinship.
 
@@ -368,13 +408,15 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 
 #### Network Centrality Predicts Default Risk (2022-2025)
 
-<span id="chen-et-al-2022"></span>
-**[6] Chen et al. (2022)**. Network centrality effects in peer to peer lending. *Physica A: Statistical Mechanics and its Applications*
+#### [6] Chen et al. (2022) {#chen-et-al-2022}
+
+**Chen et al. (2022)**. Network centrality effects in peer to peer lending. *Physica A: Statistical Mechanics and its Applications*
 
 > First study testing degree, betweenness, and eigenvector centrality in P2P lending credit default modeling. **Key findings:** (1) Borrower's network position positively contributes to classification of default risk; (2) Degree centrality enhances predictive power in default models; (3) Network topological features add value beyond traditional credit features.
 
-<span id="network-centrality-credit-risk-2025"></span>
-**[7] Network centrality and credit risk: A comprehensive analysis (2025)**. *Journal of Marketing Analytics*
+#### [7] Network Centrality & Credit Risk (2025) {#network-centrality-credit-risk-2025}
+
+**Network centrality and credit risk: A comprehensive analysis (2025)**. *Journal of Marketing Analytics*
 
 > Recent analysis using Renrendai (Chinese P2P platform) data: (1) Degree centrality (number of connections) improves default prediction; (2) Eigenvector centrality (connections to influential people) positively moderated funding success; (3) Borrowers with higher connectivity had better repayment rates.
 
@@ -404,8 +446,9 @@ Could PageRank or eigenvector centrality (measuring network influence and peer p
 
 #### The Double-Edged Sword of Social Pressure
 
-<span id="social-ties-crisis-2024"></span>
-**[8] Microfinance borrowers' social ties can bring stability or chaos (2024)**. Crisis analysis
+#### [8] Social Ties in Crisis (2024) {#social-ties-crisis-2024}
+
+**Microfinance borrowers' social ties can bring stability or chaos (2024)**. Crisis analysis
 
 > **Critical finding**: Social pressures that ensure repayment in good times can **accelerate defaults during crises**. Joint liability can spread defaults across groups during liquidity crunches—the same social mechanisms that create accountability can transmit failure.
 
@@ -447,16 +490,18 @@ Where Centrality = Borrower PageRank, Lender PageRank, or Mutual Connection Cent
 
 ### Group Lending and Social Collateral
 
-<span id="besley-and-coate-1995"></span>
-**[9] Besley, T., & Coate, S. (1995)**. Group lending, repayment incentives and social collateral. *Journal of Development Economics, 46*(1), 1-18.
+#### [9] Besley & Coate (1995) {#besley-and-coate-1995}
+
+**Besley, T., & Coate, S. (1995)**. Group lending, repayment incentives and social collateral. *Journal of Development Economics, 46*(1), 1-18.
 DOI: [10.1016/0304-3878(94)00045-E](https://doi.org/10.1016/0304-3878(94)00045-E)
 
 > **Foundational paper** establishing that social collateral can substitute for traditional collateral in lending. Demonstrates how group lending creates peer monitoring and social sanctions that improve repayment rates.
 
 ---
 
-<span id="feigenberg-et-al-2013"></span>
-**[10] Feigenberg, B., Field, E., & Pande, R. (2013)**. The economic returns to social interaction: Experimental evidence from microfinance. *The Review of Economic Studies, 80*(4), 1459-1483.
+#### [10] Feigenberg et al. (2013) {#feigenberg-et-al-2013}
+
+**Feigenberg, B., Field, E., & Pande, R. (2013)**. The economic returns to social interaction: Experimental evidence from microfinance. *The Review of Economic Studies, 80*(4), 1459-1483.
 DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 
 > Shows that increased meeting frequency in microfinance groups builds social capital and improves repayment rates by creating persistent social ties and information sharing networks.
@@ -465,8 +510,9 @@ DOI: [10.1093/restud/rdt016](https://doi.org/10.1093/restud/rdt016)
 
 ### Peer-to-Peer Lending and Reputation
 
-<span id="herzenstein-et-al-2011"></span>
-**[11] Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research, 48*(SPL), S138-S149.
+#### [11] Herzenstein et al. (2011) {#herzenstein-et-al-2011}
+
+**Herzenstein, M., Sonenshein, S., & Dholakia, U. M. (2011)**. Tell Me a Good Story and I May Lend You Money: The Role of Narratives in Peer-to-Peer Lending Decisions. *Journal of Marketing Research, 48*(SPL), S138-S149.
 DOI: [10.1509/jmkr.48.SPL.S138](https://doi.org/10.1509/jmkr.48.SPL.S138)
 
 > Seminal study on how borrower narratives affect P2P lending decisions on Prosper.com. **Key findings:** (1) As number of identity claims in narratives increases, loan funding increases but repayment performance suffers; (2) Unverifiable soft information affects lending decisions above and beyond objective, verifiable information; (3) Identity claims about being "trustworthy" or "successful" increased funding but ironically were less predictive of actual repayment compared to "moral hardship" narratives. Demonstrated that storytelling significantly impacts lender behavior in unsecured lending.
@@ -482,8 +528,9 @@ DOI: [10.1287/mnsc.2015.2181](https://doi.org/10.1287/mnsc.2015.2181)
 
 ---
 
-<span id="duarte-et-al-2012"></span>
-**[13] Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
+#### [13] Duarte et al. (2012) {#duarte-et-al-2012}
+
+**Duarte, J., Siegel, S., & Young, L. (2012)**. Trust and Credit: The Role of Appearance in Peer-to-peer Lending. *Review of Financial Studies*, 25(8), 2455-2484.
 DOI: [10.1093/rfs/hhs071](https://doi.org/10.1093/rfs/hhs071)
 
 > Examines how appearance-based impressions affect financial transactions using photographs from Prosper.com. **Key findings:** (1) Borrowers appearing more trustworthy have higher funding probabilities and receive **~50 basis points lower interest rates**; (2) Appearance correlates with actual credit quality—trustworthy-looking borrowers had better credit scores and lower default rates; (3) Visual trust signals matter in financial transactions because they predict both investor and borrower behavior. Shows that appearance provides legitimate information about creditworthiness, not just bias.
@@ -497,16 +544,18 @@ DOI: [10.3368/jhr.46.1.53](https://doi.org/10.3368/jhr.46.1.53)
 
 ---
 
-<span id="lin-et-al-2013"></span>
-**[15] Lin, M., Prabhala, N. R., & Viswanathan, S. (2013)**. Judging borrowers by the company they keep: Friendship networks and information asymmetry in online peer-to-peer lending. *Management Science, 59*(1), 17-35.
+#### [15] Lin et al. (2013) {#lin-et-al-2013}
+
+**Lin, M., Prabhala, N. R., & Viswanathan, S. (2013)**. Judging borrowers by the company they keep: Friendship networks and information asymmetry in online peer-to-peer lending. *Management Science, 59*(1), 17-35.
 DOI: [10.1287/mnsc.1120.1560](https://doi.org/10.1287/mnsc.1120.1560)
 
 > Demonstrates that borrowers with strong social network ties on Prosper.com receive 1) more bids, 2) lower interest rates, and 3) have better repayment performance. Social connections reduce information asymmetry and improve default prediction.
 
 ---
 
-<span id="freedman-and-jin-2017"></span>
-**[16] Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization, 51*, 185-222.
+#### [16] Freedman & Jin (2017) {#freedman-and-jin-2017}
+
+**Freedman, S., & Jin, G. Z. (2017)**. The information value of online social networks: Lessons from peer-to-peer lending. *International Journal of Industrial Organization, 51*, 185-222.
 DOI: [10.1016/j.ijindorg.2016.11.008](https://doi.org/10.1016/j.ijindorg.2016.11.008)
 NBER Working Paper: [w19820](https://www.nber.org/papers/w19820)
 
@@ -514,8 +563,9 @@ NBER Working Paper: [w19820](https://www.nber.org/papers/w19820)
 
 ---
 
-<span id="zhang-liu-2012"></span>
-**[84] Zhang, J., & Liu, P. (2012)**. Strategic Herding Behavior in Peer-to-Peer Loan Auctions. *Journal of Management Information Systems, 28*(4), 47-84.
+#### [84] Zhang & Liu (2012) {#zhang-liu-2012}
+
+**Zhang, J., & Liu, P. (2012)**. Strategic Herding Behavior in Peer-to-Peer Loan Auctions. *Journal of Management Information Systems, 28*(4), 47-84.
 DOI: [10.2753/MIS0742-1222280402](https://doi.org/10.2753/MIS0742-1222280402)
 
 > Analyzes herding behavior in Prosper.com loan auctions, finding that **strategic herding improves lending outcomes**. Key findings: (1) A 1% increase in bids increases likelihood of additional bids by 15% (pre-funding); (2) After full funding, herding effect drops to 5%; (3) **Loans with more herding have better subsequent repayment performance**; (4) Unlike counterproductive herding in eBay auctions, herding in P2P lending is strategic and beneficial. Demonstrates that early lender participation serves as a quality signal that attracts informed follow-on lenders, creating positive information cascades.
@@ -524,16 +574,18 @@ DOI: [10.2753/MIS0742-1222280402](https://doi.org/10.2753/MIS0742-1222280402)
 
 ### Emotional Connection and Charitable Giving
 
-<span id="small-et-al-2007"></span>
-**[17] Small, D. A., Loewenstein, G., & Slovic, P. (2007)**. Sympathy and callousness: The impact of deliberative thought on donations to identifiable and statistical victims. *Organizational Behavior and Human Decision Processes*, 102(2), 143-153.
+#### [17] Small et al. (2007) {#small-et-al-2007}
+
+**Small, D. A., Loewenstein, G., & Slovic, P. (2007)**. Sympathy and callousness: The impact of deliberative thought on donations to identifiable and statistical victims. *Organizational Behavior and Human Decision Processes*, 102(2), 143-153.
 DOI: [10.1016/j.obhdp.2006.01.005](https://doi.org/10.1016/j.obhdp.2006.01.005)
 
 > Foundational research on the **identifiable victim effect**: people donate significantly more to an identified individual with a story than to statistical information about a group. Shows that emotional engagement with specific people (not abstract numbers) drives prosocial behavior. Classic study demonstrated donors gave more when shown "Rokia, a 7-year-old girl from Mali" than when presented with statistics about millions of African children at risk. Critical insight: combining emotional stories with statistics actually reduces donations compared to stories alone—people connect to individuals, not data.
 
 ---
 
-<span id="genevsky-and-knutson-2015"></span>
-**[18] Genevsky, A., & Knutson, B. (2015)**. Neural affective mechanisms predict market-level microlending. *Psychological Science*, 26(9), 1411-1422.
+#### [18] Genevsky & Knutson (2015) {#genevsky-and-knutson-2015}
+
+**Genevsky, A., & Knutson, B. (2015)**. Neural affective mechanisms predict market-level microlending. *Psychological Science*, 26(9), 1411-1422.
 DOI: [10.1177/0956797615588467](https://doi.org/10.1177/0956797615588467)
 
 > Neural research examining how Kiva borrower photographs and stories affect lending decisions. Found that **positive arousal from viewing borrower photos directly predicts lending success** at market scale. Brain imaging showed nucleus accumbens (reward center) activation when viewing borrower profiles predicted both individual willingness to lend and aggregate lending rates across thousands of loans. Demonstrates that emotional engagement isn't just psychological—it's measurable in neural response and correlates with actual financial decisions.
@@ -542,8 +594,9 @@ DOI: [10.1177/0956797615588467](https://doi.org/10.1177/0956797615588467)
 
 ### Social Capital and Network Effects
 
-<span id="karlan-et-al-2009"></span>
-**[19] Karlan, D., Mobius, M., Rosenblat, T., & Szeidl, A. (2009)**. Trust and social collateral. *The Quarterly Journal of Economics, 124*(3), 1307-1361.
+#### [19] Karlan et al. (2009) {#karlan-et-al-2009}
+
+**Karlan, D., Mobius, M., Rosenblat, T., & Szeidl, A. (2009)**. Trust and social collateral. *The Quarterly Journal of Economics, 124*(3), 1307-1361.
 DOI: [10.1162/qjec.2009.124.3.1307](https://doi.org/10.1162/qjec.2009.124.3.1307)
 
 > Field experiment in Peru showing that social proximity (measured by geographic distance and relationship strength) strongly predicts loan repayment. Trust between borrowers in lending groups reduces default risk by 13%.
@@ -635,37 +688,43 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 ## Network Analysis for Sybil/Fraud Detection
 
-<span id="quality-filtering-research"></span>
-**[87] Various ML-based bot detection studies (2020-2024)**. Machine learning approaches for social network bot detection.
+#### [87] ML-based Bot Detection (2020-2024) {#quality-filtering-research}
+
+**Various ML-based bot detection studies (2020-2024)**. Machine learning approaches for social network bot detection.
 
 > Comprehensive research across multiple platforms shows machine learning algorithms achieve **99%+ accuracy** for bot detection in social networks. Key approaches: SVM (99.9% accuracy), Random Forest (99.6%), and KNN (97%). Quality scoring systems like Neynar leverage these ML methods to filter spam/bot accounts on Farcaster at scale.
 
-<span id="openrank"></span>
-**[89] OpenRank Protocol**. Open-source reputation computation for Farcaster using graph algorithms.
+#### [89] OpenRank Protocol {#openrank}
+
+**OpenRank Protocol**. Open-source reputation computation for Farcaster using graph algorithms.
 URL: [docs.openrank.com](https://docs.openrank.com/integrations/farcaster)
 
 > Uses **EigenTrust algorithm** on Farcaster's social graph to compute trust scores. Weights engagement actions as peer-to-peer trust heuristics: Mentions (12), Replies (6), Recasts (3), Likes (1), Follows (1). Spam and Sybil clusters naturally receive low scores because low-reputation profiles cannot boost others. Global rankings updated every 2 hours. Demonstrates graph-based reputation systems work at scale on decentralized social networks.
 
-<span id="farcaster-spam-labels"></span>
-**[90] Farcaster Spam Labels**. ML-based spam prediction for Farcaster accounts.
+#### [90] Farcaster Spam Labels {#farcaster-spam-labels}
+
+**Farcaster Spam Labels**. ML-based spam prediction for Farcaster accounts.
 URL: [github.com/warpcast/labels](https://github.com/warpcast/labels)
 
 > Public spam labels predict probability of spammy behavior based on historical activity, social graph structure, message content, and community moderation actions. Distinguishes between human spammers and bots. Examples of detected spam: generic LLM responses, bulk following, irrelevant or offensive replies. Labels are transparently published and used by Farcaster clients for quality filtering.
 
-<span id="sybilrank"></span>
-**[85] Cao, Q., Sirivianos, M., Yang, X., & Pregueiro, T. (2012)**. Aiding the Detection of Fake Accounts in Large Scale Social Online Services. *USENIX NSDI*.
+#### [85] Cao et al. (2012) - SybilRank {#sybilrank}
+
+**Cao, Q., Sirivianos, M., Yang, X., & Pregueiro, T. (2012)**. Aiding the Detection of Fake Accounts in Large Scale Social Online Services. *USENIX NSDI*.
 URL: [usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf](https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf)
 
 > **SybilRank deployed at Tuenti (Spain's largest social network):** Achieved **~90% accuracy** on 200K accounts flagged as fake. First 50K accounts were **100% fake**. Provided **18x efficiency improvement** over manual inspection (previously 5% accuracy). Uses early-stopping random walks with degree-normalized trust propagation. Scales to hundreds of millions of nodes. Demonstrates that graph-based Sybil detection works in production at scale.
 
-<span id="louvain-fraud"></span>
-**[86] Blondel, V. D., Guillaume, J. L., Lambiotte, R., & Lefebvre, E. (2008)**. Fast unfolding of communities in large networks. *Journal of Statistical Mechanics: Theory and Experiment*.
+#### [86] Blondel et al. (2008) - Louvain {#louvain-fraud}
+
+**Blondel, V. D., Guillaume, J. L., Lambiotte, R., & Lefebvre, E. (2008)**. Fast unfolding of communities in large networks. *Journal of Statistical Mechanics: Theory and Experiment*.
 DOI: [10.1088/1742-5468/2008/10/P10008](https://doi.org/10.1088/1742-5468/2008/10/P10008)
 
 > Louvain algorithm for community detection, achieving **88% accuracy** for fraud clustering in financial networks. Enables efficient identification of densely connected fraud rings through modularity optimization. Deployed in production by Neo4j and banking/finance systems for fraud ring detection. Detects communities even when not well separated, useful for overlapping fraud networks.
 
-<span id="hgnn-fraud"></span>
-**[88] Various HGNN research (2023-2024)**. Heterogeneous Graph Neural Networks for fraud detection in financial networks.
+#### [88] HGNN Fraud Detection (2023-2024) {#hgnn-fraud}
+
+**Various HGNN research (2023-2024)**. Heterogeneous Graph Neural Networks for fraud detection in financial networks.
 
 > Modern graph neural network approaches combine structural topology analysis with behavioral signals (posting patterns, interaction networks, temporal evolution). **Deployed in production** at major financial institutions including Industrial and Commercial Bank of China (ICBC). HGNNs use attention mechanisms to dynamically weight different relationship types and detect evolving fraud patterns. Significantly outperforms traditional graph-based methods by incorporating multiple node types and temporal dynamics.
 
@@ -673,32 +732,36 @@ DOI: [10.1088/1742-5468/2008/10/P10008](https://doi.org/10.1088/1742-5468/2008/1
 
 ## P2P Lending Fraud & Security
 
-<span id="prosper-pump-and-dump"></span>
-**[80] Freedman, S., & Jin, G. Z. (2008)**. Dynamic Learning and Selection: The Early Years of Prosper.com. Working Paper.
+#### [80] Freedman & Jin (2008) {#prosper-pump-and-dump}
+
+**Freedman, S., & Jin, G. Z. (2008)**. Dynamic Learning and Selection: The Early Years of Prosper.com. Working Paper.
 URL: [www.prosper.com/downloads/research/dynamic-learning-selection-062008.pdf](https://www.prosper.com/downloads/research/dynamic-learning-selection-062008.pdf)
 
 > Documents Prosper's early fraud issues including "pump and dump" bidding manipulation and group leader reward misalignment. Group leaders received ~$12 per funded loan, creating incentives to fund poor-quality loans. Research found that "the estimated returns of group loans are significantly lower than those of non-group loans" and that "group leader rewards motivated leaders to fund lower quality loans in order to earn the rewards." Approximately 18.5% of all money loaned through Prosper from February 2006 through June 2008 were in some form of delinquency. More than 35% of all loans that originated in February 2007 were in some form of delinquency.
 
 ---
 
-<span id="china-p2p-fraud"></span>
-**[81] Li, J., & Wang, Y. (2022)**. Crime and crisis in China's P2P online lending market: A comparative analysis of fraud. *Crime, Law and Social Change*.
+#### [81] Li & Wang (2022) {#china-p2p-fraud}
+
+**Li, J., & Wang, Y. (2022)**. Crime and crisis in China's P2P online lending market: A comparative analysis of fraud. *Crime, Law and Social Change*.
 DOI: [10.1007/s10611-022-10053-y](https://doi.org/10.1007/s10611-022-10053-y)
 
 > Comprehensive analysis of China's P2P lending collapse. By mid-2019, among 6,618 Chinese P2P platforms, 5,774 ended in bankruptcy or business failure (87.2% failure rate). Fraud was a main contributor. **Ezubao case:** 95% of projects were fake using "straw borrowers"—shell companies controlled by the Yucheng Group. The group purchased borrower information for $121.6 million to fabricate projects. On Renrendai platform, the probability of default by new borrowers was 56%. Synthetic identity fraud, loan stacking, and fake borrower schemes were prevalent. Demonstrates the catastrophic consequences of inadequate fraud prevention.
 
 ---
 
-<span id="p2p-fraud-detection"></span>
-**[82] Xu, J. J., Chen, D., Chau, M., & Luo, X. (2022)**. Peer-to-peer loan fraud detection: Constructing features from transaction data. *Management Information Systems Quarterly, 46*(3), 1579-1602.
+#### [82] Xu et al. (2022) {#p2p-fraud-detection}
+
+**Xu, J. J., Chen, D., Chau, M., & Luo, X. (2022)**. Peer-to-peer loan fraud detection: Constructing features from transaction data. *Management Information Systems Quarterly, 46*(3), 1579-1602.
 DOI: [10.25300/MISQ/2022/16725](https://doi.org/10.25300/MISQ/2022/16725)
 
 > Machine learning approach to fraud detection on Chinese P2P platforms. Deployed on platform with 11,953,273 borrowers, identified 29,727 fraud-agents, with domain experts confirming 95.59% accuracy. Constructs behavioral features from transaction data including fraud capability, integrity, and opportunity based on loan requests, payment histories, connected peers, and activity sequences. Shows fraud detection requires analyzing network patterns, not just individual borrower characteristics.
 
 ---
 
-<span id="p2p-fraud-statistics"></span>
-**[83] RiskSeal (2024)**. P2P Fraud Statistics and Trends.
+#### [83] RiskSeal (2024) {#p2p-fraud-statistics}
+
+**RiskSeal (2024)**. P2P Fraud Statistics and Trends.
 URL: [riskseal.io/glossary/p2p-fraud](https://riskseal.io/glossary/p2p-fraud)
 
 > Industry statistics: Over 57% of small business owners experienced fraud including P2P payment fraud. More than $12.5 billion lost to fraud in 2024—a 25% increase from previous year. Synthetic identity fraud accounts for 27% of all fraud. Common schemes include loan stacking (multiple simultaneous loans without disclosure) and identity theft. Modern P2P platforms employ machine learning and digital footprint analysis for detection.
@@ -709,8 +772,9 @@ URL: [riskseal.io/glossary/p2p-fraud](https://riskseal.io/glossary/p2p-fraud)
 
 ### Soft Information in Lending
 
-<span id="liberti-and-petersen-2018"></span>
-**[28] Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
+#### [28] Liberti & Petersen (2018) {#liberti-and-petersen-2018}
+
+**Liberti, J. M., & Petersen, M. A. (2018)**. Information: Hard and Soft. *Review of Corporate Finance Studies*, 8(1), 1-41.
 DOI: [10.1093/rcfs/cfy009](https://doi.org/10.1093/rcfs/cfy009)
 
 > Comprehensive review distinguishing hard information (quantitative, easily transmitted) from soft information (qualitative, context-dependent). **Key findings:** (1) Soft information (personal narratives, relationship data) reduces information asymmetry in lending; (2) Considering soft data in equal measure as hard information improves creditworthiness assessment; (3) Soft information is especially valuable for small borrowers and those without extensive credit history; (4) Technology (P2P platforms) enables soft information to be transmitted at scale, challenging traditional assumptions that soft information requires in-person relationships.
@@ -834,8 +898,9 @@ URL: [techcrunch.com/2015/04/28/facebook-api-shut-down](https://techcrunch.com/2
 
 ### Crowdfunding Psychology and Campaign Dynamics
 
-<span id="crowdfunding-first-10-days"></span>
-**[43] Dehdashti, Y., Namin, A., Ratchford, B. T., & Chonko, L. B. (2022)**. The Unanticipated Dynamics of Promoting Crowdfunding Donation Campaigns on Social Media. *Journal of Interactive Marketing, 57*(1), 73-91.
+#### [43] Dehdashti et al. (2022) {#crowdfunding-first-10-days}
+
+**Dehdashti, Y., Namin, A., Ratchford, B. T., & Chonko, L. B. (2022)**. The Unanticipated Dynamics of Promoting Crowdfunding Donation Campaigns on Social Media. *Journal of Interactive Marketing, 57*(1), 73-91.
 DOI: [10.1177/10949968221074726](https://doi.org/10.1177/10949968221074726)
 URL: [news.utdallas.edu/business-management/social-media-crowdfunding-2022](https://news.utdallas.edu/business-management/social-media-crowdfunding-2022/)
 
@@ -851,8 +916,9 @@ URL: [news.utdallas.edu/business-management/social-media-crowdfunding-2022](http
 
 ### Fundraising Conversion Optimization
 
-<span id="gofundme-conversion-2024"></span>
-**[44] GoFundMe Pro (2024)**. The Ultimate Guide to High-Converting Donation Forms. Industry best practices report.
+#### [44] GoFundMe Conversion (2024) {#gofundme-conversion-2024}
+
+**GoFundMe Pro (2024)**. The Ultimate Guide to High-Converting Donation Forms. Industry best practices report.
 URL: [pro.gofundme.com/c/blog/donation-form-conversion](https://pro.gofundme.com/c/blog/donation-form-conversion/)
 
 > Comprehensive analysis of donation page optimization showing **average conversion rate of 12%** for standard pages and **15-25% for well-optimized** pages. **Key optimization:** Reducing form fields from 11 to 4 led to **120% increase in conversions**.
@@ -872,8 +938,9 @@ Also see:
 
 ---
 
-<span id="optimal-story-length"></span>
-**[45] GoFundMe (2024)**. Craft Your Story: Crowdfunding Storytelling Best Practices. Platform guidance on fundraiser narrative optimization.
+#### [45] GoFundMe Storytelling (2024) {#optimal-story-length}
+
+**GoFundMe (2024)**. Craft Your Story: Crowdfunding Storytelling Best Practices. Platform guidance on fundraiser narrative optimization.
 URL: [gofundme.com/en-ca/c/crowdfunding-lessons/story](https://www.gofundme.com/en-ca/c/crowdfunding-lessons/story)
 
 > GoFundMe's platform data shows fundraiser descriptions with **400 words or more receive more donations**. Research also shows fundraiser titles with **4-8 words make the most money**. The guidance emphasizes that while length matters, authentic storytelling quality ultimately drives donation success.
@@ -890,8 +957,9 @@ URL: [gofundme.com/en-ca/c/crowdfunding-lessons/story](https://www.gofundme.com/
 
 ### Farcaster Platform Growth
 
-<span id="farcaster-frames-2024"></span>
-**[46] Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
+#### [46] Farcaster Growth (2024) {#farcaster-frames-2024}
+
+**Farcaster growth metrics (2024)**. Dune Analytics dashboard by pixelhack.
 URL: [dune.com/pixelhack/farcaster](https://dune.com/pixelhack/farcaster)
 
 > When Farcaster released Frames feature on January 26, 2024, daily active users **jumped from fewer than 2,000 to nearly 20,000** in weeks following launch. As of 2024, DAU exceeds **61,500 users**.
@@ -909,8 +977,9 @@ Also see:
 
 ### Web3 Adoption Barriers
 
-<span id="web3-adoption-2024"></span>
-**[46] Consensys (2024)**. Web3 and Crypto Global Survey 2024. Industry research report.
+#### [46] Web3 Adoption (2024) {#web3-adoption-2024}
+
+**Consensys (2024)**. Web3 and Crypto Global Survey 2024. Industry research report.
 URL: [consensys.io/insight-report/web3-and-crypto-global-survey](https://consensys.io/insight-report/web3-and-crypto-global-survey)
 
 > Global survey showing **42% of respondents currently own or have previously bought cryptocurrencies**. Over half the population in Nigeria (84%), South Africa (66%), Vietnam (60%), the Philippines (54%) and India (50%) report owning a crypto wallet, while wallet ownership in developed markets remains significantly lower.
@@ -929,8 +998,9 @@ Also see:
 
 ### P2P Lending Market Projections
 
-<span id="p2p-market-2024"></span>
-**[47] Global Market Insights (2024)**. Peer to Peer Lending Market Size, Industry Forecasts 2024-2032.
+#### [47] P2P Lending Market Size (2024) {#p2p-market-2024}
+
+**Global Market Insights (2024)**. Peer to Peer Lending Market Size, Industry Forecasts 2024-2032.
 URL: [gminsights.com/industry-analysis/peer-to-peer-lending-market](https://www.gminsights.com/industry-analysis/peer-to-peer-lending-market)
 
 > **Peer-to-Peer Lending Market:**
@@ -951,8 +1021,9 @@ URL: [grandviewresearch.com/industry-analysis/peer-to-peer-lending-market-report
 
 ### Kiva and Prosper Platform Growth
 
-<span id="kiva-prosper-growth"></span>
-**[48] Kiva referral and team lending case studies**. Platform growth analysis from Ambassador and academic research.
+#### [48] Kiva & Prosper Growth {#kiva-prosper-growth}
+
+**Kiva referral and team lending case studies**. Platform growth analysis from Ambassador and academic research.
 
 **Ambassador (2020)**. How Learning From Kiva Can Improve Your Referral Program.
 URL: [getambassador.com/blog/how-to-improve-your-referral-program](https://getambassador.com/blog/how-to-improve-your-referral-program/?hs_amp=true)
