@@ -639,6 +639,18 @@ URL: [akhuwat.org.pk](https://akhuwat.org.pk)
 
 > Comprehensive research across multiple platforms shows machine learning algorithms achieve **99%+ accuracy** for bot detection in social networks. Key approaches: SVM (99.9% accuracy), Random Forest (99.6%), and KNN (97%). Quality scoring systems like Neynar leverage these ML methods to filter spam/bot accounts on Farcaster at scale.
 
+<span id="openrank"></span>
+**[89] OpenRank Protocol**. Open-source reputation computation for Farcaster using graph algorithms.
+URL: [docs.openrank.com](https://docs.openrank.com/integrations/farcaster)
+
+> Uses **EigenTrust algorithm** on Farcaster's social graph to compute trust scores. Weights engagement actions as peer-to-peer trust heuristics: Mentions (12), Replies (6), Recasts (3), Likes (1), Follows (1). Spam and Sybil clusters naturally receive low scores because low-reputation profiles cannot boost others. Global rankings updated every 2 hours. Demonstrates graph-based reputation systems work at scale on decentralized social networks.
+
+<span id="warpcast-spam-labels"></span>
+**[90] Warpcast Spam Labels**. ML-based spam prediction for Farcaster accounts.
+URL: [github.com/warpcast/labels](https://github.com/warpcast/labels)
+
+> Public spam labels predict probability of spammy behavior based on historical activity, social graph structure, message content, and community moderation actions. Distinguishes between human spammers and bots. Examples of detected spam: generic LLM responses, bulk following, irrelevant or offensive replies. Labels are transparently published and used by Farcaster clients for quality filtering.
+
 <span id="sybilrank"></span>
 **[85] Cao, Q., Sirivianos, M., Yang, X., & Pregueiro, T. (2012)**. Aiding the Detection of Fake Accounts in Large Scale Social Online Services. *USENIX NSDI*.
 URL: [usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf](https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final42_2.pdf)

@@ -12,7 +12,7 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 |---------------|--------|----------|
 | **Friends vouch with capital** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
 | **Market filtering** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
-| **Quality filtering** | ✅ Validated | ML achieves [99%+ bot detection](../references.md#quality-filtering-research) |
+| **Quality filtering** | ✅ Validated | [Neynar](../references.md#quality-filtering-research), [Warpcast labels](../references.md#warpcast-spam-labels), [OpenRank](../references.md#openrank) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
 | **Network analysis** | ✅ Validated | [Graph-based methods](../references.md#sybilrank) available if needed |
 
@@ -66,10 +66,12 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 
 ### Layer 2: Quality Filtering (Validated)
 
-**Neynar scores filter spam/bots:**
-- 0-1 scale measures account quality
-- Bot/spam accounts weighted near zero
-- Research: ML achieves 99%+ bot detection accuracy
+**Farcaster-native quality signals:**
+- **Neynar scores:** 0-1 scale measuring account quality, distinguishes high vs low quality AI activity [[87]](../references.md#quality-filtering-research)
+- **Warpcast spam labels:** ML predictions based on activity patterns, social graph, content, and user moderation [[90]](../references.md#warpcast-spam-labels)
+- **OpenRank trust scores:** EigenTrust algorithm weights peer-to-peer engagement, updated every 2 hours [[89]](../references.md#openrank)
+
+Low-quality accounts (bots, spammers, LLM slop) get filtered before they can impact trust scores. Research shows ML achieves [99%+ bot detection accuracy](../references.md#quality-filtering-research).
 
 ### Layer 3: Temporal & On-Chain Signals
 
