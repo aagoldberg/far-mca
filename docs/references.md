@@ -651,6 +651,11 @@ DOI: [10.1088/1742-5468/2008/10/P10008](https://doi.org/10.1088/1742-5468/2008/1
 
 > Louvain algorithm for community detection, achieving **88% accuracy** for fraud clustering in financial networks. Enables efficient identification of densely connected fraud rings through modularity optimization. Deployed in production by Neo4j and banking/finance systems for fraud ring detection. Detects communities even when not well separated, useful for overlapping fraud networks.
 
+<span id="hgnn-fraud"></span>
+**[88] Various HGNN research (2023-2024)**. Heterogeneous Graph Neural Networks for fraud detection in financial networks.
+
+> Modern graph neural network approaches combine structural topology analysis with behavioral signals (posting patterns, interaction networks, temporal evolution). **Deployed in production** at major financial institutions including Industrial and Commercial Bank of China (ICBC). HGNNs use attention mechanisms to dynamically weight different relationship types and detect evolving fraud patterns. Significantly outperforms traditional graph-based methods by incorporating multiple node types and temporal dynamics.
+
 ---
 
 ## P2P Lending Fraud & Security
