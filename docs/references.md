@@ -645,8 +645,8 @@ URL: [docs.openrank.com](https://docs.openrank.com/integrations/farcaster)
 
 > Uses **EigenTrust algorithm** on Farcaster's social graph to compute trust scores. Weights engagement actions as peer-to-peer trust heuristics: Mentions (12), Replies (6), Recasts (3), Likes (1), Follows (1). Spam and Sybil clusters naturally receive low scores because low-reputation profiles cannot boost others. Global rankings updated every 2 hours. Demonstrates graph-based reputation systems work at scale on decentralized social networks.
 
-<span id="warpcast-spam-labels"></span>
-**[90] Warpcast Spam Labels**. ML-based spam prediction for Farcaster accounts.
+<span id="farcaster-spam-labels"></span>
+**[90] Farcaster Spam Labels**. ML-based spam prediction for Farcaster accounts.
 URL: [github.com/warpcast/labels](https://github.com/warpcast/labels)
 
 > Public spam labels predict probability of spammy behavior based on historical activity, social graph structure, message content, and community moderation actions. Distinguishes between human spammers and bots. Examples of detected spam: generic LLM responses, bulk following, irrelevant or offensive replies. Labels are transparently published and used by Farcaster clients for quality filtering.

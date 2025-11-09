@@ -6,7 +6,7 @@ LendFriend runs natively inside Farcaster, letting you create and fund loans wit
 
 ## What It Is
 
-A mini app that runs inside Farcaster clients (Warpcast mobile, Warpcast web). No separate signup, no context switching - everything happens where you already spend time.
+A mini app that runs inside Farcaster clients. No separate signup, no context switching - everything happens where you already spend time.
 
 **Key features:**
 - Create loans directly in Farcaster
@@ -21,7 +21,7 @@ A mini app that runs inside Farcaster clients (Warpcast mobile, Warpcast web). N
 
 **Creating a loan:**
 
-1. Open LendFriend mini app in Warpcast
+1. Open LendFriend mini app in Farcaster
 2. Your Farcaster identity is automatically verified
 3. Fill out loan details (amount, duration, description)
 4. Add images or budget breakdown (optional)
@@ -87,7 +87,7 @@ The mini app shows your personalized trust score for each loan, so you can make 
 
 **Current constraints:**
 - Mobile-only (no desktop Farcaster mini apps yet)
-- Warpcast-optimized (other Farcaster clients may vary)
+- Optimized for Farcaster mobile clients
 - Requires Farcaster account
 
 **For desktop users:** Visit [lendfriend.org](https://lendfriend.org) for full web experience.

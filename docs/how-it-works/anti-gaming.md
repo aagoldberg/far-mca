@@ -12,7 +12,7 @@ Phase 0 tests these findings on Farcaster and tracks emerging attack patterns, a
 |---------------|--------|----------|
 | **Friends vouch with capital** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
 | **Lender evaluation** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
-| **Bot & spam filtering** | ✅ Validated | [Neynar](../references.md#quality-filtering-research), [Warpcast labels](../references.md#warpcast-spam-labels), [OpenRank](../references.md#openrank) |
+| **Bot & spam filtering** | ✅ Validated | [Neynar](../references.md#quality-filtering-research), [Farcaster labels](../references.md#farcaster-spam-labels), [OpenRank](../references.md#openrank) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
 | **Network analysis** | ✅ Validated | [Graph-based methods](../references.md#sybilrank) available if needed |
 
@@ -53,7 +53,7 @@ Phase 0 tests these findings on Farcaster and tracks emerging attack patterns, a
 
 **Farcaster-native quality signals:**
 - **Neynar scores:** 0-1 scale measuring account quality [[87]](../references.md#quality-filtering-research)
-- **Warpcast spam labels:** ML predictions based on activity patterns and community moderation [[90]](../references.md#warpcast-spam-labels)
+- **Farcaster spam labels:** ML predictions based on activity patterns and community moderation [[90]](../references.md#farcaster-spam-labels)
 - **OpenRank trust scores:** Graph-based reputation, updated every 2 hours [[89]](../references.md#openrank)
 
 These systems filter low-quality accounts (bots, spammers, low-quality AI) before they impact trust scores.
