@@ -6,7 +6,7 @@ Phase 0 tests these findings on Farcaster and tracks emerging attack patterns, a
 
 ---
 
-## Defense Status
+## Security Layers
 
 | Defense Layer | Status | Evidence |
 |---------------|--------|----------|
