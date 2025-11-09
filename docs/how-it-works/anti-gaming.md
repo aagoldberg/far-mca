@@ -11,8 +11,8 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 | Defense Layer | Status | Evidence |
 |---------------|--------|----------|
 | **Friends vouch with capital** | ✅ Validated | Prosper.com: [14% default reduction](../references.md#iyer-et-al-2016) |
-| **Market filtering** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
-| **Quality filtering** | ✅ Validated | [Neynar](../references.md#quality-filtering-research), [Warpcast labels](../references.md#warpcast-spam-labels), [OpenRank](../references.md#openrank) |
+| **Lender evaluation** | ✅ Validated | Lenders predict [45% better than credit scores alone](../references.md#iyer-et-al-2016) |
+| **Bot & spam filtering** | ✅ Validated | [Neynar](../references.md#quality-filtering-research), [Warpcast labels](../references.md#warpcast-spam-labels), [OpenRank](../references.md#openrank) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
 | **Network analysis** | ✅ Validated | [Graph-based methods](../references.md#sybilrank) available if needed |
 
@@ -23,7 +23,7 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 ## Our Approach
 
 **Principles:**
-1. **Economic alignment > algorithms** — Lenders risk money, so market filtering matters most
+1. **Economic alignment > algorithms** — Lenders risk money, so lender evaluation matters most
 2. **Data-driven iteration** — Phase 0 reveals what works, we adapt accordingly
 3. **Layered defense** — Multiple protections create resilience
 
@@ -45,13 +45,13 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 - Eliminates "cheap talk" problem [[16]](../references.md#freedman-and-jin-2017)
 - Friend capital contributions reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
 
-**Market-based filtering — validated by Prosper.com:**
+**Lender evaluation — validated by Prosper.com:**
 - Lenders predict defaults **45% better** than credit scores alone [[12]](../references.md#iyer-et-al-2016)
 - Strategic herding improves outcomes: 1% bid increase → 15% more bids [[84]](../references.md#zhang-liu-2012)
 - Loans with more herding have **better repayment performance** [[84]](../references.md#zhang-liu-2012)
 - Early lenders signal quality, attracting informed follow-on lenders [[84]](../references.md#zhang-liu-2012)
 
-**Why it works:** Market filtering requires good information [[12]](../references.md#iyer-et-al-2016). Trust scores + on-chain reputation give lenders what they need to make smart decisions.
+**Why it works:** Lender evaluation requires good information [[12]](../references.md#iyer-et-al-2016). Trust scores + on-chain reputation give lenders what they need to make smart decisions.
 
 **Permanent on-chain reputation:**
 - Default history visible to all future lenders
@@ -64,7 +64,7 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 
 ---
 
-### Layer 2: Quality Filtering (Validated)
+### Layer 2: Bot & Spam Filtering (Validated)
 
 **Farcaster-native quality signals:**
 - **Neynar scores:** 0-1 scale measuring account quality, distinguishes high vs low quality AI activity [[87]](../references.md#quality-filtering-research)
@@ -89,7 +89,7 @@ Low-quality accounts (bots, spammers, LLM slop) get filtered before they can imp
 - Community detection algorithms identify coordinated fraud rings
 - Farcaster-specific signals: FID history, reaction patterns, content repetition
 
-**Our stack approach:** Economic protections come first. If sophisticated network attacks emerge, we deploy these validated methods used in production by major platforms.
+**Our stack approach:** Economic protections (friends vouch with capital + lender evaluation) come first. If sophisticated network attacks emerge, we deploy these validated methods used in production by major platforms.
 
 ---
 
