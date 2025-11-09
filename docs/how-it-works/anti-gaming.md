@@ -1,8 +1,8 @@
 # Anti-Gaming & Sybil Resistance
 
-We build on validated P2P lending research: capital-backed social trust reduces defaults by 14% [[12]](../references.md#iyer-et-al-2016), and lenders predict defaults 45% better than credit scores alone [[12]](../references.md#iyer-et-al-2016).
+We build on validated P2P lending research showing that friends who vouch with capital and lenders who evaluate borrowers significantly reduce defaults [[12]](../references.md#iyer-et-al-2016).
 
-Phase 0 validates these findings in crypto-native contexts and gathers data on emerging attack patterns, allowing us to deploy additional graph-based and behavioral defenses if sophisticated attacks emerge.
+Phase 0 tests these findings on Farcaster and tracks emerging attack patterns, allowing us to deploy additional defenses if needed.
 
 ---
 
@@ -15,8 +15,6 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 | **Bot & spam filtering** | ✅ Validated | [Neynar](../references.md#quality-filtering-research), [Warpcast labels](../references.md#warpcast-spam-labels), [OpenRank](../references.md#openrank) |
 | **On-chain reputation** | 🤷 Logical | Makes Sybils expensive |
 | **Network analysis** | ✅ Validated | [Graph-based methods](../references.md#sybilrank) available if needed |
-
-**Our bet:** Layering these defenses creates resilience even if individual layers fail. Economic alignment (lenders risk capital) matters more than algorithmic perfection.
 
 ---
 
@@ -39,57 +37,49 @@ Phase 0 validates these findings in crypto-native contexts and gathers data on e
 
 ### Layer 1: Economic Protections (Strongest Defense)
 
-**Friends vouch with capital — validated by Prosper.com:**
+**Friends vouch with capital:**
 - Every contribution requires actual money, not endorsements
 - Friends risk their capital if borrower defaults
 - Eliminates "cheap talk" problem [[16]](../references.md#freedman-and-jin-2017)
-- Friend capital contributions reduce defaults by 14% [[12]](../references.md#iyer-et-al-2016)
 
-**Lender evaluation — validated by Prosper.com:**
-- Lenders predict defaults **45% better** than credit scores alone [[12]](../references.md#iyer-et-al-2016)
-- Strategic herding improves outcomes: 1% bid increase → 15% more bids [[84]](../references.md#zhang-liu-2012)
-- Loans with more herding have **better repayment performance** [[84]](../references.md#zhang-liu-2012)
-- Early lenders signal quality, attracting informed follow-on lenders [[84]](../references.md#zhang-liu-2012)
-
-**Why it works:** Lender evaluation requires good information [[12]](../references.md#iyer-et-al-2016). Trust scores + on-chain reputation give lenders what they need to make smart decisions.
-
-**Permanent on-chain reputation:**
-- Default history visible to all future lenders
-- Can't create fresh identity after default
-- Makes Sybil attacks expensive (need capital + reputation for each identity)
-
-**Short feedback loops (30-90 day loans):**
-- Fast data on what signals predict repayment
-- Rapid iteration on defense mechanisms
+**Lender evaluation:**
+- Lenders use social and financial signals to assess borrowers [[12]](../references.md#iyer-et-al-2016)
+- Early lenders signal quality, attracting others to participate [[84]](../references.md#zhang-liu-2012)
+- Trust scores + on-chain reputation provide the information lenders need
 
 ---
 
 ### Layer 2: Bot & Spam Filtering (Validated)
 
 **Farcaster-native quality signals:**
-- **Neynar scores:** 0-1 scale measuring account quality, distinguishes high vs low quality AI activity [[87]](../references.md#quality-filtering-research)
-- **Warpcast spam labels:** ML predictions based on activity patterns, social graph, content, and user moderation [[90]](../references.md#warpcast-spam-labels)
-- **OpenRank trust scores:** EigenTrust algorithm weights peer-to-peer engagement, updated every 2 hours [[89]](../references.md#openrank)
+- **Neynar scores:** 0-1 scale measuring account quality [[87]](../references.md#quality-filtering-research)
+- **Warpcast spam labels:** ML predictions based on activity patterns and community moderation [[90]](../references.md#warpcast-spam-labels)
+- **OpenRank trust scores:** Graph-based reputation, updated every 2 hours [[89]](../references.md#openrank)
 
-Low-quality accounts (bots, spammers, LLM slop) get filtered before they can impact trust scores. Research shows ML achieves [99%+ bot detection accuracy](../references.md#quality-filtering-research).
+These systems filter low-quality accounts (bots, spammers, low-quality AI) before they impact trust scores.
 
 ### Layer 3: Temporal & On-Chain Signals
 
-**Basic fraud deterrents:**
-- Account age and connection stability matter
-- Transaction history permanently recorded
+**Time-based protections:**
+- Account age and connection stability
 - Loan size limits for new borrowers
 - Growth patterns flagged if suspicious
+- Short loan terms (30-90 days) provide fast feedback on what predicts repayment
+
+**Permanent on-chain reputation:**
+- Default history visible to all future lenders
+- Can't create fresh identity after default
+- Makes Sybil attacks expensive (need capital + reputation for each identity)
 
 ### Layer 4: Network Analysis (Validated, Available If Needed)
 
-**Modern graph-based detection methods combine structural and behavioral signals:**
-- Graph neural networks (HGNNs) deployed at major financial institutions for fraud detection
+**Available if sophisticated attacks emerge:**
+- Graph neural networks (HGNNs) deployed at major financial institutions
 - Behavioral pattern analysis: posting cadence, interaction networks, account evolution
 - Community detection algorithms identify coordinated fraud rings
 - Farcaster-specific signals: FID history, reaction patterns, content repetition
 
-**Our stack approach:** Economic protections (friends vouch with capital + lender evaluation) come first. If sophisticated network attacks emerge, we deploy these validated methods used in production by major platforms.
+Economic protections (friends vouch with capital + lender evaluation) come first. These methods are deployed by major platforms and available if needed.
 
 ---
 
