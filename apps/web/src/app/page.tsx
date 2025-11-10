@@ -200,6 +200,184 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Vision Section */}
+      <div className="bg-gradient-to-br from-[#3B9B7F]/5 via-white to-[#2C7DA0]/5 py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
+              The Big Picture
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              From bootstrap to global scale: Building the future of reputation-backed lending
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Phase 0 */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-[#3B9B7F]">
+              <div className="bg-[#3B9B7F] px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-white">Phase 0: Social Trust</h3>
+                  <span className="px-3 py-1 bg-white text-[#3B9B7F] text-xs font-bold rounded-full">
+                    LIVE
+                  </span>
+                </div>
+                <p className="text-[#3B9B7F]/80 text-sm mt-1 font-semibold">2024-2025</p>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 mb-4 font-semibold">
+                  Zero-interest loans backed by social trust
+                </p>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>$100-$5K loans, 30-90 days</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Farcaster social graph</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Prove the model works</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Phase 1 */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-gray-200 opacity-90">
+              <div className="bg-gray-100 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-gray-900">Phase 1: Add Cashflow</h3>
+                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">
+                    PLANNED
+                  </span>
+                </div>
+                <p className="text-gray-600 text-sm mt-1 font-semibold">2025-2026</p>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 mb-4 font-semibold">
+                  Scale with revenue verification
+                </p>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>$5K-$50K+ loans</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Plaid/Stripe/Shopify data</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>8-12% APR (vs 20-50%)</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Phase 2 */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-gray-200 opacity-75">
+              <div className="bg-gray-100 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-gray-900">Phase 2: Automate</h3>
+                  <span className="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-bold rounded-full">
+                    FUTURE
+                  </span>
+                </div>
+                <p className="text-gray-600 text-sm mt-1 font-semibold">2026-2027</p>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 mb-4 font-semibold">
+                  Loans that repay themselves
+                </p>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>$10K-$100K+ loans</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Smart wallet auto-repayment</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Mass market scale</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 bg-white rounded-xl shadow-md p-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  Why This Matters
+                </h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  A <span className="font-bold text-[#3B9B7F]">$1 trillion economy</span> exists that traditional banks can't serve.
+                  Freelancers, creators, and small business owners earn through Shopify, Stripe, and Upwork—but can't get loans
+                  because W-2s and FICO scores don't measure platform income.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  Platform lenders like Shopify Capital charge <span className="font-bold text-red-600">20-50% APR</span> because
+                  VC-backed infrastructure is expensive. We use the same revenue verification but with crypto infrastructure
+                  and community capital—enabling <span className="font-bold text-[#3B9B7F]">8-12% APR</span> instead.
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-[#3B9B7F]/10 to-[#2C7DA0]/10 rounded-xl p-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-700 font-semibold">Traditional Banks:</span>
+                    <span className="text-red-600 font-bold">❌ Reject platform workers</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-700 font-semibold">Platform Lenders:</span>
+                    <span className="text-orange-600 font-bold">20-50% APR</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t-2 border-[#3B9B7F] pt-4">
+                    <span className="text-gray-900 font-bold">LendFriend:</span>
+                    <span className="text-[#3B9B7F] font-bold">✓ 8-12% APR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="https://docs.lendfriend.org/economic-context"
+              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold transition-colors"
+            >
+              Read the Full Vision
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
