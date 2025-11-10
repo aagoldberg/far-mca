@@ -35,4 +35,12 @@ We measure trust algorithmically, testing whether close friends with small netwo
 
 ---
 
+## Learn More
+
+- **[Vision & Roadmap](vision.md)** - See how we're building the future of reputation-backed lending
+- **[Economic Context](economic-context.md)** - Why traditional finance can't serve the $1T platform economy
+- **[Web3 Cost Advantage](cheaper-lending.md)** - How crypto infrastructure enables better rates
+
+---
+
 **Code:** [github.com/aagoldberg/far-mca](https://github.com/aagoldberg/far-mca) • **App:** [lendfriend.org](https://lendfriend.org)

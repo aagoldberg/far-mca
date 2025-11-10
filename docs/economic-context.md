@@ -38,4 +38,8 @@ A $1T economy exists that traditional banks can't serve and platform lenders ser
 
 ---
 
-For full citations, see [Research Foundation](references.md)
+## Learn More
+
+- **[About LendFriend](README.md)** - Protocol overview and how it works
+- **[Vision & Roadmap](vision.md)** - See how we're building the future of reputation-backed lending
+- **[Web3 Cost Advantage](cheaper-lending.md)** - How crypto infrastructure enables better rates

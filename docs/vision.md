@@ -116,19 +116,8 @@ Loans that repay themselves automatically from wallets (ERC-4337) or merchant re
 
 ---
 
-## Related Documentation
+## Learn More
 
-**For non-technical overview:**
-- [Vision & roadmap](https://lendfriend.org/vision) — High-level strategy for investors/community
-- [How it works](https://lendfriend.org/how-it-works) — User-friendly explanation
-- [Whitepaper](https://lendfriend.org/whitepaper) — Complete manifesto
-
-**Technical deep dives:**
-- [Smart Contract Flow](how-it-works/smart-contract-flow.md)
-- [Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
-- [Risk Scoring](how-it-works/risk-scoring/README.md)
-- [Technical Stack](how-it-works/technical-stack.md)
-
-**Research foundation:**
-- [Research Foundation](references.md) — 80+ citations and peer-reviewed papers
-- [Motivation](motivation.md) — Why uncollateralized lending matters
+- **[About LendFriend](README.md)** - Protocol overview and how it works
+- **[Economic Context](economic-context.md)** - Why traditional finance can't serve the $1T platform economy
+- **[Web3 Cost Advantage](cheaper-lending.md)** - How crypto infrastructure enables better rates
