@@ -41,9 +41,12 @@ export default function Home() {
 
       {/* Loan List Section */}
       <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Ways to Help</h2>
-          <p className="text-gray-600">Support community members working toward their dreams</p>
+        <div className="mb-8 text-center">
+          <div className="inline-block mb-3">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Ways to Help</h2>
+            <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+          </div>
+          <p className="text-gray-600 max-w-2xl mx-auto">Support community members working toward their dreams</p>
         </div>
         <LoanList />
       </div>
@@ -51,9 +54,17 @@ export default function Home() {
       {/* How It Works Section */}
       <div className="bg-gradient-to-br from-gray-50 to-white py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-12">
-            From Request to Repayment
-          </h2>
+          <div className="text-center mb-12">
+            <div className="inline-block mb-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+                How It Works
+              </h2>
+              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+            </div>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              From Request to Repayment
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Step 1 */}
@@ -190,10 +201,13 @@ export default function Home() {
       <div className="bg-gradient-to-br from-[#3B9B7F]/5 via-white to-[#2C7DA0]/5 py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
-              The Big Picture
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <div className="inline-block mb-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+                The Big Picture
+              </h2>
+              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+            </div>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               From bootstrap to global scale: Building the future of reputation-backed lending
             </p>
           </div>
@@ -287,7 +301,7 @@ export default function Home() {
                     <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span>8-12% APR (vs 20-50%)</span>
+                    <span>12-17% APR (vs ~25%)</span>
                   </li>
                 </ul>
               </div>
@@ -341,39 +355,125 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-12 bg-white rounded-xl shadow-md p-8">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Why This Matters
-                </h3>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  A <span className="font-bold text-[#3B9B7F]">$1 trillion economy</span> exists that traditional banks can't serve.
-                  Freelancers, creators, and small business owners earn through Shopify, Stripe, and Upwork—but can't get loans
-                  because W-2s and FICO scores don't measure platform income.
+          <div className="mt-12 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-md p-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-10">
+                <div className="inline-block mb-4">
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+                    The Opportunity
+                  </h3>
+                  <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+                </div>
+
+                <p className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
+                  A <span className="text-[#3B9B7F]">$1 trillion</span> platform economy
                 </p>
-                <p className="text-gray-700 leading-relaxed">
-                  Platform lenders like Shopify Capital charge <span className="font-bold text-red-600">20-50% APR</span> because
-                  VC-backed infrastructure is expensive. We use the same revenue verification but with crypto infrastructure
-                  and community capital—enabling <span className="font-bold text-[#3B9B7F]">8-12% APR</span> instead.
+
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-600 flex-wrap mb-2">
+                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Freelancers</span>
+                  <span className="text-gray-400">•</span>
+                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Creators</span>
+                  <span className="text-gray-400">•</span>
+                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Merchants</span>
+                </div>
+
+                <p className="text-sm text-gray-600 italic">
+                  That traditional finance can't serve
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-[#3B9B7F]/10 to-[#2C7DA0]/10 rounded-xl p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-semibold">Traditional Banks:</span>
-                    <span className="text-red-600 font-bold">❌ Reject platform workers</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-semibold">Platform Lenders:</span>
-                    <span className="text-orange-600 font-bold">20-50% APR</span>
-                  </div>
-                  <div className="flex items-center justify-between border-t-2 border-[#3B9B7F] pt-4">
-                    <span className="text-gray-900 font-bold">LendFriend:</span>
-                    <span className="text-[#3B9B7F] font-bold">✓ 8-12% APR</span>
-                  </div>
+            </div>
+
+            {/* TAM Image */}
+            <div className="mb-16 relative w-full h-72 rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/why/platform_workers.png"
+                alt="$1 Trillion Platform Economy"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Three Comparison Cards */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {/* Traditional Banks */}
+              <div className="bg-gray-50 rounded-xl overflow-hidden border-2 border-gray-300 hover:shadow-lg transition-shadow">
+                <div className="relative w-full h-56">
+                  <Image
+                    src="/images/why/bank_rejection.png"
+                    alt="Traditional Banks Reject"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 text-center">
+                  <h4 className="font-bold text-gray-900 mb-3 text-lg">Traditional Banks</h4>
+                  <p className="text-red-600 font-bold mb-2">❌ Reject platform earners</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    W-2s and FICO scores don't capture platform income
+                  </p>
                 </div>
               </div>
+
+              {/* Fintech Platform Lenders */}
+              <div className="bg-orange-50 rounded-xl overflow-hidden border-2 border-orange-300 hover:shadow-lg transition-shadow">
+                <div className="relative w-full h-56">
+                  <Image
+                    src="/images/why/platform_lenders.png"
+                    alt="Fintech Platform Lenders Selective"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 text-center">
+                  <h4 className="font-bold text-gray-900 mb-3 text-lg">Fintech Platform Lenders</h4>
+                  <p className="text-orange-600 font-bold mb-2">✓ ~25% APR</p>
+                  <p className="text-orange-600 font-bold text-sm mb-2">
+                    Invite-only
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Only established merchants with proven sales. Expensive infrastructure.
+                  </p>
+                </div>
+              </div>
+
+              {/* LendFriend */}
+              <div className="bg-[#3B9B7F]/10 rounded-xl overflow-hidden border-2 border-[#3B9B7F] hover:shadow-lg transition-shadow">
+                <div className="relative w-full h-56">
+                  <Image
+                    src="/images/why/lendfriend_b.png"
+                    alt="LendFriend Open Access"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 text-center">
+                  <h4 className="font-bold text-gray-900 mb-3 text-lg">LendFriend</h4>
+                  <p className="text-[#3B9B7F] font-bold mb-2">✓ 12-17% APR</p>
+                  <p className="text-[#3B9B7F] font-bold text-sm mb-2">
+                    Open to everyone
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Crypto infrastructure + social trust for those building their track record
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Summary */}
+            <div className="bg-gradient-to-br from-[#3B9B7F]/5 to-[#2C7DA0]/5 rounded-xl p-8 text-center">
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                <span className="font-bold text-[#3B9B7F]">Nearly half the cost</span> through crypto infrastructure,
+                plus <span className="font-bold text-[#3B9B7F]">social trust</span> for those building their track record.
+              </p>
+              <Link
+                href="https://docs.lendfriend.org/economic-context"
+                className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold transition-colors"
+              >
+                Read the full story
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
             </div>
           </div>
 
@@ -394,12 +494,17 @@ export default function Home() {
       {/* Three Innovations Section */}
       <div className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-4">
-            Three Innovations, One Protocol
-          </h2>
-          <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-            Built on proven research from Prosper.com and deployed on Base
-          </p>
+          <div className="text-center mb-12">
+            <div className="inline-block mb-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+                Three Innovations, One Protocol
+              </h2>
+              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+            </div>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Built on proven research from Prosper.com and deployed on Base
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Innovation 1 */}

@@ -13,7 +13,7 @@ This section provides technical implementation documentation for our three-phase
 | **Timeline** | 2024-2025 | 2025-2026 | 2026-2027 |
 | **Status** | 🟢 **LIVE** | 🟡 Planned | ⚪ Future |
 | **Loan Size** | $100-$5K | $5K-$50K+ | $10K-$100K+ |
-| **Interest** | 0% | 8-12% APR | 8-15% APR |
+| **Interest** | 0% | 12-17% APR | 12-17% APR |
 | **Underwriting** | Social trust only | Social + cashflow | Social + cashflow + auto-repay |
 | **Scale** | Friends & family | Strangers OK | Mass market |
 | **Target Users** | Early adopters | 10K+ | 100K+ |
@@ -43,7 +43,7 @@ Zero-interest loans ($100-$5K) backed by social trust to gather real-world data 
 
 Larger loans ($5K-$50K+) combining social trust + cashflow verification from Plaid/Square/Shopify.
 
-**Key Components:** Cashflow APIs, liquidity pools, 8-12% APR, hybrid risk scoring
+**Key Components:** Cashflow APIs, liquidity pools, 12-17% APR, hybrid risk scoring
 
 **Goal:** 10K+ users, $1M+ originated, prove crypto lending scales
 
@@ -86,7 +86,7 @@ Loans that repay themselves automatically from wallets (ERC-4337) or merchant re
 
 | Constraint | Phase 0 | Phase 1 | Phase 2 |
 |------------|---------|---------|---------|
-| **Interest** | 0% (hardcoded) | 0-8% variable | 0-15% variable |
+| **Interest** | 0% (hardcoded) | 12-17% variable | 12-17% variable |
 | **Loan Size** | $100-$5K | $5K-$50K+ | $10K-$100K+ |
 | **Repayment** | Manual, single maturity | Manual, installments | Auto-deduction |
 | **Identity** | Starts with Farcaster | Multi-platform (PMF-dependent) | Multi-platform |
