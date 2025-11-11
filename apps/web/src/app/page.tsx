@@ -84,7 +84,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-gray-900">Create Your Loan</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Request $100-$5K for 30-90 days. Add your story, budget breakdown, and photos. Share to your Farcaster network.
+                Request $100-$5K for 30-90 days. Add your story, budget breakdown, and photos. Share with friends.
               </p>
             </div>
 
@@ -106,7 +106,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-gray-900">Friends Contribute</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Your network sees your request. Each contribution signals trust—they're risking real money, not just clicking "endorse."
+                Your network sees your request. Each contribution signals trust with real money.
               </p>
             </div>
 
@@ -127,7 +127,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-gray-900">Trust Scores Calculate</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                We measure connection strength using mutual friends and network overlap. Close friends with selective networks count more.
+                We measure connection strength using mutual friends and network overlap. Close friends count more.
               </p>
             </div>
 
@@ -148,7 +148,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-gray-900">Lenders Evaluate</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Strangers see your trust score and backing from friends. Market-based filtering: high-risk loans don't fund.
+                Lenders see your trust score and friend support. High-risk loans don't get funded.
               </p>
             </div>
 
@@ -169,7 +169,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-gray-900">Loan Funds or Expires</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Hit your goal? Funds transfer to your wallet. Miss it? All contributions return automatically.
+                Hit your goal? Funds transfer to your wallet. Miss it? All contributions return.
               </p>
             </div>
 
@@ -355,7 +355,24 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-12 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-md p-8">
+          <div className="mt-8 text-center">
+            <Link
+              href="https://lendfriend.org/vision"
+              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold transition-colors"
+            >
+              See the full roadmap
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* The Opportunity Section */}
+      <div className="bg-gradient-to-br from-white to-gray-50 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-md p-8">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
                 <div className="inline-block mb-4">
@@ -370,11 +387,11 @@ export default function Home() {
                 </p>
 
                 <div className="flex items-center justify-center gap-2 text-sm text-gray-600 flex-wrap mb-2">
-                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Freelancers</span>
+                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Freelancers (Upwork)</span>
                   <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Creators</span>
+                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Creators (YouTube)</span>
                   <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Merchants</span>
+                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Merchants (Shopify)</span>
                 </div>
 
                 <p className="text-sm text-gray-600 italic">
@@ -466,7 +483,7 @@ export default function Home() {
                 plus <span className="font-bold text-[#3B9B7F]">social trust</span> for those building their track record.
               </p>
               <Link
-                href="https://docs.lendfriend.org/economic-context"
+                href="https://lendfriend.org/economic-context"
                 className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold transition-colors"
               >
                 Read the full story
@@ -475,18 +492,6 @@ export default function Home() {
                 </svg>
               </Link>
             </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="https://docs.lendfriend.org/economic-context"
-              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold transition-colors"
-            >
-              Read the Full Vision
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
           </div>
         </div>
       </div>
@@ -502,7 +507,7 @@ export default function Home() {
               <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
             </div>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Built on proven research from Prosper.com and deployed on Base
+              Built on years of lending research and deployed on Base
             </p>
           </div>
 
@@ -527,7 +532,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Market Filtering</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Risk Transparency</h3>
               <p className="text-gray-600 leading-relaxed">
                 Lenders choose their risk. Transparent trust scores + friend backing = informed decisions.
               </p>
