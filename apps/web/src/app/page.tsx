@@ -261,10 +261,10 @@ export default function Home() {
             </div>
 
             {/* Phase 1 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-gray-200 opacity-90">
-              <div className="bg-gray-100 px-6 py-4">
+            <div className="bg-blue-50/50 rounded-xl shadow-md overflow-hidden border-2 border-blue-200/60 opacity-75">
+              <div className="bg-blue-100/60 px-6 py-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-gray-900">Phase 1: Add Cashflow</h3>
+                  <h3 className="text-xl font-bold text-gray-700">Phase 1: Add Cashflow</h3>
                   <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">
                     PLANNED
                   </span>
@@ -272,7 +272,7 @@ export default function Home() {
                 <p className="text-gray-600 text-sm mt-1 font-semibold">2025-2026</p>
               </div>
               <div className="p-6">
-                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
+                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden opacity-60">
                   <Image
                     src="/images/phase1_gb.png"
                     alt="Phase 1: Add Cashflow"
@@ -286,19 +286,19 @@ export default function Home() {
                 </p>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>$5K-$50K+ loans</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Plaid/Stripe/Shopify data</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>12-17% APR (vs ~25%)</span>
@@ -308,10 +308,10 @@ export default function Home() {
             </div>
 
             {/* Phase 2 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-gray-200 opacity-75">
-              <div className="bg-gray-100 px-6 py-4">
+            <div className="bg-orange-50/40 rounded-xl shadow-md overflow-hidden border-2 border-orange-200/50 opacity-70">
+              <div className="bg-orange-100/50 px-6 py-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-gray-900">Phase 2: Automate</h3>
+                  <h3 className="text-xl font-bold text-gray-700">Phase 2: Automate</h3>
                   <span className="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-bold rounded-full">
                     FUTURE
                   </span>
@@ -319,7 +319,7 @@ export default function Home() {
                 <p className="text-gray-600 text-sm mt-1 font-semibold">2026-2027</p>
               </div>
               <div className="p-6">
-                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
+                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden opacity-50">
                   <Image
                     src="/images/phase2_gb.png"
                     alt="Phase 2: Automate"
@@ -333,19 +333,19 @@ export default function Home() {
                 </p>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-orange-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>$10K-$100K+ loans</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-orange-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Smart wallet auto-repayment</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-orange-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Mass market scale</span>
@@ -474,58 +474,79 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
 
-            {/* Bottom Summary */}
-            <div className="bg-gradient-to-br from-[#3B9B7F]/5 to-white rounded-xl shadow-sm border border-gray-200 p-10">
-              <h3 className="text-3xl font-bold text-gray-900 text-center mb-10">How We Lower Rates</h3>
-
-              <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
-                {/* Item 1 - Community Capital */}
-                <div className="text-center group">
-                  <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
-                    <Image
-                      src="/images/lower_interest/middleman.png"
-                      alt="Community Capital - Eliminate expensive debt middlemen"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-3">Eliminate Expensive Debt Middlemen</h4>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    Banks and VCs expect big profits from your loan - friends don't
-                  </p>
-                </div>
-
-                {/* Item 2 - Instant Settlement */}
-                <div className="text-center group">
-                  <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
-                    <Image
-                      src="/images/lower_interest/legacy_railsb.png"
-                      alt="Instant Settlement - Replace legacy payment rails with stablecoins"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-3">Fast, Lower-Cost Payments</h4>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    Replace legacy payment rails with instant, low-cost stablecoins
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center mt-10">
+              <div className="text-center mt-12">
                 <Link
                   href="https://lendfriend.org/economic-context"
                   className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
                 >
-                  Read the full story
+                  Learn more about the opportunity
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* How We Lower Rates Section */}
+      <div className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+                How We Lower Rates
+              </h2>
+              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+            </div>
+          </div>
+
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
+            {/* Item 1 - Community Capital */}
+            <div className="text-center group">
+              <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
+                <Image
+                  src="/images/lower_interest/middleman.png"
+                  alt="Community Capital - Eliminate expensive debt middlemen"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h4 className="text-xl font-bold text-gray-900 mb-3">Eliminate Expensive Debt Middlemen</h4>
+              <p className="text-gray-600 leading-relaxed text-lg">
+                Banks and VCs expect big profits from your loan - friends don't
+              </p>
+            </div>
+
+            {/* Item 2 - Fast, Lower-Cost Payments */}
+            <div className="text-center group">
+              <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
+                <Image
+                  src="/images/lower_interest/legacy_railsb.png"
+                  alt="Fast, Lower-Cost Payments - Replace legacy payment rails with stablecoins"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h4 className="text-xl font-bold text-gray-900 mb-3">Fast, Lower-Cost Payments</h4>
+              <p className="text-gray-600 leading-relaxed text-lg">
+                Replace legacy payment rails with instant, low-cost stablecoins
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="https://lendfriend.org/economic-context"
+              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
+            >
+              Read the full story
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </div>
