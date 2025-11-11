@@ -88,7 +88,7 @@ export default function Navbar() {
                     className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
-                    About LendFriend
+                    How It Works
                   </Link>
                   <Link
                     href="/vision"
