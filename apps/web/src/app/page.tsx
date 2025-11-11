@@ -560,7 +560,7 @@ export default function Home() {
       </div>
 
       {/* Viral Growth Section */}
-      <div className="bg-gradient-to-br from-[#ECFDF5] to-green-50 py-12">
+      <div className="bg-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <div className="inline-block mb-2">
@@ -574,66 +574,79 @@ export default function Home() {
             </p>
           </div>
 
-          {/* The Viral Loop */}
-          <div className="grid md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#3B9B7F]/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
-                  1
+          {/* Two-column layout: Steps (35%) + Illustration (65%) */}
+          <div className="grid md:grid-cols-[0.55fr_1fr] gap-6 items-stretch mb-8">
+            {/* Left: The Viral Loop Steps */}
+            <div className="flex flex-col justify-between gap-4">
+              {/* Step 1 */}
+              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
+                    1
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-bold mb-1 text-lg">Create</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">Borrower shares loan with their network</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-gray-900 font-bold mb-1 text-lg">Create</p>
-                  <p className="text-sm text-gray-600">Borrower shares loan with their network</p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
+                    2
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-bold mb-1 text-lg">Spread</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">Story spreads through their network and beyond</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
+                    3
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-bold mb-1 text-lg">Convert</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">Some become lenders</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 4 + Loop arrow */}
+              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center relative">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
+                    4
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-bold mb-1 text-lg">Repeat</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">Lenders become borrowers</p>
+                  </div>
+                </div>
+                {/* Loop arrow indicator */}
+                <div className="absolute -top-3 right-4 text-[#3B9B7F] opacity-60">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#2E7D68]/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#2E7D68] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
-                  2
-                </div>
-                <div>
-                  <p className="text-gray-900 font-bold mb-1 text-lg">Spread</p>
-                  <p className="text-sm text-gray-600">Story spreads through their network and beyond</p>
-                </div>
-              </div>
+            {/* Right: Visual Illustration (65% width, same height) */}
+            <div className="relative w-full h-full flex items-center">
+              <Image
+                src="/images/viral/1_big.png"
+                alt="Viral growth network effect - borrower sharing spreads to communities"
+                width={800}
+                height={400}
+                className="rounded-xl shadow-lg w-full h-full object-contain"
+              />
             </div>
-
-            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#065F46]/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#065F46] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
-                  3
-                </div>
-                <div>
-                  <p className="text-gray-900 font-bold mb-1 text-lg">Convert</p>
-                  <p className="text-sm text-gray-600">Some become lenders</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#3B9B7F]/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
-                  4
-                </div>
-                <div>
-                  <p className="text-gray-900 font-bold mb-1 text-lg">Repeat</p>
-                  <p className="text-sm text-gray-600">Lenders become borrowers</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Visual Illustration */}
-          <div className="mb-8 relative w-full max-w-3xl mx-auto">
-            <Image
-              src="/images/viral/1_big.png"
-              alt="Viral growth network effect - borrower sharing spreads to communities"
-              width={800}
-              height={400}
-              className="rounded-xl shadow-lg w-full h-auto"
-            />
           </div>
 
           {/* The Magic */}
