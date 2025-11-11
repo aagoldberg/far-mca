@@ -56,8 +56,23 @@ const LoanCardSkeleton = () => (
   </div>
 );
 
+// Helper to determine if a loan is inactive
+const isLoanInactive = (loanData: any): boolean => {
+  if (!loanData) return false;
+  const { fundraisingActive, active, completed, totalFunded, principal } = loanData;
+
+  // A loan is inactive if it's not completed, not active, not fundraising, and not fully funded
+  return !completed && !active && !fundraisingActive && totalFunded < principal;
+};
+
 // Component to fetch and display a single loan
-export const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` }) => {
+export const LoanCardWrapper = ({
+  loanAddress,
+  showInactive
+}: {
+  loanAddress: `0x${string}`;
+  showInactive: boolean;
+}) => {
   const { loanData, isLoading } = useLoanData(loanAddress);
   const [metadata, setMetadata] = useState<any>(null);
 
@@ -92,28 +107,38 @@ export const LoanCardWrapper = ({ loanAddress }: { loanAddress: `0x${string}` })
     return <LoanCardSkeleton />;
   }
 
+  const inactive = isLoanInactive(loanData);
+
+  // Hide inactive loans if toggle is off
+  if (inactive && !showInactive) {
+    return null;
+  }
+
   return (
-    <LoanCard
-      address={loanData.address}
-      borrower={loanData.borrower}
-      name={metadata?.name || 'Loading...'}
-      description={metadata?.description || ''}
-      principal={loanData.principal}
-      totalFunded={loanData.totalFunded}
-      fundraisingActive={loanData.fundraisingActive}
-      active={loanData.active}
-      completed={loanData.completed}
-      contributorsCount={loanData.contributorsCount}
-      dueAt={loanData.dueAt}
-      imageUrl={metadata?.image}
-      fundraisingDeadline={loanData.fundraisingDeadline}
-      totalRepaid={loanData.totalRepaid}
-    />
+    <div className={inactive ? 'opacity-60 grayscale' : ''}>
+      <LoanCard
+        address={loanData.address}
+        borrower={loanData.borrower}
+        name={metadata?.name || 'Loading...'}
+        description={metadata?.description || ''}
+        principal={loanData.principal}
+        totalFunded={loanData.totalFunded}
+        fundraisingActive={loanData.fundraisingActive}
+        active={loanData.active}
+        completed={loanData.completed}
+        contributorsCount={loanData.contributorsCount}
+        dueAt={loanData.dueAt}
+        imageUrl={metadata?.image}
+        fundraisingDeadline={loanData.fundraisingDeadline}
+        totalRepaid={loanData.totalRepaid}
+      />
+    </div>
   );
 };
 
 const LoanList = () => {
   const { loanAddresses, isLoading, error } = useLoans();
+  const [showInactive, setShowInactive] = useState(false);
 
   if (isLoading) {
     return (
@@ -174,10 +199,27 @@ const LoanList = () => {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-5">
-      {loanAddresses.map((address) => (
-        <LoanCardWrapper key={address} loanAddress={address} />
-      ))}
+    <div>
+      {/* Filter Toggle */}
+      <div className="flex items-center gap-2 mb-4 sm:mb-5 px-1">
+        <input
+          type="checkbox"
+          id="showInactive"
+          checked={showInactive}
+          onChange={(e) => setShowInactive(e.target.checked)}
+          className="w-4 h-4 text-[#3B9B7F] bg-gray-100 border-gray-300 rounded focus:ring-[#3B9B7F] focus:ring-2"
+        />
+        <label htmlFor="showInactive" className="text-xs sm:text-sm font-medium text-gray-700 cursor-pointer select-none">
+          Show inactive loans
+        </label>
+      </div>
+
+      {/* Loan Cards List */}
+      <div className="space-y-4 sm:space-y-5">
+        {loanAddresses.map((address) => (
+          <LoanCardWrapper key={address} loanAddress={address} showInactive={showInactive} />
+        ))}
+      </div>
     </div>
   );
 };
