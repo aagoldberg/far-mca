@@ -203,7 +203,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="inline-block mb-3">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                The Big Picture
+                Vision: How Lendfriend Scales
               </h2>
               <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
             </div>
@@ -377,26 +377,18 @@ export default function Home() {
               <div className="text-center mb-10">
                 <div className="inline-block mb-4">
                   <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                    The Opportunity
+                    The $1 Trillion New Economy That Banks Don't Serve
                   </h3>
                   <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
                 </div>
 
-                <p className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
-                  A <span className="text-[#3B9B7F]">$1 trillion</span> platform economy
-                </p>
-
-                <div className="flex items-center justify-center gap-2 text-sm text-gray-600 flex-wrap mb-2">
-                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Freelancers (Upwork)</span>
+                <div className="flex items-center justify-center gap-3 text-base md:text-lg text-gray-600 flex-wrap">
+                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Freelancers (Upwork)</span>
                   <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Creators (YouTube)</span>
+                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Creators (YouTube)</span>
                   <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-3 py-1 rounded-full font-semibold">Merchants (Shopify)</span>
+                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Merchants (Shopify)</span>
                 </div>
-
-                <p className="text-sm text-gray-600 italic">
-                  That traditional finance can't serve
-                </p>
               </div>
             </div>
 
@@ -435,8 +427,8 @@ export default function Home() {
               <div className="bg-orange-50 rounded-xl overflow-hidden border-2 border-orange-300 hover:shadow-lg transition-shadow">
                 <div className="relative w-full h-56">
                   <Image
-                    src="/images/why/platform_lenders.png"
-                    alt="Fintech Platform Lenders Selective"
+                    src="/images/why/invite_only.png"
+                    alt="Fintech Platform Lenders Invite Only"
                     fill
                     className="object-cover"
                   />
