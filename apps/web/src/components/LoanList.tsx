@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLoans, useLoanData } from '@/hooks/useMicroLoan';
 import { LoanCard } from './LoanCard';
-import { fetchFromIPFS } from '@/lib/ipfs';
+import { fetchFromIPFS, ipfsToHttp } from '@/lib/ipfs';
 
 // Enhanced skeleton loading component matching actual loan card structure
 const LoanCardSkeleton = () => (
@@ -77,9 +77,9 @@ const LoanCardWrapper = ({
     if (loanData?.metadataURI) {
       fetchFromIPFS(loanData.metadataURI)
         .then(data => {
-          // Convert image IPFS URI to gateway URL if needed
+          // Convert image IPFS URI to gateway URL using fallback system
           if (data.image && data.image.startsWith('ipfs://')) {
-            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+            data.image = ipfsToHttp(data.image, 0);
           }
           setMetadata(data);
         })
