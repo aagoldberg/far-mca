@@ -560,10 +560,10 @@ export default function Home() {
       </div>
 
       {/* Viral Growth Section */}
-      <div className="bg-gradient-to-br from-[#ECFDF5] to-green-50 py-16">
+      <div className="bg-gradient-to-br from-[#ECFDF5] to-green-50 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-3">
+          <div className="text-center mb-8">
+            <div className="inline-block mb-2">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
                 Built-In Viral Growth
               </h2>
@@ -575,49 +575,76 @@ export default function Home() {
           </div>
 
           {/* The Viral Loop */}
-          <div className="grid md:grid-cols-4 gap-6 mb-12">
-            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#3B9B7F]/20">
-              <div className="w-16 h-16 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-                1
+          <div className="grid md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#3B9B7F]/20">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
+                  1
+                </div>
+                <div>
+                  <p className="text-gray-900 font-bold mb-1 text-lg">Create</p>
+                  <p className="text-sm text-gray-600">Borrower shares loan with their network</p>
+                </div>
               </div>
-              <p className="text-gray-900 font-bold text-lg mb-2">Create</p>
-              <p className="text-sm text-gray-600">Borrower shares loan with their network</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#2E7D68]/20">
-              <div className="w-16 h-16 bg-[#2E7D68] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-                2
+            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#2E7D68]/20">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-[#2E7D68] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
+                  2
+                </div>
+                <div>
+                  <p className="text-gray-900 font-bold mb-1 text-lg">Spread</p>
+                  <p className="text-sm text-gray-600">Story spreads through their network and beyond</p>
+                </div>
               </div>
-              <p className="text-gray-900 font-bold text-lg mb-2">Spread</p>
-              <p className="text-sm text-gray-600">50-200 people see the story</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#065F46]/20">
-              <div className="w-16 h-16 bg-[#065F46] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-                3
+            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#065F46]/20">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-[#065F46] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
+                  3
+                </div>
+                <div>
+                  <p className="text-gray-900 font-bold mb-1 text-lg">Convert</p>
+                  <p className="text-sm text-gray-600">Some become lenders</p>
+                </div>
               </div>
-              <p className="text-gray-900 font-bold text-lg mb-2">Convert</p>
-              <p className="text-sm text-gray-600">Some become lenders</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#3B9B7F]/20">
-              <div className="w-16 h-16 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-                4
+            <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow border border-[#3B9B7F]/20">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
+                  4
+                </div>
+                <div>
+                  <p className="text-gray-900 font-bold mb-1 text-lg">Repeat</p>
+                  <p className="text-sm text-gray-600">Lenders become borrowers</p>
+                </div>
               </div>
-              <p className="text-gray-900 font-bold text-lg mb-2">Repeat</p>
-              <p className="text-sm text-gray-600">Lenders become borrowers</p>
             </div>
+          </div>
+
+          {/* Visual Illustration */}
+          <div className="mb-8 relative w-full max-w-3xl mx-auto">
+            <Image
+              src="/images/viral/1_big.png"
+              alt="Viral growth network effect - borrower sharing spreads to communities"
+              width={800}
+              height={400}
+              className="rounded-xl shadow-lg w-full h-auto"
+            />
           </div>
 
           {/* The Magic */}
-          <div className="bg-gradient-to-r from-[#3B9B7F]/10 to-[#2C7DA0]/10 rounded-xl p-8 border-2 border-[#3B9B7F]/30">
-            <p className="text-xl text-gray-800 leading-relaxed text-center font-semibold">
-              <span className="text-[#2E7D68] font-bold">The magic:</span> Emotional connection drives 10-100x better engagement than ads.
-              Each funded loan creates social proof that accelerates the next.
+          <div className="bg-gradient-to-r from-[#3B9B7F]/10 to-[#2C7DA0]/10 rounded-lg p-6 border border-[#3B9B7F]/30">
+            <p className="text-lg text-gray-800 leading-relaxed text-center font-semibold">
+              <span className="text-[#2E7D68] font-bold">The magic:</span> Emotional stories are 10x more likely to be shared than traditional ads.
+              Each funded loan creates social proof that accelerates the next loan.
             </p>
           </div>
 
-          <div className="text-center mt-10">
+          <div className="text-center mt-8">
             <Link
               href="https://lendfriend.org/vision"
               className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
