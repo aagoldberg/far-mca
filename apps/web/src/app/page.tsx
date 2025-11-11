@@ -559,6 +559,78 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Viral Growth Section */}
+      <div className="bg-gradient-to-br from-[#ECFDF5] to-green-50 py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+                Built-In Viral Growth
+              </h2>
+              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
+            </div>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Every borrower becomes a growth engine by sharing their personal story
+            </p>
+          </div>
+
+          {/* The Viral Loop */}
+          <div className="grid md:grid-cols-4 gap-6 mb-12">
+            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#3B9B7F]/20">
+              <div className="w-16 h-16 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                1
+              </div>
+              <p className="text-gray-900 font-bold text-lg mb-2">Create</p>
+              <p className="text-sm text-gray-600">Borrower shares loan with their network</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#2E7D68]/20">
+              <div className="w-16 h-16 bg-[#2E7D68] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                2
+              </div>
+              <p className="text-gray-900 font-bold text-lg mb-2">Spread</p>
+              <p className="text-sm text-gray-600">50-200 people see the story</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#065F46]/20">
+              <div className="w-16 h-16 bg-[#065F46] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                3
+              </div>
+              <p className="text-gray-900 font-bold text-lg mb-2">Convert</p>
+              <p className="text-sm text-gray-600">10-20% become lenders</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#3B9B7F]/20">
+              <div className="w-16 h-16 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                4
+              </div>
+              <p className="text-gray-900 font-bold text-lg mb-2">Repeat</p>
+              <p className="text-sm text-gray-600">Lenders become borrowers</p>
+            </div>
+          </div>
+
+          {/* The Magic */}
+          <div className="bg-gradient-to-r from-[#3B9B7F]/10 to-[#2C7DA0]/10 rounded-xl p-8 border-2 border-[#3B9B7F]/30">
+            <p className="text-xl text-gray-800 leading-relaxed text-center font-semibold">
+              <span className="text-[#2E7D68] font-bold">The magic:</span> Emotional connection drives 10-100x better engagement than ads.
+              Each funded loan creates social proof that accelerates the next.
+            </p>
+          </div>
+
+          <div className="text-center mt-10">
+            <Link
+              href="https://lendfriend.org/vision"
+              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
+            >
+              See the full growth model
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
+
     </main>
   );
 }
