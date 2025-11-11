@@ -319,7 +319,7 @@ export function LoanCard({
 
       <div className="p-3 sm:p-4">
         {/* Title and badges */}
-        <div className="flex items-start justify-between gap-2 mb-3">
+        <div className="flex items-start justify-between gap-2 mb-3 min-h-[63px] sm:min-h-[72px]">
           <h3 className="text-sm sm:text-base font-medium text-gray-900 line-clamp-3 flex-1 min-w-0 group-hover:text-[#2E7D68] transition-colors duration-200">
             {name || 'Untitled Loan'}
           </h3>
