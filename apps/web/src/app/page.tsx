@@ -597,7 +597,7 @@ export default function Home() {
                 3
               </div>
               <p className="text-gray-900 font-bold text-lg mb-2">Convert</p>
-              <p className="text-sm text-gray-600">10-20% become lenders</p>
+              <p className="text-sm text-gray-600">Some become lenders</p>
             </div>
 
             <div className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-shadow border-2 border-[#3B9B7F]/20">
