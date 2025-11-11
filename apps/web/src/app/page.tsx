@@ -417,6 +417,9 @@ export default function Home() {
                 <div className="p-6 text-center">
                   <h4 className="font-bold text-gray-900 mb-3 text-lg">Traditional Banks</h4>
                   <p className="text-red-600 font-bold mb-2">❌ Often reject platform earners</p>
+                  <p className="text-red-600 font-bold text-sm mb-2">
+                    Limited access
+                  </p>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     Traditional underwriting relies on W-2s and steady paychecks
                   </p>
