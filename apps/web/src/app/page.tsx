@@ -393,12 +393,13 @@ export default function Home() {
             </div>
 
             {/* TAM Image */}
-            <div className="mb-16 relative w-full h-72 rounded-2xl overflow-hidden shadow-lg">
+            <div className="mb-16 relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
               <Image
-                src="/images/why/platform_workers.png"
-                alt="$1 Trillion Platform Economy"
+                src="/images/why/platform_workers3.png"
+                alt="$1 Trillion Platform Economy - Freelancers, Creators, Merchants"
                 fill
                 className="object-cover"
+                style={{ objectPosition: 'center' }}
               />
             </div>
 
