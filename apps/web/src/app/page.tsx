@@ -14,10 +14,10 @@ export default function Home() {
             Community Lending
           </h1>
           <p className="text-xl sm:text-2xl text-gray-700 max-w-4xl mx-auto mb-4 leading-relaxed font-semibold">
-            Get funded from your network—and beyond. Your reputation grows as friends contribute.
+            Building reputation-based lending for the new economy
           </p>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Zero interest. No credit checks. Social underwriting.
+            Get funded from your network—and beyond. No credit checks
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
@@ -194,6 +194,18 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          <div className="text-center mt-10">
+            <Link
+              href="https://lendfriend.org/about"
+              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
+            >
+              Learn more about how it works
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -355,10 +367,10 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8 text-center">
+          <div className="text-center mt-10">
             <Link
               href="https://lendfriend.org/vision"
-              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-semibold transition-colors"
+              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
             >
               See the full roadmap
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -383,11 +395,11 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-center justify-center gap-3 text-base md:text-lg text-gray-600 flex-wrap">
-                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Freelancers (Upwork)</span>
+                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Freelancers (Upwork, Fiverr, Toptal)</span>
                   <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Creators (YouTube)</span>
+                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Creators (YouTube, TikTok, Patreon)</span>
                   <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Merchants (Shopify)</span>
+                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Merchants (Shopify, Etsy, Amazon)</span>
                 </div>
               </div>
             </div>
@@ -404,7 +416,7 @@ export default function Home() {
             </div>
 
             {/* Three Comparison Cards */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="grid md:grid-cols-3 gap-8 mb-6">
               {/* Traditional Banks */}
               <div className="bg-gray-50 rounded-xl overflow-hidden border-2 border-gray-300 hover:shadow-lg transition-shadow">
                 <div className="relative w-full h-56">
@@ -471,7 +483,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="text-center mt-12">
+              <div className="text-center mt-8">
                 <Link
                   href="https://lendfriend.org/economic-context"
                   className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
@@ -533,7 +545,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-10">
             <Link
               href="https://lendfriend.org/economic-context"
               className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"

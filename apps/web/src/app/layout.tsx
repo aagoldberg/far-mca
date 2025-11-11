@@ -26,7 +26,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: "LendFriend | Community-Powered Interest-Free Loans",
-  description: "Support your community with interest-free loans. Help local businesses grow while getting your contribution back - no interest, just community support.",
+  description: "Building reputation-based lending for the new economy",
 };
 
 // Force dynamic rendering to prevent SSG conflicts
