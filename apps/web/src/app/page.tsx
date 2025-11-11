@@ -480,43 +480,36 @@ export default function Home() {
             <div className="bg-gradient-to-br from-[#3B9B7F]/5 to-white rounded-xl shadow-sm border border-gray-200 p-10">
               <h3 className="text-3xl font-bold text-gray-900 text-center mb-10">How We Lower Rates</h3>
 
-              <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-10">
-                {/* Item 1 */}
+              <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
+                {/* Item 1 - Community Capital */}
                 <div className="text-center group">
-                  <div className="mx-auto mb-4 w-16 h-16 rounded-xl bg-[#3B9B7F]/10 flex items-center justify-center transition-all group-hover:bg-[#3B9B7F]/20">
-                    <svg className="w-8 h-8 text-[#3B9B7F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
+                  <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
+                    <Image
+                      src="/images/lower_interest/middleman.png"
+                      alt="Community Capital - Eliminate expensive debt middlemen"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">Community Capital</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Eliminate expensive debt middlemen
+                  <h4 className="text-xl font-bold text-gray-900 mb-3">Eliminate Expensive Debt Middlemen</h4>
+                  <p className="text-gray-600 leading-relaxed text-lg">
+                    Banks and VCs expect big profits from your loan - friends don't
                   </p>
                 </div>
 
-                {/* Item 2 */}
+                {/* Item 2 - Instant Settlement */}
                 <div className="text-center group">
-                  <div className="mx-auto mb-4 w-16 h-16 rounded-xl bg-[#3B9B7F]/10 flex items-center justify-center transition-all group-hover:bg-[#3B9B7F]/20">
-                    <svg className="w-8 h-8 text-[#3B9B7F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+                  <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
+                    <Image
+                      src="/images/lower_interest/legacy_railsb.png"
+                      alt="Instant Settlement - Replace legacy payment rails with stablecoins"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">Instant Settlement</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Replace legacy payment rails with stablecoins
-                  </p>
-                </div>
-
-                {/* Item 3 */}
-                <div className="text-center group">
-                  <div className="mx-auto mb-4 w-16 h-16 rounded-xl bg-[#3B9B7F]/10 flex items-center justify-center transition-all group-hover:bg-[#3B9B7F]/20">
-                    <svg className="w-8 h-8 text-[#3B9B7F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">Smart Risk</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Reduce defaults through social trust + cashflow
+                  <h4 className="text-xl font-bold text-gray-900 mb-3">Fast, Lower-Cost Payments</h4>
+                  <p className="text-gray-600 leading-relaxed text-lg">
+                    Replace legacy payment rails with instant, low-cost stablecoins
                   </p>
                 </div>
               </div>
