@@ -11,6 +11,63 @@ const IPFS_GATEWAYS = [
 ];
 
 /**
+ * localStorage cache with TTL (client-side only)
+ * IPFS data is immutable, so we can cache for a long time
+ */
+const LOCALSTORAGE_PREFIX = 'ipfs_cache_';
+const LOCALSTORAGE_TTL = 30 * 60 * 1000; // 30 minutes
+
+interface LocalStorageEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+function getFromLocalStorage<T>(key: string): T | null {
+  // Check if running in browser
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return null;
+  }
+
+  try {
+    const item = localStorage.getItem(LOCALSTORAGE_PREFIX + key);
+    if (!item) return null;
+
+    const entry: LocalStorageEntry<T> = JSON.parse(item);
+
+    // Check if expired
+    if (Date.now() - entry.timestamp > LOCALSTORAGE_TTL) {
+      localStorage.removeItem(LOCALSTORAGE_PREFIX + key);
+      return null;
+    }
+
+    return entry.data;
+  } catch (error) {
+    // Invalid JSON or localStorage error, ignore
+    return null;
+  }
+}
+
+function setInLocalStorage<T>(key: string, data: T): void {
+  // Check if running in browser
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+
+  try {
+    const entry: LocalStorageEntry<T> = {
+      data,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(LOCALSTORAGE_PREFIX + key, JSON.stringify(entry));
+  } catch (error) {
+    // localStorage full or disabled, ignore
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('[IPFS] localStorage write failed:', error);
+    }
+  }
+}
+
+/**
  * Convert ipfs:// URI to HTTP gateway URL
  */
 export function ipfsToHttp(uri: string, gatewayIndex: number = 0): string {
@@ -33,19 +90,28 @@ export async function fetchFromIPFS<T = any>(
   uri: string,
   timeout: number = 5000
 ): Promise<T> {
-  // Check cache first
   const cacheKey = uri.toLowerCase();
-  const cached = metadataCache.get(cacheKey);
 
-  if (cached) {
+  // Check localStorage first (client-side, persists across reloads)
+  const localStorageCached = getFromLocalStorage<T>(cacheKey);
+  if (localStorageCached) {
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[IPFS Cache HIT] ${uri.slice(0, 20)}...`);
+      console.log(`[IPFS localStorage HIT] ${uri.slice(0, 30)}...`);
     }
-    return cached;
+    return localStorageCached;
+  }
+
+  // Check in-memory cache (server-side or current session)
+  const memoryCached = metadataCache.get(cacheKey);
+  if (memoryCached) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[IPFS Memory Cache HIT] ${uri.slice(0, 30)}...`);
+    }
+    return memoryCached;
   }
 
   if (process.env.NODE_ENV === 'development') {
-    console.log(`[IPFS Cache MISS] ${uri.slice(0, 20)}...`);
+    console.log(`[IPFS Cache MISS] ${uri.slice(0, 30)}...`);
   }
 
   // Try each gateway in sequence
@@ -73,8 +139,9 @@ export async function fetchFromIPFS<T = any>(
 
       const data = await response.json();
 
-      // Store in cache
+      // Store in both caches
       metadataCache.set(cacheKey, data);
+      setInLocalStorage(cacheKey, data);
 
       if (process.env.NODE_ENV === 'development') {
         console.log(`[IPFS Success] Gateway ${i + 1}/${IPFS_GATEWAYS.length}`);
