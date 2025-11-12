@@ -10,14 +10,14 @@ export default function Home() {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#3B9B7F]/10 via-[#2C7DA0]/5 to-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-[#3B9B7F] mb-8 tracking-tight leading-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-[#3B9B7F] mb-6 tracking-tight leading-tight">
             Community Lending
           </h1>
-          <p className="text-xl sm:text-2xl text-gray-700 max-w-4xl mx-auto mb-4 leading-relaxed font-semibold">
-            Building reputation-based lending for the new economy
+          <p className="text-2xl sm:text-3xl md:text-4xl text-gray-900 max-w-4xl mx-auto mb-5 leading-tight font-bold">
+            Banks want big profits, friends don't
           </p>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Get funded from your network—and beyond. No credit checks
+            Building reputation-based lending for the new economy
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
