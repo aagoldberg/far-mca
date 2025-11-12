@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "@/components/Navbar";
 import { AirdropToast } from "@/components/AirdropToast";
+import { Analytics } from "@vercel/analytics/react";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({
             <AirdropToast />
           </div>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
