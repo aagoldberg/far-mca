@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useEvmAddress, useSignOut, useCurrentUser } from '@coinbase/cdp-hooks';
+import { useAccount, useDisconnect } from 'wagmi';
 import { HeartIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import { FarcasterSignupModal } from './FarcasterSignupModal';
 
@@ -12,9 +13,18 @@ type UserMenuProps = {
 };
 
 export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
-  const { evmAddress: address } = useEvmAddress();
+  // CDP Embedded Wallet hooks
+  const { evmAddress: cdpAddress } = useEvmAddress();
   const { signOut } = useSignOut();
   const { currentUser } = useCurrentUser();
+
+  // External wallet hooks (RainbowKit/wagmi)
+  const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
+  const { disconnect: disconnectExternal } = useDisconnect();
+
+  // Prioritize external wallet address if connected, otherwise use CDP address
+  const address = isExternalConnected ? externalAddress : cdpAddress;
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [farcasterModalOpen, setFarcasterModalOpen] = useState(false);
   const [farcasterProfile, setFarcasterProfile] = useState<{ fid: number; username: string } | null>(null);
@@ -50,6 +60,16 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
   const handleFarcasterSuccess = (data: { fid: number; username: string }) => {
     setFarcasterProfile(data);
     // TODO: Save to database via API
+  };
+
+  const handleDisconnect = () => {
+    if (isExternalConnected) {
+      // Disconnect external wallet (MetaMask, etc.)
+      disconnectExternal();
+    } else {
+      // Sign out from CDP embedded wallet
+      signOut();
+    }
   };
 
   useEffect(() => {
@@ -149,7 +169,7 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
           </Link>
           <button
             onClick={() => {
-              signOut();
+              handleDisconnect();
               handleItemClick();
             }}
             className="w-full text-left block px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-colors"
@@ -263,7 +283,7 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
           </Link>
           <button
             onClick={() => {
-              signOut();
+              handleDisconnect();
               setMenuOpen(false);
             }}
             className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-red-50"

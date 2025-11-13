@@ -1,5 +1,6 @@
-import { createConfig, http } from "wagmi";
+import { http } from "wagmi";
 import { base, baseSepolia } from "wagmi/chains";
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { coinbaseWallet } from "wagmi/connectors";
 
 const alchemyRpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
@@ -8,16 +9,10 @@ if (!alchemyRpcUrl) {
   console.warn(`[Config Warning] NEXT_PUBLIC_RPC_URL is not set. Falling back to public RPC, which may be unreliable.`);
 }
 
-export const wagmiConfig = createConfig({
+export const wagmiConfig = getDefaultConfig({
+  appName: "LendFriend",
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
   chains: [baseSepolia, base],
-  connectors: [
-    coinbaseWallet({
-      appName: "LendFriend",
-      appLogoUrl: "https://everybit.matters/logo.png",
-      preference: "smartWalletOnly", // Use Smart Wallet (email/Google/Apple), not extension
-      version: "4",
-    }),
-  ],
   ssr: true,
   transports: {
     [baseSepolia.id]: http(alchemyRpcUrl, {

@@ -8,7 +8,9 @@ import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from "@ap
 import { PaymentProvider } from "@/providers/payment/PaymentProvider";
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { CDPReactProvider } from '@coinbase/cdp-react';
+import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit';
 import { baseSepolia } from 'wagmi/chains';
+import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
@@ -47,16 +49,28 @@ export function Providers({ children }: { children: React.ReactNode }) {
     >
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
-          <OnchainKitProvider
-            apiKey={CDP_API_KEY}
-            chain={baseSepolia}
+          <RainbowKitProvider
+            appInfo={{
+              appName: 'LendFriend',
+            }}
+            theme={lightTheme({
+              accentColor: '#29738F',
+              accentColorForeground: 'white',
+              borderRadius: 'large',
+              fontStack: 'system',
+            })}
           >
-            <ApolloProvider client={apolloClient}>
-              <PaymentProvider>
-                {children}
-              </PaymentProvider>
-            </ApolloProvider>
-          </OnchainKitProvider>
+            <OnchainKitProvider
+              apiKey={CDP_API_KEY}
+              chain={baseSepolia}
+            >
+              <ApolloProvider client={apolloClient}>
+                <PaymentProvider>
+                  {children}
+                </PaymentProvider>
+              </ApolloProvider>
+            </OnchainKitProvider>
+          </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </CDPReactProvider>
