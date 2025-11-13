@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useIsSignedIn } from '@coinbase/cdp-hooks';
+import { useIsSignedIn, useEvmAddress } from '@coinbase/cdp-hooks';
 import { useAccount } from 'wagmi';
 import { CreateFundingRequestButton } from "./CreateFundingRequestButton";
 import { UserMenu } from './UserMenu';
@@ -12,6 +12,8 @@ import { RotatingText } from './RotatingText';
 import { LendFriendLogo } from './LendFriendLogo';
 import { WalletBalance } from './WalletBalance';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import { FarcasterOnboardingModal } from './FarcasterOnboardingModal';
+import { useFarcasterAccount } from '@/hooks/useFarcasterAccount';
 
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-700 hover:text-gray-900">
@@ -44,6 +46,7 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showFarcasterOnboarding, setShowFarcasterOnboarding] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -51,10 +54,14 @@ export default function Navbar() {
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { isSignedIn } = useIsSignedIn(); // CDP embedded wallet
-  const { isConnected } = useAccount(); // External wallet (MetaMask, etc.)
+  const { isConnected, address: externalAddress } = useAccount(); // External wallet (MetaMask, etc.)
+  const { evmAddress: cdpAddress } = useEvmAddress(); // CDP wallet address
 
   // Check if user is authenticated via either CDP or external wallet
   const isAuthenticated = isSignedIn || isConnected;
+
+  // Farcaster onboarding
+  const { farcasterAccount, hasPrompted, markPrompted } = useFarcasterAccount();
 
   // Debug logging
   console.log('Navbar - Auth state:', { isSignedIn, isConnected, isAuthenticated });
@@ -102,6 +109,32 @@ export default function Navbar() {
     }
   }, [isSearchOpen]);
 
+  // Show Farcaster onboarding prompt after signin if user doesn't have an account yet
+  useEffect(() => {
+    if (isAuthenticated && !farcasterAccount && !hasPrompted) {
+      // Wait a bit after signin before showing the prompt
+      const timer = setTimeout(() => {
+        setShowFarcasterOnboarding(true);
+      }, 1500); // 1.5 second delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated, farcasterAccount, hasPrompted]);
+
+  const handleCloseFarcasterOnboarding = () => {
+    setShowFarcasterOnboarding(false);
+    markPrompted(); // Mark that we've shown the prompt
+  };
+
+  // Generate a suggested username from the wallet address
+  const getSuggestedUsername = () => {
+    const address = externalAddress || cdpAddress;
+    if (!address) return '';
+
+    // Use last 6 characters of address as username suggestion
+    return `user${address.slice(-6).toLowerCase()}`;
+  };
+
   const handleSearchSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     const trimmedQuery = searchQuery.trim();
@@ -121,8 +154,15 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <>
+      <FarcasterOnboardingModal
+        isOpen={showFarcasterOnboarding}
+        onClose={handleCloseFarcasterOnboarding}
+        suggestedUsername={getSuggestedUsername()}
+      />
+
+      <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile Navbar */}
         <div className="md:hidden flex items-center justify-between h-16">
           <Link href="/" className="flex items-center">
@@ -363,5 +403,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </>
   );
 } 
