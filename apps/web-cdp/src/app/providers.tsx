@@ -8,7 +8,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from "@ap
 import { PaymentProvider } from "@/providers/payment/PaymentProvider";
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { CDPReactProvider } from '@coinbase/cdp-react';
-import { base, baseSepolia } from 'wagmi/chains';
+import { baseSepolia } from 'wagmi/chains';
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,7 @@ if (!SUBGRAPH_URL) {
 }
 
 if (!CDP_PROJECT_ID) {
-  console.error("NEXT_PUBLIC_CDP_PROJECT_ID is not set - CDP Embedded Wallets will not work");
+  console.warn("NEXT_PUBLIC_CDP_PROJECT_ID is not set - CDP Embedded Wallets will not work");
 }
 
 const httpLink = createHttpLink({
@@ -39,9 +39,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       config={{
         projectId: CDP_PROJECT_ID || '',
         ethereum: {
-          createOnLogin: 'eoa', // Create Ethereum wallet on login
+          createOnLogin: 'eoa',
         },
         appName: 'LendFriend',
+        authMethods: ['email', 'sms', 'oauth:google', 'oauth:apple', 'oauth:x'],
       }}
     >
       <WagmiProvider config={wagmiConfig}>

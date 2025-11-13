@@ -8,8 +8,7 @@ import { formatUnits } from 'viem';
 const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}`;
 
 export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?: boolean }) {
-  const evmAddress = useEvmAddress();
-  const walletAddress = (typeof evmAddress === 'string' ? evmAddress : undefined) as `0x${string}` | undefined;
+  const { evmAddress: walletAddress } = useEvmAddress();
   const [isMinting, setIsMinting] = useState(false);
   const [isRequestingEth, setIsRequestingEth] = useState(false);
   const publicClient = usePublicClient();

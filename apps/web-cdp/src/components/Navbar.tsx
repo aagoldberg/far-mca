@@ -3,11 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAccount } from 'wagmi';
-import { useCurrentUser } from '@coinbase/cdp-hooks';
-import { AuthButton } from '@coinbase/cdp-react';
+import { useIsSignedIn } from '@coinbase/cdp-hooks';
 import { CreateFundingRequestButton } from "./CreateFundingRequestButton";
 import { UserMenu } from './UserMenu';
+import { AuthModal } from './AuthModal';
 import { RotatingText } from './RotatingText';
 import { LendFriendLogo } from './LendFriendLogo';
 import { WalletBalance } from './WalletBalance';
@@ -50,19 +49,10 @@ export default function Navbar() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { isConnected } = useAccount();
-  const currentUser = useCurrentUser();
-
-  // Check if user is authenticated via CDP Embedded Wallets
-  // useCurrentUser returns { currentUser: User | null } or null
-  // We need to check the inner currentUser property, not just if the object exists
-  const actualUser = currentUser?.currentUser ?? null;
-  const isAuthenticated = !!actualUser;
+  const { isSignedIn } = useIsSignedIn();
 
   // Debug logging
-  console.log('Navbar - CDP User state:', { currentUser, actualUser, isAuthenticated });
-  console.log('Navbar - Wallet state:', { isConnected });
-  console.log('Navbar - About dropdown state:', aboutDropdownOpen);
+  console.log('Navbar - Auth state:', { isSignedIn });
 
 
   // Close menu when clicking outside
@@ -177,24 +167,24 @@ export default function Navbar() {
                 <div className="space-y-4">
                   {/* User authentication section - moved to top */}
                   <div className="w-full">
-                    {isAuthenticated ? (
+                    {isSignedIn ? (
                       <UserMenu inline={true} onItemClick={() => setMobileMenuOpen(false)} />
                     ) : (
                       <div className="w-full">
-                        <AuthButton className="w-full" />
+                        <AuthModal />
                       </div>
                     )}
                   </div>
 
-                  {/* Wallet balances - show when authenticated */}
-                  {isAuthenticated && (
+                  {/* Wallet balances - show when connected */}
+                  {isSignedIn && (
                     <div className="w-full">
                       <WalletBalance forceDesktopView={true} />
                     </div>
                   )}
 
-                  {/* Create loan button - only show when not authenticated */}
-                  {!isAuthenticated && (
+                  {/* Create loan button - only show when not connected */}
+                  {!isSignedIn && (
                     <div className="w-full">
                       <Link
                         href="/create-loan"
@@ -349,7 +339,7 @@ export default function Navbar() {
 
           {/* Right: Wallet Balance, Auth Buttons and User Menu */}
           <div className="flex-shrink-0 flex items-center space-x-3">
-            {isAuthenticated && <WalletBalance />}
+            {isSignedIn && <WalletBalance />}
             <Link
               href="/create-loan"
               className="bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
@@ -359,10 +349,10 @@ export default function Navbar() {
               </svg>
               Create Loan
             </Link>
-            {isAuthenticated ? (
+            {isSignedIn ? (
               <UserMenu />
             ) : (
-              <AuthButton />
+              <AuthModal />
             )}
           </div>
         </div>

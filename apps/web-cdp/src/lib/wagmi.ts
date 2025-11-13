@@ -14,8 +14,8 @@ export const wagmiConfig = createConfig({
     coinbaseWallet({
       appName: "LendFriend",
       appLogoUrl: "https://everybit.matters/logo.png",
-      preference: "smartWalletOnly", // Force CDP Smart Wallet (not extension)
-      version: "4", // Use SDK v4 which has better Smart Wallet support
+      preference: "smartWalletOnly", // Use Smart Wallet (email/Google/Apple), not extension
+      version: "4",
     }),
   ],
   ssr: true,
