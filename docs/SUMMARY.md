@@ -28,6 +28,7 @@
 * [🔧 Technical Stack](how-it-works/technical-stack.md)
 * [💳 Payment Methods](how-it-works/payment-methods.md)
 * [📱 Farcaster Mini App](how-it-works/farcaster-miniapp.md)
+* [🎭 Farcaster Integration](how-it-works/farcaster-integration.md)
 * [🔐 CDP Auto-Repayment](how-it-works/cdp-auto-repayment.md)
 
 ## 📚 Resources

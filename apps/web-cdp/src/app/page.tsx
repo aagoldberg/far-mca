@@ -482,18 +482,18 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+            </div>
 
-              <div className="text-center mt-8">
-                <Link
-                  href="https://lendfriend.org/economic-context"
-                  className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
-                >
-                  Learn more about the opportunity
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
+            <div className="text-center mt-8">
+              <Link
+                href="https://lendfriend.org/economic-context"
+                className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
+              >
+                Learn more about the opportunity
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
