@@ -11,6 +11,7 @@
   * [Phase 0: Prove Trust Works](vision/phase-0-social-trust.md)
   * [Phase 1: Scale with Cashflow](vision/phase-1-cashflow.md)
   * [Phase 2: Automate Repayment](vision/phase-2-automation.md)
+    * [Implementation Plans](vision/phase-2-implementation-plans.md)
 
 ## 📖 How It Works
 
@@ -27,6 +28,7 @@
 * [🔧 Technical Stack](how-it-works/technical-stack.md)
 * [💳 Payment Methods](how-it-works/payment-methods.md)
 * [📱 Farcaster Mini App](how-it-works/farcaster-miniapp.md)
+* [🔐 CDP Auto-Repayment](how-it-works/cdp-auto-repayment.md)
 
 ## 📚 Resources
 
