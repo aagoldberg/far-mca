@@ -8,11 +8,11 @@ const neynarClient = new NeynarAPIClient(config);
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, walletAddress, signature, deadline } = await request.json();
+    const { username, walletAddress, signature, fid, deadline } = await request.json();
 
-    if (!username || !walletAddress || !signature || !deadline) {
+    if (!username || !walletAddress || !signature || !fid || !deadline) {
       return NextResponse.json(
-        { error: 'Missing required fields: username, walletAddress, signature, deadline' },
+        { error: 'Missing required fields: username, walletAddress, signature, fid, deadline' },
         { status: 400 }
       );
     }
@@ -25,11 +25,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 1: Claim an FID for the new user
-    console.log('Step 1: Claiming FID...');
+    console.log('Registering Farcaster account with FID:', fid);
+
+    // Register account with Neynar using the signed data
     const fidResponse = await neynarClient.registerAccount(username, {
-      signature,
-      fid: 0, // Will be assigned by Neynar
+      signature: signature as `0x${string}`,
+      fid,
       requestedUserCustodyAddress: walletAddress as `0x${string}`,
       deadline,
     });
@@ -59,6 +60,13 @@ export async function POST(request: NextRequest) {
     if (error.message?.includes('deadline')) {
       return NextResponse.json(
         { error: 'Registration deadline expired. Please try again.' },
+        { status: 400 }
+      );
+    }
+
+    if (error.message?.includes('signature')) {
+      return NextResponse.json(
+        { error: 'Invalid signature. Please try again.' },
         { status: 400 }
       );
     }

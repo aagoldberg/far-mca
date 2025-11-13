@@ -26,32 +26,32 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Check if username is available using Neynar API
-    try {
-      const userInfo = await neynarClient.fetchBulkUsers([username], { viewerFid: 0 });
-
-      // If we get user data back, username is taken
-      if (userInfo.users && userInfo.users.length > 0) {
-        return NextResponse.json({
-          available: false,
-          message: 'Username already taken',
-        });
+    // Check if username is available using Neynar fname availability endpoint
+    const response = await fetch(
+      `https://api.neynar.com/v2/farcaster/fname/availability?fname=${encodeURIComponent(username)}`,
+      {
+        headers: {
+          'x-api-key': process.env.NEYNAR_API_KEY!,
+        },
       }
+    );
 
-      // Username is available
+    if (!response.ok) {
+      throw new Error(`Neynar API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.available) {
       return NextResponse.json({
         available: true,
         message: 'Username is available!',
       });
-    } catch (error: any) {
-      // If user not found, username is available
-      if (error.message?.includes('not found') || error.status === 404) {
-        return NextResponse.json({
-          available: true,
-          message: 'Username is available!',
-        });
-      }
-      throw error;
+    } else {
+      return NextResponse.json({
+        available: false,
+        message: 'Username already taken',
+      });
     }
   } catch (error: any) {
     console.error('Username check error:', error);

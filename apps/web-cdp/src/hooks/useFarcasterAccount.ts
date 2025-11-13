@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useEvmAddress } from '@coinbase/cdp-hooks';
-import { useAccount } from 'wagmi';
+import { useAccount, useSignTypedData } from 'wagmi';
 
 interface FarcasterAccount {
   fid: number;
@@ -27,6 +27,7 @@ interface UseFarcasterAccountReturn {
 export function useFarcasterAccount(): UseFarcasterAccountReturn {
   const { evmAddress: cdpAddress } = useEvmAddress();
   const { address: externalAddress } = useAccount();
+  const { signTypedDataAsync } = useSignTypedData();
 
   // Prioritize external wallet address
   const walletAddress = externalAddress || cdpAddress;
@@ -70,23 +71,7 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
   const clearError = () => setError(null);
 
   /**
-   * Generate a signature for Farcaster registration
-   * This is a simplified version - in production you'd want to sign a proper message
-   */
-  const generateSignature = async (): Promise<{ signature: string; deadline: number }> => {
-    // For now, we'll use a simple deadline (24 hours from now)
-    const deadline = Math.floor(Date.now() / 1000) + 86400;
-
-    // TODO: In production, you should sign a proper EIP-712 message
-    // For now, we'll use a placeholder signature
-    const signature = '0x' + '0'.repeat(130); // Placeholder
-
-    return { signature, deadline };
-  };
-
-  /**
-   * Create a Farcaster account with retry logic
-   * Tries up to 3 times with different usernames if needed
+   * Create a Farcaster account with EIP-712 signature
    */
   const createAccount = async (baseUsername: string): Promise<boolean> => {
     if (!walletAddress) {
@@ -97,93 +82,86 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
     setIsLoading(true);
     setError(null);
 
-    let attempts = 0;
-    const maxAttempts = 3;
-    let currentUsername = baseUsername;
+    try {
+      console.log(`Creating Farcaster account for username "${baseUsername}"...`);
 
-    while (attempts < maxAttempts) {
-      try {
-        console.log(`Attempt ${attempts + 1}: Trying username "${currentUsername}"...`);
+      // Step 1: Prepare registration data (get FID, nonce, typed data from backend)
+      const prepareResponse = await fetch('/api/farcaster/prepare-registration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress }),
+      });
 
-        // Generate signature
-        const { signature, deadline } = await generateSignature();
-
-        // Call the registration API
-        const response = await fetch('/api/farcaster/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: currentUsername,
-            walletAddress,
-            signature,
-            deadline,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          // Success! Save to localStorage and state
-          const account: FarcasterAccount = {
-            fid: data.fid,
-            username: data.username,
-            signer_uuid: data.signer_uuid,
-          };
-
-          const storageKey = `farcaster_account_${walletAddress.toLowerCase()}`;
-          localStorage.setItem(storageKey, JSON.stringify(account));
-
-          setFarcasterAccount(account);
-          setIsLoading(false);
-
-          console.log('Farcaster account created successfully:', account);
-          return true;
-        }
-
-        // Handle username taken error - try with a different username
-        if (response.status === 409 || data.error?.includes('username')) {
-          attempts++;
-
-          if (attempts < maxAttempts) {
-            // Try with a random suffix
-            currentUsername = `${baseUsername}${Math.floor(Math.random() * 1000)}`;
-            console.log(`Username taken, trying "${currentUsername}"...`);
-            continue;
-          } else {
-            setError('Username unavailable. Please try a different username.');
-            setIsLoading(false);
-            return false;
-          }
-        }
-
-        // Handle other errors
-        setError(data.error || 'Failed to create Farcaster account');
-        setIsLoading(false);
-        return false;
-
-      } catch (err: any) {
-        console.error('Farcaster registration error:', err);
-
-        attempts++;
-
-        if (attempts < maxAttempts) {
-          console.log('Network error, retrying...');
-          // Wait a bit before retrying
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          continue;
-        } else {
-          setError('Network error. Please check your connection and try again.');
-          setIsLoading(false);
-          return false;
-        }
+      if (!prepareResponse.ok) {
+        const errorData = await prepareResponse.json();
+        throw new Error(errorData.error || 'Failed to prepare registration');
       }
-    }
 
-    setError('Failed to create account after multiple attempts.');
-    setIsLoading(false);
-    return false;
+      const { fid, deadline, typedData } = await prepareResponse.json();
+
+      console.log('Registration prepared, requesting signature...');
+
+      // Step 2: Request user signature
+      const signature = await signTypedDataAsync({
+        domain: typedData.domain,
+        types: typedData.types,
+        primaryType: typedData.primaryType,
+        message: typedData.message,
+      });
+
+      console.log('Signature obtained, registering account...');
+
+      // Step 3: Register account with signature
+      const registerResponse = await fetch('/api/farcaster/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: baseUsername,
+          walletAddress,
+          signature,
+          fid,
+          deadline,
+        }),
+      });
+
+      const data = await registerResponse.json();
+
+      if (registerResponse.ok && data.success) {
+        // Success! Save to localStorage and state
+        const account: FarcasterAccount = {
+          fid: data.fid,
+          username: data.username,
+          signer_uuid: data.signer_uuid,
+        };
+
+        const storageKey = `farcaster_account_${walletAddress.toLowerCase()}`;
+        localStorage.setItem(storageKey, JSON.stringify(account));
+
+        setFarcasterAccount(account);
+        setIsLoading(false);
+
+        console.log('Farcaster account created successfully:', account);
+        return true;
+      }
+
+      // Handle errors
+      setError(data.error || 'Failed to create Farcaster account');
+      setIsLoading(false);
+      return false;
+
+    } catch (err: any) {
+      console.error('Farcaster registration error:', err);
+
+      // Handle user rejected signature
+      if (err.message?.includes('User rejected') || err.message?.includes('denied')) {
+        setError('Signature rejected. Please approve the signature to create your account.');
+      } else {
+        setError(err.message || 'Failed to create account');
+      }
+
+      setIsLoading(false);
+      return false;
+    }
   };
 
   return {
