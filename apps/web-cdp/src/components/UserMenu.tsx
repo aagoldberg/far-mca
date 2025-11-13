@@ -19,6 +19,7 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   // CDP Embedded Wallets - use CDP user data if available
+  // Handle case where useEvmAddress returns an object or string
   const address = typeof evmAddress === 'string' ? evmAddress : undefined;
   const profile = getSocialProfile(undefined);
   const displayName = formatDisplayName(undefined) || (address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'User');

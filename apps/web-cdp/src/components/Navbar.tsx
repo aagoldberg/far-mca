@@ -54,10 +54,13 @@ export default function Navbar() {
   const currentUser = useCurrentUser();
 
   // Check if user is authenticated via CDP Embedded Wallets
-  const isAuthenticated = !!currentUser;
+  // useCurrentUser returns { currentUser: User | null } or null
+  // We need to check the inner currentUser property, not just if the object exists
+  const actualUser = currentUser?.currentUser ?? null;
+  const isAuthenticated = !!actualUser;
 
   // Debug logging
-  console.log('Navbar - CDP User state:', { currentUser, isAuthenticated });
+  console.log('Navbar - CDP User state:', { currentUser, actualUser, isAuthenticated });
   console.log('Navbar - Wallet state:', { isConnected });
   console.log('Navbar - About dropdown state:', aboutDropdownOpen);
 
