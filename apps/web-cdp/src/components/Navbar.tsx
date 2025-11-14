@@ -63,9 +63,12 @@ export default function Navbar() {
   // Farcaster onboarding
   const { farcasterAccount, hasPrompted, markPrompted, isLoading: isFarcasterLoading } = useFarcasterAccount();
 
-  // Debug logging
-  console.log('Navbar - Auth state:', { isSignedIn, isConnected, isAuthenticated });
-
+  // Debug logging - only log when auth state changes
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Navbar - Auth state changed:', { isSignedIn, isConnected, isAuthenticated });
+    }
+  }, [isSignedIn, isConnected, isAuthenticated]);
 
   // Close menu when clicking outside
   useEffect(() => {

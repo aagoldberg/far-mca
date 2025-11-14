@@ -83,6 +83,13 @@ export class SimpleCache<T> {
   }
 
   /**
+   * Delete a specific key from cache
+   */
+  delete(key: string): boolean {
+    return this.cache.delete(key);
+  }
+
+  /**
    * Get cache statistics for debugging
    */
   stats() {

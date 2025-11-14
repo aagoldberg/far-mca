@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { WagmiProvider } from "wagmi";
 import { wagmiConfig } from "@/lib/wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -11,6 +11,7 @@ import { CDPReactProvider } from '@coinbase/cdp-react';
 import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit';
 import { baseSepolia } from 'wagmi/chains';
 import '@rainbow-me/rainbowkit/styles.css';
+import { clearProfileCache, debugProfileCache } from '@/hooks/useFarcasterProfile';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,21 @@ const apolloClient = new ApolloClient({
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  // Expose debug utilities in development
+  useEffect(() => {
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+      (window as any).debugFarcaster = {
+        clearCache: clearProfileCache,
+        debugCache: debugProfileCache,
+        clearAll: () => clearProfileCache(),
+      };
+      console.log('[Debug] Farcaster debug utilities available via window.debugFarcaster:');
+      console.log('  • clearCache(address) - Clear cache for a specific address');
+      console.log('  • debugCache(address) - Check what\'s cached for an address');
+      console.log('  • clearAll() - Clear all profile cache');
+    }
+  }, []);
+
   return (
     <CDPReactProvider
       config={{

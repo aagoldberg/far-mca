@@ -204,7 +204,11 @@ const LoanList = () => {
       {/* Loan Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {loanAddresses.map((address) => (
-          <LoanCardWrapper key={address} loanAddress={address} showInactive={showInactive} />
+          <LoanCardWrapper
+            key={address}
+            loanAddress={address}
+            showInactive={showInactive}
+          />
         ))}
       </div>
     </div>

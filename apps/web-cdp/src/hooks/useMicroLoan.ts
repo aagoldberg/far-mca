@@ -300,8 +300,102 @@ export const useContributors = (
     ?.filter((result) => result.status === 'success')
     .map((result) => result.result as `0x${string}`) || [];
 
+  if (process.env.NODE_ENV === 'development' && enabled && contributors.length > 0) {
+    console.log(`[Contributors] Loan ${loanAddress?.slice(0, 6)}...${loanAddress?.slice(-4)}:`, {
+      count: Number(contributorsCount),
+      limit: actualLimit,
+      contributors: contributors.map(addr => `${addr.slice(0, 6)}...${addr.slice(-4)}`),
+    });
+  }
+
   return {
     contributors,
+    totalCount: Number(contributorsCount),
+    hasMore: Number(contributorsCount) > limit,
+  };
+};
+
+/**
+ * Get contributors with their contribution amounts
+ * Fetches a larger pool to enable filtering by Farcaster profiles
+ */
+export const useContributorsWithAmounts = (
+  loanAddress: `0x${string}` | undefined,
+  limit: number = 10
+) => {
+  const enabled = !!loanAddress;
+
+  // First get the count
+  const { data: count } = useReadContract({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributorsCount',
+    query: { enabled },
+  });
+
+  const contributorsCount = (count as bigint) || 0n;
+  const actualLimit = Math.min(Number(contributorsCount), limit);
+
+  // Fetch contributor addresses
+  const contributorQueries = Array.from({ length: actualLimit }, (_, i) => ({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributors',
+    args: [BigInt(i)],
+  }));
+
+  const { data: contributorsData } = useReadContracts({
+    contracts: contributorQueries.length > 0 ? contributorQueries as any : [],
+    query: { enabled: enabled && actualLimit > 0 },
+  });
+
+  const contributorAddresses = contributorsData
+    ?.filter((result) => result.status === 'success')
+    .map((result) => result.result as `0x${string}`) || [];
+
+  // Fetch contribution amounts for each contributor
+  const amountQueries = contributorAddresses.map(addr => ({
+    address: loanAddress,
+    abi: MicroLoanABI.abi,
+    functionName: 'contributions',
+    args: [addr],
+  }));
+
+  const { data: amountsData } = useReadContracts({
+    contracts: amountQueries.length > 0 ? amountQueries as any : [],
+    query: { enabled: enabled && contributorAddresses.length > 0 },
+  });
+
+  const amounts = amountsData
+    ?.filter((result) => result.status === 'success')
+    .map((result) => result.result as bigint) || [];
+
+  // Combine addresses and amounts, then sort by amount descending
+  const contributorsWithAmounts = contributorAddresses
+    .map((address, index) => ({
+      address,
+      amount: amounts[index] || 0n,
+    }))
+    .sort((a, b) => {
+      // Sort by amount descending
+      if (a.amount > b.amount) return -1;
+      if (a.amount < b.amount) return 1;
+      return 0;
+    });
+
+  if (process.env.NODE_ENV === 'development' && enabled && contributorsWithAmounts.length > 0) {
+    console.log(`[ContributorsWithAmounts] Loan ${loanAddress?.slice(0, 6)}...${loanAddress?.slice(-4)}:`, {
+      count: Number(contributorsCount),
+      fetched: contributorsWithAmounts.length,
+      topContributors: contributorsWithAmounts.slice(0, 3).map(c => ({
+        address: `${c.address.slice(0, 6)}...${c.address.slice(-4)}`,
+        amount: Number(c.amount) / 1e6, // Convert to USDC
+      })),
+    });
+  }
+
+  return {
+    contributors: contributorsWithAmounts,
     totalCount: Number(contributorsCount),
     hasMore: Number(contributorsCount) > limit,
   };
