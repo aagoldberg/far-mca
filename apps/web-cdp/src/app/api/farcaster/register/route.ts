@@ -8,11 +8,11 @@ const neynarClient = new NeynarAPIClient(config);
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, walletAddress, signature, fid, deadline } = await request.json();
+    const { username, fid, walletAddress, signature, deadline } = await request.json();
 
-    if (!username || !walletAddress || !signature || !fid || !deadline) {
+    if (!username || !fid || !walletAddress || !signature || !deadline) {
       return NextResponse.json(
-        { error: 'Missing required fields: username, walletAddress, signature, fid, deadline' },
+        { error: 'Missing required fields: username, fid, walletAddress, signature, deadline' },
         { status: 400 }
       );
     }
@@ -25,14 +25,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('Registering Farcaster account with FID:', fid);
-
-    // Register account with Neynar using the signed data
-    const fidResponse = await neynarClient.registerAccount(username, {
-      signature: signature as `0x${string}`,
+    console.log('Registering Farcaster account for wallet:', walletAddress);
+    console.log('Registration params:', {
+      username,
       fid,
-      requestedUserCustodyAddress: walletAddress as `0x${string}`,
+      walletAddress,
       deadline,
+      signatureLength: signature.length,
+      signaturePrefix: signature.substring(0, 10),
+    });
+
+    // Register account with Neynar using the signed data and sponsored FID
+    const fidResponse = await neynarClient.registerAccount({
+      fid,
+      signature,
+      requestedUserCustodyAddress: walletAddress,
+      deadline,
+      fname: username, // Pass username as fname (Farcaster name)
     });
 
     console.log('Farcaster account registered:', {
@@ -48,6 +57,8 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Farcaster registration error:', error);
+    console.error('Error response data:', error.response?.data);
+    console.error('Error response status:', error.response?.status);
 
     // Handle specific error cases
     if (error.message?.includes('username')) {

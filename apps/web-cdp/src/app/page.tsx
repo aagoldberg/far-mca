@@ -74,6 +74,7 @@ export default function Home() {
                   src="/images/instructions_1b.png"
                   alt="Create Your Loan"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -95,6 +96,7 @@ export default function Home() {
                   src="/images/instructions_2.png"
                   alt="Friends Contribute"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                   style={{ objectPosition: 'center 35%' }}
                 />
@@ -117,6 +119,7 @@ export default function Home() {
                   src="/images/instructions_3.png"
                   alt="Trust Scores Calculate"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -138,6 +141,7 @@ export default function Home() {
                   src="/images/instructions_4.png"
                   alt="Lenders Evaluate"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -159,6 +163,7 @@ export default function Home() {
                   src="/images/instructions_5.png"
                   alt="Loan Funds or Expires"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -180,6 +185,7 @@ export default function Home() {
                   src="/images/instructions_6.png"
                   alt="Reputation Builds"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -242,6 +248,7 @@ export default function Home() {
                     src="/images/phase0_gb.png"
                     alt="Phase 0: Social Trust"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                     style={{ objectPosition: 'center 40%' }}
                   />
@@ -289,6 +296,7 @@ export default function Home() {
                     src="/images/phase1_gb.png"
                     alt="Phase 1: Add Cashflow"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                     style={{ objectPosition: 'center 40%' }}
                   />
@@ -336,6 +344,7 @@ export default function Home() {
                     src="/images/phase2_gb.png"
                     alt="Phase 2: Automate"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                     style={{ objectPosition: 'center 40%' }}
                   />
@@ -410,6 +419,7 @@ export default function Home() {
                 src="/images/why/platform_workers3.png"
                 alt="$1 Trillion Platform Economy - Freelancers, Creators, Merchants"
                 fill
+                sizes="(max-width: 1024px) 100vw, 1200px"
                 className="object-cover"
                 style={{ objectPosition: 'center' }}
               />
@@ -424,6 +434,7 @@ export default function Home() {
                     src="/images/why/bank_rejection.png"
                     alt="Traditional Banks Reject"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                   />
                 </div>
@@ -446,6 +457,7 @@ export default function Home() {
                     src="/images/why/invite_only.png"
                     alt="Fintech Platform Lenders Invite Only"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                   />
                 </div>
@@ -468,6 +480,7 @@ export default function Home() {
                     src="/images/why/lendfriend_b.png"
                     alt="LendFriend Open Access"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                   />
                 </div>
@@ -519,6 +532,7 @@ export default function Home() {
                   src="/images/lower_interest/middleman.png"
                   alt="Community Capital - Eliminate expensive debt middlemen"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
@@ -535,6 +549,7 @@ export default function Home() {
                   src="/images/lower_interest/legacy_railsb.png"
                   alt="Fast, Lower-Cost Payments - Replace legacy payment rails with stablecoins"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>

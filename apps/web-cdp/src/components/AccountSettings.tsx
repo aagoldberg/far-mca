@@ -4,6 +4,7 @@ import { useAccount } from 'wagmi';
 import { usePrivy } from '@privy-io/react-auth';
 import { useBorrowerLoans, useLoans } from '@/hooks/useMicroLoan';
 import { useState } from 'react';
+import { DataExport } from './DataExport';
 
 export default function AccountSettings() {
   const { address, connector } = useAccount();
@@ -206,6 +207,11 @@ export default function AccountSettings() {
         <p className="text-xs text-gray-500 mt-6 text-center">
           More settings and features coming soon
         </p>
+      </section>
+
+      {/* Data Export Section */}
+      <section className="bg-white border border-gray-200 rounded-2xl p-6">
+        <DataExport />
       </section>
     </div>
   );

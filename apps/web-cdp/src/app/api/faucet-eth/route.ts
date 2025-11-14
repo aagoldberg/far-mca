@@ -41,10 +41,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Faucet is empty, please refill' }, { status: 503 });
     }
 
-    // Send ETH
+    // Get the current nonce to avoid conflicts
+    const nonce = await publicClient.getTransactionCount({
+      address: account.address,
+      blockTag: 'pending' // Use pending to get the latest nonce including pending txs
+    });
+
+    // Send ETH with explicit nonce
     const hash = await walletClient.sendTransaction({
       to: recipientAddress as `0x${string}`,
       value: amountToSend,
+      nonce,
     });
 
     // Wait for confirmation
@@ -66,6 +73,19 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Faucet error:', error);
+
+    // Handle specific nonce-related errors
+    if (error.message?.includes('replacement transaction underpriced') ||
+        error.message?.includes('nonce too low')) {
+      return NextResponse.json(
+        {
+          error: 'A transaction is already pending. Please wait a few seconds and try again.',
+          details: 'The faucet wallet has a pending transaction. Wait for it to complete before requesting again.'
+        },
+        { status: 429 } // 429 Too Many Requests
+      );
+    }
+
     return NextResponse.json(
       { error: error.message || 'Failed to send ETH' },
       { status: 500 }

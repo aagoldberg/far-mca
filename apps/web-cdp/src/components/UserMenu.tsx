@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useEvmAddress, useSignOut, useCurrentUser } from '@coinbase/cdp-hooks';
 import { useAccount, useDisconnect } from 'wagmi';
 import { HeartIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
-import { FarcasterSignupModal } from './FarcasterSignupModal';
+import { FarcasterOnboardingModal } from './FarcasterOnboardingModal';
+import { useFarcasterAccount } from '@/hooks/useFarcasterAccount';
 
 type UserMenuProps = {
   inline?: boolean;
@@ -22,45 +23,30 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
   const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
   const { disconnect: disconnectExternal } = useDisconnect();
 
+  // Farcaster account hook
+  const { farcasterAccount } = useFarcasterAccount();
+
   // Prioritize external wallet address if connected, otherwise use CDP address
   const address = isExternalConnected ? externalAddress : cdpAddress;
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [farcasterModalOpen, setFarcasterModalOpen] = useState(false);
-  const [farcasterProfile, setFarcasterProfile] = useState<{ fid: number; username: string } | null>(null);
+  const [farcasterProfile, setFarcasterProfile] = useState<{ fid: number; username: string; pfp_url?: string; display_name?: string } | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Debug logging to see what CDP is returning
-  console.log('UserMenu - CDP currentUser data:', {
-    currentUser,
-    allKeys: currentUser ? Object.keys(currentUser) : [],
-    username: (currentUser as any)?.username,
-    displayName: (currentUser as any)?.displayName,
-    name: (currentUser as any)?.name,
-    email: (currentUser as any)?.email,
-    avatarUrl: (currentUser as any)?.avatarUrl,
-    profilePictureUrl: (currentUser as any)?.profilePictureUrl,
-    picture: (currentUser as any)?.picture,
-    fullObject: JSON.stringify(currentUser, null, 2)
-  });
-
-  // Get user info from CDP (name, avatar from OAuth providers)
-  // Prioritize Farcaster username if available
-  const displayName = farcasterProfile?.username ||
+  // Get user info - Prioritize Farcaster profile > CDP OAuth > wallet address
+  const displayName = farcasterProfile?.display_name ||
+                      farcasterProfile?.username ||
                       (currentUser as any)?.name ||
                       (currentUser as any)?.displayName ||
                       (currentUser as any)?.username ||
                       (currentUser as any)?.email ||
                       (address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'User');
 
-  const userAvatar = (currentUser as any)?.picture ||
+  const userAvatar = farcasterProfile?.pfp_url ||
+                     (currentUser as any)?.picture ||
                      (currentUser as any)?.avatarUrl ||
                      (currentUser as any)?.profilePictureUrl;
-
-  const handleFarcasterSuccess = (data: { fid: number; username: string }) => {
-    setFarcasterProfile(data);
-    // TODO: Save to database via API
-  };
 
   const handleDisconnect = () => {
     if (isExternalConnected) {
@@ -72,13 +58,49 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
     }
   };
 
+  // Fetch Farcaster profile data when account is available
+  useEffect(() => {
+    async function fetchFarcasterProfile() {
+      if (!farcasterAccount?.fid) return;
+
+      try {
+        const response = await fetch(
+          `https://api.neynar.com/v2/farcaster/user/bulk?fids=${farcasterAccount.fid}`,
+          {
+            headers: {
+              'api_key': process.env.NEXT_PUBLIC_NEYNAR_API_KEY!,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          const user = data.users?.[0];
+
+          if (user) {
+            setFarcasterProfile({
+              fid: user.fid,
+              username: user.username,
+              pfp_url: user.pfp_url,
+              display_name: user.display_name,
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching Farcaster profile:', error);
+      }
+    }
+
+    fetchFarcasterProfile();
+  }, [farcasterAccount]);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
       }
     }
-    
+
     // Only add click outside listener for dropdown version
     if (!inline) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -125,7 +147,7 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
         </div>
 
         {/* Farcaster Account Prompt */}
-        {!farcasterProfile && (
+        {!farcasterAccount && (
           <button
             onClick={() => setFarcasterModalOpen(true)}
             className="w-full px-4 py-3 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
@@ -242,7 +264,7 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
           </div>
 
           {/* Farcaster Account Prompt */}
-          {!farcasterProfile && (
+          {!farcasterAccount && (
             <button
               onClick={() => {
                 setFarcasterModalOpen(true);
@@ -295,10 +317,10 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
       )}
 
       {/* Farcaster Signup Modal */}
-      <FarcasterSignupModal
+      <FarcasterOnboardingModal
         isOpen={farcasterModalOpen}
         onClose={() => setFarcasterModalOpen(false)}
-        onSuccess={handleFarcasterSuccess}
+        suggestedUsername={address ? `user${address.slice(-6).toLowerCase()}` : ''}
       />
     </div>
   );

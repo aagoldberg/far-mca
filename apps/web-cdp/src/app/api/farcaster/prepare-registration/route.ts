@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createPublicClient, http } from 'viem';
 import { optimism } from 'viem/chains';
+import { NeynarAPIClient, Configuration } from '@neynar/nodejs-sdk';
 
 // ID Registry contract on Optimism
 const ID_REGISTRY_ADDRESS = '0x00000000Fc6c5F01Fc30151999387Bb99A9f489b';
@@ -21,6 +22,11 @@ const ID_REGISTRY_ABI = [
     type: 'function',
   },
 ] as const;
+
+const config = new Configuration({
+  apiKey: process.env.NEYNAR_API_KEY!,
+});
+const neynarClient = new NeynarAPIClient(config);
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,24 +53,32 @@ export async function POST(request: NextRequest) {
       args: [walletAddress as `0x${string}`],
     });
 
-    // Get a new FID from Neynar
+    // Create deadline (1 hour from now)
+    const deadline = BigInt(Math.floor(Date.now() / 1000) + 3600);
+
+    // Fetch a sponsored FID from Neynar
+    // This FID must be used within 10 minutes or Neynar will reassign it
+    console.log('Fetching sponsored FID from Neynar...');
     const fidResponse = await fetch('https://api.neynar.com/v2/farcaster/user/fid', {
       method: 'GET',
       headers: {
-        'x-api-key': process.env.NEYNAR_API_KEY!,
+        'api_key': process.env.NEYNAR_API_KEY!,
       },
     });
 
     if (!fidResponse.ok) {
-      throw new Error('Failed to get FID from Neynar');
+      const errorText = await fidResponse.text();
+      console.error('Failed to fetch FID:', fidResponse.status, errorText);
+      return NextResponse.json(
+        { error: `Failed to get sponsored FID from Neynar: ${errorText}` },
+        { status: 500 }
+      );
     }
 
     const { fid } = await fidResponse.json();
+    console.log('Got sponsored FID:', fid);
 
-    // Create deadline (1 hour from now)
-    const deadline = BigInt(Math.floor(Date.now() / 1000) + 3600);
-
-    // Create EIP-712 typed data
+    // Create EIP-712 typed data for Transfer (Neynar expects Transfer, not Register)
     const typedData = {
       domain: {
         name: 'Farcaster IdRegistry',
@@ -73,19 +87,36 @@ export async function POST(request: NextRequest) {
         verifyingContract: ID_REGISTRY_ADDRESS as `0x${string}`,
       },
       types: {
-        Register: [
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' },
+        ],
+        Transfer: [
+          { name: 'fid', type: 'uint256' },
           { name: 'to', type: 'address' },
-          { name: 'recovery', type: 'address' },
           { name: 'nonce', type: 'uint256' },
           { name: 'deadline', type: 'uint256' },
         ],
       },
-      primaryType: 'Register' as const,
+      primaryType: 'Transfer' as const,
       message: {
+        fid: BigInt(fid),
         to: walletAddress as `0x${string}`,
-        recovery: walletAddress as `0x${string}`, // Use same address as recovery
         nonce: nonce,
         deadline: deadline,
+      },
+    };
+
+    // Convert BigInt values to strings for JSON serialization
+    const serializableTypedData = {
+      ...typedData,
+      message: {
+        fid: fid.toString(),
+        to: typedData.message.to,
+        nonce: nonce.toString(),
+        deadline: deadline.toString(),
       },
     };
 
@@ -93,7 +124,7 @@ export async function POST(request: NextRequest) {
       fid,
       deadline: Number(deadline),
       nonce: Number(nonce),
-      typedData,
+      typedData: serializableTypedData,
     });
   } catch (error: any) {
     console.error('Prepare registration error:', error);

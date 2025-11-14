@@ -61,7 +61,7 @@ export default function Navbar() {
   const isAuthenticated = isSignedIn || isConnected;
 
   // Farcaster onboarding
-  const { farcasterAccount, hasPrompted, markPrompted } = useFarcasterAccount();
+  const { farcasterAccount, hasPrompted, markPrompted, isLoading: isFarcasterLoading } = useFarcasterAccount();
 
   // Debug logging
   console.log('Navbar - Auth state:', { isSignedIn, isConnected, isAuthenticated });
@@ -111,15 +111,26 @@ export default function Navbar() {
 
   // Show Farcaster onboarding prompt after signin if user doesn't have an account yet
   useEffect(() => {
-    if (isAuthenticated && !farcasterAccount && !hasPrompted) {
+    console.log('[Navbar] Farcaster onboarding check:', {
+      isAuthenticated,
+      isFarcasterLoading,
+      hasFarcasterAccount: !!farcasterAccount,
+      hasPrompted,
+      willShow: isAuthenticated && !isFarcasterLoading && !farcasterAccount && !hasPrompted
+    });
+
+    // Don't show modal if we're still loading the Farcaster account from localStorage
+    if (isAuthenticated && !isFarcasterLoading && !farcasterAccount && !hasPrompted) {
+      console.log('[Navbar] Will show Farcaster modal in 1.5s');
       // Wait a bit after signin before showing the prompt
       const timer = setTimeout(() => {
+        console.log('[Navbar] Showing Farcaster modal now');
         setShowFarcasterOnboarding(true);
       }, 1500); // 1.5 second delay
 
       return () => clearTimeout(timer);
     }
-  }, [isAuthenticated, farcasterAccount, hasPrompted]);
+  }, [isAuthenticated, isFarcasterLoading, farcasterAccount, hasPrompted]);
 
   const handleCloseFarcasterOnboarding = () => {
     setShowFarcasterOnboarding(false);

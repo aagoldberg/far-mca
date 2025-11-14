@@ -71,12 +71,19 @@ export async function POST(request: NextRequest) {
       }, { status: 503 });
     }
 
-    // Send USDC
+    // Get the current nonce to avoid conflicts
+    const nonce = await publicClient.getTransactionCount({
+      address: account.address,
+      blockTag: 'pending' // Use pending to get the latest nonce including pending txs
+    });
+
+    // Send USDC with explicit nonce
     const hash = await walletClient.writeContract({
       address: USDC_ADDRESS,
       abi: ERC20_ABI,
       functionName: 'transfer',
-      args: [recipientAddress as `0x${string}`, amountToSend]
+      args: [recipientAddress as `0x${string}`, amountToSend],
+      nonce,
     });
 
     // Wait for confirmation
@@ -90,6 +97,19 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('USDC Faucet error:', error);
+
+    // Handle specific nonce-related errors
+    if (error.message?.includes('replacement transaction underpriced') ||
+        error.message?.includes('nonce too low')) {
+      return NextResponse.json(
+        {
+          error: 'A transaction is already pending. Please wait a few seconds and try again.',
+          details: 'The faucet wallet has a pending transaction. Wait for it to complete before requesting again.'
+        },
+        { status: 429 } // 429 Too Many Requests
+      );
+    }
+
     return NextResponse.json(
       { error: error.message || 'Failed to send USDC' },
       { status: 500 }
