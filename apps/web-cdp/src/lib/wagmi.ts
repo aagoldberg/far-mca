@@ -1,3 +1,5 @@
+'use client';
+
 import { http } from "wagmi";
 import { base, baseSepolia } from "wagmi/chains";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
@@ -24,10 +26,10 @@ export const wagmiConfig = getDefaultConfig({
   },
 });
 
-// New MicroLoan contract addresses
-export const MICROLOAN_FACTORY_ADDRESS = process.env.NEXT_PUBLIC_MICROLOAN_FACTORY_ADDRESS as `0x${string}` || '0x0000000000000000000000000000000000000000';
-export const USDC_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}` || '0x0000000000000000000000000000000000000000';
-
-// Legacy RBF Campaign addresses (deprecated, keeping for reference)
-export const CAMPAIGN_FACTORY_ADDRESS = process.env.NEXT_PUBLIC_CAMPAIGN_FACTORY_ADDRESS as `0x${string}` || '0x0000000000000000000000000000000000000000';
-export const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}` || '0x2d04a1dF447A9265Bc936747f1CEe7126e99aaFe';
+// Re-export constants from constants.ts for convenience
+export {
+  MICROLOAN_FACTORY_ADDRESS,
+  USDC_ADDRESS,
+  CAMPAIGN_FACTORY_ADDRESS,
+  USDC_CONTRACT_ADDRESS,
+} from './constants';

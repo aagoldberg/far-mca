@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createWalletClient, createPublicClient, http, parseUnits } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
-import { MICROLOAN_FACTORY_ADDRESS } from '@/lib/wagmi';
+import { MICROLOAN_FACTORY_ADDRESS } from '@/lib/constants';
 import MicroLoanFactoryABI from '@/abi/MicroLoanFactory.json';
 
 // Relayer configuration
