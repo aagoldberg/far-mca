@@ -78,6 +78,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           >
             <OnchainKitProvider
               apiKey={CDP_API_KEY}
+              projectId={CDP_PROJECT_ID}
               chain={baseSepolia}
             >
               <ApolloProvider client={apolloClient}>

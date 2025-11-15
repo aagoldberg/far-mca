@@ -92,6 +92,11 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
     isSuccess: isRepaySuccess
   } = useRepay();
 
+  // Fetch Farcaster profile for borrower - MUST be before early returns
+  const { profile: borrowerProfile, isLoading: isProfileLoading } = useFarcasterProfile(
+    loanData?.borrower as `0x${string}` | undefined
+  );
+
   // Fetch metadata from IPFS with caching
   useEffect(() => {
     if (loanData?.metadataURI) {
@@ -158,9 +163,6 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   // Check if loan is defaulted (active, not completed, and past due date)
   const now = BigInt(Math.floor(Date.now() / 1000));
   const isLoanDefaulted = loanData.active && !loanData.completed && now > loanData.dueAt;
-
-  // Fetch Farcaster profile for borrower
-  const { profile: borrowerProfile, isLoading: isProfileLoading } = useFarcasterProfile(loanData.borrower);
 
   // Check if refund is available
   const fundraisingExpired = now > loanData.fundraisingDeadline;

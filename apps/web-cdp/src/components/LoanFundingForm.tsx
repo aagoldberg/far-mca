@@ -140,20 +140,25 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     }
   }, [isContributeSuccess]);
 
-  // Check if user needs funding whenever amount changes
+  // Always show funding section for low balances (proactive, not reactive)
+  // This helps users add funds BEFORE they decide how much to contribute
   useEffect(() => {
-    if (!amount || parseFloat(amount) <= 0) {
-      setNeedsFunding(false);
-      return;
-    }
-
-    const amountInUnits = parseUnits(amount, USDC_DECIMALS);
     const estimatedGasETH = parseUnits('0.002', 18); // Rough estimate for gas
+    const minRecommendedUSDC = parseUnits('10', USDC_DECIMALS); // $10 minimum recommendation
 
-    const hasEnoughUSDC = usdcBalance >= amountInUnits;
-    const hasEnoughETH = (ethBalance?.value || 0n) >= estimatedGasETH;
+    const hasLowUSDC = usdcBalance < minRecommendedUSDC;
+    const hasLowETH = (ethBalance?.value || 0n) < estimatedGasETH;
 
-    setNeedsFunding(!hasEnoughUSDC || !hasEnoughETH);
+    // Show funding if balance is low OR if amount exceeds balance
+    if (amount && parseFloat(amount) > 0) {
+      const amountInUnits = parseUnits(amount, USDC_DECIMALS);
+      const hasEnoughUSDC = usdcBalance >= amountInUnits;
+      const hasEnoughETH = (ethBalance?.value || 0n) >= estimatedGasETH;
+      setNeedsFunding(!hasEnoughUSDC || !hasEnoughETH);
+    } else {
+      // No amount entered yet - show if balances are low
+      setNeedsFunding(hasLowUSDC || hasLowETH);
+    }
   }, [amount, usdcBalance, ethBalance]);
 
   // Helper function to parse error messages
@@ -733,10 +738,10 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </p>
         </div>
 
-        {/* Inline Funding Section - shows when balance is insufficient */}
-        {needsFunding && amount && parseFloat(amount) > 0 && step === 'input' && (
+        {/* Inline Funding Section - shows proactively when balance is low */}
+        {needsFunding && step === 'input' && (
           <InlineFundingSection
-            requiredUSDC={parseUnits(amount, USDC_DECIMALS)}
+            requiredUSDC={amount && parseFloat(amount) > 0 ? parseUnits(amount, USDC_DECIMALS) : 0n}
             requiredETH={parseUnits('0.002', 18)}
             currentUSDC={usdcBalance}
             currentETH={ethBalance?.value || 0n}
