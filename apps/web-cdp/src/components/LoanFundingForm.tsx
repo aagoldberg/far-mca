@@ -110,6 +110,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   // Helper function to parse error messages
   const parseErrorMessage = (error: any): string => {
     const errorStr = error?.message || String(error);
+    console.log('[Error] Raw error:', errorStr);
 
     // User rejected transaction
     if (errorStr.includes('User rejected') ||
@@ -117,6 +118,23 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         errorStr.includes('user rejected') ||
         errorStr.includes('denied transaction')) {
       return 'Transaction cancelled. Please try again when you\'re ready.';
+    }
+
+    // Contract-specific errors
+    if (errorStr.includes('GoalExceeded')) {
+      return 'This loan has already been fully funded or your contribution would exceed the goal. Please refresh the page.';
+    }
+
+    if (errorStr.includes('FundraisingNotActive') || errorStr.includes('FundraisingEnded')) {
+      return 'Fundraising for this loan has ended. Please refresh the page.';
+    }
+
+    if (errorStr.includes('InvalidAmount')) {
+      return 'Invalid contribution amount. Please try a different amount.';
+    }
+
+    if (errorStr.includes('SafeERC20FailedOperation') || errorStr.includes('ERC20')) {
+      return 'Token transfer failed. Please ensure you have sufficient USDC balance and approval.';
     }
 
     // Insufficient balance
@@ -276,6 +294,82 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     console.log('[Fund] Starting fund process. Needs approval:', needsApproval);
     console.log('[Fund] Current allowance:', currentAllowance?.toString());
     console.log('[Fund] Amount to contribute:', amountBigInt.toString());
+    console.log('[Fund] Loan address (spender):', loanAddress);
+    console.log('[Fund] User address:', address);
+    console.log('[Fund] Loan state - Total funded:', loanData?.totalFunded.toString(), 'Principal:', loanData?.principal.toString());
+    console.log('[Fund] Remaining needed:', (loanData?.principal && loanData?.totalFunded) ? (loanData.principal - loanData.totalFunded).toString() : 'unknown');
+
+    // Fetch real-time on-chain state before transaction
+    try {
+      const publicClient = createPublicClient({
+        chain: baseSepolia,
+        transport: http(process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org'),
+      });
+
+      // Check actual on-chain USDC balance
+      const onChainBalance = await publicClient.readContract({
+        address: USDC_ADDRESS,
+        abi: TestUSDCABI.abi,
+        functionName: 'balanceOf',
+        args: [address],
+      }) as bigint;
+
+      // Check actual on-chain loan state
+      const [onChainTotalFunded, onChainPrincipal, onChainFundraisingActive] = await Promise.all([
+        publicClient.readContract({
+          address: loanAddress,
+          abi: MicroLoanABI.abi,
+          functionName: 'totalFunded',
+        }) as Promise<bigint>,
+        publicClient.readContract({
+          address: loanAddress,
+          abi: MicroLoanABI.abi,
+          functionName: 'principal',
+        }) as Promise<bigint>,
+        publicClient.readContract({
+          address: loanAddress,
+          abi: MicroLoanABI.abi,
+          functionName: 'fundraisingActive',
+        }) as Promise<boolean>,
+      ]);
+
+      console.log('[Fund] On-chain USDC balance:', onChainBalance.toString());
+      console.log('[Fund] On-chain loan total funded:', onChainTotalFunded.toString());
+      console.log('[Fund] On-chain loan principal:', onChainPrincipal.toString());
+      console.log('[Fund] On-chain fundraising active:', onChainFundraisingActive);
+
+      // Check if USDC balance is sufficient
+      if (onChainBalance < amountBigInt) {
+        setStep('error');
+        setErrorMessage(`Insufficient USDC balance. You have ${formatUnits(onChainBalance, USDC_DECIMALS)} USDC but trying to contribute ${amount} USDC.`);
+        return;
+      }
+
+      // Check if loan is already fully funded
+      if (onChainTotalFunded >= onChainPrincipal) {
+        setStep('error');
+        setErrorMessage('This loan has already been fully funded! Please refresh the page.');
+        return;
+      }
+
+      // Check if contribution would exceed goal
+      if (onChainTotalFunded + amountBigInt > onChainPrincipal) {
+        const remaining = onChainPrincipal - onChainTotalFunded;
+        setStep('error');
+        setErrorMessage(`This loan only needs ${formatUnits(remaining, USDC_DECIMALS)} USDC more. Please reduce your contribution amount.`);
+        return;
+      }
+
+      // Check if fundraising is still active
+      if (!onChainFundraisingActive) {
+        setStep('error');
+        setErrorMessage('Fundraising for this loan is no longer active. Please refresh the page.');
+        return;
+      }
+    } catch (error) {
+      console.error('[Fund] Error checking on-chain state:', error);
+      // Continue anyway - let the transaction fail if there's an issue
+    }
 
     if (needsApproval) {
       console.log('[Fund] Approval required, calling handleApprove');
