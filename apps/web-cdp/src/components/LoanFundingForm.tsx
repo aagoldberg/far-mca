@@ -28,7 +28,17 @@ const waitForTransactionReceipt = async (txHash: string) => {
   });
 
   if (receipt.status === 'reverted') {
-    throw new Error('Transaction reverted on-chain');
+    console.error('[CDP] Transaction reverted. Receipt:', receipt);
+
+    // Try to get the revert reason
+    try {
+      const tx = await publicClient.getTransaction({ hash: txHash as `0x${string}` });
+      console.error('[CDP] Failed transaction details:', tx);
+    } catch (e) {
+      console.error('[CDP] Could not fetch transaction details:', e);
+    }
+
+    throw new Error('Transaction failed on-chain. This could be due to insufficient balance, insufficient allowance, or the loan being fully funded.');
   }
 
   return receipt;
@@ -263,9 +273,15 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   };
 
   const handleFund = async () => {
+    console.log('[Fund] Starting fund process. Needs approval:', needsApproval);
+    console.log('[Fund] Current allowance:', currentAllowance?.toString());
+    console.log('[Fund] Amount to contribute:', amountBigInt.toString());
+
     if (needsApproval) {
+      console.log('[Fund] Approval required, calling handleApprove');
       await handleApprove();
     } else {
+      console.log('[Fund] No approval needed, proceeding to contribute');
       await handleContribute();
     }
   };
