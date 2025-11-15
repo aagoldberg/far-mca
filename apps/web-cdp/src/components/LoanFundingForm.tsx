@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import { useEvmAddress, useSendEvmTransaction } from '@coinbase/cdp-hooks';
 import { parseUnits, formatUnits, encodeFunctionData, createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
@@ -12,6 +12,7 @@ import { USDC_DECIMALS } from '@/types/loan';
 import { USDC_ADDRESS } from '@/lib/wagmi';
 import TestUSDCABI from '@/abi/TestUSDC.json';
 import MicroLoanABI from '@/abi/MicroLoan.json';
+import { InlineFundingSection } from './InlineFundingSection';
 
 // Helper function to wait for transaction confirmation
 const waitForTransactionReceipt = async (txHash: string) => {
@@ -78,6 +79,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
+  const [needsFunding, setNeedsFunding] = useState(false);
 
   // Check for both external wallet (wagmi) and CDP embedded wallet
   const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
@@ -90,6 +92,11 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
   const { loanData, isLoading: loanLoading } = useLoanData(loanAddress);
   const { balance: usdcBalance, balanceFormatted } = useUSDCBalance(address);
+
+  // Get ETH balance for gas estimation
+  const { data: ethBalance, refetch: refetchEthBalance } = useBalance({
+    address: address,
+  });
 
   // CDP transaction hooks
   const { sendEvmTransaction: sendCdpTransaction, isPending: isCdpPending } = useSendEvmTransaction();
@@ -132,6 +139,22 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
       setStep('success');
     }
   }, [isContributeSuccess]);
+
+  // Check if user needs funding whenever amount changes
+  useEffect(() => {
+    if (!amount || parseFloat(amount) <= 0) {
+      setNeedsFunding(false);
+      return;
+    }
+
+    const amountInUnits = parseUnits(amount, USDC_DECIMALS);
+    const estimatedGasETH = parseUnits('0.002', 18); // Rough estimate for gas
+
+    const hasEnoughUSDC = usdcBalance >= amountInUnits;
+    const hasEnoughETH = (ethBalance?.value || 0n) >= estimatedGasETH;
+
+    setNeedsFunding(!hasEnoughUSDC || !hasEnoughETH);
+  }, [amount, usdcBalance, ethBalance]);
 
   // Helper function to parse error messages
   const parseErrorMessage = (error: any): string => {
@@ -320,6 +343,14 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
       setStep('error');
       setErrorMessage(parseErrorMessage(error));
     }
+  };
+
+  const handleFundingComplete = async () => {
+    console.log('[Funding] Funding complete, rechecking balances');
+    // Refetch balances
+    await refetchEthBalance();
+    // USDC balance will auto-refresh via the hook
+    // The useEffect will automatically update needsFunding state
   };
 
   const handleFund = async () => {
@@ -702,6 +733,18 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </p>
         </div>
 
+        {/* Inline Funding Section - shows when balance is insufficient */}
+        {needsFunding && amount && parseFloat(amount) > 0 && step === 'input' && (
+          <InlineFundingSection
+            requiredUSDC={parseUnits(amount, USDC_DECIMALS)}
+            requiredETH={parseUnits('0.002', 18)}
+            currentUSDC={usdcBalance}
+            currentETH={ethBalance?.value || 0n}
+            walletAddress={address}
+            onFundingComplete={handleFundingComplete}
+          />
+        )}
+
         {errorMessage && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-sm text-red-600">{errorMessage}</p>
@@ -721,12 +764,13 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
         <button
           onClick={handleFund}
-          disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
+          disabled={!amount || parseFloat(amount) <= 0 || step !== 'input' || needsFunding}
           className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {step === 'approve' && ((isApproving || isApproveTxConfirming) || isCdpPending) && 'Approving USDC...'}
           {step === 'contribute' && ((isContributing || isContributeTxConfirming) || isCdpPending) && 'Confirming contribution...'}
-          {step === 'input' && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
+          {step === 'input' && needsFunding && 'Add Funds First'}
+          {step === 'input' && !needsFunding && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
         </button>
 
         {step !== 'input' && step !== 'success' && step !== 'error' && (
