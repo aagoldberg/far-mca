@@ -30,15 +30,41 @@ const waitForTransactionReceipt = async (txHash: string) => {
   if (receipt.status === 'reverted') {
     console.error('[CDP] Transaction reverted. Receipt:', receipt);
 
-    // Try to get the revert reason
+    // Try to get the revert reason and decode it
     try {
       const tx = await publicClient.getTransaction({ hash: txHash as `0x${string}` });
       console.error('[CDP] Failed transaction details:', tx);
-    } catch (e) {
+
+      // Try to simulate the failed transaction to get revert reason
+      try {
+        await publicClient.call({
+          data: tx.input,
+          to: tx.to,
+          from: tx.from,
+          value: tx.value,
+          blockNumber: receipt.blockNumber - 1n,
+        });
+      } catch (simulationError: any) {
+        console.error('[CDP] Revert simulation error:', simulationError.shortMessage || simulationError.message);
+
+        // Check if it's a known contract error
+        const errorMsg = simulationError.shortMessage || simulationError.message || '';
+        if (errorMsg.includes('SafeERC20FailedOperation')) {
+          throw new Error('USDC transfer failed. The USDC contract rejected the transfer. This usually means insufficient balance or allowance.');
+        } else if (errorMsg.includes('GoalExceeded')) {
+          throw new Error('This loan has been fully funded or your contribution would exceed the goal.');
+        } else if (errorMsg.includes('FundraisingNotActive')) {
+          throw new Error('Fundraising has ended for this loan.');
+        }
+      }
+    } catch (e: any) {
+      if (e.message.includes('USDC transfer') || e.message.includes('fully funded') || e.message.includes('Fundraising')) {
+        throw e; // Re-throw our specific errors
+      }
       console.error('[CDP] Could not fetch transaction details:', e);
     }
 
-    throw new Error('Transaction failed on-chain. This could be due to insufficient balance, insufficient allowance, or the loan being fully funded.');
+    throw new Error('Transaction failed on-chain. The blockchain rejected this transaction. Please try refreshing the page and checking your balance.');
   }
 
   return receipt;
@@ -255,12 +281,18 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         });
 
         console.log('[CDP] Sending contribution transaction...');
+        console.log('[CDP] Transaction details:', {
+          to: loanAddress,
+          amount: amountInUnits.toString(),
+          from: cdpAddress,
+        });
+
         const result = await sendCdpTransaction({
           transaction: {
             to: loanAddress,
             data: contributeData,
             value: 0n,
-            gas: 150000n, // Gas limit for contribute
+            gas: 200000n, // Increased gas limit for contribute
             chainId: 84532, // Base Sepolia
             type: "eip1559" as const,
           },
@@ -295,7 +327,10 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     console.log('[Fund] Current allowance:', currentAllowance?.toString());
     console.log('[Fund] Amount to contribute:', amountBigInt.toString());
     console.log('[Fund] Loan address (spender):', loanAddress);
-    console.log('[Fund] User address:', address);
+    console.log('[Fund] User address (wagmi):', externalAddress);
+    console.log('[Fund] User address (CDP):', cdpAddress);
+    console.log('[Fund] Active wallet:', address);
+    console.log('[Fund] Using CDP wallet:', isCdpWallet);
     console.log('[Fund] Loan state - Total funded:', loanData?.totalFunded.toString(), 'Principal:', loanData?.principal.toString());
     console.log('[Fund] Remaining needed:', (loanData?.principal && loanData?.totalFunded) ? (loanData.principal - loanData.totalFunded).toString() : 'unknown');
 
