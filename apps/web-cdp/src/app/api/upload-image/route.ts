@@ -44,7 +44,11 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await response.json();
-    return NextResponse.json({ hash: result.IpfsHash });
+    const ipfsUrl = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${result.IpfsHash}`;
+    return NextResponse.json({
+      hash: result.IpfsHash,
+      ipfsUrl
+    });
   } catch (error: any) {
     console.error('Error uploading image to IPFS:', error);
     console.error('Error message:', error.message);

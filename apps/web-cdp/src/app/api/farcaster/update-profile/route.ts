@@ -46,6 +46,17 @@ export async function PATCH(request: NextRequest) {
   } catch (error: any) {
     console.error('[Farcaster] Profile update error:', error);
 
+    // Handle 403 - likely unapproved signer
+    if (error.response?.status === 403 || error.status === 403) {
+      return NextResponse.json(
+        {
+          error: 'Signer not approved. Please approve the signer in the Farcaster app first.',
+          needsApproval: true,
+        },
+        { status: 403 }
+      );
+    }
+
     // Handle specific Neynar errors
     if (error.response?.data) {
       return NextResponse.json(

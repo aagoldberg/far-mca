@@ -44,16 +44,69 @@ export async function POST(request: NextRequest) {
       fname: username, // Pass username as fname (Farcaster name)
     });
 
-    console.log('Farcaster account registered:', {
-      fid: fidResponse.fid,
-      username,
+    console.log('Farcaster registration response:', fidResponse);
+
+    // registerAccount() automatically creates a signer with approval URL
+    const signerResponse = fidResponse.signer || fidResponse.signers?.[0];
+
+    if (!signerResponse || !signerResponse.signer_uuid) {
+      throw new Error('No signer returned from registerAccount');
+    }
+
+    console.log('Signer from registration:', {
+      signer_uuid: signerResponse.signer_uuid,
+      status: signerResponse.status,
+      has_approval_url: !!signerResponse.signer_approval_url,
     });
+
+    console.log('Farcaster account registered:', {
+      fid: fidResponse.fid || fid,
+      username,
+      signer_uuid: signerResponse.signer_uuid,
+    });
+
+    // Store in database for persistent access
+    try {
+      const { getSupabaseAdmin } = await import('@/lib/supabase');
+      const supabase = getSupabaseAdmin();
+
+      // Use the FID we got from prepare-registration since Neynar doesn't always return it
+      const accountFid = fidResponse.fid || fid;
+
+      const { error: dbError } = await supabase
+        .from('farcaster_accounts')
+        .upsert({
+          wallet_address: walletAddress.toLowerCase(),
+          fid: accountFid,
+          username,
+          signer_uuid: signerResponse.signer_uuid,
+          public_key: signerResponse.public_key,
+          signer_status: signerResponse.status || 'pending_approval',
+          signer_approval_url: signerResponse.signer_approval_url,
+          last_verified_at: new Date().toISOString(),
+        }, {
+          onConflict: 'wallet_address',
+        });
+
+      if (dbError) {
+        console.error('[Farcaster] Database save error:', dbError);
+        // Don't fail the request - database is just a cache
+        console.warn('[Farcaster] Continuing without database save');
+      } else {
+        console.log('[Farcaster] ✓ Saved to database');
+      }
+    } catch (dbError) {
+      console.error('[Farcaster] Database error:', dbError);
+      // Don't fail the request - database is just a cache
+    }
 
     return NextResponse.json({
       success: true,
-      fid: fidResponse.fid,
+      fid: fidResponse.fid || fid,
       username,
-      signer_uuid: fidResponse.signer_uuid,
+      signer_uuid: signerResponse.signer_uuid,
+      signer_approval_url: signerResponse.signer_approval_url,
+      signer_status: signerResponse.status,
     });
   } catch (error: any) {
     console.error('Farcaster registration error:', error);

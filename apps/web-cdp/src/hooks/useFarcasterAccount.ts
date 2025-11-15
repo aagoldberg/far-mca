@@ -8,6 +8,8 @@ interface FarcasterAccount {
   fid: number;
   username: string;
   signer_uuid?: string;
+  signer_status?: string;
+  signer_approval_url?: string;
 }
 
 export interface ProfileUpdates {
@@ -101,15 +103,42 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
 
           if (users.length > 0 && users[0]) {
             const user = users[0] as any;
+            const fid = user[0]?.fid;
+            const username = user[0]?.username;
+
+            // Query database for existing signer (persistent across sessions)
+            let signer_uuid: string | undefined = undefined;
+            let signer_status: string | undefined = undefined;
+            let signer_approval_url: string | undefined = undefined;
+            try {
+              console.log('[Farcaster] Checking database for signer...');
+              const signerResponse = await fetch(`/api/farcaster/get-signer?fid=${fid}&wallet=${walletAddress}`);
+              const signerData = await signerResponse.json();
+
+              if (signerData.success && signerData.signer_uuid) {
+                signer_uuid = signerData.signer_uuid;
+                signer_status = signerData.signer_status;
+                signer_approval_url = signerData.signer_approval_url;
+                console.log('[Farcaster] ✓ Retrieved signer from database');
+              } else {
+                console.log('[Farcaster] ℹ No signer found in database (profile editing will require setup)');
+              }
+            } catch (err) {
+              console.warn('[Farcaster] Could not retrieve signer from database:', err);
+            }
+
             const account = {
-              fid: user[0]?.fid,
-              username: user[0]?.username,
+              fid,
+              username,
+              signer_uuid,
+              signer_status,
+              signer_approval_url,
             };
 
-            console.log('[Farcaster] Found Farcaster account:', account);
+            console.log('[Farcaster] Found Farcaster account:', { fid, username, hasSigner: !!signer_uuid });
             setFarcasterAccount(account);
 
-            // Cache the result
+            // Cache the result (including signer_uuid from Neynar)
             localStorage.setItem(cacheKey, JSON.stringify({
               data: account,
               timestamp: Date.now(),
@@ -297,7 +326,15 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
           fid: data.fid,
           username: data.username,
           signer_uuid: data.signer_uuid,
+          signer_status: data.signer_status,
+          signer_approval_url: data.signer_approval_url,
         };
+
+        // Auto-open approval URL for one-click approval
+        if (data.signer_approval_url && data.signer_status !== 'approved') {
+          console.log('[Farcaster] Opening signer approval URL:', data.signer_approval_url);
+          window.open(data.signer_approval_url, '_blank', 'width=500,height=700');
+        }
 
         // Cache the newly created account
         const cacheKey = `farcaster_account_cache_${walletAddress.toLowerCase()}`;

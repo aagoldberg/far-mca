@@ -1,14 +1,20 @@
 'use client';
 
 import { useAccount } from 'wagmi';
+import { useEvmAddress } from '@coinbase/cdp-hooks';
 import { usePrivy } from '@privy-io/react-auth';
 import { useBorrowerLoans, useLoans } from '@/hooks/useMicroLoan';
 import { useState } from 'react';
 import { DataExport } from './DataExport';
+import { FarcasterProfileEdit } from './FarcasterProfileEdit';
 
 export default function AccountSettings() {
-  const { address, connector } = useAccount();
+  const { address: externalAddress, connector } = useAccount();
+  const { evmAddress: cdpAddress } = useEvmAddress();
   const { user, logout } = usePrivy();
+
+  // Prioritize external wallet address, fallback to CDP address
+  const address = externalAddress || cdpAddress;
   const { loans: borrowedLoans } = useBorrowerLoans(address);
   const { loans: allLoans } = useLoans();
 
@@ -81,6 +87,11 @@ export default function AccountSettings() {
             Disconnect
           </button>
         </div>
+      </section>
+
+      {/* Farcaster Profile Section */}
+      <section className="mb-6">
+        <FarcasterProfileEdit />
       </section>
 
       {/* Activity Stats Section */}
