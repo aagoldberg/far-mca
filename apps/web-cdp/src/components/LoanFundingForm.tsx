@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useEvmAddress, useSendEvmTransaction } from '@coinbase/cdp-hooks';
-import { parseUnits, formatUnits, encodeFunctionData } from 'viem';
+import { parseUnits, formatUnits, encodeFunctionData, createPublicClient, http } from 'viem';
+import { baseSepolia } from 'viem/chains';
 import Link from 'next/link';
 import { useLoanData, useContribute } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCApprove, useNeedsApproval } from '@/hooks/useUSDC';
@@ -11,6 +12,27 @@ import { USDC_DECIMALS } from '@/types/loan';
 import { USDC_ADDRESS } from '@/lib/wagmi';
 import TestUSDCABI from '@/abi/TestUSDC.json';
 import MicroLoanABI from '@/abi/MicroLoan.json';
+
+// Helper function to wait for transaction confirmation
+const waitForTransactionReceipt = async (txHash: string) => {
+  const publicClient = createPublicClient({
+    chain: baseSepolia,
+    transport: http(process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org'),
+  });
+
+  console.log('[CDP] Polling for transaction receipt:', txHash);
+
+  const receipt = await publicClient.waitForTransactionReceipt({
+    hash: txHash as `0x${string}`,
+    timeout: 60000, // 60 second timeout
+  });
+
+  if (receipt.status === 'reverted') {
+    throw new Error('Transaction reverted on-chain');
+  }
+
+  return receipt;
+};
 
 interface LoanFundingFormProps {
   loanAddress: `0x${string}`;
@@ -169,8 +191,13 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
         console.log('[CDP] Approval transaction sent:', result);
 
-        // Small delay to ensure approval is processed
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Wait for transaction to be mined on-chain
+        if (result?.transactionHash) {
+          console.log('[CDP] Waiting for approval confirmation...');
+          // Wait for the transaction to be confirmed (poll for receipt)
+          await waitForTransactionReceipt(result.transactionHash);
+          console.log('[CDP] Approval confirmed on-chain');
+        }
 
         // Auto-proceed to contribute
         handleContribute();
@@ -215,7 +242,14 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
         console.log('[CDP] Contribution transaction sent:', result);
 
-        // Show success
+        // Wait for transaction to be mined on-chain
+        if (result?.transactionHash) {
+          console.log('[CDP] Waiting for contribution confirmation...');
+          await waitForTransactionReceipt(result.transactionHash);
+          console.log('[CDP] Contribution confirmed on-chain');
+        }
+
+        // Show success only after blockchain confirmation
         setStep('success');
       } else {
         // Use wagmi for external wallets
