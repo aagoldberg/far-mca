@@ -70,12 +70,6 @@ export function AvatarCropper({ onImageCropped, onCancel }: AvatarCropperProps) 
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const pastedText = e.clipboardData.getData('text');
-    if (pastedText) {
-      setUrlInput(pastedText);
-    }
-  };
 
   const createImage = (url: string): Promise<HTMLImageElement> =>
     new Promise((resolve, reject) => {
