@@ -29,6 +29,7 @@
 * [💳 Payment Methods](how-it-works/payment-methods.md)
 * [📱 Farcaster Mini App](how-it-works/farcaster-miniapp.md)
 * [🎭 Farcaster Integration](how-it-works/farcaster-integration.md)
+* [💬 Group Chat](how-it-works/group-chat.md)
 * [🔐 CDP Auto-Repayment](how-it-works/cdp-auto-repayment.md)
 
 ## 📚 Resources

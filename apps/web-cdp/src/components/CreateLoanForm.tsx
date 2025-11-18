@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useWalletClient, usePublicClient } from 'wagmi';
 import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
 import { useCreateLoan } from '@/hooks/useMicroLoan';
@@ -9,6 +9,7 @@ import { USDC_DECIMALS } from '@/types/loan';
 import ImageCropModal from '@/components/ImageCropModal';
 import { LoanCard } from '@/components/LoanCard';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import { createXmtpClient, createLoanGroup, getInboxId } from '@/lib/xmtp-client';
 
 enum IncomeRange {
   PREFER_NOT_TO_SAY = '',
@@ -54,6 +55,8 @@ interface FormData {
 export default function CreateLoanForm() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
+  const { data: walletClient } = useWalletClient();
+  const publicClient = usePublicClient();
   const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoan();
   const { profile } = useFarcasterProfile(address);
 
@@ -92,6 +95,69 @@ export default function CreateLoanForm() {
       setIsCheckingConnection(false);
     }
   }, [isConnected]);
+
+  // Create XMTP group when loan is successfully created
+  useEffect(() => {
+    if (!isSuccess || !hash || !address || !walletClient || !publicClient) return;
+
+    const createXmtpGroupForLoan = async () => {
+      try {
+        console.log('[XMTP] Creating group for new loan...');
+
+        // Wait for transaction receipt to get loan address
+        const receipt = await publicClient.waitForTransactionReceipt({ hash });
+
+        if (!receipt || receipt.status !== 'success') {
+          console.error('[XMTP] Transaction failed');
+          return;
+        }
+
+        // Extract loan address from logs (first log contains the created loan address)
+        const loanAddress = receipt.logs[0]?.address;
+
+        if (!loanAddress) {
+          console.error('[XMTP] Could not extract loan address from receipt');
+          return;
+        }
+
+        console.log('[XMTP] Loan created at:', loanAddress);
+
+        // Create XMTP client for borrower
+        const xmtpClient = await createXmtpClient(address, walletClient);
+
+        // Get borrower's inbox ID
+        const borrowerInboxId = await getInboxId(xmtpClient);
+
+        // Create XMTP group
+        const xmtpGroupId = await createLoanGroup(
+          xmtpClient,
+          loanAddress,
+          profile?.display_name || profile?.username
+        );
+
+        console.log('[XMTP] Group created:', xmtpGroupId);
+
+        // Store group ID in database via API
+        await fetch('/api/xmtp/create-group', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            loanAddress,
+            xmtpGroupId,
+            borrowerAddress: address,
+            borrowerInboxId,
+          }),
+        });
+
+        console.log('[XMTP] Group stored in database');
+      } catch (error) {
+        console.error('[XMTP] Failed to create group:', error);
+        // Don't fail the loan creation if XMTP fails
+      }
+    };
+
+    createXmtpGroupForLoan();
+  }, [isSuccess, hash, address, walletClient, publicClient, profile]);
 
   const handleChange = (field: keyof FormData, value: string | number | undefined) => {
     setFormData(prev => ({ ...prev, [field]: value }));
