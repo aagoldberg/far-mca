@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAccount, useBalance, useWalletClient } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import { useEvmAddress, useSendEvmTransaction } from '@coinbase/cdp-hooks';
 import { parseUnits, formatUnits, encodeFunctionData, createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
@@ -13,7 +13,6 @@ import { USDC_ADDRESS } from '@/lib/wagmi';
 import TestUSDCABI from '@/abi/TestUSDC.json';
 import MicroLoanABI from '@/abi/MicroLoan.json';
 import { InlineFundingSection } from './InlineFundingSection';
-import { createXmtpClient, getInboxId } from '@/lib/xmtp-client';
 
 // Helper function to wait for transaction confirmation
 const waitForTransactionReceipt = async (txHash: string) => {
@@ -78,14 +77,12 @@ interface LoanFundingFormProps {
 
 export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const [amount, setAmount] = useState('');
-  const [message, setMessage] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
   const [needsFunding, setNeedsFunding] = useState(false);
 
   // Check for both external wallet (wagmi) and CDP embedded wallet
   const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
-  const { data: walletClient } = useWalletClient();
   const { evmAddress: cdpAddress } = useEvmAddress();
 
   // Use whichever wallet is available
@@ -140,45 +137,8 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   useEffect(() => {
     if (isContributeSuccess && step === 'contribute') {
       setStep('success');
-
-      // Add contributor to XMTP group
-      const addToXmtpGroup = async () => {
-        try {
-          // Skip if CDP wallet (can't create XMTP client for CDP wallets yet)
-          if (!externalAddress || !walletClient || isCdpWallet) {
-            console.log('[XMTP] Skipping - CDP wallet or no wallet client');
-            return;
-          }
-
-          console.log('[XMTP] Adding contributor to group...');
-
-          // Create XMTP client for contributor
-          const xmtpClient = await createXmtpClient(externalAddress, walletClient);
-
-          // Get contributor's inbox ID
-          const contributorInboxId = await getInboxId(xmtpClient);
-
-          // Call API to store inbox ID
-          await fetch('/api/xmtp/add-contributor', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              loanAddress,
-              contributorAddress: externalAddress,
-              contributorInboxId,
-            }),
-          });
-
-          console.log('[XMTP] Contributor added to group');
-        } catch (error) {
-          console.error('[XMTP] Failed to add contributor:', error);
-          // Don't fail the contribution if XMTP fails
-        }
-      };
-
-      addToXmtpGroup();
     }
-  }, [isContributeSuccess, externalAddress, walletClient, isCdpWallet, loanAddress]);
+  }, [isContributeSuccess]);
 
   // Always show funding section for low balances (proactive, not reactive)
   // This helps users add funds BEFORE they decide how much to contribute
@@ -334,32 +294,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     }
   };
 
-  // Helper: Save contribution message
-  const saveContributionMessage = async (transactionHash: string) => {
-    if (!message.trim() || !address) return;
-
-    try {
-      const amountInUnits = parseUnits(amount, USDC_DECIMALS);
-
-      await fetch('/api/contributions/add-message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          loanAddress,
-          contributorAddress: address,
-          amount: amountInUnits.toString(),
-          message: message.trim(),
-          transactionHash,
-        }),
-      });
-
-      console.log('[Message] Saved contribution message');
-    } catch (error) {
-      console.error('[Message] Failed to save message (continuing):', error);
-      // Don't fail the contribution if message save fails
-    }
-  };
-
   const handleContribute = async () => {
     try {
       setStep('contribute');
@@ -401,9 +335,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           console.log('[CDP] Waiting for contribution confirmation...');
           await waitForTransactionReceipt(result.transactionHash);
           console.log('[CDP] Contribution confirmed on-chain');
-
-          // Save message after successful contribution
-          await saveContributionMessage(result.transactionHash);
         }
 
         // Show success only after blockchain confirmation
@@ -805,30 +736,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           <p className="text-xs text-gray-500 mt-1">
             Remaining needed: ${formatUnits(remainingNeeded, USDC_DECIMALS)} USDC
           </p>
-        </div>
-
-        {/* Message of Support */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Message of Support <span className="text-gray-400 font-normal">(Optional)</span>
-          </label>
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Good luck! You got this! 🙏"
-            maxLength={280}
-            rows={3}
-            disabled={step !== 'input'}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none resize-none disabled:bg-gray-50 disabled:text-gray-500"
-          />
-          <div className="flex justify-between items-center mt-1">
-            <p className="text-xs text-gray-500">
-              Your message will appear on the loan page
-            </p>
-            <p className="text-xs text-gray-500">
-              {message.length}/280
-            </p>
-          </div>
         </div>
 
         {/* Inline Funding Section - shows proactively when balance is low */}

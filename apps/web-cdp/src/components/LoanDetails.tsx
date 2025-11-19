@@ -10,8 +10,6 @@ import { useState, useEffect } from 'react';
 import { TrustSignals } from '@/components/TrustSignals';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import ShareModal from '@/components/ShareModal';
-import { ContributionMessages } from '@/components/ContributionMessages';
-import { LoanChat } from '@/components/LoanChat';
 import type { LoanShareData } from '@/utils/shareUtils';
 
 interface LoanDetailsProps {
@@ -495,7 +493,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
       {/* Contributors - Simple Count (Mobile Only) */}
       {loanData.contributorsCount > 0n && (
-        <div className="lg:hidden bg-white border border-gray-200 rounded-xl p-5 sm:p-6 mb-5">
+        <div className="lg:hidden bg-white border border-gray-200 rounded-xl p-5 sm:p-6">
           <h3 className="text-base font-bold text-gray-700 mb-3">Supporters</h3>
           <div className="flex items-center gap-3 text-base text-gray-600">
             <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -505,19 +503,6 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
         </div>
       )}
-
-      {/* Contribution Messages */}
-      <div className="mb-5">
-        <ContributionMessages loanAddress={loanAddress} />
-      </div>
-
-      {/* XMTP Contributor Chat */}
-      <div className="mb-5">
-        <LoanChat
-          loanAddress={loanAddress}
-          isContributor={contribution !== undefined && contribution > 0n}
-        />
-      </div>
         </div>
 
         {/* Sticky Sidebar (Desktop Only) */}
