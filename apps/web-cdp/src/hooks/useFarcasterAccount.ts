@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useEvmAddress, useSignEvmTypedData } from '@coinbase/cdp-hooks';
-import { useAccount, useSignTypedData } from 'wagmi';
+import { useAccount, useSignTypedData, useSwitchChain } from 'wagmi';
+import { optimism } from 'viem/chains';
 
 interface FarcasterAccount {
   fid: number;
@@ -38,9 +39,10 @@ interface UseFarcasterAccountReturn {
  */
 export function useFarcasterAccount(): UseFarcasterAccountReturn {
   const { evmAddress: cdpAddress } = useEvmAddress();
-  const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
+  const { address: externalAddress, isConnected: isExternalConnected, chainId: currentChainId } = useAccount();
   const { signTypedDataAsync: signWithWagmi } = useSignTypedData();
   const { signEvmTypedData: signWithCDP } = useSignEvmTypedData();
+  const { switchChainAsync } = useSwitchChain();
 
   // Prioritize external wallet address
   const walletAddress = externalAddress || cdpAddress;
@@ -277,20 +279,53 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
       let signature: string;
 
       if (isExternalConnected) {
-        // External wallet (wagmi) - Convert string values back to BigInt for signing
-        signature = await signWithWagmi({
-          domain: typedData.domain,
-          types: typedData.types,
-          primaryType: typedData.primaryType,
-          message: {
-            fid: BigInt(typedData.message.fid),
-            to: typedData.message.to,
-            nonce: BigInt(typedData.message.nonce),
-            deadline: BigInt(typedData.message.deadline),
-          },
-        });
+        // External wallet (wagmi) - Need to switch to Optimism for EIP-712 signature
+        const needsSwitch = currentChainId !== optimism.id;
+        const originalChainId = currentChainId;
+
+        try {
+          // Switch to Optimism if needed (EIP-712 domain requires chainId: 10)
+          if (needsSwitch && switchChainAsync) {
+            console.log('[Farcaster] Switching to Optimism Mainnet for signature...');
+            await switchChainAsync({ chainId: optimism.id });
+          }
+
+          // Sign with wagmi - Convert string values back to BigInt for signing
+          signature = await signWithWagmi({
+            domain: typedData.domain,
+            types: typedData.types,
+            primaryType: typedData.primaryType,
+            message: {
+              fid: BigInt(typedData.message.fid),
+              to: typedData.message.to,
+              nonce: BigInt(typedData.message.nonce),
+              deadline: BigInt(typedData.message.deadline),
+            },
+          });
+
+          console.log('[Farcaster] Signature obtained successfully');
+
+          // Switch back to original chain
+          if (needsSwitch && originalChainId && switchChainAsync) {
+            console.log('[Farcaster] Switching back to original network...');
+            await switchChainAsync({ chainId: originalChainId });
+          }
+        } catch (err: any) {
+          console.error('[Farcaster] Error during signing:', err);
+
+          // If signature fails, try to switch back anyway
+          if (needsSwitch && originalChainId && switchChainAsync) {
+            try {
+              console.log('[Farcaster] Attempting to switch back after error...');
+              await switchChainAsync({ chainId: originalChainId });
+            } catch (switchErr) {
+              console.error('[Farcaster] Failed to switch back to original chain:', switchErr);
+            }
+          }
+          throw err;
+        }
       } else {
-        // CDP embedded wallet - Use CDP's signing method
+        // CDP embedded wallet - Use CDP's signing method (no chain switch needed)
         const result = await signWithCDP({
           evmAccount: walletAddress as `0x${string}`, // CDP requires evmAccount parameter
           typedData: {

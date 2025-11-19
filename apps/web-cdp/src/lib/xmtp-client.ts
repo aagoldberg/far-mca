@@ -21,7 +21,7 @@ export function createXmtpSigner(
   chainId: bigint = BigInt(84532) // Base Sepolia default
 ) {
   return {
-    type: 'SCW' as const,
+    type: 'EOA' as const, // Use EOA for external wallets (MetaMask, etc.), not SCW
     getIdentifier: () => ({
       identifier: address.toLowerCase(),
       identifierKind: 'Ethereum' as const,
@@ -33,7 +33,6 @@ export function createXmtpSigner(
       });
       return toBytes(signature);
     },
-    getChainId: () => chainId,
   };
 }
 

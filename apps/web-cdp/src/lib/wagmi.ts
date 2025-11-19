@@ -1,7 +1,7 @@
 'use client';
 
 import { http } from "wagmi";
-import { base, baseSepolia } from "wagmi/chains";
+import { base, baseSepolia, optimism } from "wagmi/chains";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { coinbaseWallet } from "wagmi/connectors";
 
@@ -14,7 +14,7 @@ if (!alchemyRpcUrl) {
 export const wagmiConfig = getDefaultConfig({
   appName: "LendFriend",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
-  chains: [baseSepolia, base],
+  chains: [baseSepolia, base, optimism],
   ssr: true,
   transports: {
     [baseSepolia.id]: http(alchemyRpcUrl, {
@@ -23,6 +23,7 @@ export const wagmiConfig = getDefaultConfig({
       retryDelay: 1000,
     }),
     [base.id]: http(),
+    [optimism.id]: http(), // Public RPC for Optimism (only used for Farcaster signatures)
   },
 });
 
