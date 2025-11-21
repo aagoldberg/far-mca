@@ -20,6 +20,7 @@
 * [🚀 Virality & Growth](how-it-works/virality-and-growth/README.md)
 * [🤝 Social Trust Scoring](how-it-works/social-trust-scoring/README.md)
   * [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md)
+* [🔐 Social Verification](how-it-works/social-verification.md)
 * [📊 Risk Scoring](how-it-works/risk-scoring/README.md)
   * [Lender Warnings](how-it-works/risk-scoring/lender-warnings.md)
 * [🛡️ Anti-Gaming & Sybil Resistance](how-it-works/anti-gaming.md)

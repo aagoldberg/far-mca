@@ -5,10 +5,18 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const shop = searchParams.get('shop');
+    const wallet = searchParams.get('wallet');
 
     if (!shop) {
       return NextResponse.json(
         { error: 'Shop parameter is required' },
+        { status: 400 }
+      );
+    }
+
+    if (!wallet) {
+      return NextResponse.json(
+        { error: 'Wallet address is required' },
         { status: 400 }
       );
     }
@@ -25,7 +33,7 @@ export async function GET(request: NextRequest) {
       apiKey: process.env.SHOPIFY_API_KEY || '',
       apiSecret: process.env.SHOPIFY_API_SECRET || '',
       scopes: ['read_orders', 'read_customers'],
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/shopify/callback`
+      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/shopify/callback?wallet=${encodeURIComponent(wallet)}`
     });
 
     const authUrl = shopifyClient.getAuthUrl(shop, 'credit-scoring');

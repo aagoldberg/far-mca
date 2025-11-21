@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  ShoppingBagIcon, 
+import { useAccount } from 'wagmi';
+import {
+  ShoppingBagIcon,
   ArrowTopRightOnSquareIcon,
-  ExclamationTriangleIcon 
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 
 interface ShopifyConnectButtonProps {
@@ -20,6 +21,7 @@ export default function ShopifyConnectButton({
   className = '',
   size = 'md'
 }: ShopifyConnectButtonProps) {
+  const { address } = useAccount();
   const [isConnecting, setIsConnecting] = useState(false);
   const [shopDomain, setShopDomain] = useState('');
   const [showInput, setShowInput] = useState(false);
@@ -31,6 +33,11 @@ export default function ShopifyConnectButton({
   };
 
   const handleConnect = async () => {
+    if (!address) {
+      onConnectionError?.('Please connect your wallet first');
+      return;
+    }
+
     if (!shopDomain.trim()) {
       setShowInput(true);
       return;
@@ -44,8 +51,10 @@ export default function ShopifyConnectButton({
     setIsConnecting(true);
 
     try {
-      // Get auth URL from our API
-      const response = await fetch(`/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}`);
+      // Get auth URL from our API (now includes wallet address)
+      const response = await fetch(
+        `/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}&wallet=${encodeURIComponent(address)}`
+      );
       const data = await response.json();
 
       if (!response.ok) {
