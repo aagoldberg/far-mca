@@ -2,14 +2,14 @@ import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
     eslint: {
-        // Skip linting during builds for deployment
-        ignoreDuringBuilds: true,
+        // Enable linting during builds - errors will fail the build
+        ignoreDuringBuilds: false,
     },
     typescript: {
-        // Skip TypeScript errors during builds for deployment
-        ignoreBuildErrors: true,
+        // Enable TypeScript checking during builds - errors will fail the build
+        ignoreBuildErrors: false,
     },
 };
 

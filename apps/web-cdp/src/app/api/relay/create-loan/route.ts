@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createWalletClient, createPublicClient, http, parseUnits } from 'viem';
+import { createWalletClient, createPublicClient, http, parseUnits, verifyMessage } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { MICROLOAN_FACTORY_ADDRESS } from '@/lib/constants';
@@ -43,12 +43,14 @@ export async function POST(request: NextRequest) {
       description,
       imageUrl,
       businessWebsite,
+      signature,
+      timestamp,
     } = await request.json();
 
     // Validation
-    if (!userAddress || !principal || !termPeriods || !name) {
+    if (!userAddress || !principal || !termPeriods || !name || !signature || !timestamp) {
       return NextResponse.json(
-        { error: 'Missing required parameters' },
+        { error: 'Missing required parameters (including signature and timestamp)' },
         { status: 400 }
       );
     }
@@ -76,6 +78,47 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Verify timestamp is recent (within last 5 minutes to prevent replay attacks)
+    const now = Date.now();
+    const timestampAge = now - timestamp;
+    const FIVE_MINUTES_MS = 5 * 60 * 1000;
+
+    if (timestampAge > FIVE_MINUTES_MS || timestampAge < 0) {
+      return NextResponse.json(
+        { error: 'Request timestamp expired or invalid. Please try again.' },
+        { status: 400 }
+      );
+    }
+
+    // Verify wallet ownership via signature
+    // Expected message format: "Create loan for {address} at {timestamp}"
+    const message = `Create loan for ${userAddress} at ${timestamp}`;
+
+    let isValidSignature = false;
+    try {
+      isValidSignature = await verifyMessage({
+        address: userAddress as `0x${string}`,
+        message,
+        signature: signature as `0x${string}`,
+      });
+    } catch (err) {
+      console.error('[Relayer] Signature verification error:', err);
+      return NextResponse.json(
+        { error: 'Invalid signature format' },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidSignature) {
+      console.warn('[Relayer] Invalid signature for address:', userAddress);
+      return NextResponse.json(
+        { error: 'Signature verification failed. You must sign the message to prove wallet ownership.' },
+        { status: 403 }
+      );
+    }
+
+    console.log('[Relayer] ✓ Signature verified for:', userAddress);
 
     // Create relayer wallet client
     const account = privateKeyToAccount(RELAYER_PRIVATE_KEY);
