@@ -1,6 +1,6 @@
 'use client';
 
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { useRouter } from 'next/navigation';
 import { InvestorPortfolio } from '@/components/InvestorPortfolio';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function PortfolioPage() {
-  const { ready, authenticated, login } = usePrivy();
+  const { ready, authenticated, login } = useCDPAuth();
   const router = useRouter();
 
   // Redirect if not authenticated

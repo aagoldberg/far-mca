@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ConnectedWallet } from '@privy-io/react-auth';
+import { ConnectedWallet } from '@/types/wallet';
 import { useAccount, useBalance, useWriteContract, useWaitForTransactionReceipt, useChainId, useSwitchChain, useReadContract, usePublicClient } from 'wagmi';
-import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
+import { useCDPWallets } from '@/hooks/useCDPWallets';
 import { parseUnits, formatUnits } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import { campaignABI } from '@/abi/Campaign';
@@ -30,8 +31,8 @@ export const WalletDonationButton: React.FC<WalletDonationButtonProps> = ({
     onError
 }) => {
     const { address, isConnected } = useAccount();
-    const { authenticated, user, login } = usePrivy();
-    const { wallets } = useWallets();
+    const { authenticated, user, login } = useCDPAuth();
+    const { wallets } = useCDPWallets();
     const chainId = useChainId();
     const { switchChain } = useSwitchChain();
     const [isProcessing, setIsProcessing] = useState(false);

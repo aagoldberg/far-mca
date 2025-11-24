@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useWallets, useFundWallet, useSendTransaction } from '@privy-io/react-auth';
+import { useCDPWallets } from '@/hooks/useCDPWallets';
 import { useBalance } from 'wagmi';
 import { Address, parseUnits, encodeFunctionData } from 'viem';
 import { farcasterFundraiseABI } from '@/abi/FarcasterFundraise'; // Assuming you have this
@@ -23,11 +23,12 @@ export default function SmartContributeButton({
     onSuccess,
     onError,
 }: SmartContributeButtonProps) {
-    const { wallets } = useWallets();
+    const { wallets, isCDPWallet } = useCDPWallets();
     const [isProcessing, setIsProcessing] = useState(false);
-    const { sendTransaction, isPending } = useSendTransaction();
 
-    const smartWallet = wallets.find((wallet) => wallet.walletClientType === 'privy');
+    // TODO: CDP migration - useFundWallet and useSendTransaction need CDP equivalents
+    // For now, we'll disable smart wallet functionality
+    const smartWallet = wallets.find((wallet) => wallet.walletClientType === 'cdp');
     const { data: balance, isLoading: isBalanceLoading, refetch } = useBalance({
         address: smartWallet?.address as Address | undefined,
         token: USDC_CONTRACT_ADDRESS,

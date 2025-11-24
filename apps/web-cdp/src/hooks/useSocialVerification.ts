@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client (client-side, uses anon key)

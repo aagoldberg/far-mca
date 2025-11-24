@@ -1,6 +1,6 @@
 "use client";
 
-import { usePrivy, useFundWallet, useCreateWallet } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { useState } from 'react';
 
 interface PrivyFundingButtonProps {
@@ -9,20 +9,17 @@ interface PrivyFundingButtonProps {
   onError?: (message: string) => void;
 }
 
-export function PrivyFundingButton({ 
-  fiatAmount = 25, 
-  onSuccess, 
-  onError 
+// TODO: CDP Migration - This component needs CDP equivalents for:
+// - useFundWallet: CDP has different funding mechanisms
+// - useCreateWallet: CDP uses embedded wallets differently
+// For now, this button is disabled until CDP funding is implemented
+export function PrivyFundingButton({
+  fiatAmount = 25,
+  onSuccess,
+  onError
 }: PrivyFundingButtonProps) {
-  const { user, authenticated, createWallet } = usePrivy();
+  const { user, authenticated } = useCDPAuth();
   const [isLoading, setIsLoading] = useState(false);
-  
-  const { fundWallet } = useFundWallet({
-    onUserExited: () => {
-      setIsLoading(false);
-      onError?.('Funding cancelled');
-    }
-  });
 
   const handleFundWallet = async () => {
     setIsLoading(true);

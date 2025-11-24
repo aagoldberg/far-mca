@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { formatUnits } from 'viem';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { 
@@ -21,7 +21,7 @@ interface WithdrawFundsModalProps {
 }
 
 export default function WithdrawFundsModal({ campaign, onClose, onSuccess }: WithdrawFundsModalProps) {
-  const { user } = usePrivy();
+  const { user } = useCDPAuth();
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   
   const { writeContract, data: hash, error, isPending } = useWriteContract();

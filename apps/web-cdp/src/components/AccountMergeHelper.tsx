@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { ExclamationTriangleIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
 export default function AccountMergeHelper() {
-  const { user, logout } = usePrivy();
+  const { user, logout } = useCDPAuth();
   const [showInstructions, setShowInstructions] = useState(false);
 
   return (

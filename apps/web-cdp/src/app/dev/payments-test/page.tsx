@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { CoinbaseEmbedded } from '@/components/CoinbaseEmbedded';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 
 const PaymentsTestPage = () => {
-  const { user } = usePrivy();
+  const { user } = useCDPAuth();
 
   const walletAddress = user?.wallet?.address;
   const isCoinbaseSandbox = !!process.env.NEXT_PUBLIC_COINBASE_SANDBOX_ENABLED;

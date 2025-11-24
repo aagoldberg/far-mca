@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 
 interface AirdropStatus {
   isLoading: boolean;
@@ -28,7 +28,7 @@ interface AirdropStatus {
  * ```
  */
 export function useAutoAirdrop() {
-  const { authenticated, user, ready } = usePrivy();
+  const { authenticated, user, ready } = useCDPAuth();
   const [status, setStatus] = useState<AirdropStatus>({
     isLoading: false,
     isSuccess: false,

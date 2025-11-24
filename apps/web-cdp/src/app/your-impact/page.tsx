@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
+import { useCDPWallets } from '@/hooks/useCDPWallets';
 import { useRouter } from 'next/navigation';
 import { useAccount } from 'wagmi';
 import { gql, useQuery } from '@apollo/client';
@@ -82,8 +83,8 @@ interface Donation {
 }
 
 export default function YourImpactPage() {
-  const { user, authenticated } = usePrivy();
-  const { wallets } = useWallets();
+  const { user, authenticated } = useCDPAuth();
+  const { wallets } = useCDPWallets();
   const { address } = useAccount();
   const router = useRouter();
   const [selectedTimeframe, setSelectedTimeframe] = useState<'all' | 'year' | 'month'>('all');

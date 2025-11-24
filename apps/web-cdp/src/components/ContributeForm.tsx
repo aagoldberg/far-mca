@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { PaymentOptionsRefactored } from './PaymentOptionsRefactored';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 // import { BridgeButton } from './BridgeButton';
@@ -19,7 +19,7 @@ export default function ContributeForm({
     onSuccess,
     onError,
 }: ContributeFormProps) {
-    const { login, user, ready } = usePrivy();
+    const { login, user, ready } = useCDPAuth();
     const [amount, setAmount] = useState('5');
     const amountIsValid = (parseFloat(amount) || 0) >= 5;
 

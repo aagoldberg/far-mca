@@ -1,10 +1,10 @@
 "use client";
 
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import Link from 'next/link';
 
 export const CreateFundingRequestButton = () => {
-    const { ready, authenticated } = usePrivy();
+    const { ready, authenticated } = useCDPAuth();
 
     if (!ready || !authenticated) {
         return null;

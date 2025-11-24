@@ -1,7 +1,7 @@
 "use client";
 
 import { useCampaign } from '@/hooks/useCampaign';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { useEffect, useState } from 'react';
 import { getSocialProfile, PlatformBadges, TrustIndicator } from '@/utils/socialUtils';
 import CampaignCreatorProfile from '@/components/CampaignCreatorProfile';
@@ -14,7 +14,7 @@ type CampaignDetailsProps = {
 
 export default function CampaignDetails({ campaignNumericId }: CampaignDetailsProps) {
   const { campaign, loading, error } = useCampaign(campaignNumericId);
-  const { user } = usePrivy();
+  const { user } = useCDPAuth();
   const [creatorProfile, setCreatorProfile] = useState<{
     name: string | null, 
     image: string | null,

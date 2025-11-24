@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { uploadJson, uploadImage } from '@/utils/storage';
 import { useAccount, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { parseUnits } from 'viem';
@@ -18,7 +18,7 @@ const USDC_DECIMALS = 6;
 export const CreateFundingRequestForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { ready, authenticated, user } = usePrivy();
+  const { ready, authenticated, user } = useCDPAuth();
   const { address } = useAccount();
   
   const [formData, setFormData] = useState({

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, ComponentType } from 'react';
-import { usePrivy, useWallets, ConnectedWallet } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
+import { useCDPWallets } from '@/hooks/useCDPWallets';
+import { ConnectedWallet } from '@/types/wallet';
 import Image from 'next/image';
 import { BanknotesIcon, CreditCardIcon as OutlineCreditCardIcon } from '@heroicons/react/24/outline';
 
@@ -22,8 +24,8 @@ type PaymentOptionsProps = {
 };
 
 export function PaymentOptionsRefactored({ campaignNumericId, fiatAmount, onSuccess, onError }: PaymentOptionsProps) {
-    const { user, authenticated, login, logout } = usePrivy();
-    const { wallets } = useWallets();
+    const { user, authenticated, login, logout } = useCDPAuth();
+    const { wallets } = useCDPWallets();
     const { provider, isSandboxMode } = usePaymentProvider();
     const { campaign, loading: isCampaignLoading, error: campaignError } = useCampaign(campaignNumericId);
 

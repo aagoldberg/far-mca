@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { useRouter } from 'next/navigation';
 import { gql, useQuery } from '@apollo/client';
 import Link from 'next/link';
@@ -71,7 +71,7 @@ interface Campaign {
 }
 
 export default function MyFundraisersPage() {
-  const { user, authenticated } = usePrivy();
+  const { user, authenticated } = useCDPAuth();
   const router = useRouter();
   const [filter, setFilter] = useState<FilterType>('all');
   const [sort, setSort] = useState<SortType>('recent');

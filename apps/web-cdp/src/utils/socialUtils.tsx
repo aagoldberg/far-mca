@@ -1,4 +1,4 @@
-import { User } from '@privy-io/react-auth';
+import { CDPUser } from '@/hooks/useCDPAuth';
 
 export type SocialPlatform = 'google' | 'twitter' | 'discord' | 'farcaster' | 'telegram' | 'instagram' | 'spotify' | 'tiktok' | 'linkedin' | 'github' | 'apple';
 
@@ -86,7 +86,7 @@ export const PLATFORM_ICONS: Record<SocialPlatform, JSX.Element> = {
   )
 };
 
-export function getBestName(user: User | null | undefined): string | null {
+export function getBestName(user: CDPUser | null | undefined): string | null {
   if (!user) return null;
   
   // Priority order for names
@@ -106,7 +106,7 @@ export function getBestName(user: User | null | undefined): string | null {
   return null;
 }
 
-export function getBestAvatar(user: User | null | undefined): string | null {
+export function getBestAvatar(user: CDPUser | null | undefined): string | null {
   if (!user) return null;
   
   // Priority order for avatars (high quality sources first)
@@ -124,7 +124,7 @@ export function getBestAvatar(user: User | null | undefined): string | null {
   return null;
 }
 
-export function getConnectedPlatforms(user: User | null | undefined): SocialPlatform[] {
+export function getConnectedPlatforms(user: CDPUser | null | undefined): SocialPlatform[] {
   if (!user) return [];
   
   const platforms: SocialPlatform[] = [];
@@ -144,7 +144,7 @@ export function getConnectedPlatforms(user: User | null | undefined): SocialPlat
   return platforms;
 }
 
-export function getTrustScore(user: User | null | undefined): number {
+export function getTrustScore(user: CDPUser | null | undefined): number {
   if (!user) return 0;
   
   const platforms = getConnectedPlatforms(user);
@@ -172,7 +172,7 @@ export function getTrustScore(user: User | null | undefined): number {
   return Math.min(score, 100);
 }
 
-export function getSocialProfile(user: User | null | undefined): SocialProfile {
+export function getSocialProfile(user: CDPUser | null | undefined): SocialProfile {
   const name = getBestName(user);
   const avatar = getBestAvatar(user);
   const platforms = getConnectedPlatforms(user);
@@ -236,7 +236,7 @@ export function getSocialProfile(user: User | null | undefined): SocialProfile {
   };
 }
 
-export function formatDisplayName(user: User | null | undefined, walletAddress?: string): string {
+export function formatDisplayName(user: CDPUser | null | undefined, walletAddress?: string): string {
   const name = getBestName(user);
   if (name) return name;
   

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useCampaign } from '@/hooks/useCampaign';
 import { formatUnits, parseUnits } from 'viem';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { 
   CurrencyDollarIcon,
   ChartBarIcon,
@@ -14,16 +14,16 @@ import {
 
 const USDC_DECIMALS = 6;
 
-function FundingCard({ 
-  advanceId, 
-  onFundClick 
-}: { 
+function FundingCard({
+  advanceId,
+  onFundClick
+}: {
   advanceId: string;
   onFundClick: () => void;
 }) {
   const { campaign, loading } = useCampaign(advanceId);
   const { address } = useAccount();
-  const { ready, authenticated, login } = usePrivy();
+  const { ready, authenticated, login } = useCDPAuth();
   const [fundAmount, setFundAmount] = useState('');
   
   if (loading || !campaign) {

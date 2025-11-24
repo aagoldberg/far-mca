@@ -5,7 +5,7 @@ import Link from 'next/link';
 import ShareModal from './ShareModal';
 import { useCampaign } from '@/hooks/useCampaign';
 import { formatUnits } from "viem";
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { getSocialProfile, formatDisplayName, PlatformBadges, TrustIndicator } from '@/utils/socialUtils';
 
 const USDC_DECIMALS = 6;
@@ -20,7 +20,7 @@ export default function DonateShareCard({ campaignNumericId, onDonateClick }: Do
   const [showAllDonors, setShowAllDonors] = useState(false);
   const [showTopDonors, setShowTopDonors] = useState(false);
   const { campaign, loading, error } = useCampaign(campaignNumericId);
-  const { user } = usePrivy();
+  const { user } = useCDPAuth();
   
   // Process donation data to get all donation lists
   const donationStats = useMemo(() => {

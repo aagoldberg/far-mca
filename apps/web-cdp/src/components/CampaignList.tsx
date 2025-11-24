@@ -5,7 +5,7 @@ import { gql, useQuery } from '@apollo/client';
 import Link from 'next/link';
 import { useCampaigns, ProcessedCampaign } from '@/hooks/useCampaign';
 import { formatUnits } from 'viem';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { getSocialProfile, formatDisplayName } from '@/utils/socialUtils';
 
 const USDC_DECIMALS = 6;

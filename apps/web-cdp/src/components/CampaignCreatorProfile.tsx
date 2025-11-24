@@ -1,19 +1,19 @@
 'use client';
 
-import { User } from '@privy-io/react-auth';
-import { 
-  getSocialProfile, 
-  PlatformBadges, 
-  TrustIndicator, 
+import { CDPUser } from '@/hooks/useCDPAuth';
+import {
+  getSocialProfile,
+  PlatformBadges,
+  TrustIndicator,
   getConnectedPlatforms,
   PLATFORM_ICONS,
-  SocialPlatform 
+  SocialPlatform
 } from '@/utils/socialUtils';
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, CheckBadgeIcon } from '@heroicons/react/24/outline';
 
 interface CampaignCreatorProfileProps {
-  creator: User | null;
+  creator: CDPUser | null;
   walletAddress?: string;
   showFullProfile?: boolean;
 }

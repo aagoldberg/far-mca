@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useSocialVerification, SocialPlatform } from '@/hooks/useSocialVerification';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 
 interface VerifyFriendshipButtonProps {
   friendAddress: string;

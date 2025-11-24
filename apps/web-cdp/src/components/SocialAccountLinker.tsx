@@ -1,14 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useCDPAuth } from '@/hooks/useCDPAuth';
 import { getConnectedPlatforms, PLATFORM_ICONS, SocialPlatform, getTrustScore } from '@/utils/socialUtils';
 import { PlusIcon, CheckIcon } from '@heroicons/react/24/outline';
 
-// Only include platforms that Privy actually supports for linking
+// CDP supports: Google, Apple, Twitter/X natively
+// Farcaster via custom integration
+// TODO: Add support for other platforms via custom OAuth
 const ALL_PLATFORMS: SocialPlatform[] = [
-  'google', 'twitter', 'discord', 'farcaster', 'linkedin', 'github', 'apple'
-  // Note: telegram, instagram, spotify, tiktok are not supported by Privy for linking yet
+  'google', 'twitter', 'farcaster', 'apple'
+  // TODO: Add discord, linkedin, github via custom OAuth
 ];
 
 const PLATFORM_NAMES: Record<SocialPlatform, string> = {
