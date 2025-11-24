@@ -32,6 +32,13 @@
 * [🎭 Farcaster Integration](how-it-works/farcaster-integration.md)
 * [🔐 CDP Auto-Repayment](how-it-works/cdp-auto-repayment.md)
 
+## 🔌 APIs
+
+* [Creator Platform APIs](apis/creators/README.md)
+  * [YouTube Integration](apis/creators/youtube.md)
+  * [Twitch Integration](apis/creators/twitch.md)
+  * [TikTok Shop Integration](apis/creators/tiktokshop.md)
+
 ## 📚 Resources
 
 * [📚 Research Foundation](references.md)

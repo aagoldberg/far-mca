@@ -44,7 +44,7 @@ export class StripeClient {
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: this.config.clientId,
-      scope: 'read_only', // Read-only access to payment data
+      scope: 'read_write', // Required for Stripe Connect Standard
       redirect_uri: this.config.redirectUri,
       state,
     });

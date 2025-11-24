@@ -4,14 +4,14 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_KEY!
 );
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
-    const wallet = searchParams.get('wallet');
+    const state = searchParams.get('state');
     const error = searchParams.get('error');
     const errorDescription = searchParams.get('error_description');
 
@@ -19,13 +19,22 @@ export async function GET(request: NextRequest) {
     if (error) {
       console.error('Stripe OAuth error:', error, errorDescription);
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?error=${encodeURIComponent(errorDescription || error)}`
+        `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=${encodeURIComponent(errorDescription || error)}`
       );
     }
 
-    if (!code || !wallet) {
+    if (!code || !state) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?error=Missing required parameters`
+        `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=Missing required parameters`
+      );
+    }
+
+    // Extract wallet address from state parameter
+    // State format: "wallet-timestamp"
+    const wallet = state.split('-')[0];
+    if (!wallet) {
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=Invalid state parameter`
       );
     }
 
@@ -33,7 +42,7 @@ export async function GET(request: NextRequest) {
     if (!process.env.STRIPE_CLIENT_ID || !process.env.STRIPE_CLIENT_SECRET) {
       console.error('Missing Stripe environment variables');
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?error=Stripe not configured`
+        `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=Stripe not configured`
       );
     }
 
@@ -88,7 +97,7 @@ export async function GET(request: NextRequest) {
     if (dbError) {
       console.error('Database error:', dbError);
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?error=${encodeURIComponent('Failed to save connection')}`
+        `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=${encodeURIComponent('Failed to save connection')}`
       );
     }
 
@@ -100,14 +109,14 @@ export async function GET(request: NextRequest) {
       recurringRevenue: revenueData.recurringRevenue,
     });
 
-    // Redirect to dashboard with success message
+    // Redirect to credit page with success message
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?stripe_connected=true`
+      `${process.env.NEXT_PUBLIC_APP_URL}/credit?stripe_connected=true`
     );
   } catch (error) {
     console.error('Stripe callback error:', error);
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?error=${encodeURIComponent(
+      `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=${encodeURIComponent(
         error instanceof Error ? error.message : 'Failed to connect Stripe'
       )}`
     );

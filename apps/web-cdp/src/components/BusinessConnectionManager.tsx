@@ -4,13 +4,19 @@ import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import ShopifyConnectButton from './ShopifyConnectButton';
 import StripeConnectButton from './StripeConnectButton';
+import YouTubeConnectButton from './YouTubeConnectButton';
+import TwitchConnectButton from './TwitchConnectButton';
+import TikTokShopConnectButton from './TikTokShopConnectButton';
 import {
   CheckCircleIcon,
   ArrowPathIcon,
   ShoppingBagIcon,
   CreditCardIcon,
   BanknotesIcon,
-  BuildingStorefrontIcon
+  BuildingStorefrontIcon,
+  VideoCameraIcon,
+  PlayIcon,
+  ShoppingCartIcon
 } from '@heroicons/react/24/outline';
 
 interface BusinessConnection {
@@ -52,6 +58,24 @@ const PLATFORM_CONFIG = {
     icon: CreditCardIcon,
     color: 'bg-indigo-600',
     hoverColor: 'hover:bg-indigo-700',
+  },
+  youtube: {
+    name: 'YouTube',
+    icon: VideoCameraIcon,
+    color: 'bg-red-600',
+    hoverColor: 'hover:bg-red-700',
+  },
+  twitch: {
+    name: 'Twitch',
+    icon: PlayIcon,
+    color: 'bg-purple-600',
+    hoverColor: 'hover:bg-purple-700',
+  },
+  tiktokshop: {
+    name: 'TikTok Shop',
+    icon: ShoppingCartIcon,
+    color: 'bg-black',
+    hoverColor: 'hover:bg-gray-800',
   },
   square: {
     name: 'Square',
@@ -226,6 +250,33 @@ export default function BusinessConnectionManager() {
           {/* Stripe Integration */}
           {!connections.some(c => c.platform === 'stripe') && (
             <StripeConnectButton
+              onConnectionSuccess={() => loadCreditScore()}
+              onConnectionError={(err) => setError(err)}
+              size="md"
+            />
+          )}
+
+          {/* YouTube Integration */}
+          {!connections.some(c => c.platform === 'youtube') && (
+            <YouTubeConnectButton
+              onConnectionSuccess={() => loadCreditScore()}
+              onConnectionError={(err) => setError(err)}
+              size="md"
+            />
+          )}
+
+          {/* Twitch Integration */}
+          {!connections.some(c => c.platform === 'twitch') && (
+            <TwitchConnectButton
+              onConnectionSuccess={() => loadCreditScore()}
+              onConnectionError={(err) => setError(err)}
+              size="md"
+            />
+          )}
+
+          {/* TikTok Shop Integration */}
+          {!connections.some(c => c.platform === 'tiktokshop') && (
+            <TikTokShopConnectButton
               onConnectionSuccess={() => loadCreditScore()}
               onConnectionError={(err) => setError(err)}
               size="md"
