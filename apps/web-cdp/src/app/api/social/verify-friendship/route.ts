@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 
     // Store the verified connection in Supabase
     const { data, error } = await supabase
-      .from('social_connections')
+      .from('social_verifications')
       .upsert({
         attester_address: attesterAddress.toLowerCase(),
         attester_platform_id: attesterPlatformId,

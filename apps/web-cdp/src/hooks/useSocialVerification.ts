@@ -58,7 +58,7 @@ interface UseSocialVerificationReturn {
  */
 export function useSocialVerification(): UseSocialVerificationReturn {
   const { address } = useAccount();
-  const { user } = usePrivy();
+  const { user } = useCDPAuth();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +84,7 @@ export function useSocialVerification(): UseSocialVerificationReturn {
       const { friendAddress, platform } = params;
 
       // Get platform-specific IDs
-      const attesterPlatformId = getPlatformId(user, platform);
+      const attesterPlatformId = await getPlatformId(user, platform, address);
       const friendPlatformId = null; // Friend must have also connected their platform
 
       if (!attesterPlatformId) {
@@ -134,7 +134,7 @@ export function useSocialVerification(): UseSocialVerificationReturn {
 
     try {
       const { data, error } = await supabase
-        .from('social_connections')
+        .from('social_verifications')
         .select('*')
         .eq('attester_address', address.toLowerCase())
         .eq('is_active', true)
@@ -159,7 +159,7 @@ export function useSocialVerification(): UseSocialVerificationReturn {
   const getFriendConnections = async (friendAddress: string): Promise<SocialConnection[]> => {
     try {
       const { data, error } = await supabase
-        .from('social_connections')
+        .from('social_verifications')
         .select('*')
         .eq('attester_address', friendAddress.toLowerCase())
         .eq('is_active', true)
@@ -188,14 +188,14 @@ export function useSocialVerification(): UseSocialVerificationReturn {
   ): Promise<boolean> => {
     try {
       let query1 = supabase
-        .from('social_connections')
+        .from('social_verifications')
         .select('id')
         .eq('attester_address', address1.toLowerCase())
         .eq('friend_address', address2.toLowerCase())
         .eq('is_active', true);
 
       let query2 = supabase
-        .from('social_connections')
+        .from('social_verifications')
         .select('id')
         .eq('attester_address', address2.toLowerCase())
         .eq('friend_address', address1.toLowerCase())
@@ -230,14 +230,14 @@ export function useSocialVerification(): UseSocialVerificationReturn {
     try {
       // Get all friends of address1
       const { data: friends1 } = await supabase
-        .from('social_connections')
+        .from('social_verifications')
         .select('friend_address')
         .eq('attester_address', address1.toLowerCase())
         .eq('is_active', true);
 
       // Get all friends of address2
       const { data: friends2 } = await supabase
-        .from('social_connections')
+        .from('social_verifications')
         .select('friend_address')
         .eq('attester_address', address2.toLowerCase())
         .eq('is_active', true);
@@ -268,25 +268,33 @@ export function useSocialVerification(): UseSocialVerificationReturn {
 }
 
 /**
- * Helper: Get platform-specific user ID from Privy user object
+ * Helper: Get platform-specific user ID from CDP user object
+ * Queries social_connections table to find linked platform account
  */
-function getPlatformId(user: any, platform: SocialPlatform): string | null {
-  switch (platform) {
-    case 'facebook':
-      return user.facebook?.subject || null;
-    case 'instagram':
-      return user.instagram?.subject || null;
-    case 'twitter':
-      return user.twitter?.subject || null;
-    case 'linkedin':
-      return user.linkedin?.subject || null;
-    case 'discord':
-      return user.discord?.subject || null;
-    case 'google':
-      return user.google?.subject || null;
-    case 'farcaster':
-      return user.farcaster?.fid?.toString() || null;
-    default:
+async function getPlatformId(user: any, platform: SocialPlatform, walletAddress: string): Promise<string | null> {
+  try {
+    // Query social_connections table for linked platform account
+    const { data, error } = await supabase
+      .from('social_connections')
+      .select('platform_user_id, fid')
+      .eq('wallet_address', walletAddress.toLowerCase())
+      .eq('platform', platform)
+      .eq('is_active', true)
+      .single();
+
+    if (error || !data) {
       return null;
+    }
+
+    // For Farcaster, return FID; for others, return platform_user_id
+    if (platform === 'farcaster') {
+      return data.fid?.toString() || null;
+    }
+
+    return data.platform_user_id || null;
+
+  } catch (err) {
+    console.error(`[Social Verification] Error getting platform ID for ${platform}:`, err);
+    return null;
   }
 }
