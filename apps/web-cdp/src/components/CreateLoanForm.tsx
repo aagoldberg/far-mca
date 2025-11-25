@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi';
 import { useIsSignedIn, useEvmAddress } from '@coinbase/cdp-hooks';
 import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
-import { useCreateLoan } from '@/hooks/useMicroLoan';
+import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
 import { USDC_DECIMALS } from '@/types/loan';
 import ImageCropModal from '@/components/ImageCropModal';
 import { LoanCard } from '@/components/LoanCard';
@@ -62,7 +62,7 @@ export default function CreateLoanForm() {
   const isConnected = isSignedIn || isExternalConnected;
   const address = (externalAddress || cdpAddress) as `0x${string}` | undefined;
 
-  const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoan();
+  const { createLoan, isPending, isConfirming, isSuccess } = useCreateLoanGasless();
   const { profile } = useFarcasterProfile(address);
 
   const [isCheckingConnection, setIsCheckingConnection] = useState(true);

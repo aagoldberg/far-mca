@@ -6,6 +6,8 @@
  */
 
 import { useReadContract, useReadContracts, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
+import { useWriteContracts, useCallsStatus } from 'wagmi/experimental';
+import { useState } from 'react';
 import { formatUnits, parseUnits } from 'viem';
 import { MICROLOAN_FACTORY_ADDRESS, USDC_ADDRESS } from '@/lib/wagmi';
 import MicroLoanFactoryABI from '@/abi/MicroLoanFactory.json';
@@ -16,6 +18,8 @@ import {
   UserContribution,
   USDC_DECIMALS
 } from '@/types/loan';
+
+const PAYMASTER_URL = process.env.NEXT_PUBLIC_PAYMASTER_URL;
 
 // =============================================================================
 // FACTORY - GET ALL LOANS
@@ -619,6 +623,76 @@ export const useCreateLoan = () => {
     isConfirming,
     isSuccess,
     error,
+  };
+};
+
+/**
+ * Create a new loan with paymaster support (gasless for Smart Wallets)
+ * Uses wagmi/experimental for batch transaction + paymaster capabilities
+ */
+export const useCreateLoanGasless = () => {
+  const { address } = useAccount();
+  const [callsId, setCallsId] = useState<string | undefined>();
+  const { writeContracts, isPending: isWritePending } = useWriteContracts();
+  const { data: callsStatus } = useCallsStatus({
+    id: callsId as `0x${string}`,
+    query: {
+      enabled: !!callsId,
+      refetchInterval: (data) =>
+        data?.state.data?.status === 'CONFIRMED' ? false : 1000,
+    },
+  });
+
+  const createLoan = async (params: {
+    borrower: `0x${string}`;
+    metadataURI: string;
+    principal: bigint;
+    loanDuration: number;
+    fundraisingDeadline: number;
+  }) => {
+    if (!address) {
+      throw new Error('Wallet not connected');
+    }
+
+    // Use writeContracts (even for single call) to enable paymaster
+    const id = await writeContracts({
+      contracts: [
+        {
+          address: MICROLOAN_FACTORY_ADDRESS,
+          abi: MicroLoanFactoryABI.abi,
+          functionName: 'createLoan',
+          args: [
+            params.borrower,
+            params.metadataURI,
+            params.principal,
+            BigInt(params.loanDuration),
+            BigInt(params.fundraisingDeadline),
+          ],
+        },
+      ],
+      capabilities: PAYMASTER_URL ? {
+        paymasterService: {
+          url: PAYMASTER_URL,
+        },
+      } : undefined,
+    });
+
+    setCallsId(id);
+    return id;
+  };
+
+  const isConfirming = callsStatus?.status === 'PENDING';
+  const isConfirmed = callsStatus?.status === 'CONFIRMED';
+  const error = callsStatus?.status === 'FAILED' ? new Error('Transaction failed') : null;
+
+  return {
+    createLoan,
+    isPending: isWritePending,
+    isConfirming,
+    isSuccess: isConfirmed,
+    error,
+    callsId,
+    callsStatus,
   };
 };
 
