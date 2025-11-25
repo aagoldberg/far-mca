@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
+import { useIsSignedIn, useEvmAddress } from '@coinbase/cdp-hooks';
 import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
 import { useCreateLoan } from '@/hooks/useMicroLoan';
@@ -53,7 +54,14 @@ interface FormData {
 
 export default function CreateLoanForm() {
   const router = useRouter();
-  const { address, isConnected } = useAccount();
+  const { address: externalAddress, isConnected: isExternalConnected } = useAccount(); // External wallets
+  const { isSignedIn } = useIsSignedIn(); // CDP embedded wallet
+  const { evmAddress: cdpAddress } = useEvmAddress(); // CDP wallet address
+
+  // Check if user is authenticated via either CDP or external wallet
+  const isConnected = isSignedIn || isExternalConnected;
+  const address = (externalAddress || cdpAddress) as `0x${string}` | undefined;
+
   const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoan();
   const { profile } = useFarcasterProfile(address);
 
