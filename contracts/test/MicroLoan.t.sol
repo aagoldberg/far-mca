@@ -418,105 +418,109 @@ contract MicroLoanTest is Test {
         assertEq(loan.secondsUntilDue(), 0);
     }
 
-    function test_MetadataUpdate() public {
-        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+    // COMMENTED OUT: updateMetadata() was removed when metadataURI was made immutable
+    // function test_MetadataUpdate() public {
+    //     MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
 
-        // Fund and disburse
-        vm.startPrank(alice);
-        usdc.approve(address(loan), type(uint256).max);
-        loan.contribute(1_000e6);
-        vm.stopPrank();
+    //     // Fund and disburse
+    //     vm.startPrank(alice);
+    //     usdc.approve(address(loan), type(uint256).max);
+    //     loan.contribute(1_000e6);
+    //     vm.stopPrank();
 
-        vm.prank(borrower);
-        loan.disburse();
+    //     vm.prank(borrower);
+    //     loan.disburse();
 
-        // Borrower updates metadata with progress update
-        vm.prank(borrower);
-        loan.updateMetadata("ipfs://QmProgressUpdate1");
-        assertEq(loan.metadataURI(), "ipfs://QmProgressUpdate1");
+    //     // Borrower updates metadata with progress update
+    //     vm.prank(borrower);
+    //     loan.updateMetadata("ipfs://QmProgressUpdate1");
+    //     assertEq(loan.metadataURI(), "ipfs://QmProgressUpdate1");
 
-        // Borrower updates again with thank you message
-        vm.prank(borrower);
-        loan.updateMetadata("ipfs://QmThankYou");
-        assertEq(loan.metadataURI(), "ipfs://QmThankYou");
+    //     // Borrower updates again with thank you message
+    //     vm.prank(borrower);
+    //     loan.updateMetadata("ipfs://QmThankYou");
+    //     assertEq(loan.metadataURI(), "ipfs://QmThankYou");
 
-        // Non-borrower cannot update
-        vm.prank(alice);
-        vm.expectRevert();
-        loan.updateMetadata("ipfs://Unauthorized");
-    }
+    //     // Non-borrower cannot update
+    //     vm.prank(alice);
+    //     vm.expectRevert();
+    //     loan.updateMetadata("ipfs://Unauthorized");
+    // }
 
-    function test_MetadataUpdateAfterCompletion() public {
-        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+    // COMMENTED OUT: updateMetadata() was removed when metadataURI was made immutable
+    // function test_MetadataUpdateAfterCompletion() public {
+    //     MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
 
-        // Fund, disburse, and complete
-        vm.startPrank(alice);
-        usdc.approve(address(loan), type(uint256).max);
-        loan.contribute(1_000e6);
-        vm.stopPrank();
+    //     // Fund, disburse, and complete
+    //     vm.startPrank(alice);
+    //     usdc.approve(address(loan), type(uint256).max);
+    //     loan.contribute(1_000e6);
+    //     vm.stopPrank();
 
-        vm.prank(borrower);
-        loan.disburse();
+    //     vm.prank(borrower);
+    //     loan.disburse();
 
-        vm.startPrank(borrower);
-        usdc.approve(address(loan), type(uint256).max);
-        loan.repay(1_000e6);
-        vm.stopPrank();
+    //     vm.startPrank(borrower);
+    //     usdc.approve(address(loan), type(uint256).max);
+    //     loan.repay(1_000e6);
+    //     vm.stopPrank();
 
-        // Borrower can still update metadata after completion (for final thank you)
-        vm.prank(borrower);
-        loan.updateMetadata("ipfs://QmFinalThankYou");
-        assertEq(loan.metadataURI(), "ipfs://QmFinalThankYou");
-    }
+    //     // Borrower can still update metadata after completion (for final thank you)
+    //     vm.prank(borrower);
+    //     loan.updateMetadata("ipfs://QmFinalThankYou");
+    //     assertEq(loan.metadataURI(), "ipfs://QmFinalThankYou");
+    // }
 
-    function test_TokenRecovery() public {
-        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+    // COMMENTED OUT: recoverTokens() was removed for MVP
+    // function test_TokenRecovery() public {
+    //     MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
 
-        // Fund, disburse, and complete
-        vm.startPrank(alice);
-        usdc.approve(address(loan), type(uint256).max);
-        loan.contribute(1_000e6);
-        vm.stopPrank();
+    //     // Fund, disburse, and complete
+    //     vm.startPrank(alice);
+    //     usdc.approve(address(loan), type(uint256).max);
+    //     loan.contribute(1_000e6);
+    //     vm.stopPrank();
 
-        vm.prank(borrower);
-        loan.disburse();
+    //     vm.prank(borrower);
+    //     loan.disburse();
 
-        vm.startPrank(borrower);
-        usdc.approve(address(loan), type(uint256).max);
-        loan.repay(1_000e6);
-        vm.stopPrank();
+    //     vm.startPrank(borrower);
+    //     usdc.approve(address(loan), type(uint256).max);
+    //     loan.repay(1_000e6);
+    //     vm.stopPrank();
 
-        // Alice claims her funds
-        vm.prank(alice);
-        loan.claim();
+    //     // Alice claims her funds
+    //     vm.prank(alice);
+    //     loan.claim();
 
-        // Someone accidentally sends 100 USDC to the completed loan
-        usdc.mint(address(loan), 100e6);
+    //     // Someone accidentally sends 100 USDC to the completed loan
+    //     usdc.mint(address(loan), 100e6);
 
-        // Anyone can recover the accidentally sent tokens
-        uint256 recoveryRecipientBefore = usdc.balanceOf(bob);
-        vm.prank(alice);
-        loan.recoverTokens(address(usdc), bob);
-        uint256 recoveryRecipientAfter = usdc.balanceOf(bob);
+    //     // Anyone can recover the accidentally sent tokens
+    //     uint256 recoveryRecipientBefore = usdc.balanceOf(bob);
+    //     vm.prank(alice);
+    //     loan.recoverTokens(address(usdc), bob);
+    //     uint256 recoveryRecipientAfter = usdc.balanceOf(bob);
 
-        assertEq(recoveryRecipientAfter - recoveryRecipientBefore, 100e6);
-    }
+    //     assertEq(recoveryRecipientAfter - recoveryRecipientBefore, 100e6);
+    // }
 
-    function test_TokenRecoveryOnCancelled() public {
-        MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
+    // COMMENTED OUT: recoverTokens() was removed for MVP
+    // function test_TokenRecoveryOnCancelled() public {
+    //     MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);
 
-        // Borrower cancels fundraising
-        vm.prank(borrower);
-        loan.cancelFundraise();
+    //     // Borrower cancels fundraising
+    //     vm.prank(borrower);
+    //     loan.cancelFundraise();
 
-        // Someone accidentally sends tokens
-        usdc.mint(address(loan), 50e6);
+    //     // Someone accidentally sends tokens
+    //     usdc.mint(address(loan), 50e6);
 
-        // Can recover from cancelled loan
-        vm.prank(alice);
-        loan.recoverTokens(address(usdc), alice);
-        // Verify recovery succeeded (no revert)
-    }
+    //     // Can recover from cancelled loan
+    //     vm.prank(alice);
+    //     loan.recoverTokens(address(usdc), alice);
+    //     // Verify recovery succeeded (no revert)
+    // }
 
     function test_GetStatus() public {
         MicroLoan loan = _createLoan(1_000e6, 56 days, 7 days);

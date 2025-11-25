@@ -179,6 +179,34 @@ contract MicroLoan is ReentrancyGuard {
         }
     }
 
+    /**
+     * @notice Gasless contribution - relayer calls on behalf of contributor
+     * @param contributor Address of the actual contributor (must have approved USDC to this contract)
+     * @param amount Amount of funding token to contribute
+     */
+    function contributeFor(address contributor, uint256 amount) external nonReentrant {
+        if (!fundraisingActive) revert FundraisingNotActive();
+        if (block.timestamp > fundraisingDeadline) revert FundraisingEnded();
+        if (amount == 0) revert InvalidAmount();
+        if (totalFunded + amount > principal) revert GoalExceeded();
+
+        fundingToken.safeTransferFrom(contributor, address(this), amount);
+
+        if (contributions[contributor] == 0) {
+            contributors.push(contributor);
+        }
+        contributions[contributor] += amount;
+        totalFunded += amount;
+
+        emit Contributed(contributor, amount);
+
+        if (totalFunded == principal) {
+            fundraisingActive = false;
+            fundedAt = block.timestamp;
+            emit FundraisingClosed(totalFunded);
+        }
+    }
+
     // --------------------
     // Disbursement
     // --------------------
@@ -269,6 +297,51 @@ contract MicroLoan is ReentrancyGuard {
         }
     }
 
+    /**
+     * @notice Gasless repayment - relayer calls on behalf of payer
+     * @param payer Address of the actual payer (must have approved USDC to this contract)
+     * @param amount Amount to repay (excess beyond outstanding principal distributed to lenders)
+     */
+    function repayFor(address payer, uint256 amount) external nonReentrant {
+        if (!active) revert NotActive();
+        if (completed) revert AlreadyCompleted();
+        if (amount == 0) revert InvalidAmount();
+
+        fundingToken.safeTransferFrom(payer, address(this), amount);
+
+        // Apply full payment amount (including any overpayment)
+        uint256 principalPortion = amount > outstandingPrincipal ? outstandingPrincipal : amount;
+
+        outstandingPrincipal -= principalPortion;
+        totalRepaid += amount; // Track total including overpayments
+
+        // Update accumulator for pro-rata distribution (includes overpayments)
+        accRepaidPerShare += (amount * ACC_PRECISION) / principal;
+
+        // Rich repayment event for off-chain reputation tracking
+        uint256 timeUntilDue = secondsUntilDue();
+        emit Repayment(
+            payer,
+            amount,
+            totalRepaid,
+            outstandingPrincipal,
+            block.timestamp,
+            timeUntilDue
+        );
+
+        // Check completion
+        if (outstandingPrincipal == 0) {
+            completed = true;
+            // Finalize accumulator to ensure all funds (including overpayments) are distributable
+            // This handles any rounding dust and ensures lenders can claim 100% of totalRepaid
+            if (totalRepaid > 0) {
+                accRepaidPerShare = (totalRepaid * ACC_PRECISION) / principal;
+            }
+            emit Completed(totalRepaid, block.timestamp);
+            factory.notifyLoanClosed();
+        }
+    }
+
     // --------------------
     // Lender Claims
     // --------------------
@@ -292,6 +365,21 @@ contract MicroLoan is ReentrancyGuard {
 
         fundingToken.safeTransfer(msg.sender, pending);
         emit Claimed(msg.sender, pending);
+    }
+
+    /**
+     * @notice Gasless claim - relayer calls on behalf of contributor
+     * @param contributor Address of the contributor to claim for
+     */
+    function claimFor(address contributor) external nonReentrant {
+        uint256 pending = claimableAmount(contributor);
+        if (pending == 0) revert NoReturnsAvailable();
+
+        uint256 accumulated = (contributions[contributor] * accRepaidPerShare) / ACC_PRECISION;
+        userRewardDebt[contributor] = accumulated;
+
+        fundingToken.safeTransfer(contributor, pending);
+        emit Claimed(contributor, pending);
     }
 
     // --------------------
