@@ -346,14 +346,18 @@ export function LoanCard({
               <div className="flex items-center gap-3 min-w-0 flex-1">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
-                  <img
-                    src={profile.pfpUrl}
-                    alt={profile.displayName}
-                    className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
+                  {profile.pfpUrl ? (
+                    <img
+                      src={profile.pfpUrl}
+                      alt={profile.displayName}
+                      className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-[#3B9B7F]/30 transition-all duration-300" />
+                  )}
                 </div>
                 <span className="text-sm sm:text-base font-semibold text-gray-900 truncate">
                   {profile.displayName || `@${profile.username}`}
