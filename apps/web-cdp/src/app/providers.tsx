@@ -18,6 +18,7 @@ const queryClient = new QueryClient();
 const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
 const CDP_API_KEY = process.env.CDP_API_KEY_ID || process.env.NEXT_PUBLIC_CDP_API_KEY;
 const CDP_PROJECT_ID = process.env.NEXT_PUBLIC_CDP_PROJECT_ID;
+const PAYMASTER_URL = process.env.NEXT_PUBLIC_PAYMASTER_URL;
 
 if (!SUBGRAPH_URL) {
   console.warn("NEXT_PUBLIC_SUBGRAPH_URL is not set - using fallback");
@@ -25,6 +26,10 @@ if (!SUBGRAPH_URL) {
 
 if (!CDP_PROJECT_ID) {
   console.warn("NEXT_PUBLIC_CDP_PROJECT_ID is not set - CDP Embedded Wallets will not work");
+}
+
+if (!PAYMASTER_URL) {
+  console.warn("NEXT_PUBLIC_PAYMASTER_URL is not set - Gasless transactions will fallback to user-paid gas");
 }
 
 const httpLink = createHttpLink({
@@ -57,7 +62,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       config={{
         projectId: CDP_PROJECT_ID || '',
         ethereum: {
-          createOnLogin: 'eoa',
+          createOnLogin: 'all', // Creates Smart Wallets for gasless transactions
         },
         appName: 'LendFriend',
         authMethods: ['email', 'sms', 'oauth:google', 'oauth:apple', 'oauth:x'],
@@ -80,6 +85,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
               apiKey={CDP_API_KEY}
               projectId={CDP_PROJECT_ID}
               chain={baseSepolia}
+              config={{
+                appearance: {
+                  mode: 'light',
+                },
+                paymaster: PAYMASTER_URL ? {
+                  url: PAYMASTER_URL,
+                } : undefined,
+              }}
             >
               <ApolloProvider client={apolloClient}>
                 <PaymentProvider>
