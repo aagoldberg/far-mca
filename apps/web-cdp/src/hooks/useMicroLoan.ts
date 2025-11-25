@@ -7,6 +7,7 @@
 
 import { useReadContract, useReadContracts, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import { useWriteContracts, useCallsStatus } from 'wagmi/experimental';
+import { useIsSignedIn, useEvmAddress } from '@coinbase/cdp-hooks';
 import { useState } from 'react';
 import { formatUnits, parseUnits } from 'viem';
 import { MICROLOAN_FACTORY_ADDRESS, USDC_ADDRESS } from '@/lib/wagmi';
@@ -631,7 +632,13 @@ export const useCreateLoan = () => {
  * Uses wagmi/experimental for batch transaction + paymaster capabilities
  */
 export const useCreateLoanGasless = () => {
-  const { address } = useAccount();
+  const { address: externalAddress } = useAccount(); // External wallets
+  const { isSignedIn } = useIsSignedIn(); // CDP embedded wallet
+  const { evmAddress: cdpAddress } = useEvmAddress(); // CDP wallet address
+
+  // Check if user is authenticated via either CDP or external wallet
+  const address = (externalAddress || cdpAddress) as `0x${string}` | undefined;
+
   const [callsId, setCallsId] = useState<string | undefined>();
   const { writeContracts, isPending: isWritePending } = useWriteContracts();
   const { data: callsStatus } = useCallsStatus({
