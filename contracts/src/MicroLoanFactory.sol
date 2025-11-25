@@ -28,9 +28,10 @@ contract MicroLoanFactory is Ownable, Pausable {
     // --------------------
     address public immutable usdc;
     uint256 public minPrincipal = 100e6;           // $100 minimum (6 decimals)
+    uint256 public maxPrincipal = 100_000e6;       // $100k maximum (6 decimals)
     uint256 public minLoanDuration = 7 days;       // Minimum time to maturity
     uint256 public maxLoanDuration = 365 days;     // Maximum time to maturity
-    uint256 public disbursementWindow = 14 days;   // Time to disburse after funding
+    uint256 public disbursementWindow = 30 days;   // Time to disburse after funding
 
     address[] public loans;
     mapping(address => address[]) public borrowerLoans;
@@ -58,7 +59,13 @@ contract MicroLoanFactory is Ownable, Pausable {
 
     function setMinPrincipal(uint256 _minPrincipal) external onlyOwner {
         require(_minPrincipal > 0, "min principal must be > 0");
+        require(_minPrincipal < maxPrincipal, "min must be < max");
         minPrincipal = _minPrincipal;
+    }
+
+    function setMaxPrincipal(uint256 _maxPrincipal) external onlyOwner {
+        require(_maxPrincipal > minPrincipal, "max must be > min");
+        maxPrincipal = _maxPrincipal;
     }
 
     function setDisbursementWindow(uint256 _window) external onlyOwner {
@@ -84,6 +91,7 @@ contract MicroLoanFactory is Ownable, Pausable {
         uint256 fundraisingDeadline
     ) external whenNotPaused returns (address loanAddr) {
         require(principal >= minPrincipal, "principal below minimum");
+        require(principal <= maxPrincipal, "principal above maximum");
         require(
             loanDuration >= minLoanDuration && loanDuration <= maxLoanDuration,
             "duration out of bounds"

@@ -81,10 +81,8 @@ contract MicroLoan is ReentrancyGuard {
     );
     event Claimed(address indexed contributor, uint256 amount);
     event Completed(uint256 totalRepaid, uint256 timestamp);
-    event Defaulted(uint256 dueDate, uint256 outstandingAmount, uint256 timestamp);
     event Refunded(address indexed contributor, uint256 amount);
     event FundraisingCancelled();
-    event MetadataUpdated(string newMetadataURI, uint256 timestamp);
 
     // --------------------
     // Constructor
@@ -212,31 +210,15 @@ contract MicroLoan is ReentrancyGuard {
     }
 
     /**
-     * @notice Borrower can cancel fundraising before full funding is reached
+     * @notice Borrower can cancel loan anytime before disbursing funds
      */
     function cancelFundraise() external onlyBorrower {
         require(!active, "already disbursed");
-        require(fundraisingActive, "not fundraising");
-        require(totalFunded < principal, "already fully funded");
+        require(!cancelled, "already cancelled");
         fundraisingActive = false;
         cancelled = true;
         emit FundraisingCancelled();
         factory.notifyLoanClosed();
-    }
-
-    // --------------------
-    // Metadata Updates
-    // --------------------
-    /**
-     * @notice Update loan metadata (for progress updates, thank you messages, photos, etc.)
-     * @dev Only borrower can update. Allows community engagement throughout loan lifecycle.
-     * @param newMetadataURI New IPFS or HTTP URI pointing to updated metadata
-     */
-    function updateMetadata(string calldata newMetadataURI) external onlyBorrower {
-        require(active || completed, "loan not active or completed");
-        require(bytes(newMetadataURI).length > 0, "empty metadata");
-        metadataURI = newMetadataURI;
-        emit MetadataUpdated(newMetadataURI, block.timestamp);
     }
 
     // --------------------
@@ -252,9 +234,6 @@ contract MicroLoan is ReentrancyGuard {
         if (completed) revert AlreadyCompleted();
         if (amount == 0) revert InvalidAmount();
 
-        // Check if loan was defaulted before this repayment
-        bool wasDefaulted = isDefaulted();
-
         fundingToken.safeTransferFrom(msg.sender, address(this), amount);
 
         // Apply full payment amount (including any overpayment)
@@ -265,11 +244,6 @@ contract MicroLoan is ReentrancyGuard {
 
         // Update accumulator for pro-rata distribution (includes overpayments)
         accRepaidPerShare += (amount * ACC_PRECISION) / principal;
-
-        // Emit default event if loan was in default (for off-chain tracking)
-        if (wasDefaulted) {
-            emit Defaulted(dueAt, outstandingPrincipal + principalPortion, block.timestamp);
-        }
 
         // Rich repayment event for off-chain reputation tracking
         uint256 timeUntilDue = secondsUntilDue();
@@ -341,25 +315,6 @@ contract MicroLoan is ReentrancyGuard {
 
         fundingToken.safeTransfer(msg.sender, contributed);
         emit Refunded(msg.sender, contributed);
-    }
-
-    // --------------------
-    // Token Recovery (Safety)
-    // --------------------
-    /**
-     * @notice Recover tokens accidentally sent to completed/cancelled loans
-     * @dev Can only be called when loan is completed or cancelled (no active funds)
-     * @param token Address of token to recover
-     * @param to Address to send recovered tokens to
-     */
-    function recoverTokens(address token, address to) external nonReentrant {
-        require(completed || cancelled, "loan still active");
-        require(to != address(0), "invalid recipient");
-
-        uint256 balance = IERC20(token).balanceOf(address(this));
-        require(balance > 0, "no tokens to recover");
-
-        IERC20(token).safeTransfer(to, balance);
     }
 
     // --------------------
