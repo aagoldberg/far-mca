@@ -103,6 +103,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
         await imageResponse.arrayBuffer();
 
+        // Calculate funding percentage
+        const goalAmount = Number(formatUnits(BigInt(campaign.goalAmount || 1), 6));
+        const raisedAmount = Number(formatUnits(BigInt(campaign.actualBalance || campaign.totalRaised), 6));
+        const percentFunded = Math.min(Math.round((raisedAmount / goalAmount) * 100), 100);
+
         return new ImageResponse(
             (
                 <div
@@ -110,81 +115,130 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
                         display: 'flex',
                         height: '100%',
                         width: '100%',
-                        backgroundColor: 'white',
+                        backgroundColor: '#f9fafb',
+                        padding: '60px',
                     }}
                 >
-                    {/* Background */}
+                    {/* Card Container */}
                     <div
                         style={{
+                            display: 'flex',
+                            flexDirection: 'column',
                             width: '100%',
                             height: '100%',
                             backgroundColor: 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            borderRadius: '24px',
+                            overflow: 'hidden',
+                            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
                         }}
                     >
-                        {/* Main Content */}
+                        {/* Campaign Image */}
+                        <div
+                            style={{
+                                width: '100%',
+                                height: '340px',
+                                overflow: 'hidden',
+                                display: 'flex',
+                            }}
+                        >
+                            <img
+                                src={imageUrl}
+                                alt={metadata.title}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </div>
+
+                        {/* Content Area */}
                         <div
                             style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                textAlign: 'center',
-                                width: '80%',
+                                padding: '40px 50px',
+                                flex: 1,
+                                justifyContent: 'space-between',
                             }}
                         >
-                            {/* Image */}
-                            <img 
-                                src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${metadata.image.replace('ipfs://', '')}`} 
-                                alt={metadata.title} 
-                                width={500} 
-                                height={262}
-                                style={{
-                                    objectFit: 'cover',
-                                    borderRadius: '20px',
-                                    marginBottom: '30px',
-                                    border: '5px solid #f3f4f6'
-                                }}
-                            />
-
                             {/* Title */}
                             <h1
                                 style={{
-                                    fontSize: '60px',
-                                    fontWeight: 700,
-                                    color: '#1f2937',
-                                    margin: '0',
-                                    lineHeight: '1.2'
+                                    fontSize: '48px',
+                                    fontWeight: 600,
+                                    color: '#111827',
+                                    margin: '0 0 20px 0',
+                                    lineHeight: '1.2',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden',
                                 }}
                             >
                                 {metadata.title}
                             </h1>
 
-                            {/* Raised Amount */}
-                            <p 
-                                style={{
-                                    fontSize: '32px',
-                                    color: '#4b5563',
-                                    marginTop: '20px'
-                                }}
-                            >
-                                ${Number(formatUnits(BigInt(campaign.actualBalance || campaign.totalRaised), 6)).toLocaleString()} Raised
-                            </p>
+                            {/* Bottom Section */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                {/* Borrower Info */}
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <span style={{ fontSize: '20px', color: '#6b7280' }}>
+                                        Borrower:
+                                    </span>
+                                    <span style={{ fontSize: '20px', color: '#111827', fontWeight: 500 }}>
+                                        {campaign.creator.substring(0, 6)}...{campaign.creator.substring(campaign.creator.length - 4)}
+                                    </span>
+                                </div>
 
+                                {/* Progress Section */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                                        <span style={{ fontSize: '20px', color: '#6b7280' }}>
+                                            Progress:
+                                        </span>
+                                        <span style={{ fontSize: '32px', color: '#10b981', fontWeight: 700 }}>
+                                            {percentFunded}% funded
+                                        </span>
+                                    </div>
+                                    {/* Progress Bar */}
+                                    <div
+                                        style={{
+                                            width: '100%',
+                                            height: '12px',
+                                            backgroundColor: '#e5e7eb',
+                                            borderRadius: '6px',
+                                            overflow: 'hidden',
+                                            display: 'flex',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                width: `${percentFunded}%`,
+                                                height: '100%',
+                                                backgroundColor: '#10b981',
+                                                borderRadius: '6px',
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Footer */}
+                        {/* Footer Branding */}
                         <div
                             style={{
-                                position: 'absolute',
-                                bottom: '30px',
-                                fontSize: '24px',
-                                color: '#6b7280'
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                padding: '20px',
+                                backgroundColor: '#f9fafb',
+                                borderTop: '1px solid #e5e7eb',
                             }}
                         >
-                            Created by {campaign.creator.substring(0,6)}...{campaign.creator.substring(campaign.creator.length - 4)} on everybit
+                            <span style={{ fontSize: '18px', color: '#6b7280', fontWeight: 500 }}>
+                                everybit • Together, we build stronger communities
+                            </span>
                         </div>
                     </div>
                 </div>
