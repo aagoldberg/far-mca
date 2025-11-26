@@ -19,34 +19,45 @@ export interface ShareUrlConfig {
 
 export const generateShareUrls = (loan: LoanShareData, customMessage?: string): Record<string, string> => {
   const loanUrl = `${window.location.origin}/loan/${loan.id}`;
-  const defaultText = `Support ${loan.borrower} with a zero-interest community loan! ${Math.round(loan.progressPercentage)}% funded so far. Help them reach their $${loan.principal.toLocaleString()} goal!`;
+
+  // Psychology-optimized default message: Hope & empowerment focused
+  const progressEmoji = loan.progressPercentage >= 75 ? '🔥' : loan.progressPercentage >= 50 ? '🎯' : loan.progressPercentage >= 25 ? '✨' : '💚';
+  const defaultText = `${progressEmoji} "${loan.title}" needs our help!\n\n${Math.round(loan.progressPercentage)}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised\n\nZero-interest community loan. Every dollar makes a difference!`;
+
   const shareText = customMessage || defaultText;
-  const hashtags = 'microloans,zero-interest,community-funding,farcaster';
+  const hashtags = 'microloans,zero-interest,community-funding,crypto';
+
+  // UTM tracking for analytics
+  // Simplified UTM for platforms with character limits (Twitter)
+  const shortUtmParams = (source: string) => `?utm_source=${source}&utm_medium=social`;
+  const fullUtmParams = (source: string) => `?utm_source=${source}&utm_medium=social&utm_campaign=loan_share`;
+  const shortTrackedUrl = (source: string) => loanUrl + shortUtmParams(source);
+  const fullTrackedUrl = (source: string) => loanUrl + fullUtmParams(source);
 
   return {
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(loanUrl)}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullTrackedUrl('facebook'))}`,
 
-    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${shareText} ${hashtags.split(',').map(h => `#${h}`).join(' ')}\n\n${loanUrl}`)}`,
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${shareText}\n\n${shortTrackedUrl('twitter')}`)}`,
 
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(loanUrl)}&title=${encodeURIComponent(`Support ${loan.borrower}`)}&summary=${encodeURIComponent(shareText)}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(fullTrackedUrl('linkedin'))}&title=${encodeURIComponent(loan.title)}&summary=${encodeURIComponent(shareText)}`,
 
-    whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText}\n\n${loanUrl}`)}`,
+    whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText}\n\n👉 ${fullTrackedUrl('whatsapp')}`)}`,
 
-    telegram: `https://t.me/share/url?url=${encodeURIComponent(loanUrl)}&text=${encodeURIComponent(shareText)}`,
+    telegram: `https://t.me/share/url?url=${encodeURIComponent(fullTrackedUrl('telegram'))}&text=${encodeURIComponent(shareText)}`,
 
-    reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(loanUrl)}&title=${encodeURIComponent(`Support ${loan.borrower} - ${loan.title}`)}`,
+    reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(fullTrackedUrl('reddit'))}&title=${encodeURIComponent(loan.title)}`,
 
-    email: `mailto:?subject=${encodeURIComponent(`Support ${loan.borrower}`)}&body=${encodeURIComponent(`Hi,\n\nI wanted to share this zero-interest community loan with you:\n\n${loan.borrower} - ${loan.title}\n\n${shareText}\n\n${loanUrl}\n\nEvery contribution makes a difference!\n\nBest regards`)}`,
+    email: `mailto:?subject=${encodeURIComponent(`Help support: ${loan.title}`)}&body=${encodeURIComponent(`Hi,\n\nI wanted to share this zero-interest community loan with you:\n\n${loan.title}\n\n${shareText}\n\n${fullTrackedUrl('email')}\n\nEvery contribution makes a difference!\n\nBest regards`)}`,
 
-    discord: loanUrl, // Discord doesn't have direct share link, will copy to clipboard
+    discord: fullTrackedUrl('discord'), // Discord doesn't have direct share link, will copy to clipboard
 
-    bluesky: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${shareText}\n\n${loanUrl}`)}`,
+    bluesky: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${shareText}\n\n${fullTrackedUrl('bluesky')}`)}`,
 
-    farcaster: `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(loanUrl)}`,
+    farcaster: `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(fullTrackedUrl('farcaster'))}`,
 
-    tiktok: `https://www.tiktok.com/share?url=${encodeURIComponent(loanUrl)}`,
+    tiktok: `https://www.tiktok.com/share?url=${encodeURIComponent(fullTrackedUrl('tiktok'))}`,
 
-    snapchat: `https://www.snapchat.com/share?url=${encodeURIComponent(loanUrl)}`
+    snapchat: `https://www.snapchat.com/share?url=${encodeURIComponent(fullTrackedUrl('snapchat'))}`
   };
 };
 

@@ -1,14 +1,63 @@
-'use client';
-
-import { use } from 'react';
+import { Metadata } from 'next';
 import LoanDetails from '@/components/LoanDetails';
+import { getLoanDataForMetadata } from '@/lib/loanMetadata';
 
 interface PageProps {
   params: Promise<{ address: string }>;
 }
 
-export default function LoanDetailPage({ params }: PageProps) {
-  const { address } = use(params);
+// Generate dynamic Open Graph metadata for each loan
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { address } = await params;
+
+  // Fetch loan data for metadata (we'll create this helper)
+  const loan = await getLoanDataForMetadata(address);
+
+  if (!loan) {
+    return {
+      title: 'Loan Not Found',
+      description: 'This loan could not be found.',
+    };
+  }
+
+  const progressPercent = Math.round((loan.totalFunded / loan.principal) * 100);
+  const progressEmoji = progressPercent >= 75 ? '🔥' : progressPercent >= 50 ? '🎯' : progressPercent >= 25 ? '✨' : '💚';
+
+  const title = `${progressEmoji} ${loan.title}`;
+  const description = `${progressPercent}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised. Zero-interest community loan. Every dollar makes a difference!`;
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3004';
+  const loanUrl = `${baseUrl}/loan/${address}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: loanUrl,
+      siteName: 'Community Microloans',
+      images: [
+        {
+          url: `${baseUrl}/api/og/loan/${address}`, // Always use dynamic OG image with formatted design
+          width: 1200,
+          height: 630,
+          alt: loan.title,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${baseUrl}/api/og/loan/${address}`], // Dynamic formatted image
+    },
+  };
+}
+
+export default async function LoanDetailPage({ params }: PageProps) {
+  const { address } = await params;
 
   return <LoanDetails loanAddress={address as `0x${string}`} />;
 }

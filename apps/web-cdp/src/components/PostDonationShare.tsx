@@ -87,6 +87,7 @@ export default function PostDonationShare({
   const socialPlatforms = [
     { id: 'facebook', name: 'Facebook', icon: '📘', color: 'bg-blue-600', description: 'Share with your network' },
     { id: 'twitter', name: 'Twitter', icon: '🐦', color: 'bg-sky-500', description: 'Tweet to followers' },
+    { id: 'farcaster', name: 'Farcaster', icon: '🟣', color: 'bg-purple-600', description: 'Share on Farcaster' },
     { id: 'instagram', name: 'Instagram', icon: '📷', color: 'bg-pink-500', description: 'Story or post' },
     { id: 'whatsapp', name: 'WhatsApp', icon: '💬', color: 'bg-green-500', description: 'Message friends' },
     { id: 'linkedin', name: 'LinkedIn', icon: '💼', color: 'bg-blue-700', description: 'Professional network' },
@@ -116,6 +117,43 @@ export default function PostDonationShare({
 
   const campaignUrl = `${window.location.origin}/campaign/${campaign.id}`;
 
+  // Generate platform-specific share URLs with UTM tracking
+  const generateShareUrl = (platform: string): string | null => {
+    // Add UTM parameters for tracking
+    const utmUrl = `${campaignUrl}?utm_source=${platform}&utm_medium=social&utm_campaign=post_donation_share&utm_content=donor_${campaign.id}`;
+    const encodedUrl = encodeURIComponent(utmUrl);
+    const encodedText = encodeURIComponent(customMessage);
+
+    switch (platform) {
+      case 'facebook':
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+
+      case 'twitter':
+        return `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+
+      case 'farcaster':
+        // Farcaster compose URL via Warpcast - embeds the campaign URL
+        return `https://warpcast.com/~/compose?text=${encodedText}&embeds[]=${encodedUrl}`;
+
+      case 'linkedin':
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+
+      case 'whatsapp':
+        return `https://wa.me/?text=${encodedText}%20${encodedUrl}`;
+
+      case 'instagram':
+        // Instagram doesn't support URL sharing - will handle specially
+        return null;
+
+      case 'copy':
+        // Special handling in handleShare
+        return null;
+
+      default:
+        return null;
+    }
+  };
+
   useEffect(() => {
     if (shareStep === 'customize' && shareTemplates.length > 0) {
       setCustomMessage(shareTemplates[0].message);
@@ -133,28 +171,36 @@ export default function PostDonationShare({
   const handleShare = async () => {
     if (selectedPlatforms.length === 0) return;
 
-    // Handle copy link
-    if (selectedPlatforms.includes('copy')) {
-      navigator.clipboard.writeText(`${customMessage} ${campaignUrl}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-
-    // Handle other platforms (in real app, you'd integrate with their APIs)
-    const shareData = {
-      title: campaign.title,
-      text: customMessage,
-      url: campaignUrl
-    };
-
-    // Use Web Share API if available
-    if (navigator.share && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      try {
-        await navigator.share(shareData);
-      } catch (err) {
-        console.log('Share cancelled or failed');
+    // Handle each selected platform
+    selectedPlatforms.forEach((platform) => {
+      if (platform === 'copy') {
+        // Handle copy link - include UTM tracking
+        const utmUrl = `${campaignUrl}?utm_source=copy&utm_medium=social&utm_campaign=post_donation_share&utm_content=donor_${campaign.id}`;
+        navigator.clipboard.writeText(`${customMessage}\n\n${utmUrl}`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
+      } else if (platform === 'instagram') {
+        // Instagram: copy message and show instructions
+        navigator.clipboard.writeText(`${customMessage}\n\nLink in bio or DM for campaign details!`);
+        alert('Caption copied! Open Instagram and paste to share.\n\nNote: Instagram doesn\'t support direct URL sharing, so the campaign link has been copied separately.');
+      } else if (platform === 'facebook') {
+        // Facebook: copy message to clipboard and open share dialog
+        // Facebook no longer accepts pre-filled text for security reasons
+        navigator.clipboard.writeText(customMessage);
+        const shareUrl = generateShareUrl(platform);
+        if (shareUrl) {
+          window.open(shareUrl, '_blank', 'width=600,height=600');
+          // Show notification that message was copied
+          alert('Your message has been copied to clipboard! Paste it into the Facebook post dialog that just opened.');
+        }
+      } else {
+        // All other platforms: open share URL in new window
+        const shareUrl = generateShareUrl(platform);
+        if (shareUrl) {
+          window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
       }
-    }
+    });
 
     setShareStep('success');
   };
