@@ -2,10 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { YouTubeClient } from '@/lib/youtube-client/index';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Lazy initialization to avoid build-time errors when env vars are missing
+let supabase: ReturnType<typeof createClient> | null = null;
+function getSupabase() {
+  if (!supabase) {
+    supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+      process.env.SUPABASE_SERVICE_KEY || 'placeholder'
+    );
+  }
+  return supabase;
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -57,7 +64,7 @@ export async function GET(request: NextRequest) {
     const channelAgeDays = Math.floor(channelAgeMs / (1000 * 60 * 60 * 24));
 
     // Store connection in Supabase
-    const { data: connection, error: dbError } = await supabase
+    const { data: connection, error: dbError } = await getSupabase()
       .from('business_connections')
       .upsert({
         wallet_address: wallet.toLowerCase(),
