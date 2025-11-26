@@ -17,188 +17,140 @@ export async function GET(
     }
 
     const progressPercent = Math.round((loan.totalFunded / loan.principal) * 100);
-    const progressEmoji = progressPercent >= 75 ? '🔥' : progressPercent >= 50 ? '🎯' : progressPercent >= 25 ? '✨' : '💚';
-    const remaining = loan.principal - loan.totalFunded;
 
     return new ImageResponse(
       (
         <div
           style={{
+            display: 'flex',
             height: '100%',
             width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: '#ffffff',
-            position: 'relative',
+            backgroundColor: '#f9fafb',
+            padding: '60px',
           }}
         >
-          {/* Background Image with Overlay */}
-          {loan.image && (
-            <div
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-              }}
-            >
-              <img
-                src={loan.image}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  filter: 'brightness(0.4)',
-                }}
-              />
-            </div>
-          )}
-
-          {/* Content Overlay */}
+          {/* Card Container */}
           <div
             style={{
-              position: 'relative',
-              zIndex: 10,
-              padding: '60px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
+              width: '100%',
               height: '100%',
-              color: 'white',
+              backgroundColor: 'white',
+              borderRadius: '24px',
+              overflow: 'hidden',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
             }}
           >
-            {/* Header Badge */}
+            {/* Loan Image */}
+            {loan.image && (
+              <div
+                style={{
+                  width: '100%',
+                  height: '340px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                }}
+              >
+                <img
+                  src={loan.image}
+                  alt={loan.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Content Area */}
             <div
               style={{
                 display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                backgroundColor: 'rgba(59, 155, 127, 0.9)',
-                padding: '16px 24px',
-                borderRadius: '12px',
-                width: 'fit-content',
+                flexDirection: 'column',
+                padding: '40px 50px',
+                flex: 1,
+                justifyContent: 'space-between',
               }}
             >
-              <span style={{ fontSize: '32px' }}>{progressEmoji}</span>
-              <span style={{ fontSize: '28px', fontWeight: 600 }}>Zero-Interest Community Loan</span>
-            </div>
-
-            {/* Title */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Title */}
               <h1
                 style={{
-                  fontSize: '72px',
-                  fontWeight: 'bold',
-                  lineHeight: 1.2,
-                  margin: 0,
-                  textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
-                  maxWidth: '1000px',
+                  fontSize: '48px',
+                  fontWeight: 600,
+                  color: '#111827',
+                  margin: '0 0 20px 0',
+                  lineHeight: '1.2',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
                 }}
               >
                 {loan.title}
               </h1>
 
-              {/* Progress Section */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                {/* Progress Bar */}
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '12px',
-                  }}
-                >
+              {/* Bottom Section */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {/* Borrower Info */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ fontSize: '20px', color: '#6b7280' }}>
+                    Borrower:
+                  </span>
+                  <span style={{ fontSize: '20px', color: '#111827', fontWeight: 500 }}>
+                    {loan.borrower.substring(0, 6)}...{loan.borrower.substring(loan.borrower.length - 4)}
+                  </span>
+                </div>
+
+                {/* Progress Section */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <span style={{ fontSize: '20px', color: '#6b7280' }}>
+                      Progress:
+                    </span>
+                    <span style={{ fontSize: '32px', color: '#10b981', fontWeight: 700 }}>
+                      {progressPercent}% funded
+                    </span>
+                  </div>
+                  {/* Progress Bar */}
                   <div
                     style={{
                       width: '100%',
-                      height: '48px',
-                      backgroundColor: 'rgba(255,255,255,0.3)',
-                      borderRadius: '24px',
+                      height: '12px',
+                      backgroundColor: '#e5e7eb',
+                      borderRadius: '6px',
                       overflow: 'hidden',
-                      border: '3px solid rgba(255,255,255,0.5)',
+                      display: 'flex',
                     }}
                   >
                     <div
                       style={{
                         width: `${Math.min(progressPercent, 100)}%`,
                         height: '100%',
-                        backgroundColor: progressPercent >= 75 ? '#EF4444' : progressPercent >= 50 ? '#F59E0B' : '#10B981',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'flex-end',
-                        paddingRight: '20px',
+                        backgroundColor: '#10b981',
+                        borderRadius: '6px',
                       }}
-                    >
-                      <span style={{ fontSize: '32px', fontWeight: 'bold', color: 'white' }}>
-                        {progressPercent}%
-                      </span>
-                    </div>
+                    />
                   </div>
                 </div>
-
-                {/* Stats */}
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: '36px',
-                    fontWeight: 600,
-                  }}
-                >
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ fontSize: '56px', fontWeight: 'bold', color: '#10B981' }}>
-                      ${loan.totalFunded.toLocaleString()}
-                    </div>
-                    <div style={{ fontSize: '32px', opacity: 0.9 }}>raised</div>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'right' }}>
-                    <div style={{ fontSize: '56px', fontWeight: 'bold' }}>
-                      ${loan.principal.toLocaleString()}
-                    </div>
-                    <div style={{ fontSize: '32px', opacity: 0.9 }}>goal</div>
-                  </div>
-                </div>
-
-                {remaining > 0 && (
-                  <div
-                    style={{
-                      fontSize: '28px',
-                      backgroundColor: 'rgba(239, 68, 68, 0.9)',
-                      padding: '16px 24px',
-                      borderRadius: '12px',
-                      width: 'fit-content',
-                      fontWeight: 600,
-                    }}
-                  >
-                    Only ${remaining.toLocaleString()} left to go!
-                  </div>
-                )}
               </div>
             </div>
 
-            {/* Footer */}
+            {/* Footer Branding */}
             <div
               style={{
                 display: 'flex',
-                justifyContent: 'space-between',
+                justifyContent: 'center',
                 alignItems: 'center',
+                padding: '20px',
+                backgroundColor: '#f9fafb',
+                borderTop: '1px solid #e5e7eb',
               }}
             >
-              <div style={{ fontSize: '24px', opacity: 0.9 }}>
-                Every dollar makes a difference 💚
-              </div>
-              <div
-                style={{
-                  fontSize: '28px',
-                  fontWeight: 600,
-                  backgroundColor: 'rgba(255,255,255,0.2)',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
-                }}
-              >
-                Community Microloans
-              </div>
+              <span style={{ fontSize: '18px', color: '#6b7280', fontWeight: 500 }}>
+                everybit • Together, we build stronger communities
+              </span>
             </div>
           </div>
         </div>

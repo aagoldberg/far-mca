@@ -5,6 +5,7 @@ const MICROLOAN_ABI = parseAbi([
   'function principal() view returns (uint256)',
   'function totalFunded() view returns (uint256)',
   'function metadataURI() view returns (string)',
+  'function borrower() view returns (address)',
 ]);
 
 export interface LoanMetadata {
@@ -13,6 +14,7 @@ export interface LoanMetadata {
   image?: string;
   principal: number;
   totalFunded: number;
+  borrower: string;
 }
 
 export async function getLoanDataForMetadata(address: string): Promise<LoanMetadata | null> {
@@ -24,7 +26,7 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
     });
 
     // Fetch loan data from blockchain
-    const [principal, totalFunded, metadataURI] = await Promise.all([
+    const [principal, totalFunded, metadataURI, borrower] = await Promise.all([
       publicClient.readContract({
         address: address as `0x${string}`,
         abi: MICROLOAN_ABI,
@@ -39,6 +41,11 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
         address: address as `0x${string}`,
         abi: MICROLOAN_ABI,
         functionName: 'metadataURI',
+      }),
+      publicClient.readContract({
+        address: address as `0x${string}`,
+        abi: MICROLOAN_ABI,
+        functionName: 'borrower',
       }),
     ]);
 
@@ -66,6 +73,7 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
       image: metadata.image ? metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/') : undefined,
       principal: principalNum,
       totalFunded: totalFundedNum,
+      borrower: borrower as string,
     };
   } catch (error) {
     console.error('Error fetching loan metadata:', error);

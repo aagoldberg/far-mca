@@ -134,17 +134,30 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity">
-            <div className="bg-white rounded-xl shadow-2xl p-6 m-4 w-full max-w-md relative animate-in slide-in-from-bottom-10 fade-in-25">
+            <div className="bg-white rounded-xl shadow-2xl p-6 m-4 w-full max-w-2xl relative animate-in slide-in-from-bottom-10 fade-in-25 max-h-[90vh] overflow-y-auto">
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
                 >
                     <XMarkIcon className="w-6 h-6" />
                 </button>
 
                 <h2 className="text-xl font-bold mb-4 text-gray-900">Spread the Word</h2>
 
-                {/* Loan Preview */}
+                {/* OG Card Preview */}
+                <div className="mb-6">
+                    <p className="text-sm text-gray-600 mb-3">Preview of what people will see when you share:</p>
+                    <div className="border-2 border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <img
+                            src={`/api/og/loan/${loan.id}`}
+                            alt="Share preview"
+                            className="w-full h-auto"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+
+                {/* Loan Info Summary */}
                 <div className="mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 className="font-semibold text-gray-900 mb-1">{loan.title}</h3>
                     <p className="text-sm text-gray-600 mb-2">Borrower: {loan.borrower.slice(0, 6)}...{loan.borrower.slice(-4)}</p>
