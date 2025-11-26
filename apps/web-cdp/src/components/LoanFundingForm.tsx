@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount, useBalance } from 'wagmi';
-import { useEvmAddress, useSendEvmTransaction } from '@coinbase/cdp-hooks';
+import { useEvmAddress, useSendEvmTransaction, useCurrentUser } from '@coinbase/cdp-hooks';
 import { parseUnits, formatUnits, encodeFunctionData, createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import Link from 'next/link';
@@ -84,8 +84,14 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   // Check for both external wallet (wagmi) and CDP embedded wallet
   const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
   const { evmAddress: cdpAddress } = useEvmAddress();
+  const { currentUser } = useCurrentUser();
 
-  // Use whichever wallet is available
+  // CDP creates BOTH an EOA and Smart Account when createOnLogin: 'smart'
+  // - evmAddress returns the Smart Account (for display)
+  // - evmAccounts[0] is the EOA (for signing with useSendEvmTransaction)
+  const cdpEoaAddress = (currentUser as any)?.evmAccounts?.[0] as `0x${string}` | undefined;
+
+  // Use whichever wallet is available (Smart Account for display)
   const address = externalAddress || cdpAddress;
   const isConnected = isExternalConnected || !!cdpAddress;
   const isCdpWallet = !!cdpAddress && !isExternalConnected;
@@ -258,6 +264,11 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         });
 
         console.log('[CDP] Sending approval transaction...');
+
+        if (!cdpEoaAddress) {
+          throw new Error('CDP EOA address not found. Please disconnect and reconnect your wallet.');
+        }
+
         const result = await sendCdpTransaction({
           transaction: {
             to: USDC_ADDRESS,
@@ -267,7 +278,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             chainId: 84532, // Base Sepolia
             type: "eip1559" as const,
           },
-          evmAccount: cdpAddress as `0x${string}`,
+          evmAccount: cdpEoaAddress, // Use CDP EOA for signing
           network: 'base-sepolia',
         });
 
@@ -312,8 +323,12 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         console.log('[CDP] Transaction details:', {
           to: loanAddress,
           amount: amountInUnits.toString(),
-          from: cdpAddress,
+          from: cdpEoaAddress,
         });
+
+        if (!cdpEoaAddress) {
+          throw new Error('CDP EOA address not found. Please disconnect and reconnect your wallet.');
+        }
 
         const result = await sendCdpTransaction({
           transaction: {
@@ -324,7 +339,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             chainId: 84532, // Base Sepolia
             type: "eip1559" as const,
           },
-          evmAccount: cdpAddress as `0x${string}`,
+          evmAccount: cdpEoaAddress, // Use CDP EOA for signing
           network: 'base-sepolia',
         });
 
