@@ -25,7 +25,6 @@ export const generateShareUrls = (loan: LoanShareData, customMessage?: string): 
   const defaultText = `${progressEmoji} "${loan.title}" needs our help!\n\n${Math.round(loan.progressPercentage)}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised\n\nZero-interest community loan. Every dollar makes a difference!`;
 
   const shareText = customMessage || defaultText;
-  const hashtags = 'microloans,zero-interest,community-funding,crypto';
 
   // UTM tracking for analytics
   // Simplified UTM for platforms with character limits (Twitter)
