@@ -10,7 +10,16 @@ export async function GET(
 ) {
   try {
     const { address } = await params;
-    const loan = await getLoanDataForMetadata(address);
+
+    // Add timeout to prevent hanging
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Timeout')), 8000)
+    );
+
+    const loan = await Promise.race([
+      getLoanDataForMetadata(address),
+      timeoutPromise
+    ]) as Awaited<ReturnType<typeof getLoanDataForMetadata>>;
 
     if (!loan) {
       return new Response('Loan not found', { status: 404 });
@@ -39,16 +48,21 @@ export async function GET(
               backgroundColor: 'white',
             }}
           >
-            {/* Left Side - Image */}
-            {loan.image && (
-              <div
-                style={{
-                  width: '50%',
-                  height: '100%',
-                  display: 'flex',
-                  position: 'relative',
-                }}
-              >
+            {/* Left Side - Image or Gradient */}
+            <div
+              style={{
+                width: '50%',
+                height: '100%',
+                display: 'flex',
+                position: 'relative',
+                background: loan.image
+                  ? undefined
+                  : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {loan.image ? (
                 <img
                   src={loan.image}
                   alt={loan.title}
@@ -58,25 +72,29 @@ export async function GET(
                     objectFit: 'cover',
                   }}
                 />
-                {/* Overlay Badge */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '30px',
-                    left: '30px',
-                    backgroundColor: '#10b981',
-                    color: 'white',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    fontSize: '20px',
-                    fontWeight: 700,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  }}
-                >
-                  Zero-Interest Loan
+              ) : (
+                <div style={{ fontSize: '120px', color: 'white', opacity: 0.9 }}>
+                  💚
                 </div>
+              )}
+              {/* Overlay Badge */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '30px',
+                  left: '30px',
+                  backgroundColor: loan.image ? '#10b981' : 'rgba(255,255,255,0.95)',
+                  color: loan.image ? 'white' : '#10b981',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                }}
+              >
+                Zero-Interest Loan
               </div>
-            )}
+            </div>
 
             {/* Right Side - Content */}
             <div

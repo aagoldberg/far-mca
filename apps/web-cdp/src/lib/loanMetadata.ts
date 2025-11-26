@@ -49,17 +49,26 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
       }),
     ]);
 
-    // Fetch metadata from IPFS
+    // Fetch metadata from IPFS with timeout
     let metadata: any = {};
     if (metadataURI) {
       try {
         const ipfsUrl = metadataURI.replace('ipfs://', 'https://ipfs.io/ipfs/');
-        const response = await fetch(ipfsUrl, { next: { revalidate: 3600 } }); // Cache for 1 hour
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+        const response = await fetch(ipfsUrl, {
+          signal: controller.signal,
+          next: { revalidate: 3600 } // Cache for 1 hour
+        });
+        clearTimeout(timeoutId);
+
         if (response.ok) {
           metadata = await response.json();
         }
       } catch (error) {
         console.error('Failed to fetch IPFS metadata:', error);
+        // Continue with empty metadata
       }
     }
 
