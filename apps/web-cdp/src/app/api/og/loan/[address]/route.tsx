@@ -123,8 +123,8 @@ export async function GET(
             display: 'flex',
             height: '100%',
             width: '100%',
-            backgroundColor: '#f9fafb',
-            padding: '60px',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            padding: '0',
           }}
         >
           {/* Card Container */}
@@ -135,30 +135,43 @@ export async function GET(
               width: '100%',
               height: '100%',
               backgroundColor: 'white',
-              borderRadius: '24px',
+              borderRadius: '0',
               overflow: 'hidden',
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
+              position: 'relative',
             }}
           >
-            {/* Image Section (conditional) */}
+            {/* Image Section with Gradient Overlay */}
             {hasImage && validatedImage && (
               <div
                 style={{
                   display: 'flex',
-                  width: '40%',
+                  width: '45%',
                   height: '100%',
                   overflow: 'hidden',
+                  position: 'relative',
                 }}
               >
                 <img
                   src={validatedImage}
                   alt={title}
-                  width={480}
+                  width={540}
                   height={630}
                   style={{
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
+                  }}
+                />
+                {/* Gradient overlay for depth */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.05) 100%)',
+                    display: 'flex',
                   }}
                 />
               </div>
@@ -170,98 +183,217 @@ export async function GET(
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
-                padding: '50px',
-                justifyContent: 'space-between',
+                padding: hasImage ? '60px 60px 50px 60px' : '70px',
+                background: hasImage
+                  ? 'white'
+                  : 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+                position: 'relative',
               }}
             >
-              {/* Title */}
+              {/* Status Badge */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: '24px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    backgroundColor: progressPercent >= 100 ? '#dcfce7' : '#f0fdf4',
+                    color: progressPercent >= 100 ? '#15803d' : '#16a34a',
+                    padding: '8px 16px',
+                    borderRadius: '100px',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    letterSpacing: '0.5px',
+                  }}
+                >
+                  {progressPercent >= 100 ? '✓ FULLY FUNDED' : '○ ACTIVE CAMPAIGN'}
+                </div>
+              </div>
+
+              {/* Title with improved hierarchy */}
+              <h1
+                style={{
+                  fontSize: hasImage ? '46px' : '64px',
+                  fontWeight: 800,
+                  color: '#0f172a',
+                  margin: 0,
+                  marginBottom: '32px',
+                  lineHeight: '1.1',
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {title}
+              </h1>
+
+              {/* Funding Stats with Visual Hierarchy */}
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
+                  gap: '16px',
+                  marginBottom: '40px',
                 }}
               >
-                <h1
-                  style={{
-                    fontSize: hasImage ? '42px' : '56px',
-                    fontWeight: 700,
-                    color: '#111827',
-                    margin: 0,
-                    marginBottom: '20px',
-                    lineHeight: '1.2',
-                  }}
-                >
-                  {title}
-                </h1>
-
-                {/* Funding Amount */}
-                <div
-                  style={{
-                    display: 'flex',
-                    fontSize: hasImage ? '60px' : '72px',
-                    fontWeight: 800,
-                    color: '#10b981',
-                    marginBottom: '10px',
-                  }}
-                >
-                  ${totalFundedStr}
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    fontSize: '24px',
-                    color: '#6b7280',
-                    marginBottom: '30px',
-                  }}
-                >
-                  raised of ${principalStr} goal
-                </div>
-              </div>
-
-              {/* Bottom Section */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {/* Borrower Info */}
-                {borrower && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <span style={{ fontSize: '18px', color: '#6b7280' }}>
-                      Borrower:
-                    </span>
-                    <span style={{ fontSize: '18px', color: '#111827', fontWeight: 500 }}>
-                      {borrower.substring(0, 6)}...{borrower.substring(borrower.length - 4)}
-                    </span>
-                  </div>
-                )}
-
-                {/* Progress Section */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <span style={{ fontSize: '20px', color: '#6b7280' }}>
-                      Progress:
-                    </span>
-                    <span style={{ fontSize: '32px', color: '#10b981', fontWeight: 700 }}>
-                      {progressPercent}% funded
-                    </span>
-                  </div>
-                  {/* Progress Bar */}
+                {/* Main Amount */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <div
                     style={{
-                      width: '100%',
-                      height: '12px',
-                      backgroundColor: '#e5e7eb',
-                      borderRadius: '6px',
-                      overflow: 'hidden',
                       display: 'flex',
+                      fontSize: hasImage ? '68px' : '88px',
+                      fontWeight: 900,
+                      color: '#10b981',
+                      lineHeight: '1',
+                    }}
+                  >
+                    ${totalFundedStr}
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      fontSize: '22px',
+                      color: '#64748b',
+                      fontWeight: 500,
+                    }}
+                  >
+                    of ${principalStr} goal
+                  </div>
+                </div>
+
+                {/* Enhanced Progress Bar */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      position: 'relative',
+                      width: '100%',
+                      height: '16px',
+                      backgroundColor: '#e2e8f0',
+                      borderRadius: '100px',
+                      overflow: 'hidden',
+                      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)',
                     }}
                   >
                     <div
                       style={{
                         width: `${progressWidth}%`,
                         height: '100%',
-                        backgroundColor: '#10b981',
-                        borderRadius: '6px',
+                        background: 'linear-gradient(90deg, #059669 0%, #10b981 50%, #34d399 100%)',
+                        borderRadius: '100px',
+                        display: 'flex',
+                        boxShadow: progressWidth > 0 ? '0 0 20px rgba(16, 185, 129, 0.3)' : 'none',
                       }}
                     />
                   </div>
+                  {/* Percentage Badge */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        fontSize: '38px',
+                        fontWeight: 800,
+                        color: '#10b981',
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
+                      {progressPercent}%
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        fontSize: '16px',
+                        color: '#94a3b8',
+                        fontWeight: 500,
+                      }}
+                    >
+                      funded
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Borrower Info with Icon */}
+              {borrower && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '20px 24px',
+                    backgroundColor: '#f8fafc',
+                    borderRadius: '12px',
+                    borderLeft: '4px solid #10b981',
+                    marginTop: 'auto',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '44px',
+                      height: '44px',
+                      backgroundColor: '#dcfce7',
+                      borderRadius: '100px',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '20px',
+                      fontWeight: 700,
+                      color: '#059669',
+                    }}
+                  >
+                    {borrower.substring(2, 4).toUpperCase()}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600, letterSpacing: '0.5px' }}>
+                      BORROWER
+                    </span>
+                    <span style={{ fontSize: '18px', color: '#0f172a', fontWeight: 600, fontFamily: 'monospace' }}>
+                      {borrower.substring(0, 6)}...{borrower.substring(borrower.length - 4)}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Footer Branding */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: '32px',
+                  paddingTop: '24px',
+                  borderTop: '2px solid #e2e8f0',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    color: '#10b981',
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  lendfriend
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '14px',
+                    color: '#94a3b8',
+                    fontWeight: 500,
+                  }}
+                >
+                  Zero-interest community loans
                 </div>
               </div>
             </div>
