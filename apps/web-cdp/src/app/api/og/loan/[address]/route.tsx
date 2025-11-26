@@ -7,6 +7,12 @@ export const runtime = 'edge';
 // Cache OG images for 1 hour, revalidate every 5 minutes
 export const revalidate = 300;
 
+// Simple number formatter for edge runtime compatibility
+function formatNumber(num: number): string {
+  if (num === undefined || num === null || isNaN(num)) return '0';
+  return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ address: string }> }
@@ -24,15 +30,25 @@ export async function GET(
       timeoutPromise
     ]) as Awaited<ReturnType<typeof getLoanDataForMetadata>>;
 
+    console.log('[OG] Loan data:', JSON.stringify({
+      loan,
+      principal: loan?.principal,
+      totalFunded: loan?.totalFunded,
+      borrower: loan?.borrower
+    }));
+
     if (!loan) {
+      console.error('[OG] Loan data is null/undefined');
       return new Response('Loan not found', { status: 404 });
     }
 
     // Safety checks for undefined values
-    const principal = loan.principal || 0;
-    const totalFunded = loan.totalFunded || 0;
+    const principal = typeof loan.principal === 'number' ? loan.principal : 0;
+    const totalFunded = typeof loan.totalFunded === 'number' ? loan.totalFunded : 0;
     const progressPercent = principal > 0 ? Math.round((totalFunded / principal) * 100) : 0;
     const remaining = principal - totalFunded;
+
+    console.log('[OG] Calculated values:', { principal, totalFunded, progressPercent, remaining });
 
     return new ImageResponse(
       (
@@ -175,10 +191,10 @@ export async function GET(
                       display: 'flex',
                     }}
                   >
-                    ${totalFunded.toLocaleString()}
+                    ${formatNumber(totalFunded)}
                   </div>
                   <div style={{ fontSize: '20px', color: '#6b7280', display: 'flex' }}>
-                    raised of ${principal.toLocaleString()} goal
+                    raised of ${formatNumber(principal)} goal
                   </div>
                 </div>
 
@@ -222,7 +238,7 @@ export async function GET(
                         display: 'flex',
                       }}
                     >
-                      ${remaining.toLocaleString()} to go
+                      ${formatNumber(remaining)} to go
                     </div>
                   )}
                 </div>
