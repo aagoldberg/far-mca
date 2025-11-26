@@ -123,277 +123,207 @@ export async function GET(
             display: 'flex',
             height: '100%',
             width: '100%',
-            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            backgroundColor: 'white',
             padding: '0',
           }}
         >
-          {/* Card Container */}
+          {/* Two-column layout */}
           <div
             style={{
               display: 'flex',
-              flexDirection: hasImage ? 'row' : 'column',
+              flexDirection: 'row',
               width: '100%',
               height: '100%',
               backgroundColor: 'white',
-              borderRadius: '0',
-              overflow: 'hidden',
-              position: 'relative',
             }}
           >
-            {/* Image Section with Gradient Overlay */}
+            {/* Left: Image Section */}
             {hasImage && validatedImage && (
               <div
                 style={{
                   display: 'flex',
-                  width: '45%',
+                  width: '50%',
                   height: '100%',
                   overflow: 'hidden',
                   position: 'relative',
+                  backgroundColor: '#f3f4f6',
                 }}
               >
                 <img
                   src={validatedImage}
                   alt={title}
-                  width={540}
+                  width={600}
                   height={630}
                   style={{
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
+                    objectPosition: 'center',
                   }}
                 />
-                {/* Gradient overlay for depth */}
+                {/* Status badge overlay */}
                 <div
                   style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.05) 100%)',
+                    top: '24px',
+                    right: '24px',
                     display: 'flex',
                   }}
-                />
+                >
+                  <span
+                    style={{
+                      padding: '10px 20px',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      backgroundColor: progressPercent >= 100 ? '#dcfce7' : '#fef3c7',
+                      color: progressPercent >= 100 ? '#15803d' : '#92400e',
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                    }}
+                  >
+                    {progressPercent >= 100 ? 'Funded' : 'Fundraising'}
+                  </span>
+                </div>
               </div>
             )}
 
-            {/* Content Section */}
+            {/* Right: Content Section */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
-                padding: hasImage ? '60px 60px 50px 60px' : '70px',
-                background: hasImage
-                  ? 'white'
-                  : 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-                position: 'relative',
+                padding: '48px 52px',
+                justifyContent: 'center',
+                backgroundColor: 'white',
               }}
             >
-              {/* Status Badge */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '24px',
-                }}
-              >
-                <div
+              {/* All content centered vertically */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                {/* Title - larger and word-wrapped */}
+                <h1
                   style={{
+                    fontSize: '52px',
+                    fontWeight: 500,
+                    color: '#111827',
+                    margin: 0,
+                    lineHeight: '1.1',
                     display: 'flex',
-                    alignItems: 'center',
-                    backgroundColor: progressPercent >= 100 ? '#dcfce7' : '#f0fdf4',
-                    color: progressPercent >= 100 ? '#15803d' : '#16a34a',
-                    padding: '8px 16px',
-                    borderRadius: '100px',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    letterSpacing: '0.5px',
                   }}
                 >
-                  {progressPercent >= 100 ? '✓ FULLY FUNDED' : '○ ACTIVE CAMPAIGN'}
-                </div>
-              </div>
+                  {title}
+                </h1>
 
-              {/* Title with improved hierarchy */}
-              <h1
-                style={{
-                  fontSize: hasImage ? '46px' : '64px',
-                  fontWeight: 800,
-                  color: '#0f172a',
-                  margin: 0,
-                  marginBottom: '32px',
-                  lineHeight: '1.1',
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                {title}
-              </h1>
-
-              {/* Funding Stats with Visual Hierarchy */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px',
-                  marginBottom: '40px',
-                }}
-              >
-                {/* Main Amount */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      fontSize: hasImage ? '68px' : '88px',
-                      fontWeight: 900,
-                      color: '#10b981',
-                      lineHeight: '1',
-                    }}
-                  >
-                    ${totalFundedStr}
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      fontSize: '22px',
-                      color: '#64748b',
-                      fontWeight: 500,
-                    }}
-                  >
-                    of ${principalStr} goal
-                  </div>
-                </div>
-
-                {/* Enhanced Progress Bar */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>
+                {/* Progress Bar - larger */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div
                     style={{
                       display: 'flex',
                       position: 'relative',
                       width: '100%',
-                      height: '16px',
-                      backgroundColor: '#e2e8f0',
+                      height: '20px',
+                      backgroundColor: '#f3f4f6',
                       borderRadius: '100px',
                       overflow: 'hidden',
-                      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)',
                     }}
                   >
                     <div
                       style={{
                         width: `${progressWidth}%`,
                         height: '100%',
-                        background: 'linear-gradient(90deg, #059669 0%, #10b981 50%, #34d399 100%)',
+                        background: 'linear-gradient(90deg, #3B9B7F 0%, #2E7D68 100%)',
                         borderRadius: '100px',
                         display: 'flex',
-                        boxShadow: progressWidth > 0 ? '0 0 20px rgba(16, 185, 129, 0.3)' : 'none',
                       }}
                     />
                   </div>
-                  {/* Percentage Badge */}
+
+                  {/* Funding text - much larger */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '36px',
+                        fontWeight: 700,
+                        color: '#3B9B7F',
+                      }}
+                    >
+                      ${totalFundedStr} raised
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '28px',
+                        color: '#6b7280',
+                        fontWeight: 500,
+                      }}
+                    >
+                      of ${principalStr}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Borrower info - much larger */}
+                {borrower && (
                   <div
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between',
+                      gap: '20px',
+                      paddingTop: '32px',
+                      borderTop: '1px solid #e5e7eb',
                     }}
                   >
                     <div
                       style={{
                         display: 'flex',
-                        fontSize: '38px',
-                        fontWeight: 800,
-                        color: '#10b981',
-                        letterSpacing: '-0.02em',
+                        width: '56px',
+                        height: '56px',
+                        backgroundColor: '#dcfce7',
+                        borderRadius: '100px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '22px',
+                        fontWeight: 600,
+                        color: '#15803d',
                       }}
                     >
-                      {progressPercent}%
+                      {borrower.substring(2, 4).toUpperCase()}
                     </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        fontSize: '16px',
-                        color: '#94a3b8',
-                        fontWeight: 500,
-                      }}
-                    >
-                      funded
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <span style={{ fontSize: '16px', color: '#6b7280', fontWeight: 500 }}>
+                        Borrower
+                      </span>
+                      <span style={{ fontSize: '22px', color: '#111827', fontWeight: 600, fontFamily: 'monospace' }}>
+                        {borrower.substring(0, 6)}...{borrower.substring(borrower.length - 4)}
+                      </span>
                     </div>
                   </div>
-                </div>
-              </div>
+                )}
 
-              {/* Borrower Info with Icon */}
-              {borrower && (
+                {/* Footer branding - much larger */}
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
-                    padding: '20px 24px',
-                    backgroundColor: '#f8fafc',
-                    borderRadius: '12px',
-                    borderLeft: '4px solid #10b981',
-                    marginTop: 'auto',
+                    justifyContent: 'center',
+                    paddingTop: '28px',
+                    borderTop: '1px solid #e5e7eb',
                   }}
                 >
-                  <div
+                  <span
                     style={{
-                      display: 'flex',
-                      width: '44px',
-                      height: '44px',
-                      backgroundColor: '#dcfce7',
-                      borderRadius: '100px',
-                      alignItems: 'center',
-                      justifyContent: 'center',
                       fontSize: '20px',
-                      fontWeight: 700,
-                      color: '#059669',
+                      color: '#6b7280',
+                      fontWeight: 500,
                     }}
                   >
-                    {borrower.substring(2, 4).toUpperCase()}
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600, letterSpacing: '0.5px' }}>
-                      BORROWER
-                    </span>
-                    <span style={{ fontSize: '18px', color: '#0f172a', fontWeight: 600, fontFamily: 'monospace' }}>
-                      {borrower.substring(0, 6)}...{borrower.substring(borrower.length - 4)}
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Footer Branding */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginTop: '32px',
-                  paddingTop: '24px',
-                  borderTop: '2px solid #e2e8f0',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    color: '#10b981',
-                    letterSpacing: '-0.01em',
-                  }}
-                >
-                  lendfriend
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    fontSize: '14px',
-                    color: '#94a3b8',
-                    fontWeight: 500,
-                  }}
-                >
-                  Zero-interest community loans
+                    lendfriend · Zero-interest community loans
+                  </span>
                 </div>
               </div>
             </div>

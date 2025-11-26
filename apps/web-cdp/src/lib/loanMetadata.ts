@@ -65,6 +65,7 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
 
         if (response.ok) {
           metadata = await response.json();
+          console.log('[getLoanDataForMetadata] Raw IPFS metadata:', JSON.stringify(metadata, null, 2));
         }
       } catch (error) {
         console.error('Failed to fetch IPFS metadata:', error);
@@ -77,7 +78,7 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
     const totalFundedNum = Number(totalFunded) / 1e6;
 
     return {
-      title: metadata.title || 'Community Loan',
+      title: metadata.name || metadata.title || 'Community Loan',
       description: metadata.description || 'Zero-interest community loan',
       image: metadata.image ? metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/') : undefined,
       principal: principalNum,
