@@ -4,6 +4,9 @@ import { getLoanDataForMetadata } from '@/lib/loanMetadata';
 
 export const runtime = 'edge';
 
+// Cache OG images for 1 hour, revalidate every 5 minutes
+export const revalidate = 300;
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ address: string }> }
@@ -25,8 +28,11 @@ export async function GET(
       return new Response('Loan not found', { status: 404 });
     }
 
-    const progressPercent = Math.round((loan.totalFunded / loan.principal) * 100);
-    const remaining = loan.principal - loan.totalFunded;
+    // Safety checks for undefined values
+    const principal = loan.principal || 0;
+    const totalFunded = loan.totalFunded || 0;
+    const progressPercent = principal > 0 ? Math.round((totalFunded / principal) * 100) : 0;
+    const remaining = principal - totalFunded;
 
     return new ImageResponse(
       (
@@ -90,6 +96,7 @@ export async function GET(
                   fontSize: '20px',
                   fontWeight: 700,
                   boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  display: 'flex',
                 }}
               >
                 Zero-Interest Loan
@@ -127,30 +134,32 @@ export async function GET(
                 </h1>
 
                 {/* Borrower */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '20px',
-                      backgroundColor: '#e5e7eb',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '18px',
-                      fontWeight: 600,
-                      color: '#6b7280',
-                    }}
-                  >
-                    {loan.borrower.substring(2, 4).toUpperCase()}
+                {loan.borrower && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '20px',
+                        backgroundColor: '#e5e7eb',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '18px',
+                        fontWeight: 600,
+                        color: '#6b7280',
+                      }}
+                    >
+                      {loan.borrower.substring(2, 4).toUpperCase()}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '14px', color: '#9ca3af', display: 'flex' }}>Borrower</span>
+                      <span style={{ fontSize: '18px', color: '#374151', fontWeight: 600, display: 'flex' }}>
+                        {loan.borrower.substring(0, 6)}...{loan.borrower.substring(loan.borrower.length - 4)}
+                      </span>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '14px', color: '#9ca3af' }}>Borrower</span>
-                    <span style={{ fontSize: '18px', color: '#374151', fontWeight: 600 }}>
-                      {loan.borrower.substring(0, 6)}...{loan.borrower.substring(loan.borrower.length - 4)}
-                    </span>
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* Progress Stats */}
@@ -163,12 +172,13 @@ export async function GET(
                       fontWeight: 800,
                       color: '#10b981',
                       lineHeight: '1',
+                      display: 'flex',
                     }}
                   >
-                    ${loan.totalFunded.toLocaleString()}
+                    ${totalFunded.toLocaleString()}
                   </div>
-                  <div style={{ fontSize: '20px', color: '#6b7280' }}>
-                    raised of ${loan.principal.toLocaleString()} goal
+                  <div style={{ fontSize: '20px', color: '#6b7280', display: 'flex' }}>
+                    raised of ${principal.toLocaleString()} goal
                   </div>
                 </div>
 
@@ -195,10 +205,10 @@ export async function GET(
                 {/* Stats Row */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                    <span style={{ fontSize: '32px', fontWeight: 700, color: '#111827' }}>
+                    <span style={{ fontSize: '32px', fontWeight: 700, color: '#111827', display: 'flex' }}>
                       {progressPercent}%
                     </span>
-                    <span style={{ fontSize: '18px', color: '#6b7280' }}>funded</span>
+                    <span style={{ fontSize: '18px', color: '#6b7280', display: 'flex' }}>funded</span>
                   </div>
                   {remaining > 0 && (
                     <div
@@ -209,6 +219,7 @@ export async function GET(
                         borderRadius: '6px',
                         fontSize: '16px',
                         fontWeight: 600,
+                        display: 'flex',
                       }}
                     >
                       ${remaining.toLocaleString()} to go
@@ -227,7 +238,7 @@ export async function GET(
                   borderTop: '1px solid #e5e7eb',
                 }}
               >
-                <span style={{ fontSize: '16px', color: '#6b7280', fontWeight: 500 }}>
+                <span style={{ fontSize: '16px', color: '#6b7280', fontWeight: 500, display: 'flex' }}>
                   everybit • Community Microloans
                 </span>
               </div>
