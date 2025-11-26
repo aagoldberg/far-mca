@@ -62,7 +62,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       config={{
         projectId: CDP_PROJECT_ID || '',
         ethereum: {
-          createOnLogin: 'all', // Creates Smart Wallets for gasless transactions
+          createOnLogin: 'smart', // Creates Smart Accounts (ERC-4337) for gasless transactions
+          enableSpendPermissions: true, // Enable spend permissions for better UX
         },
         appName: 'LendFriend',
         authMethods: ['email', 'sms', 'oauth:google', 'oauth:apple', 'oauth:x'],

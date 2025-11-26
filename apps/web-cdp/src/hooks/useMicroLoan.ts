@@ -6,9 +6,8 @@
  */
 
 import { useReadContract, useReadContracts, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
-import { useWriteContracts, useCallsStatus } from 'wagmi/experimental';
-import { useState } from 'react';
-import { formatUnits, parseUnits } from 'viem';
+import { useState, useEffect } from 'react';
+import { formatUnits, parseUnits, encodeFunctionData } from 'viem';
 import { MICROLOAN_FACTORY_ADDRESS, USDC_ADDRESS } from '@/lib/wagmi';
 import MicroLoanFactoryABI from '@/abi/MicroLoanFactory.json';
 import MicroLoanABI from '@/abi/MicroLoan.json';
@@ -18,6 +17,7 @@ import {
   UserContribution,
   USDC_DECIMALS
 } from '@/types/loan';
+import { useSendUserOperation, useWaitForUserOperation, useEvmAddress } from '@coinbase/cdp-hooks';
 
 const PAYMASTER_URL = process.env.NEXT_PUBLIC_PAYMASTER_URL;
 
@@ -627,20 +627,13 @@ export const useCreateLoan = () => {
 };
 
 /**
- * Create a new loan with paymaster support (gasless for Smart Wallets)
- * Uses wagmi/experimental for batch transaction + paymaster capabilities
+ * Create a new loan using CDP Smart Wallet with gasless transactions
+ * Uses useSendUserOperation from @coinbase/cdp-hooks which properly
+ * handles CDP Smart Accounts with paymaster support
  */
 export const useCreateLoanGasless = () => {
-  const [callsId, setCallsId] = useState<string | undefined>();
-  const { writeContracts, isPending: isWritePending } = useWriteContracts();
-  const { data: callsStatus } = useCallsStatus({
-    id: callsId as `0x${string}`,
-    query: {
-      enabled: !!callsId,
-      refetchInterval: (data) =>
-        data?.state.data?.status === 'CONFIRMED' ? false : 1000,
-    },
-  });
+  const { sendUserOperation, status, data, error } = useSendUserOperation();
+  const { evmAddress } = useEvmAddress();
 
   const createLoan = async (params: {
     borrower: `0x${string}`;
@@ -649,48 +642,67 @@ export const useCreateLoanGasless = () => {
     loanDuration: number;
     fundraisingDeadline: number;
   }) => {
-    // Address validation is done by the caller (CreateLoanForm)
-    // which has proper wallet detection for both CDP and external wallets
-
-    // Use writeContracts (even for single call) to enable paymaster
-    const id = await writeContracts({
-      contracts: [
-        {
-          address: MICROLOAN_FACTORY_ADDRESS,
-          abi: MicroLoanFactoryABI.abi,
-          functionName: 'createLoan',
-          args: [
-            params.borrower,
-            params.metadataURI,
-            params.principal,
-            BigInt(params.loanDuration),
-            BigInt(params.fundraisingDeadline),
-          ],
-        },
-      ],
-      capabilities: PAYMASTER_URL ? {
-        paymasterService: {
-          url: PAYMASTER_URL,
-        },
-      } : undefined,
+    console.log('[useCreateLoanGasless] Creating loan with CDP Smart Wallet:', {
+      factoryAddress: MICROLOAN_FACTORY_ADDRESS,
+      paymasterUrl: PAYMASTER_URL,
+      smartAccount: evmAddress,
+      params,
     });
 
-    setCallsId(id);
-    return id;
+    // Check if Smart Account exists
+    if (!evmAddress) {
+      const errorMsg = 'No Smart Account found. Please disconnect and reconnect to create a Smart Account.';
+      console.error('[useCreateLoanGasless]', errorMsg);
+      throw new Error(errorMsg);
+    }
+
+    try {
+      // Encode the contract function call
+      const encodedData = encodeFunctionData({
+        abi: MicroLoanFactoryABI.abi,
+        functionName: 'createLoan',
+        args: [
+          params.borrower,
+          params.metadataURI,
+          params.principal,
+          BigInt(params.loanDuration),
+          BigInt(params.fundraisingDeadline),
+        ],
+      });
+
+      console.log('[useCreateLoanGasless] Encoded transaction data:', encodedData);
+
+      // Send user operation (Smart Account transaction with paymaster)
+      const result = await sendUserOperation({
+        evmSmartAccount: evmAddress,
+        network: 'base-sepolia',
+        calls: [{
+          to: MICROLOAN_FACTORY_ADDRESS,
+          data: encodedData,
+        }],
+        useCdpPaymaster: !!PAYMASTER_URL, // Use CDP paymaster if configured
+      });
+
+      console.log('[useCreateLoanGasless] User operation sent, result:', result);
+      return result;
+    } catch (err: any) {
+      console.error('[useCreateLoanGasless] Error creating loan:', err);
+      throw err;
+    }
   };
 
-  const isConfirming = callsStatus?.status === 'PENDING';
-  const isConfirmed = callsStatus?.status === 'CONFIRMED';
-  const error = callsStatus?.status === 'FAILED' ? new Error('Transaction failed') : null;
+  const isPending = status === 'pending';
+  const isConfirming = status === 'pending';
+  const isSuccess = status === 'success';
+  const hash = data?.userOperationHash;
 
   return {
     createLoan,
-    isPending: isWritePending,
+    isPending,
     isConfirming,
-    isSuccess: isConfirmed,
+    isSuccess,
     error,
-    callsId,
-    callsStatus,
+    hash,
   };
 };
 

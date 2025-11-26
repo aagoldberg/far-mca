@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
-import { useIsSignedIn, useEvmAddress } from '@coinbase/cdp-hooks';
 import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
 import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
@@ -10,6 +8,7 @@ import { USDC_DECIMALS } from '@/types/loan';
 import ImageCropModal from '@/components/ImageCropModal';
 import { LoanCard } from '@/components/LoanCard';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import { useWalletType } from '@/hooks/useWalletType';
 
 enum IncomeRange {
   PREFER_NOT_TO_SAY = '',
@@ -54,15 +53,11 @@ interface FormData {
 
 export default function CreateLoanForm() {
   const router = useRouter();
-  const { address: externalAddress, isConnected: isExternalConnected } = useAccount(); // External wallets
-  const { isSignedIn } = useIsSignedIn(); // CDP embedded wallet
-  const { evmAddress: cdpAddress } = useEvmAddress(); // CDP wallet address
 
-  // Check if user is authenticated via either CDP or external wallet
-  const isConnected = isSignedIn || isExternalConnected;
-  const address = (externalAddress || cdpAddress) as `0x${string}` | undefined;
+  // Use standardized wallet detection utility (CDP best practice)
+  const { address, isConnected } = useWalletType();
 
-  const { createLoan, isPending, isConfirming, isSuccess } = useCreateLoanGasless();
+  const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoanGasless();
   const { profile } = useFarcasterProfile(address);
 
   const [isCheckingConnection, setIsCheckingConnection] = useState(true);

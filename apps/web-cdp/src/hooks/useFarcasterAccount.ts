@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useEvmAddress, useSignEvmTypedData } from '@coinbase/cdp-hooks';
-import { useAccount, useSignTypedData } from 'wagmi';
+import { useSignTypedData } from 'wagmi';
+import { useSignEvmTypedData, useCurrentUser } from '@coinbase/cdp-hooks';
+import { useWalletType } from '@/hooks/useWalletType';
 
 interface FarcasterAccount {
   fid: number;
@@ -35,15 +36,27 @@ interface UseFarcasterAccountReturn {
 /**
  * Hook to manage Farcaster account creation and status
  * Uses localStorage for persistence until database is added
+ *
+ * IMPORTANT: When createOnLogin: 'smart', CDP creates BOTH:
+ * - An EOA (evmAccounts[0]) - used for Farcaster signing
+ * - A Smart Account (evmSmartAccounts[0]) - used for gasless transactions
+ *
+ * This allows CDP Smart Wallet users to create Farcaster accounts without needing external wallets!
  */
 export function useFarcasterAccount(): UseFarcasterAccountReturn {
-  const { evmAddress: cdpAddress } = useEvmAddress();
-  const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
+  const { address: defaultAddress, isExternalWallet, isCdpWallet } = useWalletType();
+  const { currentUser } = useCurrentUser();
   const { signTypedDataAsync: signWithWagmi } = useSignTypedData();
   const { signEvmTypedData: signWithCDP } = useSignEvmTypedData();
 
-  // Prioritize external wallet address
-  const walletAddress = externalAddress || cdpAddress;
+  // CDP creates both EOA and Smart Account when createOnLogin: 'smart'
+  // Access the EOA address for Farcaster signing
+  const cdpEoaAddress = (currentUser as any)?.evmAccounts?.[0] as `0x${string}` | undefined;
+
+  // For Farcaster, always use EOA address (not Smart Account)
+  // External wallets: use their address directly
+  // CDP wallets: use the auto-created EOA address
+  const walletAddress = isCdpWallet ? cdpEoaAddress : defaultAddress;
 
   const [farcasterAccount, setFarcasterAccount] = useState<FarcasterAccount | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Start as true to prevent flash
@@ -272,12 +285,12 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
 
       console.log('Registration prepared with FID:', fid, 'requesting signature...');
 
-      // Step 2: Request user signature
-      // Use the appropriate signing method based on wallet type
+      // Step 2: Request user signature (Farcaster requires EOA signature)
       let signature: string;
 
-      if (isExternalConnected) {
+      if (isExternalWallet) {
         // External wallet (wagmi) - Convert string values back to BigInt for signing
+        console.log('[Farcaster] Using external wallet for signing...');
         signature = await signWithWagmi({
           domain: typedData.domain,
           types: typedData.types,
@@ -289,10 +302,11 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
             deadline: BigInt(typedData.message.deadline),
           },
         });
-      } else {
-        // CDP embedded wallet - Use CDP's signing method
+      } else if (isCdpWallet && cdpEoaAddress) {
+        // CDP Smart Wallet - Use the auto-created EOA for signing
+        console.log('[Farcaster] Using CDP EOA for signing:', cdpEoaAddress);
         const result = await signWithCDP({
-          evmAccount: walletAddress as `0x${string}`, // CDP requires evmAccount parameter
+          evmAccount: cdpEoaAddress, // Use the CDP-created EOA address
           typedData: {
             domain: typedData.domain,
             types: typedData.types,
@@ -301,6 +315,12 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
           },
         });
         signature = result.signature;
+      } else {
+        const errorMsg = 'No wallet found. Please connect a wallet to create a Farcaster account.';
+        console.error('[Farcaster]', errorMsg);
+        setError(errorMsg);
+        setIsLoading(false);
+        return false;
       }
 
       console.log('Signature obtained, registering account...');
