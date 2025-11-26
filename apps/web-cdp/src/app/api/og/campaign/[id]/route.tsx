@@ -1,25 +1,15 @@
-import { getCampaign, getIPFSMetadata } from '../../../../../lib/subgraph';
-import { getClient } from '../../../../../lib/apollo';
-import { gql } from '@apollo/client';
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
 import { formatUnits } from 'viem';
 
 export const runtime = 'edge';
 
-const GET_CAMPAIGN_METADATA = gql`
-  query GetCampaignMetadata($id: ID!) {
-    campaign(id: $id) {
-      id
-      metadataCID
-    }
-  }
-`;
+const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
 
 async function getIPFSMetadata(cid: string): Promise<{ title: string; description: string; image: string; } | null> {
     if (!cid) return null;
     try {
-        const url = `https://ipfs.io/ipfs/${cid}`;
+        const url = `${IPFS_GATEWAY}${cid.replace('ipfs://', '')}`;
         const response = await fetch(url);
         if (!response.ok) {
             return null;
@@ -31,15 +21,14 @@ async function getIPFSMetadata(cid: string): Promise<{ title: string; descriptio
 }
 
 function formatIpfsUrl(ipfsUrl: string): string {
-    const gateway = 'https://gateway.pinata.cloud/ipfs/';
     if (!ipfsUrl) return '';
     if (ipfsUrl.startsWith('http')) {
         return ipfsUrl;
     }
     if (ipfsUrl.startsWith('ipfs://')) {
-        return `${gateway}${ipfsUrl.substring(7)}`;
+        return `${IPFS_GATEWAY}${ipfsUrl.substring(7)}`;
     }
-    return `${gateway}${ipfsUrl}`;
+    return `${IPFS_GATEWAY}${ipfsUrl}`;
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -48,15 +37,42 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         if (!id) {
             return new Response('Campaign ID is required', { status: 400 });
         }
-        
-        const client = getClient();
-        await client.query({
-            query: GET_CAMPAIGN_METADATA,
-            variables: { id },
-        });
+
+        const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+        if (!subgraphUrl) {
+            return new Response('Subgraph not configured', { status: 500 });
+        }
 
         // 1. Fetch campaign details from the subgraph
-        const campaign = await getCampaign(id);
+        const response = await fetch(subgraphUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: `
+                    query GetCampaign($campaignId: String!) {
+                        campaigns(where: { campaignId: $campaignId }) {
+                            id
+                            campaignId
+                            creator
+                            metadataURI
+                            goalAmount
+                            totalRaised
+                            actualBalance
+                        }
+                    }
+                `,
+                variables: { campaignId: id },
+            }),
+        });
+
+        if (!response.ok) {
+            return new Response('Failed to fetch campaign', { status: 500 });
+        }
+
+        const data = await response.json();
+        const campaign = data?.data?.campaigns?.[0];
 
         if (!campaign || !campaign.metadataURI) {
           return new Response('Campaign not found', { status: 404 });
