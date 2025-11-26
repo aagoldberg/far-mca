@@ -36,22 +36,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: loanUrl,
-      siteName: 'Community Microloans',
+      siteName: 'lendfriend',
       images: [
         {
           url: `${baseUrl}/api/og/loan/${address}`, // Always use dynamic OG image with formatted design
           width: 1200,
           height: 630,
           alt: loan.title,
+          type: 'image/png',
         },
       ],
       type: 'website',
+      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
       images: [`${baseUrl}/api/og/loan/${address}`], // Dynamic formatted image
+      site: '@lendfriend',
     },
   };
 }
