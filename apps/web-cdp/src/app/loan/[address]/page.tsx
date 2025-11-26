@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${progressEmoji} ${loan.title}`;
   const description = `${progressPercent}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised. Zero-interest community loan. Every dollar makes a difference!`;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3004';
+  // Auto-detect base URL from Vercel or use env variable
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3004');
   const loanUrl = `${baseUrl}/loan/${address}`;
 
   return {
