@@ -17,6 +17,7 @@ export async function GET(
     }
 
     const progressPercent = Math.round((loan.totalFunded / loan.principal) * 100);
+    const remaining = loan.principal - loan.totalFunded;
 
     return new ImageResponse(
       (
@@ -25,31 +26,27 @@ export async function GET(
             display: 'flex',
             height: '100%',
             width: '100%',
-            backgroundColor: '#f9fafb',
-            padding: '60px',
+            backgroundColor: '#f3f4f6',
+            padding: '0',
           }}
         >
-          {/* Card Container */}
+          {/* Two Column Layout */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
               width: '100%',
               height: '100%',
               backgroundColor: 'white',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
             }}
           >
-            {/* Loan Image */}
+            {/* Left Side - Image */}
             {loan.image && (
               <div
                 style={{
-                  width: '100%',
-                  height: '340px',
-                  overflow: 'hidden',
+                  width: '50%',
+                  height: '100%',
                   display: 'flex',
+                  position: 'relative',
                 }}
               >
                 <img
@@ -61,96 +58,161 @@ export async function GET(
                     objectFit: 'cover',
                   }}
                 />
+                {/* Overlay Badge */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '30px',
+                    left: '30px',
+                    backgroundColor: '#10b981',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '20px',
+                    fontWeight: 700,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  }}
+                >
+                  Zero-Interest Loan
+                </div>
               </div>
             )}
 
-            {/* Content Area */}
+            {/* Right Side - Content */}
             <div
               style={{
+                width: '50%',
                 display: 'flex',
                 flexDirection: 'column',
-                padding: '40px 50px',
-                flex: 1,
+                padding: '60px 50px',
                 justifyContent: 'space-between',
+                backgroundColor: 'white',
               }}
             >
-              {/* Title */}
-              <h1
-                style={{
-                  fontSize: '48px',
-                  fontWeight: 600,
-                  color: '#111827',
-                  margin: '0 0 20px 0',
-                  lineHeight: '1.2',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                }}
-              >
-                {loan.title}
-              </h1>
+              {/* Top Section */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {/* Title */}
+                <h1
+                  style={{
+                    fontSize: '42px',
+                    fontWeight: 700,
+                    color: '#111827',
+                    margin: '0',
+                    lineHeight: '1.2',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {loan.title}
+                </h1>
 
-              {/* Bottom Section */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {/* Borrower Info */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ fontSize: '20px', color: '#6b7280' }}>
-                    Borrower:
-                  </span>
-                  <span style={{ fontSize: '20px', color: '#111827', fontWeight: 500 }}>
-                    {loan.borrower.substring(0, 6)}...{loan.borrower.substring(loan.borrower.length - 4)}
-                  </span>
-                </div>
-
-                {/* Progress Section */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <span style={{ fontSize: '20px', color: '#6b7280' }}>
-                      Progress:
-                    </span>
-                    <span style={{ fontSize: '32px', color: '#10b981', fontWeight: 700 }}>
-                      {progressPercent}% funded
-                    </span>
-                  </div>
-                  {/* Progress Bar */}
+                {/* Borrower */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div
                     style={{
-                      width: '100%',
-                      height: '12px',
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '20px',
                       backgroundColor: '#e5e7eb',
-                      borderRadius: '6px',
-                      overflow: 'hidden',
                       display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '18px',
+                      fontWeight: 600,
+                      color: '#6b7280',
                     }}
                   >
-                    <div
-                      style={{
-                        width: `${Math.min(progressPercent, 100)}%`,
-                        height: '100%',
-                        backgroundColor: '#10b981',
-                        borderRadius: '6px',
-                      }}
-                    />
+                    {loan.borrower.substring(2, 4).toUpperCase()}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '14px', color: '#9ca3af' }}>Borrower</span>
+                    <span style={{ fontSize: '18px', color: '#374151', fontWeight: 600 }}>
+                      {loan.borrower.substring(0, 6)}...{loan.borrower.substring(loan.borrower.length - 4)}
+                    </span>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Footer Branding */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '20px',
-                backgroundColor: '#f9fafb',
-                borderTop: '1px solid #e5e7eb',
-              }}
-            >
-              <span style={{ fontSize: '18px', color: '#6b7280', fontWeight: 500 }}>
-                everybit • Together, we build stronger communities
-              </span>
+              {/* Progress Stats */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {/* Amount Raised */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div
+                    style={{
+                      fontSize: '48px',
+                      fontWeight: 800,
+                      color: '#10b981',
+                      lineHeight: '1',
+                    }}
+                  >
+                    ${loan.totalFunded.toLocaleString()}
+                  </div>
+                  <div style={{ fontSize: '20px', color: '#6b7280' }}>
+                    raised of ${loan.principal.toLocaleString()} goal
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                <div
+                  style={{
+                    width: '100%',
+                    height: '16px',
+                    backgroundColor: '#e5e7eb',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${Math.min(progressPercent, 100)}%`,
+                      height: '100%',
+                      background: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+                    }}
+                  />
+                </div>
+
+                {/* Stats Row */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                    <span style={{ fontSize: '32px', fontWeight: 700, color: '#111827' }}>
+                      {progressPercent}%
+                    </span>
+                    <span style={{ fontSize: '18px', color: '#6b7280' }}>funded</span>
+                  </div>
+                  {remaining > 0 && (
+                    <div
+                      style={{
+                        backgroundColor: '#fef3c7',
+                        color: '#92400e',
+                        padding: '8px 16px',
+                        borderRadius: '6px',
+                        fontSize: '16px',
+                        fontWeight: 600,
+                      }}
+                    >
+                      ${remaining.toLocaleString()} to go
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  paddingTop: '20px',
+                  borderTop: '1px solid #e5e7eb',
+                }}
+              >
+                <span style={{ fontSize: '16px', color: '#6b7280', fontWeight: 500 }}>
+                  everybit • Community Microloans
+                </span>
+              </div>
             </div>
           </div>
         </div>
