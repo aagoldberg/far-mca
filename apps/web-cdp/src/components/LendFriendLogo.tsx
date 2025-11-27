@@ -4,15 +4,10 @@ export function LendFriendLogo() {
   return (
     <div className="flex items-center group cursor-pointer no-underline">
       <div className="flex flex-col">
-        <div className="text-2xl sm:text-3xl tracking-tight">
-          <span className="font-semibold text-[#2C7A7B] group-hover:text-[#234E52] transition-colors">
-            Lend
-          </span>
-          <span className="font-medium text-[#4A9C9D] group-hover:text-[#3A8C8E] transition-colors">
-            friend
-          </span>
-        </div>
-        <span className="text-[9px] sm:text-[10px] text-gray-500 -mt-0.5 font-semibold tracking-wider hidden xs:block">
+        <span className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-[#2C7DA0] from-35% via-[#2E8B8B] via-45% to-[#3B9B7F] to-55% bg-clip-text text-transparent group-hover:from-[#236382] group-hover:via-[#26706F] group-hover:to-[#2E7D68] transition-all">
+          LendFriend
+        </span>
+        <span className="text-[10px] sm:text-[11px] text-gray-500 -mt-0.5 font-semibold tracking-wider hidden xs:block">
           COMMUNITY LENDING
         </span>
       </div>
