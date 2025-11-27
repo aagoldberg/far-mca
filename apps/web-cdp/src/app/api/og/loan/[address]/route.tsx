@@ -20,7 +20,7 @@ function formatNumber(num: any): string {
   }
 }
 
-// Validate and optionally convert image to base64 for reliability
+// Validate image URL (Edge Runtime compatible - no Buffer needed)
 async function validateAndFetchImage(imageUrl: string | undefined): Promise<string | null> {
   if (!imageUrl) return null;
 
@@ -51,14 +51,9 @@ async function validateAndFetchImage(imageUrl: string | undefined): Promise<stri
       return null;
     }
 
-    // For better reliability, convert to base64
-    // This avoids I/O during ImageResponse rendering
-    const arrayBuffer = await response.arrayBuffer();
-    const base64 = Buffer.from(arrayBuffer).toString('base64');
-    const dataUri = `data:${contentType};base64,${base64}`;
-
-    console.log('[OG] Image validated and converted to base64');
-    return dataUri;
+    console.log('[OG] Image validated successfully');
+    // Return the URL directly - ImageResponse can fetch it
+    return imageUrl;
   } catch (error) {
     console.log('[OG] Image validation failed:', error);
     return null;

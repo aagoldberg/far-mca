@@ -19,10 +19,18 @@ export interface LoanMetadata {
 
 export async function getLoanDataForMetadata(address: string): Promise<LoanMetadata | null> {
   try {
+    // Get RPC URL from environment (check multiple possible variable names)
+    const rpcUrl = process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL ||
+                   process.env.NEXT_PUBLIC_RPC_URL ||
+                   'https://sepolia.base.org';
+
+    console.log('[getLoanDataForMetadata] Starting fetch for address:', address);
+    console.log('[getLoanDataForMetadata] Using RPC URL:', rpcUrl);
+
     // Create public client for reading blockchain data
     const publicClient = createPublicClient({
       chain: baseSepolia,
-      transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL || 'https://sepolia.base.org'),
+      transport: http(rpcUrl),
     });
 
     // Fetch loan data from blockchain
@@ -77,7 +85,7 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
     const principalNum = Number(principal) / 1e6; // Assuming 6 decimals (USDC)
     const totalFundedNum = Number(totalFunded) / 1e6;
 
-    return {
+    const result = {
       title: metadata.name || metadata.title || 'Community Loan',
       description: metadata.description || 'Zero-interest community loan',
       image: metadata.image ? metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/') : undefined,
@@ -85,8 +93,23 @@ export async function getLoanDataForMetadata(address: string): Promise<LoanMetad
       totalFunded: totalFundedNum,
       borrower: borrower as string,
     };
+
+    console.log('[getLoanDataForMetadata] Successfully fetched loan data:', {
+      title: result.title,
+      principal: result.principal,
+      totalFunded: result.totalFunded,
+      hasImage: !!result.image,
+    });
+
+    return result;
   } catch (error) {
-    console.error('Error fetching loan metadata:', error);
+    console.error('[getLoanDataForMetadata] CRITICAL ERROR fetching loan metadata for address:', address);
+    console.error('[getLoanDataForMetadata] Error details:', error);
+    console.error('[getLoanDataForMetadata] Error type:', error instanceof Error ? error.constructor.name : typeof error);
+    console.error('[getLoanDataForMetadata] Error message:', error instanceof Error ? error.message : String(error));
+    if (error instanceof Error && error.stack) {
+      console.error('[getLoanDataForMetadata] Stack trace:', error.stack);
+    }
     return null;
   }
 }
