@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import ShopifyConnectButton from './ShopifyConnectButton';
 import StripeConnectButton from './StripeConnectButton';
+import SquareConnectButton from './SquareConnectButton';
 import YouTubeConnectButton from './YouTubeConnectButton';
 import TwitchConnectButton from './TwitchConnectButton';
 import TikTokShopConnectButton from './TikTokShopConnectButton';
@@ -283,14 +284,13 @@ export default function BusinessConnectionManager() {
             />
           )}
 
+          {/* Square Integration */}
           {!connections.some(c => c.platform === 'square') && (
-            <button
-              disabled
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 text-gray-400 rounded-md cursor-not-allowed"
-            >
-              <BuildingStorefrontIcon className="w-5 h-5" />
-              <span>Square (Coming Soon)</span>
-            </button>
+            <SquareConnectButton
+              onConnectionSuccess={() => loadCreditScore()}
+              onConnectionError={(err) => setError(err)}
+              size="md"
+            />
           )}
 
           {!connections.some(c => c.platform === 'plaid') && (
