@@ -7,9 +7,6 @@ import { USDC_DECIMALS } from '@/types/loan';
 import { useWalletType } from '@/hooks/useWalletType';
 import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
-import ShopifyConnectButton from './ShopifyConnectButton';
-import StripeConnectButton from './StripeConnectButton';
-import SquareConnectButton from './SquareConnectButton';
 import ImageCropModal from './ImageCropModal';
 import { LoanCard } from './LoanCard';
 import {
@@ -652,7 +649,7 @@ export default function LoanCreationWizard() {
   // Progress indicator
   const steps = [
     { num: 1, name: 'Basics' },
-    { num: 2, name: 'Connect Platforms' },
+    { num: 2, name: 'Connect' },
     { num: 3, name: 'Eligibility' },
     { num: 4, name: 'Complete' },
   ];
@@ -669,37 +666,45 @@ export default function LoanCreationWizard() {
         <span className="font-medium">Back to Loans</span>
       </button>
 
-      {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Create Your Loan</h1>
-        <p className="text-gray-600">Get zero-interest funding from your community</p>
-      </div>
-
       {/* Progress Indicator */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
+      <div className="mb-10">
+        <div className="flex items-start justify-between max-w-xl mx-auto">
           {steps.map((step, idx) => (
-            <div key={step.num} className="flex items-center flex-1">
-              <div className="flex flex-col items-center flex-1">
+            <div key={step.num} className="flex items-center" style={{ flex: idx < steps.length - 1 ? '1' : '0 0 auto' }}>
+              <div className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                     currentStep === step.num
-                      ? 'bg-[#3B9B7F] text-white'
+                      ? 'bg-green-600 text-white shadow-sm'
                       : currentStep > step.num
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 text-gray-500'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-white border-2 border-gray-300 text-gray-400'
                   }`}
                 >
-                  {currentStep > step.num ? '✓' : step.num}
+                  {currentStep > step.num ? (
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  ) : (
+                    step.num
+                  )}
                 </div>
-                <span className="text-xs mt-2 font-medium text-gray-600">{step.name}</span>
+                <span
+                  className={`text-xs mt-2 font-medium text-center max-w-[80px] ${
+                    currentStep >= step.num ? 'text-gray-900' : 'text-gray-500'
+                  }`}
+                >
+                  {step.name}
+                </span>
               </div>
               {idx < steps.length - 1 && (
-                <div
-                  className={`h-1 flex-1 mx-2 ${
-                    currentStep > step.num ? 'bg-green-500' : 'bg-gray-200'
-                  }`}
-                />
+                <div className="flex-1 px-3 pt-4">
+                  <div
+                    className={`h-0.5 w-full transition-all ${
+                      currentStep > step.num ? 'bg-green-600' : 'bg-gray-200'
+                    }`}
+                  />
+                </div>
               )}
             </div>
           ))}
@@ -781,68 +786,144 @@ export default function LoanCreationWizard() {
 
         {/* STEP 2: CONNECT PLATFORMS */}
         {currentStep === 2 && (
-          <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Connect Revenue Sources (Optional)</h2>
-            <p className="text-sm text-gray-600">
-              Connect your business accounts to get pre-qualified and show lenders your revenue. This can help you get funded faster!
-            </p>
+          <div className="bg-white border border-gray-300 rounded-xl p-8 shadow-sm space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Application overview</h2>
+              <p className="text-base text-gray-600">
+                Complete the following steps to submit your application for funding.
+              </p>
+            </div>
 
-            {creditScore && creditScore.connections.length > 0 ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                <h3 className="font-semibold text-green-900 mb-2">Connected Platforms</h3>
-                <div className="space-y-2">
-                  {creditScore.connections.map((conn) => (
-                    <div key={conn.platform} className="flex items-center gap-2 text-sm text-green-800">
-                      <CheckCircleIcon className="w-5 h-5" />
-                      <span className="capitalize">{conn.platform}</span>
-                      <span className="text-green-600">
-                        - ${(conn.revenue_data.totalRevenue / 1000).toFixed(1)}k revenue
-                      </span>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Connect platforms</h3>
+
+              <div className="space-y-3">
+                {/* Shopify Platform Card */}
+                {creditScore?.connections.some(c => c.platform === 'shopify') ? (
+                  <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 cursor-not-allowed">
+                    <div className="flex items-center gap-3">
+                      <ShoppingBagIcon className="h-6 w-6 text-gray-600" />
+                      <div className="flex-1">
+                        <span className="text-base font-medium text-gray-900">Shopify</span>
+                      </div>
+                      <CheckCircleIcon className="h-5 w-5 text-green-600" />
                     </div>
-                  ))}
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!address) return;
+                      try {
+                        const shopDomain = prompt('Enter your Shopify store domain (e.g., yourstore.myshopify.com):');
+                        if (!shopDomain || !shopDomain.includes('.myshopify.com')) return;
+                        const response = await fetch(
+                          `/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}&wallet=${encodeURIComponent(address)}`
+                        );
+                        const data = await response.json();
+                        if (response.ok) window.location.href = data.authUrl;
+                      } catch (error) {
+                        console.error('Shopify connection error:', error);
+                      }
+                    }}
+                    className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <ShoppingBagIcon className="h-6 w-6 text-gray-700" />
+                      <span className="text-base font-medium text-gray-900">Shopify</span>
+                    </div>
+                  </button>
+                )}
+
+                {/* Stripe Platform Card */}
+                {creditScore?.connections.some(c => c.platform === 'stripe') ? (
+                  <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 cursor-not-allowed">
+                    <div className="flex items-center gap-3">
+                      <CreditCardIcon className="h-6 w-6 text-gray-600" />
+                      <div className="flex-1">
+                        <span className="text-base font-medium text-gray-900">Stripe</span>
+                      </div>
+                      <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!address) return;
+                      try {
+                        const response = await fetch(
+                          `/api/stripe/auth?wallet=${encodeURIComponent(address)}`
+                        );
+                        const data = await response.json();
+                        if (response.ok) window.location.href = data.authUrl;
+                      } catch (error) {
+                        console.error('Stripe connection error:', error);
+                      }
+                    }}
+                    className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <CreditCardIcon className="h-6 w-6 text-gray-700" />
+                      <span className="text-base font-medium text-gray-900">Stripe</span>
+                    </div>
+                  </button>
+                )}
+
+                {/* Square Platform Card */}
+                {creditScore?.connections.some(c => c.platform === 'square') ? (
+                  <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 cursor-not-allowed">
+                    <div className="flex items-center gap-3">
+                      <BuildingStorefrontIcon className="h-6 w-6 text-gray-600" />
+                      <div className="flex-1">
+                        <span className="text-base font-medium text-gray-900">Square</span>
+                      </div>
+                      <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!address) return;
+                      try {
+                        const params = new URLSearchParams({
+                          wallet: address,
+                          ...(draftId && { draft: draftId }),
+                        });
+                        const response = await fetch(`/api/square/auth?${params.toString()}`);
+                        const data = await response.json();
+                        if (response.ok) window.location.href = data.authUrl;
+                      } catch (error) {
+                        console.error('Square connection error:', error);
+                      }
+                    }}
+                    className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <BuildingStorefrontIcon className="h-6 w-6 text-gray-700" />
+                      <span className="text-base font-medium text-gray-900">Square</span>
+                    </div>
+                  </button>
+                )}
+              </div>
+
+              {/* Optional Notice */}
+              {creditScore && creditScore.connections.length === 0 && (
+                <div className="mt-6 space-y-2">
+                  <h4 className="text-sm font-semibold text-gray-900">No action required</h4>
+                  <p className="text-sm text-gray-600">
+                    The data from these platforms is not required. We'll use other data sources you connect to review your application.
+                  </p>
                 </div>
-              </div>
-            ) : (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                <p className="text-sm text-blue-800">
-                  No platforms connected yet. Connect at least one to improve your loan eligibility.
-                </p>
-              </div>
-            )}
-
-            {/* OAuth Connection Buttons */}
-            <div className="space-y-3">
-              {!creditScore?.connections.some(c => c.platform === 'shopify') && (
-                <ShopifyConnectButton
-                  onConnectionSuccess={() => loadCreditScore()}
-                  onConnectionError={(err) => console.error(err)}
-                  size="md"
-                />
-              )}
-
-              {!creditScore?.connections.some(c => c.platform === 'stripe') && (
-                <StripeConnectButton
-                  onConnectionSuccess={() => loadCreditScore()}
-                  onConnectionError={(err) => console.error(err)}
-                  size="md"
-                />
-              )}
-
-              {!creditScore?.connections.some(c => c.platform === 'square') && (
-                <SquareConnectButton
-                  onConnectionSuccess={() => loadCreditScore()}
-                  onConnectionError={(err) => console.error(err)}
-                  size="md"
-                  draftId={draftId}
-                />
               )}
             </div>
 
-            <div className="flex gap-3 pt-4">
+            <div className="flex gap-3 pt-4 border-t border-gray-200">
               <button
                 type="button"
                 onClick={goToPreviousStep}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-xl"
+                className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               >
                 Back
               </button>
@@ -854,9 +935,9 @@ export default function LoanCreationWizard() {
                   }
                   goToNextStep();
                 }}
-                className="flex-1 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-3 px-6 rounded-xl"
+                className="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
               >
-                {creditScore?.connections.length > 0 ? 'Continue to Eligibility' : 'Skip for Now'}
+                Next
               </button>
             </div>
           </div>
