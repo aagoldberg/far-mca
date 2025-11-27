@@ -50,7 +50,7 @@ export const generateShareUrls = (loan: LoanShareData, customMessage?: string): 
 
     discord: fullTrackedUrl('discord'), // Discord doesn't have direct share link, will copy to clipboard
 
-    bluesky: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${shareText}\n\n${fullTrackedUrl('bluesky')}`)}`,
+    sms: `sms:?&body=${encodeURIComponent(`${shareText}\n\n${fullTrackedUrl('sms')}`)}`,
 
     farcaster: `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(fullTrackedUrl('farcaster'))}`,
 
