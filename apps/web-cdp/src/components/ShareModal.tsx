@@ -173,7 +173,6 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                                 src={`/api/og/loan/${loan.id}`}
                                 alt="Share preview"
                                 className={`w-full h-auto ${imageLoading ? 'hidden' : ''}`}
-                                loading="lazy"
                                 onLoad={() => setImageLoading(false)}
                                 onError={() => {
                                     console.error('[ShareModal] OG image failed to load');
