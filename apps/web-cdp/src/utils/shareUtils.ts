@@ -20,9 +20,20 @@ export interface ShareUrlConfig {
 export const generateShareUrls = (loan: LoanShareData, customMessage?: string): Record<string, string> => {
   const loanUrl = `${window.location.origin}/loan/${loan.id}`;
 
-  // Psychology-optimized default message: Hope & empowerment focused
+  // Psychology-optimized default message: Make sharer the hero, emotional, personal
   const progressEmoji = loan.progressPercentage >= 75 ? '🔥' : loan.progressPercentage >= 50 ? '🎯' : loan.progressPercentage >= 25 ? '✨' : '💚';
-  const defaultText = `${progressEmoji} "${loan.title}" needs our help!\n\n${Math.round(loan.progressPercentage)}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised\n\nZero-interest community loan. Every dollar makes a difference!`;
+
+  // Personalized, hero-focused messaging based on progress
+  let heroMessage = '';
+  if (loan.progressPercentage >= 75) {
+    heroMessage = `I'm helping finish funding "${loan.title}" - we're almost there!`;
+  } else if (loan.progressPercentage >= 50) {
+    heroMessage = `I'm supporting "${loan.title}" and you can too!`;
+  } else {
+    heroMessage = `Help me make "${loan.title}" happen!`;
+  }
+
+  const defaultText = `${progressEmoji} ${heroMessage}\n\n${Math.round(loan.progressPercentage)}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised\n\nZero-interest community loan. Your share could change everything!`;
 
   const shareText = customMessage || defaultText;
 
@@ -46,7 +57,7 @@ export const generateShareUrls = (loan: LoanShareData, customMessage?: string): 
 
     reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(fullTrackedUrl('reddit'))}&title=${encodeURIComponent(loan.title)}`,
 
-    email: `mailto:?subject=${encodeURIComponent(`Help support: ${loan.title}`)}&body=${encodeURIComponent(`Hi,\n\nI wanted to share this zero-interest community loan with you:\n\n${loan.title}\n\n${shareText}\n\n${fullTrackedUrl('email')}\n\nEvery contribution makes a difference!\n\nBest regards`)}`,
+    email: `mailto:?subject=${encodeURIComponent(`Help me support: ${loan.title}`)}&body=${encodeURIComponent(`Hi,\n\nI'm supporting this zero-interest community loan and I'd love your help:\n\n${loan.title}\n\n${shareText}\n\n${fullTrackedUrl('email')}\n\nYour support could change everything!\n\nThanks`)}`,
 
     discord: fullTrackedUrl('discord'), // Discord doesn't have direct share link, will copy to clipboard
 

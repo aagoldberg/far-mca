@@ -152,7 +152,18 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
         const shareUrl = shareUrls[platformId];
 
         if (platformId === 'discord') {
-            const success = await copyToClipboard(`${customMessage || `Check out this zero-interest loan!`} ${loanUrl}`);
+            // Use hero-focused default message for Discord
+            const progressEmoji = loan.progressPercentage >= 75 ? '🔥' : loan.progressPercentage >= 50 ? '🎯' : loan.progressPercentage >= 25 ? '✨' : '💚';
+            let heroMessage = '';
+            if (loan.progressPercentage >= 75) {
+                heroMessage = `I'm helping finish funding "${loan.title}" - we're almost there!`;
+            } else if (loan.progressPercentage >= 50) {
+                heroMessage = `I'm supporting "${loan.title}" and you can too!`;
+            } else {
+                heroMessage = `Help me make "${loan.title}" happen!`;
+            }
+            const discordMessage = customMessage || `${progressEmoji} ${heroMessage}\n\n${Math.round(loan.progressPercentage)}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised\n\nZero-interest community loan. Your share could change everything!`;
+            const success = await copyToClipboard(`${discordMessage}\n\n${loanUrl}`);
             if (success) {
                 setCopiedPlatform(platformId);
                 setTimeout(() => setCopiedPlatform(null), 2000);
@@ -178,11 +189,11 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     <XMarkIcon className="w-6 h-6" />
                 </button>
 
-                <h2 className="text-xl font-bold mb-6 text-gray-900">Spread the Word</h2>
+                <h2 className="text-xl font-bold mb-5 text-gray-900">Help make this happen</h2>
 
                 {/* OG Card Preview */}
-                <div className="mb-4">
-                    <div className="border-2 border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div className="mb-5">
+                    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-md">
                         {imageLoading && !imageError && (
                             <div className="w-full h-[315px] bg-gray-100 flex items-center justify-center">
                                 <div className="text-center">
@@ -218,35 +229,34 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                 </div>
 
                 {/* Impact Message - moved up for prominence */}
-                <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="mb-5 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-sm text-green-800 text-center font-semibold">
                         Shared loans get funded 3× faster
                     </p>
                 </div>
 
-                {/* URL Copy Section */}
-                <div className="flex items-center space-x-2 mb-6">
-                    <input
-                        type="text"
-                        readOnly
-                        value={loanUrl}
-                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#3B9B7F] focus:border-transparent"
-                    />
+                {/* URL Copy Section - simplified */}
+                <div className="mb-5">
                     <button
                         onClick={handleCopyToClipboard}
-                        className="flex items-center justify-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-semibold transition-colors"
+                        className="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm font-semibold transition-colors gap-2"
                     >
                         {copied ? (
-                            <ClipboardDocumentCheckIcon className="w-5 h-5 text-green-500" />
+                            <>
+                                <ClipboardDocumentCheckIcon className="w-5 h-5 text-green-600" />
+                                <span className="text-green-600">Link copied!</span>
+                            </>
                         ) : (
-                            <ClipboardDocumentIcon className="w-5 h-5" />
+                            <>
+                                <ClipboardDocumentIcon className="w-5 h-5 text-gray-600" />
+                                <span className="text-gray-700">Copy link</span>
+                            </>
                         )}
-                        <span className="ml-2">{copied ? 'Copied!' : 'Copy'}</span>
                     </button>
                 </div>
 
                 {/* Social Sharing Section */}
-                <div className="border-t border-gray-200 pt-6">
+                <div className="border-t border-gray-200 pt-5">
 
                     {/* Primary Share Buttons */}
                     <div className="grid grid-cols-4 gap-3">
@@ -270,7 +280,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     {/* More Options Toggle */}
                     <button
                         onClick={() => setShowMoreOptions(!showMoreOptions)}
-                        className="w-full mt-3 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors flex items-center justify-center gap-1"
+                        className="w-full mt-4 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors flex items-center justify-center gap-1"
                     >
                         <span>{showMoreOptions ? 'Fewer' : 'More'} options</span>
                         <svg

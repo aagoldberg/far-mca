@@ -156,29 +156,31 @@ export async function GET(
                     objectPosition: 'center',
                   }}
                 />
-                {/* Status badge overlay */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '24px',
-                    right: '24px',
-                    display: 'flex',
-                  }}
-                >
-                  <span
+                {/* Status badge overlay - only show if fully funded */}
+                {progressPercent >= 100 && (
+                  <div
                     style={{
-                      padding: '10px 20px',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      backgroundColor: progressPercent >= 100 ? '#dcfce7' : '#fef3c7',
-                      color: progressPercent >= 100 ? '#15803d' : '#92400e',
-                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                      position: 'absolute',
+                      top: '24px',
+                      right: '24px',
+                      display: 'flex',
                     }}
                   >
-                    {progressPercent >= 100 ? 'Funded' : 'Fundraising'}
-                  </span>
-                </div>
+                    <span
+                      style={{
+                        padding: '12px 24px',
+                        borderRadius: '10px',
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        backgroundColor: '#dcfce7',
+                        color: '#15803d',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                      }}
+                    >
+                      Funded ✓
+                    </span>
+                  </div>
+                )}
               </div>
             )}
 
@@ -188,36 +190,36 @@ export async function GET(
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
-                padding: '48px 52px',
+                padding: '56px 60px',
                 justifyContent: 'center',
                 backgroundColor: 'white',
               }}
             >
               {/* All content centered vertically */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-                {/* Title - larger and word-wrapped */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                {/* Title - larger and bold */}
                 <h1
                   style={{
-                    fontSize: '52px',
-                    fontWeight: 500,
+                    fontSize: '46px',
+                    fontWeight: 600,
                     color: '#111827',
                     margin: 0,
-                    lineHeight: '1.1',
+                    lineHeight: '1.15',
                     display: 'flex',
                   }}
                 >
                   {title}
                 </h1>
 
-                {/* Progress Bar - larger */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {/* Progress Bar - clean and trustworthy */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div
                     style={{
                       display: 'flex',
                       position: 'relative',
                       width: '100%',
-                      height: '20px',
-                      backgroundColor: '#f3f4f6',
+                      height: '28px',
+                      backgroundColor: '#e5e7eb',
                       borderRadius: '100px',
                       overflow: 'hidden',
                     }}
@@ -226,98 +228,61 @@ export async function GET(
                       style={{
                         width: `${progressWidth}%`,
                         height: '100%',
-                        background: 'linear-gradient(90deg, #3B9B7F 0%, #2E7D68 100%)',
+                        background: 'linear-gradient(90deg, #2C7A7B 0%, #234E52 100%)',
                         borderRadius: '100px',
                         display: 'flex',
                       }}
                     />
                   </div>
 
-                  {/* Funding text - much larger */}
+                  {/* Funding text - simplified */}
                   <div
                     style={{
                       display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'baseline',
+                      flexDirection: 'column',
+                      gap: '8px',
                     }}
                   >
                     <span
                       style={{
-                        fontSize: '36px',
+                        fontSize: '56px',
                         fontWeight: 700,
-                        color: '#3B9B7F',
+                        color: '#2C7A7B',
+                        lineHeight: '1',
                       }}
                     >
                       ${totalFundedStr} raised
                     </span>
                     <span
                       style={{
-                        fontSize: '28px',
+                        fontSize: '24px',
                         color: '#6b7280',
                         fontWeight: 500,
                       }}
                     >
-                      of ${principalStr}
+                      of ${principalStr} goal · {progressPercent}% funded
                     </span>
                   </div>
                 </div>
 
-                {/* Borrower info - much larger */}
-                {borrower && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '20px',
-                      paddingTop: '32px',
-                      borderTop: '1px solid #e5e7eb',
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: 'flex',
-                        width: '56px',
-                        height: '56px',
-                        backgroundColor: '#dcfce7',
-                        borderRadius: '100px',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '22px',
-                        fontWeight: 600,
-                        color: '#15803d',
-                      }}
-                    >
-                      {borrower.substring(2, 4).toUpperCase()}
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <span style={{ fontSize: '16px', color: '#6b7280', fontWeight: 500 }}>
-                        Borrower
-                      </span>
-                      <span style={{ fontSize: '22px', color: '#111827', fontWeight: 600, fontFamily: 'monospace' }}>
-                        {borrower.substring(0, 6)}...{borrower.substring(borrower.length - 4)}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Footer branding - much larger */}
+                {/* Footer - simple and trustworthy */}
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    paddingTop: '28px',
-                    borderTop: '1px solid #e5e7eb',
+                    paddingTop: '24px',
+                    borderTop: '2px solid #e5e7eb',
                   }}
                 >
                   <span
                     style={{
-                      fontSize: '20px',
-                      color: '#6b7280',
-                      fontWeight: 500,
+                      fontSize: '24px',
+                      color: '#2C7A7B',
+                      fontWeight: 600,
                     }}
                   >
-                    lendfriend · Zero-interest community loans
+                    lendfriend · 0% interest community loans
                   </span>
                 </div>
               </div>
