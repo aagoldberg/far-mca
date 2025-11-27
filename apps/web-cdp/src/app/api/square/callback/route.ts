@@ -29,9 +29,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Extract wallet address from state parameter
-    // State format: "wallet-timestamp"
-    const wallet = state.split('-')[0];
+    // Extract wallet address and draft ID from state parameter
+    // State format: "wallet-timestamp" or "wallet-draftId-timestamp"
+    const stateParts = state.split('-');
+    const wallet = stateParts[0];
+    const draftId = stateParts.length === 3 ? stateParts[1] : null; // Draft ID if present
+
     if (!wallet) {
       return NextResponse.redirect(
         `${process.env.NEXT_PUBLIC_APP_URL}/credit?error=Invalid state parameter`
@@ -114,10 +117,18 @@ export async function GET(request: NextRequest) {
       successRate: revenueData.successRate,
     });
 
-    // Redirect to credit page with success message
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL}/credit?square_connected=true`
-    );
+    // Redirect based on whether this is part of loan creation flow or standalone
+    if (draftId) {
+      // Loan creation flow: redirect to wizard Step 3 (eligibility)
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_APP_URL}/create-loan?draft=${draftId}&step=3`
+      );
+    } else {
+      // Standalone flow: redirect to credit page
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_APP_URL}/credit?square_connected=true`
+      );
+    }
   } catch (error) {
     console.error('Square callback error:', error);
     return NextResponse.redirect(

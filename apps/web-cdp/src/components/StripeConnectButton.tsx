@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useAccount } from 'wagmi';
+import { useWalletType } from '@/hooks/useWalletType';
 import {
   CreditCardIcon,
   ArrowTopRightOnSquareIcon,
@@ -20,7 +20,7 @@ export default function StripeConnectButton({
   className = '',
   size = 'md'
 }: StripeConnectButtonProps) {
-  const { address } = useAccount();
+  const { address } = useWalletType();
   const [isConnecting, setIsConnecting] = useState(false);
 
   const sizeClasses = {

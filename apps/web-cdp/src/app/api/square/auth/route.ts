@@ -5,6 +5,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const wallet = searchParams.get('wallet');
+    const draftId = searchParams.get('draft'); // Optional draft ID for loan creation flow
 
     if (!wallet) {
       return NextResponse.json(
@@ -31,9 +32,9 @@ export async function GET(request: NextRequest) {
       environment,
     });
 
-    // Generate state parameter for CSRF protection and wallet tracking
-    // State will be passed back by Square, so we can retrieve the wallet from it
-    const state = `${wallet}-${Date.now()}`;
+    // Generate state parameter for CSRF protection, wallet tracking, and draft resumption
+    // Format: wallet-draftId-timestamp (or wallet-timestamp if no draft)
+    const state = draftId ? `${wallet}-${draftId}-${Date.now()}` : `${wallet}-${Date.now()}`;
     const authUrl = squareClient.getAuthUrl(state);
 
     return NextResponse.json({ authUrl });

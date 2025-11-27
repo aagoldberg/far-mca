@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useAccount } from 'wagmi';
+import { useWalletType } from '@/hooks/useWalletType';
 import {
   ShoppingBagIcon,
   ArrowTopRightOnSquareIcon,
@@ -21,7 +21,7 @@ export default function ShopifyConnectButton({
   className = '',
   size = 'md'
 }: ShopifyConnectButtonProps) {
-  const { address } = useAccount();
+  const { address } = useWalletType();
   const [isConnecting, setIsConnecting] = useState(false);
   const [shopDomain, setShopDomain] = useState('');
   const [showInput, setShowInput] = useState(false);

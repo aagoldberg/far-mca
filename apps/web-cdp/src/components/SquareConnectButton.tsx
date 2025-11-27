@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useAccount } from 'wagmi';
+import { useWalletType } from '@/hooks/useWalletType';
 import {
   BuildingStorefrontIcon,
   ArrowTopRightOnSquareIcon,
@@ -12,15 +12,17 @@ interface SquareConnectButtonProps {
   onConnectionError?: (error: string) => void;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
+  draftId?: string | null; // Optional draft ID for loan creation flow
 }
 
 export default function SquareConnectButton({
   onConnectionSuccess,
   onConnectionError,
   className = '',
-  size = 'md'
+  size = 'md',
+  draftId = null
 }: SquareConnectButtonProps) {
-  const { address } = useAccount();
+  const { address } = useWalletType();
   const [isConnecting, setIsConnecting] = useState(false);
 
   const sizeClasses = {
@@ -38,10 +40,13 @@ export default function SquareConnectButton({
     setIsConnecting(true);
 
     try {
-      // Get auth URL from our API (includes wallet address)
-      const response = await fetch(
-        `/api/square/auth?wallet=${encodeURIComponent(address)}`
-      );
+      // Build auth URL with wallet and optional draft ID
+      const params = new URLSearchParams({
+        wallet: address,
+        ...(draftId && { draft: draftId }),
+      });
+
+      const response = await fetch(`/api/square/auth?${params.toString()}`);
       const data = await response.json();
 
       if (!response.ok) {
