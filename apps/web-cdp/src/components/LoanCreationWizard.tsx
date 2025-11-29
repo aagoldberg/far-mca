@@ -669,16 +669,16 @@ export default function LoanCreationWizard() {
 
       {/* Progress Indicator */}
       <div className="mb-10">
-        <div className="flex items-start justify-between max-w-xl mx-auto">
+        <div className="flex items-center justify-between max-w-xl mx-auto">
           {steps.map((step, idx) => (
             <div key={step.num} className="flex items-center" style={{ flex: idx < steps.length - 1 ? '1' : '0 0 auto' }}>
               <div className="flex flex-col items-center">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                     currentStep === step.num
-                      ? 'bg-green-600 text-white shadow-sm'
+                      ? 'bg-[#1a96c1] text-white shadow-sm'
                       : currentStep > step.num
-                      ? 'bg-green-600 text-white'
+                      ? 'bg-[#1a96c1] text-white'
                       : 'bg-white border-2 border-gray-300 text-gray-400'
                   }`}
                 >
@@ -699,10 +699,10 @@ export default function LoanCreationWizard() {
                 </span>
               </div>
               {idx < steps.length - 1 && (
-                <div className="flex-1 px-3 pt-4">
+                <div className="flex-1 px-3">
                   <div
                     className={`h-0.5 w-full transition-all ${
-                      currentStep > step.num ? 'bg-green-600' : 'bg-gray-200'
+                      currentStep > step.num ? 'bg-[#1a96c1]' : 'bg-gray-200'
                     }`}
                   />
                 </div>
