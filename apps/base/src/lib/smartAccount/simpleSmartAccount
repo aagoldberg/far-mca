@@ -1,0 +1,13 @@
+import { toSimpleSmartAccount } from "permissionless/accounts"
+import { entryPoint07Address } from "viem/account-abstraction";
+import { publicClient } from "./publicClient"
+import { owner } from "./owner"
+ 
+const simpleSmartAccount = await toSimpleSmartAccount({
+  owner,
+  client: publicClient,
+  entryPoint: {
+        address: entryPoint07Address,
+        version: "0.7"
+    }
+})

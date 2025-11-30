@@ -1,0 +1,37 @@
+{
+  "name": "LendFriend",
+  "description": "Community lending with 0% interest - Banks want profits, friends don't",
+  "longDescription": "LendFriend is a social lending platform where communities help each other through fair, zero-interest loans. Funders build reputation and social capital instead of earning interest, while borrowers access credit based on trust and community standing. Perfect for friend groups, DAOs, and tight-knit communities on Base.",
+  "iconUrl": "https://lendfriend-base.vercel.app/icon.png",
+  "splashImageUrl": "https://lendfriend-base.vercel.app/splash.png",
+  "miniapp": {
+    "version": "next",
+    "homeUrl": "https://lendfriend-base.vercel.app",
+    "iconUrl": "https://lendfriend-base.vercel.app/icon.png",
+    "splashBackgroundColor": "#2C7A7B",
+    "splashTextColor": "#FFFFFF",
+    "primaryCategory": "defi",
+    "secondaryCategories": ["social", "financial"],
+    "screenshotUrls": [
+      "https://lendfriend-base.vercel.app/screenshots/home.png",
+      "https://lendfriend-base.vercel.app/screenshots/create.png",
+      "https://lendfriend-base.vercel.app/screenshots/loan.png"
+    ],
+    "ogImage": "https://lendfriend-base.vercel.app/og-image.png",
+    "tags": ["lending", "community", "defi", "social", "reputation", "zero-interest", "base"],
+    "features": ["smart_wallet", "social_graph", "gasless_transactions"]
+  },
+  "socialLinks": {
+    "website": "https://lendfriend.org",
+    "discord": "https://discord.gg/lendfriend"
+  },
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x0000000000000000000000000000000000000000"
+  },
+  "webhookUrl": ""
+}

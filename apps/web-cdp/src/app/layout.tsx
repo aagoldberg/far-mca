@@ -22,7 +22,9 @@ const rubik = Rubik({
   variable: "--font-rubik",
 });
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
+// Auto-detect base URL from Vercel or use env variable
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ||
+  (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3004');
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),

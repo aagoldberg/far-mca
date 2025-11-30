@@ -8,21 +8,24 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#3B9B7F]/10 via-[#2C7DA0]/5 to-white py-16 sm:py-24">
+      <div className="bg-gradient-to-br from-[#3B9B7F]/10 via-[#2C7DA0]/5 to-white py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-[#3B9B7F] mb-6 tracking-tight leading-tight">
+          {/* Main headline */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#2C7A7B] mb-4 tracking-tight leading-tight">
             Community Lending
           </h1>
-          <p className="text-2xl sm:text-3xl md:text-4xl text-gray-900 max-w-4xl mx-auto mb-5 leading-tight font-bold">
+          {/* Supporting message */}
+          <p className="text-2xl sm:text-3xl md:text-4xl text-gray-700 max-w-4xl mx-auto mb-3 leading-snug font-semibold">
             Banks want big profits, friends don't
           </p>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
+          {/* Sub-tagline */}
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
             Building reputation-based lending for the new economy
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/create-loan"
-              className="inline-flex items-center gap-2 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold py-4 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-[#2C7A7B] hover:bg-[#234E52] text-white font-semibold py-3.5 px-7 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -31,7 +34,7 @@ export default function Home() {
             </Link>
             <Link
               href="#loans"
-              className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-semibold py-4 px-8 rounded-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium py-3.5 px-7 rounded-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-200"
             >
               Browse Loans
             </Link>
@@ -40,13 +43,10 @@ export default function Home() {
       </div>
 
       {/* Loan List Section */}
-      <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8 text-center">
-          <div className="inline-block mb-3">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Ways to Help</h2>
-            <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
-          </div>
-          <p className="text-gray-600 max-w-2xl mx-auto">Support community members working toward their dreams</p>
+      <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Active Loans</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">Support community members working toward their dreams</p>
         </div>
         <LoanList />
       </div>

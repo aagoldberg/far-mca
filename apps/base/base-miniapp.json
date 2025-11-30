@@ -1,0 +1,28 @@
+{
+  "name": "LendFriend",
+  "description": "Community lending platform with 0% interest",
+  "version": "1.0.0",
+  "author": "LendFriend Team",
+  "icon": "/icon.png",
+  "splash": "/splash.png",
+  "url": "https://lendfriend-base.vercel.app",
+  "permissions": [
+    "wallet_connect",
+    "smart_wallet",
+    "transaction_send",
+    "user_profile"
+  ],
+  "features": {
+    "smart_wallet": true,
+    "gasless": true,
+    "spend_permissions": true
+  },
+  "chains": ["base", "base-sepolia"],
+  "category": "defi",
+  "tags": ["lending", "crowdfunding", "revenue-based-financing"],
+  "entry_points": {
+    "main": "/",
+    "create_loan": "/create-loan",
+    "my_loans": "/my-loans"
+  }
+}

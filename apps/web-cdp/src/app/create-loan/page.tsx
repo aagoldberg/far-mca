@@ -1,11 +1,11 @@
 "use client";
 
-import CreateLoanForm from "@/components/CreateLoanForm";
+import LoanCreationWizard from "@/components/LoanCreationWizard";
 
 export default function CreateLoanPage() {
   return (
     <main className="min-h-screen bg-gray-50">
-      <CreateLoanForm />
+      <LoanCreationWizard />
     </main>
   );
 }
