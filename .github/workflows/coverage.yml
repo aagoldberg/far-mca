@@ -1,0 +1,74 @@
+name: Code Coverage
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'contracts/**'
+  pull_request:
+    paths:
+      - 'contracts/**'
+
+jobs:
+  coverage:
+    name: Test Coverage Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Run coverage
+        working-directory: contracts
+        run: forge coverage --report lcov
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./contracts/lcov.info
+          flags: smart-contracts
+          name: foundry-coverage
+          fail_ci_if_error: false
+
+      - name: Generate coverage summary
+        working-directory: contracts
+        run: |
+          forge coverage --report summary > coverage.txt
+          cat coverage.txt
+
+      - name: Comment coverage on PR
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = fs.readFileSync('contracts/coverage.txt', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Test Coverage Report\n\n```\n' + coverage + '\n```'
+            })
+
+      - name: Check coverage threshold
+        working-directory: contracts
+        run: |
+          # Extract overall coverage percentage
+          COVERAGE=$(forge coverage --report summary | grep "Total" | awk '{print $4}' | sed 's/%//')
+
+          echo "Overall coverage: $COVERAGE%"
+
+          # Fail if below 70%
+          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+            echo "❌ Coverage is below 70% threshold"
+            exit 1
+          fi
+
+          echo "✅ Coverage meets 70% threshold"

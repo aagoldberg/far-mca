@@ -1,0 +1,89 @@
+name: Security Analysis
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'contracts/src/**'
+      - 'contracts/script/**'
+      - '.github/workflows/security.yml'
+  pull_request:
+    paths:
+      - 'contracts/src/**'
+      - 'contracts/script/**'
+  schedule:
+    - cron: '0 0 * * 1'  # Run every Monday at midnight UTC
+
+jobs:
+  slither:
+    name: Slither Static Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Run Slither
+        uses: crytic/slither-action@v0.4.0
+        id: slither
+        with:
+          target: 'contracts/'
+          slither-config: 'contracts/.slither.config.json'
+          fail-on: none
+          sarif: results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.slither.outputs.sarif }}
+
+      - name: Check for critical/high issues
+        if: steps.slither.outputs.stdout != ''
+        run: |
+          echo "Slither found potential issues:"
+          echo "${{ steps.slither.outputs.stdout }}"
+
+          # Count critical and high severity issues
+          CRITICAL=$(echo "${{ steps.slither.outputs.stdout }}" | grep -c "Impact: High" || true)
+          HIGH=$(echo "${{ steps.slither.outputs.stdout }}" | grep -c "Impact: Medium" || true)
+
+          if [ "$CRITICAL" -gt "0" ] || [ "$HIGH" -gt "5" ]; then
+            echo "❌ Found $CRITICAL critical and $HIGH high severity issues"
+            exit 1
+          fi
+
+          echo "✅ No blocking security issues found"
+
+  mythril:
+    name: Mythril Security Analysis
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Mythril
+        run: |
+          pip install mythril
+
+      - name: Run Mythril on MicroLoan
+        run: |
+          myth analyze contracts/src/MicroLoan.sol --solc-json contracts/foundry.toml || true
+        continue-on-error: true
+
+      - name: Run Mythril on MicroLoanFactory
+        run: |
+          myth analyze contracts/src/MicroLoanFactory.sol --solc-json contracts/foundry.toml || true
+        continue-on-error: true

@@ -1,0 +1,60 @@
+name: Foundry Tests
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'contracts/**'
+      - '.github/workflows/test.yml'
+  pull_request:
+    paths:
+      - 'contracts/**'
+      - '.github/workflows/test.yml'
+
+jobs:
+  test:
+    name: Run Foundry Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Run Forge build
+        working-directory: contracts
+        run: |
+          forge --version
+          forge build --sizes
+        id: build
+
+      - name: Run Forge tests
+        working-directory: contracts
+        run: |
+          forge test -vvv
+        id: test
+
+      - name: Run Gas Snapshot
+        working-directory: contracts
+        run: |
+          forge snapshot --check --tolerance 5
+        id: snapshot
+        continue-on-error: true
+
+      - name: Comment Gas Report
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request' && steps.snapshot.outcome == 'failure'
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ **Gas usage increased by more than 5%**\n\nPlease review the gas snapshot changes.'
+            })
