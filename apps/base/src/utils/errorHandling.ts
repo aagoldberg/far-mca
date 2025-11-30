@@ -240,3 +240,11 @@ export function isNetworkError(error: unknown): boolean {
   const lowerMessage = message.toLowerCase();
   return lowerMessage.includes('network') || lowerMessage.includes('connection') || lowerMessage.includes('rpc');
 }
+
+/**
+ * Create a UserFriendlyError from any error
+ */
+export function createUserFriendlyError(error: unknown): UserFriendlyError {
+  const details = parseBlockchainError(error);
+  return new UserFriendlyError(details);
+}

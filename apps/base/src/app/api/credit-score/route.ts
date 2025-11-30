@@ -1,11 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { calculateCreditScore, type BusinessConnection } from '@/lib/credit-score';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+// Lazy initialization to avoid build-time errors when env vars aren't available
+let supabase: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient {
+  if (!supabase) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase environment variables');
+    }
+
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabase;
+}
 
 /**
  * POST /api/credit-score
@@ -27,8 +39,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const client = getSupabaseClient();
+
     // Fetch all active connections for this wallet
-    const { data: connections, error } = await supabase
+    const { data: connections, error } = await client
       .from('business_connections')
       .select('*')
       .eq('wallet_address', walletAddress.toLowerCase())
@@ -89,8 +103,10 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const client = getSupabaseClient();
+
     // Fetch all active connections for this wallet
-    const { data: connections, error } = await supabase
+    const { data: connections, error } = await client
       .from('business_connections')
       .select('*')
       .eq('wallet_address', walletAddress.toLowerCase())
