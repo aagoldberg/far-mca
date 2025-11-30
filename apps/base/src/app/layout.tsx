@@ -3,7 +3,6 @@ import { Nunito, Figtree, Rubik } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import MiniAppNavbar from "@/components/MiniAppNavbar";
-import { AirdropToast } from "@/components/AirdropToast";
 import { Analytics } from "@vercel/analytics/react";
 
 const nunito = Nunito({
@@ -62,10 +61,9 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable}`}>
       <body>
         <Providers>
-          <div>
+          <div className="min-h-screen bg-gray-50">
             <MiniAppNavbar />
             <main>{children}</main>
-            <AirdropToast />
           </div>
         </Providers>
         <Analytics />
