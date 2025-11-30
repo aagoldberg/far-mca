@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useAccount } from 'wagmi';
 import { parseUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useCreateLoan } from '@/hooks/useMicroLoan';
-import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import { useMiniAppWallet } from '@/hooks/useMiniAppWallet';
 import ImageCropModal from './ImageCropModal';
 import { LoanCard } from './LoanCard';
 import {
@@ -80,8 +79,7 @@ interface CreditScoreData {
 export default function LoanCreationWizard() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { address, isConnected, isConnecting } = useAccount();
-  const { farcasterProfile } = useFarcasterProfile();
+  const { address, isConnected, isConnecting, userProfile } = useMiniAppWallet();
 
   // Wizard state
   const [currentStep, setCurrentStep] = useState(1);
@@ -534,7 +532,7 @@ export default function LoanCreationWizard() {
       const principal = parseUnits(formData.amount, USDC_DECIMALS);
 
       await createLoan({
-        borrower: address,
+        borrower: address as `0x${string}`,
         metadataURI,
         principal,
         loanDuration,
@@ -733,7 +731,29 @@ export default function LoanCreationWizard() {
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
           <p className="text-gray-600 mb-4">Please connect your wallet to create a loan request</p>
-          <p className="text-sm text-gray-500">Click 'Login' in the navigation to connect</p>
+          <p className="text-sm text-gray-500">Open this app in Warpcast to get started</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Require Farcaster profile to create a loan
+  if (mounted && isConnected && !userProfile?.username) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
+          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Farcaster Profile Required</h2>
+          <p className="text-gray-600 mb-4">
+            To request funding, you need a verified Farcaster profile. This helps build trust with lenders.
+          </p>
+          <p className="text-sm text-gray-500">
+            Please open this app from Warpcast with a connected Farcaster account.
+          </p>
         </div>
       </div>
     );
@@ -1350,7 +1370,7 @@ export default function LoanCreationWizard() {
                 <div className="max-w-md mx-auto">
                   <LoanCard
                     address={"0x0000000000000000000000000000000000000000" as `0x${string}`}
-                    borrower={address || "0x0000000000000000000000000000000000000000" as `0x${string}`}
+                    borrower={(address || "0x0000000000000000000000000000000000000000") as `0x${string}`}
                     name={formData.loanPurposes.length > 0 ? `Funding for ${formData.loanPurposes.join(', ')}` : "What's this funding for?"}
                     description={""}
                     principal={formData.amount ? parseUnits(formData.amount, USDC_DECIMALS) : 0n}

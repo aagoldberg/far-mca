@@ -648,6 +648,33 @@ export default function CreateLoanForm() {
     );
   }
 
+  // Require Farcaster profile to create a loan
+  if (!profile?.username) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
+          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Farcaster Profile Required</h2>
+          <p className="text-gray-600 mb-4">
+            To request funding, you need a verified Farcaster profile linked to your wallet. This helps build trust with lenders.
+          </p>
+          <a
+            href="https://warpcast.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-5 py-2.5 bg-[#8A63D2] hover:bg-[#7952C1] text-white font-medium rounded-xl transition-colors"
+          >
+            Get Farcaster on Warpcast
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
       <button
