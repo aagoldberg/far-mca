@@ -1,10 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+// Lazy initialization to avoid build-time errors when env vars aren't available
+let supabase: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient {
+  if (!supabase) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase environment variables');
+    }
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabase;
+}
 
 // GET: Retrieve a draft by ID
 export async function GET(request: NextRequest) {
@@ -20,7 +30,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data: draft, error } = await supabase
+    const { data: draft, error } = await getSupabaseClient()
       .from('loan_drafts')
       .select('*')
       .eq('id', draftId)
@@ -73,7 +83,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { data: draft, error } = await supabase
+    const { data: draft, error } = await getSupabaseClient()
       .from('loan_drafts')
       .insert({
         wallet_address: walletAddress.toLowerCase(),
@@ -126,7 +136,7 @@ export async function PUT(request: NextRequest) {
     if (step4Data !== undefined) updateData.step4_data = step4Data;
     if (isCompleted !== undefined) updateData.is_completed = isCompleted;
 
-    const { data: draft, error } = await supabase
+    const { data: draft, error } = await getSupabaseClient()
       .from('loan_drafts')
       .update(updateData)
       .eq('id', id)
@@ -164,7 +174,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const { error } = await supabase
+    const { error } = await getSupabaseClient()
       .from('loan_drafts')
       .delete()
       .eq('id', draftId);

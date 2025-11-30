@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SquareClient } from '@/lib/square-client/index';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+// Lazy initialization to avoid build-time errors when env vars aren't available
+let supabase: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient {
+  if (!supabase) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase environment variables');
+    }
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabase;
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -70,7 +80,7 @@ export async function GET(request: NextRequest) {
       : 0;
 
     // Store connection in Supabase
-    const { data: connection, error: dbError } = await supabase
+    const { data: connection, error: dbError } = await getSupabaseClient()
       .from('business_connections')
       .upsert({
         wallet_address: wallet.toLowerCase(),
