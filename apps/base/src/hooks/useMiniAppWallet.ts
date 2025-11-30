@@ -25,29 +25,61 @@ export function useMiniAppWallet(): MiniAppWalletState {
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [isMiniApp, setIsMiniApp] = useState(false);
 
   // Also check wagmi connection for CDP Smart Wallet
   const wagmiAccount = useAccount();
 
   useEffect(() => {
-    // Check if already connected via SDK
-    checkConnection();
+    // Auto-connect when running in mini app context
+    autoConnectInMiniApp();
   }, []);
 
-  const checkConnection = async () => {
+  const autoConnectInMiniApp = async () => {
     try {
       // Check if running in mini app context
-      const context = await sdk.context.get();
+      const context = await sdk.context;
+      console.log('[MiniAppWallet] Context:', context);
+
       if (context?.user) {
+        setIsMiniApp(true);
         setUserProfile({
           fid: context.user.fid,
           username: context.user.username,
           displayName: context.user.displayName,
-          pfp: context.user.pfp,
+          pfp: context.user.pfpUrl,
         });
+
+        // Get wallet address from context - user is already authenticated in Farcaster
+        // The user's verified addresses or custody address should be available
+        const userAddress = context.user.verifiedAddresses?.ethAddresses?.[0]
+          || context.user.custodyAddress;
+
+        if (userAddress) {
+          console.log('[MiniAppWallet] Auto-connected with address:', userAddress);
+          setAddress(userAddress);
+          setIsConnected(true);
+        } else {
+          // If no address in context, try to get wallet via SDK
+          console.log('[MiniAppWallet] No address in context, requesting wallet...');
+          try {
+            const ethProvider = await sdk.wallet.ethProvider;
+            if (ethProvider) {
+              const accounts = await ethProvider.request({ method: 'eth_requestAccounts' }) as string[];
+              if (accounts && accounts.length > 0) {
+                console.log('[MiniAppWallet] Got wallet from ethProvider:', accounts[0]);
+                setAddress(accounts[0]);
+                setIsConnected(true);
+              }
+            }
+          } catch (walletError) {
+            console.log('[MiniAppWallet] Could not get wallet from ethProvider:', walletError);
+          }
+        }
       }
     } catch (error) {
-      console.log('Not running in mini app context');
+      console.log('[MiniAppWallet] Not running in mini app context:', error);
+      setIsMiniApp(false);
     }
   };
 
@@ -56,33 +88,48 @@ export function useMiniAppWallet(): MiniAppWalletState {
     setError(null);
 
     try {
-      // Try to connect via SDK first (for mini app context)
+      // If already in mini app context, try to get wallet from ethProvider
+      if (isMiniApp) {
+        const ethProvider = await sdk.wallet.ethProvider;
+        if (ethProvider) {
+          const accounts = await ethProvider.request({ method: 'eth_requestAccounts' }) as string[];
+          if (accounts && accounts.length > 0) {
+            console.log('[MiniAppWallet] Connected via ethProvider:', accounts[0]);
+            setAddress(accounts[0]);
+            setIsConnected(true);
+            return;
+          }
+        }
+      }
+
+      // Fallback: Try sdk.wallet.connect()
       const result = await sdk.wallet.connect();
+      console.log('[MiniAppWallet] sdk.wallet.connect result:', result);
 
       if (result.address) {
         setAddress(result.address);
         setIsConnected(true);
 
         // Get user context if available
-        const context = await sdk.context.get();
+        const context = await sdk.context;
         if (context?.user) {
           setUserProfile({
             fid: context.user.fid,
             username: context.user.username,
             displayName: context.user.displayName,
-            pfp: context.user.pfp,
+            pfp: context.user.pfpUrl,
           });
         }
       }
     } catch (error) {
-      // Fallback to CDP Smart Wallet if not in mini app context
-      console.log('SDK wallet connection failed, falling back to CDP');
-      setError('Please use the Connect button to connect via Smart Wallet');
+      console.log('[MiniAppWallet] SDK wallet connection failed:', error);
 
-      // The CDP connection will be handled by existing components
+      // Fallback to wagmi/CDP Smart Wallet if not in mini app context
       if (wagmiAccount.address) {
         setAddress(wagmiAccount.address);
         setIsConnected(true);
+      } else {
+        setError('Could not connect wallet. Please try again.');
       }
     } finally {
       setIsConnecting(false);
