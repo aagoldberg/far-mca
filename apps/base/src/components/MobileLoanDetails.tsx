@@ -35,10 +35,8 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   // Loading state
   if (isLoading || !loan) {
     return (
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        <div className="flex items-center justify-center flex-1">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#2C7A7B] border-t-transparent" />
-        </div>
+      <div className="flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#2C7A7B] border-t-transparent" />
       </div>
     );
   }
@@ -98,8 +96,8 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   const borrowerAvatar = borrowerProfile?.pfp_url;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Fixed Header */}
+    <div className="bg-gray-50 pb-32">
+      {/* Header with back button */}
       <div className="bg-white border-b border-gray-100 sticky top-0 z-20">
         <div className="flex items-center justify-between px-4 h-12">
           <button
@@ -133,8 +131,8 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
         </div>
       </div>
 
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto pb-32">
+      {/* Content */}
+      <div>
         {/* Hero Image */}
         {loan.imageUrl && (
           <div className="relative aspect-video bg-gray-100">
@@ -359,9 +357,6 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             <ShareIcon className="w-5 h-5" />
           </button>
         </div>
-        <p className="text-xs text-center text-gray-400 mt-2">
-          $5 min · ${Math.max(0, (loan.goal || 0) - (loan.raised || 0)).toLocaleString()} max
-        </p>
       </div>
 
       {/* Share Modal */}
