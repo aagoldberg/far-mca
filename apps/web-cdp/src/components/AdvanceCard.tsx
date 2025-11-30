@@ -24,6 +24,8 @@ const formatDate = (timestamp: bigint): string => {
   });
 };
 
+const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
+
 interface LoanMetadata {
   name?: string;
   description?: string;
@@ -44,14 +46,14 @@ export default function AdvanceCard({ loanAddress }: AdvanceCardProps) {
     if (loanData?.metadataURI) {
       setLoadingMetadata(true);
       const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
-        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        ? `${IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
         : loanData.metadataURI;
 
       fetch(metadataUrl)
         .then(res => res.json())
         .then(data => {
           if (data.image && data.image.startsWith('ipfs://')) {
-            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+            data.image = `${IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
           }
           setMetadata(data);
         })

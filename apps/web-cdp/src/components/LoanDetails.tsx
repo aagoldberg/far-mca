@@ -30,6 +30,8 @@ const formatDate = (timestamp: bigint): string => {
   });
 };
 
+const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
+
 interface LoanMetadata {
   name?: string;
   description?: string;
@@ -103,7 +105,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       setLoadingMetadata(true);
 
       const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
-        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        ? `${IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
         : loanData.metadataURI;
 
       fetch(metadataUrl)
@@ -114,7 +116,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         .then(data => {
           // Convert IPFS image URL if needed
           if (data.image && data.image.startsWith('ipfs://')) {
-            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+            data.image = `${IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
           }
           setMetadata(data);
         })
@@ -264,7 +266,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             src={(() => {
               const imageSource = metadata.imageUrl || metadata.image || '';
               return imageSource.startsWith('ipfs://')
-                ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${imageSource.replace('ipfs://', '')}`
+                ? `${IPFS_GATEWAY}${imageSource.replace('ipfs://', '')}`
                 : imageSource;
             })()}
             alt={metadata?.name || 'Loan'}

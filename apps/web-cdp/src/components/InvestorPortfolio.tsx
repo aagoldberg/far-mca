@@ -15,6 +15,8 @@ import {
   ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline';
 
+const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
+
 interface LoanMetadata {
   name?: string;
   description?: string;
@@ -330,7 +332,7 @@ function ContributionRow({
   useEffect(() => {
     if (loanData?.metadataURI) {
       const metadataUrl = loanData.metadataURI.startsWith('ipfs://')
-        ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
+        ? `${IPFS_GATEWAY}${loanData.metadataURI.replace('ipfs://', '')}`
         : loanData.metadataURI;
 
       fetch(metadataUrl)
@@ -338,7 +340,7 @@ function ContributionRow({
         .then(data => {
           // Convert IPFS image URLs to gateway URLs
           if (data.image && data.image.startsWith('ipfs://')) {
-            data.image = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
+            data.image = `${IPFS_GATEWAY}${data.image.replace('ipfs://', '')}`;
           }
           setMetadata(data);
         })
