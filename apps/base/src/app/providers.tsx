@@ -7,9 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { PaymentProvider } from "@/providers/payment/PaymentProvider";
 import { OnchainKitProvider } from '@coinbase/onchainkit';
-import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit';
 import { baseSepolia } from 'wagmi/chains';
-import '@rainbow-me/rainbowkit/styles.css';
 import { clearProfileCache, debugProfileCache } from '@/hooks/useFarcasterProfile';
 import { sdk } from "@farcaster/miniapp-sdk";
 
@@ -69,42 +67,30 @@ export function Providers({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // For mini apps, we don't need CDP provider wrapping everything
-  // CDP components can still be used individually when needed
+  // For mini apps, use Farcaster's wagmi connector - no RainbowKit needed
+  // The farcasterMiniApp connector auto-connects if user has wallet in Farcaster
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider
-          appInfo={{
-            appName: 'LendFriend Mini App',
+        <OnchainKitProvider
+          apiKey={CDP_API_KEY}
+          projectId={CDP_PROJECT_ID}
+          chain={baseSepolia}
+          config={{
+            appearance: {
+              mode: 'light',
+            },
+            paymaster: PAYMASTER_URL ? {
+              url: PAYMASTER_URL,
+            } : undefined,
           }}
-          theme={lightTheme({
-            accentColor: '#29738F',
-            accentColorForeground: 'white',
-            borderRadius: 'large',
-            fontStack: 'system',
-          })}
         >
-          <OnchainKitProvider
-            apiKey={CDP_API_KEY}
-            projectId={CDP_PROJECT_ID}
-            chain={baseSepolia}
-            config={{
-              appearance: {
-                mode: 'light',
-              },
-              paymaster: PAYMASTER_URL ? {
-                url: PAYMASTER_URL,
-              } : undefined,
-            }}
-          >
-            <ApolloProvider client={apolloClient}>
-              <PaymentProvider>
-                {children}
-              </PaymentProvider>
-            </ApolloProvider>
-          </OnchainKitProvider>
-        </RainbowKitProvider>
+          <ApolloProvider client={apolloClient}>
+            <PaymentProvider>
+              {children}
+            </PaymentProvider>
+          </ApolloProvider>
+        </OnchainKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

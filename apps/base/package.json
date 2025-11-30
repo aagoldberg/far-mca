@@ -19,6 +19,7 @@
     "@coinbase/onchainkit": "^0.38.19",
     "@coinbase/wallet-sdk": "^4.2.3",
     "@farcaster/miniapp-sdk": "^0.2.1",
+    "@farcaster/miniapp-wagmi-connector": "^1.1.0",
     "@heroicons/react": "^2.2.0",
     "@lifi/widget": "^3.23.3",
     "@neynar/nodejs-sdk": "^3.85.0",

@@ -1,9 +1,8 @@
 'use client';
 
-import { http } from "wagmi";
+import { http, createConfig } from "wagmi";
 import { base, baseSepolia } from "wagmi/chains";
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { coinbaseWallet } from "wagmi/connectors";
+import { farcasterMiniApp } from "@farcaster/miniapp-wagmi-connector";
 
 const alchemyRpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
 
@@ -11,11 +10,10 @@ if (!alchemyRpcUrl) {
   console.warn(`[Config Warning] NEXT_PUBLIC_RPC_URL is not set. Falling back to public RPC, which may be unreliable.`);
 }
 
-export const wagmiConfig = getDefaultConfig({
-  appName: "LendFriend",
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
+// Use Farcaster Mini App connector for seamless wallet integration
+// If user has a connected wallet in Farcaster, isConnected will be true automatically
+export const wagmiConfig = createConfig({
   chains: [baseSepolia, base],
-  ssr: true,
   transports: {
     [baseSepolia.id]: http(alchemyRpcUrl, {
       timeout: 10000,
@@ -24,6 +22,8 @@ export const wagmiConfig = getDefaultConfig({
     }),
     [base.id]: http(),
   },
+  connectors: [farcasterMiniApp()],
+  ssr: true,
 });
 
 // Re-export constants from constants.ts for convenience
