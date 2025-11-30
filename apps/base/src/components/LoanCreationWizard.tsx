@@ -713,10 +713,24 @@ export default function LoanCreationWizard() {
     );
   }
 
+  // Back button component for reuse
+  const BackButton = () => (
+    <button
+      onClick={() => router.push('/')}
+      className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+      <span className="font-medium">Back to Loans</span>
+    </button>
+  );
+
   // Loading state - only show after mount to prevent hydration issues
   if (mounted && isConnecting) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
+        <BackButton />
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
           <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Connecting Wallet...</h2>
@@ -728,6 +742,7 @@ export default function LoanCreationWizard() {
   if (mounted && !isConnected) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
+        <BackButton />
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
           <p className="text-gray-600 mb-4">Please connect your wallet to create a loan request</p>
@@ -741,6 +756,7 @@ export default function LoanCreationWizard() {
   if (mounted && isConnected && !userProfile?.username) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
+        <BackButton />
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

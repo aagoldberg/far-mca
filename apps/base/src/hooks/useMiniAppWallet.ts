@@ -28,9 +28,9 @@ export function useMiniAppWallet(): MiniAppWalletState {
   const { connect: wagmiConnect, connectors, isPending } = useConnect();
   const { disconnect: wagmiDisconnect } = useDisconnect();
 
-  // Fetch Farcaster user profile on mount
+  // Fetch Farcaster user profile and auto-connect on mount
   useEffect(() => {
-    const fetchProfile = async () => {
+    const initMiniApp = async () => {
       try {
         const context = await sdk.context;
         console.log('[MiniAppWallet] Farcaster context:', context);
@@ -42,14 +42,20 @@ export function useMiniAppWallet(): MiniAppWalletState {
             displayName: context.user.displayName,
             pfp: context.user.pfpUrl,
           });
+
+          // Auto-connect if not already connected
+          if (!isConnected && connectors.length > 0) {
+            console.log('[MiniAppWallet] Auto-connecting wallet...');
+            wagmiConnect({ connector: connectors[0] });
+          }
         }
       } catch (err) {
         console.log('[MiniAppWallet] Not in mini app context:', err);
       }
     };
 
-    fetchProfile();
-  }, []);
+    initMiniApp();
+  }, [isConnected, connectors, wagmiConnect]);
 
   // Log connection state changes
   useEffect(() => {
