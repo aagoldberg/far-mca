@@ -425,121 +425,102 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const maxContribution = remainingNeeded < usdcBalance ? remainingNeeded : usdcBalance;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
-      <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
-        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to loan
-      </Link>
+    <div className="px-4 py-6 pb-32">
+      {/* Header */}
+      <div className="flex items-center mb-6">
+        <Link
+          href={`/loan/${loanAddress}`}
+          className="p-2 -ml-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </Link>
+        <h1 className="text-xl font-bold text-gray-900 ml-2">Fund Loan</h1>
+      </div>
 
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Lend a Hand
-      </h1>
-      <p className="text-gray-600 mb-6">
-        Your interest-free loan helps a neighbor's dream become reality. Together, we lift each other up.
-      </p>
-
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Amount (USDC)
-          </label>
-          <div className="relative">
-            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
-              $
-            </span>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="0.00"
-              disabled={step !== 'input'}
-              max={formatUnits(maxContribution, USDC_DECIMALS)}
-              step="0.01"
-              className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
-            />
-          </div>
-          <div className="flex justify-between items-center mt-2 text-sm">
-            <p className="text-gray-500">
-              Balance: {balanceFormatted}
-            </p>
-            <button
-              onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
-              className="text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
-              disabled={step !== 'input'}
-            >
-              Max
-            </button>
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Remaining needed: ${formatUnits(remainingNeeded, USDC_DECIMALS)} USDC
-          </p>
+      {/* Amount Input Card */}
+      <div className="bg-white rounded-xl shadow-sm p-5 mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          Amount (USDC)
+        </label>
+        <div className="relative mb-3">
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
+            $
+          </span>
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="0.00"
+            disabled={step !== 'input'}
+            max={formatUnits(maxContribution, USDC_DECIMALS)}
+            step="0.01"
+            className="w-full pl-10 pr-4 py-4 text-2xl font-bold border border-gray-200 rounded-xl focus:border-[#2C7A7B] focus:ring-1 focus:ring-[#2C7A7B] outline-none disabled:bg-gray-50 disabled:text-gray-500"
+          />
         </div>
 
-        {errorMessage && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-            <p className="text-sm text-red-600">{errorMessage}</p>
-            {step === 'error' && (
-              <button
-                onClick={() => {
-                  setStep('input');
-                  setErrorMessage('');
-                }}
-                className="mt-2 text-sm text-red-700 hover:text-red-800 underline"
-              >
-                Try again
-              </button>
-            )}
-          </div>
-        )}
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-gray-500">Balance: {balanceFormatted}</span>
+          <button
+            onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
+            className="text-[#2C7A7B] font-medium"
+            disabled={step !== 'input'}
+          >
+            Max
+          </button>
+        </div>
+      </div>
 
+      {/* Remaining needed */}
+      <div className="bg-gray-50 rounded-xl p-4 mb-6">
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-gray-600">Remaining to fund</span>
+          <span className="font-semibold text-gray-900">
+            ${formatUnits(remainingNeeded, USDC_DECIMALS)} USDC
+          </span>
+        </div>
+      </div>
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+          <p className="text-sm text-red-600">{errorMessage}</p>
+          {step === 'error' && (
+            <button
+              onClick={() => {
+                setStep('input');
+                setErrorMessage('');
+              }}
+              className="mt-2 text-sm text-red-700 hover:text-red-800 underline"
+            >
+              Try again
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Status Message */}
+      {step !== 'input' && step !== 'success' && step !== 'error' && (
+        <div className="mb-4 p-4 bg-blue-50 rounded-xl">
+          <p className="text-sm text-blue-700 text-center">
+            {step === 'approve' && 'Approve USDC in your wallet...'}
+            {step === 'contribute' && 'Confirm contribution in your wallet...'}
+          </p>
+        </div>
+      )}
+
+      {/* Fixed Bottom Button */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-4 py-4">
         <button
           onClick={handleFund}
           disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
-          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="w-full bg-[#2C7A7B] hover:bg-[#234E52] text-white font-semibold py-4 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving USDC...'}
-          {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming contribution...'}
-          {step === 'input' && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
+          {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving...'}
+          {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming...'}
+          {step === 'input' && (needsApproval ? 'Approve & Fund' : 'Fund Loan')}
         </button>
-
-        {step !== 'input' && step !== 'success' && step !== 'error' && (
-          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-            <p className="text-sm text-blue-700 text-center">
-              {step === 'approve' && 'Please approve USDC spending in your wallet...'}
-              {step === 'contribute' && 'Please confirm the contribution in your wallet...'}
-            </p>
-          </div>
-        )}
-      </div>
-
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
-        <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-          <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-          Zero-Interest Model
-        </h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-gray-600">Interest Rate</span>
-            <span className="font-medium text-green-600">0%</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Repayment Multiple</span>
-            <span className="font-medium text-gray-900">1.0x</span>
-          </div>
-          <div className="flex justify-between pt-2 border-t border-green-200">
-            <span className="text-gray-600">You'll receive back</span>
-            <span className="font-semibold text-[#3B9B7F]">
-              ${amount && parseFloat(amount) > 0
-                ? parseFloat(amount).toFixed(2)
-                : '0.00'} USDC
-            </span>
-          </div>
-        </div>
-        <p className="text-xs text-gray-600 mt-4 italic">
-          This is lending with heart. Your generosity helps someone build their future, and you'll receive every dollar back - no interest charged, just community care.
-        </p>
       </div>
     </div>
   );
