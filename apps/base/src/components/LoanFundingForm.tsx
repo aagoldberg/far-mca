@@ -2,114 +2,37 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount, useBalance } from 'wagmi';
-import { useEvmAddress, useSendEvmTransaction, useCurrentUser } from '@coinbase/cdp-hooks';
-import { parseUnits, formatUnits, encodeFunctionData, createPublicClient, http } from 'viem';
-import { baseSepolia } from 'viem/chains';
+import { parseUnits, formatUnits } from 'viem';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useLoanData, useContribute } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCApprove, useNeedsApproval } from '@/hooks/useUSDC';
 import { USDC_DECIMALS } from '@/types/loan';
-import { USDC_ADDRESS } from '@/lib/wagmi';
-import TestUSDCABI from '@/abi/TestUSDC.json';
-import MicroLoanABI from '@/abi/MicroLoan.json';
-import { InlineFundingSection } from './InlineFundingSection';
-
-// Helper function to wait for transaction confirmation
-const waitForTransactionReceipt = async (txHash: string) => {
-  const publicClient = createPublicClient({
-    chain: baseSepolia,
-    transport: http(process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org'),
-  });
-
-  console.log('[CDP] Polling for transaction receipt:', txHash);
-
-  const receipt = await publicClient.waitForTransactionReceipt({
-    hash: txHash as `0x${string}`,
-    timeout: 60000, // 60 second timeout
-  });
-
-  if (receipt.status === 'reverted') {
-    console.error('[CDP] Transaction reverted. Receipt:', receipt);
-
-    // Try to get the revert reason and decode it
-    try {
-      const tx = await publicClient.getTransaction({ hash: txHash as `0x${string}` });
-      console.error('[CDP] Failed transaction details:', tx);
-
-      // Try to simulate the failed transaction to get revert reason
-      try {
-        await publicClient.call({
-          data: tx.input,
-          to: tx.to,
-          from: tx.from,
-          value: tx.value,
-          blockNumber: receipt.blockNumber - 1n,
-        });
-      } catch (simulationError: any) {
-        console.error('[CDP] Revert simulation error:', simulationError.shortMessage || simulationError.message);
-
-        // Check if it's a known contract error
-        const errorMsg = simulationError.shortMessage || simulationError.message || '';
-        if (errorMsg.includes('SafeERC20FailedOperation')) {
-          throw new Error('USDC transfer failed. The USDC contract rejected the transfer. This usually means insufficient balance or allowance.');
-        } else if (errorMsg.includes('GoalExceeded')) {
-          throw new Error('This loan has been fully funded or your contribution would exceed the goal.');
-        } else if (errorMsg.includes('FundraisingNotActive')) {
-          throw new Error('Fundraising has ended for this loan.');
-        }
-      }
-    } catch (e: any) {
-      if (e.message.includes('USDC transfer') || e.message.includes('fully funded') || e.message.includes('Fundraising')) {
-        throw e; // Re-throw our specific errors
-      }
-      console.error('[CDP] Could not fetch transaction details:', e);
-    }
-
-    throw new Error('Transaction failed on-chain. The blockchain rejected this transaction. Please try refreshing the page and checking your balance.');
-  }
-
-  return receipt;
-};
 
 interface LoanFundingFormProps {
   loanAddress: `0x${string}`;
 }
 
 export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
+  const router = useRouter();
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
-  const [needsFunding, setNeedsFunding] = useState(false);
 
-  // Check for both external wallet (wagmi) and CDP embedded wallet
-  const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
-  const { evmAddress: cdpAddress } = useEvmAddress();
-  const { currentUser } = useCurrentUser();
-
-  // CDP creates BOTH an EOA and Smart Account when createOnLogin: 'smart'
-  // - evmAddress returns the Smart Account (for display)
-  // - evmAccounts[0] is the EOA (for signing with useSendEvmTransaction)
-  const cdpEoaAddress = (currentUser as any)?.evmAccounts?.[0] as `0x${string}` | undefined;
-
-  // Use whichever wallet is available (Smart Account for display)
-  const address = externalAddress || cdpAddress;
-  const isConnected = isExternalConnected || !!cdpAddress;
-  const isCdpWallet = !!cdpAddress && !isExternalConnected;
+  // Use wagmi for wallet connection (works with Farcaster mini app connector)
+  const { address, isConnected } = useAccount();
 
   const { loanData, isLoading: loanLoading } = useLoanData(loanAddress);
   const { balance: usdcBalance, balanceFormatted } = useUSDCBalance(address);
 
   // Get ETH balance for gas estimation
-  const { data: ethBalance, refetch: refetchEthBalance } = useBalance({
+  const { data: ethBalance } = useBalance({
     address: address,
   });
 
-  // CDP transaction hooks
-  const { sendEvmTransaction: sendCdpTransaction, isPending: isCdpPending } = useSendEvmTransaction();
-
   // Check if approval needed
   const amountBigInt = amount ? parseUnits(amount, USDC_DECIMALS) : 0n;
-  const { needsApproval, currentAllowance } = useNeedsApproval(
+  const { needsApproval } = useNeedsApproval(
     address,
     loanAddress,
     amountBigInt
@@ -145,27 +68,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
       setStep('success');
     }
   }, [isContributeSuccess]);
-
-  // Always show funding section for low balances (proactive, not reactive)
-  // This helps users add funds BEFORE they decide how much to contribute
-  useEffect(() => {
-    const estimatedGasETH = parseUnits('0.002', 18); // Rough estimate for gas
-    const minRecommendedUSDC = parseUnits('10', USDC_DECIMALS); // $10 minimum recommendation
-
-    const hasLowUSDC = usdcBalance < minRecommendedUSDC;
-    const hasLowETH = (ethBalance?.value || 0n) < estimatedGasETH;
-
-    // Show funding if balance is low OR if amount exceeds balance
-    if (amount && parseFloat(amount) > 0) {
-      const amountInUnits = parseUnits(amount, USDC_DECIMALS);
-      const hasEnoughUSDC = usdcBalance >= amountInUnits;
-      const hasEnoughETH = (ethBalance?.value || 0n) >= estimatedGasETH;
-      setNeedsFunding(!hasEnoughUSDC || !hasEnoughETH);
-    } else {
-      // No amount entered yet - show if balances are low
-      setNeedsFunding(hasLowUSDC || hasLowETH);
-    }
-  }, [amount, usdcBalance, ethBalance]);
 
   // Helper function to parse error messages
   const parseErrorMessage = (error: any): string => {
@@ -254,50 +156,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     try {
       setStep('approve');
       setErrorMessage('');
-
-      if (isCdpWallet) {
-        // Use CDP transaction for approval
-        const approveData = encodeFunctionData({
-          abi: TestUSDCABI.abi,
-          functionName: 'approve',
-          args: [loanAddress, amountInUnits],
-        });
-
-        console.log('[CDP] Sending approval transaction...');
-
-        if (!cdpEoaAddress) {
-          throw new Error('CDP EOA address not found. Please disconnect and reconnect your wallet.');
-        }
-
-        const result = await sendCdpTransaction({
-          transaction: {
-            to: USDC_ADDRESS,
-            data: approveData,
-            value: 0n,
-            gas: 100000n, // Gas limit for approve
-            chainId: 84532, // Base Sepolia
-            type: "eip1559" as const,
-          },
-          evmAccount: cdpEoaAddress, // Use CDP EOA for signing
-          network: 'base-sepolia',
-        });
-
-        console.log('[CDP] Approval transaction sent:', result);
-
-        // Wait for transaction to be mined on-chain
-        if (result?.transactionHash) {
-          console.log('[CDP] Waiting for approval confirmation...');
-          // Wait for the transaction to be confirmed (poll for receipt)
-          await waitForTransactionReceipt(result.transactionHash);
-          console.log('[CDP] Approval confirmed on-chain');
-        }
-
-        // Auto-proceed to contribute
-        handleContribute();
-      } else {
-        // Use wagmi for external wallets
-        await approve(loanAddress, amountInUnits, false);
-      }
+      await approve(loanAddress, amountInUnits, false);
     } catch (error: any) {
       console.error('[Approve] Error:', error);
       setStep('error');
@@ -310,54 +169,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
       setStep('contribute');
       setErrorMessage('');
       const amountInUnits = parseUnits(amount, USDC_DECIMALS);
-
-      if (isCdpWallet) {
-        // Use CDP transaction for contribution
-        const contributeData = encodeFunctionData({
-          abi: MicroLoanABI.abi,
-          functionName: 'contribute',
-          args: [amountInUnits],
-        });
-
-        console.log('[CDP] Sending contribution transaction...');
-        console.log('[CDP] Transaction details:', {
-          to: loanAddress,
-          amount: amountInUnits.toString(),
-          from: cdpEoaAddress,
-        });
-
-        if (!cdpEoaAddress) {
-          throw new Error('CDP EOA address not found. Please disconnect and reconnect your wallet.');
-        }
-
-        const result = await sendCdpTransaction({
-          transaction: {
-            to: loanAddress,
-            data: contributeData,
-            value: 0n,
-            gas: 200000n, // Increased gas limit for contribute
-            chainId: 84532, // Base Sepolia
-            type: "eip1559" as const,
-          },
-          evmAccount: cdpEoaAddress, // Use CDP EOA for signing
-          network: 'base-sepolia',
-        });
-
-        console.log('[CDP] Contribution transaction sent:', result);
-
-        // Wait for transaction to be mined on-chain
-        if (result?.transactionHash) {
-          console.log('[CDP] Waiting for contribution confirmation...');
-          await waitForTransactionReceipt(result.transactionHash);
-          console.log('[CDP] Contribution confirmed on-chain');
-        }
-
-        // Show success only after blockchain confirmation
-        setStep('success');
-      } else {
-        // Use wagmi for external wallets
-        await contribute(loanAddress, amountInUnits);
-      }
+      await contribute(loanAddress, amountInUnits);
     } catch (error: any) {
       console.error('[Contribute] Error:', error);
       setStep('error');
@@ -365,103 +177,15 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     }
   };
 
-  const handleFundingComplete = async () => {
-    console.log('[Funding] Funding complete, rechecking balances');
-    // Refetch balances
-    await refetchEthBalance();
-    // USDC balance will auto-refresh via the hook
-    // The useEffect will automatically update needsFunding state
-  };
-
   const handleFund = async () => {
-    console.log('[Fund] Starting fund process. Needs approval:', needsApproval);
-    console.log('[Fund] Current allowance:', currentAllowance?.toString());
-    console.log('[Fund] Amount to contribute:', amountBigInt.toString());
-    console.log('[Fund] Loan address (spender):', loanAddress);
-    console.log('[Fund] User address (wagmi):', externalAddress);
-    console.log('[Fund] User address (CDP):', cdpAddress);
-    console.log('[Fund] Active wallet:', address);
-    console.log('[Fund] Using CDP wallet:', isCdpWallet);
-    console.log('[Fund] Loan state - Total funded:', loanData?.totalFunded.toString(), 'Principal:', loanData?.principal.toString());
-    console.log('[Fund] Remaining needed:', (loanData?.principal && loanData?.totalFunded) ? (loanData.principal - loanData.totalFunded).toString() : 'unknown');
-
-    // Fetch real-time on-chain state before transaction
-    try {
-      const publicClient = createPublicClient({
-        chain: baseSepolia,
-        transport: http(process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org'),
-      });
-
-      // Check actual on-chain USDC balance
-      const onChainBalance = await publicClient.readContract({
-        address: USDC_ADDRESS,
-        abi: TestUSDCABI.abi,
-        functionName: 'balanceOf',
-        args: [address],
-      }) as bigint;
-
-      // Check actual on-chain loan state
-      const [onChainTotalFunded, onChainPrincipal, onChainFundraisingActive] = await Promise.all([
-        publicClient.readContract({
-          address: loanAddress,
-          abi: MicroLoanABI.abi,
-          functionName: 'totalFunded',
-        }) as Promise<bigint>,
-        publicClient.readContract({
-          address: loanAddress,
-          abi: MicroLoanABI.abi,
-          functionName: 'principal',
-        }) as Promise<bigint>,
-        publicClient.readContract({
-          address: loanAddress,
-          abi: MicroLoanABI.abi,
-          functionName: 'fundraisingActive',
-        }) as Promise<boolean>,
-      ]);
-
-      console.log('[Fund] On-chain USDC balance:', onChainBalance.toString());
-      console.log('[Fund] On-chain loan total funded:', onChainTotalFunded.toString());
-      console.log('[Fund] On-chain loan principal:', onChainPrincipal.toString());
-      console.log('[Fund] On-chain fundraising active:', onChainFundraisingActive);
-
-      // Check if USDC balance is sufficient
-      if (onChainBalance < amountBigInt) {
-        setStep('error');
-        setErrorMessage(`Insufficient USDC balance. You have ${formatUnits(onChainBalance, USDC_DECIMALS)} USDC but trying to contribute ${amount} USDC.`);
-        return;
-      }
-
-      // Check if loan is already fully funded
-      if (onChainTotalFunded >= onChainPrincipal) {
-        setStep('error');
-        setErrorMessage('This loan has already been fully funded! Please refresh the page.');
-        return;
-      }
-
-      // Check if contribution would exceed goal
-      if (onChainTotalFunded + amountBigInt > onChainPrincipal) {
-        const remaining = onChainPrincipal - onChainTotalFunded;
-        setStep('error');
-        setErrorMessage(`This loan only needs ${formatUnits(remaining, USDC_DECIMALS)} USDC more. Please reduce your contribution amount.`);
-        return;
-      }
-
-      // Check if fundraising is still active
-      if (!onChainFundraisingActive) {
-        setStep('error');
-        setErrorMessage('Fundraising for this loan is no longer active. Please refresh the page.');
-        return;
-      }
-    } catch (error) {
-      console.error('[Fund] Error checking on-chain state:', error);
-      // Continue anyway - let the transaction fail if there's an issue
+    if (!amount || parseFloat(amount) <= 0) {
+      setErrorMessage('Please enter a valid amount');
+      return;
     }
 
     if (needsApproval) {
-      console.log('[Fund] Approval required, calling handleApprove');
       await handleApprove();
     } else {
-      console.log('[Fund] No approval needed, proceeding to contribute');
       await handleContribute();
     }
   };
@@ -753,18 +477,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </p>
         </div>
 
-        {/* Inline Funding Section - shows proactively when balance is low */}
-        {needsFunding && step === 'input' && (
-          <InlineFundingSection
-            requiredUSDC={amount && parseFloat(amount) > 0 ? parseUnits(amount, USDC_DECIMALS) : 0n}
-            requiredETH={parseUnits('0.002', 18)}
-            currentUSDC={usdcBalance}
-            currentETH={ethBalance?.value || 0n}
-            walletAddress={address}
-            onFundingComplete={handleFundingComplete}
-          />
-        )}
-
         {errorMessage && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-sm text-red-600">{errorMessage}</p>
@@ -784,13 +496,12 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
         <button
           onClick={handleFund}
-          disabled={!amount || parseFloat(amount) <= 0 || step !== 'input' || needsFunding}
+          disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
           className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          {step === 'approve' && ((isApproving || isApproveTxConfirming) || isCdpPending) && 'Approving USDC...'}
-          {step === 'contribute' && ((isContributing || isContributeTxConfirming) || isCdpPending) && 'Confirming contribution...'}
-          {step === 'input' && needsFunding && 'Add Funds First'}
-          {step === 'input' && !needsFunding && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
+          {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving USDC...'}
+          {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming contribution...'}
+          {step === 'input' && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
         </button>
 
         {step !== 'input' && step !== 'success' && step !== 'error' && (

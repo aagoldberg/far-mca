@@ -141,7 +141,7 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             <img
               src={loan.imageUrl}
               alt={loan.title || loan.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
         )}

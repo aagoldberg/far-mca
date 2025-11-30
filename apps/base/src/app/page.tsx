@@ -51,7 +51,7 @@ function MiniLoanCard({ loan }: { loan: any }) {
             <img
               src={loan.imageUrl}
               alt={loan.title || loan.name}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover object-top"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
