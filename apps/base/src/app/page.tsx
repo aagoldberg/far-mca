@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useMiniAppWallet } from "@/hooks/useMiniAppWallet";
 import { useLoansWithMetadata, useLoanWithMetadata } from "@/hooks/useLoansWithMetadata";
+import { useFarcasterProfile } from "@/hooks/useFarcasterProfile";
 
 // Loading skeleton for loan cards
 function LoanCardSkeleton() {
@@ -34,20 +35,18 @@ function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
   return <MiniLoanCard loan={loan} />;
 }
 
-// Enhanced mobile-first loan card with Farcaster-inspired UX
+// Clean mobile loan card
 function MiniLoanCard({ loan }: { loan: any }) {
   const progress = loan.progress || 0;
-  const hasContributors = loan.contributorsCount && loan.contributorsCount > 0;
+  const borrowerAddress = loan.borrower || loan.creator;
+  const { profile: borrowerProfile } = useFarcasterProfile(borrowerAddress);
 
   return (
-    <Link href={`/loan/${loan.address}`} className="block group">
-      <div className="relative bg-white rounded-xl shadow-sm hover:shadow-lg active:shadow-xl transition-all duration-300 overflow-hidden">
-        {/* Hover gradient border effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3B9B7F]/10 via-transparent to-[#2E7D68]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
-
+    <Link href={`/loan/${loan.address}`} className="block">
+      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {/* Loan image */}
         {loan.imageUrl && (
-          <div className="relative w-full bg-gray-100" style={{ paddingBottom: '56.25%' /* 16:9 aspect ratio */ }}>
+          <div className="relative w-full bg-gray-100" style={{ paddingBottom: '56.25%' }}>
             <img
               src={loan.imageUrl}
               alt={loan.title || loan.name}
@@ -56,68 +55,44 @@ function MiniLoanCard({ loan }: { loan: any }) {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
-          </div>
-        )}
-
-        <div className="relative p-4">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 text-sm leading-tight group-hover:text-[#2E7D68] transition-colors">
-                {loan.title || loan.name || 'Community Loan'}
-              </h3>
-              <p className="text-xs text-gray-500 mt-1">
-                by @{loan.creator || loan.borrower?.slice(0, 6)}
-              </p>
-            </div>
+            {/* Days left badge */}
             {loan.daysLeft !== undefined && (
-              <div className="flex items-center gap-1 text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-lg">
-                <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              <div className="absolute top-3 right-3 flex items-center gap-1 text-xs bg-white/90 backdrop-blur-sm text-gray-700 px-2 py-1 rounded-full shadow-sm">
                 <span className="font-medium">{loan.daysLeft}d left</span>
               </div>
             )}
           </div>
+        )}
 
-          <div className="space-y-2">
-            {/* Enhanced progress bar with gradient and shimmer */}
-            <div className="relative w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200" />
-              <div
-                className="relative h-full rounded-full transition-all duration-500 bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] shadow-sm"
-                style={{ width: `${Math.min(progress, 100)}%` }}
-              >
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-              </div>
-            </div>
+        <div className="p-4">
+          {/* Title */}
+          <h3 className="font-semibold text-gray-900 text-base leading-snug mb-3">
+            {loan.title || loan.name || 'Community Loan'}
+          </h3>
 
-            <div className="flex justify-between items-baseline">
-              <span className="text-sm font-bold bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] bg-clip-text text-transparent">
+          {/* Progress bar */}
+          <div className="w-full bg-gray-100 rounded-full h-2 mb-3 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-[#2C7A7B]"
+              style={{ width: `${Math.min(progress, 100)}%` }}
+            />
+          </div>
+
+          {/* Funding info */}
+          <div className="flex justify-between items-center">
+            <div>
+              <span className="text-base font-bold text-[#2C7A7B]">
                 ${loan.raised?.toLocaleString() || '0'}
               </span>
-              <span className="text-xs text-gray-500">
+              <span className="text-sm text-gray-500 ml-1">
                 of ${loan.goal?.toLocaleString() || '0'}
               </span>
             </div>
-
-            {/* Contributors footer */}
-            <div className="pt-2 mt-2 border-t border-gray-100/80">
-              {hasContributors ? (
-                <div className="flex items-center gap-2 text-xs text-gray-500">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  <span>{loan.contributorsCount} {loan.contributorsCount === 1 ? 'supporter' : 'supporters'}</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-1.5 text-xs text-gray-400 italic">
-                  <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  <span>Be the first supporter</span>
-                </div>
-              )}
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span>{loan.contributorsCount || 0} supporters</span>
             </div>
           </div>
         </div>
