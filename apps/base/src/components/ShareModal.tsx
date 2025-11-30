@@ -180,36 +180,38 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity">
-            <div className="bg-white rounded-xl shadow-2xl p-6 m-4 w-full max-w-2xl relative animate-in slide-in-from-bottom-10 fade-in-25 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity px-4">
+            <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md relative animate-in slide-in-from-bottom-10 fade-in-25 max-h-[90vh] overflow-y-auto">
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+                    className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors z-10"
                 >
-                    <XMarkIcon className="w-6 h-6" />
+                    <XMarkIcon className="w-5 h-5" />
                 </button>
 
-                <h2 className="text-xl font-bold mb-5 text-gray-900">Help make this happen</h2>
+                <div className="text-center mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Share this loan</h2>
+                    <p className="text-sm text-gray-600">Help {loan.borrower} reach their funding goal</p>
+                </div>
 
                 {/* OG Card Preview */}
-                <div className="mb-5">
-                    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-md">
+                <div className="mb-6">
+                    <div className="border border-gray-200 rounded-lg overflow-hidden">
                         {imageLoading && !imageError && (
-                            <div className="w-full h-[315px] bg-gray-100 flex items-center justify-center">
+                            <div className="w-full h-[240px] bg-gray-50 flex items-center justify-center">
                                 <div className="text-center">
-                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3B9B7F] mx-auto mb-2"></div>
-                                    <p className="text-sm text-gray-500">Loading preview...</p>
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2C7A7B] mx-auto mb-2"></div>
+                                    <p className="text-xs text-gray-500">Loading preview...</p>
                                 </div>
                             </div>
                         )}
                         {imageError ? (
-                            <div className="w-full h-[315px] bg-gray-50 flex items-center justify-center p-6">
+                            <div className="w-full h-[240px] bg-gray-50 flex items-center justify-center p-4">
                                 <div className="text-center">
-                                    <svg className="w-16 h-16 text-gray-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="w-12 h-12 text-gray-300 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <p className="text-sm text-gray-500 mb-1">Preview unavailable</p>
-                                    <p className="text-xs text-gray-400">Share card will still work when shared</p>
+                                    <p className="text-xs text-gray-500">Preview unavailable</p>
                                 </div>
                             </div>
                         ) : (
@@ -228,49 +230,50 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     </div>
                 </div>
 
-                {/* Impact Message - moved up for prominence */}
-                <div className="mb-5 p-3 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-sm text-green-800 text-center font-semibold">
-                        Shared loans get funded 3× faster
-                    </p>
-                </div>
-
-                {/* URL Copy Section - simplified */}
-                <div className="mb-5">
+                {/* URL Copy Section */}
+                <div className="mb-6">
                     <button
                         onClick={handleCopyToClipboard}
-                        className="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm font-semibold transition-colors gap-2"
+                        className="w-full flex items-center justify-center px-4 py-3.5 bg-[#2C7A7B] hover:bg-[#245F60] text-white rounded-lg font-medium transition-colors gap-2 shadow-sm"
                     >
                         {copied ? (
                             <>
-                                <ClipboardDocumentCheckIcon className="w-5 h-5 text-green-600" />
-                                <span className="text-green-600">Link copied!</span>
+                                <ClipboardDocumentCheckIcon className="w-5 h-5" />
+                                <span>Link copied!</span>
                             </>
                         ) : (
                             <>
-                                <ClipboardDocumentIcon className="w-5 h-5 text-gray-600" />
-                                <span className="text-gray-700">Copy link</span>
+                                <ClipboardDocumentIcon className="w-5 h-5" />
+                                <span>Copy link</span>
                             </>
                         )}
                     </button>
                 </div>
 
+                {/* Divider */}
+                <div className="relative mb-6">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                        <span className="px-4 bg-white text-sm text-gray-500">OR</span>
+                    </div>
+                </div>
+
                 {/* Social Sharing Section */}
-                <div className="border-t border-gray-200 pt-5">
+                <div>
 
                     {/* Primary Share Buttons */}
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 gap-3 mb-4">
                         {primaryPlatforms.map(platform => (
                             <button
                                 key={platform.id}
                                 onClick={() => handlePlatformShare(platform.id)}
-                                className={`flex flex-col items-center justify-center p-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${platform.brandColor} text-white`}
+                                className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${platform.brandColor} text-white`}
                                 title={`Share on ${platform.name}`}
                             >
-                                <div className="flex-shrink-0 mb-1.5">
-                                    {platform.icon}
-                                </div>
-                                <span className="text-xs font-medium">
+                                {platform.icon}
+                                <span className="text-sm">
                                     {platform.name}
                                 </span>
                             </button>
@@ -295,24 +298,27 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
 
                     {/* More Platform Options */}
                     {showMoreOptions && (
-                        <div className="grid grid-cols-3 gap-3 mt-3 animate-in slide-in-from-top-2 fade-in-50">
+                        <div className="grid grid-cols-2 gap-3 mt-3">
                             {morePlatforms.map(platform => (
                                 <button
                                     key={platform.id}
                                     onClick={() => handlePlatformShare(platform.id)}
-                                    className={`flex flex-col items-center justify-center p-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${platform.brandColor} text-white`}
+                                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${platform.brandColor} text-white`}
                                     title={`Share on ${platform.name}`}
                                 >
-                                    <div className="flex-shrink-0 mb-1.5">
-                                        {platform.icon}
-                                    </div>
-                                    <span className="text-xs font-medium">
+                                    {platform.icon}
+                                    <span className="text-sm">
                                         {platform.name}
                                     </span>
                                 </button>
                             ))}
                         </div>
                     )}
+
+                    {/* Helper text */}
+                    <p className="text-xs text-gray-500 text-center mt-6">
+                        Shared loans get funded 3× faster
+                    </p>
                 </div>
             </div>
         </div>
