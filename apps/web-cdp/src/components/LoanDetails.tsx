@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { TrustSignals } from '@/components/TrustSignals';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import ShareModal from '@/components/ShareModal';
+import LoanUpdates from '@/components/LoanUpdates';
 import type { LoanShareData } from '@/utils/shareUtils';
 
 interface LoanDetailsProps {
@@ -491,6 +492,11 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             <p className="text-base font-bold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
           </div>
         </div>
+      </div>
+
+      {/* Loan Updates */}
+      <div className="mb-5">
+        <LoanUpdates loanAddress={loanAddress} />
       </div>
 
       {/* Contributors - Simple Count (Mobile Only) */}
