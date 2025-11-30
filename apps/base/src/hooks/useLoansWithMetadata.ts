@@ -21,6 +21,7 @@ export interface LoanWithMetadata {
   name?: string;
   title?: string;
   description?: string;
+  fullDescription?: string;
   image?: string;
   imageUrl?: string;
 
@@ -42,6 +43,15 @@ export function useLoansWithMetadata() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // If there's an error fetching loans, treat it as no loans available
+    // This handles cases where the contract hasn't been deployed or network issues
+    if (error) {
+      console.warn('[useLoansWithMetadata] Error fetching loan addresses:', error);
+      setLoansWithMetadata([]);
+      setIsLoading(false);
+      return;
+    }
+
     if (!loanAddresses || loanAddresses.length === 0) {
       setLoansWithMetadata([]);
       setIsLoading(false);
@@ -66,13 +76,13 @@ export function useLoansWithMetadata() {
     };
 
     fetchLoansData();
-  }, [loanAddresses]);
+  }, [loanAddresses, error]);
 
   return {
     loans: loansWithMetadata,
     loanAddresses: loanAddresses || [],
     isLoading: isLoadingAddresses || isLoading,
-    error,
+    error: undefined, // Don't propagate errors to UI, just show empty state
   };
 }
 
@@ -133,6 +143,7 @@ export function useLoanWithMetadata(loanAddress: `0x${string}`) {
     name: metadata?.name || metadata?.title,
     title: metadata?.name || metadata?.title,
     description: metadata?.description,
+    fullDescription: metadata?.fullDescription,
     image: metadata?.image,
     imageUrl: metadata?.image,
     creator: metadata?.borrower || loanData.borrower,

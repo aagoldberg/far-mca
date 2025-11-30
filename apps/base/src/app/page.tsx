@@ -179,12 +179,6 @@ export default function Home() {
                   <LoanCardSkeleton key={i} />
                 ))}
               </div>
-            ) : error ? (
-              /* Error State */
-              <div className="text-center py-12">
-                <p className="text-sm text-red-500">Error loading loans</p>
-                <p className="text-xs text-gray-500 mt-1">{error.message}</p>
-              </div>
             ) : loanAddresses.length === 0 ? (
               /* Empty State */
               <div className="text-center py-12">

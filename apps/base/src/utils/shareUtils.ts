@@ -47,6 +47,8 @@ export const generateShareUrls = (loan: LoanShareData, customMessage?: string): 
   return {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullTrackedUrl('facebook'))}`,
 
+    messenger: `https://www.facebook.com/dialog/send?link=${encodeURIComponent(fullTrackedUrl('messenger'))}&app_id=YOUR_APP_ID&redirect_uri=${encodeURIComponent(loanUrl)}`,
+
     twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${shareText}\n\n${shortTrackedUrl('twitter')}`)}`,
 
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(fullTrackedUrl('linkedin'))}&title=${encodeURIComponent(loan.title)}&summary=${encodeURIComponent(shareText)}`,
@@ -62,6 +64,8 @@ export const generateShareUrls = (loan: LoanShareData, customMessage?: string): 
     discord: fullTrackedUrl('discord'), // Discord doesn't have direct share link, will copy to clipboard
 
     sms: `sms:?&body=${encodeURIComponent(`${shareText}\n\n${fullTrackedUrl('sms')}`)}`,
+
+    nextdoor: `https://nextdoor.com/sharekit/?source=share_url&body=${encodeURIComponent(`${shareText}\n\n${fullTrackedUrl('nextdoor')}`)}`,
 
     farcaster: `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(fullTrackedUrl('farcaster'))}`,
 
