@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import LoanDetails from '@/components/LoanDetails';
+import MobileLoanDetails from '@/components/MobileLoanDetails';
 import { getLoanDataForMetadata } from '@/lib/loanMetadata';
 
 interface PageProps {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Auto-detect base URL from Vercel or use env variable
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3004');
+    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3005');
   const loanUrl = `${baseUrl}/loan/${address}`;
 
   return {
@@ -64,5 +64,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function LoanDetailPage({ params }: PageProps) {
   const { address } = await params;
 
-  return <LoanDetails loanAddress={address as `0x${string}`} />;
+  return <MobileLoanDetails loanAddress={address as `0x${string}`} />;
 }

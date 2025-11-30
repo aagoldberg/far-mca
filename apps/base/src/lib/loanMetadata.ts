@@ -17,8 +17,47 @@ export interface LoanMetadata {
   borrower: string;
 }
 
+// Mock data for development
+const MOCK_LOANS: Record<string, LoanMetadata> = {
+  '0x1234567890123456789012345678901234567890': {
+    title: 'Sewing Machine for Business',
+    description: 'Professional sewing machine to expand tailoring business',
+    principal: 600,
+    totalFunded: 10,
+    borrower: '0xabcdef1234567890abcdef1234567890abcdef12',
+  },
+  '0x2345678901234567890123456789012345678901': {
+    title: 'Food Truck Equipment',
+    description: 'Commercial kitchen equipment for mobile food business',
+    principal: 2000,
+    totalFunded: 250,
+    borrower: '0xbcdef1234567890abcdef1234567890abcdef123',
+  },
+  '0x3456789012345678901234567890123456789012': {
+    title: 'Laptop for Coding Bootcamp',
+    description: 'MacBook Pro for software development training',
+    principal: 1200,
+    totalFunded: 800,
+    borrower: '0xcdef1234567890abcdef1234567890abcdef1234',
+  },
+  '0x4567890123456789012345678901234567890123': {
+    title: 'Inventory for Online Store',
+    description: 'Initial inventory purchase for e-commerce launch',
+    principal: 1500,
+    totalFunded: 450,
+    borrower: '0xdef1234567890abcdef1234567890abcdef12345',
+  },
+};
+
 export async function getLoanDataForMetadata(address: string): Promise<LoanMetadata | null> {
   try {
+    // Check if this is a mock address for development
+    const mockData = MOCK_LOANS[address.toLowerCase()];
+    if (mockData) {
+      console.log('[getLoanDataForMetadata] Returning mock data for:', address);
+      return mockData;
+    }
+
     // Get RPC URL from environment (check multiple possible variable names)
     const rpcUrl = process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL ||
                    process.env.NEXT_PUBLIC_RPC_URL ||

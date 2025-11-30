@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ArrowLeftIcon, ShareIcon, HeartIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 import { useMiniAppWallet } from "@/hooks/useMiniAppWallet";
+import ShareModal from "@/components/ShareModal";
+import type { LoanShareData } from "@/utils/shareUtils";
 
 // Mock loan data - replace with actual data fetching
 const mockLoan = {
@@ -48,9 +50,22 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   const router = useRouter();
   const { isConnected, connect } = useMiniAppWallet();
   const [isLiked, setIsLiked] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const progress = (mockLoan.raised / mockLoan.goal) * 100;
   const weeklyPayment = (mockLoan.goal / mockLoan.repaymentWeeks).toFixed(2);
+
+  // Prepare loan data for ShareModal
+  const loanShareData: LoanShareData = {
+    id: mockLoan.id,
+    title: mockLoan.title,
+    borrower: mockLoan.creator,
+    description: mockLoan.description,
+    image: mockLoan.imageUrl,
+    principal: mockLoan.goal,
+    totalFunded: mockLoan.raised,
+    progressPercentage: progress,
+  };
 
   const handleFund = async () => {
     if (!isConnected) {
@@ -60,18 +75,8 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
     router.push(`/loan/${loanAddress}/fund`);
   };
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: mockLoan.title,
-          text: `Help fund: ${mockLoan.title}`,
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.log("Share cancelled");
-      }
-    }
+  const handleShare = () => {
+    setIsShareModalOpen(true);
   };
 
   return (
@@ -309,12 +314,6 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
               )}
             </div>
           </div>
-
-          {/* Trust Badge */}
-          <div className="bg-green-50 rounded-lg p-3 text-xs text-green-700">
-            <div className="font-medium mb-1">Community verified</div>
-            <div>This loan request has been reviewed by the community</div>
-          </div>
         </div>
       </div>
 
@@ -338,6 +337,13 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
           Min. contribution $5 · Max. ${mockLoan.goal - mockLoan.raised}
         </p>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        loan={loanShareData}
+      />
     </div>
   );
 }

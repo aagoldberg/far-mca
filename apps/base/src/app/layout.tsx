@@ -28,10 +28,24 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL ||
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: "LendFriend | Community-Powered Interest-Free Loans",
-  description: "Building reputation-based lending for the new economy",
+  title: "LendFriend",
+  description: "Community lending with 0% interest",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: 'cover',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'LendFriend',
+  },
   other: {
     'fc:miniapp': `${appUrl}/.well-known/farcaster.json`,
+    'apple-mobile-web-app-capable': 'yes',
+    'mobile-web-app-capable': 'yes',
   },
 };
 
