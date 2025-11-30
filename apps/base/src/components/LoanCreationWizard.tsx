@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useAccount } from 'wagmi';
 import { parseUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
-import { useWalletType } from '@/hooks/useWalletType';
-import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
+import { useCreateLoan } from '@/hooks/useMicroLoan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import ImageCropModal from './ImageCropModal';
 import { LoanCard } from './LoanCard';
@@ -80,14 +80,14 @@ interface CreditScoreData {
 export default function LoanCreationWizard() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { address, isConnected, walletType, isCheckingConnection } = useWalletType();
+  const { address, isConnected, isConnecting } = useAccount();
   const { farcasterProfile } = useFarcasterProfile();
 
   // Wizard state
   const [currentStep, setCurrentStep] = useState(1);
-  const [draftId, setDraftId] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  // Form data
+  // Form data - simplified for mobile
   const [formData, setFormData] = useState<FormData>({
     amount: '',
     repaymentWeeks: 12,
@@ -104,6 +104,7 @@ export default function LoanCreationWizard() {
   const [creditScore, setCreditScore] = useState<CreditScoreData | null>(null);
 
   // UI state
+  const [draftId, setDraftId] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState('');
@@ -119,7 +120,12 @@ export default function LoanCreationWizard() {
     isConfirming,
     isSuccess,
     hash,
-  } = useCreateLoanGasless();
+  } = useCreateLoan();
+
+  // Set mounted state to handle SSR hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Load draft from URL params (after OAuth callback)
   useEffect(() => {
@@ -230,15 +236,15 @@ export default function LoanCreationWizard() {
     }
   };
 
-  // Step 1 validation
+  // Step 1 validation - updated for mini app requirements
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.amount || parseFloat(formData.amount) < 100) {
-      newErrors.amount = 'Minimum loan amount is $100 USDC';
+    if (!formData.amount || parseFloat(formData.amount) < 25) {
+      newErrors.amount = 'Minimum loan amount is $25 USDC';
     }
-    if (!formData.amount || parseFloat(formData.amount) > 10000) {
-      newErrors.amount = 'Maximum loan amount is $10,000 USDC';
+    if (!formData.amount || parseFloat(formData.amount) > 3000) {
+      newErrors.amount = 'Maximum loan amount is $3,000 USDC';
     }
     if (formData.loanPurposes.length === 0) {
       newErrors.loanPurposes = 'Please select at least one funding purpose';
@@ -562,20 +568,45 @@ export default function LoanCreationWizard() {
     }
   };
 
-  // Success state (same as CreateLoanForm)
+  // Success state with elaborate social sharing
   if (isSuccess && hash) {
-    const shareUrl = `${window.location.origin}/`;
-    const shareText = `I just created a loan request on LendFriend! Help me reach my goal 🙏`;
+    const shareUrl = `${window.location.origin}/loan/${hash}`;
+    const shareText = `I just created a loan request for $${formData.amount} USDC on LendFriend! Help me reach my goal 🙏`;
+    const shareTextWithPurpose = `I'm raising $${formData.amount} USDC for ${formData.loanPurposes.join(', ')} on LendFriend! Support small businesses and earn returns 💪`;
 
-    const handleShare = (platform: string) => {
+    const handleShare = (platform: string, event?: React.MouseEvent<HTMLButtonElement>) => {
       let url = '';
       switch (platform) {
         case 'twitter':
-          url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+          url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTextWithPurpose)}&url=${encodeURIComponent(shareUrl)}&hashtags=DeFi,MicroLoans,Base`;
           break;
         case 'warpcast':
-          url = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+          url = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareTextWithPurpose + '\n\n' + shareUrl)}`;
           break;
+        case 'telegram':
+          url = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTextWithPurpose)}`;
+          break;
+        case 'whatsapp':
+          url = `https://wa.me/?text=${encodeURIComponent(shareTextWithPurpose + '\n\n' + shareUrl)}`;
+          break;
+        case 'linkedin':
+          url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+          break;
+        case 'email':
+          const subject = `Support My Loan Request on LendFriend`;
+          const body = `Hi,\n\nI just created a loan request on LendFriend, a decentralized lending platform on Base.\n\n${shareTextWithPurpose}\n\nYou can view and contribute to my loan here:\n${shareUrl}\n\nThanks for your support!`;
+          url = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          break;
+        case 'copy':
+          navigator.clipboard.writeText(shareUrl);
+          // Simple visual feedback - change button text temporarily
+          const copyBtn = event.currentTarget as HTMLButtonElement;
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '✓ Copied!';
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+          }, 2000);
+          return;
       }
       if (url) window.open(url, '_blank', 'width=600,height=400');
     };
@@ -596,18 +627,79 @@ export default function LoanCreationWizard() {
 
           <div className="bg-white rounded-xl p-6 mb-6 border-2 border-[#1a96c1]/30 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Share Your Loan</h3>
-            <div className="grid grid-cols-2 gap-3">
+
+            {/* Primary sharing options */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
               <button
                 onClick={() => handleShare('twitter')}
-                className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-xl"
+                className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
               >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
                 X/Twitter
               </button>
               <button
                 onClick={() => handleShare('warpcast')}
-                className="flex items-center justify-center gap-2 bg-[#8A63D2] hover:bg-[#7952C1] text-white font-semibold py-3 px-4 rounded-xl"
+                className="flex items-center justify-center gap-2 bg-[#8A63D2] hover:bg-[#7952C1] text-white font-semibold py-3 px-4 rounded-xl transition-colors"
               >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                </svg>
                 Warpcast
+              </button>
+            </div>
+
+            {/* Secondary sharing options */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              <button
+                onClick={() => handleShare('telegram')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.828.941z"/>
+                </svg>
+                <span className="text-xs">Telegram</span>
+              </button>
+              <button
+                onClick={() => handleShare('whatsapp')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-[#25D366] hover:bg-[#20BD5C] text-white rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.062 18.062c-.773.773-1.66 1.385-2.636 1.819a8.902 8.902 0 01-3.426.657c-1.458 0-2.873-.354-4.149-1.017l-4.576 1.204 1.225-4.478a8.849 8.849 0 01-1.125-4.247c0-1.187.231-2.346.687-3.426.434-.976 1.046-1.863 1.819-2.636a8.902 8.902 0 012.636-1.819A8.76 8.76 0 0112 3.375a8.76 8.76 0 013.426.687 8.902 8.902 0 012.636 1.819 8.902 8.902 0 011.819 2.636A8.76 8.76 0 0120.625 12a8.76 8.76 0 01-.687 3.426 8.902 8.902 0 01-1.876 2.636zm-2.144-6.391c-.196-.098-1.161-.573-1.343-.638-.181-.065-.313-.098-.446.098-.133.196-.514.638-.629.773-.116.133-.231.15-.428.049-.196-.098-.831-.306-1.583-.975-.585-.522-1.981-1.297-.227-1.873.196-.065.349-.098.524-.295.175-.196.386-.514.579-.773.196-.261.261-.446.392-.744.131-.295.065-.556-.032-.779-.098-.223-.446-1.074-.609-1.47-.163-.392-.327-.34-.446-.347-.115-.007-.247-.007-.38-.007-.133 0-.349.049-.532.246-.181.196-.693.677-.693 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.419.475.146.906.126 1.248.077.38-.058 1.171-.48 1.338-.942.164-.464.164-.86.114-.942-.049-.084-.181-.133-.38-.232z"/>
+                </svg>
+                <span className="text-xs">WhatsApp</span>
+              </button>
+              <button
+                onClick={() => handleShare('linkedin')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-[#0077B5] hover:bg-[#006399] text-white rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <span className="text-xs">LinkedIn</span>
+              </button>
+            </div>
+
+            {/* Utility buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => handleShare('email')}
+                className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-3 rounded-lg transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Email
+              </button>
+              <button
+                onClick={() => handleShare('copy')}
+                className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-3 rounded-lg transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                Copy Link
               </button>
             </div>
           </div>
@@ -623,8 +715,8 @@ export default function LoanCreationWizard() {
     );
   }
 
-  // Loading state
-  if (isCheckingConnection) {
+  // Loading state - only show after mount to prevent hydration issues
+  if (mounted && isConnecting) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
@@ -635,7 +727,7 @@ export default function LoanCreationWizard() {
     );
   }
 
-  if (!isConnected) {
+  if (mounted && !isConnected) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
@@ -732,14 +824,14 @@ export default function LoanCreationWizard() {
                     onChange={(e) => handleChange('amount', e.target.value)}
                     placeholder="500"
                     step="10"
-                    min="100"
-                    max="10000"
+                    min="25"
+                    max="3000"
                     className={`w-full pl-9 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 outline-none transition-all ${
                       errors.amount ? 'border-red-300' : 'border-gray-300 focus:border-[#1a96c1]'
                     }`}
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1.5">$100 - $10,000 USDC</p>
+                <p className="text-xs text-gray-500 mt-1.5">$25 - $3,000 USDC</p>
                 {errors.amount && <p className="text-sm text-red-600 mt-1.5">{errors.amount}</p>}
               </div>
 
