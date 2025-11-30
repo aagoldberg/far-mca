@@ -22,17 +22,13 @@ const mockLoan = {
   daysLeft: 27,
   repaymentWeeks: 12,
   purpose: "Equipment",
-  // Additional borrower info
-  aboutBorrower: "I'm a self-taught tailor with 3 years of experience. Started making clothes for family, now have regular clients. Member of local artisan community.",
+  // Additional borrower info (from form fields)
+  aboutYou: "I'm a self-taught tailor with 3 years of experience. Started making clothes for family, now have regular clients. Member of local artisan community.",
+  loanUseAndImpact: "I'll use the $600 to buy a Singer Professional sewing machine ($450), quality fabric and materials ($150), and workspace improvements ($50). With this equipment, I can increase my output from 5 to 20 pieces per week, serving my existing 5 clients and taking on 10 new customers who are already on my waiting list. I'll repay through my weekly sales revenue, allocating 20% of each week's income.",
   businessWebsite: "https://sarahstitches.com",
   twitterHandle: "@sarahstitches",
   monthlyIncome: "$1,500 - $2,000",
   creditScore: 720,
-  fundBreakdown: [
-    { item: "Professional sewing machine", amount: 400 },
-    { item: "Quality fabric and materials", amount: 150 },
-    { item: "Workspace improvements", amount: 50 },
-  ],
   updates: [
     { date: "2 days ago", text: "Reached 70% of goal! Thank you everyone!" },
     { date: "5 days ago", text: "Added photos of my current workspace" },
@@ -179,11 +175,11 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             </div>
           </div>
 
-          {/* About the Borrower */}
+          {/* About Me - from "aboutYou" form field */}
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <h2 className="text-base font-semibold text-gray-900 mb-3">About Me</h2>
-            <p className="text-sm text-gray-700 leading-relaxed mb-3">
-              {mockLoan.aboutBorrower}
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line mb-3">
+              {mockLoan.aboutYou}
             </p>
 
             {/* Social Links */}
@@ -229,34 +225,11 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             )}
           </div>
 
-          {/* Loan Story Section */}
+          {/* Loan Plan - from "loanUseAndImpact" form field */}
           <div className="bg-white rounded-xl p-4 shadow-sm">
-            <h2 className="text-base font-semibold text-gray-900 mb-3">My Story</h2>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              {mockLoan.description}
-            </p>
-          </div>
-
-          {/* How I'll Use the Funds */}
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <h2 className="text-base font-semibold text-gray-900 mb-3">How I'll Use the Funds</h2>
-            <div className="space-y-2">
-              {mockLoan.fundBreakdown.map((item, index) => (
-                <div key={index} className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#2C7A7B] rounded-full mt-1.5"></div>
-                  <p className="text-sm text-gray-700 flex-1">{item.item} (${item.amount})</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Impact & Goals */}
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <h2 className="text-base font-semibold text-gray-900 mb-3">Expected Impact</h2>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              With this equipment, I can increase my output from 5 to 20 pieces per week,
-              serving my existing 5 clients and taking on 10 new customers who are already
-              on my waiting list.
+            <h2 className="text-base font-semibold text-gray-900 mb-3">My Loan Plan</h2>
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+              {mockLoan.loanUseAndImpact}
             </p>
           </div>
 
