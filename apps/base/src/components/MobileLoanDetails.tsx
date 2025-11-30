@@ -79,9 +79,9 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-50">
       {/* Fixed Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-20">
+      <div className="bg-white border-b border-gray-200 z-20">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => router.back()}
@@ -114,8 +114,8 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
         </div>
       </div>
 
-      {/* Scrollable Content with padding for fixed bottom bar */}
-      <div className="flex-1 overflow-y-auto pb-28">
+      {/* Scrollable Content */}
+      <div className="flex-1 overflow-y-auto pb-32">
         {/* Hero Image */}
         <div className="relative h-48 bg-gray-200">
           <img
@@ -365,6 +365,6 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
           Min. contribution $5 · Max. ${mockLoan.goal - mockLoan.raised}
         </p>
       </div>
-    </main>
+    </div>
   );
 }
