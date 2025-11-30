@@ -61,9 +61,9 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable}`}>
       <body>
         <Providers>
-          <div className="min-h-screen bg-gray-50">
+          <div className="flex flex-col h-screen bg-gray-50">
             <MiniAppNavbar />
-            <main>{children}</main>
+            <main className="flex-1 overflow-y-auto">{children}</main>
           </div>
         </Providers>
         <Analytics />

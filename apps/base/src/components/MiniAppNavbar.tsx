@@ -15,23 +15,20 @@ export default function MiniAppNavbar() {
         {/* User info - Farcaster native: avatar + username */}
         <div className="flex items-center">
           {isConnected && userProfile ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               {userProfile.pfp ? (
                 <img
                   src={userProfile.pfp}
                   alt={userProfile.username || 'Profile'}
-                  className="w-7 h-7 rounded-full object-cover"
+                  className="w-8 h-8 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-7 h-7 rounded-full bg-[#2C7A7B]/10 flex items-center justify-center">
-                  <span className="text-xs font-medium text-[#2C7A7B]">
+                <div className="w-8 h-8 rounded-full bg-[#2C7A7B]/10 flex items-center justify-center">
+                  <span className="text-sm font-medium text-[#2C7A7B]">
                     {userProfile.username?.charAt(0).toUpperCase() || '?'}
                   </span>
                 </div>
               )}
-              <span className="text-sm font-medium text-gray-700">
-                @{userProfile.username}
-              </span>
             </div>
           ) : isConnected ? (
             <div className="w-7 h-7 rounded-full bg-gray-100 animate-pulse" />
