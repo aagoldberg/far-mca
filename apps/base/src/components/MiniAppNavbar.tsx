@@ -12,34 +12,20 @@ export default function MiniAppNavbar() {
         {/* App name */}
         <span className="text-lg font-bold text-[#2C7A7B]">LendFriend</span>
 
-        {/* User info - Farcaster native: avatar + username */}
+        {/* User avatar - in Farcaster mini app, user is always connected */}
         <div className="flex items-center">
-          {isConnected && userProfile ? (
-            <div className="flex items-center">
-              {userProfile.pfp ? (
-                <img
-                  src={userProfile.pfp}
-                  alt={userProfile.username || 'Profile'}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-[#2C7A7B]/10 flex items-center justify-center">
-                  <span className="text-sm font-medium text-[#2C7A7B]">
-                    {userProfile.username?.charAt(0).toUpperCase() || '?'}
-                  </span>
-                </div>
-              )}
-            </div>
-          ) : isConnected ? (
-            <div className="w-7 h-7 rounded-full bg-gray-100 animate-pulse" />
+          {userProfile?.pfp ? (
+            <img
+              src={userProfile.pfp}
+              alt={userProfile.username || 'Profile'}
+              className="w-8 h-8 rounded-full object-cover"
+            />
           ) : (
-            <button
-              className="px-3 py-1.5 text-sm font-medium bg-[#2C7A7B] text-white rounded-lg transition-colors disabled:opacity-50"
-              onClick={connect}
-              disabled={isConnecting}
-            >
-              {isConnecting ? '...' : 'Connect'}
-            </button>
+            <div className="w-8 h-8 rounded-full bg-[#2C7A7B]/10 flex items-center justify-center">
+              <span className="text-sm font-medium text-[#2C7A7B]">
+                {userProfile?.username?.charAt(0).toUpperCase() || '?'}
+              </span>
+            </div>
           )}
         </div>
       </div>

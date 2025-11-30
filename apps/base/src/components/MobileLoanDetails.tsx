@@ -91,8 +91,9 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   // Check if current user is the borrower
   const isBorrower = address && loan && address.toLowerCase() === (loan.borrower || loan.creator)?.toLowerCase();
 
-  // Get borrower display info
-  const borrowerDisplayName = borrowerProfile?.username || loan.creator || borrowerAddress?.slice(0, 10);
+  // Get borrower display info - prefer Farcaster username, otherwise shorten address
+  const shortenAddress = (addr: string) => addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : '';
+  const borrowerDisplayName = borrowerProfile?.username || shortenAddress(borrowerAddress || '');
   const borrowerAvatar = borrowerProfile?.pfp_url;
 
   return (
@@ -101,9 +102,9 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
       <div className="bg-white border-b border-gray-100 sticky top-0 z-20">
         <div className="flex items-center justify-between px-4 h-12">
           <button
-            onClick={() => router.back()}
+            onClick={() => router.push('/')}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-lg transition-colors"
-            aria-label="Go back"
+            aria-label="Back to loans"
           >
             <ArrowLeftIcon className="w-5 h-5 text-gray-600" />
           </button>
