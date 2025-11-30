@@ -22,6 +22,17 @@ const mockLoan = {
   daysLeft: 27,
   repaymentWeeks: 12,
   purpose: "Equipment",
+  // Additional borrower info
+  aboutBorrower: "I'm a self-taught tailor with 3 years of experience. Started making clothes for family, now have regular clients. Member of local artisan community.",
+  businessWebsite: "https://sarahstitches.com",
+  twitterHandle: "@sarahstitches",
+  monthlyIncome: "$1,500 - $2,000",
+  creditScore: 720,
+  fundBreakdown: [
+    { item: "Professional sewing machine", amount: 400 },
+    { item: "Quality fabric and materials", amount: 150 },
+    { item: "Workspace improvements", amount: 50 },
+  ],
   updates: [
     { date: "2 days ago", text: "Reached 70% of goal! Thank you everyone!" },
     { date: "5 days ago", text: "Added photos of my current workspace" },
@@ -41,7 +52,6 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   const router = useRouter();
   const { isConnected, connect } = useMiniAppWallet();
   const [isLiked, setIsLiked] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<"story" | "updates" | "backers">("story");
 
   const progress = (mockLoan.raised / mockLoan.goal) * 100;
   const weeklyPayment = (mockLoan.goal / mockLoan.repaymentWeeks).toFixed(2);
@@ -169,100 +179,160 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             </div>
           </div>
 
-          {/* Tabs */}
-          <div className="bg-white rounded-xl shadow-sm">
-            <div className="flex border-b border-gray-200">
-              <button
-                onClick={() => setSelectedTab("story")}
-                className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                  selectedTab === "story"
-                    ? "text-[#2C7A7B] border-b-2 border-[#2C7A7B]"
-                    : "text-gray-500"
-                }`}
-              >
-                Story
-              </button>
-              <button
-                onClick={() => setSelectedTab("updates")}
-                className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                  selectedTab === "updates"
-                    ? "text-[#2C7A7B] border-b-2 border-[#2C7A7B]"
-                    : "text-gray-500"
-                }`}
-              >
-                Updates ({mockLoan.updates.length})
-              </button>
-              <button
-                onClick={() => setSelectedTab("backers")}
-                className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                  selectedTab === "backers"
-                    ? "text-[#2C7A7B] border-b-2 border-[#2C7A7B]"
-                    : "text-gray-500"
-                }`}
-              >
-                Backers ({mockLoan.backers})
-              </button>
+          {/* About the Borrower */}
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-3">About Me</h2>
+            <p className="text-sm text-gray-700 leading-relaxed mb-3">
+              {mockLoan.aboutBorrower}
+            </p>
+
+            {/* Social Links */}
+            {(mockLoan.businessWebsite || mockLoan.twitterHandle) && (
+              <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                {mockLoan.businessWebsite && (
+                  <a
+                    href={mockLoan.businessWebsite}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[#2C7A7B] hover:underline flex items-center gap-1"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                    Website
+                  </a>
+                )}
+                {mockLoan.twitterHandle && (
+                  <a
+                    href={`https://twitter.com/${mockLoan.twitterHandle.replace('@', '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[#2C7A7B] hover:underline flex items-center gap-1"
+                  >
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    {mockLoan.twitterHandle}
+                  </a>
+                )}
+              </div>
+            )}
+
+            {/* Credit Score Badge */}
+            {mockLoan.creditScore && (
+              <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 rounded-full">
+                <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-xs font-medium text-green-700">Credit Score: {mockLoan.creditScore}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Loan Story Section */}
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-3">My Story</h2>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              {mockLoan.description}
+            </p>
+          </div>
+
+          {/* How I'll Use the Funds */}
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-3">How I'll Use the Funds</h2>
+            <div className="space-y-2">
+              {mockLoan.fundBreakdown.map((item, index) => (
+                <div key={index} className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-[#2C7A7B] rounded-full mt-1.5"></div>
+                  <p className="text-sm text-gray-700 flex-1">{item.item} (${item.amount})</p>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="p-4">
-              {selectedTab === "story" && (
-                <div className="space-y-3">
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    {mockLoan.description}
-                  </p>
+          {/* Impact & Goals */}
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-3">Expected Impact</h2>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              With this equipment, I can increase my output from 5 to 20 pieces per week,
+              serving my existing 5 clients and taking on 10 new customers who are already
+              on my waiting list.
+            </p>
+          </div>
 
-                  <div className="bg-blue-50 rounded-lg p-3">
-                    <div className="flex items-start gap-2">
-                      <CheckCircleIcon className="w-5 h-5 text-blue-600 mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium text-blue-900">0% Interest</p>
-                        <p className="text-xs text-blue-700 mt-1">
-                          This is a community loan with no interest or hidden fees
-                        </p>
-                      </div>
-                    </div>
+          {/* Repayment Plan */}
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-3">Repayment Plan</h2>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Weekly Payment</span>
+                <span className="text-sm font-semibold">${weeklyPayment}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Duration</span>
+                <span className="text-sm font-semibold">{mockLoan.repaymentWeeks} weeks</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Total to Repay</span>
+                <span className="text-sm font-semibold">${mockLoan.goal}</span>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-3">
+                <div className="flex items-start gap-2">
+                  <CheckCircleIcon className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-blue-900">0% Interest</p>
+                    <p className="text-xs text-blue-700 mt-1">
+                      This is a community loan with no interest or hidden fees
+                    </p>
                   </div>
                 </div>
-              )}
+              </div>
+            </div>
+          </div>
 
-              {selectedTab === "updates" && (
-                <div className="space-y-3">
-                  {mockLoan.updates.map((update, index) => (
-                    <div key={index} className="border-l-2 border-gray-200 pl-3">
-                      <p className="text-xs text-gray-500">{update.date}</p>
-                      <p className="text-sm text-gray-700 mt-1">{update.text}</p>
+          {/* Recent Updates */}
+          {mockLoan.updates.length > 0 && (
+            <div className="bg-white rounded-xl p-4 shadow-sm">
+              <h2 className="text-base font-semibold text-gray-900 mb-3">Recent Updates</h2>
+              <div className="space-y-3">
+                {mockLoan.updates.map((update, index) => (
+                  <div key={index} className="border-l-2 border-gray-200 pl-3">
+                    <p className="text-xs text-gray-500">{update.date}</p>
+                    <p className="text-sm text-gray-700 mt-1">{update.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Recent Backers */}
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-3">
+              Recent Backers ({mockLoan.backers})
+            </h2>
+            <div className="space-y-3">
+              {mockLoan.contributions.map((contribution, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={contribution.avatar}
+                      alt={contribution.name}
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <div>
+                      <p className="text-sm font-medium">{contribution.name}</p>
+                      <p className="text-xs text-gray-500">{contribution.time}</p>
                     </div>
-                  ))}
+                  </div>
+                  <span className="text-sm font-semibold text-[#2C7A7B]">
+                    ${contribution.amount}
+                  </span>
                 </div>
-              )}
-
-              {selectedTab === "backers" && (
-                <div className="space-y-3">
-                  {mockLoan.contributions.map((contribution, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={contribution.avatar}
-                          alt={contribution.name}
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <div>
-                          <p className="text-sm font-medium">{contribution.name}</p>
-                          <p className="text-xs text-gray-500">{contribution.time}</p>
-                        </div>
-                      </div>
-                      <span className="text-sm font-semibold text-[#2C7A7B]">
-                        ${contribution.amount}
-                      </span>
-                    </div>
-                  ))}
-
-                  {mockLoan.backers > 3 && (
-                    <button className="w-full text-center text-sm text-gray-500 py-2">
-                      View all {mockLoan.backers} backers
-                    </button>
-                  )}
-                </div>
+              ))}
+              {mockLoan.backers > mockLoan.contributions.length && (
+                <p className="text-center text-sm text-gray-500 pt-2">
+                  + {mockLoan.backers - mockLoan.contributions.length} more backers
+                </p>
               )}
             </div>
           </div>
