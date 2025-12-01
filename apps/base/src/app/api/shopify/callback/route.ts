@@ -91,41 +91,46 @@ export async function GET(request: NextRequest) {
       ? revenueData.totalRevenue / revenueData.orderCount
       : 0;
 
-    // Store connection in Supabase
-    const { data: connection, error: dbError } = await getSupabaseClient()
-      .from('business_connections')
-      .upsert({
-        wallet_address: walletAddress.toLowerCase(),
-        platform: 'shopify',
-        platform_user_id: shop,
-        access_token: session.accessToken, // TODO: Encrypt in production
-        revenue_data: {
-          totalRevenue: revenueData.totalRevenue,
-          orderCount: revenueData.orderCount,
-          periodDays: revenueData.periodDays,
-          currency: revenueData.currency,
-          averageOrderValue,
-        },
-        metadata: {
-          shop_domain: shop,
-          scope: session.scope,
-        },
-        last_synced_at: new Date().toISOString(),
-        is_active: true,
-      })
-      .select()
-      .single();
+    // Try to store connection in Supabase (optional - may not have table set up)
+    let dbStored = false;
+    try {
+      const { data: connection, error: dbError } = await getSupabaseClient()
+        .from('business_connections')
+        .upsert({
+          wallet_address: walletAddress.toLowerCase(),
+          platform: 'shopify',
+          platform_user_id: shop,
+          access_token: session.accessToken, // TODO: Encrypt in production
+          revenue_data: {
+            totalRevenue: revenueData.totalRevenue,
+            orderCount: revenueData.orderCount,
+            periodDays: revenueData.periodDays,
+            currency: revenueData.currency,
+            averageOrderValue,
+          },
+          metadata: {
+            shop_domain: shop,
+            scope: session.scope,
+          },
+          last_synced_at: new Date().toISOString(),
+          is_active: true,
+        })
+        .select()
+        .single();
 
-    if (dbError) {
-      console.error('[Shopify] Database error:', dbError);
-      throw new Error('Failed to store connection');
+      if (dbError) {
+        console.warn('[Shopify] Database error (non-fatal):', dbError);
+      } else {
+        dbStored = true;
+        console.log('[Shopify] ✓ Connection stored:', {
+          wallet: walletAddress,
+          shop,
+          revenue: revenueData.totalRevenue,
+        });
+      }
+    } catch (dbErr) {
+      console.warn('[Shopify] Database storage failed (non-fatal):', dbErr);
     }
-
-    console.log('[Shopify] ✓ Connection stored:', {
-      wallet: walletAddress,
-      shop,
-      revenue: revenueData.totalRevenue,
-    });
 
     // Calculate credit score for this wallet
     const scoreResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/credit-score`, {
