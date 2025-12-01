@@ -878,29 +878,25 @@ export default function LoanCreationWizard() {
                 {/* Repayment */}
                 <div>
                   <label className="block text-sm font-medium text-gray-900 mb-2">Repayment timeline</label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {[
-                      { value: 0, label: 'Grant', sublabel: 'No repayment' },
-                      { value: 4, label: '1 month', sublabel: '' },
-                      { value: 8, label: '2 months', sublabel: '' },
-                      { value: 12, label: '3 months', sublabel: '' },
+                      { value: 4, label: '1 month' },
+                      { value: 8, label: '2 months' },
+                      { value: 12, label: '3 months' },
                     ].map((option) => (
                       <button
                         key={option.value}
                         type="button"
                         onClick={() => handleChange('repaymentWeeks', option.value)}
-                        className={`p-3 rounded-xl border-2 text-left transition-all ${
+                        className={`p-3 rounded-xl border-2 text-center transition-all ${
                           formData.repaymentWeeks === option.value
                             ? 'border-[#2C7A7B] bg-[#2C7A7B]/5'
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
-                        <span className={`block font-medium ${formData.repaymentWeeks === option.value ? 'text-[#2C7A7B]' : 'text-gray-900'}`}>
+                        <span className={`font-medium ${formData.repaymentWeeks === option.value ? 'text-[#2C7A7B]' : 'text-gray-900'}`}>
                           {option.label}
                         </span>
-                        {option.sublabel && (
-                          <span className="text-xs text-gray-500">{option.sublabel}</span>
-                        )}
                       </button>
                     ))}
                   </div>
