@@ -968,17 +968,29 @@ export default function LoanCreationWizard() {
                   <button
                     type="button"
                     onClick={async () => {
-                      if (!address) return;
+                      if (!address) {
+                        alert('Please connect your wallet first');
+                        return;
+                      }
                       try {
                         const shopDomain = prompt('Enter your Shopify store domain (e.g., yourstore.myshopify.com):');
-                        if (!shopDomain || !shopDomain.includes('.myshopify.com')) return;
+                        if (!shopDomain) return;
+                        if (!shopDomain.includes('.myshopify.com')) {
+                          alert('Please enter a valid Shopify domain (e.g., yourstore.myshopify.com)');
+                          return;
+                        }
                         const response = await fetch(
                           `/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}&wallet=${encodeURIComponent(address)}`
                         );
                         const data = await response.json();
-                        if (response.ok) window.open(data.authUrl, '_blank');
+                        if (response.ok && data.authUrl) {
+                          window.location.href = data.authUrl;
+                        } else {
+                          alert(data.error || 'Failed to connect to Shopify');
+                        }
                       } catch (error) {
                         console.error('Shopify connection error:', error);
+                        alert('Failed to connect to Shopify. Please try again.');
                       }
                     }}
                     className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
@@ -1004,15 +1016,23 @@ export default function LoanCreationWizard() {
                   <button
                     type="button"
                     onClick={async () => {
-                      if (!address) return;
+                      if (!address) {
+                        alert('Please connect your wallet first');
+                        return;
+                      }
                       try {
                         const response = await fetch(
                           `/api/stripe/auth?wallet=${encodeURIComponent(address)}`
                         );
                         const data = await response.json();
-                        if (response.ok) window.open(data.authUrl, '_blank');
+                        if (response.ok && data.authUrl) {
+                          window.location.href = data.authUrl;
+                        } else {
+                          alert(data.error || 'Failed to connect to Stripe');
+                        }
                       } catch (error) {
                         console.error('Stripe connection error:', error);
+                        alert('Failed to connect to Stripe. Please try again.');
                       }
                     }}
                     className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
@@ -1038,7 +1058,10 @@ export default function LoanCreationWizard() {
                   <button
                     type="button"
                     onClick={async () => {
-                      if (!address) return;
+                      if (!address) {
+                        alert('Please connect your wallet first');
+                        return;
+                      }
                       try {
                         const params = new URLSearchParams({
                           wallet: address,
@@ -1046,9 +1069,14 @@ export default function LoanCreationWizard() {
                         });
                         const response = await fetch(`/api/square/auth?${params.toString()}`);
                         const data = await response.json();
-                        if (response.ok) window.open(data.authUrl, '_blank');
+                        if (response.ok && data.authUrl) {
+                          window.location.href = data.authUrl;
+                        } else {
+                          alert(data.error || 'Failed to connect to Square');
+                        }
                       } catch (error) {
                         console.error('Square connection error:', error);
+                        alert('Failed to connect to Square. Please try again.');
                       }
                     }}
                     className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
