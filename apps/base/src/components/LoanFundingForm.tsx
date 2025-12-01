@@ -15,7 +15,7 @@ interface LoanFundingFormProps {
 }
 
 // Quick amount presets
-const QUICK_AMOUNTS = [10, 25, 50, 100];
+const QUICK_AMOUNTS = [25, 50, 100, 250];
 
 export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const router = useRouter();
@@ -432,8 +432,9 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   // Helper to shorten address
   const shortenAddress = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 
-  // Get balance as number for display
+  // Get balance and max contribution as numbers for display
   const balanceNumber = parseFloat(formatUnits(usdcBalance, USDC_DECIMALS));
+  const maxContributionNumber = parseFloat(formatUnits(maxContribution, USDC_DECIMALS));
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -483,11 +484,11 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
         {/* Quick Amount Buttons */}
         <div className="flex gap-2 mb-6">
-          {QUICK_AMOUNTS.map((quickAmount) => (
+          {QUICK_AMOUNTS.filter(amt => amt <= maxContributionNumber).map((quickAmount) => (
             <button
               key={quickAmount}
               onClick={() => setAmount(quickAmount.toString())}
-              disabled={step !== 'input' || quickAmount > balanceNumber}
+              disabled={step !== 'input'}
               className={`flex-1 py-3 rounded-xl border-2 font-medium transition-all ${
                 amount === quickAmount.toString()
                   ? 'border-[#2C7A7B] bg-[#2C7A7B]/5 text-[#2C7A7B]'
@@ -497,6 +498,20 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
               ${quickAmount}
             </button>
           ))}
+          {/* Show max button if none of the quick amounts fit or as additional option */}
+          {maxContributionNumber > 0 && maxContributionNumber < QUICK_AMOUNTS[0] && (
+            <button
+              onClick={() => setAmount(maxContributionNumber.toFixed(2))}
+              disabled={step !== 'input'}
+              className={`flex-1 py-3 rounded-xl border-2 font-medium transition-all ${
+                amount === maxContributionNumber.toFixed(2)
+                  ? 'border-[#2C7A7B] bg-[#2C7A7B]/5 text-[#2C7A7B]'
+                  : 'border-gray-200 text-gray-700 hover:border-gray-300'
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              ${maxContributionNumber.toFixed(0)} (max)
+            </button>
+          )}
         </div>
 
         {/* Custom Amount Input */}
