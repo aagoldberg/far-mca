@@ -71,7 +71,7 @@ export class ShopifyClient {
     date.setDate(date.getDate() - days);
     const createdAtMin = date.toISOString();
 
-    const url = `https://${session.shop}/admin/api/2025-01/orders.json` +
+    const url = `https://${session.shop}/admin/api/2024-10/orders.json` +
       `?status=any&created_at_min=${createdAtMin}&fields=total_price,currency`;
 
     const response = await fetch(url, {
@@ -81,6 +81,8 @@ export class ShopifyClient {
     });
 
     if (!response.ok) {
+      const errorBody = await response.text();
+      console.error('[Shopify] API error response:', errorBody);
       throw new Error(`Shopify API error: ${response.statusText}`);
     }
 
