@@ -173,18 +173,20 @@ function MiniLoanCard({ loan }: { loan: any }) {
             {loan.title || loan.name || 'Community Loan'}
           </h3>
 
-          {/* Borrower + Progress bar + Amount - all inline */}
+          {/* Borrower + Amount + Progress bar */}
           <div className="flex items-center gap-3 mb-1">
             <BorrowerInline address={borrowerAddress} />
-            <div className="w-16 bg-gray-100 rounded-full h-1.5 overflow-hidden flex-shrink-0">
-              <div
-                className="h-full rounded-full bg-[#2C7A7B]"
-                style={{ width: `${Math.min(progress, 100)}%` }}
-              />
-            </div>
-            <div className="text-sm whitespace-nowrap">
-              <span className="font-bold text-[#2C7A7B]">${loan.raised?.toLocaleString() || '0'}</span>
-              <span className="text-gray-400"> / ${loan.goal?.toLocaleString() || '0'}</span>
+            <div className="flex items-center gap-2 ml-auto">
+              <div className="text-sm whitespace-nowrap">
+                <span className="font-bold text-[#2C7A7B]">${loan.raised?.toLocaleString() || '0'}</span>
+                <span className="text-gray-400"> / ${loan.goal?.toLocaleString() || '0'}</span>
+              </div>
+              <div className="w-12 bg-gray-100 rounded-full h-1.5 overflow-hidden flex-shrink-0">
+                <div
+                  className="h-full rounded-full bg-[#2C7A7B]"
+                  style={{ width: `${Math.min(progress, 100)}%` }}
+                />
+              </div>
             </div>
           </div>
 
