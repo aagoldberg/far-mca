@@ -118,21 +118,34 @@ function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
   return <MiniLoanCard loan={loan} />;
 }
 
-// Borrower inline component
-function BorrowerInline({ address }: { address: `0x${string}` }) {
+// Borrower header component with status
+function BorrowerHeader({ address, loan }: { address: `0x${string}`; loan: any }) {
   const { profile } = useFarcasterProfile(address);
 
+  // Determine status
+  const getStatus = () => {
+    if (loan.completed) return { label: 'Completed', color: 'bg-gray-100 text-gray-600' };
+    if (loan.active) return { label: 'Active', color: 'bg-blue-100 text-blue-700' };
+    if (loan.fundraisingActive) return { label: 'Fundraising', color: 'bg-yellow-100 text-yellow-700' };
+    return { label: 'Closed', color: 'bg-gray-100 text-gray-600' };
+  };
+
+  const status = getStatus();
+
   return (
-    <div className="flex items-center gap-1.5 min-w-0">
+    <div className="flex items-center gap-2 mb-2">
       {profile?.pfpUrl ? (
-        <img src={profile.pfpUrl} alt="" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
+        <img src={profile.pfpUrl} alt="" className="w-8 h-8 rounded-full object-cover" />
       ) : (
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-[10px] font-medium flex-shrink-0">
+        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xs font-medium">
           {address.slice(2, 4).toUpperCase()}
         </div>
       )}
-      <span className="text-sm text-gray-600 truncate">
-        {profile?.username ? `@${profile.username}` : `${address.slice(0, 6)}...`}
+      <span className="font-medium text-gray-900">
+        {profile?.displayName || profile?.username || `${address.slice(0, 6)}...`}
+      </span>
+      <span className={`ml-auto text-xs font-medium px-2 py-0.5 rounded-full ${status.color}`}>
+        {status.label}
       </span>
     </div>
   );
@@ -146,10 +159,13 @@ function MiniLoanCard({ loan }: { loan: any }) {
 
   return (
     <Link href={`/loan/${loan.address}`} className="block">
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm overflow-hidden p-4">
+        {/* Borrower header with status */}
+        <BorrowerHeader address={borrowerAddress} loan={loan} />
+
         {/* Loan image */}
         {loan.imageUrl && (
-          <div className="relative w-full bg-gray-100" style={{ paddingBottom: '56.25%' }}>
+          <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden mb-3" style={{ paddingBottom: '56.25%' }}>
             <img
               src={loan.imageUrl}
               alt={loan.title || loan.name}
@@ -159,7 +175,7 @@ function MiniLoanCard({ loan }: { loan: any }) {
               }}
             />
             {/* Days left badge */}
-            {loan.daysLeft !== undefined && (
+            {loan.daysLeft !== undefined && loan.fundraisingActive && (
               <div className="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur-sm text-gray-700 px-2.5 py-1 rounded-full font-medium">
                 {loan.daysLeft}d left
               </div>
@@ -167,32 +183,31 @@ function MiniLoanCard({ loan }: { loan: any }) {
           </div>
         )}
 
-        <div className="p-4">
-          {/* Title */}
-          <h3 className="font-semibold text-gray-900 text-base leading-snug mb-3">
-            {loan.title || loan.name || 'Community Loan'}
-          </h3>
+        {/* Title */}
+        <h3 className="font-semibold text-gray-900 text-base leading-snug mb-3">
+          {loan.title || loan.name || 'Community Loan'}
+        </h3>
 
-          {/* Borrower + Amount + Progress bar */}
-          <div className="flex items-center gap-3 mb-1">
-            <BorrowerInline address={borrowerAddress} />
-            <div className="flex items-center gap-2 ml-auto">
-              <div className="text-sm whitespace-nowrap">
-                <span className="font-bold text-[#2C7A7B]">${loan.raised?.toLocaleString() || '0'}</span>
-                <span className="text-gray-400"> / ${loan.goal?.toLocaleString() || '0'}</span>
-              </div>
-              <div className="w-12 bg-gray-100 rounded-full h-1.5 overflow-hidden flex-shrink-0">
-                <div
-                  className="h-full rounded-full bg-[#2C7A7B]"
-                  style={{ width: `${Math.min(progress, 100)}%` }}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Funded by section */}
-          <FundedBySection loanAddress={loan.address} totalCount={contributorsCount} />
+        {/* Progress bar */}
+        <div className="w-full bg-gray-100 rounded-full h-1.5 mb-2 overflow-hidden">
+          <div
+            className="h-full rounded-full bg-[#2C7A7B]"
+            style={{ width: `${Math.min(progress, 100)}%` }}
+          />
         </div>
+
+        {/* Funding amounts */}
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-sm">
+            <span className="font-bold text-[#2C7A7B]">${loan.raised?.toLocaleString() || '0'} raised</span>
+          </span>
+          <span className="text-sm text-gray-500">
+            of ${loan.goal?.toLocaleString() || '0'}
+          </span>
+        </div>
+
+        {/* Funded by section */}
+        <FundedBySection loanAddress={loan.address} totalCount={contributorsCount} />
       </div>
     </Link>
   );
