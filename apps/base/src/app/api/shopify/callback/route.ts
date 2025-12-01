@@ -69,8 +69,22 @@ export async function GET(request: NextRequest) {
     // Exchange code for access token
     const session = await shopifyClient.exchangeCodeForToken(shop, code);
 
-    // Fetch revenue data
-    const revenueData = await shopifyClient.getRevenueData(session, 90); // 90 days
+    // Try to fetch revenue data (may fail if protected customer data access not approved)
+    let revenueData = {
+      totalRevenue: 0,
+      orderCount: 0,
+      periodDays: 90,
+      currency: 'USD',
+    };
+    let dataAccessError = false;
+
+    try {
+      revenueData = await shopifyClient.getRevenueData(session, 90); // 90 days
+    } catch (apiError: any) {
+      // Log but don't fail - protected customer data may not be approved yet
+      console.warn('[Shopify] Could not fetch revenue data (protected customer data access may be required):', apiError.message);
+      dataAccessError = true;
+    }
 
     // Calculate average order value
     const averageOrderValue = revenueData.orderCount > 0
@@ -133,6 +147,9 @@ export async function GET(request: NextRequest) {
     const redirectUrl = new URL('/account-settings', process.env.NEXT_PUBLIC_APP_URL!);
     redirectUrl.searchParams.set('shopifyConnected', 'true');
     redirectUrl.searchParams.set('score', creditScoreData?.score?.toString() || '0');
+    if (dataAccessError) {
+      redirectUrl.searchParams.set('dataAccessPending', 'true');
+    }
 
     return NextResponse.redirect(redirectUrl.toString());
   } catch (error) {
