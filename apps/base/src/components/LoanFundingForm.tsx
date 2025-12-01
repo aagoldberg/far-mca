@@ -440,7 +440,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
       {/* Header */}
       <div className="bg-white px-4 py-3 flex items-center justify-center border-b border-gray-100 relative">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push(`/loan/${loanAddress}`)}
           className="absolute right-3 p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
