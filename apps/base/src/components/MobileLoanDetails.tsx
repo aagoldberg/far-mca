@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeftIcon, ShareIcon, HeartIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { useMiniAppWallet } from "@/hooks/useMiniAppWallet";
 import { useLoanWithMetadata } from "@/hooks/useLoansWithMetadata";
 import { useLoanContributors } from "@/hooks/useLoanContributors";
@@ -20,7 +19,6 @@ interface MobileLoanDetailsProps {
 export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProps) {
   const router = useRouter();
   const { isConnected, connect, address } = useMiniAppWallet();
-  const [isLiked, setIsLiked] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isPostUpdateModalOpen, setIsPostUpdateModalOpen] = useState(false);
 
@@ -109,26 +107,13 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             <ArrowLeftIcon className="w-5 h-5 text-gray-600" />
           </button>
 
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => setIsLiked(!isLiked)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Like"
-            >
-              {isLiked ? (
-                <HeartSolidIcon className="w-5 h-5 text-red-500" />
-              ) : (
-                <HeartIcon className="w-5 h-5 text-gray-600" />
-              )}
-            </button>
-            <button
-              onClick={handleShare}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Share"
-            >
-              <ShareIcon className="w-5 h-5 text-gray-600" />
-            </button>
-          </div>
+          <button
+            onClick={handleShare}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Share"
+          >
+            <ShareIcon className="w-5 h-5 text-gray-600" />
+          </button>
         </div>
       </div>
 
