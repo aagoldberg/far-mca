@@ -612,7 +612,7 @@ export default function LoanCreationWizard() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 shadow-lg">
-          <div className="w-20 h-20 bg-gradient-to-br from-[#1a96c1] to-[#157ba3] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#2C7A7B] to-[#234E52] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
@@ -623,7 +623,7 @@ export default function LoanCreationWizard() {
             {hash.slice(0, 10)}...{hash.slice(-8)}
           </p>
 
-          <div className="bg-white rounded-xl p-6 mb-6 border-2 border-[#1a96c1]/30 shadow-md">
+          <div className="bg-white rounded-xl p-6 mb-6 border-2 border-[#2C7A7B]/30 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Share Your Loan</h3>
 
             {/* Primary sharing options */}
@@ -704,7 +704,7 @@ export default function LoanCreationWizard() {
 
           <button
             onClick={() => router.push('/')}
-            className="block w-full bg-[#1a96c1] hover:bg-[#157ba3] text-white font-bold py-4 px-6 rounded-xl"
+            className="block w-full bg-[#2C7A7B] hover:bg-[#234E52] text-white font-bold py-4 px-6 rounded-xl"
           >
             View All Loans
           </button>
@@ -804,9 +804,9 @@ export default function LoanCreationWizard() {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                     currentStep === step.num
-                      ? 'bg-[#1a96c1] text-white shadow-sm'
+                      ? 'bg-[#2C7A7B] text-white shadow-sm'
                       : currentStep > step.num
-                      ? 'bg-[#1a96c1] text-white'
+                      ? 'bg-[#2C7A7B] text-white'
                       : 'bg-white border-2 border-gray-300 text-gray-400'
                   }`}
                 >
@@ -830,7 +830,7 @@ export default function LoanCreationWizard() {
                 <div className="flex-1 px-3">
                   <div
                     className={`h-0.5 w-full transition-all ${
-                      currentStep > step.num ? 'bg-[#1a96c1]' : 'bg-gray-200'
+                      currentStep > step.num ? 'bg-[#2C7A7B]' : 'bg-gray-200'
                     }`}
                   />
                 </div>
