@@ -8,19 +8,48 @@ import { useRouter } from 'next/navigation';
 import { useLoanData, useContribute } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCApprove, useNeedsApproval } from '@/hooks/useUSDC';
 import { USDC_DECIMALS } from '@/types/loan';
+import { useMiniAppWallet } from '@/hooks/useMiniAppWallet';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 
 interface LoanFundingFormProps {
   loanAddress: `0x${string}`;
 }
+
+// Quick amount presets
+const QUICK_AMOUNTS = [10, 25, 50, 100];
 
 export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const router = useRouter();
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
+  const [showWalletSelector, setShowWalletSelector] = useState(false);
 
   // Use wagmi for wallet connection (works with Farcaster mini app connector)
   const { address, isConnected } = useAccount();
+  const { userProfile } = useMiniAppWallet();
+
+  // Get Farcaster profile with verified wallets
+  const { profile: farcasterProfile } = useFarcasterProfile(address as `0x${string}`);
+
+  // Build list of available wallets (current + verified)
+  const availableWallets = (() => {
+    const wallets: `0x${string}`[] = [];
+    if (address) wallets.push(address as `0x${string}`);
+    // Add verified addresses from Farcaster (excluding current address to avoid duplicates)
+    if (farcasterProfile?.verifications) {
+      farcasterProfile.verifications.forEach((addr: string) => {
+        const normalizedAddr = addr.toLowerCase();
+        if (!wallets.some(w => w.toLowerCase() === normalizedAddr)) {
+          wallets.push(addr as `0x${string}`);
+        }
+      });
+    }
+    return wallets;
+  })();
+
+  const selectedWallet = availableWallets[selectedWalletIndex] || address;
 
   const { loanData, isLoading: loanLoading } = useLoanData(loanAddress);
   const { balance: usdcBalance, balanceFormatted } = useUSDCBalance(address);
@@ -424,102 +453,195 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const remainingNeeded = loanData.principal - loanData.totalFunded;
   const maxContribution = remainingNeeded < usdcBalance ? remainingNeeded : usdcBalance;
 
+  // Helper to shorten address
+  const shortenAddress = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+
+  // Get balance as number for display
+  const balanceNumber = parseFloat(formatUnits(usdcBalance, USDC_DECIMALS));
+
   return (
-    <div className="px-4 py-6 pb-32">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="flex items-center mb-6">
-        <Link
-          href={`/loan/${loanAddress}`}
+      <div className="bg-white px-4 py-3 flex items-center border-b border-gray-100">
+        <button
+          onClick={() => router.back()}
           className="p-2 -ml-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </Link>
-        <h1 className="text-xl font-bold text-gray-900 ml-2">Fund Loan</h1>
+        </button>
       </div>
 
-      {/* Amount Input Card */}
-      <div className="bg-white rounded-xl shadow-sm p-5 mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          Amount (USDC)
-        </label>
-        <div className="relative mb-3">
-          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
-            $
-          </span>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="0.00"
-            disabled={step !== 'input'}
-            max={formatUnits(maxContribution, USDC_DECIMALS)}
-            step="0.01"
-            className="w-full pl-10 pr-4 py-4 text-2xl font-bold border border-gray-200 rounded-xl focus:border-[#2C7A7B] focus:ring-1 focus:ring-[#2C7A7B] outline-none disabled:bg-gray-50 disabled:text-gray-500"
-          />
-        </div>
-
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-500">Balance: {balanceFormatted}</span>
+      <div className="px-4 py-6 pb-32">
+        {/* Wallet Selector */}
+        <div className="bg-white rounded-2xl shadow-sm p-4 mb-6">
           <button
-            onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
-            className="text-[#2C7A7B] font-medium"
-            disabled={step !== 'input'}
+            onClick={() => availableWallets.length > 1 && setShowWalletSelector(!showWalletSelector)}
+            className="w-full flex items-center gap-3"
+            disabled={availableWallets.length <= 1}
           >
-            Max
+            {/* Avatar */}
+            {userProfile?.pfp ? (
+              <img src={userProfile.pfp} alt="" className="w-10 h-10 rounded-full object-cover" />
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-sm">
+                {selectedWallet?.slice(2, 4).toUpperCase()}
+              </div>
+            )}
+
+            {/* Address */}
+            <div className="flex-1 text-left">
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-gray-900">{shortenAddress(selectedWallet || '')}</span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText(selectedWallet || '');
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              </div>
+              {availableWallets.length > 1 && (
+                <span className="text-xs text-gray-500">{availableWallets.length} wallets connected</span>
+              )}
+            </div>
+
+            {/* Dropdown arrow */}
+            {availableWallets.length > 1 && (
+              <svg className={`w-5 h-5 text-gray-400 transition-transform ${showWalletSelector ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            )}
           </button>
-        </div>
-      </div>
 
-      {/* Remaining needed */}
-      <div className="bg-gray-50 rounded-xl p-4 mb-6">
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Remaining to fund</span>
-          <span className="font-semibold text-gray-900">
-            ${formatUnits(remainingNeeded, USDC_DECIMALS)} USDC
-          </span>
-        </div>
-      </div>
-
-      {/* Error Message */}
-      {errorMessage && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-          <p className="text-sm text-red-600">{errorMessage}</p>
-          {step === 'error' && (
-            <button
-              onClick={() => {
-                setStep('input');
-                setErrorMessage('');
-              }}
-              className="mt-2 text-sm text-red-700 hover:text-red-800 underline"
-            >
-              Try again
-            </button>
+          {/* Wallet dropdown */}
+          {showWalletSelector && availableWallets.length > 1 && (
+            <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
+              {availableWallets.map((wallet, idx) => (
+                <button
+                  key={wallet}
+                  onClick={() => {
+                    setSelectedWalletIndex(idx);
+                    setShowWalletSelector(false);
+                  }}
+                  className={`w-full flex items-center gap-3 p-2 rounded-xl transition-colors ${
+                    idx === selectedWalletIndex ? 'bg-[#2C7A7B]/10' : 'hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-xs">
+                    {wallet.slice(2, 4).toUpperCase()}
+                  </div>
+                  <span className={`text-sm ${idx === selectedWalletIndex ? 'text-[#2C7A7B] font-medium' : 'text-gray-700'}`}>
+                    {shortenAddress(wallet)}
+                  </span>
+                  {idx === selectedWalletIndex && (
+                    <svg className="w-4 h-4 text-[#2C7A7B] ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
           )}
         </div>
-      )}
 
-      {/* Status Message */}
-      {step !== 'input' && step !== 'success' && step !== 'error' && (
-        <div className="mb-4 p-4 bg-blue-50 rounded-xl">
-          <p className="text-sm text-blue-700 text-center">
-            {step === 'approve' && 'Approve USDC in your wallet...'}
-            {step === 'contribute' && 'Confirm contribution in your wallet...'}
-          </p>
+        {/* Balance Display */}
+        <div className="text-center mb-8">
+          <div className="text-5xl font-bold text-gray-900 mb-1">
+            ${amount || '0'}
+          </div>
+          <div className="text-gray-500">
+            ${balanceNumber.toFixed(2)} available
+          </div>
         </div>
-      )}
+
+        {/* Quick Amount Buttons */}
+        <div className="flex gap-2 mb-6">
+          {QUICK_AMOUNTS.map((quickAmount) => (
+            <button
+              key={quickAmount}
+              onClick={() => setAmount(quickAmount.toString())}
+              disabled={step !== 'input' || quickAmount > balanceNumber}
+              className={`flex-1 py-3 rounded-xl border-2 font-medium transition-all ${
+                amount === quickAmount.toString()
+                  ? 'border-[#2C7A7B] bg-[#2C7A7B]/5 text-[#2C7A7B]'
+                  : 'border-gray-200 text-gray-700 hover:border-gray-300'
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              ${quickAmount}
+            </button>
+          ))}
+        </div>
+
+        {/* Custom Amount Input */}
+        <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6">
+          <label className="block text-xs text-gray-500 mb-2">Custom amount</label>
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400 text-lg">$</span>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="0.00"
+              disabled={step !== 'input'}
+              max={formatUnits(maxContribution, USDC_DECIMALS)}
+              step="0.01"
+              className="flex-1 text-xl font-medium outline-none disabled:bg-transparent disabled:text-gray-500"
+            />
+            <button
+              onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
+              className="text-sm text-[#2C7A7B] font-medium px-3 py-1 rounded-lg hover:bg-[#2C7A7B]/10"
+              disabled={step !== 'input'}
+            >
+              Max
+            </button>
+          </div>
+        </div>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p className="text-sm text-red-600">{errorMessage}</p>
+            {step === 'error' && (
+              <button
+                onClick={() => {
+                  setStep('input');
+                  setErrorMessage('');
+                }}
+                className="mt-2 text-sm text-red-700 hover:text-red-800 underline"
+              >
+                Try again
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Status Message */}
+        {step !== 'input' && step !== 'success' && step !== 'error' && (
+          <div className="mb-4 p-4 bg-blue-50 rounded-xl">
+            <p className="text-sm text-blue-700 text-center">
+              {step === 'approve' && 'Approve USDC in your wallet...'}
+              {step === 'contribute' && 'Confirm contribution in your wallet...'}
+            </p>
+          </div>
+        )}
+      </div>
 
       {/* Fixed Bottom Button */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-4 py-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white px-4 py-4 safe-area-pb">
         <button
           onClick={handleFund}
           disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
-          className="w-full bg-[#2C7A7B] hover:bg-[#234E52] text-white font-semibold py-4 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold py-4 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving...'}
           {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming...'}
-          {step === 'input' && (needsApproval ? 'Approve & Fund' : 'Fund Loan')}
+          {step === 'input' && (needsApproval ? 'Approve' : 'Fund')}
         </button>
       </div>
     </div>
