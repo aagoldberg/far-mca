@@ -133,18 +133,18 @@ function BorrowerHeader({ address, loan }: { address: `0x${string}`; loan: any }
   const status = getStatus();
 
   return (
-    <div className="flex items-center gap-2 mb-2">
+    <div className="flex items-center gap-1.5 mb-2">
       {profile?.pfpUrl ? (
-        <img src={profile.pfpUrl} alt="" className="w-8 h-8 rounded-full object-cover" />
+        <img src={profile.pfpUrl} alt="" className="w-5 h-5 rounded-full object-cover" />
       ) : (
-        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xs font-medium">
+        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-[10px] font-medium">
           {address.slice(2, 4).toUpperCase()}
         </div>
       )}
-      <span className="font-medium text-gray-900">
+      <span className="text-sm font-medium text-gray-700">
         {profile?.displayName || profile?.username || `${address.slice(0, 6)}...`}
       </span>
-      <span className={`ml-auto text-xs font-medium px-2 py-0.5 rounded-full ${status.color}`}>
+      <span className={`ml-auto text-[11px] font-medium px-2 py-0.5 rounded-full ${status.color}`}>
         {status.label}
       </span>
     </div>
