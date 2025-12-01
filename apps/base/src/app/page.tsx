@@ -118,10 +118,31 @@ function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
   return <MiniLoanCard loan={loan} />;
 }
 
+// Borrower info component
+function BorrowerInfo({ address }: { address: `0x${string}` }) {
+  const { profile } = useFarcasterProfile(address);
+
+  if (!profile) return null;
+
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      {profile.pfpUrl ? (
+        <img src={profile.pfpUrl} alt="" className="w-6 h-6 rounded-full object-cover" />
+      ) : (
+        <div className="w-6 h-6 rounded-full bg-gray-200" />
+      )}
+      <span className="text-sm text-gray-600">
+        <span className="font-medium text-gray-900">@{profile.username}</span>
+      </span>
+    </div>
+  );
+}
+
 // Clean mobile loan card
 function MiniLoanCard({ loan }: { loan: any }) {
   const progress = loan.progress || 0;
   const contributorsCount = Number(loan.contributorsCount) || 0;
+  const borrowerAddress = loan.borrower || loan.creator;
 
   return (
     <Link href={`/loan/${loan.address}`} className="block">
@@ -147,6 +168,9 @@ function MiniLoanCard({ loan }: { loan: any }) {
         )}
 
         <div className="p-4">
+          {/* Borrower info */}
+          <BorrowerInfo address={borrowerAddress} />
+
           {/* Title */}
           <h3 className="font-semibold text-gray-900 text-base leading-snug mb-3">
             {loan.title || loan.name || 'Community Loan'}
@@ -160,19 +184,14 @@ function MiniLoanCard({ loan }: { loan: any }) {
             />
           </div>
 
-          {/* Funding info */}
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="text-base font-bold text-[#2C7A7B]">
-                ${loan.raised?.toLocaleString() || '0'}
-              </span>
-              <span className="text-sm text-gray-500 ml-1">
-                of ${loan.goal?.toLocaleString() || '0'}
-              </span>
-            </div>
-            <div className="text-xs text-gray-500">
-              {contributorsCount} supporter{contributorsCount !== 1 ? 's' : ''}
-            </div>
+          {/* Funding info - just the amounts now */}
+          <div className="mb-1">
+            <span className="text-base font-bold text-[#2C7A7B]">
+              ${loan.raised?.toLocaleString() || '0'}
+            </span>
+            <span className="text-sm text-gray-500 ml-1">
+              of ${loan.goal?.toLocaleString() || '0'}
+            </span>
           </div>
 
           {/* Funded by section */}
