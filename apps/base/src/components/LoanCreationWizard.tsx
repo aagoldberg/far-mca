@@ -196,6 +196,19 @@ export default function LoanCreationWizard() {
     }
   };
 
+  // Refresh credit score when user returns to app (after OAuth in external browser)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && currentStep === 2 && address) {
+        // User came back to the app - refresh credit score to check for new connections
+        loadCreditScore();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [currentStep, address]);
+
   // Save draft to Supabase
   const saveDraftStep = async (step: number, data: any) => {
     if (!address) return;
@@ -955,7 +968,17 @@ export default function LoanCreationWizard() {
         {currentStep === 2 && (
           <div className="space-y-4">
             <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">Connect Your Business</h2>
+              <div className="flex items-center justify-between mb-1">
+                <h2 className="text-lg font-bold text-gray-900">Connect Your Business</h2>
+                <button
+                  type="button"
+                  onClick={() => loadCreditScore()}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                  title="Refresh connection status"
+                >
+                  <ArrowPathIcon className="h-4 w-4" />
+                </button>
+              </div>
               <p className="text-sm text-gray-500 mb-5">
                 Optional: Link your accounts to help lenders understand your business.
               </p>

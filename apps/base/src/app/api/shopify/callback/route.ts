@@ -148,9 +148,9 @@ export async function GET(request: NextRequest) {
       creditScoreData = await scoreResponse.json();
     }
 
-    // Redirect to success page with wallet address
-    const redirectUrl = new URL('/account-settings', process.env.NEXT_PUBLIC_APP_URL!);
-    redirectUrl.searchParams.set('shopifyConnected', 'true');
+    // Redirect to success page telling user to go back to Mini App
+    const redirectUrl = new URL('/connection-success', process.env.NEXT_PUBLIC_APP_URL!);
+    redirectUrl.searchParams.set('platform', 'shopify');
     redirectUrl.searchParams.set('score', creditScoreData?.score?.toString() || '0');
     if (dataAccessError) {
       redirectUrl.searchParams.set('dataAccessPending', 'true');
@@ -160,10 +160,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('[Shopify] Callback error:', error);
 
-    // Redirect to settings with error
-    const errorUrl = new URL('/account-settings', process.env.NEXT_PUBLIC_APP_URL!);
-    errorUrl.searchParams.set('error', 'shopify_connection_failed');
-    errorUrl.searchParams.set('message', error instanceof Error ? error.message : 'Unknown error');
+    // Redirect to error page
+    const errorUrl = new URL('/connection-success', process.env.NEXT_PUBLIC_APP_URL!);
+    errorUrl.searchParams.set('platform', 'shopify');
+    errorUrl.searchParams.set('error', error instanceof Error ? error.message : 'Connection failed');
 
     return NextResponse.redirect(errorUrl.toString());
   }
