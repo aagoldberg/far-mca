@@ -27,10 +27,10 @@ export default function BottomNav() {
     },
     {
       href: '/create-loan',
-      label: 'Create',
+      label: 'Borrow',
       icon: (active: boolean) => (
-        <div className={`w-12 h-12 rounded-full flex items-center justify-center -mt-4 shadow-lg ${active ? 'bg-[#234E52]' : 'bg-[#2C7A7B]'}`}>
-          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className={`w-14 h-14 rounded-full flex items-center justify-center -mt-6 shadow-xl border-4 border-white ${active ? 'bg-[#234E52]' : 'bg-[#2C7A7B]'}`}>
+          <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
         </div>
@@ -66,7 +66,11 @@ export default function BottomNav() {
             }`}
           >
             {item.icon(item.isActive)}
-            {!item.isCenter && (
+            {item.isCenter ? (
+              <span className="text-xs mt-1 font-semibold text-[#2C7A7B]">
+                {item.label}
+              </span>
+            ) : (
               <span className={`text-xs mt-1 font-medium ${item.isActive ? 'text-[#2C7A7B]' : 'text-gray-500'}`}>
                 {item.label}
               </span>
