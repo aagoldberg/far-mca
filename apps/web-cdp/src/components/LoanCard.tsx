@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
-import { useContributorsWithAmounts } from '@/hooks/useMicroLoan';
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -102,123 +101,6 @@ const getDaysRemaining = (fundraisingDeadline?: bigint): string | null => {
   return `${daysRemaining} days`;
 };
 
-// Component for individual contributor avatar
-function ContributorAvatar({ address: contributorAddress, index, total }: { address: `0x${string}`; index: number; total: number }) {
-  const { profile } = useFarcasterProfile(contributorAddress);
-
-  return (
-    <div
-      className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-gray-200 overflow-hidden shadow-sm hover:shadow-md hover:scale-110 transition-all duration-200"
-      style={{ zIndex: total - index }}
-    >
-      {profile?.pfpUrl ? (
-        <img
-          src={profile.pfpUrl}
-          alt={profile.displayName || 'Contributor'}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-          }}
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68] text-white text-[10px] sm:text-xs font-bold">
-          {contributorAddress.slice(2, 4).toUpperCase()}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// Component for contributor name in text
-function ContributorName({ address: contributorAddress }: { address: `0x${string}` }) {
-  const { profile } = useFarcasterProfile(contributorAddress);
-
-  return (
-    <span className="font-medium text-gray-900">
-      {profile?.username ? `@${profile.username}` : `${contributorAddress.slice(0, 6)}...${contributorAddress.slice(-4)}`}
-    </span>
-  );
-}
-
-function ContributorsDisplay({ contributors, totalCount, hasMore }: { contributors: `0x${string}`[], totalCount: number, hasMore: boolean }) {
-  // Always call hooks at the top level - fetch profiles for up to 2 contributors
-  const profile1 = useFarcasterProfile(contributors[0]);
-  const profile2 = useFarcasterProfile(contributors.length > 1 ? contributors[1] : undefined);
-
-  // Check if any of the displayed contributors has a profile
-  const anyHaveProfiles = profile1.profile !== null || (contributors.length > 1 && profile2.profile !== null);
-
-  // If no one has a profile, show generic message
-  if (!anyHaveProfiles) {
-    return (
-      <span className="text-gray-500">
-        {totalCount === 1 ? '1 lender' : `${totalCount} lenders`}
-      </span>
-    );
-  }
-
-  // Calculate how many others there are
-  const othersCount = totalCount - contributors.length;
-
-  // Show up to 2 named contributors
-  return (
-    <>
-      {contributors.slice(0, 2).map((addr, idx) => (
-        <span key={addr}>
-          <ContributorName address={addr} />
-          {idx === 0 && contributors.length > 1 && ', '}
-        </span>
-      ))}
-      {othersCount > 0 && (
-        <span className="text-gray-500">
-          {' and '}
-          {othersCount} {othersCount === 1 ? 'other' : 'others'}
-        </span>
-      )}
-    </>
-  );
-}
-
-// Component to handle contributor footer with profile checks
-// Note: contributors passed here are already filtered to those with Farcaster profiles
-function ContributorFooter({ contributors, totalCount, hasMore }: { contributors: `0x${string}`[], totalCount: number, hasMore: boolean }) {
-  // If no contributors with profiles, show nothing (parent will show "Be the first supporter")
-  if (contributors.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="pt-3 mt-3 border-t border-gray-100/80">
-      {/* Label */}
-      <div className="text-xs text-gray-500 mb-2">
-        Supported by
-      </div>
-
-      {/* Avatars + Names */}
-      <div className="flex items-center gap-3">
-        <div className="flex -space-x-3 flex-shrink-0">
-          {contributors.map((contributorAddress, index) => (
-            <ContributorAvatar
-              key={contributorAddress}
-              address={contributorAddress}
-              index={index}
-              total={contributors.length}
-            />
-          ))}
-        </div>
-
-        <div className="flex-1 text-xs sm:text-sm text-gray-600">
-          <ContributorsDisplay
-            contributors={contributors}
-            totalCount={totalCount}
-            hasMore={hasMore}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function LoanCard({
   address,
   borrower,
@@ -247,84 +129,9 @@ export function LoanCard({
   // Fetch Farcaster profile - gracefully falls back to wallet address if no profile exists
   const { profile, hasProfile } = useFarcasterProfile(borrower);
 
-  // Fetch top 10 contributors sorted by amount
-  const { contributors: allContributors, totalCount, hasMore: hasMoreContributors } = useContributorsWithAmounts(address, 10);
-
-  // Fetch Farcaster profiles for top 10 contributors (always call hooks at top level)
-  const profile0 = useFarcasterProfile(allContributors[0]?.address);
-  const profile1 = useFarcasterProfile(allContributors[1]?.address);
-  const profile2 = useFarcasterProfile(allContributors[2]?.address);
-  const profile3 = useFarcasterProfile(allContributors[3]?.address);
-  const profile4 = useFarcasterProfile(allContributors[4]?.address);
-  const profile5 = useFarcasterProfile(allContributors[5]?.address);
-  const profile6 = useFarcasterProfile(allContributors[6]?.address);
-  const profile7 = useFarcasterProfile(allContributors[7]?.address);
-  const profile8 = useFarcasterProfile(allContributors[8]?.address);
-  const profile9 = useFarcasterProfile(allContributors[9]?.address);
-
-  // Filter to contributors with Farcaster profiles and take top 3 by amount
-  const contributorsWithProfiles = useMemo(() => {
-    const profiles = [profile0, profile1, profile2, profile3, profile4, profile5, profile6, profile7, profile8, profile9];
-
-    // Only filter if profiles have finished loading (not all are isLoading)
-    const allProfilesLoaded = profiles.every((p, idx) =>
-      !allContributors[idx] || !p.isLoading
-    );
-
-    if (!allProfilesLoaded) {
-      // Profiles still loading, return empty for now
-      return [];
-    }
-
-    const filtered = allContributors
-      .map((contributor, index) => ({
-        ...contributor,
-        hasProfile: profiles[index]?.hasProfile || false,
-        username: profiles[index]?.profile?.username,
-      }))
-      .filter(c => c.hasProfile)
-      .slice(0, 3);
-
-    return filtered;
-  }, [allContributors, profile0, profile1, profile2, profile3, profile4, profile5, profile6, profile7, profile8, profile9]);
-
-  const contributors = contributorsWithProfiles.map(c => c.address);
-  const hasMore = contributorsWithProfiles.length < totalCount;
-
   const shortAddress = borrower ? `${borrower.slice(0, 6)}...${borrower.slice(-4)}` : '';
 
   const daysRemaining = getDaysRemaining(fundraisingDeadline);
-
-  // Debug: Log borrower and contributor status
-  if (process.env.NODE_ENV === 'development') {
-    if (borrower) {
-      console.log(`[LoanCard ${address.slice(0, 6)}] Borrower: ${borrower}`, {
-        hasProfile,
-        username: profile?.username,
-        verifiedAddresses: profile?.verifications,
-        pfpUrl: profile?.pfpUrl,
-      });
-    }
-    if (allContributors.length > 0) {
-      const profiles = [profile0, profile1, profile2, profile3, profile4, profile5, profile6, profile7, profile8, profile9];
-
-      console.log(`[LoanCard ${address.slice(0, 6)}] Top contributors by amount:`,
-        allContributors.slice(0, 5).map((c, i) => ({
-          address: `${c.address.slice(0, 6)}...${c.address.slice(-4)}`,
-          amount: Number(c.amount) / 1e6,
-          isLoading: profiles[i]?.isLoading,
-          hasProfile: profiles[i]?.hasProfile,
-          username: profiles[i]?.profile?.username,
-        }))
-      );
-      console.log(`[LoanCard ${address.slice(0, 6)}] Final display:`, {
-        showing: contributors.length,
-        totalWithProfiles: contributorsWithProfiles.length,
-        totalCount,
-        profilesStillLoading: profiles.some((p, idx) => allContributors[idx] && p.isLoading),
-      });
-    }
-  }
 
   return (
     <Link
@@ -454,33 +261,6 @@ export function LoanCard({
           </div>
         </div>
 
-        {/* Contributor avatars footer */}
-        {contributors.length > 0 ? (
-          // Show contributors with Farcaster profiles
-          <ContributorFooter
-            contributors={contributors}
-            totalCount={totalCount}
-            hasMore={hasMore}
-          />
-        ) : totalCount > 0 ? (
-          // Has contributors but none with Farcaster profiles - show generic message
-          <div className="pt-3 mt-3 border-t border-gray-100/80">
-            <div className="text-xs text-gray-500 mb-2">
-              Supported by
-            </div>
-            <div className="text-xs sm:text-sm text-gray-600">
-              {totalCount} {totalCount === 1 ? 'other' : 'others'}
-            </div>
-          </div>
-        ) : (
-          // No contributors yet
-          <div className="pt-3 mt-3 border-t border-gray-100/80 text-xs sm:text-sm text-gray-400 italic flex items-center gap-2">
-            <svg className="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span>Be the first supporter</span>
-          </div>
-        )}
       </div>
       </div>
     </Link>
