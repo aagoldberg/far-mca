@@ -33,10 +33,12 @@ export async function GET(request: NextRequest) {
       apiKey: process.env.SHOPIFY_API_KEY || '',
       apiSecret: process.env.SHOPIFY_API_SECRET || '',
       scopes: ['read_orders', 'read_customers'],
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/shopify/callback?wallet=${encodeURIComponent(wallet)}`
+      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/shopify/callback`
     });
 
-    const authUrl = shopifyClient.getAuthUrl(shop, 'credit-scoring');
+    // Encode wallet in state parameter (Shopify returns this unchanged in callback)
+    const state = JSON.stringify({ wallet, nonce: 'credit-scoring' });
+    const authUrl = shopifyClient.getAuthUrl(shop, state);
 
     return NextResponse.json({ authUrl });
   } catch (error) {

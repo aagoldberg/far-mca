@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
     const code = searchParams.get('code');
     const shop = searchParams.get('shop');
     const state = searchParams.get('state');
-    const walletAddress = searchParams.get('wallet'); // Pass wallet in state or query
 
     if (!code || !shop) {
       return NextResponse.json(
@@ -32,10 +31,23 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Verify state parameter for security
-    if (state !== 'credit-scoring') {
+    // Parse state parameter to extract wallet address
+    let walletAddress: string | null = null;
+    try {
+      if (state) {
+        const stateData = JSON.parse(state);
+        walletAddress = stateData.wallet;
+        // Verify nonce for security
+        if (stateData.nonce !== 'credit-scoring') {
+          return NextResponse.json(
+            { error: 'Invalid state parameter' },
+            { status: 400 }
+          );
+        }
+      }
+    } catch {
       return NextResponse.json(
-        { error: 'Invalid state parameter' },
+        { error: 'Invalid state parameter format' },
         { status: 400 }
       );
     }
