@@ -8,6 +8,7 @@ import { useCreateLoan } from '@/hooks/useMicroLoan';
 import { useMiniAppWallet } from '@/hooks/useMiniAppWallet';
 import ImageCropModal from './ImageCropModal';
 import { LoanCard } from './LoanCard';
+import { sdk } from '@farcaster/miniapp-sdk';
 import {
   CheckCircleIcon,
   ArrowPathIcon,
@@ -1020,7 +1021,15 @@ export default function LoanCreationWizard() {
                             );
                             const data = await response.json();
                             if (response.ok && data.authUrl) {
-                              window.location.href = data.authUrl;
+                              // Use SDK to open external URL (breaks out of iframe)
+                              try {
+                                await sdk.actions.openUrl(data.authUrl);
+                              } catch {
+                                // Fallback for non-miniapp context
+                                window.open(data.authUrl, '_blank');
+                              }
+                              setConnectingPlatform(null);
+                              setShowShopifyInput(false);
                             } else {
                               alert(data.error || 'Failed to connect to Shopify');
                               setConnectingPlatform(null);
@@ -1074,7 +1083,12 @@ export default function LoanCreationWizard() {
                         );
                         const data = await response.json();
                         if (response.ok && data.authUrl) {
-                          window.location.href = data.authUrl;
+                          // Use SDK to open external URL (breaks out of iframe)
+                          try {
+                            await sdk.actions.openUrl(data.authUrl);
+                          } catch {
+                            window.open(data.authUrl, '_blank');
+                          }
                         } else {
                           alert(data.error || 'Failed to connect to Stripe');
                         }
@@ -1118,7 +1132,12 @@ export default function LoanCreationWizard() {
                         const response = await fetch(`/api/square/auth?${params.toString()}`);
                         const data = await response.json();
                         if (response.ok && data.authUrl) {
-                          window.location.href = data.authUrl;
+                          // Use SDK to open external URL (breaks out of iframe)
+                          try {
+                            await sdk.actions.openUrl(data.authUrl);
+                          } catch {
+                            window.open(data.authUrl, '_blank');
+                          }
                         } else {
                           alert(data.error || 'Failed to connect to Square');
                         }
