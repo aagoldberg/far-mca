@@ -111,6 +111,11 @@ export default function LoanCreationWizard() {
   const [showCropModal, setShowCropModal] = useState(false);
   const [tempImageSrc, setTempImageSrc] = useState('');
 
+  // Business connection state
+  const [showShopifyInput, setShowShopifyInput] = useState(false);
+  const [shopifyDomain, setShopifyDomain] = useState('');
+  const [connectingPlatform, setConnectingPlatform] = useState<string | null>(null);
+
   // Loan creation hook
   const {
     createLoan,
@@ -964,35 +969,78 @@ export default function LoanCreationWizard() {
                     </div>
                     <CheckCircleIcon className="h-5 w-5 text-green-600" />
                   </div>
+                ) : showShopifyInput ? (
+                  <div className="p-4 bg-white border border-[#2C7A7B] rounded-xl space-y-3">
+                    <div className="flex items-center gap-3">
+                      <ShoppingBagIcon className="h-5 w-5 text-[#2C7A7B]" />
+                      <span className="font-medium text-gray-900">Connect Shopify</span>
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        value={shopifyDomain}
+                        onChange={(e) => setShopifyDomain(e.target.value)}
+                        placeholder="yourstore.myshopify.com"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2C7A7B] focus:border-transparent"
+                        autoFocus
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Enter your Shopify store domain</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowShopifyInput(false);
+                          setShopifyDomain('');
+                        }}
+                        className="flex-1 px-3 py-2 text-sm text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        disabled={connectingPlatform === 'shopify'}
+                        onClick={async () => {
+                          if (!address) {
+                            alert('Please connect your wallet first');
+                            return;
+                          }
+                          const domain = shopifyDomain.trim().toLowerCase();
+                          if (!domain) return;
+
+                          // Auto-append .myshopify.com if not present
+                          const fullDomain = domain.includes('.myshopify.com')
+                            ? domain
+                            : `${domain}.myshopify.com`;
+
+                          setConnectingPlatform('shopify');
+                          try {
+                            const response = await fetch(
+                              `/api/shopify/auth?shop=${encodeURIComponent(fullDomain)}&wallet=${encodeURIComponent(address)}`
+                            );
+                            const data = await response.json();
+                            if (response.ok && data.authUrl) {
+                              window.location.href = data.authUrl;
+                            } else {
+                              alert(data.error || 'Failed to connect to Shopify');
+                              setConnectingPlatform(null);
+                            }
+                          } catch (error) {
+                            console.error('Shopify connection error:', error);
+                            alert('Failed to connect to Shopify. Please try again.');
+                            setConnectingPlatform(null);
+                          }
+                        }}
+                        className="flex-1 px-3 py-2 text-sm text-white bg-[#2C7A7B] rounded-lg hover:bg-[#234E52] transition-colors disabled:opacity-50"
+                      >
+                        {connectingPlatform === 'shopify' ? 'Connecting...' : 'Connect'}
+                      </button>
+                    </div>
+                  </div>
                 ) : (
                   <button
                     type="button"
-                    onClick={async () => {
-                      if (!address) {
-                        alert('Please connect your wallet first');
-                        return;
-                      }
-                      try {
-                        const shopDomain = prompt('Enter your Shopify store domain (e.g., yourstore.myshopify.com):');
-                        if (!shopDomain) return;
-                        if (!shopDomain.includes('.myshopify.com')) {
-                          alert('Please enter a valid Shopify domain (e.g., yourstore.myshopify.com)');
-                          return;
-                        }
-                        const response = await fetch(
-                          `/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}&wallet=${encodeURIComponent(address)}`
-                        );
-                        const data = await response.json();
-                        if (response.ok && data.authUrl) {
-                          window.location.href = data.authUrl;
-                        } else {
-                          alert(data.error || 'Failed to connect to Shopify');
-                        }
-                      } catch (error) {
-                        console.error('Shopify connection error:', error);
-                        alert('Failed to connect to Shopify. Please try again.');
-                      }
-                    }}
+                    onClick={() => setShowShopifyInput(true)}
                     className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-3">
