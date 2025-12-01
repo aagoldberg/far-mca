@@ -122,15 +122,25 @@ function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
 function BorrowerHeader({ address, loan }: { address: `0x${string}`; loan: any }) {
   const { profile } = useFarcasterProfile(address);
 
-  // Determine status
-  const getStatus = () => {
-    if (loan.completed) return { label: 'Completed', color: 'bg-gray-100 text-gray-600' };
-    if (loan.active) return { label: 'Active', color: 'bg-blue-100 text-blue-700' };
-    if (loan.fundraisingActive) return { label: 'Fundraising', color: 'bg-yellow-100 text-yellow-700' };
+  // Determine status badge - smart badge that shows most relevant info
+  const getStatusBadge = () => {
+    if (loan.completed) {
+      return { label: 'Completed', color: 'bg-gray-100 text-gray-600' };
+    }
+    if (loan.active) {
+      return { label: 'Repaying', color: 'bg-blue-100 text-blue-700' };
+    }
+    if (loan.fundraisingActive) {
+      // Show days left during fundraising (more useful than "Fundraising" label)
+      if (loan.daysLeft !== undefined) {
+        return { label: `${loan.daysLeft}d left`, color: 'bg-amber-50 text-amber-700 border border-amber-200' };
+      }
+      return { label: 'Fundraising', color: 'bg-amber-50 text-amber-700 border border-amber-200' };
+    }
     return { label: 'Closed', color: 'bg-gray-100 text-gray-600' };
   };
 
-  const status = getStatus();
+  const badge = getStatusBadge();
 
   return (
     <div className="flex items-center gap-1.5 mb-2">
@@ -144,8 +154,8 @@ function BorrowerHeader({ address, loan }: { address: `0x${string}`; loan: any }
       <span className="text-sm font-medium text-gray-700">
         {profile?.displayName || profile?.username || `${address.slice(0, 6)}...`}
       </span>
-      <span className={`ml-auto text-[11px] font-medium px-2 py-0.5 rounded-full ${status.color}`}>
-        {status.label}
+      <span className={`ml-auto text-[11px] font-medium px-2 py-0.5 rounded-full ${badge.color}`}>
+        {badge.label}
       </span>
     </div>
   );
@@ -174,12 +184,6 @@ function MiniLoanCard({ loan }: { loan: any }) {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
-            {/* Days left badge */}
-            {loan.daysLeft !== undefined && loan.fundraisingActive && (
-              <div className="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur-sm text-gray-700 px-2.5 py-1 rounded-full font-medium">
-                {loan.daysLeft}d left
-              </div>
-            )}
           </div>
         )}
 
