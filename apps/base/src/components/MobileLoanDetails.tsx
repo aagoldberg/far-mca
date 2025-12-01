@@ -89,9 +89,8 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
   // Check if current user is the borrower
   const isBorrower = address && loan && address.toLowerCase() === (loan.borrower || loan.creator)?.toLowerCase();
 
-  // Get borrower display info - prefer Farcaster username, otherwise shorten address
-  const shortenAddress = (addr: string) => addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : '';
-  const borrowerDisplayName = borrowerProfile?.username || shortenAddress(borrowerAddress || '');
+  // Get borrower display info - prefer Farcaster username, never show address
+  const borrowerDisplayName = borrowerProfile?.displayName || borrowerProfile?.username || 'Community Member';
   const borrowerAvatar = borrowerProfile?.pfp_url;
 
   return (

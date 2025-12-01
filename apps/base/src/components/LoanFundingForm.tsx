@@ -429,9 +429,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const remainingNeeded = loanData.principal - loanData.totalFunded;
   const maxContribution = remainingNeeded < usdcBalance ? remainingNeeded : usdcBalance;
 
-  // Helper to shorten address
-  const shortenAddress = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-
   // Get balance and max contribution as numbers for display
   const balanceNumber = parseFloat(formatUnits(usdcBalance, USDC_DECIMALS));
   const maxContributionNumber = parseFloat(formatUnits(maxContribution, USDC_DECIMALS));
@@ -449,24 +446,20 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
           </svg>
         </button>
 
-        {/* Wallet info in header */}
+        {/* User info in header */}
         <div className="flex items-center gap-2">
           {userProfile?.pfp ? (
-            <img src={userProfile.pfp} alt="" className="w-6 h-6 rounded-full object-cover" />
+            <img src={userProfile.pfp} alt={userProfile.username || 'You'} className="w-6 h-6 rounded-full object-cover" />
           ) : (
-            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs">
-              {address?.slice(2, 4).toUpperCase()}
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#2C7A7B] to-[#234E52] flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+              </svg>
             </div>
           )}
-          <span className="text-sm font-medium text-gray-900">{shortenAddress(address || '')}</span>
-          <button
-            onClick={() => navigator.clipboard.writeText(address || '')}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-          </button>
+          <span className="text-sm font-medium text-gray-900">
+            {userProfile?.username ? `@${userProfile.username}` : 'You'}
+          </span>
         </div>
       </div>
 

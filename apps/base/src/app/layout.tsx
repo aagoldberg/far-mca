@@ -3,6 +3,7 @@ import { Nunito, Figtree, Rubik } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import MiniAppNavbar from "@/components/MiniAppNavbar";
+import BottomNav from "@/components/BottomNav";
 import { Analytics } from "@vercel/analytics/react";
 
 const nunito = Nunito({
@@ -63,7 +64,8 @@ export default function RootLayout({
         <Providers>
           <div className="flex flex-col h-screen bg-gray-50">
             <MiniAppNavbar />
-            <main className="flex-1 overflow-y-auto">{children}</main>
+            <main className="flex-1 overflow-y-auto pb-20">{children}</main>
+            <BottomNav />
           </div>
         </Providers>
         <Analytics />
