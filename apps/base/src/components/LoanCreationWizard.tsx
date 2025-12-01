@@ -976,7 +976,7 @@ export default function LoanCreationWizard() {
                           `/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}&wallet=${encodeURIComponent(address)}`
                         );
                         const data = await response.json();
-                        if (response.ok) window.location.href = data.authUrl;
+                        if (response.ok) window.open(data.authUrl, '_blank');
                       } catch (error) {
                         console.error('Shopify connection error:', error);
                       }
@@ -1010,7 +1010,7 @@ export default function LoanCreationWizard() {
                           `/api/stripe/auth?wallet=${encodeURIComponent(address)}`
                         );
                         const data = await response.json();
-                        if (response.ok) window.location.href = data.authUrl;
+                        if (response.ok) window.open(data.authUrl, '_blank');
                       } catch (error) {
                         console.error('Stripe connection error:', error);
                       }
@@ -1046,7 +1046,7 @@ export default function LoanCreationWizard() {
                         });
                         const response = await fetch(`/api/square/auth?${params.toString()}`);
                         const data = await response.json();
-                        if (response.ok) window.location.href = data.authUrl;
+                        if (response.ok) window.open(data.authUrl, '_blank');
                       } catch (error) {
                         console.error('Square connection error:', error);
                       }
