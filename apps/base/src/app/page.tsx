@@ -118,20 +118,20 @@ function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
   return <MiniLoanCard loan={loan} />;
 }
 
-// Borrower avatar overlay component
-function BorrowerOverlay({ address }: { address: `0x${string}` }) {
+// Borrower inline component
+function BorrowerInline({ address }: { address: `0x${string}` }) {
   const { profile } = useFarcasterProfile(address);
 
   return (
-    <div className="absolute bottom-3 left-3 flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full pl-1 pr-3 py-1">
+    <div className="flex items-center gap-1.5 min-w-0">
       {profile?.pfpUrl ? (
-        <img src={profile.pfpUrl} alt="" className="w-6 h-6 rounded-full object-cover" />
+        <img src={profile.pfpUrl} alt="" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
       ) : (
-        <div className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center text-white text-xs font-medium">
+        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-[10px] font-medium flex-shrink-0">
           {address.slice(2, 4).toUpperCase()}
         </div>
       )}
-      <span className="text-sm font-medium text-white">
+      <span className="text-sm text-gray-600 truncate">
         {profile?.username ? `@${profile.username}` : `${address.slice(0, 6)}...`}
       </span>
     </div>
@@ -147,7 +147,7 @@ function MiniLoanCard({ loan }: { loan: any }) {
   return (
     <Link href={`/loan/${loan.address}`} className="block">
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        {/* Loan image with overlays */}
+        {/* Loan image */}
         {loan.imageUrl && (
           <div className="relative w-full bg-gray-100" style={{ paddingBottom: '56.25%' }}>
             <img
@@ -158,14 +158,12 @@ function MiniLoanCard({ loan }: { loan: any }) {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
-            {/* Days left badge - top right */}
+            {/* Days left badge */}
             {loan.daysLeft !== undefined && (
               <div className="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur-sm text-gray-700 px-2.5 py-1 rounded-full font-medium">
                 {loan.daysLeft}d left
               </div>
             )}
-            {/* Borrower info - bottom left */}
-            <BorrowerOverlay address={borrowerAddress} />
           </div>
         )}
 
@@ -175,9 +173,10 @@ function MiniLoanCard({ loan }: { loan: any }) {
             {loan.title || loan.name || 'Community Loan'}
           </h3>
 
-          {/* Progress bar + funding info inline */}
+          {/* Borrower + Progress bar + Amount - all inline */}
           <div className="flex items-center gap-3 mb-1">
-            <div className="flex-1 bg-gray-100 rounded-full h-1.5 overflow-hidden">
+            <BorrowerInline address={borrowerAddress} />
+            <div className="w-16 bg-gray-100 rounded-full h-1.5 overflow-hidden flex-shrink-0">
               <div
                 className="h-full rounded-full bg-[#2C7A7B]"
                 style={{ width: `${Math.min(progress, 100)}%` }}
