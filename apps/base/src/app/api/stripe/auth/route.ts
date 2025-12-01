@@ -28,9 +28,8 @@ export async function GET(request: NextRequest) {
       redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/stripe/callback`
     });
 
-    // Generate state parameter for CSRF protection and wallet tracking
-    // State will be passed back by Stripe, so we can retrieve the wallet from it
-    const state = `${wallet}-${Date.now()}`;
+    // Encode wallet in state parameter (Stripe returns this unchanged in callback)
+    const state = JSON.stringify({ wallet, nonce: Date.now() });
     const authUrl = stripeClient.getAuthUrl(state);
 
     return NextResponse.json({ authUrl });
