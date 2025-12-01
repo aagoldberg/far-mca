@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { WagmiProvider } from "wagmi";
 import { wagmiConfig } from "@/lib/wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,6 +10,14 @@ import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { baseSepolia } from 'wagmi/chains';
 import { clearProfileCache, debugProfileCache } from '@/hooks/useFarcasterProfile';
 import { sdk } from "@farcaster/miniapp-sdk";
+
+// Call ready() immediately when module loads (before React hydration)
+// This is critical for the splash screen to dismiss quickly
+if (typeof window !== 'undefined') {
+  sdk.actions.ready().catch(() => {
+    // Silently ignore errors - expected outside Warpcast
+  });
+}
 
 const queryClient = new QueryClient();
 
@@ -56,23 +64,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Initialize Farcaster Mini App SDK
-  // This MUST be called for the splash screen to go away in Warpcast
-  const [sdkReady, setSdkReady] = useState(false);
-
-  useEffect(() => {
-    // Call ready() unconditionally - the SDK handles non-Warpcast contexts
-    sdk.actions.ready()
-      .then(() => {
-        console.log('[Mini App] sdk.actions.ready() called successfully');
-        setSdkReady(true);
-      })
-      .catch((error: unknown) => {
-        // This is expected to fail outside of Warpcast - that's fine
-        console.log('[Mini App] sdk.actions.ready() error:', error);
-        setSdkReady(true); // Still mark as ready for the app to function
-      });
-  }, []);
 
   // For mini apps, use Farcaster's wagmi connector - no RainbowKit needed
   // The farcasterMiniApp connector auto-connects if user has wallet in Farcaster
