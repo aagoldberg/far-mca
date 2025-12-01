@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMiniAppWallet } from "@/hooks/useMiniAppWallet";
 import { useLoansWithMetadata, useLoanWithMetadata } from "@/hooks/useLoansWithMetadata";
 import { useFarcasterProfile } from "@/hooks/useFarcasterProfile";
+import { useContributorsWithAmounts } from "@/hooks/useMicroLoan";
 
 // Loading skeleton for loan cards
 function LoanCardSkeleton() {
@@ -24,6 +25,88 @@ function LoanCardSkeleton() {
   );
 }
 
+// Component to show a single funder's avatar
+function FunderAvatar({ address }: { address: `0x${string}` }) {
+  const { profile } = useFarcasterProfile(address);
+
+  if (profile?.pfpUrl) {
+    return (
+      <img
+        src={profile.pfpUrl}
+        alt={profile.username}
+        className="w-5 h-5 rounded-full border border-white object-cover"
+      />
+    );
+  }
+
+  // Default avatar for non-Farcaster users
+  return (
+    <div className="w-5 h-5 rounded-full border border-white bg-gray-300 flex items-center justify-center">
+      <span className="text-[8px] text-gray-600">
+        {address.slice(2, 4).toUpperCase()}
+      </span>
+    </div>
+  );
+}
+
+// Component to show funder username
+function FunderName({ address, isFirst }: { address: `0x${string}`; isFirst: boolean }) {
+  const { profile } = useFarcasterProfile(address);
+
+  const name = profile?.username
+    ? `@${profile.username}`
+    : `${address.slice(0, 6)}...`;
+
+  return (
+    <span className="font-medium text-gray-700">
+      {!isFirst && ', '}{name}
+    </span>
+  );
+}
+
+// Component to show "Funded by @user, @user2 and X others"
+function FundedBySection({ loanAddress, totalCount }: { loanAddress: `0x${string}`; totalCount: number }) {
+  const { contributors } = useContributorsWithAmounts(loanAddress, 3);
+
+  if (totalCount === 0 || contributors.length === 0) {
+    return null;
+  }
+
+  const displayedContributors = contributors.slice(0, 2);
+  const remainingCount = totalCount - displayedContributors.length;
+
+  return (
+    <div className="flex items-center gap-2 pt-3 mt-3 border-t border-gray-100">
+      {/* Stacked avatars */}
+      <div className="flex -space-x-1.5">
+        {displayedContributors.map((contributor, idx) => (
+          <FunderAvatar key={contributor.address} address={contributor.address} />
+        ))}
+        {remainingCount > 0 && (
+          <div className="w-5 h-5 rounded-full border border-white bg-gray-200 flex items-center justify-center">
+            <span className="text-[8px] font-medium text-gray-600">+{remainingCount}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Text */}
+      <p className="text-xs text-gray-500 flex-1 truncate">
+        <span className="text-gray-400">Funded by </span>
+        {displayedContributors.map((contributor, idx) => (
+          <FunderName
+            key={contributor.address}
+            address={contributor.address}
+            isFirst={idx === 0}
+          />
+        ))}
+        {remainingCount > 0 && (
+          <span className="text-gray-500"> and {remainingCount} other{remainingCount > 1 ? 's' : ''}</span>
+        )}
+      </p>
+    </div>
+  );
+}
+
 // Wrapper component to fetch individual loan data
 function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
   const { loan, isLoading } = useLoanWithMetadata(loanAddress);
@@ -38,8 +121,7 @@ function MiniLoanCardWrapper({ loanAddress }: { loanAddress: `0x${string}` }) {
 // Clean mobile loan card
 function MiniLoanCard({ loan }: { loan: any }) {
   const progress = loan.progress || 0;
-  const borrowerAddress = loan.borrower || loan.creator;
-  const { profile: borrowerProfile } = useFarcasterProfile(borrowerAddress);
+  const contributorsCount = Number(loan.contributorsCount) || 0;
 
   return (
     <Link href={`/loan/${loan.address}`} className="block">
@@ -88,13 +170,13 @@ function MiniLoanCard({ loan }: { loan: any }) {
                 of ${loan.goal?.toLocaleString() || '0'}
               </span>
             </div>
-            <div className="flex items-center gap-1 text-xs text-gray-500">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span>{loan.contributorsCount || 0} supporters</span>
+            <div className="text-xs text-gray-500">
+              {contributorsCount} supporter{contributorsCount !== 1 ? 's' : ''}
             </div>
           </div>
+
+          {/* Funded by section */}
+          <FundedBySection loanAddress={loan.address} totalCount={contributorsCount} />
         </div>
       </div>
     </Link>
