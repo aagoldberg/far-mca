@@ -566,7 +566,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         <button
           onClick={handleFund}
           disabled={!amount || parseFloat(amount) <= 0 || step !== 'input'}
-          className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold py-4 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="w-full bg-[#2C7A7B] hover:bg-[#234E52] text-white font-semibold py-4 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {step === 'approve' && (isApproving || isApproveTxConfirming) && 'Approving...'}
           {step === 'contribute' && (isContributing || isContributeTxConfirming) && 'Confirming...'}
