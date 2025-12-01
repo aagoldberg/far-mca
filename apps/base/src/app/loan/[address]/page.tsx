@@ -13,6 +13,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Fetch loan data for metadata (we'll create this helper)
   const loan = await getLoanDataForMetadata(address);
 
+  // Auto-detect base URL from Vercel or use env variable
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3005');
+  const loanUrl = `${baseUrl}/loan/${address}`;
+
   if (!loan) {
     return {
       title: 'Loan Not Found',
@@ -25,11 +30,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${progressEmoji} ${loan.title}`;
   const description = `${progressPercent}% funded • $${loan.totalFunded.toLocaleString()} of $${loan.principal.toLocaleString()} raised. Zero-interest community loan. Every dollar makes a difference!`;
-
-  // Auto-detect base URL from Vercel or use env variable
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3005');
-  const loanUrl = `${baseUrl}/loan/${address}`;
 
   return {
     title,
@@ -57,6 +57,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       images: [`${baseUrl}/api/og/loan/${address}`], // Dynamic formatted image
       site: '@lendfriend',
+    },
+    // Farcaster Frame metadata for Mini App embeds
+    other: {
+      'fc:frame': JSON.stringify({
+        version: 'next',
+        imageUrl: `${baseUrl}/api/og/loan/${address}`,
+        button: {
+          title: progressPercent >= 100 ? 'View Loan' : `Fund This Loan (${progressPercent}% funded)`,
+          action: {
+            type: 'launch_frame',
+            name: 'LendFriend',
+            url: loanUrl,
+            splashImageUrl: `${baseUrl}/splash.png`,
+            splashBackgroundColor: '#2C7A7B',
+          },
+        },
+      }),
     },
   };
 }

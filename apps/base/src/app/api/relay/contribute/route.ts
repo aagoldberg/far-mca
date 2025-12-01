@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createWalletClient, createPublicClient, http, parseUnits, verifyMessage } from 'viem';
+import { createWalletClient, createPublicClient, http, parseUnits, verifyMessage, formatUnits } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import MicroLoanABI from '@/abi/MicroLoan.json';
+import { notifyContribution, notifyFullyFunded, getFidFromAddress } from '@/lib/notifications';
 
 // Relayer configuration
 const RELAYER_PRIVATE_KEY = process.env.RELAYER_PRIVATE_KEY as `0x${string}`;
@@ -179,6 +180,92 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Send notifications in the background (don't block the response)
+    (async () => {
+      try {
+        // Get loan data for notification
+        const [borrower, principal, totalFunded, metadataURI] = await Promise.all([
+          publicClient.readContract({
+            address: loanAddress as `0x${string}`,
+            abi: MicroLoanABI.abi,
+            functionName: 'borrower',
+          }) as Promise<`0x${string}`>,
+          publicClient.readContract({
+            address: loanAddress as `0x${string}`,
+            abi: MicroLoanABI.abi,
+            functionName: 'principal',
+          }) as Promise<bigint>,
+          publicClient.readContract({
+            address: loanAddress as `0x${string}`,
+            abi: MicroLoanABI.abi,
+            functionName: 'totalFunded',
+          }) as Promise<bigint>,
+          publicClient.readContract({
+            address: loanAddress as `0x${string}`,
+            abi: MicroLoanABI.abi,
+            functionName: 'metadataURI',
+          }) as Promise<string>,
+        ]);
+
+        // Get borrower's FID
+        const borrowerFid = await getFidFromAddress(borrower);
+        if (!borrowerFid) {
+          console.log('[Notifications] Borrower has no Farcaster account - skipping notification');
+          return;
+        }
+
+        // Try to get contributor name from Farcaster
+        let contributorName = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+        const contributorFid = await getFidFromAddress(userAddress);
+        if (contributorFid) {
+          // Could fetch username here, but keeping simple for now
+          contributorName = `FID:${contributorFid}`;
+        }
+
+        // Parse loan title from metadata (simplified - assumes IPFS gateway)
+        let loanTitle = 'Your loan';
+        try {
+          if (metadataURI.startsWith('ipfs://')) {
+            const ipfsHash = metadataURI.replace('ipfs://', '');
+            const metaResponse = await fetch(`https://gateway.pinata.cloud/ipfs/${ipfsHash}`);
+            if (metaResponse.ok) {
+              const metadata = await metaResponse.json();
+              loanTitle = metadata.name || loanTitle;
+            }
+          }
+        } catch (e) {
+          console.log('[Notifications] Could not fetch loan metadata:', e);
+        }
+
+        const goal = formatUnits(principal, 6);
+        const newTotal = formatUnits(totalFunded, 6);
+        const isFullyFunded = totalFunded >= principal;
+
+        // Send contribution notification
+        await notifyContribution({
+          borrowerFid,
+          contributorName,
+          amount,
+          loanAddress,
+          loanTitle,
+          newTotal,
+          goal,
+        });
+
+        // If fully funded, send that notification too
+        if (isFullyFunded) {
+          await notifyFullyFunded({
+            borrowerFid,
+            loanAddress,
+            loanTitle,
+            totalAmount: goal,
+          });
+        }
+      } catch (notifyError) {
+        console.error('[Notifications] Error sending notifications:', notifyError);
+      }
+    })();
 
     return NextResponse.json({
       success: true,
