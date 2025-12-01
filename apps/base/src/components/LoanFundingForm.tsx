@@ -9,7 +9,6 @@ import { useLoanData, useContribute } from '@/hooks/useMicroLoan';
 import { useUSDCBalance, useUSDCApprove, useNeedsApproval } from '@/hooks/useUSDC';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useMiniAppWallet } from '@/hooks/useMiniAppWallet';
-import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 
 interface LoanFundingFormProps {
   loanAddress: `0x${string}`;
@@ -23,33 +22,10 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
-  const [showWalletSelector, setShowWalletSelector] = useState(false);
 
   // Use wagmi for wallet connection (works with Farcaster mini app connector)
   const { address, isConnected } = useAccount();
   const { userProfile } = useMiniAppWallet();
-
-  // Get Farcaster profile with verified wallets
-  const { profile: farcasterProfile } = useFarcasterProfile(address as `0x${string}`);
-
-  // Build list of available wallets (current + verified)
-  const availableWallets = (() => {
-    const wallets: `0x${string}`[] = [];
-    if (address) wallets.push(address as `0x${string}`);
-    // Add verified addresses from Farcaster (excluding current address to avoid duplicates)
-    if (farcasterProfile?.verifications) {
-      farcasterProfile.verifications.forEach((addr: string) => {
-        const normalizedAddr = addr.toLowerCase();
-        if (!wallets.some(w => w.toLowerCase() === normalizedAddr)) {
-          wallets.push(addr as `0x${string}`);
-        }
-      });
-    }
-    return wallets;
-  })();
-
-  const selectedWallet = availableWallets[selectedWalletIndex] || address;
 
   const { loanData, isLoading: loanLoading } = useLoanData(loanAddress);
   const { balance: usdcBalance, balanceFormatted } = useUSDCBalance(address);
@@ -462,93 +438,38 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white px-4 py-3 flex items-center border-b border-gray-100">
+      <div className="bg-white px-4 py-3 flex items-center justify-center border-b border-gray-100 relative">
         <button
           onClick={() => router.back()}
-          className="p-2 -ml-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="absolute right-3 p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-      </div>
 
-      <div className="px-4 py-6 pb-32">
-        {/* Wallet Selector */}
-        <div className="bg-white rounded-2xl shadow-sm p-4 mb-6">
-          <button
-            onClick={() => availableWallets.length > 1 && setShowWalletSelector(!showWalletSelector)}
-            className="w-full flex items-center gap-3"
-            disabled={availableWallets.length <= 1}
-          >
-            {/* Avatar */}
-            {userProfile?.pfp ? (
-              <img src={userProfile.pfp} alt="" className="w-10 h-10 rounded-full object-cover" />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-sm">
-                {selectedWallet?.slice(2, 4).toUpperCase()}
-              </div>
-            )}
-
-            {/* Address */}
-            <div className="flex-1 text-left">
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-900">{shortenAddress(selectedWallet || '')}</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigator.clipboard.writeText(selectedWallet || '');
-                  }}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </button>
-              </div>
-              {availableWallets.length > 1 && (
-                <span className="text-xs text-gray-500">{availableWallets.length} wallets connected</span>
-              )}
-            </div>
-
-            {/* Dropdown arrow */}
-            {availableWallets.length > 1 && (
-              <svg className={`w-5 h-5 text-gray-400 transition-transform ${showWalletSelector ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            )}
-          </button>
-
-          {/* Wallet dropdown */}
-          {showWalletSelector && availableWallets.length > 1 && (
-            <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
-              {availableWallets.map((wallet, idx) => (
-                <button
-                  key={wallet}
-                  onClick={() => {
-                    setSelectedWalletIndex(idx);
-                    setShowWalletSelector(false);
-                  }}
-                  className={`w-full flex items-center gap-3 p-2 rounded-xl transition-colors ${
-                    idx === selectedWalletIndex ? 'bg-[#2C7A7B]/10' : 'hover:bg-gray-50'
-                  }`}
-                >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-xs">
-                    {wallet.slice(2, 4).toUpperCase()}
-                  </div>
-                  <span className={`text-sm ${idx === selectedWalletIndex ? 'text-[#2C7A7B] font-medium' : 'text-gray-700'}`}>
-                    {shortenAddress(wallet)}
-                  </span>
-                  {idx === selectedWalletIndex && (
-                    <svg className="w-4 h-4 text-[#2C7A7B] ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </button>
-              ))}
+        {/* Wallet info in header */}
+        <div className="flex items-center gap-2">
+          {userProfile?.pfp ? (
+            <img src={userProfile.pfp} alt="" className="w-6 h-6 rounded-full object-cover" />
+          ) : (
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs">
+              {address?.slice(2, 4).toUpperCase()}
             </div>
           )}
+          <span className="text-sm font-medium text-gray-900">{shortenAddress(address || '')}</span>
+          <button
+            onClick={() => navigator.clipboard.writeText(address || '')}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </button>
         </div>
+      </div>
+
+      <div className="px-4 py-8 pb-32">
 
         {/* Balance Display */}
         <div className="text-center mb-8">
