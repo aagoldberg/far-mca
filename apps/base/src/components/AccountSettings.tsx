@@ -1,20 +1,13 @@
 'use client';
 
-import { useAccount } from 'wagmi';
-import { useEvmAddress } from '@coinbase/cdp-hooks';
-import { useCDPAuth } from '@/hooks/useCDPAuth';
+import { useAccount, useDisconnect } from 'wagmi';
 import { useBorrowerLoans, useLoans } from '@/hooks/useMicroLoan';
-import { useState } from 'react';
 import { DataExport } from './DataExport';
 import { FarcasterProfileEdit } from './FarcasterProfileEdit';
 
 export default function AccountSettings() {
-  const { address: externalAddress, connector } = useAccount();
-  const { evmAddress: cdpAddress } = useEvmAddress();
-  const { user, logout } = useCDPAuth();
-
-  // Prioritize external wallet address, fallback to CDP address
-  const address = externalAddress || cdpAddress;
+  const { address, connector } = useAccount();
+  const { disconnect } = useDisconnect();
   const { loans: borrowedLoans } = useBorrowerLoans(address);
   const { loans: allLoans } = useLoans();
 
@@ -81,7 +74,7 @@ export default function AccountSettings() {
             )}
           </div>
           <button
-            onClick={() => logout()}
+            onClick={() => disconnect()}
             className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-medium rounded-lg transition-colors"
           >
             Disconnect
