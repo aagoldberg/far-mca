@@ -28,7 +28,7 @@ function ConnectionSuccessContent() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          router.push('/create-loan');
+          router.push('/create-loan?step=2');
           return 0;
         }
         return prev - 1;
@@ -51,7 +51,7 @@ function ConnectionSuccessContent() {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Connection Failed</h1>
           <p className="text-gray-600 mb-6">{error}</p>
           <button
-            onClick={() => router.push('/create-loan')}
+            onClick={() => router.push('/create-loan?step=2')}
             className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
           >
             Try Again
