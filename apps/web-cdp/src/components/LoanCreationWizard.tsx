@@ -112,6 +112,11 @@ export default function LoanCreationWizard() {
   const [showCropModal, setShowCropModal] = useState(false);
   const [tempImageSrc, setTempImageSrc] = useState('');
 
+  // Shopify connection state
+  const [showShopifyInput, setShowShopifyInput] = useState(false);
+  const [shopifyDomain, setShopifyDomain] = useState('');
+  const [isConnectingShopify, setIsConnectingShopify] = useState(false);
+
   // Loan creation hook
   const {
     createLoan,
@@ -183,6 +188,45 @@ export default function LoanCreationWizard() {
       }
     } catch (error) {
       console.error('Error loading credit score:', error);
+    }
+  };
+
+  // Handle Shopify connection
+  const handleShopifyConnect = async () => {
+    if (!address || !shopifyDomain.trim()) return;
+
+    // Validate domain format
+    let domain = shopifyDomain.trim().toLowerCase();
+    if (!domain.includes('.myshopify.com')) {
+      // Try adding .myshopify.com if just store name provided
+      if (!domain.includes('.')) {
+        domain = `${domain}.myshopify.com`;
+        setShopifyDomain(domain);
+      } else {
+        setErrors(prev => ({ ...prev, shopify: 'Please enter a valid .myshopify.com domain' }));
+        return;
+      }
+    }
+
+    setIsConnectingShopify(true);
+    setErrors(prev => ({ ...prev, shopify: '' }));
+
+    try {
+      const response = await fetch(
+        `/api/shopify/auth?shop=${encodeURIComponent(domain)}&wallet=${encodeURIComponent(address)}`
+      );
+      const data = await response.json();
+
+      if (response.ok && data.authUrl) {
+        window.location.href = data.authUrl;
+      } else {
+        setErrors(prev => ({ ...prev, shopify: data.error || 'Failed to connect to Shopify' }));
+        setIsConnectingShopify(false);
+      }
+    } catch (error) {
+      console.error('Shopify connection error:', error);
+      setErrors(prev => ({ ...prev, shopify: 'Connection failed. Please try again.' }));
+      setIsConnectingShopify(false);
     }
   };
 
@@ -901,23 +945,64 @@ export default function LoanCreationWizard() {
                       <CheckCircleIcon className="h-5 w-5 text-green-600" />
                     </div>
                   </div>
+                ) : showShopifyInput ? (
+                  <div className="border border-gray-200 rounded-lg p-4 bg-white space-y-3">
+                    <div className="flex items-center gap-3">
+                      <ShoppingBagIcon className="h-6 w-6 text-gray-700" />
+                      <span className="text-base font-medium text-gray-900">Connect Shopify</span>
+                    </div>
+                    <div>
+                      <label htmlFor="shopifyDomain" className="block text-sm font-medium text-gray-700 mb-1">
+                        Store Domain
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          id="shopifyDomain"
+                          value={shopifyDomain}
+                          onChange={(e) => setShopifyDomain(e.target.value)}
+                          placeholder="yourstore.myshopify.com"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              handleShopifyConnect();
+                            }
+                          }}
+                          disabled={isConnectingShopify}
+                        />
+                        <button
+                          type="button"
+                          onClick={handleShopifyConnect}
+                          disabled={!shopifyDomain.trim() || isConnectingShopify}
+                          className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                        >
+                          {isConnectingShopify ? 'Connecting...' : 'Connect'}
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Enter your .myshopify.com domain to securely connect
+                      </p>
+                      {errors.shopify && (
+                        <p className="text-xs text-red-600 mt-1">{errors.shopify}</p>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowShopifyInput(false);
+                        setShopifyDomain('');
+                        setErrors(prev => ({ ...prev, shopify: '' }));
+                      }}
+                      className="text-sm text-gray-500 hover:text-gray-700"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 ) : (
                   <button
                     type="button"
-                    onClick={async () => {
-                      if (!address) return;
-                      try {
-                        const shopDomain = prompt('Enter your Shopify store domain (e.g., yourstore.myshopify.com):');
-                        if (!shopDomain || !shopDomain.includes('.myshopify.com')) return;
-                        const response = await fetch(
-                          `/api/shopify/auth?shop=${encodeURIComponent(shopDomain)}&wallet=${encodeURIComponent(address)}`
-                        );
-                        const data = await response.json();
-                        if (response.ok) window.location.href = data.authUrl;
-                      } catch (error) {
-                        console.error('Shopify connection error:', error);
-                      }
-                    }}
+                    onClick={() => setShowShopifyInput(true)}
                     className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-3">

@@ -29,14 +29,25 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/shopify/callback`;
+    console.log('[Shopify Auth] Config:', {
+      apiKey: process.env.SHOPIFY_API_KEY?.substring(0, 8) + '...',
+      redirectUri,
+      shop,
+    });
+
     const shopifyClient = new ShopifyClient({
       apiKey: process.env.SHOPIFY_API_KEY || '',
       apiSecret: process.env.SHOPIFY_API_SECRET || '',
-      scopes: ['read_orders', 'read_customers'],
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/shopify/callback?wallet=${encodeURIComponent(wallet)}`
+      scopes: ['read_orders', 'read_products', 'read_locations'],
+      redirectUri,
     });
 
-    const authUrl = shopifyClient.getAuthUrl(shop, 'credit-scoring');
+    // Encode wallet in state parameter (Shopify returns this unchanged in callback)
+    const state = JSON.stringify({ wallet, nonce: 'credit-scoring' });
+    const authUrl = shopifyClient.getAuthUrl(shop, state);
+
+    console.log('[Shopify Auth] Generated URL:', authUrl);
 
     return NextResponse.json({ authUrl });
   } catch (error) {
