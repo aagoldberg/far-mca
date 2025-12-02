@@ -31,12 +31,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Parse state parameter to extract wallet address
+    // Parse state parameter to extract wallet address and draft ID
     let walletAddress: string | null = null;
+    let draftId: string | null = null;
     try {
       if (state) {
         const stateData = JSON.parse(state);
         walletAddress = stateData.wallet;
+        draftId = stateData.draft || null;
         // Verify nonce for security
         if (stateData.nonce !== 'credit-scoring') {
           return NextResponse.json(
@@ -158,6 +160,9 @@ export async function GET(request: NextRequest) {
     redirectUrl.searchParams.set('score', creditScoreData?.score?.toString() || '0');
     if (dataAccessError) {
       redirectUrl.searchParams.set('dataAccessPending', 'true');
+    }
+    if (draftId) {
+      redirectUrl.searchParams.set('draft', draftId);
     }
 
     return NextResponse.redirect(redirectUrl.toString());

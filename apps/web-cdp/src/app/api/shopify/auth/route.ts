@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const shop = searchParams.get('shop');
     const wallet = searchParams.get('wallet');
+    const draft = searchParams.get('draft');
 
     if (!shop) {
       return NextResponse.json(
@@ -43,8 +44,8 @@ export async function GET(request: NextRequest) {
       redirectUri,
     });
 
-    // Encode wallet in state parameter (Shopify returns this unchanged in callback)
-    const state = JSON.stringify({ wallet, nonce: 'credit-scoring' });
+    // Encode wallet and draft ID in state parameter (Shopify returns this unchanged in callback)
+    const state = JSON.stringify({ wallet, draft, nonce: 'credit-scoring' });
     const authUrl = shopifyClient.getAuthUrl(shop, state);
 
     console.log('[Shopify Auth] Generated URL:', authUrl);

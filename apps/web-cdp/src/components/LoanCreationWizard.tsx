@@ -212,9 +212,11 @@ export default function LoanCreationWizard() {
     setErrors(prev => ({ ...prev, shopify: '' }));
 
     try {
-      const response = await fetch(
-        `/api/shopify/auth?shop=${encodeURIComponent(domain)}&wallet=${encodeURIComponent(address)}`
-      );
+      let authUrl = `/api/shopify/auth?shop=${encodeURIComponent(domain)}&wallet=${encodeURIComponent(address)}`;
+      if (draftId) {
+        authUrl += `&draft=${encodeURIComponent(draftId)}`;
+      }
+      const response = await fetch(authUrl);
       const data = await response.json();
 
       if (response.ok && data.authUrl) {

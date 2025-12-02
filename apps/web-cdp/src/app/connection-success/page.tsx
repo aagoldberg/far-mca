@@ -10,6 +10,7 @@ function ConnectionSuccessContent() {
   const score = searchParams.get('score');
   const dataAccessPending = searchParams.get('dataAccessPending') === 'true';
   const error = searchParams.get('error');
+  const draft = searchParams.get('draft');
   const [countdown, setCountdown] = useState(3);
 
   const platformNames: Record<string, string> = {
@@ -20,6 +21,15 @@ function ConnectionSuccessContent() {
 
   const displayName = platformNames[platform.toLowerCase()] || platform;
 
+  // Build redirect URL with step and optional draft
+  const getRedirectUrl = () => {
+    let url = '/create-loan?step=2';
+    if (draft) {
+      url += `&draft=${encodeURIComponent(draft)}`;
+    }
+    return url;
+  };
+
   // Auto-redirect after countdown
   useEffect(() => {
     if (error) return; // Don't auto-redirect on error
@@ -28,7 +38,7 @@ function ConnectionSuccessContent() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          router.push('/create-loan?step=2');
+          router.push(getRedirectUrl());
           return 0;
         }
         return prev - 1;
@@ -36,7 +46,7 @@ function ConnectionSuccessContent() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [router, error]);
+  }, [router, error, draft]);
 
   // Error state
   if (error) {
@@ -51,7 +61,7 @@ function ConnectionSuccessContent() {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Connection Failed</h1>
           <p className="text-gray-600 mb-6">{error}</p>
           <button
-            onClick={() => router.push('/create-loan?step=2')}
+            onClick={() => router.push(getRedirectUrl())}
             className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
           >
             Try Again
@@ -106,7 +116,7 @@ function ConnectionSuccessContent() {
 
         {/* Manual button */}
         <button
-          onClick={() => router.push('/create-loan?step=2')}
+          onClick={() => router.push(getRedirectUrl())}
           className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
         >
           Continue to Loan Application
