@@ -133,10 +133,10 @@ export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?:
         <button
           onClick={requestEth}
           disabled={isRequestingEth}
-          className="text-xs text-teal-600 hover:text-teal-700 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+          className="w-5 h-5 flex items-center justify-center text-xs text-teal-600 hover:text-white hover:bg-teal-600 font-bold border border-teal-300 hover:border-teal-600 rounded disabled:text-gray-400 disabled:border-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
           title="Get test ETH"
         >
-          {isRequestingEth ? '...' : '+'}
+          {isRequestingEth ? '·' : '+'}
         </button>
       </div>
 
@@ -155,10 +155,10 @@ export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?:
         <button
           onClick={mintTestUSDC}
           disabled={isMinting}
-          className="text-xs text-teal-600 hover:text-teal-700 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+          className="w-5 h-5 flex items-center justify-center text-xs text-teal-600 hover:text-white hover:bg-teal-600 font-bold border border-teal-300 hover:border-teal-600 rounded disabled:text-gray-400 disabled:border-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
           title="Get test USDC"
         >
-          {isMinting ? '...' : '+'}
+          {isMinting ? '·' : '+'}
         </button>
       </div>
     </div>
