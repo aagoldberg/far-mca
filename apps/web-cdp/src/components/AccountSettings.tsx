@@ -213,22 +213,22 @@ export default function AccountSettings() {
                       stroke="url(#scoreGradient)"
                       strokeWidth="12"
                       strokeLinecap="round"
-                      strokeDasharray={`${(creditData.score / 100) * 440} 440`}
+                      strokeDasharray={`${(trustData.score / 100) * 440} 440`}
                     />
                     <defs>
                       <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={creditData.score >= 70 ? '#10b981' : creditData.score >= 40 ? '#f59e0b' : '#ef4444'} />
-                        <stop offset="100%" stopColor={creditData.score >= 70 ? '#059669' : creditData.score >= 40 ? '#d97706' : '#dc2626'} />
+                        <stop offset="0%" stopColor={trustData.score >= 70 ? '#10b981' : trustData.score >= 40 ? '#f59e0b' : '#ef4444'} />
+                        <stop offset="100%" stopColor={trustData.score >= 70 ? '#059669' : trustData.score >= 40 ? '#d97706' : '#dc2626'} />
                       </linearGradient>
                     </defs>
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-5xl font-bold">{creditData.score}</span>
+                    <span className="text-5xl font-bold">{trustData.score}</span>
                     <span className="text-sm text-slate-400">out of 100</span>
                   </div>
                 </div>
-                <div className={`mt-3 px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${getScoreGradient(creditData.score)}`}>
-                  {getScoreLabel(creditData.score)}
+                <div className={`mt-3 px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${getScoreGradient(trustData.score)}`}>
+                  {getScoreLabel(trustData.score)}
                 </div>
               </div>
 
@@ -239,12 +239,12 @@ export default function AccountSettings() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-slate-300">Revenue</span>
-                    <span className="text-sm font-medium">{creditData.breakdown.revenueScore}/40</span>
+                    <span className="text-sm font-medium">{trustData.breakdown.revenueScore}/40</span>
                   </div>
                   <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-teal-500 to-teal-400 rounded-full transition-all duration-500"
-                      style={{ width: `${(creditData.breakdown.revenueScore / 40) * 100}%` }}
+                      style={{ width: `${(trustData.breakdown.revenueScore / 40) * 100}%` }}
                     />
                   </div>
                 </div>
@@ -252,12 +252,12 @@ export default function AccountSettings() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-slate-300">Consistency</span>
-                    <span className="text-sm font-medium">{creditData.breakdown.consistencyScore}/20</span>
+                    <span className="text-sm font-medium">{trustData.breakdown.consistencyScore}/20</span>
                   </div>
                   <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-500"
-                      style={{ width: `${(creditData.breakdown.consistencyScore / 20) * 100}%` }}
+                      style={{ width: `${(trustData.breakdown.consistencyScore / 20) * 100}%` }}
                     />
                   </div>
                 </div>
@@ -265,12 +265,12 @@ export default function AccountSettings() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-slate-300">Reliability</span>
-                    <span className="text-sm font-medium">{creditData.breakdown.reliabilityScore}/20</span>
+                    <span className="text-sm font-medium">{trustData.breakdown.reliabilityScore}/20</span>
                   </div>
                   <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full transition-all duration-500"
-                      style={{ width: `${(creditData.breakdown.reliabilityScore / 20) * 100}%` }}
+                      style={{ width: `${(trustData.breakdown.reliabilityScore / 20) * 100}%` }}
                     />
                   </div>
                 </div>
@@ -278,12 +278,12 @@ export default function AccountSettings() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-slate-300">Growth</span>
-                    <span className="text-sm font-medium">{creditData.breakdown.growthScore}/20</span>
+                    <span className="text-sm font-medium">{trustData.breakdown.growthScore}/20</span>
                   </div>
                   <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full transition-all duration-500"
-                      style={{ width: `${(creditData.breakdown.growthScore / 20) * 100}%` }}
+                      style={{ width: `${(trustData.breakdown.growthScore / 20) * 100}%` }}
                     />
                   </div>
                 </div>
@@ -321,9 +321,9 @@ export default function AccountSettings() {
           </a>
         </div>
 
-        {creditData && creditData.connections && creditData.connections.length > 0 ? (
+        {trustData && trustData.connections && trustData.connections.length > 0 ? (
           <div className="space-y-3">
-            {creditData.connections.map((conn, idx) => (
+            {trustData.connections.map((conn, idx) => (
               <div
                 key={idx}
                 className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
@@ -377,7 +377,7 @@ export default function AccountSettings() {
       </section>
 
       {/* Recommendations */}
-      {creditData && creditData.recommendations && creditData.recommendations.length > 0 && (
+      {trustData && trustData.recommendations && trustData.recommendations.length > 0 && (
         <section className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 mb-6">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -388,7 +388,7 @@ export default function AccountSettings() {
             <div className="flex-1">
               <h2 className="text-lg font-bold text-gray-900 mb-2">Tips to Improve Your Score</h2>
               <ul className="space-y-2">
-                {creditData.recommendations.map((rec, idx) => (
+                {trustData.recommendations.map((rec, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
                     <svg className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
