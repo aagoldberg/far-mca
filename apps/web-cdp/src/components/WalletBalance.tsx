@@ -117,63 +117,67 @@ export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?:
 
   // Desktop view component
   const DesktopView = () => (
-    <div className="bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm min-w-max">
-      <div className="font-medium text-gray-900 mb-2">Test Balances</div>
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <span className="text-gray-600 w-10">ETH:</span>
-          <span className="font-medium text-gray-900 min-w-12">
+    <div className="flex items-center gap-4 text-sm">
+      {/* ETH Balance */}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
+          <span className="text-slate-500 font-medium">ETH</span>
+          <span className="font-semibold text-slate-800">
             {isLoading ? (
-              <div className="w-12 h-4 bg-gray-200 rounded animate-pulse" />
+              <span className="text-slate-400">...</span>
             ) : (
               formatBalance(ethBalance?.value, 18)
             )}
           </span>
-          <button 
-            onClick={requestEth}
-            disabled={isRequestingEth}
-            className="text-blue-600 hover:text-blue-800 hover:underline text-xs disabled:text-gray-400 disabled:cursor-not-allowed"
-          >
-            {isRequestingEth ? 'sending...' : 'get more'}
-          </button>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-gray-600 w-10">USDC:</span>
-          <span className="font-medium text-gray-900 min-w-12">
+        <button
+          onClick={requestEth}
+          disabled={isRequestingEth}
+          className="text-xs text-teal-600 hover:text-teal-700 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+          title="Get test ETH"
+        >
+          {isRequestingEth ? '...' : '+'}
+        </button>
+      </div>
+
+      {/* USDC Balance */}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
+          <span className="text-slate-500 font-medium">USDC</span>
+          <span className="font-semibold text-slate-800">
             {isLoading ? (
-              <div className="w-12 h-4 bg-gray-200 rounded animate-pulse" />
+              <span className="text-slate-400">...</span>
             ) : (
               formatBalance(usdcBalance?.value, 6)
             )}
           </span>
-          <button 
-            onClick={mintTestUSDC}
-            disabled={isMinting}
-            className="text-blue-600 hover:text-blue-800 hover:underline text-xs disabled:text-gray-400 disabled:cursor-not-allowed"
-          >
-            {isMinting ? 'minting...' : 'get more'}
-          </button>
         </div>
+        <button
+          onClick={mintTestUSDC}
+          disabled={isMinting}
+          className="text-xs text-teal-600 hover:text-teal-700 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+          title="Get test USDC"
+        >
+          {isMinting ? '...' : '+'}
+        </button>
       </div>
     </div>
   );
 
   // Mobile view component
   const MobileView = () => (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 text-xs">
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1">
-          <span className="text-gray-600">Ξ</span>
-          <span className="font-medium text-gray-900">
-            {isLoading ? '...' : formatBalance(ethBalance?.value, 18)}
-          </span>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-gray-600">$</span>
-          <span className="font-medium text-gray-900">
-            {isLoading ? '...' : formatBalance(usdcBalance?.value, 6)}
-          </span>
-        </div>
+    <div className="flex items-center gap-3 text-xs">
+      <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md">
+        <span className="text-slate-500">ETH</span>
+        <span className="font-semibold text-slate-800">
+          {isLoading ? '...' : formatBalance(ethBalance?.value, 18)}
+        </span>
+      </div>
+      <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md">
+        <span className="text-slate-500">USDC</span>
+        <span className="font-semibold text-slate-800">
+          {isLoading ? '...' : formatBalance(usdcBalance?.value, 6)}
+        </span>
       </div>
     </div>
   );
