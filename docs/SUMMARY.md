@@ -22,6 +22,8 @@
   * [The Algorithm](how-it-works/social-trust-scoring/the-algorithm.md)
 * [🔐 Social Verification](how-it-works/social-verification.md)
 * [📊 Risk Scoring](how-it-works/risk-scoring/README.md)
+  * [FinRegLab Research](how-it-works/risk-scoring/finreglab-research.md)
+  * [Cashflow Risk Model](how-it-works/risk-scoring/cashflow-risk-model.md)
   * [Lender Warnings](how-it-works/risk-scoring/lender-warnings.md)
 * [🛡️ Anti-Gaming & Sybil Resistance](how-it-works/anti-gaming.md)
 * [⚡ Smart Contract Flow](how-it-works/smart-contract-flow.md)

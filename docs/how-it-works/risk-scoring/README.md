@@ -74,4 +74,14 @@ Before contributing, lenders see clear warnings based on risk level. [View warni
 
 ---
 
-**Next:** [Social Trust Scoring](../social-trust-scoring/README.md) · [Anti-Gaming](../anti-gaming.md) · [Lender Warnings](lender-warnings.md)
+---
+
+## Cashflow-Based Risk Scoring (Phase 1+)
+
+For borrowers with connected Shopify, Stripe, or Square accounts, we incorporate cashflow-based signals into risk assessment. This uses industry-researched models from FICO SBSS, Kabbage, and e-commerce RBF lenders.
+
+[View Cashflow Risk Model →](cashflow-risk-model.md)
+
+---
+
+**Next:** [Cashflow Risk Model](cashflow-risk-model.md) · [Social Trust Scoring](../social-trust-scoring/README.md) · [Anti-Gaming](../anti-gaming.md) · [Lender Warnings](lender-warnings.md)
