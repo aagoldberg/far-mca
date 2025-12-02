@@ -1,14 +1,16 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
 function ConnectionSuccessContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const platform = searchParams.get('platform') || 'Account';
   const score = searchParams.get('score');
   const dataAccessPending = searchParams.get('dataAccessPending') === 'true';
   const error = searchParams.get('error');
+  const [countdown, setCountdown] = useState(3);
 
   const platformNames: Record<string, string> = {
     shopify: 'Shopify',
@@ -17,6 +19,24 @@ function ConnectionSuccessContent() {
   };
 
   const displayName = platformNames[platform.toLowerCase()] || platform;
+
+  // Auto-redirect after countdown
+  useEffect(() => {
+    if (error) return; // Don't auto-redirect on error
+
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          router.push('/create-loan');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [router, error]);
 
   // Error state
   if (error) {
@@ -30,11 +50,12 @@ function ConnectionSuccessContent() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Connection Failed</h1>
           <p className="text-gray-600 mb-6">{error}</p>
-          <div className="bg-gray-50 rounded-xl p-4">
-            <p className="text-sm text-gray-500">
-              Return to the LendFriend app and try again.
-            </p>
-          </div>
+          <button
+            onClick={() => router.push('/create-loan')}
+            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -73,23 +94,23 @@ function ConnectionSuccessContent() {
           </div>
         )}
 
-        {/* Instructions */}
+        {/* Auto-redirect notice */}
         <div className="bg-gray-50 rounded-xl p-4 mb-6">
           <p className="text-gray-700 font-medium mb-2">
-            You can close this tab now
+            Redirecting in {countdown} seconds...
           </p>
           <p className="text-sm text-gray-500">
-            Return to the LendFriend app to continue your loan application.
+            You'll be taken back to your loan application.
           </p>
         </div>
 
-        {/* Visual hint */}
-        <div className="flex items-center justify-center gap-2 text-gray-400">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          <span className="text-sm">Go back to LendFriend</span>
-        </div>
+        {/* Manual button */}
+        <button
+          onClick={() => router.push('/create-loan')}
+          className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
+        >
+          Continue to Loan Application
+        </button>
       </div>
     </div>
   );
