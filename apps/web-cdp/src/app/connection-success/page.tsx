@@ -106,7 +106,7 @@ function ConnectionSuccessContent() {
 
         {/* Manual button */}
         <button
-          onClick={() => router.push('/create-loan')}
+          onClick={() => router.push('/create-loan?step=2')}
           className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
         >
           Continue to Loan Application
