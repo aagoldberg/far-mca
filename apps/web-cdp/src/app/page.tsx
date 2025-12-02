@@ -8,37 +8,20 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#3B9B7F]/10 via-[#2C7DA0]/5 to-white py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="bg-gradient-to-br from-slate-50 via-teal-50/30 to-white py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#2C7A7B] mb-4 tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-teal-700 mb-6 tracking-tight leading-tight">
             Community Lending
           </h1>
           {/* Supporting message */}
-          <p className="text-2xl sm:text-3xl md:text-4xl text-gray-700 max-w-4xl mx-auto mb-3 leading-snug font-semibold">
+          <p className="text-xl sm:text-2xl md:text-3xl text-slate-600 max-w-3xl mx-auto mb-4 leading-relaxed">
             Banks want big profits, friends don't
           </p>
           {/* Sub-tagline */}
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
             Building reputation-based lending for the new economy
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href="/create-loan"
-              className="inline-flex items-center gap-2 bg-[#2C7A7B] hover:bg-[#234E52] text-white font-semibold py-3.5 px-7 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Request a Loan
-            </Link>
-            <Link
-              href="#loans"
-              className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium py-3.5 px-7 rounded-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-200"
-            >
-              Browse Loans
-            </Link>
-          </div>
         </div>
       </div>
 
