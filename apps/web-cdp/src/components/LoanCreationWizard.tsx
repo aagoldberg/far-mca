@@ -1140,13 +1140,6 @@ export default function LoanCreationWizard() {
                   </p>
                 </div>
               )}
-              {creditScore && creditScore.connections.length > 0 && creditScore.connections.length < 3 && (
-                <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
-                  <p className="text-sm text-amber-800">
-                    <strong>Boost your score:</strong> Connect additional platforms to increase your Trust Score and unlock better rates.
-                  </p>
-                </div>
-              )}
             </div>
 
             <div className="flex gap-3 pt-4 border-t border-gray-200">
