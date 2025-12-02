@@ -926,11 +926,32 @@ export default function LoanCreationWizard() {
         {currentStep === 2 && (
           <div className="bg-white border border-gray-300 rounded-xl p-8 shadow-sm space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Application overview</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Connect Your Business</h2>
               <p className="text-base text-gray-600">
-                Complete the following steps to submit your application for funding.
+                Link your business platforms to build your Trust Score and unlock better loan terms.
               </p>
             </div>
+
+            {/* Trust Score Display */}
+            {creditScore && creditScore.connections.length > 0 && (
+              <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-5 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-slate-300 mb-1">Your Trust Score</p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl font-bold">{creditScore.score}</span>
+                      <span className="text-slate-400">/100</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-slate-300 mb-1">{creditScore.connections.length} platform{creditScore.connections.length !== 1 ? 's' : ''} connected</p>
+                    {creditScore.connections.length < 3 && (
+                      <p className="text-xs text-teal-400">Connect more to boost your score</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Connect platforms</h3>
@@ -938,13 +959,21 @@ export default function LoanCreationWizard() {
               <div className="space-y-3">
                 {/* Shopify Platform Card */}
                 {creditScore?.connections.some(c => c.platform === 'shopify') ? (
-                  <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 cursor-not-allowed">
+                  <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
                     <div className="flex items-center gap-3">
-                      <ShoppingBagIcon className="h-6 w-6 text-gray-600" />
-                      <div className="flex-1">
-                        <span className="text-base font-medium text-gray-900">Shopify</span>
+                      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <ShoppingBagIcon className="h-5 w-5 text-green-600" />
                       </div>
-                      <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base font-medium text-gray-900">Shopify</span>
+                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                        </div>
+                        <p className="text-sm text-gray-500">
+                          {creditScore.connections.find(c => c.platform === 'shopify')?.platform_user_id || 'Store connected'}
+                        </p>
+                      </div>
+                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
                     </div>
                   </div>
                 ) : showShopifyInput ? (
@@ -1016,13 +1045,21 @@ export default function LoanCreationWizard() {
 
                 {/* Stripe Platform Card */}
                 {creditScore?.connections.some(c => c.platform === 'stripe') ? (
-                  <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 cursor-not-allowed">
+                  <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
                     <div className="flex items-center gap-3">
-                      <CreditCardIcon className="h-6 w-6 text-gray-600" />
-                      <div className="flex-1">
-                        <span className="text-base font-medium text-gray-900">Stripe</span>
+                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <CreditCardIcon className="h-5 w-5 text-purple-600" />
                       </div>
-                      <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base font-medium text-gray-900">Stripe</span>
+                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                        </div>
+                        <p className="text-sm text-gray-500">
+                          {creditScore.connections.find(c => c.platform === 'stripe')?.platform_user_id || 'Account connected'}
+                        </p>
+                      </div>
+                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
                     </div>
                   </div>
                 ) : (
@@ -1051,13 +1088,21 @@ export default function LoanCreationWizard() {
 
                 {/* Square Platform Card */}
                 {creditScore?.connections.some(c => c.platform === 'square') ? (
-                  <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 cursor-not-allowed">
+                  <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
                     <div className="flex items-center gap-3">
-                      <BuildingStorefrontIcon className="h-6 w-6 text-gray-600" />
-                      <div className="flex-1">
-                        <span className="text-base font-medium text-gray-900">Square</span>
+                      <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
+                        <BuildingStorefrontIcon className="h-5 w-5 text-white" />
                       </div>
-                      <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base font-medium text-gray-900">Square</span>
+                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                        </div>
+                        <p className="text-sm text-gray-500">
+                          {creditScore.connections.find(c => c.platform === 'square')?.platform_user_id || 'Account connected'}
+                        </p>
+                      </div>
+                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
                     </div>
                   </div>
                 ) : (
@@ -1087,12 +1132,18 @@ export default function LoanCreationWizard() {
                 )}
               </div>
 
-              {/* Optional Notice */}
+              {/* Helpful hints based on connection status */}
               {creditScore && creditScore.connections.length === 0 && (
-                <div className="mt-6 space-y-2">
-                  <h4 className="text-sm font-semibold text-gray-900">No action required</h4>
-                  <p className="text-sm text-gray-600">
-                    The data from these platforms is not required. We'll use other data sources you connect to review your application.
+                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm text-blue-800">
+                    <strong>Tip:</strong> Connecting at least one platform helps us verify your business and may improve your loan terms.
+                  </p>
+                </div>
+              )}
+              {creditScore && creditScore.connections.length > 0 && creditScore.connections.length < 3 && (
+                <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <p className="text-sm text-amber-800">
+                    <strong>Boost your score:</strong> Connect additional platforms to increase your Trust Score and unlock better rates.
                   </p>
                 </div>
               )}
@@ -1114,9 +1165,13 @@ export default function LoanCreationWizard() {
                   }
                   goToNextStep();
                 }}
-                className="px-6 py-2.5 bg-[#1a96c1] text-white font-medium rounded-lg hover:bg-[#157ba3] transition-colors"
+                className={`px-6 py-2.5 font-medium rounded-lg transition-colors ${
+                  creditScore && creditScore.connections.length > 0
+                    ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-md'
+                    : 'bg-[#1a96c1] text-white hover:bg-[#157ba3]'
+                }`}
               >
-                Next
+                {creditScore && creditScore.connections.length > 0 ? 'Continue to Eligibility' : 'Skip for Now'}
               </button>
             </div>
           </div>
