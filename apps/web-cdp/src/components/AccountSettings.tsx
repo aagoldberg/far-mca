@@ -346,7 +346,7 @@ function ScoreRow({ label, value, max }: { label: string; value: number; max: nu
           }}
         />
       </div>
-      <span className="text-sm text-gray-600 w-12 text-right">{value}/{max}</span>
+      <span className="text-sm text-gray-600 w-12 text-right">{Math.round(value)}/{max}</span>
     </div>
   );
 }
