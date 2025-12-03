@@ -101,209 +101,197 @@ export default function AccountSettings() {
     }).format(amount);
   };
 
-  const getScoreGradient = (score: number) => {
-    if (score >= 70) return 'from-emerald-500 to-teal-600';
-    if (score >= 40) return 'from-amber-500 to-orange-500';
-    return 'from-slate-400 to-slate-500';
+  const getScoreColor = (score: number) => {
+    if (score >= 70) return { text: 'text-emerald-600', bg: 'bg-emerald-500', light: 'bg-emerald-100' };
+    if (score >= 40) return { text: 'text-amber-600', bg: 'bg-amber-500', light: 'bg-amber-100' };
+    return { text: 'text-teal-600', bg: 'bg-teal-500', light: 'bg-teal-100' };
   };
 
   const getScoreLabel = (score: number) => {
-    if (score >= 70) return { text: 'Excellent', color: 'text-emerald-600', bg: 'bg-emerald-50' };
-    if (score >= 40) return { text: 'Good', color: 'text-amber-600', bg: 'bg-amber-50' };
-    if (score > 0) return { text: 'Building', color: 'text-blue-600', bg: 'bg-blue-50' };
-    return { text: 'Not rated', color: 'text-slate-500', bg: 'bg-slate-50' };
+    if (score >= 70) return 'Excellent';
+    if (score >= 40) return 'Good';
+    if (score > 0) return 'Building';
+    return 'Not rated';
   };
 
   if (!address) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4">
         <div className="text-center max-w-sm">
-          <div className="w-20 h-20 bg-gradient-to-br from-teal-100 to-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-teal-100">
-            <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Connect Your Wallet</h2>
-          <p className="text-slate-500">Connect a wallet to view your account and trust score</p>
+          <h2 className="text-xl font-semibold text-slate-800 mb-2">Connect Your Wallet</h2>
+          <p className="text-slate-500 text-sm">Connect a wallet to view your account</p>
         </div>
       </div>
     );
   }
 
-  const scoreLabel = trustData ? getScoreLabel(trustData.score) : getScoreLabel(0);
+  const scoreColors = trustData ? getScoreColor(trustData.score) : getScoreColor(0);
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
-      {/* Trust Score Hero Card */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-xl">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-2xl" />
-
-        <div className="relative">
-          <div className="flex items-start justify-between mb-6">
-            <div>
-              <p className="text-slate-400 text-sm font-medium mb-1">Your Trust Score</p>
-              <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${scoreLabel.bg} ${scoreLabel.color}`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                {scoreLabel.text}
-              </div>
-            </div>
-            {trustData?.connections && trustData.connections.length > 0 && (
-              <button
-                onClick={refreshConnections}
-                disabled={refreshing}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-xs font-medium transition-all"
-              >
-                <svg className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                {refreshing ? 'Syncing' : 'Refresh'}
-              </button>
-            )}
-          </div>
-
-          {trustLoading ? (
-            <div className="flex justify-center py-12">
-              <div className="animate-spin rounded-full h-10 w-10 border-2 border-white/20 border-t-teal-400"></div>
-            </div>
-          ) : trustData ? (
-            <>
-              {/* Score Circle */}
-              <div className="flex items-center gap-8 mb-8">
-                <div className="relative">
-                  <svg className="w-32 h-32 -rotate-90" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
-                    <circle
-                      cx="60" cy="60" r="54" fill="none"
-                      stroke="url(#scoreGradient)"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      strokeDasharray={`${(trustData.score / 100) * 339} 339`}
-                      className="transition-all duration-1000"
-                    />
-                    <defs>
-                      <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#14b8a6" />
-                        <stop offset="100%" stopColor="#3b82f6" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-4xl font-bold text-white">{trustData.score}</span>
-                    <span className="text-slate-400 text-xs">of 100</span>
-                  </div>
-                </div>
-
-                {/* Score Breakdown */}
-                <div className="flex-1 space-y-3">
-                  <ScoreBar label="Revenue" value={trustData.breakdown.revenueScore} max={40} color="teal" />
-                  <ScoreBar label="Consistency" value={trustData.breakdown.consistencyScore} max={20} color="blue" />
-                  <ScoreBar label="Reliability" value={trustData.breakdown.reliabilityScore} max={20} color="purple" />
-                  <ScoreBar label="Growth" value={trustData.breakdown.growthScore} max={20} color="amber" />
-                </div>
-              </div>
-
-              {/* Connected count */}
-              <div className="flex items-center gap-2 text-slate-400 text-sm">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-                {trustData.connections.length} platform{trustData.connections.length !== 1 ? 's' : ''} connected
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <p className="text-white font-medium mb-1">Build Your Trust Score</p>
-              <p className="text-slate-400 text-sm mb-4">Connect your business platforms to get started</p>
-              <a
-                href="/create-loan?step=2"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold rounded-xl transition-all shadow-lg shadow-teal-500/25"
-              >
-                Connect Platform
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </a>
-            </div>
+    <div className="max-w-md mx-auto px-4 py-6 space-y-4">
+      {/* Trust Score Card */}
+      <section className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        {/* Header */}
+        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+          <h2 className="font-semibold text-slate-900">Trust Score</h2>
+          {trustData?.connections && trustData.connections.length > 0 && (
+            <button
+              onClick={refreshConnections}
+              disabled={refreshing}
+              className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
+            >
+              <svg className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              {refreshing ? 'Syncing...' : 'Refresh'}
+            </button>
           )}
         </div>
+
+        {trustLoading ? (
+          <div className="flex justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-200 border-t-teal-600"></div>
+          </div>
+        ) : trustData ? (
+          <div className="p-5">
+            {/* Score Display */}
+            <div className="flex items-start gap-5 mb-6">
+              <div className="flex-shrink-0">
+                <div className={`w-20 h-20 rounded-2xl ${scoreColors.light} flex items-center justify-center`}>
+                  <span className={`text-3xl font-bold ${scoreColors.text}`}>{trustData.score}</span>
+                </div>
+                <p className="text-center text-xs text-slate-400 mt-1.5">of 100</p>
+              </div>
+              <div className="flex-1 pt-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${scoreColors.light} ${scoreColors.text}`}>
+                    {getScoreLabel(trustData.score)}
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    {trustData.connections.length} platform{trustData.connections.length !== 1 ? 's' : ''} linked
+                  </span>
+                </div>
+                <p className="text-sm text-slate-500">
+                  {trustData.score < 40
+                    ? 'Connect more platforms and increase sales to improve your score.'
+                    : trustData.score < 70
+                    ? 'Good progress! Continue building your track record.'
+                    : 'Excellent score! You qualify for the best loan terms.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Score Breakdown */}
+            <div className="space-y-3">
+              <ScoreRow label="Revenue" value={trustData.breakdown.revenueScore} max={40} />
+              <ScoreRow label="Consistency" value={trustData.breakdown.consistencyScore} max={20} />
+              <ScoreRow label="Reliability" value={trustData.breakdown.reliabilityScore} max={20} />
+              <ScoreRow label="Growth" value={trustData.breakdown.growthScore} max={20} />
+            </div>
+          </div>
+        ) : (
+          <div className="p-8 text-center">
+            <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <p className="text-slate-600 font-medium mb-1">Build Your Trust Score</p>
+            <p className="text-slate-400 text-sm mb-4">Connect a business platform to get started</p>
+            <a
+              href="/create-loan?step=2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              Connect Platform
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        )}
       </section>
 
       {/* Connected Platforms */}
-      <section className="bg-white rounded-2xl shadow-sm shadow-slate-200/50 border border-slate-100 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
-          <h2 className="font-semibold text-slate-800">Connected Platforms</h2>
+      <section className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+          <h2 className="font-semibold text-slate-900">Connected Platforms</h2>
           <a
             href="/create-loan?step=2"
-            className="flex items-center gap-1 text-sm text-teal-600 hover:text-teal-700 font-medium transition-colors"
+            className="text-sm text-teal-600 hover:text-teal-700 font-medium transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Add
+            + Add
           </a>
         </div>
 
         {trustData?.connections && trustData.connections.length > 0 ? (
-          <div className="divide-y divide-slate-50">
+          <div>
             {trustData.connections.map((conn, idx) => (
               <PlatformRow key={idx} connection={conn} formatCurrency={formatCurrency} />
             ))}
           </div>
         ) : (
-          <div className="px-5 py-10 text-center">
-            <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-            </div>
-            <p className="text-slate-500 text-sm">No platforms connected yet</p>
-            <p className="text-slate-400 text-xs mt-1">Connect Shopify, Stripe, or Square to build your score</p>
+          <div className="px-5 py-8 text-center">
+            <p className="text-slate-400 text-sm">No platforms connected</p>
           </div>
         )}
       </section>
 
-      {/* Quick Stats Row */}
-      <div className="grid grid-cols-3 gap-3">
-        <StatCard label="Total Loans" value={borrowedLoans?.length || 0} icon="📋" />
-        <StatCard label="Active" value={activeBorrowedLoans} icon="🟢" highlight />
-        <StatCard label="Completed" value={completedBorrowedLoans} icon="✅" />
-      </div>
+      {/* Loan Activity */}
+      <section className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100">
+          <h2 className="font-semibold text-slate-900">Loan Activity</h2>
+        </div>
+        <div className="grid grid-cols-3 divide-x divide-slate-100">
+          <div className="py-4 text-center">
+            <p className="text-2xl font-semibold text-slate-800">{borrowedLoans?.length || 0}</p>
+            <p className="text-xs text-slate-500 mt-0.5">Total</p>
+          </div>
+          <div className="py-4 text-center bg-teal-50/50">
+            <p className="text-2xl font-semibold text-teal-600">{activeBorrowedLoans}</p>
+            <p className="text-xs text-slate-500 mt-0.5">Active</p>
+          </div>
+          <div className="py-4 text-center">
+            <p className="text-2xl font-semibold text-slate-800">{completedBorrowedLoans}</p>
+            <p className="text-xs text-slate-500 mt-0.5">Completed</p>
+          </div>
+        </div>
+      </section>
 
-      {/* Wallet Card */}
-      <section className="bg-gradient-to-br from-slate-50 to-white rounded-2xl shadow-sm shadow-slate-200/50 border border-slate-100 p-5">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Wallet */}
+      <section className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100">
+          <h2 className="font-semibold text-slate-900">Wallet</h2>
+        </div>
+        <div className="px-5 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
               </svg>
             </div>
             <div>
-              <p className="text-xs text-slate-500 mb-0.5">Connected Wallet</p>
               <button
                 onClick={() => copyToClipboard(address)}
-                className="font-mono font-medium text-slate-800 hover:text-slate-600 flex items-center gap-2 transition-colors"
+                className="font-mono text-sm text-slate-800 hover:text-slate-600 flex items-center gap-2 transition-colors"
               >
                 {formatAddress(address)}
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-sans ${copied ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'} transition-colors`}>
-                  {copied ? 'Copied!' : 'Copy'}
+                <span className={`text-xs px-1.5 py-0.5 rounded ${copied ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
+                  {copied ? 'Copied' : 'Copy'}
                 </span>
               </button>
               {connector?.name && (
-                <p className="text-xs text-slate-400 mt-0.5">{connector.name}</p>
+                <p className="text-xs text-slate-400">{connector.name}</p>
               )}
             </div>
           </div>
           <button
             onClick={() => logout()}
-            className="px-4 py-2 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 font-medium rounded-lg transition-all"
+            className="text-sm text-slate-500 hover:text-red-600 font-medium transition-colors"
           >
             Disconnect
           </button>
@@ -311,9 +299,9 @@ export default function AccountSettings() {
       </section>
 
       {/* Social Profile */}
-      <section className="bg-white rounded-2xl shadow-sm shadow-slate-200/50 border border-slate-100 overflow-hidden">
-        <div className="px-5 py-4 bg-gradient-to-r from-purple-50 to-white border-b border-slate-100">
-          <h2 className="font-semibold text-slate-800">Social Profile</h2>
+      <section className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100">
+          <h2 className="font-semibold text-slate-900">Social Profile</h2>
         </div>
         <div className="p-5">
           <FarcasterProfileEdit />
@@ -323,73 +311,78 @@ export default function AccountSettings() {
   );
 }
 
-function ScoreBar({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
+function ScoreRow({ label, value, max }: { label: string; value: number; max: number }) {
   const percentage = Math.round((value / max) * 100);
-  const colorMap: Record<string, string> = {
-    teal: 'bg-teal-400',
-    blue: 'bg-blue-400',
-    purple: 'bg-purple-400',
-    amber: 'bg-amber-400',
-  };
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-xs text-slate-400">{label}</span>
-        <span className="text-xs font-medium text-white">{value}<span className="text-slate-500">/{max}</span></span>
-      </div>
-      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+    <div className="flex items-center gap-3">
+      <span className="text-sm text-slate-600 w-24">{label}</span>
+      <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
         <div
-          className={`h-full ${colorMap[color]} rounded-full transition-all duration-700`}
+          className="h-full bg-teal-500 rounded-full transition-all duration-500"
           style={{ width: `${percentage}%` }}
         />
       </div>
+      <span className="text-sm font-medium text-slate-700 w-12 text-right">{value}/{max}</span>
     </div>
   );
 }
 
 function PlatformRow({ connection, formatCurrency }: { connection: TrustScoreData['connections'][0]; formatCurrency: (amount: number, currency: string) => string }) {
-  const platformConfig: Record<string, { icon: string; gradient: string; label: string }> = {
-    shopify: { icon: '🛍️', gradient: 'from-green-400 to-emerald-500', label: 'Shopify' },
-    stripe: { icon: '💳', gradient: 'from-purple-400 to-indigo-500', label: 'Stripe' },
-    square: { icon: '⬛', gradient: 'from-slate-600 to-slate-800', label: 'Square' },
+  const platformConfig: Record<string, { icon: JSX.Element; bg: string; label: string }> = {
+    shopify: {
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M15.337 3.415c-.045-.027-.09-.045-.135-.054a.587.587 0 00-.12-.009c-.03 0-.065.003-.105.009-.04.005-.087.014-.14.027-.052.013-.095.027-.13.04-.034.014-.07.03-.108.05a1.2 1.2 0 00-.237.17 2.36 2.36 0 00-.18.18l-.003.003-.009.01c-.105.12-.21.27-.315.45-.105.18-.203.383-.293.608l-2.497 6.907-2.476-6.907a3.96 3.96 0 00-.293-.608 2.38 2.38 0 00-.315-.45l-.009-.01-.003-.003a2.36 2.36 0 00-.18-.18 1.2 1.2 0 00-.237-.17c-.038-.02-.074-.036-.108-.05a1.06 1.06 0 00-.13-.04 1.03 1.03 0 00-.14-.027.587.587 0 00-.105-.009.587.587 0 00-.12.009c-.045.009-.09.027-.135.054-.267.153-.4.486-.4.998v12.94c0 .512.133.845.4.998.045.027.09.045.135.054.045.009.087.009.12.009.033 0 .07-.003.105-.009.04-.005.087-.014.14-.027.052-.013.095-.027.13-.04.034-.014.07-.03.108-.05.087-.05.165-.108.237-.17.072-.063.135-.12.18-.18l.003-.003.009-.01c.105-.12.21-.27.315-.45.105-.18.203-.383.293-.608L12 10.173l2.476 6.907c.09.225.188.428.293.608.105.18.21.33.315.45l.009.01.003.003c.045.06.108.117.18.18.072.062.15.12.237.17.038.02.074.036.108.05.035.013.078.027.13.04.053.013.1.022.14.027.035.006.072.009.105.009.033 0 .075 0 .12-.009.045-.009.09-.027.135-.054.267-.153.4-.486.4-.998V4.413c0-.512-.133-.845-.4-.998z"/>
+        </svg>
+      ),
+      bg: 'bg-green-500',
+      label: 'Shopify'
+    },
+    stripe: {
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
+        </svg>
+      ),
+      bg: 'bg-indigo-500',
+      label: 'Stripe'
+    },
+    square: {
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 3h18v18H3V3zm16.5 16.5v-15h-15v15h15zM9 9h6v6H9V9z"/>
+        </svg>
+      ),
+      bg: 'bg-slate-800',
+      label: 'Square'
+    },
   };
 
   const config = platformConfig[connection.platform.toLowerCase()] || {
-    icon: '📊',
-    gradient: 'from-slate-400 to-slate-500',
+    icon: <span className="text-sm">?</span>,
+    bg: 'bg-slate-500',
     label: connection.platform
   };
 
+  const revenue = connection.revenue_data.totalRevenue;
+  const orders = connection.revenue_data.orderCount;
+
   return (
-    <div className="flex items-center justify-between px-5 py-4 hover:bg-slate-50/50 transition-colors">
+    <div className="px-5 py-4 flex items-center justify-between border-b border-slate-50 last:border-b-0">
       <div className="flex items-center gap-3">
-        <div className={`w-11 h-11 bg-gradient-to-br ${config.gradient} rounded-xl flex items-center justify-center text-xl shadow-sm`}>
+        <div className={`w-10 h-10 ${config.bg} rounded-lg flex items-center justify-center text-white`}>
           {config.icon}
         </div>
         <div>
-          <p className="font-semibold text-slate-800">{config.label}</p>
-          <p className="text-xs text-slate-400 truncate max-w-[160px]">{connection.platform_user_id}</p>
+          <p className="font-medium text-slate-800">{config.label}</p>
+          <p className="text-xs text-slate-400 truncate max-w-[140px]">{connection.platform_user_id}</p>
         </div>
       </div>
       <div className="text-right">
-        <p className="font-bold text-slate-800">
-          {formatCurrency(connection.revenue_data.totalRevenue, connection.revenue_data.currency)}
-        </p>
-        <p className="text-xs text-slate-400">
-          {connection.revenue_data.orderCount.toLocaleString()} orders
-        </p>
+        <p className="font-semibold text-slate-800">{formatCurrency(revenue, connection.revenue_data.currency)}</p>
+        <p className="text-xs text-slate-400">{orders.toLocaleString()} orders</p>
       </div>
-    </div>
-  );
-}
-
-function StatCard({ label, value, icon, highlight }: { label: string; value: number; icon: string; highlight?: boolean }) {
-  return (
-    <div className={`rounded-2xl p-4 text-center ${highlight ? 'bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100' : 'bg-white border border-slate-100 shadow-sm shadow-slate-200/50'}`}>
-      <div className="text-2xl mb-1">{icon}</div>
-      <p className={`text-2xl font-bold ${highlight ? 'text-teal-600' : 'text-slate-800'}`}>{value}</p>
-      <p className="text-xs text-slate-500 mt-0.5">{label}</p>
     </div>
   );
 }
