@@ -7,11 +7,14 @@ function ConnectionSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const platform = searchParams.get('platform') || 'Account';
-  const score = searchParams.get('score');
+  const initialScore = searchParams.get('score');
   const dataAccessPending = searchParams.get('dataAccessPending') === 'true';
   const error = searchParams.get('error');
   const draft = searchParams.get('draft');
+  const wallet = searchParams.get('wallet');
   const [countdown, setCountdown] = useState(3);
+  const [score, setScore] = useState(initialScore);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const platformNames: Record<string, string> = {
     shopify: 'Shopify',
@@ -20,6 +23,45 @@ function ConnectionSuccessContent() {
   };
 
   const displayName = platformNames[platform.toLowerCase()] || platform;
+
+  // Refresh score from connected platforms
+  const refreshScore = async () => {
+    if (isRefreshing) return;
+
+    setIsRefreshing(true);
+    setCountdown(0); // Pause auto-redirect
+
+    try {
+      // Get wallet from URL or try to infer from context
+      const walletAddress = wallet;
+      if (!walletAddress) {
+        console.warn('No wallet address available for refresh');
+        setIsRefreshing(false);
+        return;
+      }
+
+      // First refresh the connection data
+      const refreshResponse = await fetch('/api/connections/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress }),
+      });
+
+      if (refreshResponse.ok) {
+        // Then get the updated score
+        const scoreResponse = await fetch(`/api/credit-score?walletAddress=${walletAddress}`);
+        if (scoreResponse.ok) {
+          const data = await scoreResponse.json();
+          setScore(data.score?.toString() || '0');
+        }
+      }
+    } catch (error) {
+      console.error('Failed to refresh score:', error);
+    } finally {
+      setIsRefreshing(false);
+      setCountdown(3); // Resume countdown
+    }
+  };
 
   // Build redirect URL with step and optional draft
   const getRedirectUrl = () => {
@@ -89,9 +131,26 @@ function ConnectionSuccessContent() {
         {/* Score Display */}
         {score && (
           <div className="bg-blue-50 rounded-xl p-4 mb-4">
-            <p className="text-sm text-gray-600 mb-1">Your Credit Score</p>
+            <p className="text-sm text-gray-600 mb-1">Your Trust Score</p>
             <p className="text-4xl font-bold text-blue-600">{score}</p>
             <p className="text-xs text-gray-500 mt-1">out of 100</p>
+            {wallet && (
+              <button
+                onClick={refreshScore}
+                disabled={isRefreshing}
+                className="mt-3 text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 mx-auto disabled:opacity-50"
+              >
+                <svg
+                  className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {isRefreshing ? 'Refreshing...' : 'Refresh Score'}
+              </button>
+            )}
           </div>
         )}
 

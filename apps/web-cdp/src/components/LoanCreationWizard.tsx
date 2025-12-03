@@ -132,6 +132,15 @@ export default function LoanCreationWizard() {
       const draftIdParam = searchParams.get('draft');
       const stepParam = searchParams.get('step');
 
+      // Always navigate to step if specified (even without draft)
+      if (stepParam && !draftIdParam) {
+        setCurrentStep(parseInt(stepParam));
+        // Load credit score for step 2
+        if (parseInt(stepParam) === 2) {
+          await loadCreditScore();
+        }
+      }
+
       if (draftIdParam && address) {
         try {
           const response = await fetch(`/api/loan-drafts?id=${draftIdParam}&wallet=${address}`);

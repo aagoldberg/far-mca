@@ -158,6 +158,7 @@ export async function GET(request: NextRequest) {
     const redirectUrl = new URL('/connection-success', process.env.NEXT_PUBLIC_APP_URL!);
     redirectUrl.searchParams.set('platform', 'shopify');
     redirectUrl.searchParams.set('score', creditScoreData?.score?.toString() || '0');
+    redirectUrl.searchParams.set('wallet', walletAddress);
     if (dataAccessError) {
       redirectUrl.searchParams.set('dataAccessPending', 'true');
     }
