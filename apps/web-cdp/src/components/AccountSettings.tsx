@@ -185,13 +185,13 @@ export default function AccountSettings() {
                   <p className="text-sm text-gray-500 mb-2">{trustData.connections.length} platform{trustData.connections.length !== 1 ? 's' : ''} linked</p>
                   {/* Score tier indicators */}
                   <div className="flex items-center gap-1.5">
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score < 40 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`px-2.5 py-1 rounded text-xs font-medium ${trustData.score < 40 ? 'bg-slate-200 text-slate-700 border border-slate-300' : 'bg-gray-50 text-gray-300 border border-gray-200'}`}>
                       Early
                     </span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 40 && trustData.score < 70 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`px-2.5 py-1 rounded text-xs font-medium ${trustData.score >= 40 && trustData.score < 70 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-50 text-gray-300 border border-gray-200'}`}>
                       Good
                     </span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 70 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`px-2.5 py-1 rounded text-xs font-medium ${trustData.score >= 70 ? 'bg-emerald-100 text-emerald-700 border border-emerald-300' : 'bg-gray-50 text-gray-300 border border-gray-200'}`}>
                       Excellent
                     </span>
                   </div>
