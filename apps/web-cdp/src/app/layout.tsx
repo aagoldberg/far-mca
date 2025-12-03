@@ -45,7 +45,7 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable}`}>
       <body>
         <Providers>
-          <div>
+          <div className="min-h-screen" style={{ backgroundColor: '#F0F4F3' }}>
             <Navbar />
             <main>{children}</main>
             <AirdropToast />

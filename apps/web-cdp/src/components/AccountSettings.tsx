@@ -185,13 +185,13 @@ export default function AccountSettings() {
                   <p className="text-sm text-gray-500 mb-2">{trustData.connections.length} platform{trustData.connections.length !== 1 ? 's' : ''} linked</p>
                   {/* Score tier indicators */}
                   <div className="flex items-center gap-1.5">
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score < 40 ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score < 40 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-100 text-gray-400'}`}>
                       Early
                     </span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 40 && trustData.score < 70 ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 40 && trustData.score < 70 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-100 text-gray-400'}`}>
                       Good
                     </span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 70 ? 'bg-emerald-100 text-emerald-700 border border-emerald-300' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 70 ? 'bg-teal-100 text-teal-700 border border-teal-300' : 'bg-gray-100 text-gray-400'}`}>
                       Excellent
                     </span>
                   </div>
@@ -276,15 +276,15 @@ export default function AccountSettings() {
         <div className="p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Loan Activity</h2>
           <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
+            <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
               <p className="text-2xl font-bold text-gray-900">{borrowedLoans?.length || 0}</p>
               <p className="text-sm text-gray-500 mt-1">Total</p>
             </div>
-            <div className="text-center p-4 bg-teal-50 rounded-lg">
+            <div className="text-center p-4 bg-teal-50 rounded-lg border border-teal-200">
               <p className="text-2xl font-bold text-teal-600">{activeBorrowedLoans}</p>
-              <p className="text-sm text-gray-500 mt-1">Active</p>
+              <p className="text-sm text-teal-600 mt-1">Active</p>
             </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
+            <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
               <p className="text-2xl font-bold text-gray-900">{completedBorrowedLoans}</p>
               <p className="text-sm text-gray-500 mt-1">Completed</p>
             </div>
