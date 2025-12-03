@@ -104,7 +104,7 @@ export default function AccountSettings() {
   const getScoreLabel = (score: number) => {
     if (score >= 70) return 'Excellent';
     if (score >= 40) return 'Good';
-    if (score > 0) return 'Building';
+    if (score > 0) return 'Early';
     return 'Not rated';
   };
 
@@ -127,7 +127,7 @@ export default function AccountSettings() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       {/* Trust Score Card */}
-      <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-gray-900">Trust Score</h2>
@@ -182,9 +182,20 @@ export default function AccountSettings() {
                   <div className="absolute -top-0.5 right-2 w-2 h-2 bg-teal-500 rounded-full"></div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 mb-0.5">{trustData.connections.length} platform{trustData.connections.length !== 1 ? 's' : ''} linked</p>
-                  <p className="font-medium text-gray-900">{getScoreLabel(trustData.score)}</p>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 mb-2">{trustData.connections.length} platform{trustData.connections.length !== 1 ? 's' : ''} linked</p>
+                  {/* Score tier indicators */}
+                  <div className="flex items-center gap-1.5">
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score < 40 ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'bg-gray-100 text-gray-400'}`}>
+                      Early
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 40 && trustData.score < 70 ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'bg-gray-100 text-gray-400'}`}>
+                      Good
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${trustData.score >= 70 ? 'bg-emerald-100 text-emerald-700 border border-emerald-300' : 'bg-gray-100 text-gray-400'}`}>
+                      Excellent
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
                     {trustData.score < 40
                       ? 'Connect more platforms to improve.'
                       : trustData.score < 70
@@ -226,7 +237,7 @@ export default function AccountSettings() {
       </section>
 
       {/* Connected Platforms */}
-      <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">Connected Platforms</h2>
@@ -253,7 +264,7 @@ export default function AccountSettings() {
       </section>
 
       {/* Social Profile */}
-      <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
         <div className="p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Social Profile</h2>
           <FarcasterProfileEdit />
@@ -261,7 +272,7 @@ export default function AccountSettings() {
       </section>
 
       {/* Loan Activity */}
-      <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
         <div className="p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Loan Activity</h2>
           <div className="grid grid-cols-3 gap-4">
@@ -282,7 +293,7 @@ export default function AccountSettings() {
       </section>
 
       {/* Wallet */}
-      <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
         <div className="p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Wallet</h2>
           <div className="flex items-center justify-between">
@@ -326,10 +337,13 @@ function ScoreRow({ label, value, max }: { label: string; value: number; max: nu
   return (
     <div className="flex items-center gap-3">
       <span className="text-sm text-gray-600 w-24">{label}</span>
-      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-teal-500 rounded-full transition-all duration-500"
-          style={{ width: `${percentage}%` }}
+          className="h-full rounded-full transition-all duration-500"
+          style={{
+            width: `${percentage}%`,
+            background: `linear-gradient(90deg, #3b82f6 0%, #0d9488 ${Math.min(percentage * 2, 100)}%, #047857 100%)`
+          }}
         />
       </div>
       <span className="text-sm text-gray-600 w-12 text-right">{value}/{max}</span>
@@ -380,7 +394,7 @@ function PlatformCard({ connection, formatCurrency }: { connection: TrustScoreDa
   const orders = connection.revenue_data.orderCount;
 
   return (
-    <div className="border border-gray-200 rounded-xl p-4 hover:border-gray-300 transition-colors">
+    <div className="border border-gray-300 rounded-lg p-4 hover:border-gray-400 transition-colors">
       <div className="flex flex-col items-center text-center">
         <div className="mb-2">
           {config.icon}
