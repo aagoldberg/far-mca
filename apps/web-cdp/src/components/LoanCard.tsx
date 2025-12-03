@@ -261,6 +261,16 @@ export function LoanCard({
           </div>
         </div>
 
+        {/* View details link */}
+        <div className="pt-3 border-t border-gray-100">
+          <span className="text-sm text-[#3B9B7F] font-medium group-hover:text-[#2E7D68] transition-colors flex items-center gap-1">
+            View details
+            <svg className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+
       </div>
       </div>
     </Link>
