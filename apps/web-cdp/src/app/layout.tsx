@@ -3,6 +3,7 @@ import { Nunito, Figtree, Rubik } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { AirdropToast } from "@/components/AirdropToast";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -45,9 +46,10 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable}`}>
       <body>
         <Providers>
-          <div className="min-h-screen" style={{ backgroundColor: '#F0F4F3' }}>
+          <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F0F4F3' }}>
             <Navbar />
-            <main>{children}</main>
+            <main className="flex-grow">{children}</main>
+            <Footer />
             <AirdropToast />
           </div>
         </Providers>
