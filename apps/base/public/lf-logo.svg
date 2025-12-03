@@ -1,0 +1,31 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 64 64"
+>
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D9488"/>
+      <stop offset="100%" stop-color="#0D9488"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Simplified, pixel-stable L -->
+  <path
+    d="M22 12
+       V36
+       Q22 44 30 44
+       H40"
+    fill="none"
+    stroke="url(#logoGradient)"
+    stroke-width="7"
+    stroke-linecap="round"
+  />
+
+  <!-- F top bar -->
+  <rect x="32" y="15" width="22" height="7" rx="3.5" fill="url(#logoGradient)"/>
+
+  <!-- F bottom bar -->
+  <rect x="32" y="27" width="22" height="7" rx="3.5" fill="url(#logoGradient)"/>
+</svg>

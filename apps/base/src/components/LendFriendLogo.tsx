@@ -2,14 +2,17 @@
 
 export function LendFriendLogo() {
   return (
-    <div className="flex items-center group cursor-pointer no-underline">
-      <div className="flex flex-col">
-        <span className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-[#2C7DA0] from-35% via-[#2E8B8B] via-45% to-[#3B9B7F] to-55% bg-clip-text text-transparent group-hover:from-[#236382] group-hover:via-[#26706F] group-hover:to-[#2E7D68] transition-all">
-          LendFriend
-        </span>
-        <span className="text-[10px] sm:text-[11px] text-gray-500 -mt-0.5 font-semibold tracking-wider hidden xs:block">
-          COMMUNITY LENDING
-        </span>
+    <div className="flex items-center gap-2 group cursor-pointer no-underline">
+      <img
+        src="/lf-logo.svg"
+        alt="LendFriend"
+        width={48}
+        height={48}
+        className="group-hover:scale-105 transition-transform"
+      />
+      <div className="text-2xl sm:text-3xl font-bold tracking-tight">
+        <span className="text-teal-700 group-hover:text-teal-800 transition-colors">Lend</span>
+        <span className="text-emerald-600 group-hover:text-emerald-700 transition-colors">Friend</span>
       </div>
     </div>
   );
