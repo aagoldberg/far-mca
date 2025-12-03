@@ -38,6 +38,7 @@ export default function AccountSettings() {
   const { user, logout } = useCDPAuth();
   const [trustData, setTrustData] = useState<TrustScoreData | null>(null);
   const [trustLoading, setTrustLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // Prioritize external wallet address, fallback to CDP address
@@ -66,6 +67,33 @@ export default function AccountSettings() {
 
     fetchTrustScore();
   }, [address]);
+
+  // Refresh data from connected platforms
+  const refreshConnections = async () => {
+    if (!address || refreshing) return;
+
+    setRefreshing(true);
+    try {
+      const response = await fetch('/api/connections/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress: address }),
+      });
+
+      if (response.ok) {
+        // Re-fetch trust score after refresh
+        const scoreResponse = await fetch(`/api/credit-score?walletAddress=${address}`);
+        if (scoreResponse.ok) {
+          const data = await scoreResponse.json();
+          setTrustData(data);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to refresh connections:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   // Calculate user stats
   const totalBorrowed = borrowedLoans?.reduce((sum, loan) => {
@@ -310,15 +338,34 @@ export default function AccountSettings() {
       <section className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-900">Connected Platforms</h2>
-          <a
-            href="/create-loan?step=2"
-            className="text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Add Platform
-          </a>
+          <div className="flex items-center gap-3">
+            {trustData?.connections && trustData.connections.length > 0 && (
+              <button
+                onClick={refreshConnections}
+                disabled={refreshing}
+                className="text-sm text-slate-600 hover:text-slate-800 font-medium flex items-center gap-1 disabled:opacity-50"
+              >
+                <svg
+                  className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {refreshing ? 'Syncing...' : 'Refresh Data'}
+              </button>
+            )}
+            <a
+              href="/create-loan?step=2"
+              className="text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add Platform
+            </a>
+          </div>
         </div>
 
         {trustData && trustData.connections && trustData.connections.length > 0 ? (
