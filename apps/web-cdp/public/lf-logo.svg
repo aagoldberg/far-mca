@@ -4,28 +4,23 @@
   height="24"
   viewBox="0 0 64 64"
 >
-  <defs>
-    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0D9488"/>
-      <stop offset="100%" stop-color="#0D9488"/>
-    </linearGradient>
-  </defs>
+  <g transform="rotate(-25 32 32)">
+    <!-- Simplified, pixel-stable L (smile) - teal-700 like "Lend" -->
+    <path
+      d="M22 12
+         V36
+         Q22 44 30 44
+         H40"
+      fill="none"
+      stroke="#0F766E"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
 
-  <!-- Simplified, pixel-stable L -->
-  <path
-    d="M22 12
-       V36
-       Q22 44 30 44
-       H40"
-    fill="none"
-    stroke="url(#logoGradient)"
-    stroke-width="7"
-    stroke-linecap="round"
-  />
+    <!-- F top bar (eye) - emerald-600 like "Friend" -->
+    <rect x="32" y="15" width="22" height="7" rx="3.5" fill="#059669"/>
 
-  <!-- F top bar -->
-  <rect x="32" y="15" width="22" height="7" rx="3.5" fill="url(#logoGradient)"/>
-
-  <!-- F bottom bar -->
-  <rect x="32" y="27" width="22" height="7" rx="3.5" fill="url(#logoGradient)"/>
+    <!-- F bottom bar (eye) - emerald-600 like "Friend" -->
+    <rect x="32" y="27" width="22" height="7" rx="3.5" fill="#059669"/>
+  </g>
 </svg>
