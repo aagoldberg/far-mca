@@ -116,6 +116,7 @@ export default function LoanCreationWizard() {
   const [showShopifyInput, setShowShopifyInput] = useState(false);
   const [shopifyDomain, setShopifyDomain] = useState('');
   const [isConnectingShopify, setIsConnectingShopify] = useState(false);
+  const [isRefreshingConnections, setIsRefreshingConnections] = useState(false);
 
   // Loan creation hook
   const {
@@ -134,9 +135,10 @@ export default function LoanCreationWizard() {
 
       // Always navigate to step if specified (even without draft)
       if (stepParam && !draftIdParam) {
-        setCurrentStep(parseInt(stepParam));
-        // Load credit score for step 2
-        if (parseInt(stepParam) === 2) {
+        const step = parseInt(stepParam);
+        setCurrentStep(step);
+        // Load credit score for step 2 or 3
+        if (step === 2 || step === 3) {
           await loadCreditScore();
         }
       }
@@ -156,13 +158,8 @@ export default function LoanCreationWizard() {
               setFormData(prev => ({ ...prev, ...draft.step4_data }));
             }
 
-            // Load credit score
-            if (draft.step3_data?.creditScore) {
-              setCreditScore(draft.step3_data.creditScore);
-            } else {
-              // Fetch fresh credit score
-              await loadCreditScore();
-            }
+            // Always fetch fresh credit score (don't use stale draft data)
+            await loadCreditScore();
 
             // Navigate to specified step
             if (stepParam) {
@@ -197,6 +194,30 @@ export default function LoanCreationWizard() {
       }
     } catch (error) {
       console.error('Error loading credit score:', error);
+    }
+  };
+
+  // Refresh all connections and reload score
+  const refreshConnections = async () => {
+    if (!address || isRefreshingConnections) return;
+
+    setIsRefreshingConnections(true);
+    try {
+      // First refresh the connection data from platforms
+      const refreshResponse = await fetch('/api/connections/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress: address }),
+      });
+
+      if (refreshResponse.ok) {
+        // Then reload the credit score
+        await loadCreditScore();
+      }
+    } catch (error) {
+      console.error('Error refreshing connections:', error);
+    } finally {
+      setIsRefreshingConnections(false);
     }
   };
 
@@ -957,6 +978,15 @@ export default function LoanCreationWizard() {
                     {creditScore.connections.length < 3 && (
                       <p className="text-xs text-teal-400">Connect more to boost your score</p>
                     )}
+                    <button
+                      type="button"
+                      onClick={refreshConnections}
+                      disabled={isRefreshingConnections}
+                      className="mt-2 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 ml-auto transition-colors"
+                    >
+                      <ArrowPathIcon className={`w-3.5 h-3.5 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
+                      {isRefreshingConnections ? 'Syncing...' : 'Refresh Data'}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -967,29 +997,14 @@ export default function LoanCreationWizard() {
 
               <div className="space-y-3">
                 {/* Shopify Platform Card */}
-                {creditScore?.connections.some(c => c.platform === 'shopify') ? (
-                  <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                        <ShoppingBagIcon className="h-5 w-5 text-green-600" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-base font-medium text-gray-900">Shopify</span>
-                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
-                        </div>
-                        <p className="text-sm text-gray-500">
-                          {creditScore.connections.find(c => c.platform === 'shopify')?.platform_user_id || 'Store connected'}
-                        </p>
-                      </div>
-                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
-                    </div>
-                  </div>
-                ) : showShopifyInput ? (
+                {showShopifyInput ? (
+                  // Input form for connecting/reconnecting
                   <div className="border border-gray-200 rounded-lg p-4 bg-white space-y-3">
                     <div className="flex items-center gap-3">
                       <ShoppingBagIcon className="h-6 w-6 text-gray-700" />
-                      <span className="text-base font-medium text-gray-900">Connect Shopify</span>
+                      <span className="text-base font-medium text-gray-900">
+                        {creditScore?.connections.some(c => c.platform === 'shopify') ? 'Reconnect Shopify' : 'Connect Shopify'}
+                      </span>
                     </div>
                     <div>
                       <label htmlFor="shopifyDomain" className="block text-sm font-medium text-gray-700 mb-1">
@@ -1039,7 +1054,61 @@ export default function LoanCreationWizard() {
                       Cancel
                     </button>
                   </div>
+                ) : creditScore?.connections.some(c => c.platform === 'shopify') ? (
+                  // Connected state
+                  (() => {
+                    const shopifyConn = creditScore.connections.find(c => c.platform === 'shopify');
+                    const revenue = shopifyConn?.revenue_data?.totalRevenue || 0;
+                    const orders = shopifyConn?.revenue_data?.orderCount || 0;
+                    return (
+                      <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <ShoppingBagIcon className="h-5 w-5 text-green-600" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-base font-medium text-gray-900">Shopify</span>
+                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                            </div>
+                            <p className="text-sm text-gray-500">
+                              {shopifyConn?.platform_user_id || 'Store connected'}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-0.5">
+                              ${revenue.toLocaleString()} revenue · {orders} orders
+                            </p>
+                          </div>
+                          <div className="flex flex-col items-end gap-1">
+                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                            <div className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={refreshConnections}
+                                disabled={isRefreshingConnections}
+                                className="text-xs text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1"
+                              >
+                                <ArrowPathIcon className={`h-3 w-3 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
+                                {isRefreshingConnections ? 'Syncing' : 'Sync'}
+                              </button>
+                              <span className="text-gray-300">·</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setShopifyDomain(shopifyConn?.platform_user_id || '');
+                                  setShowShopifyInput(true);
+                                }}
+                                className="text-xs text-blue-600 hover:text-blue-700 transition-colors"
+                              >
+                                Reconnect
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()
                 ) : (
+                  // Not connected - show connect button
                   <button
                     type="button"
                     onClick={() => setShowShopifyInput(true)}
@@ -1054,23 +1123,46 @@ export default function LoanCreationWizard() {
 
                 {/* Stripe Platform Card */}
                 {creditScore?.connections.some(c => c.platform === 'stripe') ? (
-                  <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <CreditCardIcon className="h-5 w-5 text-purple-600" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-base font-medium text-gray-900">Stripe</span>
-                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                  (() => {
+                    const stripeConn = creditScore.connections.find(c => c.platform === 'stripe');
+                    const revenue = stripeConn?.revenue_data?.totalRevenue || 0;
+                    const orders = stripeConn?.revenue_data?.orderCount || 0;
+                    return (
+                      <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <CreditCardIcon className="h-5 w-5 text-purple-600" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-base font-medium text-gray-900">Stripe</span>
+                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                            </div>
+                            <p className="text-sm text-gray-500">
+                              {stripeConn?.platform_user_id || 'Account connected'}
+                            </p>
+                            {revenue > 0 && (
+                              <p className="text-xs text-gray-400 mt-0.5">
+                                ${revenue.toLocaleString()} revenue · {orders} transactions
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={refreshConnections}
+                              disabled={isRefreshingConnections}
+                              className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
+                              title="Refresh data"
+                            >
+                              <ArrowPathIcon className={`h-4 w-4 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
+                            </button>
+                            <CheckCircleIcon className="h-6 w-6 text-green-600" />
+                          </div>
                         </div>
-                        <p className="text-sm text-gray-500">
-                          {creditScore.connections.find(c => c.platform === 'stripe')?.platform_user_id || 'Account connected'}
-                        </p>
                       </div>
-                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
-                    </div>
-                  </div>
+                    );
+                  })()
                 ) : (
                   <button
                     type="button"
@@ -1097,23 +1189,46 @@ export default function LoanCreationWizard() {
 
                 {/* Square Platform Card */}
                 {creditScore?.connections.some(c => c.platform === 'square') ? (
-                  <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
-                        <BuildingStorefrontIcon className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-base font-medium text-gray-900">Square</span>
-                          <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                  (() => {
+                    const squareConn = creditScore.connections.find(c => c.platform === 'square');
+                    const revenue = squareConn?.revenue_data?.totalRevenue || 0;
+                    const orders = squareConn?.revenue_data?.orderCount || 0;
+                    return (
+                      <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
+                            <BuildingStorefrontIcon className="h-5 w-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-base font-medium text-gray-900">Square</span>
+                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
+                            </div>
+                            <p className="text-sm text-gray-500">
+                              {squareConn?.platform_user_id || 'Account connected'}
+                            </p>
+                            {revenue > 0 && (
+                              <p className="text-xs text-gray-400 mt-0.5">
+                                ${revenue.toLocaleString()} revenue · {orders} transactions
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={refreshConnections}
+                              disabled={isRefreshingConnections}
+                              className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
+                              title="Refresh data"
+                            >
+                              <ArrowPathIcon className={`h-4 w-4 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
+                            </button>
+                            <CheckCircleIcon className="h-6 w-6 text-green-600" />
+                          </div>
                         </div>
-                        <p className="text-sm text-gray-500">
-                          {creditScore.connections.find(c => c.platform === 'square')?.platform_user_id || 'Account connected'}
-                        </p>
                       </div>
-                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
-                    </div>
-                  </div>
+                    );
+                  })()
                 ) : (
                   <button
                     type="button"
