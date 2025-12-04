@@ -641,7 +641,7 @@ export default function LoanCreationWizard() {
   // Success state (same as CreateLoanForm)
   if (isSuccess && hash) {
     const shareUrl = `${window.location.origin}/`;
-    const shareText = `I just created a loan request on LendFriend! Help me reach my goal 🙏`;
+    const shareText = `I just created a funding request on LendFriend! Help me reach my goal 🙏`;
 
     const handleShare = (platform: string) => {
       let url = '';
@@ -659,19 +659,19 @@ export default function LoanCreationWizard() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 shadow-lg">
-          <div className="w-20 h-20 bg-gradient-to-br from-[#1a96c1] to-[#157ba3] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Loan Created!</h2>
-          <p className="text-gray-700 mb-2 text-lg">Your loan is live and accepting contributions</p>
-          <p className="text-xs text-gray-500 mb-8 font-mono bg-white/50 rounded px-3 py-2 inline-block">
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-2 text-center">Request Live!</h2>
+          <p className="text-gray-700 mb-2 text-lg text-center">Your funding request is active and accepting contributions</p>
+          <p className="text-xs text-gray-500 mb-8 font-mono bg-white/50 rounded px-3 py-2 block text-center w-fit mx-auto">
             {hash.slice(0, 10)}...{hash.slice(-8)}
           </p>
 
-          <div className="bg-white rounded-xl p-6 mb-6 border-2 border-[#1a96c1]/30 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Share Your Loan</h3>
+          <div className="bg-white rounded-xl p-6 mb-6 border-2 border-brand-100 shadow-md">
+            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Share Your Request</h3>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => handleShare('twitter')}
@@ -690,7 +690,7 @@ export default function LoanCreationWizard() {
 
           <button
             onClick={() => router.push('/')}
-            className="block w-full bg-[#1a96c1] hover:bg-[#157ba3] text-white font-bold py-4 px-6 rounded-xl"
+            className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 px-6 rounded-xl"
           >
             View All Loans
           </button>
@@ -703,8 +703,8 @@ export default function LoanCreationWizard() {
   if (isCheckingConnection) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+        <div className="bg-secondary-50 border border-secondary-200 rounded-2xl p-6 text-center">
+          <div className="animate-spin h-8 w-8 border-4 border-secondary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Connecting Wallet...</h2>
         </div>
       </div>
@@ -716,7 +716,7 @@ export default function LoanCreationWizard() {
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
-          <p className="text-gray-600 mb-4">Please connect your wallet to create a loan request</p>
+          <p className="text-gray-600 mb-4">Please connect your wallet to create a funding request</p>
           <p className="text-sm text-gray-500">Click 'Login' in the navigation to connect</p>
         </div>
       </div>
@@ -740,7 +740,7 @@ export default function LoanCreationWizard() {
         <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        <span className="font-medium">Back to Loans</span>
+        <span className="font-medium">Cancel</span>
       </button>
 
       {/* Progress Indicator */}
@@ -752,9 +752,9 @@ export default function LoanCreationWizard() {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                     currentStep === step.num
-                      ? 'bg-[#1a96c1] text-white shadow-sm'
+                      ? 'bg-brand-600 text-white shadow-sm'
                       : currentStep > step.num
-                      ? 'bg-[#1a96c1] text-white'
+                      ? 'bg-brand-600 text-white'
                       : 'bg-white border-2 border-gray-300 text-gray-400'
                   }`}
                 >
@@ -778,7 +778,7 @@ export default function LoanCreationWizard() {
                 <div className="flex-1 px-3">
                   <div
                     className={`h-0.5 w-full transition-all ${
-                      currentStep > step.num ? 'bg-[#1a96c1]' : 'bg-gray-200'
+                      currentStep > step.num ? 'bg-brand-600' : 'bg-gray-200'
                     }`}
                   />
                 </div>
@@ -793,12 +793,12 @@ export default function LoanCreationWizard() {
         {/* STEP 1: BASICS */}
         {currentStep === 1 && (
           <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-8">Loan Basics</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-8">Funding Request</h2>
 
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  How much would help you reach your goal?
+                  How much capital do you need?
                 </label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-base">$</span>
@@ -810,8 +810,8 @@ export default function LoanCreationWizard() {
                     step="10"
                     min="100"
                     max="10000"
-                    className={`w-full pl-9 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 outline-none transition-all ${
-                      errors.amount ? 'border-red-300' : 'border-gray-300 focus:border-[#1a96c1]'
+                    className={`w-full pl-9 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-secondary-500 focus:ring-opacity-20 outline-none transition-all ${
+                      errors.amount ? 'border-red-300' : 'border-gray-300 focus:border-secondary-500'
                     }`}
                   />
                 </div>
@@ -824,7 +824,7 @@ export default function LoanCreationWizard() {
                 <select
                   value={formData.repaymentWeeks}
                   onChange={(e) => handleChange('repaymentWeeks', parseInt(e.target.value))}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 outline-none transition-all appearance-none bg-white"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-secondary-500 focus:ring-2 focus:ring-secondary-500 focus:ring-opacity-20 outline-none transition-all appearance-none bg-white"
                   style={{
                     backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                     backgroundPosition: 'right 0.5rem center',
@@ -833,7 +833,6 @@ export default function LoanCreationWizard() {
                     paddingRight: '2.5rem'
                   }}
                 >
-                  <option value={0}>This is a grant (no repayment)</option>
                   <option value={4}>1 month</option>
                   <option value={8}>2 months</option>
                   <option value={12}>3 months</option>
@@ -845,95 +844,22 @@ export default function LoanCreationWizard() {
                 <p className="text-xs text-gray-500 mb-3">Select all that apply</p>
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={formData.loanPurposes.includes('Marketing')}
-                      onChange={(e) => {
-                        const newPurposes = e.target.checked
-                          ? [...formData.loanPurposes, 'Marketing']
-                          : formData.loanPurposes.filter(p => p !== 'Marketing');
-                        handleChange('loanPurposes', newPurposes);
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 text-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 transition-all"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Marketing</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={formData.loanPurposes.includes('Improving cash flow')}
-                      onChange={(e) => {
-                        const newPurposes = e.target.checked
-                          ? [...formData.loanPurposes, 'Improving cash flow']
-                          : formData.loanPurposes.filter(p => p !== 'Improving cash flow');
-                        handleChange('loanPurposes', newPurposes);
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 text-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 transition-all"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Improving cash flow</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={formData.loanPurposes.includes('Company expansion')}
-                      onChange={(e) => {
-                        const newPurposes = e.target.checked
-                          ? [...formData.loanPurposes, 'Company expansion']
-                          : formData.loanPurposes.filter(p => p !== 'Company expansion');
-                        handleChange('loanPurposes', newPurposes);
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 text-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 transition-all"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Company expansion</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={formData.loanPurposes.includes('Inventory purchasing')}
-                      onChange={(e) => {
-                        const newPurposes = e.target.checked
-                          ? [...formData.loanPurposes, 'Inventory purchasing']
-                          : formData.loanPurposes.filter(p => p !== 'Inventory purchasing');
-                        handleChange('loanPurposes', newPurposes);
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 text-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 transition-all"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Inventory purchasing</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={formData.loanPurposes.includes('Research and development')}
-                      onChange={(e) => {
-                        const newPurposes = e.target.checked
-                          ? [...formData.loanPurposes, 'Research and development']
-                          : formData.loanPurposes.filter(p => p !== 'Research and development');
-                        handleChange('loanPurposes', newPurposes);
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 text-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 transition-all"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Research and development</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={formData.loanPurposes.includes('Other')}
-                      onChange={(e) => {
-                        const newPurposes = e.target.checked
-                          ? [...formData.loanPurposes, 'Other']
-                          : formData.loanPurposes.filter(p => p !== 'Other');
-                        handleChange('loanPurposes', newPurposes);
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 text-[#1a96c1] focus:ring-2 focus:ring-[#1a96c1] focus:ring-opacity-20 transition-all"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">Other</span>
-                  </label>
+                  {['Marketing', 'Improving cash flow', 'Company expansion', 'Inventory purchasing', 'Research and development', 'Other'].map((purpose) => (
+                    <label key={purpose} className="flex items-center gap-3 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        checked={formData.loanPurposes.includes(purpose)}
+                        onChange={(e) => {
+                          const newPurposes = e.target.checked
+                            ? [...formData.loanPurposes, purpose]
+                            : formData.loanPurposes.filter(p => p !== purpose);
+                          handleChange('loanPurposes', newPurposes);
+                        }}
+                        className="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-2 focus:ring-brand-600 focus:ring-opacity-20 transition-all"
+                      />
+                      <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">{purpose}</span>
+                    </label>
+                  ))}
                 </div>
 
                 {errors.loanPurposes && <p className="text-sm text-red-600 mt-2">{errors.loanPurposes}</p>}
@@ -943,7 +869,7 @@ export default function LoanCreationWizard() {
                 <button
                   type="button"
                   onClick={goToNextStep}
-                  className="bg-[#1a96c1] hover:bg-[#157ba3] text-white font-semibold py-3 px-8 rounded-lg transition-colors shadow-sm hover:shadow"
+                  className="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors shadow-sm hover:shadow"
                 >
                   Continue to Connect Platforms
                 </button>
@@ -964,25 +890,25 @@ export default function LoanCreationWizard() {
 
             {/* Trust Score Display */}
             {creditScore && creditScore.connections.length > 0 && (
-              <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-5 text-white">
+              <div className="bg-gradient-to-r from-secondary-800 to-secondary-700 rounded-xl p-5 text-white">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-slate-300 mb-1">Your Trust Score</p>
+                    <p className="text-sm text-secondary-200 mb-1">Your Trust Score</p>
                     <div className="flex items-baseline gap-2">
                       <span className="text-4xl font-bold">{creditScore.score}</span>
-                      <span className="text-slate-400">/100</span>
+                      <span className="text-secondary-300">/100</span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-slate-300 mb-1">{creditScore.connections.length} platform{creditScore.connections.length !== 1 ? 's' : ''} connected</p>
+                    <p className="text-sm text-secondary-200 mb-1">{creditScore.connections.length} platform{creditScore.connections.length !== 1 ? 's' : ''} connected</p>
                     {creditScore.connections.length < 3 && (
-                      <p className="text-xs text-teal-400">Connect more to boost your score</p>
+                      <p className="text-xs text-brand-300">Connect more to boost your score</p>
                     )}
                     <button
                       type="button"
                       onClick={refreshConnections}
                       disabled={isRefreshingConnections}
-                      className="mt-2 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 ml-auto transition-colors"
+                      className="mt-2 text-xs text-secondary-300 hover:text-white flex items-center gap-1.5 ml-auto transition-colors"
                     >
                       <ArrowPathIcon className={`w-3.5 h-3.5 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
                       {isRefreshingConnections ? 'Syncing...' : 'Refresh Data'}
@@ -1017,7 +943,7 @@ export default function LoanCreationWizard() {
                           value={shopifyDomain}
                           onChange={(e) => setShopifyDomain(e.target.value)}
                           placeholder="yourstore.myshopify.com"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                               e.preventDefault();
@@ -1030,7 +956,7 @@ export default function LoanCreationWizard() {
                           type="button"
                           onClick={handleShopifyConnect}
                           disabled={!shopifyDomain.trim() || isConnectingShopify}
-                          className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                          className="px-4 py-2 bg-brand-600 text-white rounded-md hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
                         >
                           {isConnectingShopify ? 'Connecting...' : 'Connect'}
                         </button>
@@ -1097,7 +1023,7 @@ export default function LoanCreationWizard() {
                                   setShopifyDomain(shopifyConn?.platform_user_id || '');
                                   setShowShopifyInput(true);
                                 }}
-                                className="text-xs text-blue-600 hover:text-blue-700 transition-colors"
+                                className="text-xs text-secondary-600 hover:text-secondary-700 transition-colors"
                               >
                                 Reconnect
                               </button>
@@ -1258,9 +1184,9 @@ export default function LoanCreationWizard() {
 
               {/* Helpful hints based on connection status */}
               {creditScore && creditScore.connections.length === 0 && (
-                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-sm text-blue-800">
-                    <strong>Tip:</strong> Connecting at least one platform helps us verify your business and may improve your loan terms.
+                <div className="mt-6 bg-secondary-50 border border-secondary-200 rounded-lg p-4">
+                  <p className="text-sm text-secondary-800">
+                    <strong>Tip:</strong> Connecting at least one platform helps us verify your business revenue and may improve your loan terms.
                   </p>
                 </div>
               )}
@@ -1284,8 +1210,8 @@ export default function LoanCreationWizard() {
                 }}
                 className={`px-6 py-2.5 font-medium rounded-lg transition-colors ${
                   creditScore && creditScore.connections.length > 0
-                    ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-md'
-                    : 'bg-[#1a96c1] text-white hover:bg-[#157ba3]'
+                    ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-md'
+                    : 'bg-brand-600 text-white hover:bg-brand-700'
                 }`}
               >
                 {creditScore && creditScore.connections.length > 0 ? 'Continue to Eligibility' : 'Skip for Now'}
@@ -1297,13 +1223,13 @@ export default function LoanCreationWizard() {
         {/* STEP 3: ELIGIBILITY */}
         {currentStep === 3 && (
           <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Your Loan Eligibility</h2>
+            <h2 className="text-lg font-bold text-gray-900">Your Funding Eligibility</h2>
 
             {creditScore && creditScore.score > 0 ? (
-              <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-gray-200 rounded-xl p-6">
+              <div className="bg-gradient-to-r from-secondary-50 to-brand-50 border border-gray-200 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900">Business Credit Score</h3>
+                    <h3 className="text-lg font-bold text-gray-900">Business Trust Score</h3>
                     <p className="text-sm text-gray-600">Based on your connected revenue sources</p>
                   </div>
                   <div className="text-right">
@@ -1314,7 +1240,7 @@ export default function LoanCreationWizard() {
 
                 <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
                   <div
-                    className="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full"
+                    className="bg-gradient-to-r from-secondary-500 to-brand-500 h-3 rounded-full"
                     style={{ width: `${creditScore.score}%` }}
                   />
                 </div>
@@ -1341,12 +1267,12 @@ export default function LoanCreationWizard() {
             ) : (
               <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
                 <p className="text-gray-600 mb-4">
-                  You haven't connected any revenue sources yet. You can still create a loan, but connecting platforms can help you get funded faster.
+                  You haven't connected any revenue sources yet. You can still create a request, but connecting platforms helps you get funded faster.
                 </p>
                 <button
                   type="button"
                   onClick={() => setCurrentStep(2)}
-                  className="text-[#1a96c1] hover:text-[#157ba3] font-semibold"
+                  className="text-brand-600 hover:text-brand-700 font-semibold"
                 >
                   ← Go Back to Connect Platforms
                 </button>
@@ -1364,7 +1290,7 @@ export default function LoanCreationWizard() {
               <button
                 type="button"
                 onClick={goToNextStep}
-                className="flex-1 bg-[#1a96c1] hover:bg-[#157ba3] text-white font-bold py-3 px-6 rounded-xl"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl"
               >
                 Continue to Complete Application
               </button>
@@ -1377,7 +1303,7 @@ export default function LoanCreationWizard() {
           <>
             {/* About You */}
             <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-gray-900">About You</h2>
+              <h2 className="text-lg font-bold text-gray-900">Your Story</h2>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
@@ -1394,7 +1320,7 @@ export default function LoanCreationWizard() {
                   placeholder="I'm Sarah, a single mother of two living in Austin. I work as a seamstress from home..."
                   rows={6}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                    errors.aboutYou ? 'border-red-300' : 'border-gray-300 focus:border-[#1a96c1]'
+                    errors.aboutYou ? 'border-red-300' : 'border-gray-300 focus:border-brand-500'
                   }`}
                 />
                 {errors.aboutYou && <p className="text-sm text-red-600 mt-1">{errors.aboutYou}</p>}
@@ -1407,7 +1333,7 @@ export default function LoanCreationWizard() {
                   value={formData.businessWebsite}
                   onChange={(e) => handleChange('businessWebsite', e.target.value)}
                   placeholder="https://myportfolio.com"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#1a96c1] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
                 />
               </div>
 
@@ -1418,19 +1344,19 @@ export default function LoanCreationWizard() {
                   value={formData.twitterHandle}
                   onChange={(e) => handleChange('twitterHandle', e.target.value)}
                   placeholder="@alice or alice"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#1a96c1] focus:ring-0 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
                 />
               </div>
             </div>
 
             {/* Loan Details */}
             <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-gray-900">Loan Details</h2>
+              <h2 className="text-lg font-bold text-gray-900">Funding Details</h2>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-sm font-semibold text-gray-900">
-                    What will this loan help you achieve, and how will you pay it back? *
+                    What will this funding help you achieve, and how will you pay it back? *
                   </label>
                   <span className={`text-xs ${formData.loanUseAndImpact.length < 225 ? 'text-red-500' : 'text-green-600'}`}>
                     {formData.loanUseAndImpact.length} chars
@@ -1442,7 +1368,7 @@ export default function LoanCreationWizard() {
                   placeholder="I'll use the $600 to buy a Singer Professional sewing machine ($450) and fabric supplies ($150)..."
                   rows={10}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 outline-none ${
-                    errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-300 focus:border-[#1a96c1]'
+                    errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-300 focus:border-brand-500'
                   }`}
                 />
                 {errors.loanUseAndImpact && <p className="text-sm text-red-600 mt-1">{errors.loanUseAndImpact}</p>}
@@ -1453,7 +1379,7 @@ export default function LoanCreationWizard() {
             <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
               <h2 className="text-lg font-bold text-gray-900 mb-1">Add a Photo</h2>
               <p className="text-sm text-gray-600 mb-4">
-                Show lenders what you're working toward — loans with photos get funded 35% faster
+                Show lenders your business in action — requests with photos get funded 35% faster.
               </p>
 
               <div
@@ -1461,7 +1387,7 @@ export default function LoanCreationWizard() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={`relative border-2 border-dashed rounded-xl p-6 ${
-                  isDragging ? 'border-[#1a96c1] bg-blue-50' : errors.imageUrl ? 'border-red-300 bg-red-50' : 'border-gray-300 bg-gray-50'
+                  isDragging ? 'border-brand-500 bg-brand-50' : errors.imageUrl ? 'border-red-300 bg-red-50' : 'border-gray-300 bg-gray-50'
                 }`}
               >
                 {formData.imageUrl ? (
@@ -1491,7 +1417,7 @@ export default function LoanCreationWizard() {
                       />
                     </svg>
                     <div className="mt-4">
-                      <label htmlFor="file-upload" className="cursor-pointer text-[#1a96c1] hover:text-[#157ba3] font-medium">
+                      <label htmlFor="file-upload" className="cursor-pointer text-brand-600 hover:text-brand-700 font-medium">
                         <span>Upload a file</span>
                         <input
                           id="file-upload"
@@ -1534,7 +1460,7 @@ export default function LoanCreationWizard() {
 
             {/* Submit */}
             {uploadProgress && (
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <div className="bg-secondary-50 border border-secondary-200 rounded-xl p-4">
                 <p className="text-gray-900 font-semibold">{uploadProgress}</p>
               </div>
             )}
@@ -1550,9 +1476,9 @@ export default function LoanCreationWizard() {
               <button
                 type="submit"
                 disabled={isPending || isConfirming || isSubmitting}
-                className="flex-1 bg-[#1a96c1] hover:bg-[#157ba3] text-white font-bold py-4 px-6 rounded-xl disabled:bg-gray-400"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 px-6 rounded-xl disabled:bg-gray-400"
               >
-                {isPending || isConfirming || isSubmitting ? 'Creating...' : 'Create Loan'}
+                {isPending || isConfirming || isSubmitting ? 'Creating...' : 'Submit Funding Request'}
               </button>
             </div>
           </>

@@ -36,8 +36,8 @@ export default {
           950: '#082f49',
         },
         accent: {
-          DEFAULT: '#F4A261',
-          hover: '#E76F51',
+          DEFAULT: '#F4D35E',
+          hover: '#E9C46A',
         }
       },
       fontFamily: {
