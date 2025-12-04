@@ -247,13 +247,13 @@ export default function Navbar() {
                     <div className="w-full">
                       <Link
                         href="/create-loan"
-                        className="block w-full text-center bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-1.5"
+                        className="block w-full text-center bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-1.5"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
-                        Create a Loan
+                        Get Funded
                       </Link>
                     </div>
                   )}
@@ -313,7 +313,7 @@ export default function Navbar() {
             <div className="flex items-center space-x-3" ref={searchRef}>
               <button
                 onClick={toggleSearch}
-                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#29738F] focus:ring-opacity-20"
+                className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-600 focus:ring-opacity-20"
                 aria-label={
                   isSearchOpen && searchQuery.trim()
                     ? 'Submit search'
@@ -334,7 +334,7 @@ export default function Navbar() {
                     placeholder="Search funding requests..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full sm:w-72 px-4 py-2 border border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#29738F] focus:border-[#29738F] text-sm text-gray-900"
+                    className="block w-full sm:w-72 px-4 py-2 border border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary-600 focus:border-secondary-600 text-sm text-gray-900"
                   />
                 </form>
               )}
@@ -363,21 +363,21 @@ export default function Navbar() {
                 <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
                   <Link
                     href="/about"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     About LendFriend
                   </Link>
                   <Link
                     href="/vision"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     Vision & Roadmap
                   </Link>
                   <Link
                     href="/economic-context"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     Background
@@ -386,7 +386,7 @@ export default function Navbar() {
                     href="https://docs.lendfriend.org"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2E8B8B] transition-colors"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     Documentation (Draft)
@@ -401,12 +401,12 @@ export default function Navbar() {
             {isAuthenticated && <WalletBalance />}
             <Link
               href="/create-loan"
-              className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
+              className="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              Create Loan
+              Get Funded
             </Link>
             {isAuthenticated ? (
               <UserMenu />
@@ -420,3 +420,4 @@ export default function Navbar() {
     </>
   );
 } 
+ 

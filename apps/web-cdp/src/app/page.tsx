@@ -6,669 +6,262 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <main className="min-h-screen bg-gray-50 font-sans selection:bg-brand-200 selection:text-brand-900">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-slate-50 via-teal-50/30 to-white py-16 sm:py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Main headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-teal-700 mb-6 tracking-tight leading-tight">
-            Community Lending
-          </h1>
-          {/* Supporting message */}
-          <p className="text-xl sm:text-2xl md:text-3xl text-slate-600 max-w-3xl mx-auto mb-4 leading-relaxed">
-            Banks want big profits, friends don't
-          </p>
-          {/* Sub-tagline */}
-          <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            Building reputation-based lending for the new economy
-          </p>
+      <div className="relative overflow-hidden bg-white border-b border-gray-100">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-50/50 via-white to-secondary-50/50 opacity-70" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 sm:pt-20 sm:pb-24">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold mb-6 border border-brand-100 shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+              </span>
+              Now integrating with Shopify, Stripe & Square
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 leading-[1.1]">
+              Community Capital for <br className="hidden sm:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-secondary-600">
+                Creators & Merchants.
+              </span>
+            </h1>
+            
+            <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed font-medium">
+              Banks look at credit scores. We look at your business. Connect your revenue data to unlock 0% interest loans from your network.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
+              <Link
+                href="/create-loan"
+                className="w-full sm:w-auto px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white text-base font-bold rounded-xl shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all transform hover:-translate-y-0.5"
+              >
+                Get Funded
+              </Link>
+              <Link
+                href="#how-it-works"
+                className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 text-base font-bold rounded-xl border border-gray-200 hover:border-brand-200 shadow-sm hover:shadow-md transition-all"
+              >
+                How it Works
+              </Link>
+            </div>
+            
+            {/* Trust Badges / Integration Logos */}
+            <div className="border-t border-gray-100/80 pt-6">
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">
+                Trusted data integrations
+              </p>
+              <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                {/* Shopify */}
+                <div className="flex items-center gap-2">
+                   <span className="text-xl font-bold text-[#96bf48] font-rubik tracking-tight">shopify</span>
+                </div>
+                {/* Stripe */}
+                <div className="flex items-center gap-2">
+                   <span className="text-xl font-bold text-[#635BFF] font-rubik tracking-tight">stripe</span>
+                </div>
+                {/* Square */}
+                <div className="flex items-center gap-2">
+                   <span className="text-xl font-bold text-[#000000] font-rubik tracking-tight">Square</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Loan List Section */}
-      <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Active Loans</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">Support community members working toward their dreams</p>
+      {/* Active Loans Section */}
+      <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Community Businesses</h2>
+            <p className="text-base text-gray-600">Support viable businesses in your network.</p>
+          </div>
+          <Link href="/search" className="group text-brand-600 font-bold hover:text-brand-700 inline-flex items-center gap-1 text-base transition-colors">
+            View all requests
+            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
         </div>
         <LoanList />
       </div>
 
-      {/* How It Works Section */}
-      <div className="bg-gradient-to-br from-gray-50 to-white py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-3">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                How It Works
-              </h2>
-              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
-            </div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              From Request to Repayment
+      {/* How It Works (New Strategy) */}
+      <div id="how-it-works" className="bg-white py-20 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm">The Process</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mt-3 mb-4">
+              From Data to Capital
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              We use your real-time business performance to unlock capital, not just your credit score.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-12 relative">
+            {/* Connector Line (Desktop) */}
+            <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-1 bg-gradient-to-r from-brand-100 via-secondary-100 to-brand-100 z-0 rounded-full" />
+
             {/* Step 1 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                <Image
-                  src="/images/instructions_1b.png"
-                  alt="Create Your Loan"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#3B9B7F] text-white flex items-center justify-center font-bold text-lg">
-                  1
+            <div className="relative z-10 flex flex-col items-center text-center group">
+              <div className="w-24 h-24 bg-white rounded-3xl shadow-xl shadow-brand-500/5 border border-gray-100 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-brand-500/10 transition-all duration-300">
+                <div className="text-brand-500 bg-brand-50 p-4 rounded-2xl">
+                  {/* Icon: Data Connection */}
+                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                  </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Create Your Loan</h3>
               </div>
-              <p className="text-gray-600 leading-relaxed">
-                Request $100-$5K for 30-90 days. Add your story, budget breakdown, and photos. Share with friends.
+              <h3 className="text-xl font-bold text-gray-900 mb-3">1. Connect Data</h3>
+              <p className="text-base text-gray-600 leading-relaxed">
+                Link your Shopify, Stripe, or Square account. We analyze revenue history securely to verify business viability.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                <Image
-                  src="/images/instructions_2.png"
-                  alt="Friends Contribute"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                  style={{ objectPosition: 'center 35%' }}
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#3B9B7F] text-white flex items-center justify-center font-bold text-lg">
-                  2
+            <div className="relative z-10 flex flex-col items-center text-center group">
+              <div className="w-24 h-24 bg-white rounded-3xl shadow-xl shadow-secondary-500/5 border border-gray-100 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-secondary-500/10 transition-all duration-300">
+                <div className="text-secondary-500 bg-secondary-50 p-4 rounded-2xl">
+                  {/* Icon: Network/Share */}
+                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Friends Contribute</h3>
               </div>
-              <p className="text-gray-600 leading-relaxed">
-                Your network sees your request. Each contribution signals trust with real money.
+              <h3 className="text-xl font-bold text-gray-900 mb-3">2. Rally Support</h3>
+              <p className="text-base text-gray-600 leading-relaxed">
+                Share your verified request. Your network lends with confidence, knowing the business fundamentals are sound.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                <Image
-                  src="/images/instructions_3.png"
-                  alt="Trust Scores Calculate"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#3B9B7F] text-white flex items-center justify-center font-bold text-lg">
-                  3
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Trust Scores Calculate</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                We measure connection strength using mutual friends and network overlap. Close friends count more.
-              </p>
-            </div>
-
-            {/* Step 4 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                <Image
-                  src="/images/instructions_4.png"
-                  alt="Lenders Evaluate"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#3B9B7F] text-white flex items-center justify-center font-bold text-lg">
-                  4
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Lenders Evaluate</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Lenders see your trust score and friend support. High-risk loans don't get funded.
-              </p>
-            </div>
-
-            {/* Step 5 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                <Image
-                  src="/images/instructions_5.png"
-                  alt="Loan Funds or Expires"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#3B9B7F] text-white flex items-center justify-center font-bold text-lg">
-                  5
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Loan Funds or Expires</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Hit your goal? Funds transfer to your wallet. Miss it? All contributions return.
-              </p>
-            </div>
-
-            {/* Step 6 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                <Image
-                  src="/images/instructions_6.png"
-                  alt="Reputation Builds"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#3B9B7F] text-white flex items-center justify-center font-bold text-lg">
-                  6
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Reputation Builds</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Repay on time → stronger reputation. Default → permanent on-chain record follows you across DeFi.
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-10">
-            <Link
-              href="https://lendfriend.org/about"
-              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
-            >
-              Learn more about how it works
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Vision Section */}
-      <div className="bg-gradient-to-br from-[#3B9B7F]/5 via-white to-[#2C7DA0]/5 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-3">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                Vision: How Lendfriend Scales
-              </h2>
-              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
-            </div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              From bootstrap to global scale: Building the future of reputation-backed lending
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Phase 0 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden border-2 border-[#3B9B7F]">
-              <div className="bg-[#3B9B7F] px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-white">Phase 0: Social Trust</h3>
-                  <span className="px-3 py-1 bg-white text-[#3B9B7F] text-xs font-bold rounded-full">
-                    LIVE
-                  </span>
-                </div>
-                <p className="text-[#3B9B7F]/80 text-sm mt-1 font-semibold">2024-2025</p>
-              </div>
-              <div className="p-6">
-                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/phase0_gb.png"
-                    alt="Phase 0: Social Trust"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
-                    style={{ objectPosition: 'center 40%' }}
-                  />
-                </div>
-                <p className="text-gray-700 mb-4 font-semibold">
-                  Zero-interest loans backed by social trust
-                </p>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>$100-$5K loans, 30-90 days</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Farcaster social graph</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-[#3B9B7F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Prove the model works</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Phase 1 */}
-            <div className="bg-blue-50/50 rounded-xl shadow-md overflow-hidden border-2 border-blue-200/60 opacity-75">
-              <div className="bg-blue-100/60 px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-gray-700">Phase 1: Add Cashflow</h3>
-                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">
-                    PLANNED
-                  </span>
-                </div>
-                <p className="text-gray-600 text-sm mt-1 font-semibold">2025-2026</p>
-              </div>
-              <div className="p-6">
-                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden opacity-60">
-                  <Image
-                    src="/images/phase1_gb.png"
-                    alt="Phase 1: Add Cashflow"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
-                    style={{ objectPosition: 'center 40%' }}
-                  />
-                </div>
-                <p className="text-gray-700 mb-4 font-semibold">
-                  Scale with revenue verification
-                </p>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>$5K-$50K+ loans</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Plaid/Stripe/Shopify data</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>12-17% APR (vs ~25%)</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Phase 2 */}
-            <div className="bg-orange-50/40 rounded-xl shadow-md overflow-hidden border-2 border-orange-200/50 opacity-70">
-              <div className="bg-orange-100/50 px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-gray-700">Phase 2: Automate</h3>
-                  <span className="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-bold rounded-full">
-                    FUTURE
-                  </span>
-                </div>
-                <p className="text-gray-600 text-sm mt-1 font-semibold">2026-2027</p>
-              </div>
-              <div className="p-6">
-                <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden opacity-50">
-                  <Image
-                    src="/images/phase2_gb.png"
-                    alt="Phase 2: Automate"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
-                    style={{ objectPosition: 'center 40%' }}
-                  />
-                </div>
-                <p className="text-gray-700 mb-4 font-semibold">
-                  Loans that repay themselves
-                </p>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-orange-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>$10K-$100K+ loans</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-orange-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Smart wallet auto-repayment</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-orange-300 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Mass market scale</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-10">
-            <Link
-              href="https://lendfriend.org/vision"
-              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
-            >
-              See the full roadmap
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* The Opportunity Section */}
-      <div className="bg-gradient-to-br from-white to-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-md p-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-10">
-                <div className="inline-block mb-4">
-                  <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                    The $1 Trillion New Economy That Banks Don't Serve
-                  </h3>
-                  <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
-                </div>
-
-                <div className="flex items-center justify-center gap-3 text-base md:text-lg text-gray-600 flex-wrap">
-                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Freelancers (Upwork, Fiverr, Toptal)</span>
-                  <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Creators (YouTube, TikTok, Patreon)</span>
-                  <span className="text-gray-400">•</span>
-                  <span className="bg-[#3B9B7F]/10 px-4 py-2 rounded-full font-semibold">Merchants (Shopify, Etsy, Amazon)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* TAM Image */}
-            <div className="mb-16 relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
-              <Image
-                src="/images/why/platform_workers3.png"
-                alt="$1 Trillion Platform Economy - Freelancers, Creators, Merchants"
-                fill
-                sizes="(max-width: 1024px) 100vw, 1200px"
-                className="object-cover"
-                style={{ objectPosition: 'center' }}
-              />
-            </div>
-
-            {/* Three Comparison Cards */}
-            <div className="grid md:grid-cols-3 gap-8 mb-6">
-              {/* Traditional Banks */}
-              <div className="bg-gray-50 rounded-xl overflow-hidden border-2 border-gray-300 hover:shadow-lg transition-shadow">
-                <div className="relative w-full h-56">
-                  <Image
-                    src="/images/why/bank_rejection.png"
-                    alt="Traditional Banks Reject"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6 text-center">
-                  <h4 className="font-bold text-gray-900 mb-3 text-lg">Traditional Banks</h4>
-                  <p className="text-red-600 font-bold mb-2">❌ Often reject platform earners</p>
-                  <p className="text-red-600 font-bold text-sm mb-2">
-                    Limited access
-                  </p>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Traditional underwriting relies on W-2s and steady paychecks
-                  </p>
-                </div>
-              </div>
-
-              {/* Fintech Platform Lenders */}
-              <div className="bg-orange-50 rounded-xl overflow-hidden border-2 border-orange-300 hover:shadow-lg transition-shadow">
-                <div className="relative w-full h-56">
-                  <Image
-                    src="/images/why/invite_only.png"
-                    alt="Fintech Platform Lenders Invite Only"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6 text-center">
-                  <h4 className="font-bold text-gray-900 mb-3 text-lg">Fintech Platform Lenders</h4>
-                  <p className="text-orange-600 font-bold mb-2">✓ ~25% APR</p>
-                  <p className="text-orange-600 font-bold text-sm mb-2">
-                    Invite-only
-                  </p>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Only established merchants with proven sales. Expensive infrastructure.
-                  </p>
-                </div>
-              </div>
-
-              {/* LendFriend */}
-              <div className="bg-[#3B9B7F]/10 rounded-xl overflow-hidden border-2 border-[#3B9B7F] hover:shadow-lg transition-shadow">
-                <div className="relative w-full h-56">
-                  <Image
-                    src="/images/why/lendfriend_b.png"
-                    alt="LendFriend Open Access"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6 text-center">
-                  <h4 className="font-bold text-gray-900 mb-3 text-lg">LendFriend</h4>
-                  <p className="text-[#3B9B7F] font-bold mb-2">✓ 12-17% APR</p>
-                  <p className="text-[#3B9B7F] font-bold text-sm mb-2">
-                    Open to everyone
-                  </p>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Crypto infrastructure + social trust for those building their track record
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center mt-8">
-              <Link
-                href="https://lendfriend.org/economic-context"
-                className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
-              >
-                Learn more about the opportunity
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* How We Lower Rates Section */}
-      <div className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-3">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                How We Lower Rates
-              </h2>
-              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
-            </div>
-          </div>
-
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
-            {/* Item 1 - Community Capital */}
-            <div className="text-center group">
-              <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
-                <Image
-                  src="/images/lower_interest/middleman.png"
-                  alt="Community Capital - Eliminate expensive debt middlemen"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-3">Eliminate Expensive Debt Middlemen</h4>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                Banks and VCs expect big profits from your loan - friends don't
-              </p>
-            </div>
-
-            {/* Item 2 - Fast, Lower-Cost Payments */}
-            <div className="text-center group">
-              <div className="relative w-full h-80 mb-6 rounded-xl overflow-hidden shadow-md">
-                <Image
-                  src="/images/lower_interest/legacy_railsb.png"
-                  alt="Fast, Lower-Cost Payments - Replace legacy payment rails with stablecoins"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-3">Fast, Lower-Cost Payments</h4>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                Replace legacy payment rails with instant, low-cost stablecoins
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-10">
-            <Link
-              href="https://lendfriend.org/economic-context"
-              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
-            >
-              Read the full story
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Viral Growth Section */}
-      <div className="bg-gray-50 py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <div className="inline-block mb-2">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-                Built-In Viral Growth
-              </h2>
-              <div className="h-1 bg-gradient-to-r from-[#3B9B7F] to-[#2C7DA0] rounded-full"></div>
-            </div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Every borrower becomes a growth engine by sharing their personal story
-            </p>
-          </div>
-
-          {/* Two-column layout: Steps (35%) + Illustration (65%) */}
-          <div className="grid md:grid-cols-[0.55fr_1fr] gap-6 items-stretch mb-8">
-            {/* Left: The Viral Loop Steps */}
-            <div className="flex flex-col justify-between gap-4">
-              {/* Step 1 */}
-              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center">
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
-                    1
-                  </div>
-                  <div>
-                    <p className="text-gray-900 font-bold mb-1 text-lg">Create</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">Borrower shares loan with their network</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Step 2 */}
-              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center">
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
-                    2
-                  </div>
-                  <div>
-                    <p className="text-gray-900 font-bold mb-1 text-lg">Spread</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">Story spreads through their network and beyond</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Step 3 */}
-              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center">
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
-                    3
-                  </div>
-                  <div>
-                    <p className="text-gray-900 font-bold mb-1 text-lg">Convert</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">Some become lenders</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Step 4 + Loop arrow */}
-              <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 flex-1 flex items-center relative">
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-12 h-12 bg-[#3B9B7F] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-xl shadow-md">
-                    4
-                  </div>
-                  <div>
-                    <p className="text-gray-900 font-bold mb-1 text-lg">Repeat</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">Lenders become borrowers</p>
-                  </div>
-                </div>
-                {/* Loop arrow indicator */}
-                <div className="absolute -top-3 right-4 text-[#3B9B7F] opacity-60">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            <div className="relative z-10 flex flex-col items-center text-center group">
+              <div className="w-24 h-24 bg-white rounded-3xl shadow-xl shadow-brand-500/5 border border-gray-100 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-brand-500/10 transition-all duration-300">
+                <div className="text-brand-500 bg-brand-50 p-4 rounded-2xl">
+                  {/* Icon: Growth/Arrow */}
+                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
               </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">3. Grow & Repay</h3>
+              <p className="text-base text-gray-600 leading-relaxed">
+                Use funds to buy inventory or marketing. Repayments can be automated from future revenue.
+              </p>
             </div>
-
-            {/* Right: Visual Illustration (65% width, same height) */}
-            <div className="relative w-full h-full flex items-center">
-              <Image
-                src="/images/viral/1_big.png"
-                alt="Viral growth network effect - borrower sharing spreads to communities"
-                width={800}
-                height={400}
-                className="rounded-xl shadow-lg w-full h-full object-contain"
-              />
-            </div>
-          </div>
-
-          {/* The Magic */}
-          <div className="bg-gradient-to-r from-[#3B9B7F]/10 to-[#2C7DA0]/10 rounded-lg p-6 border border-[#3B9B7F]/30">
-            <p className="text-lg text-gray-800 leading-relaxed text-center font-semibold">
-              <span className="text-[#2E7D68] font-bold">The magic:</span> Emotional stories are 10x more likely to be shared than traditional ads.
-              Each funded loan creates social proof that accelerates the next loan.
-            </p>
-          </div>
-
-          <div className="text-center mt-8">
-            <Link
-              href="https://lendfriend.org/vision"
-              className="inline-flex items-center gap-2 text-[#3B9B7F] hover:text-[#2E7D68] font-bold transition-colors"
-            >
-              See the full growth model
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
           </div>
         </div>
       </div>
 
+      {/* Comparison Section */}
+      <div className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              Built for the New Economy
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 items-center">
+            {/* Traditional Banks */}
+            <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm opacity-75 hover:opacity-100 transition-opacity">
+              <h3 className="text-xl font-bold text-gray-400 mb-6">Traditional Banks</h3>
+              <ul className="space-y-5 text-gray-500 text-lg">
+                <li className="flex items-center gap-4">
+                  <span className="text-red-400 text-2xl font-bold">✕</span>
+                  Reject 'gig economy' income
+                </li>
+                <li className="flex items-center gap-4">
+                  <span className="text-red-400 text-2xl font-bold">✕</span>
+                  Strict credit checks
+                </li>
+                <li className="flex items-center gap-4">
+                  <span className="text-red-400 text-2xl font-bold">✕</span>
+                  Slow approval process
+                </li>
+              </ul>
+            </div>
+
+            {/* LendFriend (Highlighted) */}
+            <div className="bg-white p-8 rounded-3xl border-2 border-brand-500 shadow-2xl shadow-brand-500/10 relative transform md:-translate-y-6 z-10">
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-500 to-secondary-500 text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wide shadow-lg">
+                Best for You
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">LendFriend</h3>
+              <ul className="space-y-5 text-gray-700 text-lg">
+                <li className="flex items-center gap-4 font-bold">
+                  <div className="p-1 rounded-full bg-brand-100 text-brand-600">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  Data-driven approval
+                </li>
+                <li className="flex items-center gap-4 font-bold">
+                  <div className="p-1 rounded-full bg-brand-100 text-brand-600">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  0% Interest (Community)
+                </li>
+                <li className="flex items-center gap-4 font-bold">
+                  <div className="p-1 rounded-full bg-brand-100 text-brand-600">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  Funding in days, not weeks
+                </li>
+              </ul>
+              <div className="mt-8">
+                <Link href="/create-loan" className="block w-full py-3 bg-brand-600 hover:bg-brand-700 text-white text-center font-bold rounded-xl transition-colors shadow-lg">
+                    Check Your Eligibility
+                </Link>
+              </div>
+            </div>
+
+            {/* Merchant Cash Advance */}
+            <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm opacity-75 hover:opacity-100 transition-opacity">
+              <h3 className="text-xl font-bold text-gray-400 mb-6">Predatory Lenders</h3>
+              <ul className="space-y-5 text-gray-500 text-lg">
+                <li className="flex items-center gap-4">
+                  <span className="text-red-400 text-2xl font-bold">✕</span>
+                  20-40% APR equivalent
+                </li>
+                <li className="flex items-center gap-4">
+                  <span className="text-red-400 text-2xl font-bold">✕</span>
+                  Aggressive daily payments
+                </li>
+                <li className="flex items-center gap-4">
+                  <span className="text-red-400 text-2xl font-bold">✕</span>
+                  Hidden fees
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-brand-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-800 to-secondary-900 opacity-50" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10" />
+        
+        <div className="relative max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Ready to grow your business?
+          </h2>
+          <p className="text-brand-100 text-lg md:text-xl mb-10 font-light leading-relaxed">
+            Join the new economy where your revenue and your community power your growth.
+          </p>
+          <Link
+            href="/create-loan"
+            className="inline-flex items-center justify-center px-8 py-4 bg-white text-brand-900 font-bold rounded-2xl shadow-2xl hover:bg-brand-50 transition-all transform hover:-translate-y-1 text-lg"
+          >
+            Start Your Application
+          </Link>
+        </div>
+      </div>
     </main>
   );
 }

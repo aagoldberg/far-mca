@@ -149,8 +149,8 @@ const LoanList = () => {
       <div className="text-center py-16 px-6">
         <div className="max-w-md mx-auto">
           {/* Icon */}
-          <div className="w-24 h-24 bg-gradient-to-br from-[#3B9B7F]/10 to-[#2E7D68]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-12 h-12 text-[#3B9B7F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-24 h-24 bg-gradient-to-br from-brand-500/10 to-brand-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-12 h-12 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </div>
@@ -168,12 +168,12 @@ const LoanList = () => {
           {/* CTA Button */}
           <a
             href="/create-loan"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-bold rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md text-base"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand-500 hover:bg-brand-700 text-white font-bold rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md text-base"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            Create Loan Request
+            Start a Funding Request
           </a>
 
           {/* Info text */}
@@ -194,7 +194,7 @@ const LoanList = () => {
           id="showInactive"
           checked={showInactive}
           onChange={(e) => setShowInactive(e.target.checked)}
-          className="w-4 h-4 text-[#3B9B7F] bg-gray-100 border-gray-300 rounded focus:ring-[#3B9B7F] focus:ring-2"
+          className="w-4 h-4 text-brand-500 bg-gray-100 border-gray-300 rounded focus:ring-brand-500 focus:ring-2"
         />
         <label htmlFor="showInactive" className="text-sm font-medium text-gray-700 cursor-pointer select-none">
           Show inactive loans

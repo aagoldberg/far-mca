@@ -4,14 +4,14 @@
   "private": true,
   "description": "LendFriend - Revenue-based financing platform",
   "workspaces": [
-    "apps/web",
+    "apps/base",
     "apps/farcaster"
   ],
   "scripts": {
-    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:base": "npm run dev --workspace=apps/base",
     "dev:farcaster": "npm run dev --workspace=apps/farcaster",
-    "build:web": "npm run build --workspace=apps/web",
+    "build:base": "npm run build --workspace=apps/base",
     "build:farcaster": "npm run build --workspace=apps/farcaster",
-    "build": "npm run build:web && npm run build:farcaster"
+    "build": "npm run build:base && npm run build:farcaster"
   }
 }

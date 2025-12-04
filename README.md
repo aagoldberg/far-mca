@@ -1,57 +1,59 @@
-# LendFriend: Revenue-Based Financing Platform
+# LendFriend: Zero-Interest Community Lending
 
-A decentralized revenue-based financing platform built on Base blockchain. Connect businesses with funders through transparent, on-chain revenue-sharing agreements.
+A decentralized, zero-interest financing platform built on the Base blockchain. It allows businesses and individuals to raise funds from their community, who are then repaid as revenue comes in. This is a model for community support, not financial return.
 
 ## 📁 Monorepo Structure
 
-This is a monorepo containing multiple applications:
+This is a monorepo containing multiple applications managed with npm workspaces:
 
-- **`apps/web/`** - Main web application (Next.js)
-- **`apps/farcaster/`** - Farcaster Mini App for mobile users
-- **`contracts/`** - Solidity smart contracts (Foundry)
-- **`readme/`** - 📚 **Integration plans & architecture docs** → **[START HERE](./readme/README.md)** for frontend integration
-- **`docs/`** - Additional documentation
+- **`apps/base/`** - The primary, full-featured Farcaster Mini App for creating, managing, and contributing to loans.
+- **`apps/farcaster/`** - A lightweight, read-only Farcaster Mini App for discovering and viewing existing loans.
+- **`contracts/`** - The core Solidity smart contracts managed with Foundry.
+- **`subgraph/`** - The Graph protocol subgraph for indexing and querying on-chain data.
+- **`docs/`** - Project documentation and whitepaper.
 
 ## 🌟 Overview
 
-LendFriend enables businesses to receive funding from the community with flexible revenue-based repayment terms:
+LendFriend enables anyone to raise funds from a community with a simple, revenue-based repayment model:
 
-- **Zero-Equity Financing**: No ownership dilution for businesses
-- **Revenue-Based Repayment**: Pay as you earn - sustainable for growing businesses
-- **Flexible Terms**: Customizable revenue share % and repayment caps
-- **Transparent & On-Chain**: All transactions recorded on Base blockchain
+- **Zero-Interest & Zero-Equity**: Funders are repaid exactly what they put in (1.0x cap). This is about support, not profit.
+- **Flexible Repayment**: The borrower can repay at any pace before the loan's due date.
+- **Transparent & On-Chain**: All contributions and repayments are recorded on the Base blockchain.
 
 ## 🏗️ Architecture
 
-- **Frontend**: Next.js 15 with React 19 and App Router
-- **Blockchain**: Base (Ethereum Layer 2) for low transaction costs
-- **Authentication**: Privy for wallet and social login
-- **Smart Contracts**: Revenue-based financing campaigns with automated repayment
-- **Farcaster Integration**: Native mobile mini app experience
-- **Styling**: TailwindCSS for responsive design
+- **Frontend**: Next.js 15 with React 19 and App Router (`apps/base`).
+- **Blockchain**: Base (Ethereum Layer 2) for low transaction costs.
+- **Authentication**: Implicitly handled by the Farcaster Mini App environment. The application trusts the wallet address provided by the host Farcaster client (e.g., Warpcast).
+- **Smart Contracts**: A factory pattern (`MicroLoanFactory.sol`) deploys individual `MicroLoan.sol` contracts that manage the entire lifecycle of a loan.
+- **Gasless Transactions**: Powered by Coinbase Developer Platform's (CDP) Smart Wallets and a Paymaster service, allowing users to perform actions without paying for gas directly.
+- **Data Fetching (Hybrid Model)**:
+    - **On-Chain Data**: Wagmi is used for real-time contract reads and all write transactions.
+    - **Indexed Data**: An Apollo Client connects to a custom subgraph to efficiently query lists of loans and historical data.
+    - **Metadata**: Loan details (title, description, image) are stored on IPFS.
+- **Styling**: TailwindCSS for responsive design.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- A wallet (MetaMask, Coinbase Wallet, etc.)
-- Base Sepolia testnet access for testing
+- A Farcaster account with a connected wallet in a client like Warpcast.
 
 ### Installation
 
 ```bash
-# Install all dependencies (uses npm workspaces)
+# Install all dependencies from the root directory
 npm install
 ```
 
 ### Development
 
 ```bash
-# Start web app (runs on port 3001)
-npm run dev:web
+# Start the main interactive app (runs on port 3005)
+npm run dev:base
 
-# Start Farcaster mini app (runs on port 3002)
+# Start the read-only viewer app (runs on port 3002)
 npm run dev:farcaster
 
 # Build both apps
@@ -60,145 +62,67 @@ npm run build
 
 ### Environment Setup
 
-Each app has its own `.env.local`:
+Each application uses its own `.env.local` file.
 
-**Web App** (`apps/web/.env.local`):
-- Copy from `apps/web/.env.example`
-- Configure Privy, RPC URLs, contract addresses
-
-**Farcaster App** (`apps/farcaster/.env.local`):
-- Copy from `apps/farcaster/.env.local` template
-- Same variables as web app (already configured)
-
-## 📋 Key Features
-
-### For Businesses (Fund Seekers)
-- **Create Funding Requests**: Set funding goals and revenue share percentages
-- **Flexible Terms**: Define repayment caps (1.0x = exactly what was funded)
-- **Multiple Payment Methods**: Accept crypto via various payment rails
-- **Dashboard**: Track funding progress and manage repayments
-
-### For Funders (Community Supporters)
-- **Browse Campaigns**: Discover businesses seeking community support
-- **Contribute Easily**: Multiple payment methods including card, Coinbase, or wallet
-- **Track Contributions**: Monitor repayment progress in real-time
-- **Zero Profit Model**: Receive your contribution back as the business grows
-
-### Three User Personas
-
-**1. Crypto Novices**
-- Use Coinbase Pay for card-to-crypto conversion
-- Simple payment flow with crypto abstracted
-
-**2. Crypto Middle Ground**
-- Connect Coinbase account for one-click funding
-- Use existing USDC balance
-
-**3. Crypto Natives**
-- Direct wallet connection (MetaMask, etc.)
-- Support for EIP-2612 permit signatures for gasless approvals
+**Main App (`apps/base/.env.local`):**
+- Copy from the provided `.env.example` file.
+- Configure environment variables for the Base Sepolia RPC URL, contract addresses, Subgraph URL, and Paymaster URL.
 
 ## 🔧 Technical Details
 
-### Project Structure
+### Project Structure (`apps/base`)
 
 ```
-far-mca/
-├── src/
-│   ├── app/              # Next.js app router pages
-│   │   ├── advance/      # Campaign detail pages
-│   │   ├── api/          # API routes
-│   │   ├── create-campaign/
-│   │   ├── request-funding/
-│   │   └── ...
-│   ├── components/       # React components
-│   ├── lib/             # Utility libraries
-│   ├── hooks/           # Custom React hooks
-│   ├── types/           # TypeScript types
-│   ├── utils/           # Helper functions
-│   ├── abi/             # Smart contract ABIs
-│   ├── config/          # Configuration files
-│   └── providers/       # Context providers
-├── public/              # Static assets
-└── ...config files
+apps/base/
+└── src/
+    ├── app/              # Next.js app router pages and layouts
+    ├── components/       # Reusable React components
+    ├── hooks/            # Custom React hooks for contract interaction (e.g., useMicroLoan.ts)
+    ├── lib/              # Core libraries (e.g., wagmi.ts, constants.ts)
+    ├── providers/        # React context providers
+    ├── abi/              # Smart contract ABIs (e.g., MicroLoan.json)
+    └── ...
 ```
 
 ### Smart Contract Integration
 
-The platform uses a factory pattern for deploying zero-interest microloans:
+The application's logic is built around two core contracts:
 
-- **MicroLoanFactory**: Deploys individual loan contracts (Base Sepolia: `0x747988...bFff`)
-- **MicroLoan**: Manages contributions and fixed-period repayments
-- **TestUSDC**: ERC-20 test token with faucet (Base Sepolia: `0x2d04a1...aaFe`)
-
-**📘 For integration details**: See [readme/FRONTEND_INTEGRATION_PLAN.md](./readme/FRONTEND_INTEGRATION_PLAN.md)
+- **`MicroLoanFactory.sol`**: A factory that deploys new loan contracts and keeps a registry of them.
+- **`MicroLoan.sol`**: The contract for an individual loan. It manages the entire lifecycle: fundraising, disbursement, repayments, and claims.
 
 ### Key Difference from Traditional RBF
 
 **Traditional RBF**:
-- Investor contributes $10,000
-- Business repays 1.5x = $15,000 over time
-- Investor profits $5,000
+- An investor contributes $10,000 expecting a 1.5x return, or $15,000. The investor profits $5,000.
 
-**FAR-MCA (Zero-Interest Model)**:
-- Funder contributes $10,000
-- Business repays 1.0x = $10,000 over time
-- Funder receives their contribution back, zero profit
-- Pure community support model
+**LendFriend (Zero-Interest Model)**:
+- A community member contributes $10,000.
+- The borrower repays exactly $10,000 over time.
+- The funder gets their original contribution back with zero profit. This is a pure community support model.
 
 ## 🔐 Security
 
-- Built on audited OpenZeppelin contracts
-- All funds managed via smart contracts
-- Transparent on-chain transaction history
-- No custodial risk - direct wallet-to-contract interactions
-
-## 📊 Use Cases
-
-### Ideal for:
-- **Mission-Driven Businesses**: Community wants to support the mission, not profit from it
-- **Local Businesses**: Community members supporting local economy
-- **Social Enterprises**: Funding aligned with values rather than returns
-- **Early-Stage Startups**: Friends and family rounds without dilution or debt burden
-
-## 🛠️ Development Workflow
-
-### Adding New Features
-
-1. **Smart Contract Changes**: Update contracts in separate contract repository
-2. **Frontend Updates**: Modify components in `src/components/`
-3. **New Pages**: Add routes in `src/app/`
-4. **API Endpoints**: Create in `src/app/api/`
-
-### Testing
-
-```bash
-# Run linting
-npm run lint
-
-# Test locally
-npm run dev
-```
+- Core contract logic is built using OpenZeppelin's audited contract library.
+- Reentrancy guards are used on critical functions.
+- All funds are managed non-custodially by the smart contracts.
+- Transactions are transparent and verifiable on-chain.
 
 ## 📄 Environment Variables
 
-See `.env.example` for all required environment variables:
+See the `.env.example` file in `apps/base` for all required environment variables, including:
 
-- **Blockchain Configuration**: RPC URL, contract addresses
-- **Authentication**: Privy app credentials
-- **APIs**: Subgraph endpoints, storage APIs
-- **Optional**: Shopify integration for credit scoring (advanced feature)
+- `NEXT_PUBLIC_RPC_URL`: RPC URL for Base Sepolia.
+- `NEXT_PUBLIC_MICROLOAN_FACTORY_ADDRESS`: The address of the deployed factory contract.
+- `NEXT_PUBLIC_USDC_ADDRESS`: The address of the USDC token contract.
+- `NEXT_PUBLIC_SUBGRAPH_URL`: The endpoint for the project's subgraph.
+- `NEXT_PUBLIC_PAYMASTER_URL`: The URL for the gas-sponsoring paymaster service.
 
 ## 🤝 Contributing
 
-This is a community-driven platform. Contributions focused on improving the zero-interest crowdfunding model are welcome!
+This is a community-driven platform. Contributions focused on improving the zero-interest crowdfunding model are welcome.
 
 ## 📝 License
 
-MIT License - see LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
----
-
-**Built on**: Next.js 15, React 19, Viem, Wagmi, Privy, Base Blockchain
-
-**Philosophy**: Community support over profit - enabling businesses to access capital through collective action without the burden of interest or equity dilution.
