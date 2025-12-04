@@ -15,6 +15,9 @@
     "homeUrl": "https://lendfriend-base.vercel.app",
     "webhookUrl": "https://api.neynar.com/f/app/REPLACE_WITH_NEYNAR_WEBHOOK_ID/event"
   },
+  "baseBuilder": {
+    "ownerAddress": "aagoldberg.base.eth"
+  },
   "triggers": [
     {
       "type": "cast_action",
