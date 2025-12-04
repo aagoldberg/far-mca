@@ -285,14 +285,28 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
             ) : (
               <div className="space-y-3">
                 {contributors.map((contributor) => {
-                  const displayName = contributor.username || 'anonymous';
-                  const isAnonymous = !contributor.username;
+                  const displayName = contributor.username || contributor.displayName || 'anonymous';
+                  const isAnonymous = !contributor.username && !contributor.displayName;
+                  const hasFarcaster = !!contributor.username;
                   const amount = Number(contributor.amount) / 1e6; // Convert from USDC wei to dollars
 
                   return (
                     <div key={contributor.id} className="flex items-center gap-3 pb-3 border-b border-gray-100 last:border-b-0 last:pb-0">
                       {/* Avatar */}
+                      {contributor.pfpUrl ? (
+                        <img
+                          src={contributor.pfpUrl}
+                          alt={displayName}
+                          className="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                      ) : null}
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm ${
+                        contributor.pfpUrl ? 'hidden' : ''
+                      } ${
                         isAnonymous
                           ? 'bg-gray-400'
                           : 'bg-gradient-to-br from-[#3B9B7F] to-[#2E7D68]'
@@ -302,9 +316,16 @@ export default function MobileLoanDetails({ loanAddress }: MobileLoanDetailsProp
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium ${isAnonymous ? 'text-gray-500 italic' : 'text-gray-900'}`}>
-                          {isAnonymous ? displayName : `@${displayName}`}
-                        </p>
+                        <div className="flex items-center gap-1.5">
+                          <p className={`text-sm font-medium ${isAnonymous ? 'text-gray-500 italic' : 'text-gray-900'}`}>
+                            {hasFarcaster ? `@${contributor.username}` : isAnonymous ? displayName : contributor.displayName}
+                          </p>
+                          {hasFarcaster && (
+                            <svg className="w-3.5 h-3.5 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                          )}
+                        </div>
                         <p className="text-xs text-gray-500">
                           {new Date(contributor.timestamp * 1000).toLocaleDateString()}
                         </p>

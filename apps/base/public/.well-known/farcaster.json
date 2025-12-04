@@ -5,7 +5,7 @@
     "signature": "SIGN_AT_BASE_DEV"
   },
   "miniapp": {
-    "version": "next",
+    "version": "1",
     "name": "LendFriend",
     "subtitle": "Community lending at 0% interest",
     "description": "Borrow from your community at 0% interest, or fund loans and help others grow. Build reputation instead of paying fees.",
@@ -13,7 +13,8 @@
     "splashImageUrl": "https://lendfriend-base.vercel.app/splash.png",
     "splashBackgroundColor": "#2C7A7B",
     "homeUrl": "https://lendfriend-base.vercel.app",
-    "webhookUrl": "https://api.neynar.com/f/app/REPLACE_WITH_NEYNAR_WEBHOOK_ID/event"
+    "primaryCategory": "finance",
+    "tags": ["lending", "community", "defi", "social"]
   },
   "baseBuilder": {
     "ownerAddress": "0x15d50E6D82a94294FD09E3A1880449b0569C54d2"
@@ -26,7 +27,5 @@
       "url": "https://lendfriend-base.vercel.app/api/action/fund",
       "description": "Fund a loan directly from any cast"
     }
-  ],
-  "primaryCategory": "finance",
-  "tags": ["lending", "community", "defi", "social", "base"]
+  ]
 }
