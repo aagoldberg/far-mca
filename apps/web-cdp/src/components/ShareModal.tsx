@@ -75,7 +75,7 @@ const morePlatforms = [
     {
         id: 'email',
         name: 'Email',
-        brandColor: 'bg-gray-600 hover:bg-gray-700',
+        brandColor: 'bg-secondary-600 hover:bg-secondary-700',
         icon: (
             <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
                 <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/>
@@ -96,7 +96,7 @@ const morePlatforms = [
     {
         id: 'sms',
         name: 'SMS',
-        brandColor: 'bg-[#10B981] hover:bg-[#059669]',
+        brandColor: 'bg-brand-600 hover:bg-brand-700',
         icon: (
             <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
                 <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
@@ -180,24 +180,24 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity">
-            <div className="bg-white rounded-xl shadow-2xl p-6 m-4 w-full max-w-2xl relative animate-in slide-in-from-bottom-10 fade-in-25 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl p-6 m-4 w-full max-w-2xl relative animate-in slide-in-from-bottom-10 fade-in-25 max-h-[90vh] overflow-y-auto border border-gray-100">
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10 p-1 rounded-full hover:bg-gray-100"
                 >
                     <XMarkIcon className="w-6 h-6" />
                 </button>
 
-                <h2 className="text-xl font-bold mb-5 text-gray-900">Help make this happen</h2>
+                <h2 className="text-xl font-bold mb-5 text-gray-900">Share this Request</h2>
 
                 {/* OG Card Preview */}
                 <div className="mb-5">
-                    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-md">
+                    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
                         {imageLoading && !imageError && (
-                            <div className="w-full h-[315px] bg-gray-100 flex items-center justify-center">
+                            <div className="w-full h-[315px] bg-gray-50 flex items-center justify-center">
                                 <div className="text-center">
-                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3B9B7F] mx-auto mb-2"></div>
+                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-2"></div>
                                     <p className="text-sm text-gray-500">Loading preview...</p>
                                 </div>
                             </div>
@@ -229,8 +229,8 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                 </div>
 
                 {/* Impact Message - moved up for prominence */}
-                <div className="mb-5 p-3 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-sm text-green-800 text-center font-semibold">
+                <div className="mb-5 p-3 bg-brand-50 border border-brand-200 rounded-lg">
+                    <p className="text-sm text-brand-800 text-center font-semibold">
                         Shared loans get funded 3× faster
                     </p>
                 </div>
@@ -239,12 +239,12 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                 <div className="mb-5">
                     <button
                         onClick={handleCopyToClipboard}
-                        className="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm font-semibold transition-colors gap-2"
+                        className="w-full flex items-center justify-center px-4 py-3 bg-gray-50 hover:bg-gray-100 border border-gray-300 rounded-lg text-sm font-semibold transition-colors gap-2"
                     >
                         {copied ? (
                             <>
-                                <ClipboardDocumentCheckIcon className="w-5 h-5 text-green-600" />
-                                <span className="text-green-600">Link copied!</span>
+                                <ClipboardDocumentCheckIcon className="w-5 h-5 text-brand-600" />
+                                <span className="text-brand-600">Link copied!</span>
                             </>
                         ) : (
                             <>
@@ -264,7 +264,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                             <button
                                 key={platform.id}
                                 onClick={() => handlePlatformShare(platform.id)}
-                                className={`flex flex-col items-center justify-center p-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${platform.brandColor} text-white`}
+                                className={`flex flex-col items-center justify-center p-3 rounded-lg font-medium transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${platform.brandColor} text-white`}
                                 title={`Share on ${platform.name}`}
                             >
                                 <div className="flex-shrink-0 mb-1.5">
@@ -280,7 +280,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                     {/* More Options Toggle */}
                     <button
                         onClick={() => setShowMoreOptions(!showMoreOptions)}
-                        className="w-full mt-4 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors flex items-center justify-center gap-1"
+                        className="w-full mt-4 py-2 text-sm text-gray-500 hover:text-gray-900 font-medium transition-colors flex items-center justify-center gap-1"
                     >
                         <span>{showMoreOptions ? 'Fewer' : 'More'} options</span>
                         <svg
@@ -300,7 +300,7 @@ export default function ShareModal({ isOpen, onClose, loan, customMessage }: Sha
                                 <button
                                     key={platform.id}
                                     onClick={() => handlePlatformShare(platform.id)}
-                                    className={`flex flex-col items-center justify-center p-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${platform.brandColor} text-white`}
+                                    className={`flex flex-col items-center justify-center p-3 rounded-lg font-medium transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${platform.brandColor} text-white`}
                                     title={`Share on ${platform.name}`}
                                 >
                                     <div className="flex-shrink-0 mb-1.5">

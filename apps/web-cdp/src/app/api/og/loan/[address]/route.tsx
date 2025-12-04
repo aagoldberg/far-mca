@@ -228,7 +228,7 @@ export async function GET(
                       style={{
                         width: `${progressWidth}%`,
                         height: '100%',
-                        background: 'linear-gradient(90deg, #2C7A7B 0%, #234E52 100%)',
+                        background: 'linear-gradient(90deg, #3B9B7F 0%, #2C7DA0 100%)',
                         borderRadius: '100px',
                         display: 'flex',
                       }}
@@ -246,8 +246,8 @@ export async function GET(
                     <span
                       style={{
                         fontSize: '56px',
-                        fontWeight: 700,
-                        color: '#2C7A7B',
+                        fontWeight: 800,
+                        color: '#3B9B7F',
                         lineHeight: '1',
                       }}
                     >
@@ -278,11 +278,11 @@ export async function GET(
                   <span
                     style={{
                       fontSize: '24px',
-                      color: '#2C7A7B',
+                      color: '#2C7DA0',
                       fontWeight: 600,
                     }}
                   >
-                    lendfriend · 0% interest community loans
+                    LendFriend · Community Capital for Creators
                   </span>
                 </div>
               </div>
