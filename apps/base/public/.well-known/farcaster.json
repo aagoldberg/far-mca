@@ -4,7 +4,7 @@
     "payload": "SIGN_AT_BASE_DEV",
     "signature": "SIGN_AT_BASE_DEV"
   },
-  "frame": {
+  "miniapp": {
     "version": "next",
     "name": "LendFriend",
     "subtitle": "Community lending at 0% interest",
