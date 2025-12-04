@@ -16,7 +16,7 @@
     "webhookUrl": "https://api.neynar.com/f/app/REPLACE_WITH_NEYNAR_WEBHOOK_ID/event"
   },
   "baseBuilder": {
-    "ownerAddress": "aagoldberg.base.eth"
+    "ownerAddress": "0x15d50E6D82a94294FD09E3A1880449b0569C54d2"
   },
   "triggers": [
     {
