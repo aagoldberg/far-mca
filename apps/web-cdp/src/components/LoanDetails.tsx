@@ -306,14 +306,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           {/* Main Content - Left Column */}
           <div className="lg:col-span-3">
             {/* Title Section */}
-            <div className="pb-6 border-b border-gray-200/60">
+            <div className="pb-6 border-b border-gray-200">
               <h1 className="text-[26px] md:text-[32px] font-semibold text-gray-900 leading-tight">
                 {metadata?.name || 'Loading...'}
               </h1>
             </div>
 
             {/* Borrower Card */}
-            <div className="py-6 border-b border-gray-200/60">
+            <div className="py-6 border-b border-gray-200">
               <div className="flex items-start gap-4">
                 {borrowerProfile?.pfp ? (
                   <img
@@ -351,7 +351,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
             {/* Trust Signals */}
             {loanData && (
-              <div className="py-6 border-b border-gray-200/60">
+              <div className="py-6 border-b border-gray-200">
                 <TrustSignals
                   borrowerAddress={loanData.borrower}
                   loanAddress={loanAddress}
@@ -363,7 +363,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
             {/* Borrower Actions (Repayment) */}
             {isBorrower && loanData.active && !loanData.completed && (
-              <div className="py-6 border-b border-gray-200/60">
+              <div className="py-6 border-b border-gray-200">
                 <div className="bg-blue-50 border border-blue-100 rounded-xl p-6">
                   <h3 className="text-[18px] font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -419,7 +419,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
             {/* Borrower Actions (Disburse) */}
             {isFunded && !loanData.active && isBorrower && (
-              <div className="py-6 border-b border-gray-200/60">
+              <div className="py-6 border-b border-gray-200">
                 <div className="bg-green-50 border border-green-100 rounded-xl p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
@@ -445,7 +445,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
             {/* Refund Action */}
             {refundAvailable && (
-              <div className="py-6 border-b border-gray-200/60">
+              <div className="py-6 border-b border-gray-200">
                 <div className="bg-orange-50 border border-orange-100 rounded-xl p-6">
                   <h3 className="text-[18px] font-semibold text-gray-900 mb-2">Refund Available</h3>
                   <p className="text-[14px] text-gray-600 mb-4">This loan did not reach its goal. You can claim a full refund.</p>
@@ -461,7 +461,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             )}
 
             {/* About the Business */}
-            <div className="py-6 border-b border-gray-200/60">
+            <div className="py-6 border-b border-gray-200">
               <h2 className="text-[16px] font-medium text-gray-900 mb-3">About the Business</h2>
               {metadata?.loanDetails?.aboutYou || metadata?.description ? (
                 <ExpandableText text={metadata?.loanDetails?.aboutYou || metadata?.description || ''} />
@@ -484,7 +484,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
 
             {/* Use of Funds */}
-            <div className="py-6 border-b border-gray-200/60">
+            <div className="py-6 border-b border-gray-200">
               <h2 className="text-[16px] font-medium text-gray-900 mb-3">Use of Funds</h2>
               {metadata?.loanDetails?.loanUseAndImpact ? (
                 <ExpandableText text={metadata.loanDetails.loanUseAndImpact} />
@@ -494,7 +494,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
 
             {/* Loan Updates */}
-            <div className="py-6 border-b border-gray-200/60">
+            <div className="py-6 border-b border-gray-200">
               <LoanUpdates loanAddress={loanAddress} />
             </div>
 
@@ -565,7 +565,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                   </div>
 
                   {/* Progress Bar */}
-                  <div className="relative w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="relative w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div
                       className="absolute top-0 left-0 h-full bg-brand-500 rounded-full transition-all duration-700 ease-out"
                       style={{ width: `${Math.min(progressPercentage, 100)}%` }}
@@ -593,7 +593,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
                   <button
                     onClick={() => setIsShareModalOpen(true)}
-                    className="block w-full text-center px-6 py-3.5 bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-full transition-all active:scale-[0.98]"
+                    className="block w-full text-center px-6 py-3.5 bg-white border border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 font-semibold rounded-full transition-all active:scale-[0.98]"
                   >
                     Share
                   </button>
@@ -612,7 +612,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
                 {/* Recent Contributors */}
                 {contributors && contributors.length > 0 && (
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-4 border-t border-gray-200">
                     <h3 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Recent Supporters</h3>
                     <div className="space-y-0 max-h-48 overflow-y-auto">
                       {contributors.map((contributorAddress) => (
