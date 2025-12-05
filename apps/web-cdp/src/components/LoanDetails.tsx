@@ -436,7 +436,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           {/* About the Business */}
           <div className="py-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">About the Business</h2>
-            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg">
+            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg max-w-3xl">
               {metadata?.loanDetails?.aboutYou || metadata?.description || (
                 <span className="text-gray-400 italic">No information provided</span>
               )}
@@ -461,7 +461,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           {/* Use of Funds */}
           <div className="py-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Use of Funds</h2>
-            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg">
+            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg max-w-3xl">
               {metadata?.loanDetails?.loanUseAndImpact || (
                 <span className="text-gray-400 italic">No plan provided</span>
               )}
