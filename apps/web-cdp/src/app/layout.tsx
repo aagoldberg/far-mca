@@ -46,7 +46,7 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable}`}>
       <body>
         <Providers>
-          <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F0F4F3' }}>
+          <div className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-grow">{children}</main>
             <Footer />

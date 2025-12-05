@@ -259,6 +259,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Main content */}
         <div className="lg:col-span-2">
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
 
           {/* Loan Image */}
           {(metadata?.imageUrl || metadata?.image) && (
@@ -490,8 +491,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
 
           {/* Loan Updates */}
-          <div className="mb-8">
+          <div className="mb-0">
             <LoanUpdates loanAddress={loanAddress} />
+          </div>
           </div>
 
         </div>
