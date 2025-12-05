@@ -256,7 +256,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       </Link>
 
       {/* Grid layout with main content and sticky sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main content */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl border border-gray-200 p-0 shadow-sm overflow-hidden">
@@ -277,10 +277,10 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
           )}
 
-          <div className="p-6">
+          <div className="p-5">
           {/* Title and Borrower */}
-          <div className="pb-6 border-b border-gray-200 mb-6">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
+          <div className="pb-5 border-b border-gray-200 mb-5">
+            <div className="flex flex-wrap items-center gap-3 mb-3">
               {loanData.completed ? (
                 <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold uppercase tracking-wide">
                   Completed
@@ -423,7 +423,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
           {/* Trust & Verification */}
           {loanData && (
-            <div className="py-6 border-b border-gray-200">
+            <div className="py-5 border-b border-gray-200">
               <TrustSignals
                 borrowerAddress={loanData.borrower}
                 loanAddress={loanAddress}
@@ -434,15 +434,15 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           )}
 
           {/* About the Business */}
-          <div className="py-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">About the Business</h2>
-            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-base max-w-3xl">
+          <div className="py-5 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">About the Business</h2>
+            <div className="text-gray-600 whitespace-pre-wrap leading-normal text-base max-w-3xl">
               {metadata?.loanDetails?.aboutYou || metadata?.description || (
                 <span className="text-gray-400 italic">No information provided</span>
               )}
             </div>
             {metadata?.loanDetails?.businessWebsite && (
-              <div className="mt-4">
+              <div className="mt-3">
                 <a
                   href={metadata.loanDetails.businessWebsite}
                   target="_blank"
@@ -459,9 +459,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
 
           {/* Use of Funds */}
-          <div className="py-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Use of Funds</h2>
-            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-base max-w-3xl">
+          <div className="py-5 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">Use of Funds</h2>
+            <div className="text-gray-600 whitespace-pre-wrap leading-normal text-base max-w-3xl">
               {metadata?.loanDetails?.loanUseAndImpact || (
                 <span className="text-gray-400 italic">No plan provided</span>
               )}
@@ -469,8 +469,8 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
 
           {/* Loan Terms */}
-          <div className="py-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Repayment Details</h2>
+          <div className="py-5 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">Repayment Details</h2>
             <div className="grid grid-cols-2 gap-y-4 gap-x-12">
               <div>
                 <div className="text-sm text-gray-500 mb-1">Interest Rate</div>
@@ -502,7 +502,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
         {/* Sticky Sidebar (Desktop Only) */}
         <div className="hidden lg:block">
-          <div className="sticky top-28">
+          <div className="sticky top-24">
             <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-[0_6px_16px_rgba(0,0,0,0.12)]">
               {/* Progress Section */}
               <div className="mb-6">
