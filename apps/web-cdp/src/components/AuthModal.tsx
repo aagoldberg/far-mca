@@ -111,7 +111,7 @@ export function AuthModal() {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-200 p-6 z-[300]">
+        <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 p-6 z-[300]">
           {/* Header */}
           <div className="mb-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-1.5 text-center">
