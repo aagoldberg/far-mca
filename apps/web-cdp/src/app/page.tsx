@@ -100,16 +100,13 @@ export default function Home() {
       </div>
 
       {/* Active Loans Section */}
-      <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2">Community Businesses</h2>
-            <p className="text-base text-stone-600">Support viable businesses in your network.</p>
-          </div>
-          <Link href="/search" className="group text-brand-600 font-bold hover:text-brand-700 inline-flex items-center gap-1 text-base transition-colors">
-            View all requests
-            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      <div id="loans" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-5 gap-3">
+          <h2 className="text-[22px] font-semibold text-stone-900">Community Businesses</h2>
+          <Link href="/search" className="group text-[14px] text-stone-600 hover:text-stone-900 inline-flex items-center gap-1 transition-colors">
+            Show all
+            <svg className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
         </div>
@@ -117,9 +114,9 @@ export default function Home() {
       </div>
 
       {/* How It Works (New Strategy) */}
-      <div id="how-it-works" className="bg-white py-24 border-y border-stone-100">
+      <div id="how-it-works" className="bg-white py-20 border-y border-stone-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
+          <div className="text-center mb-16">
             <span className="text-secondary-600 font-bold tracking-wider uppercase text-sm">The Journey</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-stone-900 mt-3 mb-4">
               How We Grow Together
@@ -129,54 +126,54 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12 relative">
+          <div className="grid md:grid-cols-3 gap-10 relative">
             {/* Connector Line (Desktop) */}
-            <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-1 bg-gradient-to-r from-brand-100 via-secondary-100 to-brand-100 z-0 rounded-full" />
+            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-1 bg-gradient-to-r from-brand-100 via-secondary-100 to-brand-100 z-0 rounded-full" />
 
             {/* Step 1 */}
             <div className="relative z-10 flex flex-col items-center text-center group">
-              <div className="w-32 h-32 bg-white rounded-full shadow-xl shadow-brand-500/10 border-4 border-white ring-1 ring-stone-100 flex items-center justify-center mb-8 group-hover:scale-105 transition-all duration-300">
-                <div className="text-brand-600 bg-brand-50 p-4 rounded-full">
+              <div className="w-24 h-24 bg-white rounded-full shadow-xl shadow-brand-500/10 border-4 border-white ring-1 ring-stone-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-all duration-300">
+                <div className="text-brand-600 bg-brand-50 p-3 rounded-full">
                   {/* Icon: Data Connection */}
-                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-stone-900 mb-3">1. Prove Your Potential</h3>
-              <p className="text-base text-stone-600 leading-relaxed">
+              <h3 className="text-lg font-bold text-stone-900 mb-2">1. Prove Your Potential</h3>
+              <p className="text-sm text-stone-600 leading-relaxed">
                 Link your Shopify, Stripe, or Square account. We verify your revenue so your community knows you're the real deal.
               </p>
             </div>
 
             {/* Step 2 */}
             <div className="relative z-10 flex flex-col items-center text-center group">
-              <div className="w-32 h-32 bg-white rounded-full shadow-xl shadow-secondary-500/10 border-4 border-white ring-1 ring-stone-100 flex items-center justify-center mb-8 group-hover:scale-105 transition-all duration-300">
-                <div className="text-secondary-600 bg-secondary-50 p-4 rounded-full">
+              <div className="w-24 h-24 bg-white rounded-full shadow-xl shadow-secondary-500/10 border-4 border-white ring-1 ring-stone-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-all duration-300">
+                <div className="text-secondary-600 bg-secondary-50 p-3 rounded-full">
                   {/* Icon: Network/Share */}
-                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-stone-900 mb-3">2. Share Your Story</h3>
-              <p className="text-base text-stone-600 leading-relaxed">
+              <h3 className="text-lg font-bold text-stone-900 mb-2">2. Share Your Story</h3>
+              <p className="text-sm text-stone-600 leading-relaxed">
                 Share your verified request. Friends and believers lend with confidence, knowing you have a viable business.
               </p>
             </div>
 
             {/* Step 3 */}
             <div className="relative z-10 flex flex-col items-center text-center group">
-              <div className="w-32 h-32 bg-white rounded-full shadow-xl shadow-brand-500/10 border-4 border-white ring-1 ring-stone-100 flex items-center justify-center mb-8 group-hover:scale-105 transition-all duration-300">
-                <div className="text-brand-600 bg-brand-50 p-4 rounded-full">
+              <div className="w-24 h-24 bg-white rounded-full shadow-xl shadow-brand-500/10 border-4 border-white ring-1 ring-stone-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-all duration-300">
+                <div className="text-brand-600 bg-brand-50 p-3 rounded-full">
                   {/* Icon: Growth/Arrow */}
-                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-stone-900 mb-3">3. Repay & Rise</h3>
-              <p className="text-base text-stone-600 leading-relaxed">
+              <h3 className="text-lg font-bold text-stone-900 mb-2">3. Repay & Rise</h3>
+              <p className="text-sm text-stone-600 leading-relaxed">
                 Use funds to grow. As your revenue climbs, you pay back the loan at 0% interest—strengthening your reputation for next time.
               </p>
             </div>
@@ -185,9 +182,9 @@ export default function Home() {
       </div>
 
       {/* Comparison Section */}
-      <div className="py-24 bg-stone-50">
+      <div className="py-20 bg-stone-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-extrabold text-stone-900">
               Banking on Character, Not Just Credit
             </h2>
@@ -269,16 +266,16 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="relative py-24 overflow-hidden">
+      <div className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-brand-900" />
         <div className="absolute inset-0 bg-gradient-to-br from-brand-800 to-secondary-900 opacity-90" />
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5" />
         
         <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Believe in your business? <br/> So do we.
           </h2>
-          <p className="text-stone-200 text-xl md:text-2xl mb-12 font-light leading-relaxed">
+          <p className="text-stone-200 text-xl md:text-2xl mb-10 font-light leading-relaxed">
             Join the community where reputation and revenue build your future.
           </p>
           <Link

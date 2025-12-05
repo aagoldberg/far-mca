@@ -188,7 +188,7 @@ const LoanList = () => {
   return (
     <div>
       {/* Filter Toggle */}
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-4">
         <input
           type="checkbox"
           id="showInactive"
@@ -196,8 +196,8 @@ const LoanList = () => {
           onChange={(e) => setShowInactive(e.target.checked)}
           className="w-4 h-4 text-brand-500 bg-gray-100 border-gray-300 rounded focus:ring-brand-500 focus:ring-2"
         />
-        <label htmlFor="showInactive" className="text-sm font-medium text-gray-700 cursor-pointer select-none">
-          Show inactive loans
+        <label htmlFor="showInactive" className="text-[13px] text-gray-500 cursor-pointer select-none">
+          Show inactive
         </label>
       </div>
 

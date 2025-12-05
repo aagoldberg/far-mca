@@ -202,7 +202,7 @@ export function LoanCard({
         )}
 
       {imageUrl && (
-        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '75%' }}>
+        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '66%' }}>
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
@@ -231,46 +231,27 @@ export function LoanCard({
         </div>
       )}
 
-      <div className="p-4 sm:p-5">
+      <div className="p-4">
         {/* Title */}
-        <div className="flex items-start justify-between gap-3 mb-4 min-h-[63px] sm:min-h-[72px]">
-          <h3 className="text-sm sm:text-base font-medium text-gray-900 line-clamp-3 flex-1 min-w-0 group-hover:text-[#2E7D68] transition-colors duration-200">
-            {name || 'Untitled Loan'}
-          </h3>
-        </div>
+        <h3 className="text-[15px] font-medium text-gray-900 line-clamp-2 mb-3 group-hover:text-[#2E7D68] transition-colors duration-200">
+          {name || 'Untitled Loan'}
+        </h3>
 
-        <div className="mb-3">
-          {/* Enhanced progress bar with gradient */}
-          <div className="relative w-full bg-gray-100 rounded-full h-2.5 sm:h-3 mb-2.5 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200" />
+        {/* Progress bar */}
+        <div className="mb-2">
+          <div className="relative w-full bg-gray-200 rounded-full h-2 overflow-hidden">
             <div
-              className="relative h-full rounded-full transition-all duration-500 bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] shadow-sm"
+              className="h-full rounded-full bg-[#3B9B7F]"
               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-            >
-              {/* Shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-            </div>
-          </div>
-          <div className="flex justify-between items-center text-xs sm:text-sm">
-            <span className="font-bold text-gray-900 bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] bg-clip-text text-transparent">
-              ${formatUSDC(totalFunded)} raised
-            </span>
-            <span className="text-gray-500 font-medium">
-              of ${formatUSDC(principal)}
-            </span>
+            />
           </div>
         </div>
 
-        {/* View details link */}
-        <div className="pt-3 border-t border-gray-100">
-          <span className="text-sm text-[#3B9B7F] font-medium group-hover:text-[#2E7D68] transition-colors flex items-center gap-1">
-            View details
-            <svg className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+        {/* Funding info */}
+        <div className="flex items-baseline gap-1 text-[14px]">
+          <span className="font-semibold text-gray-900">${formatUSDC(totalFunded)}</span>
+          <span className="text-gray-500">raised of ${formatUSDC(principal)}</span>
         </div>
-
       </div>
       </div>
     </Link>
