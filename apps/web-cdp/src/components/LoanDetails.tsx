@@ -256,13 +256,13 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       </Link>
 
       {/* Grid layout with main content and sticky sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Main content */}
         <div className="lg:col-span-2">
 
           {/* Loan Image */}
           {(metadata?.imageUrl || metadata?.image) && (
-            <div className="relative w-full rounded-3xl overflow-hidden mb-8 bg-gray-50 shadow-sm border border-gray-100" style={{ paddingBottom: '56.25%' }}>
+            <div className="relative w-full rounded-xl overflow-hidden mb-8 bg-gray-50" style={{ paddingBottom: '56.25%' }}>
               <img
                 src={(() => {
                   const imageSource = metadata.imageUrl || metadata.image || '';
@@ -277,7 +277,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           )}
 
           {/* Title and Borrower */}
-          <div className="mb-8">
+          <div className="pb-8 border-b border-gray-200 mb-8">
             <div className="flex flex-wrap items-center gap-3 mb-4">
               {loanData.completed ? (
                 <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold uppercase tracking-wide">
@@ -298,7 +298,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               ) : null}
             </div>
             
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-3xl font-semibold text-gray-900 mb-6 leading-tight">
               {metadata?.name || 'Loading...'}
             </h1>
 
@@ -308,22 +308,19 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 <img
                   src={borrowerProfile.pfp}
                   alt={borrowerProfile.displayName || borrowerProfile.username || 'Borrower'}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                  className="w-14 h-14 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center text-gray-500 font-bold text-sm">
+                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-lg">
                   {loanData.borrower.slice(2, 4).toUpperCase()}
                 </div>
               )}
               <div>
-                <div className="text-sm text-gray-500 font-medium">Organized by</div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-gray-900 text-lg">
-                    {borrowerProfile?.displayName || borrowerProfile?.username || `${loanData.borrower.slice(0, 6)}...${loanData.borrower.slice(-4)}`}
-                  </span>
-                  {isBorrower && (
-                    <span className="text-xs bg-secondary-100 text-secondary-800 px-2 py-0.5 rounded font-bold">You</span>
-                  )}
+                <div className="text-base font-semibold text-gray-900">
+                  Organized by {borrowerProfile?.displayName || borrowerProfile?.username || `${loanData.borrower.slice(0, 6)}...${loanData.borrower.slice(-4)}`}
+                </div>
+                <div className="text-sm text-gray-500">
+                  {isBorrower ? 'You' : 'Borrower on LendFriend'}
                 </div>
               </div>
             </div>
@@ -424,7 +421,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
           {/* Trust & Verification */}
           {loanData && (
-            <div className="mb-8">
+            <div className="py-8 border-b border-gray-200">
               <TrustSignals
                 borrowerAddress={loanData.borrower}
                 loanAddress={loanAddress}
@@ -434,67 +431,60 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
           )}
 
-          {/* About the Borrower */}
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">About the Business</h2>
-            <div className="bg-white border border-gray-200 rounded-2xl p-6">
-              <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-base">
-                {metadata?.loanDetails?.aboutYou || metadata?.description || (
-                  <span className="text-gray-400 italic">No information provided</span>
-                )}
-              </p>
-              {metadata?.loanDetails?.businessWebsite && (
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <a
-                    href={metadata.loanDetails.businessWebsite}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm font-bold text-gray-700 transition-colors border border-gray-200"
-                  >
-                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
-                    Visit Website
-                  </a>
-                </div>
+          {/* About the Business */}
+          <div className="py-8 border-b border-gray-200">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">About the Business</h2>
+            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg">
+              {metadata?.loanDetails?.aboutYou || metadata?.description || (
+                <span className="text-gray-400 italic">No information provided</span>
+              )}
+            </div>
+            {metadata?.loanDetails?.businessWebsite && (
+              <div className="mt-6">
+                <a
+                  href={metadata.loanDetails.businessWebsite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-gray-900 font-semibold underline hover:text-gray-700"
+                >
+                  Visit Website
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* Use of Funds */}
+          <div className="py-8 border-b border-gray-200">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Use of Funds</h2>
+            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg">
+              {metadata?.loanDetails?.loanUseAndImpact || (
+                <span className="text-gray-400 italic">No plan provided</span>
               )}
             </div>
           </div>
 
-          {/* How I'll Use This Loan */}
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Use of Funds</h2>
-            <div className="bg-white border border-gray-200 rounded-2xl p-6">
-              <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-base">
-                {metadata?.loanDetails?.loanUseAndImpact || (
-                  <span className="text-gray-400 italic">No plan provided</span>
-                )}
-              </p>
-            </div>
-          </div>
-
           {/* Loan Terms */}
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Repayment Details</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Interest</p>
-                <p className="text-xl font-bold text-brand-600">0%</p>
+          <div className="py-8 border-b border-gray-200">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Repayment Details</h2>
+            <div className="grid grid-cols-2 gap-y-6 gap-x-12">
+              <div>
+                <div className="text-sm text-gray-500 mb-1">Interest Rate</div>
+                <div className="text-lg font-semibold text-gray-900">0%</div>
               </div>
-
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Repayment</p>
-                <p className="text-xl font-bold text-gray-900">1.0x</p>
+              <div>
+                <div className="text-sm text-gray-500 mb-1">Repayment Multiplier</div>
+                <div className="text-lg font-semibold text-gray-900">1.0x</div>
               </div>
-
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Maturity</p>
-                <p className="text-lg font-bold text-gray-900">{formatDate(loanData.dueAt)}</p>
+              <div>
+                <div className="text-sm text-gray-500 mb-1">Maturity Date</div>
+                <div className="text-lg font-semibold text-gray-900">{formatDate(loanData.dueAt)}</div>
               </div>
-
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Deadline</p>
-                <p className="text-lg font-bold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</p>
+              <div>
+                <div className="text-sm text-gray-500 mb-1">Fundraising Deadline</div>
+                <div className="text-lg font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</div>
               </div>
             </div>
           </div>
@@ -508,8 +498,8 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
         {/* Sticky Sidebar (Desktop Only) */}
         <div className="hidden lg:block">
-          <div className="sticky top-24">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xl shadow-gray-100">
+          <div className="sticky top-28">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-[0_6px_16px_rgba(0,0,0,0.12)]">
               {/* Progress Section */}
               <div className="mb-6">
                 <div className="flex items-baseline gap-1 mb-2">
