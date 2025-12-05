@@ -126,7 +126,7 @@ export function AuthModal() {
 
           {/* Content */}
           {showEmailInput ? (
-            <div className="space-y-3">
+            <div className="space-y-3 max-w-xs mx-auto">
               <form onSubmit={handleEmailSignIn} className="space-y-3">
                 <input
                   type="email"
@@ -151,7 +151,7 @@ export function AuthModal() {
               </button>
             </div>
           ) : showPhoneInput ? (
-            <div className="space-y-3">
+            <div className="space-y-3 max-w-xs mx-auto">
               <form onSubmit={handleSmsSignIn} className="space-y-3">
                 <input
                   type="tel"
@@ -177,7 +177,7 @@ export function AuthModal() {
               </button>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3 max-w-xs mx-auto">
               {/* Wallet Connection Section */}
               <div className="space-y-2">
                 <button
