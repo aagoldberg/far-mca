@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLoans, useLoanData } from './useMicroLoan';
 import { fetchFromIPFS, ipfsToHttp } from '@/lib/ipfs';
 
@@ -41,20 +41,33 @@ export function useLoansWithMetadata() {
   const { loanAddresses, isLoading: isLoadingAddresses, error } = useLoans();
   const [loansWithMetadata, setLoansWithMetadata] = useState<LoanWithMetadata[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const prevAddressesRef = useRef<string>('');
+  const hasLoadedRef = useRef(false);
+
+  // Stringify addresses to create a stable dependency
+  const addressesKey = loanAddresses ? loanAddresses.join(',') : '';
 
   useEffect(() => {
+    // Skip if addresses haven't changed and we've already loaded
+    if (prevAddressesRef.current === addressesKey && hasLoadedRef.current) {
+      return;
+    }
+    prevAddressesRef.current = addressesKey;
+
     // If there's an error fetching loans, treat it as no loans available
     // This handles cases where the contract hasn't been deployed or network issues
     if (error) {
       console.warn('[useLoansWithMetadata] Error fetching loan addresses:', error);
       setLoansWithMetadata([]);
       setIsLoading(false);
+      hasLoadedRef.current = true;
       return;
     }
 
     if (!loanAddresses || loanAddresses.length === 0) {
       setLoansWithMetadata([]);
       setIsLoading(false);
+      hasLoadedRef.current = true;
       return;
     }
 
@@ -68,6 +81,7 @@ export function useLoansWithMetadata() {
 
         const loans = await Promise.all(loansPromises);
         setLoansWithMetadata(loans);
+        hasLoadedRef.current = true;
       } catch (err) {
         console.error('Error fetching loans:', err);
       } finally {
@@ -76,7 +90,7 @@ export function useLoansWithMetadata() {
     };
 
     fetchLoansData();
-  }, [loanAddresses, error]);
+  }, [addressesKey, error, loanAddresses]);
 
   return {
     loans: loansWithMetadata,

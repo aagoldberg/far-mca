@@ -1090,27 +1090,13 @@ export default function LoanCreationWizard() {
                     );
                   })()
                 ) : (
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (!address) return;
-                      try {
-                        const response = await fetch(
-                          `/api/stripe/auth?wallet=${encodeURIComponent(address)}`
-                        );
-                        const data = await response.json();
-                        if (response.ok) window.location.href = data.authUrl;
-                      } catch (error) {
-                        console.error('Stripe connection error:', error);
-                      }
-                    }}
-                    className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                  >
+                  <div className="w-full border border-gray-200 rounded-lg p-4 bg-gray-50 opacity-60 cursor-not-allowed">
                     <div className="flex items-center gap-3">
-                      <CreditCardIcon className="h-6 w-6 text-gray-700" />
-                      <span className="text-base font-medium text-gray-900">Stripe</span>
+                      <CreditCardIcon className="h-6 w-6 text-gray-400" />
+                      <span className="text-base font-medium text-gray-500">Stripe</span>
+                      <span className="ml-auto text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-medium">Coming Soon</span>
                     </div>
-                  </button>
+                  </div>
                 )}
 
                 {/* Square Platform Card */}
@@ -1156,29 +1142,13 @@ export default function LoanCreationWizard() {
                     );
                   })()
                 ) : (
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (!address) return;
-                      try {
-                        const params = new URLSearchParams({
-                          wallet: address,
-                          ...(draftId && { draft: draftId }),
-                        });
-                        const response = await fetch(`/api/square/auth?${params.toString()}`);
-                        const data = await response.json();
-                        if (response.ok) window.location.href = data.authUrl;
-                      } catch (error) {
-                        console.error('Square connection error:', error);
-                      }
-                    }}
-                    className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                  >
+                  <div className="w-full border border-gray-200 rounded-lg p-4 bg-gray-50 opacity-60 cursor-not-allowed">
                     <div className="flex items-center gap-3">
-                      <BuildingStorefrontIcon className="h-6 w-6 text-gray-700" />
-                      <span className="text-base font-medium text-gray-900">Square</span>
+                      <BuildingStorefrontIcon className="h-6 w-6 text-gray-400" />
+                      <span className="text-base font-medium text-gray-500">Square</span>
+                      <span className="ml-auto text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-medium">Coming Soon</span>
                     </div>
-                  </button>
+                  </div>
                 )}
               </div>
 

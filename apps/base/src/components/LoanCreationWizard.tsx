@@ -597,7 +597,7 @@ export default function LoanCreationWizard() {
         case 'twitter':
           url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTextWithPurpose)}&url=${encodeURIComponent(shareUrl)}&hashtags=DeFi,MicroLoans,Base`;
           break;
-        case 'warpcast':
+        case 'farcaster': // Changed from 'warpcast' to 'farcaster'
           url = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareTextWithPurpose + '\n\n' + shareUrl)}`;
           break;
         case 'telegram':
@@ -616,13 +616,14 @@ export default function LoanCreationWizard() {
           break;
         case 'copy':
           navigator.clipboard.writeText(shareUrl);
-          // Simple visual feedback - change button text temporarily
-          const copyBtn = event.currentTarget as HTMLButtonElement;
-          const originalText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '✓ Copied!';
-          setTimeout(() => {
-            copyBtn.innerHTML = originalText;
-          }, 2000);
+          const copyBtn = event?.currentTarget as HTMLButtonElement;
+          if (copyBtn) {
+              const originalText = copyBtn.innerHTML;
+              copyBtn.innerHTML = '✓ Copied!';
+              setTimeout(() => {
+                  copyBtn.innerHTML = originalText;
+              }, 2000);
+          }
           return;
       }
       if (url) window.open(url, '_blank', 'width=600,height=400');
@@ -630,40 +631,42 @@ export default function LoanCreationWizard() {
 
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 shadow-lg">
-          <div className="w-20 h-20 bg-gradient-to-br from-[#2C7A7B] to-[#234E52] rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm"> {/* Changed background */}
+          <div className="w-20 h-20 bg-base-blue rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg"> {/* Changed background */}
             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Loan Created!</h2>
-          <p className="text-gray-700 mb-2 text-lg">Your loan is live and accepting contributions</p>
-          <p className="text-xs text-gray-500 mb-8 font-mono bg-white/50 rounded px-3 py-2 inline-block">
+          <h2 className="text-3xl font-extrabold text-base-black mb-2">Loan Created!</h2> {/* Changed text color */}
+          <p className="text-gray-600 mb-2 text-lg">Your loan is live and accepting contributions</p>
+          <p className="text-xs text-gray-500 mb-8 font-mono bg-gray-50 rounded px-3 py-2 inline-block border border-gray-200"> {/* Changed background and added border */}
             {hash.slice(0, 10)}...{hash.slice(-8)}
           </p>
 
-          <div className="bg-white rounded-xl p-6 mb-6 border-2 border-[#2C7A7B]/30 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Share Your Loan</h3>
+          <div className="bg-gray-50 rounded-xl p-6 mb-6 border border-gray-200 shadow-inner"> {/* Changed background and border */}
+            <h3 className="text-xl font-bold text-base-black mb-4 text-center">Share Your Loan</h3> {/* Changed text color */}
 
             {/* Primary sharing options */}
             <div className="grid grid-cols-2 gap-3 mb-4">
               <button
                 onClick={() => handleShare('twitter')}
-                className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+                className="flex items-center justify-center gap-2 bg-black hover:opacity-90 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
-                X/Twitter
+                <span>X/Twitter</span>
               </button>
               <button
-                onClick={() => handleShare('warpcast')}
-                className="flex items-center justify-center gap-2 bg-[#8A63D2] hover:bg-[#7952C1] text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+                onClick={() => handleShare('farcaster')}
+                className="flex items-center justify-center gap-2 bg-[#855DCD] hover:opacity-90 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                <svg className="w-6 h-6" viewBox="0 0 1000 1000" fill="currentColor">
+                    <path d="M257.778 155.556H742.222V844.444H671.111V528.889H670.414C662.554 441.677 589.258 373.333 500 373.333C410.742 373.333 337.446 441.677 329.586 528.889H328.889V844.444H257.778V155.556Z"/>
+                    <path d="M128.889 253.333L157.778 351.111H182.222V746.667C169.949 746.667 160 756.616 160 768.889V795.556H155.556C143.283 795.556 133.333 805.505 133.333 817.778V844.444H382.222V817.778C382.222 805.505 372.273 795.556 360 795.556H355.556V768.889C355.556 756.616 345.606 746.667 333.333 746.667H306.667V253.333H128.889Z"/>
+                    <path d="M675.555 746.667C663.282 746.667 653.333 756.616 653.333 768.889V795.556H648.889C636.616 795.556 626.667 805.505 626.667 817.778V844.444H875.555V817.778C875.555 805.505 865.606 795.556 853.333 795.556H848.889V768.889C848.889 756.616 838.94 746.667 826.667 746.667V351.111H851.111L880 253.333H702.222V746.667H675.555Z"/>
                 </svg>
-                Warpcast
+                <span>Farcaster</span>
               </button>
             </div>
 
@@ -671,30 +674,30 @@ export default function LoanCreationWizard() {
             <div className="grid grid-cols-3 gap-2 mb-4">
               <button
                 onClick={() => handleShare('telegram')}
-                className="flex flex-col items-center justify-center gap-1 p-3 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-lg transition-colors"
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl transition-colors"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.828.941z"/>
+                <svg className="w-6 h-6 text-[#0088CC]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                 </svg>
-                <span className="text-xs">Telegram</span>
+                <span className="text-xs text-gray-700">Telegram</span>
               </button>
               <button
                 onClick={() => handleShare('whatsapp')}
-                className="flex flex-col items-center justify-center gap-1 p-3 bg-[#25D366] hover:bg-[#20BD5C] text-white rounded-lg transition-colors"
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl transition-colors"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.062 18.062c-.773.773-1.66 1.385-2.636 1.819a8.902 8.902 0 01-3.426.657c-1.458 0-2.873-.354-4.149-1.017l-4.576 1.204 1.225-4.478a8.849 8.849 0 01-1.125-4.247c0-1.187.231-2.346.687-3.426.434-.976 1.046-1.863 1.819-2.636a8.902 8.902 0 012.636-1.819A8.76 8.76 0 0112 3.375a8.76 8.76 0 013.426.687 8.902 8.902 0 012.636 1.819 8.902 8.902 0 011.819 2.636A8.76 8.76 0 0120.625 12a8.76 8.76 0 01-.687 3.426 8.902 8.902 0 01-1.876 2.636zm-2.144-6.391c-.196-.098-1.161-.573-1.343-.638-.181-.065-.313-.098-.446.098-.133.196-.514.638-.629.773-.116.133-.231.15-.428.049-.196-.098-.831-.306-1.583-.975-.585-.522-1.981-1.297-.227-1.873.196-.065.349-.098.524-.295.175-.196.386-.514.579-.773.196-.261.261-.446.392-.744.131-.295.065-.556-.032-.779-.098-.223-.446-1.074-.609-1.47-.163-.392-.327-.34-.446-.347-.115-.007-.247-.007-.38-.007-.133 0-.349.049-.532.246-.181.196-.693.677-.693 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.419.475.146.906.126 1.248.077.38-.058 1.171-.48 1.338-.942.164-.464.164-.86.114-.942-.049-.084-.181-.133-.38-.232z"/>
+                <svg className="w-6 h-6 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
                 </svg>
-                <span className="text-xs">WhatsApp</span>
+                <span className="text-xs text-gray-700">WhatsApp</span>
               </button>
               <button
                 onClick={() => handleShare('linkedin')}
-                className="flex flex-col items-center justify-center gap-1 p-3 bg-[#0077B5] hover:bg-[#006399] text-white rounded-lg transition-colors"
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl transition-colors"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-[#0077B5]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
-                <span className="text-xs">LinkedIn</span>
+                <span className="text-xs text-gray-700">LinkedIn</span>
               </button>
             </div>
 
@@ -702,7 +705,7 @@ export default function LoanCreationWizard() {
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => handleShare('email')}
-                className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-3 rounded-lg transition-colors"
+                className="flex items-center justify-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-3 rounded-xl transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -710,8 +713,8 @@ export default function LoanCreationWizard() {
                 Email
               </button>
               <button
-                onClick={() => handleShare('copy')}
-                className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-3 rounded-lg transition-colors"
+                onClick={(e) => handleShare('copy', e)}
+                className="flex items-center justify-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-3 rounded-xl transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -723,7 +726,7 @@ export default function LoanCreationWizard() {
 
           <button
             onClick={() => router.push('/')}
-            className="block w-full bg-[#2C7A7B] hover:bg-[#234E52] text-white font-bold py-4 px-6 rounded-xl"
+            className="block w-full bg-base-blue hover:opacity-90 text-white font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98]"
           >
             View All Loans
           </button>
@@ -750,9 +753,9 @@ export default function LoanCreationWizard() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <BackButton />
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Connecting Wallet...</h2>
+        <div className="bg-base-gray border border-gray-200 rounded-2xl p-6 text-center"> {/* Updated colors */}
+          <div className="animate-spin h-8 w-8 border-4 border-base-blue border-t-transparent rounded-full mx-auto mb-4"></div> {/* Updated colors */}
+          <h2 className="text-xl font-bold text-base-black mb-2">Connecting Wallet...</h2> {/* Updated colors */}
         </div>
       </div>
     );
@@ -762,8 +765,8 @@ export default function LoanCreationWizard() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <BackButton />
-        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Wallet Not Connected</h2>
+        <div className="bg-base-gray border border-gray-200 rounded-2xl p-6 text-center"> {/* Updated colors */}
+          <h2 className="text-xl font-bold text-base-black mb-2">Wallet Not Connected</h2> {/* Updated colors */}
           <p className="text-gray-600 mb-4">Please connect your wallet to create a loan request</p>
           <p className="text-sm text-gray-500">Open this app in Warpcast to get started</p>
         </div>
@@ -776,13 +779,13 @@ export default function LoanCreationWizard() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <BackButton />
-        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
-          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="bg-base-gray border border-gray-200 rounded-2xl p-6 text-center"> {/* Updated colors */}
+          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"> {/* Kept gray-100 for neutral icon background */}
+            <svg className="w-8 h-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> {/* Kept gray-600 for neutral icon color */}
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Farcaster Profile Required</h2>
+          <h2 className="text-xl font-bold text-base-black mb-2">Farcaster Profile Required</h2> {/* Updated colors */}
           <p className="text-gray-600 mb-4">
             To request funding, you need a verified Farcaster profile. This helps build trust with lenders.
           </p>
@@ -806,7 +809,7 @@ export default function LoanCreationWizard() {
     <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
       <button
         onClick={() => router.push('/')}
-        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group"
+        className="flex items-center gap-2 text-gray-600 hover:text-base-black mb-6 transition-colors group" // Updated hover text color
       >
         <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -823,9 +826,9 @@ export default function LoanCreationWizard() {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                     currentStep === step.num
-                      ? 'bg-[#2C7A7B] text-white shadow-sm'
+                      ? 'bg-base-blue text-white shadow-sm' // Updated colors
                       : currentStep > step.num
-                      ? 'bg-[#2C7A7B] text-white'
+                      ? 'bg-base-blue text-white' // Updated colors
                       : 'bg-white border-2 border-gray-300 text-gray-400'
                   }`}
                 >
@@ -839,7 +842,7 @@ export default function LoanCreationWizard() {
                 </div>
                 <span
                   className={`text-xs mt-2 font-medium text-center max-w-[80px] ${
-                    currentStep >= step.num ? 'text-gray-900' : 'text-gray-500'
+                    currentStep >= step.num ? 'text-base-black' : 'text-gray-500' // Updated colors
                   }`}
                 >
                   {step.name}
@@ -849,7 +852,7 @@ export default function LoanCreationWizard() {
                 <div className="flex-1 px-3">
                   <div
                     className={`h-0.5 w-full transition-all ${
-                      currentStep > step.num ? 'bg-[#2C7A7B]' : 'bg-gray-200'
+                      currentStep > step.num ? 'bg-base-blue' : 'bg-gray-200' // Updated colors
                     }`}
                   />
                 </div>
@@ -864,14 +867,14 @@ export default function LoanCreationWizard() {
         {/* STEP 1: BASICS */}
         {currentStep === 1 && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">Loan Basics</h2>
+            <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200"> {/* Added border */}
+              <h2 className="text-lg font-bold text-base-black mb-1">Loan Basics</h2> {/* Updated text color */}
               <p className="text-sm text-gray-500 mb-5">Tell us about your funding needs</p>
 
               <div className="space-y-5">
                 {/* Amount */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-base-black mb-2"> {/* Updated text color */}
                     How much do you need?
                   </label>
                   <div className="relative">
@@ -884,8 +887,8 @@ export default function LoanCreationWizard() {
                       step="10"
                       min="25"
                       max="3000"
-                      className={`w-full pl-10 pr-4 py-3 border rounded-xl text-lg font-medium focus:ring-2 focus:ring-[#2C7A7B]/20 outline-none transition-all ${
-                        errors.amount ? 'border-red-300' : 'border-gray-200 focus:border-[#2C7A7B]'
+                      className={`w-full pl-10 pr-4 py-3 border rounded-xl text-lg font-medium focus:ring-2 focus:ring-base-blue/20 outline-none transition-all ${ /* Updated colors */
+                        errors.amount ? 'border-red-300' : 'border-gray-200 focus:border-base-blue' /* Updated colors */
                       }`}
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">USDC</span>
@@ -896,7 +899,7 @@ export default function LoanCreationWizard() {
 
                 {/* Repayment */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">Repayment timeline</label>
+                  <label className="block text-sm font-medium text-base-black mb-2">Repayment timeline</label> {/* Updated text color */}
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       { value: 4, label: '1 month' },
@@ -909,11 +912,11 @@ export default function LoanCreationWizard() {
                         onClick={() => handleChange('repaymentWeeks', option.value)}
                         className={`p-3 rounded-xl border-2 text-center transition-all ${
                           formData.repaymentWeeks === option.value
-                            ? 'border-[#2C7A7B] bg-[#2C7A7B]/5'
+                            ? 'border-base-blue bg-base-blue/5' // Updated colors
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
-                        <span className={`font-medium ${formData.repaymentWeeks === option.value ? 'text-[#2C7A7B]' : 'text-gray-900'}`}>
+                        <span className={`font-medium ${formData.repaymentWeeks === option.value ? 'text-base-blue' : 'text-base-black'}`}> {/* Updated colors */}
                           {option.label}
                         </span>
                       </button>
@@ -923,7 +926,7 @@ export default function LoanCreationWizard() {
 
                 {/* Loan purposes */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">What's this funding for?</label>
+                  <label className="block text-sm font-medium text-base-black mb-2">What's this funding for?</label> {/* Updated text color */}
                   <p className="text-xs text-gray-500 mb-3">Select all that apply</p>
 
                   <div className="flex flex-wrap gap-2">
@@ -939,7 +942,7 @@ export default function LoanCreationWizard() {
                         }}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                           formData.loanPurposes.includes(purpose)
-                            ? 'bg-[#2C7A7B] text-white'
+                            ? 'bg-base-blue text-white' // Updated colors
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
@@ -957,7 +960,7 @@ export default function LoanCreationWizard() {
             <button
               type="button"
               onClick={goToNextStep}
-              className="w-full py-3 bg-[#2C7A7B] text-white font-medium rounded-xl hover:bg-[#234E52] transition-colors"
+              className="w-full py-3 bg-base-blue text-white font-medium rounded-xl hover:opacity-90 transition-all active:scale-[0.98]" // Updated colors
             >
               Continue
             </button>
@@ -967,13 +970,13 @@ export default function LoanCreationWizard() {
         {/* STEP 2: CONNECT PLATFORMS */}
         {currentStep === 2 && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl shadow-sm p-5">
+            <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200"> {/* Added border */}
               <div className="flex items-center justify-between mb-1">
-                <h2 className="text-lg font-bold text-gray-900">Connect Your Business</h2>
+                <h2 className="text-lg font-bold text-base-black">Connect Your Business</h2> {/* Updated text color */}
                 <button
                   type="button"
                   onClick={() => loadCreditScore()}
-                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 text-gray-400 hover:text-base-black hover:bg-gray-100 rounded-lg transition-colors" // Updated hover text color
                   title="Refresh connection status"
                 >
                   <ArrowPathIcon className="h-4 w-4" />
@@ -989,15 +992,15 @@ export default function LoanCreationWizard() {
                   <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-xl">
                     <div className="flex items-center gap-3">
                       <ShoppingBagIcon className="h-5 w-5 text-green-600" />
-                      <span className="font-medium text-gray-900">Shopify</span>
+                      <span className="font-medium text-base-black">Shopify</span> {/* Updated text color */}
                     </div>
                     <CheckCircleIcon className="h-5 w-5 text-green-600" />
                   </div>
                 ) : showShopifyInput ? (
-                  <div className="p-4 bg-white border border-[#2C7A7B] rounded-xl space-y-3">
+                  <div className="p-4 bg-white border border-base-blue rounded-xl space-y-3"> {/* Updated border color */}
                     <div className="flex items-center gap-3">
-                      <ShoppingBagIcon className="h-5 w-5 text-[#2C7A7B]" />
-                      <span className="font-medium text-gray-900">Connect Shopify</span>
+                      <ShoppingBagIcon className="h-5 w-5 text-base-blue" /> {/* Updated text color */}
+                      <span className="font-medium text-base-black">Connect Shopify</span> {/* Updated text color */}
                     </div>
                     <div>
                       <input
@@ -1005,7 +1008,7 @@ export default function LoanCreationWizard() {
                         value={shopifyDomain}
                         onChange={(e) => setShopifyDomain(e.target.value)}
                         placeholder="yourstore.myshopify.com"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2C7A7B] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-base-blue focus:border-transparent" // Updated colors
                         autoFocus
                       />
                       <p className="text-xs text-gray-500 mt-1">Enter your Shopify store domain</p>
@@ -1017,7 +1020,7 @@ export default function LoanCreationWizard() {
                           setShowShopifyInput(false);
                           setShopifyDomain('');
                         }}
-                        className="flex-1 px-3 py-2 text-sm text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                        className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors" // Updated class structure
                       >
                         Cancel
                       </button>
@@ -1063,7 +1066,7 @@ export default function LoanCreationWizard() {
                             setConnectingPlatform(null);
                           }
                         }}
-                        className="flex-1 px-3 py-2 text-sm text-white bg-[#2C7A7B] rounded-lg hover:bg-[#234E52] transition-colors disabled:opacity-50"
+                        className="flex-1 py-3 bg-base-blue text-white font-medium rounded-xl hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-50" // Updated colors
                       >
                         {connectingPlatform === 'shopify' ? 'Connecting...' : 'Connect'}
                       </button>
@@ -1073,13 +1076,13 @@ export default function LoanCreationWizard() {
                   <button
                     type="button"
                     onClick={() => setShowShopifyInput(true)}
-                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-base-blue hover:bg-gray-50 transition-colors" // Updated colors
                   >
                     <div className="flex items-center gap-3">
                       <ShoppingBagIcon className="h-5 w-5 text-gray-600" />
-                      <span className="font-medium text-gray-900">Shopify</span>
+                      <span className="font-medium text-base-black">Shopify</span> {/* Updated text color */}
                     </div>
-                    <span className="text-sm text-[#2C7A7B]">Connect</span>
+                    <span className="text-sm text-base-blue">Connect</span> {/* Updated text color */}
                   </button>
                 )}
 
@@ -1088,7 +1091,7 @@ export default function LoanCreationWizard() {
                   <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-xl">
                     <div className="flex items-center gap-3">
                       <CreditCardIcon className="h-5 w-5 text-green-600" />
-                      <span className="font-medium text-gray-900">Stripe</span>
+                      <span className="font-medium text-base-black">Stripe</span> {/* Updated text color */}
                     </div>
                     <CheckCircleIcon className="h-5 w-5 text-green-600" />
                   </div>
@@ -1120,13 +1123,13 @@ export default function LoanCreationWizard() {
                         alert('Failed to connect to Stripe. Please try again.');
                       }
                     }}
-                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-base-blue hover:bg-gray-50 transition-colors" // Updated colors
                   >
                     <div className="flex items-center gap-3">
                       <CreditCardIcon className="h-5 w-5 text-gray-600" />
-                      <span className="font-medium text-gray-900">Stripe</span>
+                      <span className="font-medium text-base-black">Stripe</span> {/* Updated text color */}
                     </div>
-                    <span className="text-sm text-[#2C7A7B]">Connect</span>
+                    <span className="text-sm text-base-blue">Connect</span> {/* Updated text color */}
                   </button>
                 )}
 
@@ -1135,7 +1138,7 @@ export default function LoanCreationWizard() {
                   <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-xl">
                     <div className="flex items-center gap-3">
                       <BuildingStorefrontIcon className="h-5 w-5 text-green-600" />
-                      <span className="font-medium text-gray-900">Square</span>
+                      <span className="font-medium text-base-black">Square</span> {/* Updated text color */}
                     </div>
                     <CheckCircleIcon className="h-5 w-5 text-green-600" />
                   </div>
@@ -1169,21 +1172,21 @@ export default function LoanCreationWizard() {
                         alert('Failed to connect to Square. Please try again.');
                       }
                     }}
-                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-[#2C7A7B] hover:bg-gray-50 transition-colors"
+                    className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-base-blue hover:bg-gray-50 transition-colors" // Updated colors
                   >
                     <div className="flex items-center gap-3">
                       <BuildingStorefrontIcon className="h-5 w-5 text-gray-600" />
-                      <span className="font-medium text-gray-900">Square</span>
+                      <span className="font-medium text-base-black">Square</span> {/* Updated text color */}
                     </div>
-                    <span className="text-sm text-[#2C7A7B]">Connect</span>
+                    <span className="text-sm text-base-blue">Connect</span> {/* Updated text color */}
                   </button>
                 )}
               </div>
             </div>
 
             {/* Info card */}
-            <div className="bg-blue-50 rounded-xl p-4">
-              <p className="text-sm text-blue-700">
+            <div className="bg-base-gray rounded-xl p-4 border border-gray-200"> {/* Updated colors */}
+              <p className="text-sm text-gray-700"> {/* Updated text color */}
                 Connecting accounts is optional but helps lenders trust your application.
               </p>
             </div>
@@ -1193,7 +1196,7 @@ export default function LoanCreationWizard() {
               <button
                 type="button"
                 onClick={goToPreviousStep}
-                className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors active:scale-[0.98]"
               >
                 Back
               </button>
@@ -1205,7 +1208,7 @@ export default function LoanCreationWizard() {
                   }
                   goToNextStep();
                 }}
-                className="flex-1 py-3 bg-[#2C7A7B] text-white font-medium rounded-xl hover:bg-[#234E52] transition-colors"
+                className="flex-1 py-3 bg-base-blue text-white font-medium rounded-xl hover:opacity-90 transition-all active:scale-[0.98]" // Updated colors
               >
                 Continue
               </button>
@@ -1216,8 +1219,8 @@ export default function LoanCreationWizard() {
         {/* STEP 3: ELIGIBILITY */}
         {currentStep === 3 && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">Your Eligibility</h2>
+            <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200"> {/* Added border */}
+              <h2 className="text-lg font-bold text-base-black mb-1">Your Eligibility</h2> {/* Updated text color */}
               <p className="text-sm text-gray-500 mb-4">Based on your connected accounts</p>
 
               {creditScore && creditScore.score > 0 ? (
@@ -1225,34 +1228,34 @@ export default function LoanCreationWizard() {
                   {/* Score display */}
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Credit Score</span>
-                    <span className="text-2xl font-bold text-[#2C7A7B]">{creditScore.score}/100</span>
+                    <span className="text-2xl font-bold text-base-blue">{creditScore.score}/100</span> {/* Updated text color */}
                   </div>
 
                   {/* Progress bar */}
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-[#2C7A7B] h-2 rounded-full transition-all"
+                      className="bg-base-blue h-2 rounded-full transition-all" // Updated color
                       style={{ width: `${creditScore.score}%` }}
                     />
                   </div>
 
                   {/* Score breakdown */}
                   <div className="grid grid-cols-2 gap-2 pt-2">
-                    <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100"> {/* Added border */}
                       <span className="text-xs text-gray-500">Revenue</span>
-                      <span className="block font-semibold text-gray-900">{Math.round(creditScore.breakdown.revenueScore)}/40</span>
+                      <span className="block font-semibold text-base-black">{Math.round(creditScore.breakdown.revenueScore)}/40</span> {/* Updated text color */}
                     </div>
-                    <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100"> {/* Added border */}
                       <span className="text-xs text-gray-500">Consistency</span>
-                      <span className="block font-semibold text-gray-900">{Math.round(creditScore.breakdown.consistencyScore)}/20</span>
+                      <span className="block font-semibold text-base-black">{Math.round(creditScore.breakdown.consistencyScore)}/20</span> {/* Updated text color */}
                     </div>
-                    <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100"> {/* Added border */}
                       <span className="text-xs text-gray-500">Reliability</span>
-                      <span className="block font-semibold text-gray-900">{Math.round(creditScore.breakdown.reliabilityScore)}/20</span>
+                      <span className="block font-semibold text-base-black">{Math.round(creditScore.breakdown.reliabilityScore)}/20</span> {/* Updated text color */}
                     </div>
-                    <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100"> {/* Added border */}
                       <span className="text-xs text-gray-500">Growth</span>
-                      <span className="block font-semibold text-gray-900">{Math.round(creditScore.breakdown.growthScore)}/20</span>
+                      <span className="block font-semibold text-base-black">{Math.round(creditScore.breakdown.growthScore)}/20</span> {/* Updated text color */}
                     </div>
                   </div>
                 </div>
@@ -1270,7 +1273,7 @@ export default function LoanCreationWizard() {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}
-                    className="text-sm text-[#2C7A7B] font-medium"
+                    className="text-sm text-base-blue font-medium" // Updated text color
                   >
                     ← Connect platforms
                   </button>
@@ -1283,14 +1286,14 @@ export default function LoanCreationWizard() {
               <button
                 type="button"
                 onClick={goToPreviousStep}
-                className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors active:scale-[0.98]"
               >
                 Back
               </button>
               <button
                 type="button"
                 onClick={goToNextStep}
-                className="flex-1 py-3 bg-[#2C7A7B] text-white font-medium rounded-xl hover:bg-[#234E52] transition-colors"
+                className="flex-1 py-3 bg-base-blue text-white font-medium rounded-xl hover:opacity-90 transition-all active:scale-[0.98]" // Updated colors
               >
                 Continue
               </button>
@@ -1302,14 +1305,14 @@ export default function LoanCreationWizard() {
         {currentStep === 4 && (
           <div className="space-y-4">
             {/* About You */}
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">About You</h2>
+            <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200"> {/* Added border */}
+              <h2 className="text-lg font-bold text-base-black mb-1">About You</h2> {/* Updated text color */}
               <p className="text-sm text-gray-500 mb-4">Help lenders get to know you</p>
 
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium text-gray-900">Your story *</label>
+                    <label className="block text-sm font-medium text-base-black">Your story *</label> {/* Updated text color */}
                     <span className={`text-xs ${formData.aboutYou.length < 100 ? 'text-gray-400' : 'text-green-600'}`}>
                       {formData.aboutYou.length}/100+
                     </span>
@@ -1319,8 +1322,8 @@ export default function LoanCreationWizard() {
                     onChange={(e) => handleChange('aboutYou', e.target.value)}
                     placeholder="Tell us about yourself, what you do, and who you serve..."
                     rows={4}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#2C7A7B]/20 outline-none resize-none ${
-                      errors.aboutYou ? 'border-red-300' : 'border-gray-200 focus:border-[#2C7A7B]'
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-base-blue/20 outline-none resize-none ${ /* Updated colors */
+                      errors.aboutYou ? 'border-red-300' : 'border-gray-200 focus:border-base-blue' /* Updated colors */
                     }`}
                   />
                   {errors.aboutYou && <p className="text-sm text-red-600 mt-1">{errors.aboutYou}</p>}
@@ -1328,23 +1331,23 @@ export default function LoanCreationWizard() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">Website</label>
+                    <label className="block text-sm font-medium text-base-black mb-2">Website</label> {/* Updated text color */}
                     <input
                       type="url"
                       value={formData.businessWebsite}
                       onChange={(e) => handleChange('businessWebsite', e.target.value)}
                       placeholder="yoursite.com"
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:border-[#2C7A7B] focus:ring-2 focus:ring-[#2C7A7B]/20 outline-none text-sm"
+                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:border-base-blue focus:ring-2 focus:ring-base-blue/20 outline-none text-sm" // Updated colors
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">X/Twitter</label>
+                    <label className="block text-sm font-medium text-base-black mb-2">X/Twitter</label> {/* Updated text color */}
                     <input
                       type="text"
                       value={formData.twitterHandle}
                       onChange={(e) => handleChange('twitterHandle', e.target.value)}
                       placeholder="@handle"
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:border-[#2C7A7B] focus:ring-2 focus:ring-[#2C7A7B]/20 outline-none text-sm"
+                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:border-base-blue focus:ring-2 focus:ring-base-blue/20 outline-none text-sm" // Updated colors
                     />
                   </div>
                 </div>
@@ -1352,13 +1355,13 @@ export default function LoanCreationWizard() {
             </div>
 
             {/* Loan Use */}
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">How You'll Use It</h2>
+            <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200"> {/* Added border */}
+              <h2 className="text-lg font-bold text-base-black mb-1">How You'll Use It</h2> {/* Updated text color */}
               <p className="text-sm text-gray-500 mb-4">Explain your plan and how you'll pay it back</p>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-gray-900">Your plan *</label>
+                  <label className="block text-sm font-medium text-base-black">Your plan *</label> {/* Updated text color */}
                   <span className={`text-xs ${formData.loanUseAndImpact.length < 225 ? 'text-gray-400' : 'text-green-600'}`}>
                     {formData.loanUseAndImpact.length}/225+
                   </span>
@@ -1368,8 +1371,8 @@ export default function LoanCreationWizard() {
                   onChange={(e) => handleChange('loanUseAndImpact', e.target.value)}
                   placeholder="I'll use this funding to... and I'll repay it by..."
                   rows={6}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#2C7A7B]/20 outline-none resize-none ${
-                    errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-200 focus:border-[#2C7A7B]'
+                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-base-blue/20 outline-none resize-none ${ /* Updated colors */
+                    errors.loanUseAndImpact ? 'border-red-300' : 'border-gray-200 focus:border-base-blue' /* Updated colors */
                   }`}
                 />
                 {errors.loanUseAndImpact && <p className="text-sm text-red-600 mt-1">{errors.loanUseAndImpact}</p>}
@@ -1377,8 +1380,8 @@ export default function LoanCreationWizard() {
             </div>
 
             {/* Photo */}
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">Add a Photo</h2>
+            <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200"> {/* Added border */}
+              <h2 className="text-lg font-bold text-base-black mb-1">Add a Photo</h2> {/* Updated text color */}
               <p className="text-sm text-gray-500 mb-4">Loans with photos get funded 35% faster</p>
 
               <div
@@ -1386,7 +1389,7 @@ export default function LoanCreationWizard() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={`relative border-2 border-dashed rounded-xl p-5 transition-colors ${
-                  isDragging ? 'border-[#2C7A7B] bg-[#2C7A7B]/5' : errors.imageUrl ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50'
+                  isDragging ? 'border-base-blue bg-base-blue/5' : errors.imageUrl ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50' /* Updated colors */
                 }`}
               >
                 {formData.imageUrl ? (
@@ -1395,7 +1398,7 @@ export default function LoanCreationWizard() {
                       <img src={formData.imageUrl} alt="Loan preview" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">Photo added</p>
+                      <p className="text-sm font-medium text-base-black">Photo added</p> {/* Updated text color */}
                       <button
                         type="button"
                         onClick={() => handleChange('imageUrl', '')}
@@ -1416,7 +1419,7 @@ export default function LoanCreationWizard() {
                       />
                     </svg>
                     <div className="mt-3">
-                      <label htmlFor="file-upload" className="cursor-pointer text-[#2C7A7B] font-medium text-sm">
+                      <label htmlFor="file-upload" className="cursor-pointer text-base-blue font-medium text-sm"> {/* Updated text color */}
                         <span>Upload photo</span>
                         <input
                           id="file-upload"
@@ -1436,7 +1439,7 @@ export default function LoanCreationWizard() {
 
             {/* Preview */}
             {(formData.loanPurposes.length > 0 || formData.imageUrl) && (
-              <div className="bg-gray-50 rounded-xl p-4">
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200"> {/* Added border */}
                 <h3 className="text-sm font-medium text-gray-700 mb-3">Preview</h3>
                 <div className="max-w-sm mx-auto">
                   <LoanCard
@@ -1458,8 +1461,8 @@ export default function LoanCreationWizard() {
 
             {/* Submit status */}
             {uploadProgress && (
-              <div className="bg-blue-50 rounded-xl p-4">
-                <p className="text-sm text-blue-700 font-medium">{uploadProgress}</p>
+              <div className="bg-base-gray rounded-xl p-4 border border-gray-200"> {/* Updated colors */}
+                <p className="text-sm text-gray-700 font-medium">{uploadProgress}</p> {/* Updated text color */}
               </div>
             )}
 
@@ -1468,14 +1471,14 @@ export default function LoanCreationWizard() {
               <button
                 type="button"
                 onClick={goToPreviousStep}
-                className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                className="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors active:scale-[0.98]"
               >
                 Back
               </button>
               <button
                 type="submit"
                 disabled={isPending || isConfirming || isSubmitting}
-                className="flex-1 py-3 bg-[#2C7A7B] text-white font-medium rounded-xl hover:bg-[#234E52] transition-colors disabled:bg-gray-400"
+                className="flex-1 py-3 bg-base-blue text-white font-medium rounded-xl hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-50" // Updated colors
               >
                 {isPending || isConfirming || isSubmitting ? 'Creating...' : 'Create Loan'}
               </button>

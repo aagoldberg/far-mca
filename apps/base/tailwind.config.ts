@@ -8,10 +8,14 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        'base-blue': '#2C7A7B', // Replaced blue with teal/green per user request
+        'base-black': '#0D0D0D',
+        'base-gray': '#F3F4F6',
+      },
       fontFamily: {
-        nunito: ['var(--font-nunito)', 'sans-serif'],
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        rubik: ['var(--font-rubik)', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
       },
       keyframes: {
         'slide-up': {
