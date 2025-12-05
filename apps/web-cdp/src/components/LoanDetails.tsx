@@ -256,7 +256,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       </Link>
 
       {/* Grid layout with main content and sticky sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main content */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl border border-gray-200 p-0 shadow-sm overflow-hidden">
@@ -277,9 +277,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
           )}
 
-          <div className="p-8">
+          <div className="p-6">
           {/* Title and Borrower */}
-          <div className="pb-8 border-b border-gray-200 mb-8">
+          <div className="pb-6 border-b border-gray-200 mb-6">
             <div className="flex flex-wrap items-center gap-3 mb-4">
               {loanData.completed ? (
                 <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold uppercase tracking-wide">
@@ -300,7 +300,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
               ) : null}
             </div>
             
-            <h1 className="text-3xl font-semibold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-3xl font-semibold text-gray-900 mb-4 leading-tight">
               {metadata?.name || 'Loading...'}
             </h1>
 
@@ -330,7 +330,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
           {/* Borrower Actions (Repayment) */}
           {isBorrower && loanData.active && !loanData.completed && (
-            <div className="bg-secondary-50 border border-secondary-100 rounded-2xl p-6 mb-8">
+            <div className="bg-secondary-50 border border-secondary-100 rounded-2xl p-6 mb-6">
               <h3 className="text-lg font-bold text-secondary-900 mb-4 flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -384,7 +384,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
           {/* Borrower Actions (Disburse/Refund) */}
           {isFunded && !loanData.active && isBorrower && (
-            <div className="bg-brand-50 border border-brand-200 rounded-2xl p-6 mb-8">
+            <div className="bg-brand-50 border border-brand-200 rounded-2xl p-6 mb-6">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -408,7 +408,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
           {/* Refund Action */}
           {refundAvailable && (
-            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 mb-8">
+            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 mb-6">
               <h3 className="text-lg font-bold text-orange-900 mb-2">Refund Available</h3>
               <p className="text-orange-800 mb-4">This loan did not reach its goal. You can claim a full refund of your contribution.</p>
               <button
@@ -423,7 +423,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
           {/* Trust & Verification */}
           {loanData && (
-            <div className="py-8 border-b border-gray-200">
+            <div className="py-6 border-b border-gray-200">
               <TrustSignals
                 borrowerAddress={loanData.borrower}
                 loanAddress={loanAddress}
@@ -434,15 +434,15 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           )}
 
           {/* About the Business */}
-          <div className="py-8 border-b border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">About the Business</h2>
-            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg max-w-3xl">
+          <div className="py-6 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">About the Business</h2>
+            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-base max-w-3xl">
               {metadata?.loanDetails?.aboutYou || metadata?.description || (
                 <span className="text-gray-400 italic">No information provided</span>
               )}
             </div>
             {metadata?.loanDetails?.businessWebsite && (
-              <div className="mt-6">
+              <div className="mt-4">
                 <a
                   href={metadata.loanDetails.businessWebsite}
                   target="_blank"
@@ -459,9 +459,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
 
           {/* Use of Funds */}
-          <div className="py-8 border-b border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Use of Funds</h2>
-            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-lg max-w-3xl">
+          <div className="py-6 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Use of Funds</h2>
+            <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-base max-w-3xl">
               {metadata?.loanDetails?.loanUseAndImpact || (
                 <span className="text-gray-400 italic">No plan provided</span>
               )}
@@ -469,24 +469,24 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           </div>
 
           {/* Loan Terms */}
-          <div className="py-8 border-b border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Repayment Details</h2>
-            <div className="grid grid-cols-2 gap-y-6 gap-x-12">
+          <div className="py-6 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Repayment Details</h2>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-12">
               <div>
                 <div className="text-sm text-gray-500 mb-1">Interest Rate</div>
-                <div className="text-lg font-semibold text-gray-900">0%</div>
+                <div className="text-base font-semibold text-gray-900">0%</div>
               </div>
               <div>
                 <div className="text-sm text-gray-500 mb-1">Repayment Multiplier</div>
-                <div className="text-lg font-semibold text-gray-900">1.0x</div>
+                <div className="text-base font-semibold text-gray-900">1.0x</div>
               </div>
               <div>
                 <div className="text-sm text-gray-500 mb-1">Maturity Date</div>
-                <div className="text-lg font-semibold text-gray-900">{formatDate(loanData.dueAt)}</div>
+                <div className="text-base font-semibold text-gray-900">{formatDate(loanData.dueAt)}</div>
               </div>
               <div>
                 <div className="text-sm text-gray-500 mb-1">Fundraising Deadline</div>
-                <div className="text-lg font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</div>
+                <div className="text-base font-semibold text-gray-900">{formatDate(loanData.fundraisingDeadline)}</div>
               </div>
             </div>
           </div>
