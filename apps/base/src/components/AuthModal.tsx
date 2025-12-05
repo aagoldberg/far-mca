@@ -133,19 +133,19 @@ export function AuthModal() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full max-w-64 mx-auto px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-base-blue focus:border-transparent text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-base-blue focus:border-transparent text-gray-900"
                   autoFocus
                 />
                 <button
                   type="submit"
-                  className="w-full max-w-64 mx-auto bg-base-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+                  className="w-full bg-base-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
                 >
                   Continue with Email
                 </button>
               </form>
               <button
                 onClick={() => setShowEmailInput(false)}
-                className="w-full max-w-64 mx-auto text-sm text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                className="w-full text-sm text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
               >
                 ← Back to options
               </button>
@@ -158,20 +158,20 @@ export function AuthModal() {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="+1234567890"
-                  className="w-full max-w-64 mx-auto px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-base-blue focus:border-transparent text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-base-blue focus:border-transparent text-gray-900"
                   autoFocus
                 />
                 <p className="text-xs text-gray-500">Include country code (e.g., +1 for US)</p>
                 <button
                   type="submit"
-                  className="w-full max-w-64 mx-auto bg-base-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+                  className="w-full bg-base-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
                 >
                   Continue with Phone
                 </button>
               </form>
               <button
                 onClick={() => setShowPhoneInput(false)}
-                className="w-full max-w-64 mx-auto text-sm text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                className="w-full text-sm text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
               >
                 ← Back to options
               </button>
@@ -183,7 +183,7 @@ export function AuthModal() {
                 <button
                   onClick={() => openConnectModal?.()}
                   disabled={!openConnectModal}
-                  className="w-full max-w-64 mx-auto bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -208,7 +208,7 @@ export function AuthModal() {
               <div className="space-y-3">
                 <button
                   onClick={handleGoogleSignIn}
-                  className="w-full max-w-64 mx-auto bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -222,7 +222,7 @@ export function AuthModal() {
 
                 <button
                   onClick={handleAppleSignIn}
-                  className="w-full max-w-64 mx-auto bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -233,7 +233,7 @@ export function AuthModal() {
 
                 <button
                   onClick={handleXSignIn}
-                  className="w-full max-w-64 mx-auto bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -244,7 +244,7 @@ export function AuthModal() {
 
                 <button
                   onClick={() => setShowPhoneInput(true)}
-                  className="w-full max-w-64 mx-auto bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -254,7 +254,7 @@ export function AuthModal() {
 
                 <button
                   onClick={() => setShowEmailInput(true)}
-                  className="w-full max-w-64 mx-auto bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
