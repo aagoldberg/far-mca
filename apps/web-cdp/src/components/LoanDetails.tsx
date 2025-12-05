@@ -286,9 +286,9 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
     <div className="min-h-screen bg-white">
       {/* Hero Image - Full Bleed */}
       {imageUrl && (
-        <div className="w-full bg-gray-50">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="relative w-full aspect-[16/9] md:aspect-[2.5/1] overflow-hidden md:rounded-xl md:my-6">
+        <div className="w-full">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-20">
+            <div className="relative w-full aspect-[16/9] md:aspect-[2.5/1] overflow-hidden md:rounded-xl md:mt-4 md:mb-0">
               <img
                 src={imageUrl}
                 alt={metadata?.name || 'Loan'}
@@ -300,45 +300,13 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       )}
 
       {/* Main Content */}
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-20 py-8 pb-32 lg:pb-12">
-        {/* Back button */}
-        <Link
-          href="/"
-          className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 text-[14px] font-medium transition-colors"
-        >
-          <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back
-        </Link>
-
+      <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-20 pt-4 pb-32 lg:pb-12">
         {/* Two Column Layout - 60/40 split */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
           {/* Main Content - Left Column */}
           <div className="lg:col-span-3">
             {/* Title Section */}
             <div className="pb-6 border-b border-gray-200/60">
-              {/* Status Badge inline with title */}
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                {loanData.completed ? (
-                  <span className="px-2.5 py-0.5 bg-green-50 text-green-700 rounded-full text-[12px] font-semibold">
-                    Completed
-                  </span>
-                ) : loanData.active && !loanData.completed ? (
-                  <span className="px-2.5 py-0.5 bg-blue-50 text-blue-700 rounded-full text-[12px] font-semibold">
-                    Active Loan
-                  </span>
-                ) : loanData.fundraisingActive ? (
-                  <span className="px-2.5 py-0.5 bg-brand-50 text-brand-700 rounded-full text-[12px] font-semibold">
-                    Fundraising
-                  </span>
-                ) : isLoanDefaulted ? (
-                  <span className="px-2.5 py-0.5 bg-red-50 text-red-700 rounded-full text-[12px] font-semibold">
-                    Defaulted
-                  </span>
-                ) : null}
-              </div>
-
               <h1 className="text-[26px] md:text-[32px] font-semibold text-gray-900 leading-tight">
                 {metadata?.name || 'Loading...'}
               </h1>
@@ -590,14 +558,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             <div className="sticky top-24">
               <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-[0_6px_16px_rgba(0,0,0,0.12)]">
                 {/* Progress Section */}
-                <div className="mb-4">
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-[28px] font-bold text-gray-900">${formatUSDC(loanData.totalFunded)}</span>
-                    <span className="text-[14px] text-gray-500">of ${formatUSDC(loanData.principal)}</span>
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-1.5 mb-3">
+                    <span className="text-[22px] font-semibold text-gray-900">${formatUSDC(loanData.totalFunded)}</span>
+                    <span className="text-[15px] text-gray-500 font-normal">of ${formatUSDC(loanData.principal)} goal</span>
                   </div>
 
                   {/* Progress Bar */}
-                  <div className="relative w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="relative w-full h-1 bg-gray-200 rounded-full overflow-hidden">
                     <div
                       className="absolute top-0 left-0 h-full bg-brand-500 rounded-full transition-all duration-700 ease-out"
                       style={{ width: `${Math.min(progressPercentage, 100)}%` }}
@@ -606,18 +574,18 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="space-y-2 mb-4">
+                <div className="space-y-3 mb-5">
                   {loanData.fundraisingActive && !isFunded ? (
                     <Link
                       href={`/loan/${loanAddress}/fund`}
-                      className="block w-full text-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white text-[16px] font-semibold rounded-lg transition-all active:scale-[0.98]"
+                      className="block w-full text-center px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white text-[16px] font-semibold rounded-full transition-all active:scale-[0.98]"
                     >
                       Fund this Loan
                     </Link>
                   ) : (
                     <button
                       disabled
-                      className="block w-full text-center px-6 py-3 bg-gray-100 text-gray-400 text-[16px] font-semibold rounded-lg cursor-not-allowed"
+                      className="block w-full text-center px-6 py-3.5 bg-gray-100 text-gray-400 text-[16px] font-semibold rounded-full cursor-not-allowed"
                     >
                       {isFunded ? 'Fully Funded' : 'Fundraising Closed'}
                     </button>
@@ -625,7 +593,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
 
                   <button
                     onClick={() => setIsShareModalOpen(true)}
-                    className="block w-full text-center px-6 py-2.5 bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-lg transition-all active:scale-[0.98]"
+                    className="block w-full text-center px-6 py-3.5 bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-full transition-all active:scale-[0.98]"
                   >
                     Share
                   </button>
@@ -677,7 +645,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           <div className="flex gap-2">
             <button
               onClick={() => setIsShareModalOpen(true)}
-              className="px-4 py-3 bg-white border border-gray-200 text-gray-700 font-semibold rounded-lg active:scale-[0.98]"
+              className="px-4 py-3 bg-white border border-gray-200 text-gray-700 font-semibold rounded-full active:scale-[0.98]"
             >
               Share
             </button>
@@ -685,14 +653,14 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             {loanData.fundraisingActive && !isFunded ? (
               <Link
                 href={`/loan/${loanAddress}/fund`}
-                className="px-6 py-3 bg-brand-600 text-white font-semibold rounded-lg active:scale-[0.98]"
+                className="px-6 py-3 bg-brand-600 text-white font-semibold rounded-full active:scale-[0.98]"
               >
                 Fund
               </Link>
             ) : (
               <button
                 disabled
-                className="px-6 py-3 bg-gray-100 text-gray-400 font-semibold rounded-lg"
+                className="px-6 py-3 bg-gray-100 text-gray-400 font-semibold rounded-full"
               >
                 {isFunded ? 'Funded' : 'Closed'}
               </button>

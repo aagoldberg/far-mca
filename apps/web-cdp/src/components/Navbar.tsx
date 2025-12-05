@@ -401,7 +401,7 @@ export default function Navbar() {
             {isAuthenticated && <WalletBalance />}
             <Link
               href="/create-loan"
-              className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
+              className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2.5 px-5 rounded-full shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

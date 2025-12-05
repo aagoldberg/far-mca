@@ -104,7 +104,7 @@ export function AuthModal() {
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
+        className="bg-white hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-5 rounded-full border border-gray-300 transition-all duration-200 whitespace-nowrap"
       >
         Log In
       </button>
