@@ -259,11 +259,11 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Main content */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
+          <div className="bg-white rounded-2xl border border-gray-200 p-0 shadow-sm overflow-hidden">
 
           {/* Loan Image */}
           {(metadata?.imageUrl || metadata?.image) && (
-            <div className="relative w-full rounded-xl overflow-hidden mb-8 bg-gray-50" style={{ paddingBottom: '56.25%' }}>
+            <div className="relative w-full rounded-none mb-0 bg-gray-50" style={{ paddingBottom: '56.25%' }}>
               <img
                 src={(() => {
                   const imageSource = metadata.imageUrl || metadata.image || '';
@@ -277,6 +277,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
             </div>
           )}
 
+          <div className="p-8">
           {/* Title and Borrower */}
           <div className="pb-8 border-b border-gray-200 mb-8">
             <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -493,6 +494,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
           {/* Loan Updates */}
           <div className="mb-0">
             <LoanUpdates loanAddress={loanAddress} />
+          </div>
           </div>
           </div>
 
