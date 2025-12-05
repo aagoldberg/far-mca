@@ -145,7 +145,7 @@ export function AuthModal() {
               </form>
               <button
                 onClick={() => setShowEmailInput(false)}
-                className="w-full text-sm text-gray-600 hover:text-gray-800 py-2"
+                className="w-full text-sm text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
               >
                 ← Back to options
               </button>
@@ -171,7 +171,7 @@ export function AuthModal() {
               </form>
               <button
                 onClick={() => setShowPhoneInput(false)}
-                className="w-full text-sm text-gray-600 hover:text-gray-800 py-2"
+                className="w-full text-sm text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
               >
                 ← Back to options
               </button>
@@ -183,7 +183,7 @@ export function AuthModal() {
                 <button
                   onClick={() => openConnectModal?.()}
                   disabled={!openConnectModal}
-                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-secondary-300 transition-colors flex items-center justify-start gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -205,7 +205,7 @@ export function AuthModal() {
               </div>
 
               {/* Social Login Options */}
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <button
                   onClick={handleGoogleSignIn}
                   className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-lg border border-gray-300 transition-colors flex items-center justify-start gap-3 cursor-pointer"
