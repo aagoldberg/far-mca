@@ -8,9 +8,9 @@ export default function BottomNav() {
   const pathname = usePathname();
   const { userProfile } = useMiniAppWallet();
 
-  // Don't show on certain pages (like funding form)
+  // Don't show on certain pages (like funding form or create loan page)
   const hiddenPaths = ['/loan/', '/create-loan'];
-  const shouldHide = hiddenPaths.some(path => pathname.includes(path) && pathname !== '/');
+  const shouldHide = hiddenPaths.some(path => pathname.includes(path)); // Check if path includes it, so /loan/xyz also hides it
 
   if (shouldHide) return null;
 
@@ -20,20 +20,22 @@ export default function BottomNav() {
       label: 'Home',
       icon: (active: boolean) => (
         <svg className="w-6 h-6" fill={active ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 0 : 2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z" />
         </svg>
       ),
       isActive: pathname === '/',
+      isCentral: false,
     },
     {
       href: '/create-loan',
       label: 'Borrow',
       icon: (active: boolean) => (
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2.5 : 2}>
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
       ),
       isActive: pathname === '/create-loan',
+      isCentral: true,
     },
     {
       href: '/activity',
@@ -44,6 +46,7 @@ export default function BottomNav() {
         </svg>
       ),
       isActive: pathname === '/activity',
+      isCentral: false,
     },
   ];
 
@@ -54,14 +57,33 @@ export default function BottomNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center justify-center min-w-[64px] h-full space-y-1 ${
-              item.isActive
-                ? 'text-base-blue'
-                : 'text-gray-400 hover:text-gray-600'
-            }`}
+            className={`flex flex-col items-center justify-center h-full group
+              ${item.isCentral ? 'flex-1' : 'min-w-[64px]'}
+              ${item.isCentral ? '' : 'px-2'}
+            `}
           >
-            {item.icon(item.isActive)}
-            <span className="text-[10px] font-medium">
+            {item.isCentral ? (
+              <div className={`
+                w-12 h-12 rounded-full flex items-center justify-center
+                transition-all duration-200
+                ${item.isActive
+                  ? 'bg-base-blue text-white shadow-md'
+                  : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+                }
+              `}>
+                {item.icon(item.isActive)}
+              </div>
+            ) : (
+              <div className={`w-6 h-6 transition-colors duration-200
+                ${item.isActive ? 'text-base-blue' : 'text-gray-400 group-hover:text-gray-600'}
+              `}>
+                {item.icon(item.isActive)}
+              </div>
+            )}
+
+            <span className={`text-[10px] mt-1 font-medium transition-colors duration-200
+              ${item.isActive ? 'text-base-blue' : 'text-gray-500'}
+            `}>
               {item.label}
             </span>
           </Link>
