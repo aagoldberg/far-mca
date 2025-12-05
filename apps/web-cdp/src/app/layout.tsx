@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito, Figtree, Rubik } from "next/font/google";
+import { Nunito, Figtree, Rubik, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "@/components/Navbar";
@@ -23,6 +23,12 @@ const rubik = Rubik({
   variable: "--font-rubik",
 });
 
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta",
+  weight: ["600", "700", "800"],
+});
+
 // Auto-detect base URL from Vercel or use env variable
 const appUrl = process.env.NEXT_PUBLIC_APP_URL ||
   (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3004');
@@ -43,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable}`}>
+    <html lang="en" className={`${nunito.variable} ${figtree.variable} ${rubik.variable} ${plusJakarta.variable}`}>
       <body className="bg-white">
         <Providers>
           <div className="min-h-screen flex flex-col">

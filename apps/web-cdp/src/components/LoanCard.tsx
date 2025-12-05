@@ -202,7 +202,7 @@ export function LoanCard({
         )}
 
       {imageUrl && (
-        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '66%' }}>
+        <div className="w-full bg-gray-100 relative" style={{ paddingBottom: '75%' }}>
           <img
             src={imageUrl}
             alt={name || 'Loan image'}
@@ -248,10 +248,15 @@ export function LoanCard({
         </div>
 
         {/* Funding info */}
-        <div className="flex items-baseline gap-1 text-[14px]">
+        <div className="flex items-baseline gap-1 text-[14px] mb-3">
           <span className="font-semibold text-gray-900">${formatUSDC(totalFunded)}</span>
           <span className="text-gray-500">raised of ${formatUSDC(principal)}</span>
         </div>
+
+        {/* Show more link */}
+        <span className="text-[14px] text-gray-500 underline underline-offset-2 group-hover:text-gray-900 transition-colors">
+          Show more
+        </span>
       </div>
       </div>
     </Link>
