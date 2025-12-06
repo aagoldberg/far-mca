@@ -44,7 +44,8 @@ export default function VisionPage() {
         {/* The Problem - 2 Column Split */}
         <section className="grid md:grid-cols-12 gap-12 items-start">
           <div className="md:col-span-5">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">The Problem</h2>
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Problem</span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Rejected by Banks. <br />Too Small for Fintechs.</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
               Millions of entrepreneurs run real businesses with verifiable revenue.
               They have transaction history and proven cashflow. To grow, they need working capital—but the system fails them.
