@@ -79,7 +79,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
-  const [needsFunding, setNeedsFunding] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Check for both external wallet (wagmi) and CDP embedded wallet
   const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
@@ -146,26 +146,6 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     }
   }, [isContributeSuccess]);
 
-  // Always show funding section for low balances (proactive, not reactive)
-  // This helps users add funds BEFORE they decide how much to contribute
-  useEffect(() => {
-    const estimatedGasETH = parseUnits('0.002', 18); // Rough estimate for gas
-    const minRecommendedUSDC = parseUnits('10', USDC_DECIMALS); // $10 minimum recommendation
-
-    const hasLowUSDC = usdcBalance < minRecommendedUSDC;
-    const hasLowETH = (ethBalance?.value || 0n) < estimatedGasETH;
-
-    // Show funding if balance is low OR if amount exceeds balance
-    if (amount && parseFloat(amount) > 0) {
-      const amountInUnits = parseUnits(amount, USDC_DECIMALS);
-      const hasEnoughUSDC = usdcBalance >= amountInUnits;
-      const hasEnoughETH = (ethBalance?.value || 0n) >= estimatedGasETH;
-      setNeedsFunding(!hasEnoughUSDC || !hasEnoughETH);
-    } else {
-      // No amount entered yet - show if balances are low
-      setNeedsFunding(hasLowUSDC || hasLowETH);
-    }
-  }, [amount, usdcBalance, ethBalance]);
 
   // Helper function to parse error messages
   const parseErrorMessage = (error: any): string => {
@@ -466,12 +446,18 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     }
   };
 
+  // Preset amounts
+  const presetAmounts = ['25', '50', '100', '250'];
+
   if (loanLoading) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/2 mb-6" />
-          <div className="h-48 bg-gray-200 rounded-2xl" />
+          <div className="h-8 bg-gray-200 rounded w-1/3 mb-8" />
+          <div className="grid md:grid-cols-5 gap-8">
+            <div className="md:col-span-3 h-64 bg-gray-200 rounded-2xl" />
+            <div className="md:col-span-2 h-80 bg-gray-200 rounded-2xl" />
+          </div>
         </div>
       </div>
     );
@@ -530,7 +516,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
 
   if (step === 'success') {
     const shareUrl = `${window.location.origin}/loan/${loanAddress}`;
-    const shareText = `I just supported this amazing loan on LendFriend! Join me in making a difference 🙏`;
+    const shareText = `I just supported a community loan on LendFriend - 0% interest lending powered by trust`;
 
     const handleShare = (platform: string) => {
       let url = '';
@@ -538,20 +524,8 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         case 'twitter':
           url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
           break;
-        case 'facebook':
-          url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-          break;
-        case 'linkedin':
-          url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-          break;
         case 'warpcast':
           url = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
-          break;
-        case 'whatsapp':
-          url = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
-          break;
-        case 'telegram':
-          url = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
           break;
       }
       if (url) window.open(url, '_blank', 'width=600,height=400');
@@ -560,136 +534,93 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     const handleCopyLink = async () => {
       try {
         await navigator.clipboard.writeText(shareUrl);
-        alert('Link copied to clipboard!');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       } catch (err) {
         console.error('Failed to copy:', err);
       }
     };
 
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="max-w-md mx-auto px-4 py-12">
+        <div className="text-center">
+          {/* Success Icon */}
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
 
-          <div className="text-center mb-6 pb-6 border-b border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">
-              Contribution Successful
-            </h2>
-            <p className="text-lg text-gray-700 mb-2">
-              ${amount} USDC
-            </p>
-            <p className="text-sm text-gray-500">
-              Your contribution has been confirmed and is now supporting this loan
-            </p>
-          </div>
+          <h2 className="text-[24px] font-semibold text-gray-900 mb-2">
+            Thank you!
+          </h2>
+          <p className="text-[32px] font-bold text-gray-900 mb-2">
+            ${amount} USDC
+          </p>
+          <p className="text-[15px] text-gray-500 mb-8">
+            Your contribution is now supporting this loan
+          </p>
 
           {/* Share Section */}
-          <div className="bg-gray-50 rounded-xl p-5 mb-6">
-            <h3 className="text-base font-semibold text-gray-900 mb-2">
-              Help This Loan Reach Its Goal
-            </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Share with your network to help fund this loan faster
+          <div className="bg-gray-50 rounded-2xl p-6 mb-6">
+            <p className="text-[15px] font-medium text-gray-900 mb-4">
+              Help spread the word
             </p>
-
-            {/* Social Share Buttons Grid */}
-            <div className="grid grid-cols-2 gap-2.5 mb-3">
-              {/* Twitter/X */}
+            <div className="flex gap-3 justify-center">
               <button
                 onClick={() => handleShare('twitter')}
-                className="flex items-center justify-center gap-1.5 bg-black hover:bg-gray-800 text-white text-sm font-medium py-2.5 px-3 rounded-lg transition-colors"
+                className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white text-[14px] font-medium py-2.5 px-5 rounded-full transition-colors"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
-                <span>X/Twitter</span>
+                Post
               </button>
-
-              {/* Farcaster */}
               <button
                 onClick={() => handleShare('warpcast')}
-                className="flex items-center justify-center gap-1.5 bg-[#855DCD] hover:bg-[#7047B8] text-white text-sm font-medium py-2.5 px-3 rounded-lg transition-colors"
+                className="flex items-center justify-center gap-2 bg-[#855DCD] hover:bg-[#7047B8] text-white text-[14px] font-medium py-2.5 px-5 rounded-full transition-colors"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM12 18l-4-4h3V7h2v7h3l-4 4z"/>
                 </svg>
-                <span>Farcaster</span>
+                Cast
               </button>
-
-              {/* Facebook */}
               <button
-                onClick={() => handleShare('facebook')}
-                className="flex items-center justify-center gap-1.5 bg-[#1877F2] hover:bg-[#0C63D4] text-white text-sm font-medium py-2.5 px-3 rounded-lg transition-colors"
+                onClick={handleCopyLink}
+                className="flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-gray-700 text-[14px] font-medium py-2.5 px-5 rounded-full transition-colors border border-gray-200"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span>Facebook</span>
-              </button>
-
-              {/* LinkedIn */}
-              <button
-                onClick={() => handleShare('linkedin')}
-                className="flex items-center justify-center gap-1.5 bg-[#0A66C2] hover:bg-[#004182] text-white text-sm font-medium py-2.5 px-3 rounded-lg transition-colors"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                <span>LinkedIn</span>
-              </button>
-
-              {/* WhatsApp */}
-              <button
-                onClick={() => handleShare('whatsapp')}
-                className="flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#1EBE57] text-white text-sm font-medium py-2.5 px-3 rounded-lg transition-colors"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                </svg>
-                <span>WhatsApp</span>
-              </button>
-
-              {/* Telegram */}
-              <button
-                onClick={() => handleShare('telegram')}
-                className="flex items-center justify-center gap-1.5 bg-[#229ED9] hover:bg-[#0C8ACF] text-white text-sm font-medium py-2.5 px-3 rounded-lg transition-colors"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                </svg>
-                <span>Telegram</span>
+                {copied ? (
+                  <>
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    Copy
+                  </>
+                )}
               </button>
             </div>
-
-            {/* Copy Link Button */}
-            <button
-              onClick={handleCopyLink}
-              className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium py-2.5 px-4 rounded-lg transition-colors border border-gray-300"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              <span>Copy Link</span>
-            </button>
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             <Link
               href={`/loan/${loanAddress}`}
-              className="block w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white text-center font-semibold py-3.5 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full bg-brand-500 hover:bg-brand-600 text-white text-center font-semibold py-3.5 px-6 rounded-full transition-colors"
             >
-              View Loan Details
+              View loan details
             </Link>
             <Link
               href="/"
-              className="block w-full bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 text-center font-medium py-3.5 px-6 rounded-xl transition-colors duration-200"
+              className="block w-full text-[15px] text-gray-500 hover:text-gray-900 text-center font-medium py-2 transition-colors"
             >
-              Return to Home
+              Back to home
             </Link>
           </div>
         </div>
@@ -701,60 +632,71 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const maxContribution = remainingNeeded < usdcBalance ? remainingNeeded : usdcBalance;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
-      <Link href={`/loan/${loanAddress}`} className="inline-flex items-center text-[#3B9B7F] hover:text-[#2E7D68] mb-6">
-        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to loan
-      </Link>
+    <div className="max-w-lg mx-auto px-4 py-8">
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-6">
+        <Link
+          href={`/loan/${loanAddress}`}
+          className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors"
+          aria-label="Back to loan"
+        >
+          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </Link>
+        <h1 className="text-[22px] font-semibold text-gray-900">Fund this loan</h1>
+      </div>
 
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Lend a Hand
-      </h1>
-      <p className="text-gray-600 mb-6">
-        Your interest-free loan helps a neighbor's dream become reality. Together, we lift each other up.
-      </p>
-
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Amount (USDC)
-          </label>
-          <div className="relative">
-            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
-              $
-            </span>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="0.00"
-              disabled={step !== 'input'}
-              max={formatUnits(maxContribution, USDC_DECIMALS)}
-              step="0.01"
-              className="w-full pl-8 pr-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-xl focus:border-[#3B9B7F] focus:ring-0 outline-none disabled:bg-gray-50 disabled:text-gray-500"
-            />
-          </div>
-          <div className="flex justify-between items-center mt-2 text-sm">
-            <p className="text-gray-500">
-              Balance: {balanceFormatted}
-            </p>
+      {/* Amount Selection */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[14px] font-medium text-gray-700">Select amount</p>
+          <p className="text-[13px] text-gray-500">Balance: <span className="text-gray-900 font-medium">${balanceFormatted}</span></p>
+        </div>
+        <div className="grid grid-cols-4 gap-2 mb-3">
+          {presetAmounts.map((preset) => (
             <button
-              onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
-              className="text-[#3B9B7F] hover:text-[#2E7D68] font-medium"
+              key={preset}
+              onClick={() => setAmount(preset)}
               disabled={step !== 'input'}
+              className={`py-3 rounded-lg font-medium text-[15px] transition-all ${
+                amount === preset
+                  ? 'bg-gray-900 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              } disabled:opacity-50`}
             >
-              Max
+              ${preset}
             </button>
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Remaining needed: ${formatUnits(remainingNeeded, USDC_DECIMALS)} USDC
-          </p>
+          ))}
         </div>
 
-        {/* Inline Funding Section - shows proactively when balance is low */}
-        {needsFunding && step === 'input' && (
+        <div className="relative">
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
+            $
+          </span>
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter amount"
+            disabled={step !== 'input'}
+            max={formatUnits(maxContribution, USDC_DECIMALS)}
+            step="0.01"
+            className="w-full pl-9 pr-20 py-4 text-xl font-medium border border-gray-200 rounded-xl focus:border-gray-400 focus:ring-0 outline-none disabled:bg-gray-50"
+          />
+          <button
+            onClick={() => setAmount(formatUnits(maxContribution, USDC_DECIMALS))}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[13px] text-brand-500 hover:text-brand-600 font-medium"
+            disabled={step !== 'input'}
+          >
+            Use max
+          </button>
+        </div>
+      </div>
+
+      {/* Inline Funding Section - Always visible for adding funds */}
+      {step === 'input' && (
+        <div className="mb-6">
           <InlineFundingSection
             requiredUSDC={amount && parseFloat(amount) > 0 ? parseUnits(amount, USDC_DECIMALS) : 0n}
             requiredETH={parseUnits('0.002', 18)}
@@ -763,73 +705,59 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
             walletAddress={address}
             onFundingComplete={handleFundingComplete}
           />
-        )}
-
-        {errorMessage && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-            <p className="text-sm text-red-600">{errorMessage}</p>
-            {step === 'error' && (
-              <button
-                onClick={() => {
-                  setStep('input');
-                  setErrorMessage('');
-                }}
-                className="mt-2 text-sm text-red-700 hover:text-red-800 underline"
-              >
-                Try again
-              </button>
-            )}
-          </div>
-        )}
-
-        <button
-          onClick={handleFund}
-          disabled={!amount || parseFloat(amount) <= 0 || step !== 'input' || needsFunding}
-          className="w-full bg-[#3B9B7F] hover:bg-[#2E7D68] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
-        >
-          {step === 'approve' && ((isApproving || isApproveTxConfirming) || isCdpPending) && 'Approving USDC...'}
-          {step === 'contribute' && ((isContributing || isContributeTxConfirming) || isCdpPending) && 'Confirming contribution...'}
-          {step === 'input' && needsFunding && 'Add Funds First'}
-          {step === 'input' && !needsFunding && (needsApproval ? 'Approve & Fund Loan' : 'Fund Loan')}
-        </button>
-
-        {step !== 'input' && step !== 'success' && step !== 'error' && (
-          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-            <p className="text-sm text-blue-700 text-center">
-              {step === 'approve' && 'Please approve USDC spending in your wallet...'}
-              {step === 'contribute' && 'Please confirm the contribution in your wallet...'}
-            </p>
-          </div>
-        )}
-      </div>
-
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
-        <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-          <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-          Zero-Interest Model
-        </h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-gray-600">Interest Rate</span>
-            <span className="font-medium text-green-600">0%</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Repayment Multiple</span>
-            <span className="font-medium text-gray-900">1.0x</span>
-          </div>
-          <div className="flex justify-between pt-2 border-t border-green-200">
-            <span className="text-gray-600">You'll receive back</span>
-            <span className="font-semibold text-[#3B9B7F]">
-              ${amount && parseFloat(amount) > 0
-                ? parseFloat(amount).toFixed(2)
-                : '0.00'} USDC
-            </span>
-          </div>
         </div>
-        <p className="text-xs text-gray-600 mt-4 italic">
-          This is lending with heart. Your generosity helps someone build their future, and you'll receive every dollar back - no interest charged, just community care.
+      )}
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div className="mb-4 p-4 bg-red-50 border border-red-100 rounded-xl">
+          <p className="text-[14px] text-red-600">{errorMessage}</p>
+          {step === 'error' && (
+            <button
+              onClick={() => {
+                setStep('input');
+                setErrorMessage('');
+              }}
+              className="mt-2 text-[13px] text-red-700 hover:text-red-800 underline"
+            >
+              Try again
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Summary */}
+      <div className="bg-gray-50 rounded-xl p-4 mb-6">
+        <div className="flex justify-between text-[14px] mb-2">
+          <span className="text-gray-600">You'll receive back</span>
+          <span className="font-semibold text-gray-900">
+            ${amount && parseFloat(amount) > 0 ? parseFloat(amount).toFixed(2) : '0.00'} USDC
+          </span>
+        </div>
+        <p className="text-[12px] text-gray-500">
+          0% interest • Full repayment when loan is complete
         </p>
       </div>
+
+      {/* Submit Button */}
+      <button
+        onClick={handleFund}
+        disabled={!amount || parseFloat(amount) <= 0 || step !== 'input' || (amount && parseUnits(amount, USDC_DECIMALS) > usdcBalance)}
+        className="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+      >
+        {step === 'approve' && ((isApproving || isApproveTxConfirming) || isCdpPending) && 'Approving...'}
+        {step === 'contribute' && ((isContributing || isContributeTxConfirming) || isCdpPending) && 'Confirming...'}
+        {step === 'input' && amount && parseUnits(amount, USDC_DECIMALS) > usdcBalance && 'Insufficient balance'}
+        {step === 'input' && (!amount || parseUnits(amount || '0', USDC_DECIMALS) <= usdcBalance) && 'Fund loan'}
+      </button>
+
+      {/* Transaction Status */}
+      {step !== 'input' && step !== 'success' && step !== 'error' && (
+        <p className="text-[13px] text-gray-500 text-center mt-3">
+          {step === 'approve' && 'Approve the transaction in your wallet...'}
+          {step === 'contribute' && 'Confirm the contribution...'}
+        </p>
+      )}
     </div>
   );
 }
