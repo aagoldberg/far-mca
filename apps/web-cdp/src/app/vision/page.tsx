@@ -24,7 +24,7 @@ export default function VisionPage() {
         {/* Aspirational Vision */}
         <section className="mb-16">
           <p className="text-2xl text-gray-800 leading-relaxed text-center mb-8 font-light max-w-[46rem] mx-auto">
-            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your reputation replaces your credit score</strong>, your cashflow replaces collateral, and loans repay themselves automatically as you earn.
+            Imagine a world where <strong className="font-semibold text-[#2E7D68]">your business revenue replaces your credit score</strong>, your sales history replaces collateral, and loans repay themselves automatically as you earn.
           </p>
 
           {/* Visual: Credit Score vs Social Trust */}
@@ -83,7 +83,7 @@ export default function VisionPage() {
           <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-[#3B9B7F] rounded-xl p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Our Vision</h2>
             <p className="text-xl text-gray-800 mb-6 text-center leading-relaxed">
-              We make uncollateralized lending work by solving fintech's core problems. We eliminate VC and debt middlemen with <strong className="text-[#2E7D68]">community capital</strong>, replace costly payment rails with <strong className="text-[#2E7D68]">instant, low-cost stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">social trust + cashflow data</strong>. Result: 8-15% lower APR at scale.
+              We make uncollateralized lending work by solving fintech's core problems. We eliminate VC and debt middlemen with <strong className="text-[#2E7D68]">community capital</strong>, replace costly payment rails with <strong className="text-[#2E7D68]">instant, low-cost stablecoins</strong>, and reduce defaults through <strong className="text-[#2E7D68]">verified revenue data + social trust</strong>. Result: 8-15% lower APR at scale.
             </p>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
@@ -309,14 +309,14 @@ export default function VisionPage() {
                   <div className="bg-[#3B9B7F] text-white px-4 py-2 rounded-lg font-bold text-sm inline-block mb-3">
                     Phase 0
                   </div>
-                  <h3 className="text-xl font-bold text-[#2E7D68] mb-2">Bootstrap Trust</h3>
-                  <div className="text-sm text-gray-600 mb-4">Launching 2025</div>
+                  <h3 className="text-xl font-bold text-[#2E7D68] mb-2">Revenue-Verified Lending</h3>
+                  <div className="text-sm text-gray-600 mb-4">Live Now</div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-3xl font-bold text-[#2E7D68]">0%</span>
                       <span className="text-sm text-gray-600">Interest</span>
                     </div>
-                    <p className="text-sm text-gray-700">Pure social lending to prove trust works</p>
+                    <p className="text-sm text-gray-700">Cashflow-backed trust + social signals</p>
                   </div>
                 </div>
                 {/* Arrow */}
@@ -333,13 +333,13 @@ export default function VisionPage() {
                   <div className="bg-[#1E40AF] text-white px-4 py-2 rounded-lg font-bold text-sm inline-block mb-3">
                     Phase 1
                   </div>
-                  <h3 className="text-xl font-bold text-[#1E40AF] mb-2">Add Cashflow</h3>
-                  <div className="text-sm text-gray-600 mb-4">2025-2026</div>
+                  <h3 className="text-xl font-bold text-[#1E40AF] mb-2">Scale with Returns</h3>
+                  <div className="text-sm text-gray-600 mb-4">Exploring</div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-3xl font-bold text-[#1E40AF]">RBF</span>
+                      <span className="text-3xl font-bold text-[#1E40AF]">%</span>
                     </div>
-                    <p className="text-sm text-gray-700">Revenue-based financing with hybrid underwriting</p>
+                    <p className="text-sm text-gray-700">Fair interest rates, larger limits (regulatory dependent)</p>
                   </div>
                 </div>
                 {/* Arrow */}
@@ -357,12 +357,12 @@ export default function VisionPage() {
                     Phase 2
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Automate Repayment</h3>
-                  <div className="text-sm text-gray-600 mb-4">2026-2027</div>
+                  <div className="text-sm text-gray-600 mb-4">Future Vision</div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-3xl font-bold text-gray-900">⚡</span>
                     </div>
-                    <p className="text-sm text-gray-700">Revenue integration & agentic payments</p>
+                    <p className="text-sm text-gray-700">Auto-repay from revenue (tech still maturing)</p>
                   </div>
                 </div>
               </div>
@@ -384,18 +384,18 @@ export default function VisionPage() {
                   Phase 0
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-[#2E7D68] mb-1">Bootstrap Trust Networks</h3>
-                  <p className="text-sm text-gray-600 font-medium">Live on Testnet • Launching Mainnet 2025</p>
+                  <h3 className="text-2xl font-bold text-[#2E7D68] mb-1">Revenue-Verified Lending</h3>
+                  <p className="text-sm text-gray-600 font-medium">Live Now</p>
                 </div>
               </div>
 
               <p className="text-lg font-semibold text-gray-900 mb-6">
-                Pure social lending at 0% to bootstrap the network
+                Cashflow-backed loans at 0% to prove revenue verification works
               </p>
 
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-3">What We're Building</h4>
+                  <h4 className="font-bold text-gray-900 mb-3">What We've Built</h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex gap-2">
                       <span className="text-[#3B9B7F] font-bold">→</span>
@@ -403,23 +403,23 @@ export default function VisionPage() {
                     </li>
                     <li className="flex gap-2">
                       <span className="text-[#3B9B7F] font-bold">→</span>
+                      <span><strong>Shopify, Stripe, and Square integrations</strong> for instant revenue verification</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#3B9B7F] font-bold">→</span>
+                      <span>Trust scores based on verified sales data + social signals</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#3B9B7F] font-bold">→</span>
                       <span>Optional tipping for borrowers who want to give back</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="text-[#3B9B7F] font-bold">→</span>
-                      <span><strong>Primary launch on Farcaster</strong> (Base app + other Farcaster-native platforms)</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-[#3B9B7F] font-bold">→</span>
-                      <span>Also exploring: Bluesky, Twitter, Reddit communities</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-[#3B9B7F] font-bold">→</span>
-                      <span>Simple wallet verification + social signals</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-[#3B9B7F] font-bold">→</span>
                       <span>On-chain repayment tracking</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#3B9B7F] font-bold">→</span>
+                      <span>Social sharing via Farcaster, Twitter, and more</span>
                     </li>
                   </ul>
                 </div>
@@ -428,20 +428,20 @@ export default function VisionPage() {
                   <h4 className="font-bold text-gray-900 mb-3">What We're Learning</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-[#ECFDF5] rounded-lg p-4 shadow-md">
-                      <p className="text-sm font-semibold text-[#065F46] mb-2">Where's The Demand?</p>
+                      <p className="text-sm font-semibold text-[#065F46] mb-2">Revenue Signals</p>
                       <ul className="text-sm text-gray-700 space-y-1">
-                        <li>• Which networks have active lenders/borrowers?</li>
-                        <li>• Community clusters vs. broad networks</li>
-                        <li>• Trust cascade patterns</li>
-                        <li>• Viral growth mechanics</li>
+                        <li>• Which platforms provide best data?</li>
+                        <li>• Optimal loan-to-revenue ratios</li>
+                        <li>• How cashflow reduces default risk</li>
+                        <li>• Revenue verification + social combined</li>
                       </ul>
                     </div>
                     <div className="bg-[#EFF6FF] rounded-lg p-4 shadow-md">
-                      <p className="text-sm font-semibold text-[#1E40AF] mb-2">How Does Repayment Work?</p>
+                      <p className="text-sm font-semibold text-[#1E40AF] mb-2">Repayment Behavior</p>
                       <ul className="text-sm text-gray-700 space-y-1">
                         <li>• Repayment rates without interest</li>
+                        <li>• Impact of verified revenue on trust</li>
                         <li>• Social proximity effects</li>
-                        <li>• Timing patterns</li>
                         <li>• Impact of transparency</li>
                       </ul>
                     </div>
@@ -450,8 +450,8 @@ export default function VisionPage() {
 
                 <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
                   <p className="text-sm text-gray-900">
-                    <strong className="text-[#92400E]">What Happens Next:</strong> We move to Phase 1 (cashflow + interest) with learnings about what borrowers need
-                    and where demand exists. Every loan teaches us something valuable about making this work at scale.
+                    <strong className="text-[#92400E]">What Happens Next:</strong> We gather data on how revenue verification affects repayment and default rates.
+                    Every loan teaches us something valuable about the right balance of cashflow data and social trust.
                   </p>
                 </div>
               </div>
@@ -475,78 +475,88 @@ export default function VisionPage() {
                   Phase 1
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-[#1E40AF] mb-1">Scale with Cashflow</h3>
-                  <p className="text-sm text-gray-600 font-medium">Planned 2025-2026</p>
+                  <h3 className="text-2xl font-bold text-[#1E40AF] mb-1">Scale with Returns</h3>
+                  <p className="text-sm text-gray-600 font-medium">Exploring • Regulatory Dependent</p>
                 </div>
               </div>
 
               <p className="text-lg font-semibold text-gray-900 mb-6">
-                Layer in cashflow data for larger loans with fair interest rates
+                If regulations permit, offer fair interest rates to attract capital at scale
               </p>
 
               <div className="space-y-6">
+                {/* Regulatory Context */}
+                <div className="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-5">
+                  <p className="text-sm text-amber-900 mb-2">
+                    <strong>Important Context:</strong> Offering interest-bearing loans involves securities and lending regulations that vary by jurisdiction.
+                  </p>
+                  <p className="text-sm text-amber-800">
+                    This phase represents our aspirational direction, contingent on finding a compliant model—whether through regulatory partnerships, licensed lending frameworks, or emerging crypto-native regulatory clarity.
+                  </p>
+                </div>
+
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-3">The Key Shift</h4>
+                  <h4 className="font-bold text-gray-900 mb-3">The Opportunity</h4>
                   <div className="bg-white border-l-4 border-[#1E40AF] rounded-r-lg p-5 shadow-md">
                     <p className="text-gray-900 mb-3">
-                      Cashflow verification transforms lending from <strong>"I trust my friend"</strong> to <strong>"I trust my friend + the data"</strong>.
+                      0% interest works for proving trust, but sustainable scale requires attracting more capital through fair returns.
                     </p>
                     <p className="text-gray-700 text-sm">
-                      With objective cashflow data, community lenders can confidently fund larger loans. The social trust
-                      remains, but now backed by verified revenue streams.
+                      With strong revenue verification data and proven repayment history from Phase 0, we could potentially offer lenders modest returns (8-12% APY) while still charging borrowers significantly less than traditional fintech (which charges 20-40% APR).
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-3">New Capabilities</h4>
+                  <h4 className="font-bold text-gray-900 mb-3">What This Could Enable</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-white border-l-4 border-[#3B82F6] rounded-r-lg p-4 shadow-md">
-                      <p className="font-semibold text-[#1E40AF] mb-2">Larger Loans</p>
-                      <p className="text-sm text-gray-700">$5,000 - $50,000+ based on verified cashflow</p>
+                      <p className="font-semibold text-[#1E40AF] mb-2">Larger Loan Amounts</p>
+                      <p className="text-sm text-gray-700">$5,000 - $50,000+ backed by verified revenue data</p>
                     </div>
                     <div className="bg-white border-l-4 border-[#3B9B7F] rounded-r-lg p-4 shadow-md">
-                      <p className="font-semibold text-[#065F46] mb-2">Cashflow Verification</p>
-                      <p className="text-sm text-gray-700">Bank accounts (Plaid), merchant revenue (Square, Shopify)</p>
+                      <p className="font-semibold text-[#065F46] mb-2">Sustainable Lender Returns</p>
+                      <p className="text-sm text-gray-700">Fair yields that attract community capital long-term</p>
                     </div>
                     <div className="bg-white border-l-4 border-[#3B82F6] rounded-r-lg p-4 shadow-md">
-                      <p className="font-semibold text-[#1E40AF] mb-2">Fair Revenue-Based Terms</p>
-                      <p className="text-sm text-gray-700">Lower cost than traditional RBF (typical: 1.2-1.5x factor rates)</p>
+                      <p className="font-semibold text-[#1E40AF] mb-2">Better Than Traditional</p>
+                      <p className="text-sm text-gray-700">Still 50-70% cheaper than traditional merchant cash advances</p>
                     </div>
                     <div className="bg-white border-l-4 border-[#3B9B7F] rounded-r-lg p-4 shadow-md">
-                      <p className="font-semibold text-[#065F46] mb-2">Community Funding</p>
-                      <p className="text-sm text-gray-700">Direct lending from your network and broader community</p>
+                      <p className="font-semibold text-[#065F46] mb-2">Revenue-Based Repayment</p>
+                      <p className="text-sm text-gray-700">Pay as you earn—repayments flex with your business</p>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-3">Hybrid Risk Model</h4>
+                  <h4 className="font-bold text-gray-900 mb-3">Potential Paths Forward</h4>
                   <div className="bg-white border-l-4 border-[#3B82F6] rounded-r-lg p-4 shadow-md">
-                    <p className="text-sm text-gray-900 mb-3">
-                      Combining social trust + verified cashflow + repayment for accurate underwriting (exact weightings are experimental):
-                    </p>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <div className="flex justify-between">
-                        <span>• <strong className="text-gray-900">Small loans ($100-$5K):</strong></span>
-                        <span>60% social, 30% cashflow, 10% repayment</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>• <strong className="text-gray-900">Medium loans ($5K-$25K):</strong></span>
-                        <span>40% social, 40% cashflow, 20% repayment</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>• <strong className="text-gray-900">Large loans ($25K+):</strong></span>
-                        <span>20% social, 60% cashflow, 20% repayment</span>
-                      </div>
-                    </div>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li className="flex gap-2">
+                        <span className="text-[#3B82F6] font-bold">•</span>
+                        <span><strong>Partner with licensed lenders</strong> who can offer interest-bearing products</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-[#3B82F6] font-bold">•</span>
+                        <span><strong>Revenue share model</strong> (not interest) that may have different regulatory treatment</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-[#3B82F6] font-bold">•</span>
+                        <span><strong>Geographic focus</strong> on jurisdictions with clearer crypto lending frameworks</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-[#3B82F6] font-bold">•</span>
+                        <span><strong>Wait for regulatory clarity</strong> in the evolving DeFi/stablecoin landscape</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
 
                 <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
                   <p className="text-sm text-gray-900">
-                    <strong className="text-[#92400E]">Goal:</strong> Serve borrowers traditional finance excludes—freelancers, crypto-native workers, small merchants.
-                    Prove that hybrid underwriting can scale while maintaining fairness.
+                    <strong className="text-[#92400E]">Our Commitment:</strong> We'll only move to interest-bearing loans if we can do so compliantly.
+                    The goal is fairer lending, not regulatory arbitrage. We're actively researching compliant models.
                   </p>
                 </div>
               </div>
@@ -571,92 +581,106 @@ export default function VisionPage() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-1">Automate Repayment</h3>
-                  <p className="text-sm text-gray-600 font-medium">Future: 2026-2027</p>
+                  <p className="text-sm text-gray-600 font-medium">Future Vision • Tech Still Maturing</p>
                 </div>
               </div>
 
               <p className="text-lg font-semibold text-gray-900 mb-6">
-                Loans that repay themselves automatically from your wallet or business revenue
+                Loans that could repay themselves automatically—when the technology is ready
               </p>
 
               <div className="space-y-6">
+                {/* Tech Context */}
+                <div className="bg-gray-100 border-l-4 border-gray-400 rounded-r-lg p-5">
+                  <p className="text-sm text-gray-800 mb-2">
+                    <strong>Current Reality:</strong> Auto-repayment from e-commerce revenue sounds ideal, but the infrastructure isn't mature yet.
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    Most merchants (Shopify, Square, Stripe) operate in fiat, not crypto. Seamless auto-deduction from traditional payment processors into stablecoin repayments requires bridges that don't reliably exist today. This is a long-term vision, not a near-term promise.
+                  </p>
+                </div>
+
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-3">The Vision</h4>
+                  <h4 className="font-bold text-gray-900 mb-3">The Dream</h4>
                   <div className="bg-white border border-gray-200 rounded-lg p-5">
                     <div className="space-y-3">
                       <div className="flex gap-3">
-                        <span className="text-[#3B9B7F] font-bold text-lg">1.</span>
-                        <p className="text-gray-800">Get approved based on social trust + verified cashflow</p>
+                        <span className="text-gray-400 font-bold text-lg">1.</span>
+                        <p className="text-gray-700">Get approved based on verified revenue + trust score</p>
                       </div>
                       <div className="flex gap-3">
-                        <span className="text-[#3B9B7F] font-bold text-lg">2.</span>
-                        <p className="text-gray-800">Choose "auto-repay from my Square sales" or "auto-deduct from my wallet"</p>
+                        <span className="text-gray-400 font-bold text-lg">2.</span>
+                        <p className="text-gray-700">Connect your revenue source (Shopify, Square, crypto wallet)</p>
                       </div>
                       <div className="flex gap-3">
-                        <span className="text-[#3B9B7F] font-bold text-lg">3.</span>
-                        <p className="text-gray-800">As you earn, small amounts automatically flow to lenders</p>
+                        <span className="text-gray-400 font-bold text-lg">3.</span>
+                        <p className="text-gray-700">As you earn, small amounts automatically flow to lenders</p>
                       </div>
                       <div className="flex gap-3">
-                        <span className="text-[#3B9B7F] font-bold text-lg">4.</span>
-                        <p className="text-gray-800">No payment reminders, no stress, no late fees—just passive repayment</p>
+                        <span className="text-gray-400 font-bold text-lg">4.</span>
+                        <p className="text-gray-700">No payment reminders, no stress—just passive repayment</p>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">For Merchants</h4>
-                    <div className="bg-[#ECFDF5] rounded-lg p-4 shadow-md">
-                      <p className="text-sm text-[#065F46] mb-2">
-                        <strong>Revenue Integration</strong>
-                      </p>
-                      <ul className="text-sm text-gray-700 space-y-1">
-                        <li>• Shopify, Square, Stripe</li>
-                        <li>• Coinbase Commerce for crypto</li>
-                        <li>• And other payment platforms</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">For Wallet Holders</h4>
-                    <div className="bg-[#EFF6FF] rounded-lg p-4 shadow-md">
-                      <p className="text-sm text-[#1E40AF] mb-2">
-                        <strong>Account Abstraction</strong> (developing)
-                      </p>
-                      <ul className="text-sm text-gray-700 space-y-1">
-                        <li>• Auto-deduct from incoming transfers</li>
-                        <li>• Payment streams plugins maturing</li>
-                        <li>• Stripe + Coinbase pushing adoption</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Agentic Repayment</h4>
-                    <div className="bg-[#ECFDF5] rounded-lg p-4 shadow-md">
-                      <p className="text-sm text-[#065F46] mb-2">
-                        <strong>AI-Managed Payments</strong> (future)
-                      </p>
-                      <ul className="text-sm text-gray-700 space-y-1">
-                        <li>• Agent monitors your income streams</li>
-                        <li>• Auto-schedules optimal repayments</li>
-                        <li>• Manages cashflow for you</li>
-                      </ul>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-3">Why This Matters</h4>
-                  <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
-                    <p className="text-gray-900 mb-2">
-                      Removes the biggest friction in P2P lending: <strong className="text-[#92400E]">remembering to repay</strong>.
-                    </p>
-                    <p className="text-sm text-gray-700">
-                      Borrowers never miss payments. Lenders get passive, predictable returns. Lower default rates for everyone.
-                      Lending becomes invisible—you borrow, you earn, it repays itself.
-                    </p>
+                  <h4 className="font-bold text-gray-900 mb-3">What's Missing Today</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-white border border-gray-200 rounded-lg p-4">
+                      <p className="font-semibold text-gray-800 mb-2">E-commerce → Crypto Bridge</p>
+                      <p className="text-sm text-gray-600">Shopify/Square pay out in fiat. Converting to USDC for auto-repayment requires manual steps or expensive intermediaries.</p>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-4">
+                      <p className="font-semibold text-gray-800 mb-2">Merchant Stablecoin Adoption</p>
+                      <p className="text-sm text-gray-600">Very few e-commerce businesses accept or hold crypto today. This is changing, but slowly.</p>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-4">
+                      <p className="font-semibold text-gray-800 mb-2">Account Abstraction Maturity</p>
+                      <p className="text-sm text-gray-600">ERC-4337 exists but payment streams and auto-deduction plugins are still emerging.</p>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-4">
+                      <p className="font-semibold text-gray-800 mb-2">User Trust & Adoption</p>
+                      <p className="text-sm text-gray-600">Giving a smart contract permission to auto-deduct from revenue requires high user trust we haven't yet earned.</p>
+                    </div>
                   </div>
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-3">What Could Accelerate This</h4>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="bg-[#ECFDF5] rounded-lg p-4 shadow-md">
+                      <p className="text-sm text-[#065F46] mb-2">
+                        <strong>Coinbase Commerce Growth</strong>
+                      </p>
+                      <p className="text-xs text-gray-700">
+                        If more merchants accept crypto natively, auto-repayment becomes simpler
+                      </p>
+                    </div>
+                    <div className="bg-[#EFF6FF] rounded-lg p-4 shadow-md">
+                      <p className="text-sm text-[#1E40AF] mb-2">
+                        <strong>Stripe/Square Stablecoin Support</strong>
+                      </p>
+                      <p className="text-xs text-gray-700">
+                        Major payment processors adding USDC payouts would be game-changing
+                      </p>
+                    </div>
+                    <div className="bg-gray-100 rounded-lg p-4 shadow-md">
+                      <p className="text-sm text-gray-700 mb-2">
+                        <strong>AI Payment Agents</strong>
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Autonomous agents that manage payments across fiat and crypto could bridge the gap
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#FFFBEB] border-l-4 border-[#F59E0B] rounded-r-lg p-4 shadow-sm">
+                  <p className="text-sm text-gray-900">
+                    <strong className="text-[#92400E]">Our Approach:</strong> We're watching this space closely and will implement auto-repayment when the tech is ready.
+                    For now, we focus on what works today: verified revenue, trust scores, and simple manual repayment via USDC.
+                  </p>
                 </div>
               </div>
 
