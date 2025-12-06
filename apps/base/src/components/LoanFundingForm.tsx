@@ -561,7 +561,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         )}
       </div>
 
-// Fixed Bottom Button */}
+{/* Fixed Bottom Button */}
       <div className="fixed bottom-0 left-0 right-0 bg-white px-4 py-4 safe-area-pb border-t border-gray-100"> {/* Added border-t */}
         <button
           onClick={handleFund}
