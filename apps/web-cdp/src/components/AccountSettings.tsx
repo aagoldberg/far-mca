@@ -84,8 +84,6 @@ export default function AccountSettings() {
   const activeBorrowedLoans = borrowedLoans?.filter(loan => loan.active).length || 0;
   const completedBorrowedLoans = borrowedLoans?.filter(loan => loan.completed).length || 0;
 
-  const formatAddress = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-
   const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text);
     setCopied(true);
@@ -126,6 +124,42 @@ export default function AccountSettings() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+      {/* Wallet - First section */}
+      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
+        <div className="p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Wallet</h2>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+                </svg>
+              </div>
+              <div>
+                <button
+                  onClick={() => copyToClipboard(address)}
+                  className="font-mono text-sm text-gray-900 hover:text-gray-600 flex items-center gap-2 transition-colors"
+                >
+                  {address}
+                  <span className={`text-xs px-1.5 py-0.5 rounded ${copied ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'}`}>
+                    {copied ? 'Copied!' : 'Copy'}
+                  </span>
+                </button>
+                {connector?.name && (
+                  <p className="text-xs text-gray-400 mt-0.5">{connector.name}</p>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() => logout()}
+              className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
+            >
+              Disconnect
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Trust Score Card */}
       <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
         <div className="p-6">
@@ -292,41 +326,6 @@ export default function AccountSettings() {
         </div>
       </section>
 
-      {/* Wallet */}
-      <section className="bg-white rounded-lg border border-gray-300 overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Wallet</h2>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
-                </svg>
-              </div>
-              <div>
-                <button
-                  onClick={() => copyToClipboard(address)}
-                  className="font-mono text-sm text-gray-900 hover:text-gray-600 flex items-center gap-2 transition-colors"
-                >
-                  {formatAddress(address)}
-                  <span className={`text-xs px-1.5 py-0.5 rounded ${copied ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'}`}>
-                    {copied ? 'Copied!' : 'Copy'}
-                  </span>
-                </button>
-                {connector?.name && (
-                  <p className="text-xs text-gray-400 mt-0.5">{connector.name}</p>
-                )}
-              </div>
-            </div>
-            <button
-              onClick={() => logout()}
-              className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
-            >
-              Disconnect
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

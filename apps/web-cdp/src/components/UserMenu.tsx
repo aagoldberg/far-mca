@@ -138,11 +138,6 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
             <p className="text-sm font-medium text-gray-900 truncate">
               {displayName}
             </p>
-            {address && (
-              <p className="text-xs text-gray-500 truncate font-mono">
-                {address.slice(0, 10)}...{address.slice(-8)}
-              </p>
-            )}
           </div>
         </div>
 
@@ -254,11 +249,6 @@ export const UserMenu = ({ inline = false, onItemClick }: UserMenuProps) => {
                 <p className="text-sm font-medium text-gray-900 truncate">
                   {displayName}
                 </p>
-                {address && (
-                  <p className="text-xs text-gray-500 truncate font-mono">
-                    {address.slice(0, 10)}...{address.slice(-8)}
-                  </p>
-                )}
               </div>
             </div>
           </div>
