@@ -249,7 +249,7 @@ export default function VisionPage() {
                   <div className="w-12 h-12 bg-brand-800 border border-brand-700 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-6 relative z-10 shadow-xl">1</div>
                   <h4 className="font-bold text-lg mb-2">Borrower Shares</h4>
                   <p className="text-brand-100 text-sm leading-relaxed px-4">
-                    To get funded, borrowers share their loan with their own social graph (Farcaster, Twitter). Distribution is user-generated.
+                    To get funded, borrowers share their loan with their own social graph (Facebook, WhatsApp). Distribution is user-generated.
                   </p>
                 </div>
 
@@ -285,16 +285,16 @@ export default function VisionPage() {
             <div className="relative pl-8 md:pl-12">
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-500 border-4 border-white shadow-sm"></div>
               <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
-                <span className="text-xs font-bold tracking-wider uppercase text-brand-600">Live Now</span>
+                <span className="text-xs font-bold tracking-wider uppercase text-brand-600">In Testing</span>
                 <h3 className="text-2xl font-bold text-gray-900">Revenue-Verified Lending</h3>
               </div>
               <p className="text-gray-600 mb-4 max-w-2xl leading-relaxed">
-                0% interest community loans ($100-$5K) to prove the model. We've built OAuth integrations for Shopify/Stripe, 
-                on-chain repayment tracking, and social sharing rails.
+                0% interest community loans ($100-$5K) to prove the model. Connect Shopify, Stripe, or Square to verify revenue,
+                track repayments on-chain, and share with your network.
               </p>
               <ul className="grid sm:grid-cols-2 gap-2 text-sm text-gray-500">
                 <li className="flex items-center gap-2">
-                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Shopify & Stripe Integrations
+                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Shopify, Stripe & Square
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Trust Score V1
@@ -313,8 +313,8 @@ export default function VisionPage() {
                 <h3 className="text-2xl font-bold text-gray-900">Scale with Returns</h3>
               </div>
               <p className="text-gray-600 mb-4 max-w-2xl leading-relaxed">
-                Introduction of fair interest rates (8-12% APY) to attract institutional capital, contingent on regulatory frameworks. 
-                Focus on creating a sustainable yield for lenders while keeping costs 50% lower than MCAs.
+                Once we can model repayment risk using business metrics combined with social data,
+                we can introduce fair interest rates (8-12% APY) that reward lenders while keeping costs 50% lower than MCAs.
               </p>
             </div>
 
@@ -326,8 +326,8 @@ export default function VisionPage() {
                 <h3 className="text-2xl font-bold text-gray-900">Automated Repayment</h3>
               </div>
               <p className="text-gray-600 max-w-2xl leading-relaxed">
-                Smart contracts that automatically route revenue percentage to repay loans. 
-                "Loans that pay themselves" via streaming payments and merchant stablecoin adoption.
+                AI agents that monitor revenue and automatically route payments to repay loans.
+                "Loans that pay themselves" via autonomous agents, streaming payments, and merchant stablecoin adoption.
               </p>
             </div>
 
