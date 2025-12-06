@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { EyeIcon, ChartBarIcon, BoltIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, ChartBarIcon, BoltIcon, LockClosedIcon, ShieldCheckIcon, UserGroupIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 
 export default function AboutPage() {
   return (
@@ -12,7 +12,7 @@ export default function AboutPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             About LendFriend
           </h1>
-          <p className="text-xl md:text-2xl font-light whitespace-nowrap">Loans backed by your relationships, not your credit score.</p>
+          <p className="text-xl md:text-2xl font-light">Loans backed by your business, not your credit score.</p>
         </div>
       </div>
 
@@ -23,11 +23,11 @@ export default function AboutPage() {
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">What We Do</h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            LendFriend makes it easy for community members to get and give interest-free loans.
-            No banks. No credit checks. No collateral. Just people helping people.
+            LendFriend makes it easy for entrepreneurs and small business owners to access interest-free working capital.
+            No banks. No credit checks. No collateral. Just proof that you're running a real business.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Borrowers share their story publicly, community members vouch by contributing, and contributions from close connections strengthen your trust score algorithmically. Your reputation grows with every successful repayment.
+            Connect your Shopify, Stripe, or Square account to instantly verify your revenue history. Your sales data becomes your trust score. Community members can further vouch for you, and your reputation grows with every successful repayment.
           </p>
         </section>
 
@@ -42,9 +42,9 @@ export default function AboutPage() {
                 <span className="text-white text-lg font-bold">1</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Create a Loan Request</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Connect Your Business</h3>
                 <p className="text-gray-600">
-                  Share your story publicly, set your funding goal (up to $5,000), and choose your repayment timeline.
+                  Link your Shopify, Stripe, or Square account to verify your revenue. Your sales history builds your trust score automatically—no paperwork, no waiting.
                 </p>
               </div>
             </div>
@@ -55,10 +55,9 @@ export default function AboutPage() {
                 <span className="text-white text-lg font-bold">2</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Get Community Support & Share</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Create a Loan Request</h3>
                 <p className="text-gray-600">
-                  Friends and community members vouch for you by contributing. Each contribution strengthens your trust score algorithmically.
-                  Share your loan on Twitter, Farcaster, Bluesky, Facebook and more to expand your network and reach your funding goal faster!
+                  Share your story, set your funding goal (up to $5,000), and choose your repayment timeline. Your verified business data gives lenders confidence.
                 </p>
               </div>
             </div>
@@ -69,10 +68,22 @@ export default function AboutPage() {
                 <span className="text-white text-lg font-bold">3</span>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Repay When You Can</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Get Funded & Grow</h3>
                 <p className="text-gray-600">
-                  Pay back on your timeline. Every successful repayment builds your reputation for future opportunities.
-                  All transactions are transparent and on-chain, and lenders can claim their share as you repay.
+                  Community members fund your loan based on your proven track record. Friends can also vouch to strengthen your trust score. Share on social to reach your goal faster.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-10 h-10 bg-[#3B9B7F] rounded-full flex items-center justify-center">
+                <span className="text-white text-lg font-bold">4</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Repay & Build Reputation</h3>
+                <p className="text-gray-600">
+                  Pay back on your timeline. Every successful repayment builds your reputation for larger future opportunities. All transactions are transparent and on-chain.
                 </p>
               </div>
             </div>
@@ -84,13 +95,10 @@ export default function AboutPage() {
           <div className="bg-green-50 border border-green-200 rounded-xl p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Why 0% Interest?</h2>
             <p className="text-gray-700 leading-relaxed mb-3">
-              We're starting with pure generosity. Zero interest means lenders give because they want to help, not because they're chasing returns. It keeps everything simple and builds real community trust.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-3">
-              Borrowers repay to build their reputation and keep the cycle going. Lenders support people they believe in. And if borrowers want to show extra gratitude, they can leave an optional tip to share with their lenders.
+              We're starting with pure generosity. Zero interest means lenders give because they want to help entrepreneurs succeed, not because they're chasing returns.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              When people succeed here, new opportunities open up—for everyone.
+              Borrowers repay to build their reputation and unlock future opportunities. When people succeed here, new opportunities open up—for everyone.
             </p>
           </div>
         </section>
@@ -99,11 +107,64 @@ export default function AboutPage() {
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Who It's For</h2>
           <ul className="space-y-3 text-lg text-gray-700">
-            <li>• Small business owners needing working capital</li>
-            <li>• Immigrants without local credit history</li>
-            <li>• Gig workers and freelancers with irregular income</li>
-            <li>• People facing unexpected expenses</li>
+            <li className="flex gap-2">
+              <span className="text-[#3B9B7F]">•</span>
+              <span><strong>E-commerce sellers</strong> on Shopify, Stripe, or Square needing inventory capital</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-[#3B9B7F]">•</span>
+              <span><strong>Freelancers and creators</strong> with proven client revenue</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-[#3B9B7F]">•</span>
+              <span><strong>Immigrants</strong> without local credit history but with real businesses</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-[#3B9B7F]">•</span>
+              <span><strong>Gig workers</strong> with irregular but verifiable income</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-[#3B9B7F]">•</span>
+              <span><strong>Anyone</strong> facing unexpected expenses with a track record to show</span>
+            </li>
           </ul>
+        </section>
+
+        {/* How Trust Scores Work */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">How Trust Scores Work</h2>
+
+          <div className="space-y-4">
+            <div className="bg-white border border-gray-200 rounded-xl p-5">
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <ShieldCheckIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Revenue Verification (Primary)
+              </h4>
+              <p className="text-gray-600">
+                Connect Shopify, Stripe, or Square to prove your business is real. We analyze your sales volume, consistency, and growth to generate a trust score.
+              </p>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-xl p-5">
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <UserGroupIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Community Vouching (Secondary)
+              </h4>
+              <p className="text-gray-600">
+                Friends and community members can vouch for you by contributing. Contributions from close connections add extra weight to your score.
+              </p>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-xl p-5">
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <ArrowTrendingUpIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Repayment History
+              </h4>
+              <p className="text-gray-600">
+                Every on-time repayment strengthens your score and unlocks larger loan amounts.
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Why Different */}
@@ -111,6 +172,16 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">What Makes Us Different</h2>
 
           <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-white border border-gray-200 rounded-xl p-5">
+              <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <ShieldCheckIcon className="w-6 h-6 text-[#3B9B7F]" />
+                Verified Revenue
+              </h4>
+              <p className="text-sm text-gray-600">
+                Your Shopify, Stripe, or Square data proves you're running a real business—no credit bureau required.
+              </p>
+            </div>
+
             <div className="bg-white border border-gray-200 rounded-xl p-5">
               <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
                 <EyeIcon className="w-6 h-6 text-[#3B9B7F]" />
@@ -127,7 +198,7 @@ export default function AboutPage() {
                 Algorithmic Trust
               </h4>
               <p className="text-sm text-gray-600">
-                Trust scores based on how well your lenders know you. The closer they are to you, the stronger your score.
+                Trust scores combine verified revenue data with social proximity. The stronger your business and community, the better your terms.
               </p>
             </div>
 
@@ -141,7 +212,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
+            <div className="bg-white border border-gray-200 rounded-xl p-5 md:col-span-2">
               <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
                 <LockClosedIcon className="w-6 h-6 text-[#3B9B7F]" />
                 Self-Custodial
@@ -190,7 +261,7 @@ export default function AboutPage() {
           <div className="bg-[#3B9B7F] rounded-xl p-8 text-center text-white">
             <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-lg mb-6 opacity-90">
-              Browse loans to support or create your own request.
+              Connect your business and get funded today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -200,7 +271,7 @@ export default function AboutPage() {
                 Browse Loans
               </Link>
               <Link
-                href="/create"
+                href="/create-loan"
                 className="inline-block px-8 py-3 bg-[#2E7D68] text-white font-bold rounded-lg hover:bg-[#255A51] transition-colors"
               >
                 Create a Loan
