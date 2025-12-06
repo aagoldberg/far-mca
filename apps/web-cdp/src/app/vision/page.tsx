@@ -363,9 +363,9 @@ export default function VisionPage() {
         </section>
 
         {/* CTA - Simple & Clean */}
-        <section className="bg-gray-900 rounded-3xl p-12 text-center text-white">
+        <section className="bg-gradient-to-br from-brand-600 to-brand-800 rounded-3xl p-12 text-center text-white shadow-xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Join the Future of Credit</h2>
-          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-brand-100 text-lg mb-8 max-w-2xl mx-auto">
             Help us build a fairer financial system based on verification and trust, not just collateral.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
