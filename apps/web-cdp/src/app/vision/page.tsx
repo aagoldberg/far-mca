@@ -111,7 +111,7 @@ export default function VisionPage() {
                 <div className="bg-white p-2 rounded-lg shadow-sm">
                   <UserGroupIcon className="w-6 h-6 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Reputation is Better Than Collateral</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Your Community is Your Collateral</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
                 Get funded by the people who know you best. When your reputation is on the line within your own community, social accountability creates a powerful incentive to repay.
