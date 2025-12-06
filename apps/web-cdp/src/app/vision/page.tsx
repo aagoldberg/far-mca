@@ -89,7 +89,7 @@ export default function VisionPage() {
             <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Solution</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Trust Based on Truth.</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              We replace the outdated FICO score with real-time data. By combining actual sales history with social reputation, we can approve businesses that banks ignore.
+              Traditional credit models look backward. We underwrite based on your reality: real-time revenue and community trust. This allows us to serve the high-potential businesses that legacy finance excludes.
             </p>
           </div>
 
