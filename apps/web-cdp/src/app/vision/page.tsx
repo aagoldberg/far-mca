@@ -83,34 +83,38 @@ export default function VisionPage() {
           </div>
         </section>
 
-        <section className="bg-brand-50 rounded-3xl p-8 md:p-12 border-t-4 border-brand-500">
-          <div className="text-center mb-12 max-w-2xl mx-auto">
+        {/* The Solution - 2 Column Split */}
+        <section className="grid md:grid-cols-12 gap-12 items-start border-t border-gray-100 pt-16">
+          <div className="md:col-span-5">
             <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Solution</span>
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-6">
-              Verified Revenue + Social Accountability
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              We replace the outdated FICO score with real-time truth. By combining your actual sales data with the power of your social reputation, we can lend where banks can't.
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Trust Based on Truth.</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              We replace the outdated FICO score with real-time data. By combining actual sales history with social reputation, we can approve businesses that banks ignore.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-brand-100">
-              <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center mb-6">
-                <ChartBarIcon className="w-6 h-6 text-brand-600" />
+          <div className="md:col-span-7 space-y-6">
+            <div className="bg-brand-50 p-6 rounded-2xl border border-brand-100">
+              <div className="flex items-center gap-4 mb-3">
+                <div className="bg-white p-2 rounded-lg shadow-sm">
+                  <ChartBarIcon className="w-6 h-6 text-brand-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">Your Sales Are Your Credit Score</h3>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Your Sales Are Your Credit Score</h3>
               <p className="text-gray-600 leading-relaxed">
                 Stop relying on credit bureaus. Connect Shopify, Stripe, or Square instantly. We use your verifiable transaction history to prove you can repay.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-brand-100">
-              <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center mb-6">
-                <UserGroupIcon className="w-6 h-6 text-brand-600" />
+
+            <div className="bg-brand-50 p-6 rounded-2xl border border-brand-100">
+              <div className="flex items-center gap-4 mb-3">
+                <div className="bg-white p-2 rounded-lg shadow-sm">
+                  <UserGroupIcon className="w-6 h-6 text-brand-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">Reputation is Better Than Collateral</h3>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Reputation is Better Than Collateral</h3>
               <p className="text-gray-600 leading-relaxed">
-                Get funded by the people who know you best. When your reputation is on the line within your own community, repayment becomes a point of honor, not just a contract.
+                Get funded by the people who know you best. When your reputation is on the line within your own community, repayment becomes a point of honor.
               </p>
             </div>
           </div>
