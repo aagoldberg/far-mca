@@ -82,7 +82,6 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* The Solution - Full Width Band */}
         <section className="bg-brand-50 rounded-3xl p-8 md:p-12 border-t-4 border-brand-500">
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Solution</span>
@@ -90,8 +89,7 @@ export default function VisionPage() {
               Verified Revenue + Social Accountability
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Research shows alternative data predicts repayment better than credit scores. 
-              We combine automated verification with community trust to serve businesses too small for traditional lenders.
+              We replace the outdated FICO score with real-time truth. By combining your actual sales data with the power of your social reputation, we can lend where banks can't.
             </p>
           </div>
 
@@ -100,18 +98,18 @@ export default function VisionPage() {
               <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center mb-6">
                 <ChartBarIcon className="w-6 h-6 text-brand-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Revenue Verification</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Your Sales Are Your Credit Score</h3>
               <p className="text-gray-600 leading-relaxed">
-                Connect Shopify, Stripe, or Square. Your transaction history becomes your trust score—instant, data-driven, and fair.
+                Stop relying on credit bureaus. Connect Shopify, Stripe, or Square instantly. We use your verifiable transaction history to prove you can repay.
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl shadow-sm border border-brand-100">
               <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center mb-6">
                 <UserGroupIcon className="w-6 h-6 text-brand-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Social Accountability</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Reputation is Better Than Collateral</h3>
               <p className="text-gray-600 leading-relaxed">
-                Funded by your community. When people who know you back you, default rates drop significantly.
+                Get funded by the people who know you best. When your reputation is on the line within your own community, repayment becomes a point of honor, not just a contract.
               </p>
             </div>
           </div>
