@@ -83,9 +83,10 @@ export default function VisionPage() {
         </section>
 
         {/* The Solution - Full Width Band */}
-        <section className="bg-brand-50 rounded-3xl p-8 md:p-12">
+        <section className="bg-brand-50 rounded-3xl p-8 md:p-12 border-t-4 border-brand-500">
           <div className="text-center mb-12 max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Solution</span>
+            <h2 className="text-4xl font-extrabold text-gray-900 mb-6">
               Verified Revenue + Social Accountability
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
