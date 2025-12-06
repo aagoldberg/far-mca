@@ -18,14 +18,23 @@ export default function VisionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-brand-600 to-brand-800 text-white py-20 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid-pattern.svg')] opacity-10"></div>
+      <div className="relative bg-gradient-to-b from-brand-600 to-brand-800 py-24 sm:py-32 overflow-hidden isolate">
+        {/* Background Effects */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-[-40%] left-1/2 -translate-x-1/2 w-[200%] aspect-[1/1] rounded-full bg-white/5 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+        </div>
+
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
+          <div className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium text-brand-50 ring-1 ring-inset ring-brand-400/50 mb-6 bg-white/10 backdrop-blur-sm">
             The Vision
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-tight leading-tight">
+            Credit for the <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-100 to-white">Reputation Economy</span>
           </h1>
-          <p className="text-xl md:text-2xl font-light text-brand-50 max-w-2xl mx-auto leading-relaxed">
-            Web3 infrastructure for uncollateralized credit—powered by revenue verification and community trust.
+          <p className="text-xl md:text-2xl text-brand-50 max-w-2xl mx-auto leading-relaxed font-light">
+            Web3 infrastructure for uncollateralized credit—powered by verified revenue and community trust.
           </p>
         </div>
       </div>
