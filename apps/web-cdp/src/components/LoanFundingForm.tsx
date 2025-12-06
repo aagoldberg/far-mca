@@ -80,6 +80,8 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const [step, setStep] = useState<'input' | 'approve' | 'contribute' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isMintingUSDC, setIsMintingUSDC] = useState(false);
+  const [isRequestingETH, setIsRequestingETH] = useState(false);
 
   // Check for both external wallet (wagmi) and CDP embedded wallet
   const { address: externalAddress, isConnected: isExternalConnected } = useAccount();
@@ -97,7 +99,7 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
   const isCdpWallet = !!cdpAddress && !isExternalConnected;
 
   const { loanData, isLoading: loanLoading } = useLoanData(loanAddress);
-  const { balance: usdcBalance, balanceFormatted } = useUSDCBalance(address);
+  const { balance: usdcBalance, balanceFormatted, refetch: refetchUSDC } = useUSDCBalance(address);
 
   // Get ETH balance for gas estimation
   const { data: ethBalance, refetch: refetchEthBalance } = useBalance({
@@ -349,8 +351,56 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
     console.log('[Funding] Funding complete, rechecking balances');
     // Refetch balances
     await refetchEthBalance();
-    // USDC balance will auto-refresh via the hook
-    // The useEffect will automatically update needsFunding state
+    await refetchUSDC();
+  };
+
+  // Faucet functions for test tokens
+  const requestETH = async () => {
+    if (!address) return;
+    setIsRequestingETH(true);
+    try {
+      const response = await fetch('/api/faucet-eth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recipientAddress: address }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setTimeout(() => refetchEthBalance(), 2000);
+        setTimeout(() => refetchEthBalance(), 4000);
+      } else {
+        alert(data.error || 'Failed to get ETH');
+      }
+    } catch (error) {
+      console.error('ETH faucet error:', error);
+      alert('Failed to request ETH');
+    } finally {
+      setIsRequestingETH(false);
+    }
+  };
+
+  const mintTestUSDC = async () => {
+    if (!address) return;
+    setIsMintingUSDC(true);
+    try {
+      const response = await fetch('/api/faucet-usdc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recipientAddress: address }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setTimeout(() => refetchUSDC(), 2000);
+        setTimeout(() => refetchUSDC(), 4000);
+      } else {
+        alert(data.error || 'Failed to get USDC');
+      }
+    } catch (error) {
+      console.error('USDC faucet error:', error);
+      alert('Failed to request USDC');
+    } finally {
+      setIsMintingUSDC(false);
+    }
   };
 
   const handleFund = async () => {
@@ -647,12 +697,54 @@ export default function LoanFundingForm({ loanAddress }: LoanFundingFormProps) {
         <h1 className="text-[22px] font-semibold text-gray-900">Fund this loan</h1>
       </div>
 
+      {/* Wallet Balances */}
+      <div className="bg-gray-50 rounded-xl p-4 mb-6">
+        <p className="text-[13px] font-medium text-gray-500 uppercase tracking-wide mb-3">Your wallet</p>
+        <div className="flex items-center gap-3">
+          {/* USDC Balance */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-gray-200">
+              <div className="w-5 h-5 rounded-full bg-[#2775CA] flex items-center justify-center">
+                <span className="text-white text-[10px] font-bold">$</span>
+              </div>
+              <span className="text-[14px] font-semibold text-gray-900">{balanceFormatted}</span>
+            </div>
+            <button
+              onClick={mintTestUSDC}
+              disabled={isMintingUSDC}
+              className="w-6 h-6 flex items-center justify-center text-xs text-brand-600 hover:text-white hover:bg-brand-600 font-bold border border-brand-300 hover:border-brand-600 rounded disabled:text-gray-400 disabled:border-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
+              title="Get test USDC"
+            >
+              {isMintingUSDC ? '·' : '+'}
+            </button>
+          </div>
+
+          {/* ETH Balance */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-gray-200">
+              <div className="w-5 h-5 rounded-full bg-[#627EEA] flex items-center justify-center">
+                <span className="text-white text-[10px] font-bold">E</span>
+              </div>
+              <span className="text-[14px] font-semibold text-gray-900">
+                {ethBalance?.value ? parseFloat(formatUnits(ethBalance.value, 18)).toFixed(4) : '0.0000'}
+              </span>
+              <span className="text-[12px] text-gray-500">ETH</span>
+            </div>
+            <button
+              onClick={requestETH}
+              disabled={isRequestingETH}
+              className="w-6 h-6 flex items-center justify-center text-xs text-brand-600 hover:text-white hover:bg-brand-600 font-bold border border-brand-300 hover:border-brand-600 rounded disabled:text-gray-400 disabled:border-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
+              title="Get test ETH"
+            >
+              {isRequestingETH ? '·' : '+'}
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Amount Selection */}
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-[14px] font-medium text-gray-700">Select amount</p>
-          <p className="text-[13px] text-gray-500">Balance: <span className="text-gray-900 font-medium">${balanceFormatted}</span></p>
-        </div>
+        <p className="text-[14px] font-medium text-gray-700 mb-3">Select amount</p>
         <div className="grid grid-cols-4 gap-2 mb-3">
           {presetAmounts.map((preset) => (
             <button

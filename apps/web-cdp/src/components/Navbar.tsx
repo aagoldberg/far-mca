@@ -10,7 +10,6 @@ import { UserMenu } from './UserMenu';
 import { AuthModal } from './AuthModal';
 import { RotatingText } from './RotatingText';
 import { LendFriendLogo } from './LendFriendLogo';
-import { WalletBalance } from './WalletBalance';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FarcasterOnboardingModal } from './FarcasterOnboardingModal';
 import { useFarcasterAccount } from '@/hooks/useFarcasterAccount';
@@ -235,13 +234,6 @@ export default function Navbar() {
                     )}
                   </div>
 
-                  {/* Wallet balances - show when connected */}
-                  {isAuthenticated && (
-                    <div className="w-full">
-                      <WalletBalance forceDesktopView={true} />
-                    </div>
-                  )}
-
                   {/* Create loan button - only show when not connected */}
                   {!isAuthenticated && (
                     <div className="w-full">
@@ -396,9 +388,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Right: Wallet Balance, Auth Buttons and User Menu */}
+          {/* Right: Auth Buttons and User Menu */}
           <div className="flex-shrink-0 flex items-center space-x-3">
-            {isAuthenticated && <WalletBalance />}
             <Link
               href="/create-loan"
               className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2.5 px-5 rounded-full shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"

@@ -1,26 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useBalance, usePublicClient, useWalletClient } from 'wagmi';
+import { useState } from 'react';
+import { useBalance } from 'wagmi';
 import { useEvmAddress } from '@coinbase/cdp-hooks';
 import { formatUnits } from 'viem';
+import Link from 'next/link';
 
 const USDC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}`;
 
 export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?: boolean }) {
   const { evmAddress: walletAddress } = useEvmAddress();
-  const [isMinting, setIsMinting] = useState(false);
-  const [isRequestingEth, setIsRequestingEth] = useState(false);
-  const publicClient = usePublicClient();
-  const { data: walletClient } = useWalletClient();
+  const [showTooltip, setShowTooltip] = useState(false);
 
   // Get ETH balance
-  const { data: ethBalance, isLoading: ethLoading, refetch: refetchEth } = useBalance({
+  const { data: ethBalance, isLoading: ethLoading } = useBalance({
     address: walletAddress,
   });
 
   // Get USDC balance
-  const { data: usdcBalance, isLoading: usdcLoading, refetch: refetchUsdc } = useBalance({
+  const { data: usdcBalance, isLoading: usdcLoading } = useBalance({
     address: walletAddress,
     token: USDC_CONTRACT_ADDRESS,
   });
@@ -33,152 +31,66 @@ export function WalletBalance({ forceDesktopView = false }: { forceDesktopView?:
     if (!balance) return '0.00';
     const formatted = formatUnits(balance, decimals);
     const num = parseFloat(formatted);
+    if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)}k`;
+    }
     return num < 0.01 && num > 0 ? '<0.01' : num.toFixed(2);
   };
 
-  // Faucet URLs - Circle faucet for USDC, Alchemy for ETH
-  const ethFaucetUrl = `https://www.alchemy.com/faucets/base-sepolia`;
-  const usdcFaucetUrl = `https://faucet.circle.com/`;
+  const usdcFormatted = formatBalance(usdcBalance?.value, 6);
 
-  const copyAddress = () => {
-    navigator.clipboard.writeText(walletAddress);
-  };
-
-  const requestEth = async () => {
-    if (!walletAddress) {
-      alert('Please connect your wallet first');
-      return;
-    }
-
-    setIsRequestingEth(true);
-    try {
-      const response = await fetch('/api/faucet-eth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ recipientAddress: walletAddress }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log(`Successfully received ${data.amount} ETH!`);
-        // Refetch balance multiple times to overcome caching
-        setTimeout(() => refetchEth(), 2000);
-        setTimeout(() => refetchEth(), 4000);
-        setTimeout(() => refetchEth(), 6000);
-      } else {
-        console.error('Failed to get ETH:', data.error);
-        console.error('ETH faucet failed:', data.error);
-        // Toast notification would be better than alert
-        alert(data.error || 'Failed to get ETH. Please try again.');
-      }
-    } catch (error: any) {
-      console.error('Faucet error:', error);
-      alert('Failed to request ETH from faucet. Please check your connection and try again.');
-    } finally {
-      setIsRequestingEth(false);
-    }
-  };
-
-  const mintTestUSDC = async () => {
-    if (!walletAddress) {
-      alert('Please connect your wallet first');
-      return;
-    }
-
-    setIsMinting(true);
-    try {
-      const response = await fetch('/api/faucet-usdc', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ recipientAddress: walletAddress }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log(`Successfully received ${data.amount} USDC!`);
-        // Refetch balance multiple times to overcome caching
-        setTimeout(() => refetchUsdc(), 2000);
-        setTimeout(() => refetchUsdc(), 4000);
-        setTimeout(() => refetchUsdc(), 6000);
-      } else {
-        console.error('Failed to get USDC:', data.error);
-        console.error('USDC faucet failed:', data.error);
-        alert(data.error || 'Failed to get USDC. Please try again.');
-      }
-    } catch (error: any) {
-      console.error('Faucet error:', error);
-      alert('Failed to request USDC from faucet. Please check your connection and try again.');
-    } finally {
-      setIsMinting(false);
-    }
-  };
-
-  // Desktop view component
+  // Desktop view component - just shows USDC balance
   const DesktopView = () => (
-    <div className="flex items-center gap-4 text-sm">
-      {/* ETH Balance */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-          <span className="text-slate-500 font-medium">ETH</span>
-          <span className="font-semibold text-slate-800">
-            {isLoading ? (
-              <span className="text-slate-400">...</span>
-            ) : (
-              formatBalance(ethBalance?.value, 18)
-            )}
-          </span>
+    <div
+      className="relative flex items-center"
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
+      <div className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 pl-3 pr-3 py-2 rounded-full cursor-default transition-colors">
+        {/* USDC Icon */}
+        <div className="w-5 h-5 rounded-full bg-[#2775CA] flex items-center justify-center">
+          <span className="text-white text-[10px] font-bold">$</span>
         </div>
-        <button
-          onClick={requestEth}
-          disabled={isRequestingEth}
-          className="w-5 h-5 flex items-center justify-center text-xs text-brand-600 hover:text-white hover:bg-brand-600 font-bold border border-brand-300 hover:border-brand-600 rounded disabled:text-gray-400 disabled:border-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
-          title="Get test ETH"
-        >
-          {isRequestingEth ? '·' : '+'}
-        </button>
+        <span className="text-[14px] font-semibold text-gray-900">
+          {isLoading ? (
+            <span className="text-gray-400">...</span>
+          ) : (
+            usdcFormatted
+          )}
+        </span>
       </div>
 
-      {/* USDC Balance */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-          <span className="text-slate-500 font-medium">USDC</span>
-          <span className="font-semibold text-slate-800">
-            {isLoading ? (
-              <span className="text-slate-400">...</span>
-            ) : (
-              formatBalance(usdcBalance?.value, 6)
-            )}
-          </span>
+      {/* Tooltip with full balances */}
+      {showTooltip && (
+        <div className="absolute top-full right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-200 p-3 z-50 min-w-[180px]">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[13px] text-gray-500">USDC</span>
+              <span className="text-[13px] font-semibold text-gray-900">
+                ${formatUnits(usdcBalance?.value || 0n, 6)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[13px] text-gray-500">ETH</span>
+              <span className="text-[13px] font-semibold text-gray-900">
+                {parseFloat(formatUnits(ethBalance?.value || 0n, 18)).toFixed(4)}
+              </span>
+            </div>
+          </div>
         </div>
-        <button
-          onClick={mintTestUSDC}
-          disabled={isMinting}
-          className="w-5 h-5 flex items-center justify-center text-xs text-brand-600 hover:text-white hover:bg-brand-600 font-bold border border-brand-300 hover:border-brand-600 rounded disabled:text-gray-400 disabled:border-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
-          title="Get test USDC"
-        >
-          {isMinting ? '·' : '+'}
-        </button>
-      </div>
+      )}
     </div>
   );
 
   // Mobile view component
   const MobileView = () => (
-    <div className="flex items-center gap-3 text-xs">
-      <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md">
-        <span className="text-slate-500">ETH</span>
-        <span className="font-semibold text-slate-800">
-          {isLoading ? '...' : formatBalance(ethBalance?.value, 18)}
-        </span>
+    <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-full">
+      <div className="w-4 h-4 rounded-full bg-[#2775CA] flex items-center justify-center">
+        <span className="text-white text-[8px] font-bold">$</span>
       </div>
-      <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md">
-        <span className="text-slate-500">USDC</span>
-        <span className="font-semibold text-slate-800">
-          {isLoading ? '...' : formatBalance(usdcBalance?.value, 6)}
-        </span>
-      </div>
+      <span className="text-[13px] font-semibold text-gray-900">
+        {isLoading ? '...' : usdcFormatted}
+      </span>
     </div>
   );
 
