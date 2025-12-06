@@ -114,7 +114,7 @@ export default function VisionPage() {
                 <h3 className="text-xl font-bold text-gray-900">Reputation is Better Than Collateral</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Get funded by the people who know you best. When your reputation is on the line within your own community, repayment becomes a point of honor.
+                Get funded by the people who know you best. When your reputation is on the line within your own community, social accountability creates a powerful incentive to repay.
               </p>
             </div>
           </div>
