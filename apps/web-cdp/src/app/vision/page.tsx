@@ -196,8 +196,8 @@ export default function VisionPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Distribution & Growth</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              The viral mechanics of P2P networks are well-documented in academia and battle-tested in industry. 
-              The capital exists; the challenge is simply connecting it efficiently.
+              The viral mechanics of crowdlending networks are well-documented in academia and battle-tested in industry. 
+              The capital exists; the challenge is activating it through trusted social networks.
             </p>
           </div>
 
