@@ -2,6 +2,19 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+  BuildingLibraryIcon,
+  ChartBarIcon,
+  LockClosedIcon,
+  CheckCircleIcon,
+  UserGroupIcon,
+  ArrowTrendingUpIcon,
+  CurrencyDollarIcon,
+  ArrowPathIcon,
+  BoltIcon,
+  GlobeAltIcon,
+  WrenchScrewdriverIcon,
+} from '@heroicons/react/24/outline';
 
 export default function VisionPage() {
   return (
@@ -23,14 +36,74 @@ export default function VisionPage() {
         {/* The Problem */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">The Problem</h2>
-          <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-            <p>
-              Millions of entrepreneurs run real businesses with verifiable revenue—Shopify sellers, Stripe merchants, Square vendors.
-              They have transaction history, customer reviews, and proven cashflow. To grow, they need working capital.
+          <p className="text-lg text-gray-700 leading-relaxed mb-6">
+            Millions of entrepreneurs run real businesses with verifiable revenue—Shopify sellers, Stripe merchants, Square vendors.
+            They have transaction history, customer reviews, and proven cashflow. To grow, they need working capital.
+          </p>
+
+          {/* Problem bullets with icons */}
+          <div className="space-y-3 mb-8">
+            <div className="flex items-start gap-3">
+              <BuildingLibraryIcon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-medium text-gray-900">Banks require 680+ credit</span>
+                <span className="text-gray-600"> — 2+ years history, collateral, weeks of paperwork</span>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <ChartBarIcon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-medium text-gray-900">Platform MCAs need $10K+/month</span>
+                <span className="text-gray-600"> — Wayflyer, Shopify Capital exclude smaller sellers</span>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <LockClosedIcon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-medium text-gray-900">DeFi demands 150% collateral</span>
+                <span className="text-gray-600"> — defeats the purpose of credit</span>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-gray-900 font-medium mb-8">Millions fall through the cracks.</p>
+
+          {/* THE SOLUTION */}
+          <div className="border-2 border-[#2E7D68] rounded-2xl p-8 md:p-10 mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              Verified Revenue + Social Accountability
+            </h3>
+
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              Research shows alternative business data predicts repayment better than credit scores (Upstart, FinRegLab),
+              and social accountability further reduces defaults (Grameen, Kiva US). We combine both—that's how we serve
+              businesses too small for traditional lenders.
             </p>
-            <p>
-              But traditional lending fails them:
-            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#ECFDF5] rounded-xl flex-shrink-0">
+                  <ChartBarIcon className="w-7 h-7 text-[#2E7D68]" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-1">Revenue Verification</h4>
+                  <p className="text-gray-600">
+                    Connect Shopify, Stripe, or Square. Your transaction history becomes your trust score.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#ECFDF5] rounded-xl flex-shrink-0">
+                  <UserGroupIcon className="w-7 h-7 text-[#2E7D68]" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-1">Social Accountability</h4>
+                  <p className="text-gray-600">
+                    Funded by your community—people who know you and want you to succeed.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Comparison Table */}
@@ -96,11 +169,11 @@ export default function VisionPage() {
                   <td className="p-3 border-b border-gray-100 text-center text-[#2E7D68] font-semibold">Your community</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-medium text-gray-700">Default Consequence</td>
-                  <td className="p-3 text-center text-gray-600">Credit damage</td>
-                  <td className="p-3 text-center text-gray-600">Platform lockout</td>
-                  <td className="p-3 text-center text-gray-600">Liquidation</td>
-                  <td className="p-3 text-center text-[#2E7D68] font-semibold">Social accountability</td>
+                  <td className="p-3 font-medium text-gray-700">Trust Model<sup className="text-gray-400">6</sup></td>
+                  <td className="p-3 text-center text-gray-600">Credit bureau</td>
+                  <td className="p-3 text-center text-gray-600">Platform data only</td>
+                  <td className="p-3 text-center text-gray-600">Overcollateralization</td>
+                  <td className="p-3 text-center text-[#2E7D68] font-semibold">Revenue + social (97%+ repay)</td>
                 </tr>
               </tbody>
             </table>
@@ -110,6 +183,7 @@ export default function VisionPage() {
               <p><sup>3</sup> Wayflyer: <a href="https://help-center.wayflyer.com/en/articles/96332-are-there-any-fees" className="underline" target="_blank" rel="noopener">2-8% fee</a>; Shopify/Square: 10-16% factor rate (<a href="https://www.business.org/finance/loans/square-capital-review/" className="underline" target="_blank" rel="noopener">Business.org</a>)</p>
               <p><sup>4</sup> Wayflyer: <a href="https://help-center.wayflyer.com/en/articles/96317-what-are-the-requirements-to-get-funding-from-wayflyer" className="underline" target="_blank" rel="noopener">$10K/mo minimum (US)</a>; Square: <a href="https://squareup.com/help/us/en/article/6454-square-capital-eligibility-faqs" className="underline" target="_blank" rel="noopener">$10K/yr processing</a>; Shopify: invite-only, undisclosed</p>
               <p><sup>5</sup> Wayflyer: <a href="https://help-center.wayflyer.com/en/articles/96317-what-are-the-requirements-to-get-funding-from-wayflyer" className="underline" target="_blank" rel="noopener">6+ months for e-commerce</a>; Shopify: <a href="https://help.shopify.com/en/manual/finance/shopify-capital/eligibility" className="underline" target="_blank" rel="noopener">3+ months active</a></p>
+              <p><sup>6</sup> Social lending achieves 97%+ repayment: <a href="https://en.wikipedia.org/wiki/Grameen_Bank" className="underline" target="_blank" rel="noopener">Grameen Bank</a> (98%), <a href="https://www.kiva.org/about/how" className="underline" target="_blank" rel="noopener">Kiva</a> (96.4%). Research shows combining revenue verification with social accountability reduces defaults vs. either alone (<a href="https://www.researchgate.net/publication/256035318_Grameen_Bank_Lending_Does_Group_Liability_Matter" className="underline" target="_blank" rel="noopener">ResearchGate</a>)</p>
             </div>
           </div>
 
@@ -260,115 +334,91 @@ export default function VisionPage() {
 
         {/* Our Approach */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Approach</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">How It Works</h2>
 
-          <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-            We're building web3-native identity and reputation for small business lending. Instead of credit scores,
-            we use <strong>verified revenue data</strong>. Instead of banks, we use <strong>community capital</strong>.
-            Instead of collateral, we use <strong>progressive trust</strong>.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="border border-gray-200 rounded-lg p-6">
-              <h3 className="font-bold text-gray-900 mb-3">Revenue Verification</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Connect Shopify, Stripe, or Square. Your transaction history becomes your trust score.
-              </p>
-              <p className="text-xs text-gray-500">
-                Research shows cashflow data predicts repayment as effectively as credit scores—without excluding the credit-invisible.
-              </p>
+          <div className="space-y-4">
+            <div className="flex items-start gap-4 p-4 border border-gray-200 rounded-xl">
+              <ChartBarIcon className="w-6 h-6 text-[#2E7D68] mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-bold text-gray-900 mb-1">Revenue Verification</h3>
+                <p className="text-sm text-gray-600">
+                  Connect Shopify, Stripe, or Square. Your transaction history becomes your trust score—no credit bureau needed.
+                </p>
+              </div>
             </div>
-            <div className="border border-gray-200 rounded-lg p-6">
-              <h3 className="font-bold text-gray-900 mb-3">Community Capital</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Funded by friends, family, customers, and believers—people who know you and want you to succeed.
-              </p>
-              <p className="text-xs text-gray-500">
-                No anonymous institutional capital. Lenders have skin in the game beyond yield.
-              </p>
+            <div className="flex items-start gap-4 p-4 border border-gray-200 rounded-xl">
+              <UserGroupIcon className="w-6 h-6 text-[#2E7D68] mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-bold text-gray-900 mb-1">Community Capital</h3>
+                <p className="text-sm text-gray-600">
+                  Funded by friends, family, customers, and believers—people who know you and want you to succeed.
+                </p>
+              </div>
             </div>
-            <div className="border border-gray-200 rounded-lg p-6">
-              <h3 className="font-bold text-gray-900 mb-3">Progressive Trust</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Start small ($100-$5K). Each successful repayment unlocks larger amounts.
-              </p>
-              <p className="text-xs text-gray-500">
-                Social accountability: defaulting means letting down people who believed in you—not an anonymous protocol.
-              </p>
+            <div className="flex items-start gap-4 p-4 border border-gray-200 rounded-xl">
+              <ArrowTrendingUpIcon className="w-6 h-6 text-[#2E7D68] mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-bold text-gray-900 mb-1">Progressive Trust</h3>
+                <p className="text-sm text-gray-600">
+                  Start small ($100-$5K). Each successful repayment builds reputation and unlocks larger amounts.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Who This Serves */}
+        {/* Distribution */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Who This Serves</h2>
-          <p className="text-gray-600 mb-6">
-            Entrepreneurs with real businesses but limited access to traditional credit:
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Distribution</h2>
+          <p className="text-gray-700 mb-6">
+            Social lending has a proven lender base. The question isn't <em>if</em> people will fund strangers—it's how to reach them.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="font-semibold text-gray-900 mb-1">E-commerce Sellers</p>
-              <p className="text-xs text-gray-500">Shopify, Etsy, Amazon</p>
+
+          {/* Market Proof */}
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            <div className="flex items-start gap-3 bg-[#ECFDF5] border border-[#3B9B7F]/30 rounded-xl p-4">
+              <UserGroupIcon className="w-5 h-5 text-[#2E7D68] mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="text-xl font-bold text-[#2E7D68]">150M+</div>
+                <p className="text-sm text-gray-600">GoFundMe donors</p>
+                <p className="text-xs text-gray-500">$30B+ raised</p>
+              </div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="font-semibold text-gray-900 mb-1">Service Providers</p>
-              <p className="text-xs text-gray-500">Freelancers, contractors</p>
+            <div className="flex items-start gap-3 bg-[#ECFDF5] border border-[#3B9B7F]/30 rounded-xl p-4">
+              <CurrencyDollarIcon className="w-5 h-5 text-[#2E7D68] mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="text-xl font-bold text-[#2E7D68]">2M+</div>
+                <p className="text-sm text-gray-600">Kiva lenders</p>
+                <p className="text-xs text-gray-500">$2B+ loaned</p>
+              </div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="font-semibold text-gray-900 mb-1">New Americans</p>
-              <p className="text-xs text-gray-500">No US credit history</p>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="font-semibold text-gray-900 mb-1">Local Businesses</p>
-              <p className="text-xs text-gray-500">Restaurants, salons, shops</p>
+            <div className="flex items-start gap-3 bg-[#ECFDF5] border border-[#3B9B7F]/30 rounded-xl p-4">
+              <ArrowPathIcon className="w-5 h-5 text-[#2E7D68] mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="text-xl font-bold text-[#2E7D68]">50%+</div>
+                <p className="text-sm text-gray-600">Repeat donors</p>
+                <p className="text-xs text-gray-500">GoFundMe retention</p>
+              </div>
             </div>
           </div>
-        </section>
 
-        {/* Growth Model */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Growth Model</h2>
-          <p className="text-gray-600 mb-8">
-            Every borrower becomes a distribution channel by sharing their loan with their network.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="text-4xl font-bold text-[#2E7D68]">0.7-1.2</div>
-                <div>
-                  <p className="font-semibold text-gray-900">Viral Coefficient</p>
-                  <p className="text-sm text-gray-500">Each user brings 0.7-1.2 new users</p>
-                </div>
-              </div>
-              <div className="space-y-3 text-sm text-gray-600">
-                <div className="flex gap-3">
-                  <span className="font-bold text-[#2E7D68]">1.</span>
-                  <span>Borrower creates loan request</span>
-                </div>
-                <div className="flex gap-3">
-                  <span className="font-bold text-[#2E7D68]">2.</span>
-                  <span>Shares to 50-200 people (social, Farcaster)</span>
-                </div>
-                <div className="flex gap-3">
-                  <span className="font-bold text-[#2E7D68]">3.</span>
-                  <span>10-20% convert to lenders</span>
-                </div>
-                <div className="flex gap-3">
-                  <span className="font-bold text-[#2E7D68]">4.</span>
-                  <span>Lenders become future borrowers</span>
-                </div>
-              </div>
+          {/* Viral Loop */}
+          <div className="bg-gray-50 rounded-xl p-6">
+            <h3 className="font-bold text-gray-900 mb-4">Built-In Viral Loop</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Every borrower shares their loan to get funded. Research shows social networks in P2P lending
+              increase funding success, lower interest rates, and reduce defaults.<sup>*</sup>
+            </p>
+            <div className="flex flex-wrap gap-2 text-sm">
+              <span className="bg-white border border-gray-200 px-3 py-1 rounded-full">Borrower shares → Friends fund</span>
+              <span className="text-gray-400">→</span>
+              <span className="bg-white border border-gray-200 px-3 py-1 rounded-full">Funders become borrowers</span>
+              <span className="text-gray-400">→</span>
+              <span className="bg-white border border-gray-200 px-3 py-1 rounded-full">Network grows</span>
             </div>
-            <div className="flex items-center justify-center">
-              <Image
-                src="/images/viral.png"
-                alt="Viral Growth Network Effect"
-                width={400}
-                height={300}
-                className="rounded-lg w-full h-auto"
-              />
-            </div>
+            <p className="text-xs text-gray-500 mt-4">
+              <sup>*</sup> <a href="https://dl.acm.org/doi/10.1287/mnsc.1120.1560" className="underline" target="_blank" rel="noopener">Management Science</a>: "Friendships increase the probability of successful funding, lower interest rates, and are associated with lower default rates."
+            </p>
           </div>
         </section>
 
@@ -468,78 +518,32 @@ export default function VisionPage() {
         {/* Why Now */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Now</h2>
-          <p className="text-gray-600 mb-6">
-            Five years ago, this wasn't possible. Today:
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <CurrencyDollarIcon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-medium text-gray-900">Stablecoins</span>
+                <span className="text-gray-600"> — $0.01 transactions on Base L2 make micro-loans viable</span>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <WrenchScrewdriverIcon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-medium text-gray-900">Platform APIs</span>
+                <span className="text-gray-600"> — Shopify, Stripe, Square enable real-time revenue verification</span>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <GlobeAltIcon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-medium text-gray-900">Open social graphs</span>
+                <span className="text-gray-600"> — Farcaster provides verifiable, portable identity</span>
+              </div>
+            </div>
+          </div>
+          <p className="text-gray-700 mt-4 text-sm">
+            The infrastructure finally exists to combine what works: cashflow underwriting + social accountability + low-cost rails.
           </p>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 text-sm">Open Social Graphs</h4>
-              <p className="text-xs text-gray-600">
-                Farcaster, Bluesky provide verifiable social connections with wallet-based identity.
-              </p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 text-sm">Stablecoin Rails</h4>
-              <p className="text-xs text-gray-600">
-                USDC on Base: $0.01 transactions, instant settlement. Finally viable for small loans.
-              </p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 text-sm">Cashflow APIs</h4>
-              <p className="text-xs text-gray-600">
-                Plaid, Shopify, Square APIs enable real-time revenue verification.
-              </p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 text-sm">Account Abstraction</h4>
-              <p className="text-xs text-gray-600">
-                ERC-4337 enables programmable wallets with payment streams (maturing).
-              </p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 text-sm">On-Chain Reputation</h4>
-              <p className="text-xs text-gray-600">
-                ENS, POAPs, DAO participation create portable identity traditional credit misses.
-              </p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 text-sm">Research Foundation</h4>
-              <p className="text-xs text-gray-600">
-                30+ papers validate social proximity lending (Kiva, Grameen, Prosper).
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Principles */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Principles</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="border-l-4 border-[#3B9B7F] pl-4 py-2">
-              <h3 className="font-bold text-gray-900 mb-1">Transparent by Default</h3>
-              <p className="text-sm text-gray-600">
-                All loans, repayments, and scoring on-chain. No black boxes.
-              </p>
-            </div>
-            <div className="border-l-4 border-[#3B9B7F] pl-4 py-2">
-              <h3 className="font-bold text-gray-900 mb-1">Research-Driven</h3>
-              <p className="text-sm text-gray-600">
-                Following validated models from Kiva, Grameen, Prosper, Branch.
-              </p>
-            </div>
-            <div className="border-l-4 border-[#3B9B7F] pl-4 py-2">
-              <h3 className="font-bold text-gray-900 mb-1">Identity-Based</h3>
-              <p className="text-sm text-gray-600">
-                Real people with persistent identities. Not anonymous DeFi.
-              </p>
-            </div>
-            <div className="border-l-4 border-[#3B9B7F] pl-4 py-2">
-              <h3 className="font-bold text-gray-900 mb-1">Mission-First</h3>
-              <p className="text-sm text-gray-600">
-                Start altruistic (0%), evolve to sustainable. Never extractive.
-              </p>
-            </div>
-          </div>
         </section>
 
         {/* CTA */}
