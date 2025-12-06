@@ -208,9 +208,10 @@ export function InlineFundingSection({
             <span>Add ${defaultAmount} USDC</span>
           )}
         </button>
-        <p className="text-[11px] text-gray-400 text-center mt-2">
-          Powered by Coinbase
-        </p>
+        <div className="flex items-center justify-center gap-1.5 mt-2">
+          <span className="text-[11px] text-gray-400">Powered by</span>
+          <img src="/logos/coinbase/SVG/Coinbase_Wordmark.svg" alt="Coinbase" className="h-3" />
+        </div>
       </div>
     </div>
   );
