@@ -138,28 +138,10 @@ export default function EconomicContextPage() {
             </div>
             <div className="md:col-span-8">
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Platform lenders like Shopify Capital and Stripe Capital filled part of the gap. They control payment rails—seeing every transaction and auto-deducting repayments. It works: merchants funded see 36% higher growth
-                <Ref id={35} title="Shopify Capital Impact" url="https://www.shopify.com/blog/capital-effect-on-business-growth" />. But they're invite-only, gatekept to their own platforms, and charge 20-50% APR.
+                While the new economy boomed, the financial system remained stuck in the past. Banks couldn't verify income, and fintechs hit structural walls.
               </p>
-              
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                  <LockClosedIcon className="w-8 h-8 text-gray-400 mb-4" />
-                  <h4 className="font-bold text-gray-900 mb-2">The Gatekeepers</h4>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    Platform lenders like Shopify Capital filled part of the gap by controlling payment rails. But they're invite-only and gatekept to their own platforms.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                  <ChartBarIcon className="w-8 h-8 text-gray-400 mb-4" />
-                  <h4 className="font-bold text-gray-900 mb-2">The Failures</h4>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    Standalone lenders (Clearco, Wayflyer) faced challenges due to high capital costs and lack of control over payment rails. Unlike platform lenders, they cannot auto-deduct repayment from every sale, increasing risk.
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex items-start gap-4 mb-6">
+              <div className="flex items-start gap-4 mb-8">
                 <div className="p-2 bg-brand-100 rounded-full mt-1">
                   <GlobeAltIcon className="w-5 h-5 text-brand-600" />
                 </div>
@@ -170,20 +152,26 @@ export default function EconomicContextPage() {
                   </p>
                 </div>
               </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-2 bg-gray-100 rounded-full mt-1">
-                  <BuildingLibraryIcon className="w-5 h-5 text-gray-500" />
+              
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                  <LockClosedIcon className="w-8 h-8 text-gray-400 mb-4" />
+                  <h4 className="font-bold text-gray-900 mb-2">The Gatekeepers</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    Platform lenders like Shopify Capital filled part of the gap by controlling payment rails. It works—merchants funded see 36% higher growth <Ref id={35} title="Shopify Capital Impact" url="https://www.shopify.com/blog/capital-effect-on-business-growth" />. But they're invite-only and gatekept.
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-1">The Lesson</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Embedded lenders succeed by controlling the cash flow. Standalone lenders struggle without that leverage. 
-                    To build a truly open credit system, we need a new mechanism to ensure repayment: Social Trust.
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                  <ChartBarIcon className="w-8 h-8 text-gray-400 mb-4" />
+                  <h4 className="font-bold text-gray-900 mb-2">The Challenge</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    Standalone lenders (Clearco, Wayflyer) faced challenges due to high capital costs and lack of control over payment rails. Unlike platform lenders, they cannot auto-deduct repayment from every sale, increasing risk.
                   </p>
                 </div>
               </div>
-            </div>
+
+              <div className="flex items-start gap-4">
+
           </div>
 
           <div className="w-full h-px bg-gray-100" />
