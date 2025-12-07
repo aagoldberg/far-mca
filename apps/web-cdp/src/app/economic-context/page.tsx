@@ -177,8 +177,8 @@ export default function EconomicContextPage() {
                 <div>
                   <h4 className="font-bold text-gray-900 mb-1">The Lesson</h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Embedded lenders succeed because they control payment rails. Standalone lenders fail because they can't. 
-                    To build a truly open credit system, we need a different form of collateral.
+                    Embedded lenders succeed by controlling the cash flow. Standalone lenders struggle without that leverage. 
+                    To build a truly open credit system, we need a new mechanism to ensure repayment: Social Trust.
                   </p>
                 </div>
               </div>
