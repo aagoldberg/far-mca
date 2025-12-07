@@ -124,17 +124,6 @@ export default function EconomicContextPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="p-2 bg-brand-100 rounded-full mt-1">
-                  <GlobeAltIcon className="w-5 h-5 text-brand-600" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-1">The Paradox</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Platform income is more verifiable than traditional employment—Shopify sees every sale—yet banks won't accept it. They require W-2s that don't exist for the new economy.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -166,6 +155,18 @@ export default function EconomicContextPage() {
                   <h4 className="font-bold text-gray-900 mb-2">The Failures</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
                     Standalone lenders (Clearco, Wayflyer) faced challenges due to high capital costs and lack of control over payment rails. Unlike platform lenders, they cannot auto-deduct repayment from every sale, increasing risk.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 mb-6">
+                <div className="p-2 bg-brand-100 rounded-full mt-1">
+                  <GlobeAltIcon className="w-5 h-5 text-brand-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1">The Paradox</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Platform income is more verifiable than traditional employment—Shopify sees every sale—yet banks won't accept it. They require W-2s that don't exist for the new economy.
                   </p>
                 </div>
               </div>
