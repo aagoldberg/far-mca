@@ -111,7 +111,7 @@ export default function VisionPage() {
                 <div className="bg-white p-2 rounded-lg shadow-sm">
                   <UserGroupIcon className="w-6 h-6 text-brand-600" />
                 </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Your Community is Your Collateral</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Your Community is Your Collateral</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
                 Get funded by the people who know you best. When your reputation is on the line within your own community, social accountability creates a powerful incentive to repay.
@@ -204,6 +204,65 @@ export default function VisionPage() {
           </div>
         </section>
 
+        {/* Roadmap - Visual Timeline */}
+        <section>
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Roadmap</h2>
+          
+          <div className="relative border-l-2 border-gray-100 ml-4 md:ml-12 space-y-16">
+            
+            {/* Phase 0 */}
+            <div className="relative pl-8 md:pl-12">
+              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-500 border-4 border-white shadow-sm"></div>
+              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
+                <span className="text-xs font-bold tracking-wider uppercase text-brand-600">In Testing</span>
+                <h3 className="text-2xl font-bold text-gray-900">Revenue-Verified Lending</h3>
+              </div>
+              <p className="text-gray-600 mb-4 max-w-2xl leading-relaxed">
+                0% interest community loans ($100-$5K) to prove the model. Connect Shopify, Stripe, or Square to verify revenue,
+                track repayments on-chain, and share with your network.
+              </p>
+              <ul className="grid sm:grid-cols-2 gap-2 text-sm text-gray-500">
+                <li className="flex items-center gap-2">
+                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Shopify, Stripe & Square
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Trust Score V1
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Base L2 Payments
+                </li>
+              </ul>
+            </div>
+
+            {/* Phase 1 */}
+            <div className="relative pl-8 md:pl-12">
+              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-300 border-4 border-white shadow-sm"></div>
+              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
+                <span className="text-xs font-bold tracking-wider uppercase text-gray-500">Exploring</span>
+                <h3 className="text-2xl font-bold text-gray-900">Scale with Returns</h3>
+              </div>
+              <p className="text-gray-600 mb-4 max-w-2xl leading-relaxed">
+                Once we can model repayment risk using business metrics combined with social data,
+                we can introduce fair interest rates (8-12% APY) that reward lenders while keeping costs 50% lower than MCAs.
+              </p>
+            </div>
+
+            {/* Phase 2 */}
+            <div className="relative pl-8 md:pl-12">
+              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-200 border-4 border-white shadow-sm"></div>
+              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
+                <span className="text-xs font-bold tracking-wider uppercase text-gray-400">Future</span>
+                <h3 className="text-2xl font-bold text-gray-900">Automated Repayment</h3>
+              </div>
+              <p className="text-gray-600 max-w-2xl leading-relaxed">
+                AI agents that monitor revenue and automatically route payments to repay loans.
+                "Loans that pay themselves" via autonomous agents, streaming payments, and merchant stablecoin adoption.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
         {/* Distribution & Growth - Viral Loop Featured */}
         <section>
           <div className="text-center mb-12">
@@ -272,65 +331,6 @@ export default function VisionPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Roadmap - Visual Timeline */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Roadmap</h2>
-          
-          <div className="relative border-l-2 border-gray-100 ml-4 md:ml-12 space-y-16">
-            
-            {/* Phase 0 */}
-            <div className="relative pl-8 md:pl-12">
-              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-500 border-4 border-white shadow-sm"></div>
-              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
-                <span className="text-xs font-bold tracking-wider uppercase text-brand-600">In Testing</span>
-                <h3 className="text-2xl font-bold text-gray-900">Revenue-Verified Lending</h3>
-              </div>
-              <p className="text-gray-600 mb-4 max-w-2xl leading-relaxed">
-                0% interest community loans ($100-$5K) to prove the model. Connect Shopify, Stripe, or Square to verify revenue,
-                track repayments on-chain, and share with your network.
-              </p>
-              <ul className="grid sm:grid-cols-2 gap-2 text-sm text-gray-500">
-                <li className="flex items-center gap-2">
-                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Shopify, Stripe & Square
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Trust Score V1
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircleIcon className="w-4 h-4 text-brand-500" /> Base L2 Payments
-                </li>
-              </ul>
-            </div>
-
-            {/* Phase 1 */}
-            <div className="relative pl-8 md:pl-12">
-              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-300 border-4 border-white shadow-sm"></div>
-              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
-                <span className="text-xs font-bold tracking-wider uppercase text-gray-500">Exploring</span>
-                <h3 className="text-2xl font-bold text-gray-900">Scale with Returns</h3>
-              </div>
-              <p className="text-gray-600 mb-4 max-w-2xl leading-relaxed">
-                Once we can model repayment risk using business metrics combined with social data,
-                we can introduce fair interest rates (8-12% APY) that reward lenders while keeping costs 50% lower than MCAs.
-              </p>
-            </div>
-
-            {/* Phase 2 */}
-            <div className="relative pl-8 md:pl-12">
-              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-200 border-4 border-white shadow-sm"></div>
-              <div className="flex flex-col md:flex-row md:items-center gap-2 mb-4">
-                <span className="text-xs font-bold tracking-wider uppercase text-gray-400">Future</span>
-                <h3 className="text-2xl font-bold text-gray-900">Automated Repayment</h3>
-              </div>
-              <p className="text-gray-600 max-w-2xl leading-relaxed">
-                AI agents that monitor revenue and automatically route payments to repay loans.
-                "Loans that pay themselves" via autonomous agents, streaming payments, and merchant stablecoin adoption.
-              </p>
-            </div>
-
           </div>
         </section>
 
