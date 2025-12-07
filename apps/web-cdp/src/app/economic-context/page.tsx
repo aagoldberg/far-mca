@@ -171,6 +171,17 @@ export default function EconomicContextPage() {
               </div>
 
               <div className="flex items-start gap-4">
+                <div className="p-2 bg-gray-100 rounded-full mt-1">
+                  <BuildingLibraryIcon className="w-5 h-5 text-gray-500" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1">The Lesson</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Embedded lenders succeed by controlling the cash flow. Standalone lenders struggle without that leverage. 
+                    To build a truly open credit system, we need a new mechanism to ensure repayment: Social Trust.
+                  </p>
+                </div>
+              </div>
 
           </div>
 
