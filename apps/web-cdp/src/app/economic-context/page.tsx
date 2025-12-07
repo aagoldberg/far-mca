@@ -100,9 +100,9 @@ export default function EconomicContextPage() {
             </div>
             <div className="md:col-span-8">
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Digital platforms built a $1+ trillion global economy. 1.6 billion gig workers
-                <Ref id={1} title="Gig Economy Statistics" url="https://www.demandsage.com/gig-economy-statistics/" /> and 207 million creators
-                <Ref id={17} title="Creator Economy Statistics" url="https://simplebeen.com/creator-economy-statistics/" /> now earn income borderlessly through Shopify, Stripe, Square, and Upwork. 
+                1.6 billion people now earn income from Upwork, Shopify, YouTube, and thousands of other platforms—borderlessly
+                <Ref id={1} title="Gig Economy Statistics" url="https://www.demandsage.com/gig-economy-statistics/" />. Then AI turbocharged it: 68% of small businesses adopted AI in 2025
+                <Ref id={2} title="Small Business AI Adoption" url="https://www.foxbusiness.com/economy/small-business-ai-adoption-jumps-68-owners-plan-significant-workforce-growth-2025" />. A new economy emerged.
               </p>
               <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-8">
                 <div className="grid grid-cols-2 gap-6">
