@@ -23,14 +23,14 @@ export default function Home() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-stone-900 tracking-tight mb-4 leading-[1.1]">
-              Lend to a Friend. <br className="hidden sm:block" />
+              Grow Your Business with <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-secondary-600">
-                Fund the Future.
+                Community Capital.
               </span>
             </h1>
             
             <p className="text-lg sm:text-xl text-stone-600 mb-6 max-w-2xl mx-auto leading-relaxed font-medium">
-              Small businesses get capital they control, backed by verified revenue and community trust.
+              Skip the banks. Use your verifiable sales revenue to unlock 0% interest loans from the people who believe in you most.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
@@ -38,7 +38,7 @@ export default function Home() {
                 href="/create-loan"
                 className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transition-all transform hover:-translate-y-0.5"
               >
-                Get Funding
+                Start Your Raise
               </Link>
               <Link
                 href="#how-it-works"
