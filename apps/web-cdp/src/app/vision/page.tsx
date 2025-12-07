@@ -385,6 +385,8 @@ export default function VisionPage() {
           </div>
         </section>
 
+        <div className="w-full h-px bg-gray-100 my-24" />
+
         {/* CTA - Simple & Clean */}
         <section className="bg-gradient-to-br from-brand-600 to-brand-800 rounded-3xl p-12 text-center text-white shadow-xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Join the Future of Credit</h2>
