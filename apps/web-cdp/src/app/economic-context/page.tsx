@@ -140,7 +140,7 @@ export default function EconomicContextPage() {
 
           <div className="w-full h-px bg-gray-100" />
 
-          {/* Wave 2 */}
+          {/* Wave 2 - Reverted Text with New Design */}
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-4 sticky top-32">
               <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">2020–2025</span>
@@ -149,8 +149,8 @@ export default function EconomicContextPage() {
             </div>
             <div className="md:col-span-8">
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Platform lenders like Shopify Capital filled part of the gap by controlling payment rails. It works—merchants funded see 36% higher growth
-                <Ref id={35} title="Shopify Capital Impact" url="https://www.shopify.com/blog/capital-effect-on-business-growth" />. But it's invite-only and expensive.
+                Platform lenders like Shopify Capital filled part of the gap. They control payment rails—seeing every transaction and auto-deducting repayments. It works: merchants funded see 36% higher growth
+                <Ref id={35} title="Shopify Capital Impact" url="https://www.shopify.com/blog/capital-effect-on-business-growth" />. But they're invite-only, gatekept to their own platforms, and expensive.
               </p>
               
               <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -158,14 +158,15 @@ export default function EconomicContextPage() {
                   <LockClosedIcon className="w-8 h-8 text-gray-400 mb-4" />
                   <h4 className="font-bold text-gray-900 mb-2">The Gatekeepers</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Platform lenders like Shopify Capital are effective but closed. They only lend to their own merchants, creating a fragmented credit landscape.
+                    Platform lenders control the rails. If you leave the platform, you lose the credit.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                   <ChartBarIcon className="w-8 h-8 text-gray-400 mb-4" />
-                  <h4 className="font-bold text-gray-900 mb-2">The Challenge</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">The Failures</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Standalone lenders offer flexibility but face higher risk because they don't control the settlement layer. This forces them to charge higher fees.
+                    Standalone revenue-based lenders (Clearco, Wayflyer) struggled because borrowers could route revenue through unmonitored channels
+                    <Ref id={41} title="RBF Moral Hazard Study" source="Harvard Business School Working Paper (2023)" />.
                   </p>
                 </div>
               </div>
@@ -187,7 +188,7 @@ export default function EconomicContextPage() {
 
           <div className="w-full h-px bg-gray-100" />
 
-          {/* Wave 3 */}
+          {/* Wave 3 - Reverted Text with New Design */}
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-4 sticky top-32">
               <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">2024–Present</span>
@@ -196,7 +197,7 @@ export default function EconomicContextPage() {
             </div>
             <div className="md:col-span-8">
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Three pieces of infrastructure finally reached maturity simultaneously, enabling a new model:
+                Three pieces of infrastructure reached maturity simultaneously:
               </p>
 
               <div className="space-y-6">
@@ -207,8 +208,8 @@ export default function EconomicContextPage() {
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Stablecoins at Scale</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      $305B supply, moving $28T annually. 80% lower costs than traditional rails.
-                      <Ref id={5} title="Stablecoin Market Data" url="https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/" />
+                      $305B supply, $28T transferred annually—more than Visa and Mastercard combined
+                      <Ref id={5} title="Stablecoin Market Data" url="https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/" />. 80% lower costs than traditional rails.
                     </p>
                   </div>
                 </div>
@@ -220,8 +221,9 @@ export default function EconomicContextPage() {
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">On-Chain Lending Proven</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      DeFi credit protocols reached $50B TVL. The settlement layer works; it just needs better underwriting.
-                      <Ref id={6} title="DeFi Stats" url="https://coinlaw.io/crypto-lending-and-borrowing-statistics/" />
+                      Maple Finance grew 1,600% to $562M
+                      <Ref id={27} title="Maple Finance Growth" url="https://www.reflexivityresearch.com/" />. Goldfinch financed $110M
+                      <Ref id={28} title="Goldfinch Emerging Markets" url="https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending" />. Blockchain settlement works.
                     </p>
                   </div>
                 </div>
@@ -233,7 +235,7 @@ export default function EconomicContextPage() {
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Social Verification Scaled</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Farcaster and Bluesky prove we can have portable, verifiable identity. For the first time, we can quantify reputation.
+                      Farcaster (500K+ users) and Bluesky prove we can have portable, verifiable identity. For the first time, we can quantify social trust at scale.
                     </p>
                   </div>
                 </div>
@@ -284,10 +286,11 @@ export default function EconomicContextPage() {
             </summary>
             <div className="mt-4 p-6 bg-gray-50 rounded-2xl text-xs text-gray-500 space-y-2 max-w-2xl text-left">
               <p>[1] DemandSage: Gig Economy Statistics 2025</p>
-              <p>[2] Fox Business: Small Business AI Adoption</p>
               <p>[5] PaymentsCMI: Stablecoin Market Data</p>
-              <p>[6] CoinLaw: DeFi Lending Stats</p>
+              <p>[27] Reflexivity Research: Maple Finance Growth</p>
+              <p>[28] CoinGecko: Goldfinch Emerging Markets</p>
               <p>[35] Shopify: Capital Effect on Growth</p>
+              <p>[37] BetaKit: Clearco Restructuring</p>
               <p>[41] HBS: RBF Moral Hazard Study (2023)</p>
             </div>
           </details>
