@@ -165,9 +165,7 @@ export default function EconomicContextPage() {
                   <ChartBarIcon className="w-8 h-8 text-gray-400 mb-4" />
                   <h4 className="font-bold text-gray-900 mb-2">The Failures</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Standalone revenue-based lenders (Clearco, Wayflyer, Pipe, Uncapped) tried to serve everyone else. Most faced major restructuring or pivoted away entirely
-                    <Ref id={37} title="Clearco Restructuring" url="https://betakit.com/" />
-                    <Ref id={40} title="Uncapped Discontinues RBF" url="https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering" />. The core problem: borrowers could route revenue through unmonitored channels.
+                    Standalone lenders (Clearco, Wayflyer) faced challenges due to high capital costs and lack of control over payment rails. Unlike platform lenders, they cannot auto-deduct repayment from every sale, increasing risk.
                   </p>
                 </div>
               </div>
