@@ -2,27 +2,37 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import {
+  GlobeAltIcon,
+  BuildingLibraryIcon,
+  BoltIcon,
+  ChartBarIcon,
+  LockClosedIcon,
+  CurrencyDollarIcon,
+  UserGroupIcon,
+  ArrowTrendingUpIcon
+} from '@heroicons/react/24/outline';
 
 function Ref({ id, title, url, source }: { id: number; title: string; url?: string; source?: string }) {
   const [show, setShow] = useState(false);
 
   return (
-    <span className="relative inline">
+    <span className="relative inline-block align-top ml-0.5">
       <button
         onClick={() => setShow(!show)}
-        className="text-slate-400 hover:text-slate-600 text-sm cursor-pointer"
+        className="text-brand-400 hover:text-brand-600 text-xs font-bold cursor-pointer bg-brand-50 px-1.5 py-0.5 rounded transition-colors"
       >
-        [{id}]
+        {id}
       </button>
       {show && (
-        <span className="absolute bottom-full left-0 mb-2 w-64 p-3 bg-white border border-slate-200 rounded-lg text-xs text-slate-700 shadow-xl z-10">
-          {title}
+        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-white border border-gray-200 rounded-xl text-xs text-gray-600 shadow-xl z-20 text-left leading-normal">
+          <strong className="block text-gray-900 mb-1">{title}</strong>
+          {source && <span className="block mb-1">{source}</span>}
           {url && (
-            <a href={url} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-900 ml-1">
-              ↗
+            <a href={url} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:underline block">
+              View Source ↗
             </a>
           )}
-          {source && <span className="text-slate-500 block mt-1">{source}</span>}
         </span>
       )}
     </span>
@@ -31,232 +41,257 @@ function Ref({ id, title, url, source }: { id: number; title: string; url?: stri
 
 export default function EconomicContextPage() {
   return (
-    <div className="min-h-screen bg-white text-slate-700">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
-      <div className="py-20 md:py-28 border-b border-slate-200">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-slate-400 text-sm tracking-wider uppercase mb-4">
+      <div className="relative bg-gradient-to-b from-brand-600 to-brand-800 py-24 sm:py-32 overflow-hidden isolate">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-[-40%] left-1/2 -translate-x-1/2 w-[200%] aspect-[1/1] rounded-full bg-white/5 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <div className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium text-brand-50 ring-1 ring-inset ring-brand-400/50 mb-6 bg-white/10 backdrop-blur-sm">
             Economic Context
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            How We Got Here
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-tight leading-tight">
+            How We <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-100 to-white">Got Here</span>
           </h1>
-
-          {/* TL;DR */}
-          <p className="text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
-            Platform workers earn $1T+ annually but can't get loans—banks can't verify their income. Standalone lenders tried and failed. We use social accountability instead of payment control.
+          <p className="text-xl md:text-2xl text-brand-100 max-w-2xl mx-auto leading-relaxed font-light">
+            Platform workers earn $1T+ annually but remain invisible to banks. This is the story of the gap they fell into—and how we're building the bridge out.
           </p>
         </div>
       </div>
 
-      {/* Headline Stats Strip */}
-      <div className="border-b border-slate-200 py-10 bg-gradient-to-r from-emerald-50/50 via-white to-emerald-50/50">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="flex justify-between items-center text-center">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-slate-900">77%</div>
-              <div className="text-sm text-slate-500 mt-1">of small businesses</div>
-              <div className="text-xs text-slate-400">struggle to access capital</div>
-            </div>
-            <div className="text-slate-300 text-2xl">|</div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-slate-900">1 in 4</div>
-              <div className="text-sm text-slate-500 mt-1">small businesses</div>
-              <div className="text-xs text-slate-400">denied traditional financing</div>
-            </div>
-            <div className="text-slate-300 text-2xl">|</div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-slate-900">$5T</div>
-              <div className="text-sm text-slate-500 mt-1">global SMB funding gap</div>
-              <div className="text-xs text-slate-400">annually</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="w-full max-w-5xl mx-auto px-6 py-16">
 
-      {/* Content */}
-      <div className="max-w-3xl mx-auto px-6 py-16">
-
-        {/* Wave 1 */}
-        <section className="mb-20">
-          <div className="mb-8">
-            <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">2010–2025</p>
-            <h2 className="text-3xl font-bold text-slate-900">The New Economy Emerged</h2>
-          </div>
-
-          <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-            Digital platforms built a $1+ trillion global economy. 1.6 billion gig workers
-            <Ref id={1} title="Gig Economy Statistics (2025)" url="https://www.demandsage.com/gig-economy-statistics/" /> and 207 million creators
-            <Ref id={17} title="Creator Economy Statistics" url="https://simplebeen.com/creator-economy-statistics/" /> now earn income borderlessly through Shopify, Stripe, Square, Upwork, and thousands of other platforms. Then AI accelerated everything—68% of small businesses adopted AI by 2025
-            <Ref id={2} title="Small Business AI Adoption (2025)" url="https://www.foxbusiness.com/economy/small-business-ai-adoption-jumps-68-owners-plan-significant-workforce-growth-2025" />.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center">
-            <div className="py-4">
-              <div className="text-2xl font-bold text-slate-900">$3.8B</div>
-              <div className="text-xs text-slate-500">Upwork volume</div>
+        {/* Key Stats - Big Typography */}
+        <section className="mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100">
+            <div className="p-6">
+              <div className="text-5xl md:text-6xl font-extrabold text-brand-600 mb-2">77%</div>
+              <div className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-1">Small Businesses</div>
+              <div className="text-sm text-gray-500">Struggle to access capital</div>
             </div>
-            <div className="py-4">
-              <div className="text-2xl font-bold text-slate-900">4.8M</div>
-              <div className="text-xs text-slate-500">Shopify merchants</div>
+            <div className="p-6">
+              <div className="text-5xl md:text-6xl font-extrabold text-brand-600 mb-2">1 in 4</div>
+              <div className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-1">Applicants Denied</div>
+              <div className="text-sm text-gray-500">By traditional lenders</div>
             </div>
-            <div className="py-4">
-              <div className="text-2xl font-bold text-slate-900">9.7M</div>
-              <div className="text-xs text-slate-500">Etsy sellers</div>
+            <div className="p-6">
+              <div className="text-5xl md:text-6xl font-extrabold text-brand-600 mb-2">$5T</div>
+              <div className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-1">Funding Gap</div>
+              <div className="text-sm text-gray-500">Global annual deficit</div>
             </div>
-            <div className="py-4">
-              <div className="text-2xl font-bold text-slate-900">6M</div>
-              <div className="text-xs text-slate-500">DoorDash drivers</div>
-            </div>
-          </div>
-
-          <div className="border-l-2 border-slate-300 pl-6 py-2">
-            <p className="text-slate-600">
-              <strong className="text-slate-900">The paradox:</strong> Platform income is more verifiable than traditional employment—Shopify sees every sale, Stripe sees every payment—yet banks won't accept it. They still require W-2s that don't exist for platform workers.
-            </p>
           </div>
         </section>
 
-        {/* Wave 2 */}
-        <section className="mb-20">
-          <div className="mb-8">
-            <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">2020–2025</p>
-            <h2 className="text-3xl font-bold text-slate-900">Finance Couldn't Adapt</h2>
-          </div>
+        <div className="w-full h-px bg-gray-100 my-24" />
 
-          <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-            Platform lenders like Shopify Capital and Stripe Capital filled part of the gap. They control payment rails—seeing every transaction and auto-deducting repayments. It works: merchants funded see 36% higher growth
-            <Ref id={35} title="Shopify Capital Impact" url="https://www.shopify.com/blog/capital-effect-on-business-growth" />. But they're invite-only, gatekept to their own platforms, and charge 20-50% APR.
-          </p>
-
-          <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-            Standalone revenue-based lenders (Clearco, Wayflyer, Pipe, Uncapped) tried to serve everyone else without controlling payment rails. Most faced major restructuring or pivoted away entirely
-            <Ref id={37} title="Clearco Restructuring" url="https://betakit.com/" />
-            <Ref id={40} title="Uncapped Discontinues RBF" url="https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering" />. The core problem: borrowers could route revenue through unmonitored channels
-            <Ref id={41} title="RBF Moral Hazard Study" source="Harvard Business School Working Paper (2023)" />.
-          </p>
-
-          <div className="border-l-2 border-slate-300 pl-6 py-2">
-            <p className="text-slate-600">
-              <strong className="text-slate-900">The lesson:</strong> Embedded lenders succeed because they control payment rails. Standalone lenders fail because they can't. A different approach is needed.
-            </p>
-          </div>
-        </section>
-
-        {/* Wave 3 */}
-        <section className="mb-20">
-          <div className="mb-8">
-            <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">2024–2025</p>
-            <h2 className="text-3xl font-bold text-slate-900">The Infrastructure Arrived</h2>
-          </div>
-
-          <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-            Three pieces of infrastructure reached maturity simultaneously:
-          </p>
-
-          <div className="space-y-8 mb-10">
-            <div>
-              <h3 className="font-bold text-slate-900 mb-2">Stablecoins at Scale</h3>
-              <p className="text-slate-600">
-                $305B supply, $28T transferred in 2024—more than Visa and Mastercard combined
-                <Ref id={5} title="Stablecoin Market Data" url="https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/" />. 80% lower costs than traditional rails
-                <Ref id={22} title="Stablecoin Cost Savings" url="https://bvnk.com/blog/blockchain-cross-border-payments" />. Visa, PayPal, and Stripe are all building on stablecoins.
+        {/* Timeline Section */}
+        <section className="space-y-24">
+          
+          {/* Wave 1 */}
+          <div className="grid md:grid-cols-12 gap-12 items-start">
+            <div className="md:col-span-4 sticky top-32">
+              <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">2010–2025</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The New Economy Emerged</h2>
+              <div className="hidden md:block w-12 h-1 bg-brand-500 rounded-full mt-6"></div>
+            </div>
+            <div className="md:col-span-8">
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                Digital platforms built a $1+ trillion global economy. 1.6 billion gig workers
+                <Ref id={1} title="Gig Economy Statistics" url="https://www.demandsage.com/gig-economy-statistics/" /> and 207 million creators
+                <Ref id={17} title="Creator Economy Statistics" url="https://simplebeen.com/creator-economy-statistics/" /> now earn income borderlessly through Shopify, Stripe, Square, and Upwork. 
               </p>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-slate-900 mb-2">On-Chain Lending Proven</h3>
-              <p className="text-slate-600">
-                Maple Finance grew 1,600% to $562M
-                <Ref id={27} title="Maple Finance Growth" url="https://www.reflexivityresearch.com/" />. Goldfinch financed $110M across 20+ countries
-                <Ref id={28} title="Goldfinch Emerging Markets" url="https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending" />. DeFi collateralized lending reached $50B TVL
-                <Ref id={6} title="DeFi Collateralized Lending TVL" url="https://coinlaw.io/crypto-lending-and-borrowing-statistics/" />. Blockchain settlement works.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-slate-900 mb-2">Social Verification Scaled</h3>
-              <p className="text-slate-600">
-                Farcaster: 500K+ users with wallet-based identity and open social graphs. Bluesky: 20M+ users with domain verification. For the first time, we can quantify social trust at scale without centralized gatekeepers.
-              </p>
+              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 mb-8">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">4.8M</div>
+                    <div className="text-sm text-gray-500">Shopify Merchants</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">$3.8B</div>
+                    <div className="text-sm text-gray-500">Upwork Volume</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">9.7M</div>
+                    <div className="text-sm text-gray-500">Etsy Sellers</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">6M</div>
+                    <div className="text-sm text-gray-500">DoorDash Drivers</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-brand-100 rounded-full mt-1">
+                  <GlobeAltIcon className="w-5 h-5 text-brand-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1">The Paradox</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Platform income is more verifiable than traditional employment—Shopify sees every sale—yet banks won't accept it. They require W-2s that don't exist for the new economy.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="border-l-2 border-slate-300 pl-6 py-2">
-            <p className="text-slate-600">
-              <strong className="text-slate-900">The convergence:</strong> In 2020, stablecoins were under $10B, no crypto lending existed at scale, and decentralized social wasn't viable. By 2025, all three are mature.
-            </p>
+          <div className="w-full h-px bg-gray-100" />
+
+          {/* Wave 2 */}
+          <div className="grid md:grid-cols-12 gap-12 items-start">
+            <div className="md:col-span-4 sticky top-32">
+              <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">2020–2025</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Finance Couldn't Adapt</h2>
+              <div className="hidden md:block w-12 h-1 bg-gray-300 rounded-full mt-6"></div>
+            </div>
+            <div className="md:col-span-8">
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                Platform lenders like Shopify Capital filled part of the gap by controlling payment rails. It works—merchants funded see 36% higher growth
+                <Ref id={35} title="Shopify Capital Impact" url="https://www.shopify.com/blog/capital-effect-on-business-growth" />. But it's invite-only and expensive.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                  <LockClosedIcon className="w-8 h-8 text-gray-400 mb-4" />
+                  <h4 className="font-bold text-gray-900 mb-2">The Gatekeepers</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    Platform lenders control the rails. If you leave the platform, you lose the credit.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                  <ChartBarIcon className="w-8 h-8 text-gray-400 mb-4" />
+                  <h4 className="font-bold text-gray-900 mb-2">The Failures</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    Standalone lenders (Clearco, Wayflyer) struggled because borrowers could route revenue elsewhere.
+                    <Ref id={37} title="Clearco Restructuring" url="https://betakit.com/" />
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-gray-100 rounded-full mt-1">
+                  <BuildingLibraryIcon className="w-5 h-5 text-gray-500" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1">The Lesson</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Embedded lenders succeed because they control payment rails. Standalone lenders fail because they can't. 
+                    To build a truly open credit system, we need a different form of collateral.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-gray-100" />
+
+          {/* Wave 3 */}
+          <div className="grid md:grid-cols-12 gap-12 items-start">
+            <div className="md:col-span-4 sticky top-32">
+              <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">2024–Present</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Convergence</h2>
+              <div className="hidden md:block w-12 h-1 bg-brand-500 rounded-full mt-6"></div>
+            </div>
+            <div className="md:col-span-8">
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                Three pieces of infrastructure finally reached maturity simultaneously, enabling a new model:
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center">
+                    <CurrencyDollarIcon className="w-6 h-6 text-brand-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Stablecoins at Scale</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      $305B supply, moving $28T annually. 80% lower costs than traditional rails.
+                      <Ref id={5} title="Stablecoin Market Data" url="https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/" />
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center">
+                    <ArrowTrendingUpIcon className="w-6 h-6 text-brand-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">On-Chain Lending Proven</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      DeFi credit protocols reached $50B TVL. The settlement layer works; it just needs better underwriting.
+                      <Ref id={6} title="DeFi Stats" url="https://coinlaw.io/crypto-lending-and-borrowing-statistics/" />
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center">
+                    <UserGroupIcon className="w-6 h-6 text-brand-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Social Verification Scaled</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Farcaster and Bluesky prove we can have portable, verifiable identity. For the first time, we can quantify reputation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* The Insight */}
+        <section className="bg-brand-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+          <div className="flex flex-col md:flex-row gap-8 items-center">
+            <div className="md:w-1/3">
+              <BoltIcon className="w-16 h-16 text-brand-300 mb-4" />
+              <span className="text-brand-200 font-bold tracking-wider uppercase text-sm mb-2 block">The Insight</span>
+              <h2 className="text-3xl font-bold">Reputation is the New Collateral</h2>
+            </div>
+            <div className="md:w-2/3 border-t md:border-t-0 md:border-l border-white/10 pt-8 md:pt-0 md:pl-12">
+              <p className="text-lg text-brand-50 leading-relaxed mb-6">
+                Borrowers repay not because we control their bank account, but because defaulting destroys their social capital.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/vision"
+                  className="px-6 py-3 bg-white text-brand-900 font-bold rounded-lg hover:bg-brand-50 transition-colors text-center"
+                >
+                  Read The Vision
+                </Link>
+                <Link
+                  href="/"
+                  className="px-6 py-3 bg-transparent border border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors text-center"
+                >
+                  Browse Loans
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* LendFriend Solution - Tightened */}
-        <section className="mb-20">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-slate-900">LendFriend Bridges the Gap</h2>
-          </div>
-
-          <div className="bg-[#3B9B7F] rounded-lg p-6 mb-10">
-            <p className="font-semibold text-white mb-4">The key insight:</p>
-            <p className="text-white/90">
-              Borrowers repay not because we control their money, but because defaulting is publicly visible to their entire social graph and destroys future access to capital. We verify Shopify, Stripe, and Square income—but enforce repayment through reputation, not payment rails.
-            </p>
-          </div>
-
-          <div className="space-y-4 text-slate-600">
-            <p><strong className="text-slate-900">Today:</strong> Build uncollateralized lending infrastructure for the new economy</p>
-            <p><strong className="text-slate-900">2027–2030:</strong> On-chain credit scores become portable across DeFi</p>
-            <p><strong className="text-slate-900">2030–2035:</strong> Reputation-backed credit becomes a Web3 primitive</p>
-          </div>
-        </section>
-
-        {/* References */}
-        <section className="mb-16">
-          <details className="text-sm">
-            <summary className="font-semibold text-slate-700 cursor-pointer hover:text-slate-900 py-2">
-              References
+        {/* References Toggle */}
+        <section className="mt-16 text-center">
+          <details className="group inline-block text-left">
+            <summary className="text-sm text-gray-400 font-medium cursor-pointer hover:text-gray-600 list-none flex items-center gap-2">
+              <span>View Sources & Citations</span>
+              <span className="group-open:rotate-180 transition-transform">▼</span>
             </summary>
-            <div className="mt-4 text-xs text-slate-500 space-y-1">
-              <div>[1] Gig Economy Statistics (2025) <a href="https://www.demandsage.com/gig-economy-statistics/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[2] Small Business AI Adoption (2025) <a href="https://www.foxbusiness.com/economy/small-business-ai-adoption-jumps-68-owners-plan-significant-workforce-growth-2025" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[3] Small Business Capital Access (2024) — Goldman Sachs Survey</div>
-              <div>[4] Small Business Funding Gap <a href="https://www.nsba.biz/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[5] Stablecoin Market Data <a href="https://paymentscmi.com/insights/stablecoins-cross-border-payments-banks-strategy/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[6] DeFi Collateralized Lending TVL <a href="https://coinlaw.io/crypto-lending-and-borrowing-statistics/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[17] Creator Economy Statistics <a href="https://simplebeen.com/creator-economy-statistics/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[20] US Treasury Report (2025) <a href="https://home.treasury.gov/system/files/136/Financing-Small-Business-Landscape-and-Recommendations.pdf" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[22] Stablecoin Cost Savings <a href="https://bvnk.com/blog/blockchain-cross-border-payments" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[27] Maple Finance Growth <a href="https://www.reflexivityresearch.com/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[28] Goldfinch Emerging Markets <a href="https://www.coingecko.com/research/publications/undercollateralized-loans-the-future-of-defi-lending" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[35] Shopify Capital Impact <a href="https://www.shopify.com/blog/capital-effect-on-business-growth" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[37] Clearco Restructuring <a href="https://betakit.com/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[40] Uncapped Discontinues RBF <a href="https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-600">↗</a></div>
-              <div>[41] RBF Moral Hazard Study — Harvard Business School Working Paper (2023)</div>
+            <div className="mt-4 p-6 bg-gray-50 rounded-2xl text-xs text-gray-500 space-y-2 max-w-2xl text-left">
+              <p>[1] DemandSage: Gig Economy Statistics 2025</p>
+              <p>[2] Fox Business: Small Business AI Adoption</p>
+              <p>[5] PaymentsCMI: Stablecoin Market Data</p>
+              <p>[6] CoinLaw: DeFi Lending Stats</p>
+              <p>[35] Shopify: Capital Effect on Growth</p>
+              <p>[41] HBS: RBF Moral Hazard Study (2023)</p>
             </div>
           </details>
-        </section>
-
-        {/* CTA */}
-        <section className="border-t border-slate-200 pt-12">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">This Is The Moment</h2>
-            <p className="text-slate-500 mb-8">
-              Three waves converged. The infrastructure exists. The market is ready.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                href="/vision"
-                className="inline-block px-6 py-3 bg-[#3B9B7F] text-white font-semibold rounded-lg hover:bg-[#2E7D68] transition-colors"
-              >
-                Read Our Vision
-              </Link>
-              <Link
-                href="/"
-                className="inline-block px-6 py-3 text-slate-700 font-semibold rounded-lg hover:bg-slate-100 transition-colors"
-              >
-                Browse Loans
-              </Link>
-            </div>
-          </div>
         </section>
 
       </div>
