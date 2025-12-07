@@ -183,6 +183,7 @@ export default function EconomicContextPage() {
                 </div>
               </div>
 
+            </div>
           </div>
 
           <div className="w-full h-px bg-gray-100" />
