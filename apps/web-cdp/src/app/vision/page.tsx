@@ -91,7 +91,8 @@ export default function VisionPage() {
             <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Solution</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Trust Based on Truth.</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Traditional credit models look backward. We underwrite based on your reality: real-time revenue and community trust. This allows us to serve the high-potential businesses that legacy finance excludes.
+              The equation is simple: <strong className="text-brand-600">Verified Revenue + Social Trust = Universal Access.</strong><br />
+              We replace backward-looking credit scores with real-time sales data, unlocking capital for the millions of high-potential businesses that legacy finance excludes.
             </p>
           </div>
 
