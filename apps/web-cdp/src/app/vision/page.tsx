@@ -39,10 +39,10 @@ export default function VisionPage() {
         </div>
       </div>
 
-      <div className="w-full max-w-5xl mx-auto px-6 py-16 space-y-24">
+      <div className="w-full max-w-5xl mx-auto px-6 py-16">
 
-        {/* The Problem - 2 Column Split */}
-        <section className="grid md:grid-cols-12 gap-12 items-start">
+        {/* The Problem */}
+        <section className="grid md:grid-cols-12 gap-12 items-start mb-24">
           <div className="md:col-span-5">
             <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Problem</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Rejected by Banks. <br />Too Small for Fintechs.</h2>
@@ -83,8 +83,10 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* The Solution - 2 Column Split */}
-        <section className="grid md:grid-cols-12 gap-12 items-start border-t border-gray-100 pt-16">
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* The Solution */}
+        <section className="grid md:grid-cols-12 gap-12 items-start">
           <div className="md:col-span-5">
             <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Solution</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Trust Based on Truth.</h2>
@@ -111,7 +113,7 @@ export default function VisionPage() {
                 <div className="bg-white p-2 rounded-lg shadow-sm">
                   <UserGroupIcon className="w-6 h-6 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Your Community is Your Collateral</h3>
+                <h3 className="text-xl font-bold text-gray-900">Your Community is Your Collateral</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
                 Get funded by the people who know you best. When your reputation is on the line within your own community, social accountability creates a powerful incentive to repay.
@@ -120,9 +122,12 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* Our Market - Big Typography */}
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* Our Market */}
         <section>
           <div className="text-center mb-12">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Opportunity</span>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">The Underserved Majority</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               We serve the gap between micro-finance and institutional capital.
@@ -149,9 +154,14 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* Comparison Table - Clean */}
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* Comparison Table */}
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">Competitive Landscape</h2>
+          <div className="text-center mb-12">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Landscape</span>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Competitive Advantage</h2>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -204,9 +214,14 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* Roadmap - Visual Timeline */}
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* Roadmap */}
         <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Roadmap</h2>
+          <div className="text-center mb-12">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Plan</span>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Roadmap</h2>
+          </div>
           
           <div className="relative border-l-2 border-gray-100 ml-4 md:ml-12 space-y-16">
             
@@ -263,9 +278,12 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* Distribution & Growth - Viral Loop Featured */}
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* Distribution & Growth */}
         <section>
           <div className="text-center mb-12">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Growth Engine</span>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Distribution & Growth</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               The viral mechanics of crowdlending networks are well-documented in academia and battle-tested in industry. 
@@ -334,9 +352,14 @@ export default function VisionPage() {
           </div>
         </section>
 
-        {/* Why Now - Grid */}
+        <div className="w-full h-px bg-gray-100 my-24" />
+
+        {/* Why Now */}
         <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Why Now</h2>
+          <div className="text-center mb-12">
+            <span className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3 block">The Timing</span>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Now</h2>
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-50 rounded-2xl p-6">
               <CurrencyDollarIcon className="w-8 h-8 text-brand-600 mb-4" />
