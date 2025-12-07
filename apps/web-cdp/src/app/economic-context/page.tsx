@@ -158,15 +158,14 @@ export default function EconomicContextPage() {
                   <LockClosedIcon className="w-8 h-8 text-gray-400 mb-4" />
                   <h4 className="font-bold text-gray-900 mb-2">The Gatekeepers</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Platform lenders control the rails. If you leave the platform, you lose the credit.
+                    Platform lenders like Shopify Capital are effective but closed. They only lend to their own merchants, creating a fragmented credit landscape.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                   <ChartBarIcon className="w-8 h-8 text-gray-400 mb-4" />
-                  <h4 className="font-bold text-gray-900 mb-2">The Failures</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">The Challenge</h4>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Standalone lenders (Clearco, Wayflyer) struggled because borrowers could route revenue elsewhere.
-                    <Ref id={37} title="Clearco Restructuring" url="https://betakit.com/" />
+                    Standalone lenders offer flexibility but face higher risk because they don't control the settlement layer. This forces them to charge higher fees.
                   </p>
                 </div>
               </div>
