@@ -116,11 +116,11 @@ function ComponentCard({
 }
 
 export default function RiskScoringPage() {
-  const [activeSection, setActiveSection] = useState('health');
+  const [activeSection, setActiveSection] = useState('grades');
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['health', 'weights', 'methodology', 'grades', 'affordability', 'foundation', 'privacy'];
+      const sections = ['grades', 'health', 'weights', 'methodology', 'affordability', 'foundation', 'privacy'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -175,10 +175,10 @@ export default function RiskScoringPage() {
                 <div className="pb-2 mb-2 border-b border-stone-100">
                   <p className="px-3 text-xs font-semibold text-brand-600 mb-1">Part 1: Health</p>
                   {[
-                    { id: 'health', label: 'Overview' },
+                    { id: 'grades', label: 'Grade System' },
+                    { id: 'health', label: 'Example Card' },
                     { id: 'weights', label: 'Components' },
                     { id: 'methodology', label: 'Methodology' },
-                    { id: 'grades', label: 'Grade System' },
                   ].map((item) => (
                     <button
                       key={item.id}
@@ -218,11 +218,65 @@ export default function RiskScoringPage() {
 
             {/* ================= PART 1: BUSINESS HEALTH ================= */}
             <div>
+              {/* 1. Grade Output (Moved Up) */}
+              <div id="grades" className="scroll-mt-32 mb-12">
+                <SectionHeading 
+                  id="grades-heading" 
+                  chapter="Part 1"
+                  title="Grade System" 
+                  subtitle="We assign a Grade (A-D) based on business quality." 
+                />
+                <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                      { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
+                      { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
+                      { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
+                      { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
+                    ].map((item) => (
+                      <div
+                        key={item.grade}
+                        className={`p-5 rounded-xl text-center border-2
+                          ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
+                          ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
+                          ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
+                          ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
+                        `}
+                      >
+                        <div className={`text-4xl font-bold mb-1
+                          ${item.color === 'green' ? 'text-green-600' : ''}
+                          ${item.color === 'blue' ? 'text-blue-600' : ''}
+                          ${item.color === 'amber' ? 'text-amber-600' : ''}
+                          ${item.color === 'red' ? 'text-red-600' : ''}
+                        `}>
+                          {item.grade}
+                        </div>
+                        <div className={`text-sm font-bold mb-1
+                          ${item.color === 'green' ? 'text-green-800' : ''}
+                          ${item.color === 'blue' ? 'text-blue-800' : ''}
+                          ${item.color === 'amber' ? 'text-amber-800' : ''}
+                          ${item.color === 'red' ? 'text-red-800' : ''}
+                        `}>
+                          {item.range}
+                        </div>
+                        <div className={`text-xs
+                          ${item.color === 'green' ? 'text-green-700' : ''}
+                          ${item.color === 'blue' ? 'text-blue-700' : ''}
+                          ${item.color === 'amber' ? 'text-amber-700' : ''}
+                          ${item.color === 'red' ? 'text-red-700' : ''}
+                        `}>
+                          {item.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <SectionHeading 
                 id="health" 
-                chapter="Part 1"
-                title="Business Health Score" 
-                subtitle="Measures the fundamental quality and stability of the business based on cash flow patterns." 
+                title="Example Health Score" 
+                subtitle="An example of how an 'A' Grade is calculated." 
               />
               
               {/* Visual Card */}
@@ -304,7 +358,7 @@ export default function RiskScoringPage() {
                     metric="Months Active"
                     formula="time = now - first_order"
                     formulaExplanation="Time since first verified transaction."
-                    description="Track record matters, but less than cash flow."
+                    description="Track record matters, but is weighted lower than cash flow."
                     minimum="First order date"
                     thresholds={[
                       { label: '36+ months', score: '100 pts', color: 'green' },
@@ -318,7 +372,7 @@ export default function RiskScoringPage() {
                     metric="Rev Change (Recent vs Prior)"
                     formula="((curr - prev) / prev) * 100"
                     formulaExplanation="Comparison of recent 3 months vs prior."
-                    description="Sustainable growth scores highest."
+                    description="Sustainable growth (10-30%) scores highest."
                     minimum="45+ days data"
                     thresholds={[
                       { label: '+10% to +30%', score: '100 pts', color: 'green' },
@@ -326,29 +380,6 @@ export default function RiskScoringPage() {
                       { label: '< -10%', score: '15 pts', color: 'red' },
                     ]}
                   />
-                </div>
-              </div>
-
-              {/* Grades */}
-              <div id="grades" className="scroll-mt-32">
-                <h3 className="text-xl font-bold text-stone-900 mb-6">Grade Output</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="p-4 rounded-xl bg-green-50 border border-green-100 text-center">
-                    <div className="text-3xl font-bold text-green-700">A</div>
-                    <div className="text-xs font-bold text-green-800">75-100</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 text-center">
-                    <div className="text-3xl font-bold text-blue-700">B</div>
-                    <div className="text-xs font-bold text-blue-800">55-74</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-yellow-50 border border-yellow-100 text-center">
-                    <div className="text-3xl font-bold text-yellow-700">C</div>
-                    <div className="text-xs font-bold text-yellow-800">40-54</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-red-50 border border-red-100 text-center">
-                    <div className="text-3xl font-bold text-red-700">D</div>
-                    <div className="text-xs font-bold text-red-800">0-39</div>
-                  </div>
                 </div>
               </div>
             </div>
