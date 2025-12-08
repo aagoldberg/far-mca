@@ -90,7 +90,7 @@ export function HeroVisual() {
 
           {/* Step 4: Success Message */}
           <div className={`absolute inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center transition-opacity duration-500 ${step === 4 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-            <div className="text-center transform transition-transform duration-500 ${step === 4 ? 'scale-100' : 'scale-90'}">
+            <div className={`text-center transform transition-transform duration-500 ${step === 4 ? 'scale-100' : 'scale-90'}`}>
               <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg animate-bounce">
                 <CurrencyDollarIcon className="w-8 h-8" />
               </div>
