@@ -10,21 +10,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Deep Emerald - The "Money/Trust" Primary (Kept)
+        // Seafoam / Teal - The "Fresh/Tech" Primary
         brand: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857', // Primary Base (Deep Emerald)
-          800: '#065f46',
-          900: '#064e3b',
-          950: '#022c22',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6', // Teal-500 (Seafoam Base)
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+          950: '#042f2e',
         },
-        // Slate Blue - The "Tech" Secondary (Kept)
+        // Slate - Neutral Foundation
         secondary: {
           50: '#f8fafc',
           100: '#f1f5f9',
@@ -32,24 +32,24 @@ export default {
           300: '#cbd5e1',
           400: '#94a3b8',
           500: '#64748b',
-          600: '#475569', // Icon/Subtext Base
+          600: '#475569',
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a',
           950: '#020617',
         },
-        // Amber/Gold - The "Opportunity" Accent (Replaces Coral)
-        // Green + Gold = Wealth (Not Christmas)
+        // Coral - The "Warmth" Accent
+        // Teal + Coral = Modern/Friendly (Not Christmas)
         accent: {
-          DEFAULT: '#F59E0B', // Amber-500 (Gold)
-          hover: '#D97706',   // Amber-600
-          50: '#fffbeb',
-          100: '#fef3c7',
+          DEFAULT: '#F47461', // Coral Base
+          hover: '#E05D4C',
+          50: '#fff1f0',
+          100: '#ffe4e1',
         },
         // Alias standard colors
-        'base-blue': '#047857', // Deep Emerald
-        'base-black': '#0f172a', // Slate-900
-        'base-gray': '#f8fafc',  // Slate-50
+        'base-blue': '#0d9488', // Teal-600 (Readable text/bg)
+        'base-black': '#0f172a',
+        'base-gray': '#f8fafc',
       },
       fontFamily: {
         nunito: ['var(--font-nunito)', 'sans-serif'],
