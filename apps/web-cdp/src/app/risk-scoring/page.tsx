@@ -212,20 +212,51 @@ export default function RiskScoringPage() {
                 </div>
               </div>
 
-              {/* Why Two Indicators */}
-              <div className="bg-stone-900 rounded-2xl p-8 text-white">
-                <h3 className="text-xl font-bold mb-4">Why Two Separate Indicators?</h3>
-                <p className="text-stone-300 mb-6">
-                  A great business asking for too much money is a different risk than a struggling business asking for a small amount. Combining these into one score would hide important information.
-                </p>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-                    <div className="text-sm font-bold text-white mb-1">Health: A, Affordability: Stretched</div>
-                    <div className="text-sm text-stone-400">Great business, but loan may be too large</div>
+              {/* Quick Reference Legend */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Grade Scale */}
+                <div className="bg-stone-50 rounded-xl p-5 border border-stone-200">
+                  <h4 className="font-bold text-stone-900 mb-3 text-sm uppercase tracking-wide">Grade Scale</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-green-700">A (Excellent)</span>
+                      <span className="font-mono text-stone-600">75-100</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-blue-700">B (Good)</span>
+                      <span className="font-mono text-stone-600">55-74</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-amber-700">C (Fair)</span>
+                      <span className="font-mono text-stone-600">40-54</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-red-700">D (Risk)</span>
+                      <span className="font-mono text-stone-600">0-39</span>
+                    </div>
                   </div>
-                  <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-                    <div className="text-sm font-bold text-white mb-1">Health: C, Affordability: Comfortable</div>
-                    <div className="text-sm text-stone-400">Newer business, but loan is very manageable</div>
+                </div>
+
+                {/* Affordability Scale */}
+                <div className="bg-stone-50 rounded-xl p-5 border border-stone-200">
+                  <h4 className="font-bold text-stone-900 mb-3 text-sm uppercase tracking-wide">Affordability Scale</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-green-700">Comfortable</span>
+                      <span className="font-mono text-stone-600">&lt; 0.5x Rev</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-blue-700">Manageable</span>
+                      <span className="font-mono text-stone-600">0.5x - 1.0x</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-amber-700">Stretched</span>
+                      <span className="font-mono text-stone-600">1.0x - 2.0x</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-red-700">High Burden</span>
+                      <span className="font-mono text-stone-600">&gt; 2.0x Rev</span>
+                    </div>
                   </div>
                 </div>
               </div>
