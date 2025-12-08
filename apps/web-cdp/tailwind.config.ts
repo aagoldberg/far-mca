@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-import colors from 'tailwindcss/colors'
 
 export default {
   content: [
@@ -10,48 +9,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Terracotta / Burnt Orange - The "Community Builder" Primary
-        // Warm, human, high-energy. Stands out from cold fintech blues.
         brand: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#f97316',
-          600: '#ea580c', // Primary Base (Terracotta)
-          700: '#c2410c',
-          800: '#9a3412',
-          900: '#7c2d12',
-          950: '#431407',
+          50: '#f0fdf9',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#3B9B7F', // Base (Original Teal)
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+          950: '#042f2e',
         },
-        // Warm Sand/Stone - The "Foundation" Secondary
-        // Grounded, physical, welcoming.
         secondary: {
-          50: '#fafaf9',
-          100: '#f5f5f4',
-          200: '#e7e5e4',
-          300: '#d6d3d1',
-          400: '#a8a29e',
-          500: '#78716c',
-          600: '#57534e',
-          700: '#44403c',
-          800: '#292524',
-          900: '#1c1917',
-          950: '#0c0a09',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#2C7DA0', // Base (Original Blue)
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
         },
-        // Sage Green - The "Growth & Safety" Accent
-        // Used for success states, money, and trust badges.
         accent: {
-          DEFAULT: '#059669', // Emerald-600
-          hover: '#047857',
-          50: '#ecfdf5',
-          100: '#d1fae5',
+          DEFAULT: '#F4D35E', // Original Yellow
+          hover: '#E9C46A',
         },
-        // Alias standard colors
-        'base-blue': '#ea580c', // Remapped to Terracotta
-        'base-black': '#1c1917', // Warm Charcoal
-        'base-gray': '#fafaf9',  // Warm Sand
+        // Mapping back aliases to the original values
+        'base-blue': '#2C7DA0', // Original Blue
+        'base-black': '#111827', // Standard Black
+        'base-gray': '#F3F4F6',  // Standard Gray
       },
       fontFamily: {
         nunito: ['var(--font-nunito)', 'sans-serif'],
