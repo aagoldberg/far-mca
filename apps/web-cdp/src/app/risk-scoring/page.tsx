@@ -195,19 +195,19 @@ export default function RiskScoringPage() {
 
             {/* 1. The Dual Score (Overview) */}
             <section>
-              <SectionHeading id="score" title="The Dual-Indicator System" icon={ChartBarIcon} />
+              <SectionHeading id="score" title="How Scoring Works" icon={ChartBarIcon} />
               
               <div className="bg-brand-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-xl">
                 <div className="relative z-10">
                   <p className="text-brand-100 mb-8 max-w-2xl text-lg">
-                    We separate <strong>"Business Quality"</strong> from <strong>"Loan Size"</strong> so lenders can make nuanced decisions. A great business asking for too much money is different from a risky business asking for a small amount.
+                    We assess every application on two factors: <strong>Business Health</strong> (your quality) and <strong>Affordability</strong> (your burden). Seeing them separately helps lenders make better decisions.
                   </p>
                   
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Card 1: Health Score */}
                     <div className="bg-white rounded-xl p-5 text-stone-900 shadow-lg">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-sm font-bold text-stone-500 uppercase">Health Score</span>
+                        <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">Score 1: Health</span>
                         <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">A (82/100)</span>
                       </div>
                       <div className="space-y-3">
@@ -246,7 +246,7 @@ export default function RiskScoringPage() {
                     {/* Card 2: Affordability */}
                     <div className="bg-white rounded-xl p-5 text-stone-900 shadow-lg">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-sm font-bold text-stone-500 uppercase">Affordability</span>
+                        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Score 2: Affordability</span>
                         <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">Comfortable</span>
                       </div>
                       <div className="mb-2">
