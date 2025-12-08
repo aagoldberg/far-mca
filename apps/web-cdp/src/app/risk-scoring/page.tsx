@@ -27,16 +27,16 @@ function ScoreBar({ label, value, tier }: { label: string; value: number; tier: 
   );
 }
 
-function SectionHeading({ id, title, subtitle, icon: Icon }: { id: string, title: string, subtitle?: string, icon?: any }) {
+function SectionHeading({ id, title, subtitle, chapter }: { id: string, title: string, subtitle?: string, chapter?: string }) {
   return (
-    <div id={id} className="scroll-mt-28 mb-6 flex items-center gap-3 border-b border-stone-200 pb-4">
-      <div className="p-2 bg-brand-50 rounded-lg text-brand-600">
-        {Icon && <Icon className="w-6 h-6" />}
-      </div>
-      <div>
-        <h2 className="text-2xl font-bold text-stone-900">{title}</h2>
-        {subtitle && <p className="text-sm text-stone-500 font-normal mt-1">{subtitle}</p>}
-      </div>
+    <div id={id} className="scroll-mt-28 mb-8 pt-8">
+      {chapter && (
+        <span className="text-brand-600 font-bold uppercase tracking-widest text-xs block mb-2">
+          {chapter}
+        </span>
+      )}
+      <h2 className="text-3xl font-bold text-stone-900 mb-2">{title}</h2>
+      {subtitle && <p className="text-lg text-stone-500 max-w-2xl">{subtitle}</p>}
     </div>
   );
 }
@@ -111,11 +111,11 @@ function ComponentCard({
 }
 
 export default function RiskScoringPage() {
-  const [activeSection, setActiveSection] = useState('approach');
+  const [activeSection, setActiveSection] = useState('health');
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['approach', 'score', 'weights', 'methodology', 'affordability', 'grades', 'privacy', 'sources'];
+      const sections = ['health', 'weights', 'methodology', 'grades', 'affordability', 'foundation', 'privacy'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -141,7 +141,7 @@ export default function RiskScoringPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
+      {/* Hero */}
       <div className="bg-gradient-to-br from-brand-900 via-brand-800 to-brand-900 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="max-w-3xl">
@@ -167,458 +167,279 @@ export default function RiskScoringPage() {
             <div className="sticky top-32">
               <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Contents</h3>
               <nav className="space-y-1">
-                {[
-                  { id: 'approach', label: 'Industry Approach' },
-                  { id: 'score', label: 'The Dual Score' },
-                  { id: 'weights', label: 'Weights & Factors' },
-                  { id: 'methodology', label: 'Detailed Methodology' },
-                  { id: 'affordability', label: 'Loan Affordability' },
-                  { id: 'grades', label: 'Grade System' },
-                  { id: 'privacy', label: 'Privacy Design' },
-                  { id: 'sources', label: 'Data Sources' },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollTo(item.id)}
-                    className={`block w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      activeSection === item.id
-                        ? 'bg-white text-brand-600 shadow-sm ring-1 ring-stone-200'
-                        : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
+                <div className="pb-2 mb-2 border-b border-stone-100">
+                  <p className="px-3 text-xs font-semibold text-brand-600 mb-1">Part 1: Health</p>
+                  {[
+                    { id: 'health', label: 'Overview' },
+                    { id: 'weights', label: 'Components' },
+                    { id: 'methodology', label: 'Methodology' },
+                    { id: 'grades', label: 'Grade System' },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollTo(item.id)}
+                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                        activeSection === item.id ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-900'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+                <div>
+                  <p className="px-3 text-xs font-semibold text-blue-600 mb-1">Part 2: Safety</p>
+                  {[
+                    { id: 'affordability', label: 'Affordability Check' },
+                    { id: 'foundation', label: 'Data Sources' },
+                    { id: 'privacy', label: 'Privacy' },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollTo(item.id)}
+                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                        activeSection === item.id ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-900'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
               </nav>
             </div>
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-9 space-y-20">
+          <div className="lg:col-span-9 space-y-24">
 
-            {/* 1. Industry Approach */}
-            <section>
-              <SectionHeading id="approach" title="Industry-Informed Approach" icon={BuildingLibraryIcon} />
-              
-              <p className="text-lg text-stone-600 mb-8 leading-relaxed">
-                Our Business Health Score isn't reinventing the wheel; it draws from established risk rating systems used by leading peer-to-peer and revenue-based lending platforms to ensure reliability.
-              </p>
-
-              <div className="grid md:grid-cols-3 gap-6 mb-10">
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-                  <div className="text-stone-900 font-bold mb-2">Kiva Model</div>
-                  <p className="text-sm text-stone-600">
-                    0.5-5 star ratings based on 7 distinct categories including governance, financials, and transparency.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-                  <div className="text-stone-900 font-bold mb-2">Prosper Model</div>
-                  <p className="text-sm text-stone-600">
-                    Letter grades (AA to HR) that communicate comparative risk levels instantly to peer lenders.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-                  <div className="text-stone-900 font-bold mb-2">Stripe Model</div>
-                  <p className="text-sm text-stone-600">
-                    Numeric scores (0-99) with clear thresholds for normal vs. elevated risk behavior.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* 2. The Dual Score */}
-            <section>
-              <SectionHeading id="score" title="The Dual-Indicator System" icon={ChartBarIcon} />
-              
-              <div className="bg-brand-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-xl">
-                <div className="relative z-10">
-                  <p className="text-brand-100 mb-8 max-w-2xl text-lg">
-                    We separate <strong>"Business Quality"</strong> from <strong>"Loan Size"</strong> so lenders can make nuanced decisions. A great business asking for too much money is different from a risky business asking for a small amount.
-                  </p>
-                  
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {/* Card 1 */}
-                    <div className="bg-white rounded-xl p-5 text-stone-900 shadow-lg">
-                      <div className="flex justify-between items-center mb-4">
-                        <span className="text-sm font-bold text-stone-500 uppercase">Health Score</span>
-                        <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">A (82/100)</span>
-                      </div>
-                      <div className="space-y-3">
-                        <div>
-                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
-                            <span>Revenue Stability</span>
-                            <span>85/100</span>
-                          </div>
-                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[85%]"></div></div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
-                            <span>Business Tenure</span>
-                            <span>100/100</span>
-                          </div>
-                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[100%]"></div></div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
-                            <span>Growth Trend</span>
-                            <span>72/100</span>
-                          </div>
-                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[72%]"></div></div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
-                            <span>Order Consistency</span>
-                            <span>90/100</span>
-                          </div>
-                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[90%]"></div></div>
-                        </div>
-                      </div>
-                      <div className="mt-4 text-xs text-stone-400 font-medium">Measures fundamental quality</div>
-                    </div>
-
-                    {/* Card 2 */}
-                    <div className="bg-white rounded-xl p-5 text-stone-900 shadow-lg">
-                      <div className="flex justify-between items-center mb-4">
-                        <span className="text-sm font-bold text-stone-500 uppercase">Affordability</span>
-                        <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">Comfortable</span>
-                      </div>
-                      <div className="mb-2">
-                        <div className="text-2xl font-bold">$2,000</div>
-                        <div className="text-xs text-stone-500">Loan Request</div>
-                      </div>
-                      <div className="text-sm font-medium text-stone-700">~2 weeks of revenue</div>
-                      <div className="mt-4 text-xs text-stone-400 font-medium">Measures repayment burden</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* 3. Weights */}
-            <section>
-              <SectionHeading id="weights" title="Components & Weights" icon={ScaleIcon} />
-              
-              <p className="text-lg text-stone-600 mb-8">
-                Our scoring model prioritizes cash flow stability above all else, based on FinRegLab research showing it as the strongest predictor of repayment.
-              </p>
-
-              {/* Visual Weight Bar */}
-              <div className="flex h-12 w-full rounded-xl overflow-hidden mb-8 shadow-sm">
-                <div className="bg-brand-600 w-[35%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">35%</div>
-                <div className="bg-brand-500 w-[25%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">25%</div>
-                <div className="bg-brand-400 w-[20%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">20%</div>
-                <div className="bg-brand-300 w-[20%] flex items-center justify-center text-white font-bold text-sm">20%</div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-xl border-l-4 border-brand-600 shadow-sm">
-                  <h3 className="font-bold text-stone-900 mb-2">Revenue Stability (35%)</h3>
-                  <p className="text-sm text-stone-600">
-                    Month-over-month consistency. Lower volatility equals higher score. The bedrock of the model.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-xl border-l-4 border-brand-500 shadow-sm">
-                  <h3 className="font-bold text-stone-900 mb-2">Order Consistency (25%)</h3>
-                  <p className="text-sm text-stone-600">
-                    Frequency and regularity of transaction volume. Consistent daily orders indicate healthy demand.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-xl border-l-4 border-brand-400 shadow-sm">
-                  <h3 className="font-bold text-stone-900 mb-2">Business Tenure (20%)</h3>
-                  <p className="text-sm text-stone-600">
-                    Length of operational history. While new businesses are welcome, track record still counts.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-xl border-l-4 border-brand-300 shadow-sm">
-                  <h3 className="font-bold text-stone-900 mb-2">Growth Trend (20%)</h3>
-                  <p className="text-sm text-stone-600">
-                    Recent trajectory vs. historical baseline. We value sustainable growth (10-30%) over viral spikes.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-8 p-5 bg-blue-50 rounded-xl border border-blue-100 text-sm text-blue-800">
-                <strong>Research Basis:</strong> Weights derived from <span className="underline cursor-pointer">FinRegLab "Sharpening the Focus" (2025)</span> and <span className="underline cursor-pointer">NBER Working Paper 33367</span>, demonstrating that cash flow metrics provide 2x predictive power for young businesses compared to FICO.
-              </div>
-            </section>
-
-            {/* 4. Detailed Methodology */}
-            <section>
-              <SectionHeading id="methodology" title="Detailed Methodology" icon={BeakerIcon} />
-              
-              <div className="grid gap-6">
-                <ComponentCard
-                  title="Revenue Stability"
-                  weight="35%"
-                  metric="Coefficient of Variation (CV) of Monthly Revenue"
-                  formula="CV = (σ / μ) × 100"
-                  formulaExplanation="Standard deviation of monthly revenue divided by mean monthly revenue. Lower CV = more stable."
-                  description="Month-over-month consistency is the strongest predictor of repayment per FinRegLab research."
-                  minimum="3+ months of order history. Less data defaults to 40 pts (Fair)."
-                  thresholds={[
-                    { label: 'CV < 15%', score: '100 pts', color: 'green' },
-                    { label: 'CV 15-25%', score: '85 pts', color: 'green' },
-                    { label: 'CV 25-40%', score: '70 pts', color: 'yellow' },
-                    { label: 'CV 40-60%', score: '50 pts', color: 'yellow' },
-                    { label: 'CV 60-80%', score: '30 pts', color: 'red' },
-                    { label: 'CV > 80%', score: '15 pts', color: 'red' },
-                  ]}
-                />
-
-                <ComponentCard
-                  title="Order Consistency"
-                  weight="25%"
-                  metric="Coefficient of Variation (CV) of Weekly Order Count"
-                  formula="CV = (σ / μ) × 100"
-                  formulaExplanation="Standard deviation of weekly order counts divided by mean weekly orders. Lower CV = steadier demand."
-                  description="Steady transaction patterns indicate reliable demand and operational consistency."
-                  minimum="4+ weeks of order history. Less data defaults to 40 pts (Fair)."
-                  thresholds={[
-                    { label: 'CV < 20%', score: '100 pts', color: 'green' },
-                    { label: 'CV 20-35%', score: '85 pts', color: 'green' },
-                    { label: 'CV 35-50%', score: '70 pts', color: 'yellow' },
-                    { label: 'CV 50-70%', score: '50 pts', color: 'yellow' },
-                    { label: 'CV 70-90%', score: '30 pts', color: 'red' },
-                    { label: 'CV > 90%', score: '15 pts', color: 'red' },
-                  ]}
-                />
-
-                <ComponentCard
-                  title="Business Tenure"
-                  weight="20%"
-                  metric="Months Since First Order"
-                  formula="tenure = (today - firstOrderDate) / 30"
-                  formulaExplanation="Days between today and the first verified order, converted to months."
-                  description="Track record matters, but cash flow metrics collectively outweigh pure tenure."
-                  minimum="Uses first order date. No orders = 15 pts (Poor)."
-                  thresholds={[
-                    { label: '36+ months', score: '100 pts', color: 'green' },
-                    { label: '24-36 months', score: '85 pts', color: 'green' },
-                    { label: '12-24 months', score: '70 pts', color: 'yellow' },
-                    { label: '6-12 months', score: '50 pts', color: 'yellow' },
-                    { label: '3-6 months', score: '30 pts', color: 'red' },
-                    { label: '< 3 months', score: '15 pts', color: 'red' },
-                  ]}
-                />
-
-                <ComponentCard
-                  title="Growth Trend"
-                  weight="20%"
-                  metric="Revenue Change: First Half vs Second Half"
-                  formula="growth = ((recentRevenue - priorRevenue) / priorRevenue) × 100"
-                  formulaExplanation="Split order history at midpoint. Compare total revenue in second half vs first half."
-                  description="Sustainable growth (10-30%) scores highest. Extreme spikes may indicate volatility."
-                  minimum="45+ days of order history. Less data defaults to 40 pts (Fair)."
-                  thresholds={[
-                    { label: '+10% to +30%', score: '100 pts', color: 'green' },
-                    { label: '+30% to +50%', score: '85 pts', color: 'green' },
-                    { label: '0% to +10%', score: '75 pts', color: 'blue' },
-                    { label: '+50% or more', score: '60 pts', color: 'yellow' },
-                    { label: '0% to -10%', score: '50 pts', color: 'yellow' },
-                    { label: 'Below -10%', score: '15-30 pts', color: 'red' },
-                  ]}
-                />
-              </div>
-            </section>
-
-            {/* 5. Affordability */}
-            <section>
-              <SectionHeading
-                id="affordability"
-                title="Loan Affordability"
-                subtitle="Is this specific loan appropriate for this business?"
+            {/* ================= PART 1: BUSINESS HEALTH ================= */}
+            <div>
+              <SectionHeading 
+                id="health" 
+                chapter="Part 1"
+                title="Business Health Score" 
+                subtitle="Measures the fundamental quality and stability of the business based on cash flow patterns." 
               />
-
-              <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-                <div className="p-6 border-b border-stone-100">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <ScaleIcon className="w-5 h-5 text-blue-700" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-stone-900">Loan-to-Revenue Ratio</div>
-                      <div className="text-sm text-stone-500">Loan Amount ÷ Average Monthly Revenue</div>
-                    </div>
+              
+              {/* Visual Card */}
+              <div className="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm mb-12">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                  <div>
+                    <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">The Metric</div>
+                    <h3 className="text-2xl font-bold text-stone-900">Quality Score</h3>
                   </div>
-                  <p className="text-stone-600">
-                    Revenue-based lenders (Wayflyer, Clearco) typically cap advances at 1-2x monthly revenue.
-                    We display this separately so lenders can assess repayment burden independently from business health.
-                  </p>
+                  <div className="mt-4 md:mt-0 flex items-center gap-3">
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">Grade A (82/100)</span>
+                  </div>
                 </div>
 
-                <div className="divide-y divide-stone-100">
-                  {[
-                    { tier: 'Comfortable', ratio: '< 0.5x', desc: 'Less than 2 weeks of revenue', color: 'green' },
-                    { tier: 'Manageable', ratio: '0.5x - 1.0x', desc: 'Less than 1 month of revenue', color: 'blue' },
-                    { tier: 'Stretched', ratio: '1.0x - 2.0x', desc: '1-2 months of revenue', color: 'amber' },
-                    { tier: 'High Burden', ratio: '> 2.0x', desc: 'More than 2 months of revenue', color: 'red' },
-                  ].map((item) => (
-                    <div key={item.tier} className="flex items-center px-6 py-4">
-                      <div className="w-32">
-                        <span className={`inline-block px-3 py-1 rounded-lg text-sm font-bold
-                          ${item.color === 'green' ? 'bg-green-100 text-green-800' : ''}
-                          ${item.color === 'blue' ? 'bg-blue-100 text-blue-800' : ''}
-                          ${item.color === 'amber' ? 'bg-amber-100 text-amber-800' : ''}
-                          ${item.color === 'red' ? 'bg-red-100 text-red-800' : ''}
-                        `}>
-                          {item.tier}
-                        </span>
-                      </div>
-                      <div className="w-28 font-mono text-sm text-stone-700">{item.ratio}</div>
-                      <div className="text-sm text-stone-500">{item.desc}</div>
-                    </div>
-                  ))}
+                <div className="space-y-4">
+                  <ScoreBar label="Revenue Stability" value={85} tier="85/100" />
+                  <ScoreBar label="Business Tenure" value={100} tier="100/100" />
+                  <ScoreBar label="Growth Trend" value={72} tier="72/100" />
+                  <ScoreBar label="Order Consistency" value={90} tier="90/100" />
                 </div>
               </div>
-            </section>
 
-            {/* 6. Grade System */}
-            <section>
-              <SectionHeading
-                id="grades"
-                title="Grade System"
-                subtitle="How component scores become letter grades"
-              />
-
-              <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-8">
-                <div className="text-center mb-8">
-                  <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3">The Formula</div>
-                  <div className="inline-block text-lg font-mono text-stone-800 bg-stone-50 px-6 py-4 rounded-xl border border-stone-200">
-                    (Stability × 0.35) + (Consistency × 0.25) + (Tenure × 0.20) + (Growth × 0.20)
-                  </div>
+              {/* Weights */}
+              <div id="weights" className="scroll-mt-32 mb-12">
+                <h3 className="text-xl font-bold text-stone-900 mb-4">Score Components</h3>
+                {/* Visual Weight Bar */}
+                <div className="flex h-12 w-full rounded-xl overflow-hidden mb-4 shadow-sm border border-stone-200">
+                  <div className="bg-brand-600 w-[35%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">35%</div>
+                  <div className="bg-brand-500 w-[25%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">25%</div>
+                  <div className="bg-brand-400 w-[20%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">20%</div>
+                  <div className="bg-brand-300 w-[20%] flex items-center justify-center text-white font-bold text-sm">20%</div>
                 </div>
+                <div className="flex text-xs text-stone-500 justify-between px-1">
+                  <span>Revenue Stability</span>
+                  <span>Order Consistency</span>
+                  <span>Tenure</span>
+                  <span>Growth</span>
+                </div>
+              </div>
 
+              {/* Methodology */}
+              <div id="methodology" className="scroll-mt-32 mb-12">
+                <h3 className="text-xl font-bold text-stone-900 mb-6">Detailed Methodology</h3>
+                <div className="grid gap-6">
+                  <ComponentCard
+                    title="Revenue Stability"
+                    weight="35%"
+                    metric="CV of Monthly Revenue"
+                    formula="CV = (σ / μ) × 100"
+                    formulaExplanation="Standard deviation divided by mean."
+                    description="Month-over-month consistency is the strongest predictor of repayment."
+                    minimum="3+ months data"
+                    thresholds={[
+                      { label: 'CV < 15%', score: '100 pts', color: 'green' },
+                      { label: 'CV 15-25%', score: '85 pts', color: 'green' },
+                      { label: 'CV 25-40%', score: '70 pts', color: 'yellow' },
+                      { label: 'CV 40-60%', score: '50 pts', color: 'yellow' },
+                      { label: 'CV > 80%', score: '15 pts', color: 'red' },
+                    ]}
+                  />
+                  <ComponentCard
+                    title="Order Consistency"
+                    weight="25%"
+                    metric="CV of Weekly Orders"
+                    formula="CV = (σ / μ) × 100"
+                    formulaExplanation="Standard deviation of weekly orders."
+                    description="Steady transaction patterns indicate reliable demand."
+                    minimum="4+ weeks data"
+                    thresholds={[
+                      { label: 'CV < 20%', score: '100 pts', color: 'green' },
+                      { label: 'CV 20-35%', score: '85 pts', color: 'green' },
+                      { label: 'CV 35-50%', score: '70 pts', color: 'yellow' },
+                      { label: 'CV > 90%', score: '15 pts', color: 'red' },
+                    ]}
+                  />
+                  <ComponentCard
+                    title="Business Tenure"
+                    weight="20%"
+                    metric="Months Active"
+                    formula="time = now - first_order"
+                    formulaExplanation="Time since first verified transaction."
+                    description="Track record matters, but less than cash flow."
+                    minimum="First order date"
+                    thresholds={[
+                      { label: '36+ months', score: '100 pts', color: 'green' },
+                      { label: '12-24 months', score: '70 pts', color: 'yellow' },
+                      { label: '< 3 months', score: '15 pts', color: 'red' },
+                    ]}
+                  />
+                  <ComponentCard
+                    title="Growth Trend"
+                    weight="20%"
+                    metric="Rev Change (Recent vs Prior)"
+                    formula="((curr - prev) / prev) * 100"
+                    formulaExplanation="Comparison of recent 3 months vs prior."
+                    description="Sustainable growth scores highest."
+                    minimum="45+ days data"
+                    thresholds={[
+                      { label: '+10% to +30%', score: '100 pts', color: 'green' },
+                      { label: '0% to +10%', score: '75 pts', color: 'blue' },
+                      { label: '< -10%', score: '15 pts', color: 'red' },
+                    ]}
+                  />
+                </div>
+              </div>
+
+              {/* Grades */}
+              <div id="grades" className="scroll-mt-32">
+                <h3 className="text-xl font-bold text-stone-900 mb-6">Grade Output</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="p-4 rounded-xl bg-green-50 border border-green-100 text-center">
+                    <div className="text-3xl font-bold text-green-700">A</div>
+                    <div className="text-xs font-bold text-green-800">75-100</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 text-center">
+                    <div className="text-3xl font-bold text-blue-700">B</div>
+                    <div className="text-xs font-bold text-blue-800">55-74</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-yellow-50 border border-yellow-100 text-center">
+                    <div className="text-3xl font-bold text-yellow-700">C</div>
+                    <div className="text-xs font-bold text-yellow-800">40-54</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-red-50 border border-red-100 text-center">
+                    <div className="text-3xl font-bold text-red-700">D</div>
+                    <div className="text-xs font-bold text-red-800">0-39</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full h-px bg-stone-200" />
+
+            {/* ================= PART 2: LOAN AFFORDABILITY ================= */}
+            <div>
+              <SectionHeading 
+                id="affordability" 
+                chapter="Part 2"
+                title="Loan Affordability Check" 
+                subtitle="Measures whether this specific loan amount is appropriate for the business's revenue." 
+              />
+
+              {/* Visual Card */}
+              <div className="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm mb-12">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                  <div>
+                    <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">The Metric</div>
+                    <h3 className="text-2xl font-bold text-stone-900">Loan-to-Revenue Ratio</h3>
+                  </div>
+                  <div className="mt-4 md:mt-0 flex items-center gap-3">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-bold">Comfortable (0.4x)</span>
+                  </div>
+                </div>
+
+                <div className="bg-stone-50 rounded-xl p-6">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                      <p className="text-stone-600 mb-4">
+                        We compare the requested loan amount to the business's average monthly revenue.
+                      </p>
+                      <div className="text-sm font-mono bg-white p-3 rounded border border-stone-200 inline-block">
+                        Ratio = Loan Amount ÷ Monthly Revenue
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm p-2 rounded bg-green-50 text-green-800 border border-green-100">
+                        <span>Comfortable</span> <span>&lt; 0.5x</span>
+                      </div>
+                      <div className="flex justify-between text-sm p-2 rounded bg-blue-50 text-blue-800 border border-blue-100">
+                        <span>Manageable</span> <span>0.5x - 1.0x</span>
+                      </div>
+                      <div className="flex justify-between text-sm p-2 rounded bg-yellow-50 text-yellow-800 border border-yellow-100">
+                        <span>Stretched</span> <span>1.0x - 2.0x</span>
+                      </div>
+                      <div className="flex justify-between text-sm p-2 rounded bg-red-50 text-red-800 border border-red-100">
+                        <span>High Burden</span> <span>&gt; 2.0x</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full h-px bg-stone-200" />
+
+            {/* ================= PART 3: FOUNDATION ================= */}
+            <div>
+              <SectionHeading id="foundation" chapter="Part 3" title="Data Foundation" />
+              
+              <div id="sources" className="scroll-mt-32 mb-12">
+                <h3 className="text-xl font-bold text-stone-900 mb-6">Verified Data Sources</h3>
+                <div className="grid md:grid-cols-3 gap-6">
                   {[
-                    { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
-                    { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
-                    { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
-                    { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
-                  ].map((item) => (
-                    <div
-                      key={item.grade}
-                      className={`p-5 rounded-xl text-center border-2
-                        ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
-                        ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
-                        ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
-                        ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
-                      `}
-                    >
-                      <div className={`text-4xl font-bold mb-1
-                        ${item.color === 'green' ? 'text-green-600' : ''}
-                        ${item.color === 'blue' ? 'text-blue-600' : ''}
-                        ${item.color === 'amber' ? 'text-amber-600' : ''}
-                        ${item.color === 'red' ? 'text-red-600' : ''}
-                      `}>
-                        {item.grade}
+                    { name: 'Shopify', color: '#96bf48', metrics: 'Orders, Revenue' },
+                    { name: 'Stripe', color: '#635BFF', metrics: 'Charges, Payouts' },
+                    { name: 'Square', color: '#000000', metrics: 'POS Transactions' },
+                  ].map((platform) => (
+                    <div key={platform.name} className="bg-white rounded-xl border border-stone-200 p-5 text-center">
+                      <div className="w-10 h-10 rounded-lg mx-auto mb-3 flex items-center justify-center text-white font-bold" style={{ backgroundColor: platform.color }}>
+                        {platform.name[0]}
                       </div>
-                      <div className={`text-sm font-bold mb-1
-                        ${item.color === 'green' ? 'text-green-800' : ''}
-                        ${item.color === 'blue' ? 'text-blue-800' : ''}
-                        ${item.color === 'amber' ? 'text-amber-800' : ''}
-                        ${item.color === 'red' ? 'text-red-800' : ''}
-                      `}>
-                        {item.range}
-                      </div>
-                      <div className={`text-xs
-                        ${item.color === 'green' ? 'text-green-700' : ''}
-                        ${item.color === 'blue' ? 'text-blue-700' : ''}
-                        ${item.color === 'amber' ? 'text-amber-700' : ''}
-                        ${item.color === 'red' ? 'text-red-700' : ''}
-                      `}>
-                        {item.label}
-                      </div>
+                      <div className="font-bold text-stone-900">{platform.name}</div>
+                      <div className="text-xs text-stone-500">{platform.metrics}</div>
                     </div>
                   ))}
                 </div>
               </div>
-            </section>
 
-            {/* 7. Privacy */}
-            <section>
-              <SectionHeading
-                id="privacy"
-                title="Privacy-First Design"
-                subtitle="We show signals, not sensitive data"
-              />
-
-              <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-                <table className="w-full text-sm text-left">
-                  <thead className="bg-stone-50 text-stone-900 font-bold border-b border-stone-200">
-                    <tr>
-                      <th className="px-6 py-4">We Don't Show (Raw Data)</th>
-                      <th className="px-6 py-4">We Show (Signals)</th>
-                      <th className="px-6 py-4">Why?</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-stone-100">
-                    <tr>
-                      <td className="px-6 py-4 text-stone-400 font-mono text-sm">$8,542 / month</td>
-                      <td className="px-6 py-4"><span className="px-2 py-1 bg-brand-100 text-brand-700 rounded text-sm font-bold">Strong</span></td>
-                      <td className="px-6 py-4 text-stone-600 text-sm">Protects sensitive financials</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 text-stone-400 font-mono text-sm">184 orders</td>
-                      <td className="px-6 py-4"><span className="px-2 py-1 bg-brand-100 text-brand-700 rounded text-sm font-bold">Steady</span></td>
-                      <td className="px-6 py-4 text-stone-600 text-sm">Protects competitive advantage</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 text-stone-400 font-mono text-sm">+14.2% growth</td>
-                      <td className="px-6 py-4"><span className="px-2 py-1 bg-brand-100 text-brand-700 rounded text-sm font-bold">Growing</span></td>
-                      <td className="px-6 py-4 text-stone-600 text-sm">Qualitative signal is sufficient</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div id="privacy" className="scroll-mt-32">
+                <h3 className="text-xl font-bold text-stone-900 mb-6">Privacy Design</h3>
+                <div className="bg-white rounded-xl border border-stone-200 p-6">
+                  <p className="text-stone-600">
+                    We calculate these scores server-side and only display the <strong>Grade</strong> and <strong>Tier</strong> to the public. Raw financial data (exact revenue dollars) is never exposed, protecting the merchant's competitive advantage.
+                  </p>
+                </div>
               </div>
-            </section>
-
-            {/* 8. Data Sources */}
-            <section>
-              <SectionHeading
-                id="sources"
-                title="Verified Data Sources"
-                subtitle="Read-only API connections to commerce platforms"
-              />
-
-              <div className="grid md:grid-cols-3 gap-6">
-                {[
-                  { name: 'Shopify', color: '#96bf48', metrics: 'Orders, Revenue, Refunds, Shop Age' },
-                  { name: 'Stripe', color: '#635BFF', metrics: 'Charges, Subscriptions, MRR, Payouts' },
-                  { name: 'Square', color: '#000000', metrics: 'Payments, Refunds, POS Transactions' },
-                ].map((platform) => (
-                  <div key={platform.name} className="bg-white rounded-2xl border border-stone-200 p-6 text-center hover:shadow-lg transition-shadow">
-                    <div
-                      className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold"
-                      style={{ backgroundColor: platform.color }}
-                    >
-                      {platform.name[0]}
-                    </div>
-                    <h4 className="font-bold text-stone-900 mb-1">{platform.name}</h4>
-                    <p className="text-sm text-stone-500">{platform.metrics}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
+            </div>
 
             {/* CTA */}
-            <section className="bg-gradient-to-br from-brand-600 to-brand-700 rounded-3xl p-10 text-center text-white">
-              <h2 className="text-3xl font-bold mb-4">See Your Score</h2>
-              <p className="text-brand-100 mb-8 max-w-xl mx-auto">
-                Connecting your accounts is safe, read-only, and takes less than 2 minutes.
-              </p>
+            <section className="bg-stone-900 rounded-3xl p-10 text-center text-white mt-12">
+              <h2 className="text-2xl font-bold mb-4">Check Your Business Health</h2>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/create-loan"
-                  className="px-8 py-4 bg-white text-brand-700 font-bold rounded-xl hover:bg-brand-50 transition-colors"
-                >
-                  Check Eligibility
-                </Link>
-                <Link
-                  href="/about"
-                  className="px-8 py-4 bg-brand-500 text-white font-bold rounded-xl hover:bg-brand-400 transition-colors"
-                >
-                  Learn More
-                </Link>
+                <Link href="/create-loan" className="px-8 py-4 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-500 transition-colors">Check Eligibility</Link>
               </div>
             </section>
 
