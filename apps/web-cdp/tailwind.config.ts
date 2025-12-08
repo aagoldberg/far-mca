@@ -10,45 +10,45 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Spruce Green - The "Trust/Money" Primary
+        // Deep Emerald - The "Modern Money" Primary
         brand: {
-          50: '#f0fdfa',
-          100: '#ccfbf1',
-          200: '#99f6e4',
-          300: '#5eead4',
-          400: '#2dd4bf',
-          500: '#14b8a6', // Bright Teal for accents
-          600: '#0d9488',
-          700: '#0f766e', // Primary Base (Deep Spruce)
-          800: '#115e59',
-          900: '#134e4a', // Darkest Text
-          950: '#042f2e',
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981', // Bright Emerald for highlights
+          600: '#059669',
+          700: '#047857', // Primary Base (Deep Emerald)
+          800: '#065f46',
+          900: '#064e3b', // Darkest Text
+          950: '#022c22',
         },
-        // Stone/Earth - The "Human/Foundation" Secondary
+        // Slate Blue - The "Tech/Corporate" Secondary
         secondary: {
-          50: '#fafaf9',
-          100: '#f5f5f4',
-          200: '#e7e5e4',
-          300: '#d6d3d1',
-          400: '#a8a29e',
-          500: '#78716c', // Icon/Subtext Base
-          600: '#57534e',
-          700: '#44403c',
-          800: '#292524',
-          900: '#1c1917',
-          950: '#0c0a09',
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569', // Icon/Subtext Base (Slate Blue)
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
         },
-        // Amber - The "Opportunity" Accent
+        // Coral - The "Community" Accent
         accent: {
-          DEFAULT: '#F59E0B', // Amber-500
-          hover: '#D97706', // Amber-600
-          50: '#fffbeb',
-          100: '#fef3c7',
+          DEFAULT: '#F47461', // Coral Base
+          hover: '#E05D4C',   // Darker Coral
+          50: '#fff1f0',
+          100: '#ffe4e1',
         },
-        // Alias standard colors to 'base' semantics if needed
-        'base-blue': '#0f766e', // Remapping your old 'base-blue' calls to Spruce
-        'base-black': '#1c1917', // Remapping old black to Warm Charcoal
-        'base-gray': '#fafaf9',  // Remapping old gray to Warm Stone
+        // Alias standard colors to 'base' semantics
+        'base-blue': '#047857', // Remapped to Deep Emerald
+        'base-black': '#0f172a', // Remapped to Slate-900 (Dark Navy)
+        'base-gray': '#f8fafc',  // Remapped to Slate-50 (Cool White)
       },
       fontFamily: {
         nunito: ['var(--font-nunito)', 'sans-serif'],
