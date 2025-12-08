@@ -150,10 +150,10 @@ export default function RiskScoringPage() {
               Transparency Report
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
-              How We Assess<br />Business Health
+              Business Health &<br />Affordability
             </h1>
             <p className="text-xl text-white/80 leading-relaxed max-w-2xl">
-              No black boxes. Our risk scoring is built on peer-reviewed research and displays two independent indicators so lenders can make informed decisions.
+              We evaluate every application on two independent factors: the quality of the business and the safety of the loan.
             </p>
           </div>
         </div>
