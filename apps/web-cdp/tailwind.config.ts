@@ -10,46 +10,45 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Seafoam / Teal - The "Fresh/Tech" Primary
+        // Indigo - The "Digital Safety" Primary
         brand: {
-          50: '#f0fdfa',
-          100: '#ccfbf1',
-          200: '#99f6e4',
-          300: '#5eead4',
-          400: '#2dd4bf',
-          500: '#14b8a6', // Teal-500 (Seafoam Base)
-          600: '#0d9488',
-          700: '#0f766e',
-          800: '#115e59',
-          900: '#134e4a',
-          950: '#042f2e',
+          50: '#eef2ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#6366f1',
+          600: '#4f46e5', // Primary Base (Indigo-600)
+          700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
+          950: '#1e1b4b',
         },
-        // Slate - Neutral Foundation
+        // Warm Sand - The "Community" Secondary
         secondary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+          50: '#fafaf9', // Warm Stone-50
+          100: '#f5f5f4', // Stone-100
+          200: '#e7e5e4',
+          300: '#d6d3d1',
+          400: '#a8a29e',
+          500: '#78716c', // Stone-500
+          600: '#57534e',
+          700: '#44403c',
+          800: '#292524',
+          900: '#1c1917',
+          950: '#0c0a09',
         },
-        // Coral - The "Warmth" Accent
-        // Teal + Coral = Modern/Friendly (Not Christmas)
+        // Burnt Orange - The "Builder" Accent
         accent: {
-          DEFAULT: '#F47461', // Coral Base
-          hover: '#E05D4C',
-          50: '#fff1f0',
-          100: '#ffe4e1',
+          DEFAULT: '#EA580C', // Orange-600
+          hover: '#C2410C',   // Orange-700
+          50: '#fff7ed',
+          100: '#ffedd5',
         },
         // Alias standard colors
-        'base-blue': '#0d9488', // Teal-600 (Readable text/bg)
-        'base-black': '#0f172a',
-        'base-gray': '#f8fafc',
+        'base-blue': '#4f46e5', // Indigo
+        'base-black': '#1e1b4b', // Deep Indigo/Black
+        'base-gray': '#fafaf9',  // Warm Sand
       },
       fontFamily: {
         nunito: ['var(--font-nunito)', 'sans-serif'],
