@@ -187,6 +187,13 @@ export default function RiskScoringPage() {
                           </div>
                           <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[72%]"></div></div>
                         </div>
+                        <div>
+                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
+                            <span>Order Consistency</span>
+                            <span>90/100</span>
+                          </div>
+                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[90%]"></div></div>
+                        </div>
                       </div>
                       <div className="mt-4 text-xs text-stone-400 font-medium">Measures fundamental quality</div>
                     </div>
