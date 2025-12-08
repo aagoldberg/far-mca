@@ -258,7 +258,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
     const { contribution: contribData } = useContribution(loanAddress, contributorAddress);
 
     return (
-      <div className="flex items-center gap-3 py-3 border-b border-gray-50 last:border-0">
+      <div className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
         {profile?.pfpUrl ? (
           <img
             src={profile.pfpUrl}
@@ -614,7 +614,7 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                 {contributors && contributors.length > 0 && (
                   <div className="pt-4 border-t border-gray-200">
                     <h3 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Recent Supporters</h3>
-                    <div className="space-y-0 max-h-48 overflow-y-auto">
+                    <div className="space-y-0 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
                       {contributors.map((contributorAddress) => (
                         <ContributorItem key={contributorAddress} address={contributorAddress} />
                       ))}
