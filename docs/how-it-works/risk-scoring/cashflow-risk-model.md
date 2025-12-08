@@ -161,102 +161,253 @@ Patterns that indicate operational health:
 
 ---
 
-## Proposed Scoring Model
+## Implemented Business Health Score Model
 
-### Enhanced Weighted Formula
+Based on FinRegLab research findings, we've implemented a four-component scoring model that prioritizes cash flow stability over absolute revenue amounts. This aligns with research showing volatility is the strongest predictor of default.
+
+### Weighted Formula
 
 ```
-Credit Score (0-100) =
-    Revenue Score (25%)
-  + Stability Score (20%)
-  + Quality Score (20%)
-  + Growth Score (15%)
-  + Platform Reliability (10%)
-  + Tenure Score (10%)
+Business Health Score (0-100) =
+    Revenue Stability (35%)
+  + Order Consistency (25%)
+  + Business Tenure (20%)
+  + Growth Trend (20%)
 ```
+
+**Why these weights?** See [FinRegLab Research](finreglab-research.md) for the research basis.
 
 ### Component Breakdown
 
-#### 1. Revenue Score (25 points max)
+#### 1. Revenue Stability (35% weight)
 
-Logarithmic scale to handle wide range:
+**The strongest predictor per FinRegLab research.** Measures month-over-month revenue consistency using Coefficient of Variation (CV).
 
-| Monthly Revenue | Points |
-|-----------------|--------|
-| $0 - $5K | 0-10 |
-| $5K - $20K | 10-15 |
-| $20K - $50K | 15-20 |
-| $50K - $200K | 20-23 |
-| $200K+ | 23-25 |
+**How It Works:**
+1. Group all orders by calendar month
+2. Sum revenue per month to create a time series: `[$8,200, $9,100, $7,800, ...]`
+3. Calculate CV: `(standard deviation / mean) × 100`
+4. Lower CV = more stable = higher score
 
-#### 2. Stability Score (20 points max)
+**Example Calculation:**
+```
+Monthly revenue: [$8,200, $9,100, $7,800, $8,500, $8,900]
+Mean: $8,500/month
+Standard Deviation: $456
+CV = (456 / 8,500) × 100 = 5.4%
+→ Score: 100 (Excellent - very stable)
+```
 
-Based on revenue variance and predictability:
+**What It Measures:**
+- Predictability of cash flow for repayment planning
+- Resilience to seasonal/market fluctuations
+- Business model sustainability
 
-| Coefficient of Variation | Points |
-|--------------------------|--------|
-| <15% (very stable) | 18-20 |
-| 15-30% (stable) | 14-17 |
-| 30-50% (moderate) | 8-13 |
-| >50% (volatile) | 0-7 |
+| CV Range | Score | Tier | Interpretation |
+|----------|-------|------|----------------|
+| < 15% | 100 | Excellent | Very predictable revenue |
+| 15-25% | 85 | Strong | Minor month-to-month variation |
+| 25-40% | 70 | Good | Normal business fluctuations |
+| 40-60% | 50 | Fair | Noticeable revenue swings |
+| 60-80% | 30 | Weak | Volatile cash flow |
+| ≥ 80% | 15 | Poor | Highly unpredictable |
 
-**Bonuses:**
-- +2 for MRR >30% of total revenue
-- +2 for consistent weekly transaction patterns
+*Requires 3+ months of data. Limited data defaults to 40 pts (Fair).*
 
-#### 3. Quality Score (20 points max)
+**Why This Is Weighted Highest (35%):** FinRegLab's study of 38,000+ small business loans found balance volatility (a cash flow stability measure) was the single strongest predictor of loan default.
 
-Operational health metrics:
+#### 2. Order Consistency (25% weight)
 
-| Metric | Good | Points |
-|--------|------|--------|
-| Chargeback rate <0.5% | Yes | +5 |
-| Refund rate <3% | Yes | +5 |
-| Success rate >97% | Yes | +5 |
-| No recent declined payments | Yes | +3 |
-| Positive review signals | Yes | +2 |
+**Transaction frequency and regularity.** JPMorgan Chase Institute research shows businesses with steady transaction patterns have higher survival rates.
 
-**Penalties:**
-- Chargeback >1%: -5 points
-- Refund rate >5%: -3 points
-- Success rate <95%: -3 points
+**How It Works:**
+1. Group all orders by week (Sunday-Saturday boundaries)
+2. Count orders per week to create a time series: `[12, 15, 11, 14, 13, ...]`
+3. Calculate CV of weekly order counts
 
-#### 4. Growth Score (15 points max)
+**Example Calculation:**
+```
+Weekly order counts: [12, 15, 11, 14, 13, 10, 16, 12]
+Mean: 12.875 orders/week
+Standard Deviation: 1.96
+CV = (1.96 / 12.875) × 100 = 15.2%
+→ Score: 100 (Excellent - very consistent)
+```
 
-Revenue trajectory analysis:
+**What It Measures:**
+- Regular customer demand vs. sporadic sales
+- Operational consistency (fulfillment capacity)
+- Business model predictability
 
-| 90-Day Growth Rate | Points |
-|--------------------|--------|
-| > +30% | 15 (strong growth) |
-| +10% to +30% | 12 (healthy growth) |
-| 0% to +10% | 9 (stable) |
-| -10% to 0% | 5 (slight decline) |
-| < -10% | 0 (concerning decline) |
+| CV Range | Score | Tier | Interpretation |
+|----------|-------|------|----------------|
+| < 20% | 100 | Excellent | Very predictable weekly volume |
+| 20-35% | 85 | Strong | Minor week-to-week variation |
+| 35-50% | 70 | Good | Normal seasonal/promotional effects |
+| 50-70% | 50 | Fair | Noticeable demand swings |
+| 70-90% | 30 | Weak | Unpredictable order flow |
+| ≥ 90% | 15 | Poor | Highly irregular (feast or famine) |
 
-#### 5. Platform Reliability (10 points max)
+*Requires 4+ weeks of data. Limited data defaults to 40 pts (Fair).*
 
-Trust hierarchy based on data source:
+**Why This Matters:** A business with 50 orders one week and 5 the next is harder to underwrite than one with steady 25-30 orders weekly, even if total volume is similar.
 
-| Platform | Points | Rationale |
-|----------|--------|-----------|
-| Plaid (bank) | 10 | Most authoritative |
-| Stripe | 8 | High trust, regulated |
-| Square | 8 | High trust, regulated |
-| Shopify | 6 | E-commerce only |
-| Multi-platform | +2 bonus | Cross-validation |
+#### 3. Business Tenure (20% weight)
 
-#### 6. Tenure Score (10 points max)
+**Track record matters, but less than combined cash flow metrics.** Calculated from the date of first verified order.
 
-Business maturity signals:
+| Months Active | Score | Display |
+|---------------|-------|---------|
+| 36+ | 100 | 3+ years |
+| 24-35 | 85 | 2+ years |
+| 12-23 | 70 | 1+ year |
+| 6-11 | 50 | 6+ months |
+| 3-5 | 30 | < 6 months |
+| < 3 | 15 | Very New |
 
-| Factor | Points |
-|--------|--------|
-| 2+ years on platform | 4 |
-| 1-2 years | 3 |
-| 6-12 months | 2 |
-| <6 months | 1 |
-| 90+ days data history | 3 |
-| Consistent activity | 3 |
+#### 4. Growth Trend (20% weight)
+
+**Future capacity indicator.** Measures momentum by comparing the first half of the data period to the second half.
+
+**How It Works:**
+1. Find the actual data span (first order date to last order date)
+2. Split at the midpoint of the actual data range
+3. Sum revenue in each half
+4. Calculate growth rate: `((recent - prior) / prior) × 100`
+
+**Example Calculation:**
+```
+First order: March 1 | Last order: May 30 (90 days of data)
+Midpoint: April 15
+
+First half (Mar 1 - Apr 14) revenue: $12,000
+Second half (Apr 15 - May 30) revenue: $14,400
+Growth Rate = ((14,400 - 12,000) / 12,000) × 100 = +20%
+→ Score: 100 (Healthy Growth)
+```
+
+**Why We Use Actual Data Midpoint:**
+The comparison is based on when orders actually exist, not an arbitrary time window. This ensures both halves contain meaningful data even if the business is new.
+
+**Why Moderate Growth Scores Highest:**
+- 10-30% growth is sustainable and indicates healthy demand
+- 50%+ growth may be unsustainable (flash sales, one-time orders)
+- Extreme growth often precedes corrections
+
+**Edge Cases:**
+- Less than 45 days of order history: Score 40 (Fair - insufficient data)
+- Zero prior revenue but has recent sales: Score 60 (new business with traction)
+- Zero revenue in both periods: Score 40 (Fair - insufficient data)
+
+| Growth Rate | Score | Classification | Interpretation |
+|-------------|-------|----------------|----------------|
+| +10% to +30% | 100 | Healthy Growth | Sustainable momentum |
+| +30% to +50% | 85 | Fast Growth | Good but watch for volatility |
+| 0% to +10% | 75 | Stable | Mature, predictable business |
+| +50% or more | 60 | May be volatile | Could be unsustainable spike |
+| 0% to -10% | 50 | Minor Decline | Seasonal or temporary dip |
+| -10% to -25% | 30 | Declining | Concerning trend |
+| Below -25% | 15 | Significant Decline | Business may be struggling |
+
+*Requires 45+ days of order history. Limited data defaults to 40 pts (Fair).*
+
+**Privacy-Safe Display Labels:**
+| Growth Rate | Display |
+|-------------|---------|
+| ≥30% | "Accelerating" |
+| 10-30% | "Growing" |
+| 0-10% | "Stable" |
+| -10% to 0% | "Slight decline" |
+| <-10% | "Declining" |
+
+### Privacy-First Display
+
+We show qualitative tiers instead of exact numbers:
+
+| Internal Data | Public Display | Why |
+|---------------|----------------|-----|
+| $8,500/month revenue | "Revenue: Strong" | Exact figures are sensitive |
+| 180 orders/month | "Orders: Steady" | Protects competitive info |
+| +12% growth | "Trend: Growing" | Qualitative is sufficient |
+| 36 months active | "Tenure: 3+ years" | Ranges work equally well |
+
+### Component Tier Labels
+
+| Score Range | Tier Label |
+|-------------|------------|
+| 85-100 | Excellent |
+| 70-84 | Strong |
+| 55-69 | Good |
+| 40-54 | Fair |
+| 25-39 | Weak |
+| 0-24 | Poor |
+
+---
+
+## Loan Affordability (Second Indicator)
+
+The Business Health Score measures how healthy a business is, but it doesn't answer a critical question: **Can this business afford this specific loan?**
+
+A business with excellent stability could still be requesting 10x their monthly revenue—that's risky regardless of their health score. Rather than combining these into a single score (where good health could mask dangerous loan size), we display them as **two separate indicators**.
+
+### Why Two Indicators?
+
+**The Problem with Additive Scoring:**
+If we combined health and affordability into one score, a business with:
+- Excellent stability (35 pts)
+- Great order consistency (25 pts)
+- Long tenure (20 pts)
+- Healthy growth (20 pts)
+
+...would score 100/100 even if requesting a loan equal to 6 months of revenue. That's misleading.
+
+**The Solution:**
+Display two independent signals, similar to how Kiva shows both "borrower trustworthiness" and "field partner risk" separately.
+
+### Loan Affordability Tiers
+
+Based on Loan-to-Revenue Ratio = Loan Amount ÷ Average Monthly Revenue
+
+| Tier | Ratio | Description |
+|------|-------|-------------|
+| **Comfortable** | < 0.5x | Loan is less than 2 weeks of revenue |
+| **Manageable** | 0.5x - 1x | Loan is less than 1 month of revenue |
+| **Stretched** | 1x - 2x | Loan equals 1-2 months of revenue |
+| **High Burden** | > 2x | Loan exceeds 2 months of revenue |
+
+### Privacy-Safe Display
+
+We show relative sizing, not exact revenue:
+
+| Ratio | Display |
+|-------|---------|
+| < 0.25x | "< 1 week revenue" |
+| 0.25x - 0.5x | "~1-2 weeks revenue" |
+| 0.5x - 1x | "~2-4 weeks revenue" |
+| 1x - 2x | "~1-2 months revenue" |
+| > 2x | "> 2 months revenue" |
+
+### Example Displays
+
+**Scenario 1: Healthy business, reasonable loan**
+```
+Business Health: A (Score: 82)
+Loan Affordability: Comfortable (~1-2 weeks revenue)
+```
+
+**Scenario 2: Healthy business, large loan**
+```
+Business Health: A (Score: 85)
+Loan Affordability: High Burden (> 2 months revenue)
+```
+
+**Scenario 3: Newer business, small loan**
+```
+Business Health: C (Score: 58)
+Loan Affordability: Comfortable (< 1 week revenue)
+```
+
+This allows lenders to make informed decisions. A Grade A business with "High Burden" affordability is a different risk profile than a Grade A business with "Comfortable" affordability.
 
 ---
 

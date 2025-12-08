@@ -19,6 +19,26 @@ export interface RevenueData {
   currency: string;
 }
 
+// Detailed order data for Business Health Score calculation
+export interface OrderData {
+  id: string;
+  createdAt: Date;
+  totalPrice: number;
+  currency: string;
+  financialStatus: string;
+  fulfillmentStatus: string | null;
+}
+
+export interface DetailedRevenueData {
+  orders: OrderData[];
+  totalRevenue: number;
+  orderCount: number;
+  periodDays: number;
+  currency: string;
+  firstOrderDate: Date | null;
+  lastOrderDate: Date | null;
+}
+
 export class ShopifyClient {
   private config: ShopifyOAuthConfig;
 
@@ -183,8 +203,188 @@ export class ShopifyClient {
       .createHmac('sha256', this.config.apiSecret)
       .update(data, 'utf8')
       .digest('base64');
-    
+
     return calculated === hmacHeader;
+  }
+
+  /**
+   * Fetch detailed order data for Business Health Score calculation
+   * Gets individual order records with timestamps for trend analysis
+   */
+  async getDetailedRevenueData(session: ShopifySession, days: number = 90): Promise<DetailedRevenueData> {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    const createdAtMin = date.toISOString();
+
+    // Use GraphQL API with detailed fields
+    const query = `
+      query getDetailedOrders($query: String!) {
+        orders(first: 250, query: $query, sortKey: CREATED_AT) {
+          edges {
+            node {
+              id
+              createdAt
+              displayFinancialStatus
+              displayFulfillmentStatus
+              totalPriceSet {
+                shopMoney {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    `;
+
+    let allOrders: OrderData[] = [];
+    let hasNextPage = true;
+    let cursor: string | null = null;
+
+    // Paginate through all orders (handle stores with > 250 orders)
+    while (hasNextPage) {
+      const paginatedQuery = cursor
+        ? `
+          query getDetailedOrders($query: String!, $cursor: String!) {
+            orders(first: 250, query: $query, after: $cursor, sortKey: CREATED_AT) {
+              edges {
+                node {
+                  id
+                  createdAt
+                  displayFinancialStatus
+                  displayFulfillmentStatus
+                  totalPriceSet {
+                    shopMoney {
+                      amount
+                      currencyCode
+                    }
+                  }
+                }
+              }
+              pageInfo {
+                hasNextPage
+                endCursor
+              }
+            }
+          }
+        `
+        : query;
+
+      const response = await fetch(`https://${session.shop}/admin/api/2024-10/graphql.json`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Access-Token': session.accessToken,
+        },
+        body: JSON.stringify({
+          query: paginatedQuery,
+          variables: cursor
+            ? { query: `created_at:>='${createdAtMin}'`, cursor }
+            : { query: `created_at:>='${createdAtMin}'` },
+        }),
+      });
+
+      if (!response.ok) {
+        // Fallback to REST API
+        return this.getDetailedRevenueDataREST(session, days);
+      }
+
+      const result = await response.json() as any;
+
+      if (result.errors) {
+        console.warn('[Shopify] GraphQL errors:', result.errors);
+        return this.getDetailedRevenueDataREST(session, days);
+      }
+
+      const edges = result.data?.orders?.edges || [];
+      for (const edge of edges) {
+        const node = edge.node;
+        allOrders.push({
+          id: node.id,
+          createdAt: new Date(node.createdAt),
+          totalPrice: parseFloat(node.totalPriceSet?.shopMoney?.amount || '0'),
+          currency: node.totalPriceSet?.shopMoney?.currencyCode || 'USD',
+          financialStatus: node.displayFinancialStatus || 'UNKNOWN',
+          fulfillmentStatus: node.displayFulfillmentStatus || null,
+        });
+      }
+
+      hasNextPage = result.data?.orders?.pageInfo?.hasNextPage || false;
+      cursor = result.data?.orders?.pageInfo?.endCursor || null;
+
+      // Safety limit: max 1000 orders to prevent infinite loops
+      if (allOrders.length >= 1000) break;
+    }
+
+    // Sort orders by date
+    allOrders.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+
+    const totalRevenue = allOrders.reduce((sum, o) => sum + o.totalPrice, 0);
+    const currency = allOrders[0]?.currency || 'USD';
+
+    return {
+      orders: allOrders,
+      totalRevenue,
+      orderCount: allOrders.length,
+      periodDays: days,
+      currency,
+      firstOrderDate: allOrders.length > 0 ? allOrders[0].createdAt : null,
+      lastOrderDate: allOrders.length > 0 ? allOrders[allOrders.length - 1].createdAt : null,
+    };
+  }
+
+  /**
+   * Fallback REST API method for detailed order data
+   */
+  private async getDetailedRevenueDataREST(session: ShopifySession, days: number): Promise<DetailedRevenueData> {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    const createdAtMin = date.toISOString();
+
+    const url = `https://${session.shop}/admin/api/2024-10/orders.json` +
+      `?status=any&created_at_min=${createdAtMin}&fields=id,created_at,total_price,currency,financial_status,fulfillment_status&limit=250`;
+
+    const response = await fetch(url, {
+      headers: {
+        'X-Shopify-Access-Token': session.accessToken,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Shopify API error: ${response.statusText}`);
+    }
+
+    const data = await response.json() as any;
+    const rawOrders = data.orders || [];
+
+    const orders: OrderData[] = rawOrders.map((order: any) => ({
+      id: order.id.toString(),
+      createdAt: new Date(order.created_at),
+      totalPrice: parseFloat(order.total_price || '0'),
+      currency: order.currency || 'USD',
+      financialStatus: order.financial_status || 'unknown',
+      fulfillmentStatus: order.fulfillment_status || null,
+    }));
+
+    // Sort orders by date
+    orders.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+
+    const totalRevenue = orders.reduce((sum, o) => sum + o.totalPrice, 0);
+
+    return {
+      orders,
+      totalRevenue,
+      orderCount: orders.length,
+      periodDays: days,
+      currency: orders[0]?.currency || 'USD',
+      firstOrderDate: orders.length > 0 ? orders[0].createdAt : null,
+      lastOrderDate: orders.length > 0 ? orders[orders.length - 1].createdAt : null,
+    };
   }
 }
 

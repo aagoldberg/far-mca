@@ -224,6 +224,22 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Learn More - Risk Scoring */}
+        <section className="mb-6">
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 text-center">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">Our Risk Scoring Methodology</h3>
+            <p className="text-gray-700 mb-4">
+              Learn how we assess business health using industry-standard approaches while protecting merchant privacy.
+            </p>
+            <Link
+              href="/risk-scoring"
+              className="inline-block px-6 py-2 bg-[#3B9B7F] text-white font-semibold rounded-lg hover:bg-[#2E7D68] transition-colors"
+            >
+              Learn About Risk Scoring →
+            </Link>
+          </div>
+        </section>
+
         {/* Learn More - Vision */}
         <section className="mb-6">
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6 text-center">
