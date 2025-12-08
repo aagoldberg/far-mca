@@ -27,13 +27,16 @@ function ScoreBar({ label, value, tier }: { label: string; value: number; tier: 
   );
 }
 
-function SectionHeading({ id, title, icon: Icon }: { id: string, title: string, icon: any }) {
+function SectionHeading({ id, title, subtitle, icon: Icon }: { id: string, title: string, subtitle?: string, icon?: any }) {
   return (
     <div id={id} className="scroll-mt-28 mb-6 flex items-center gap-3 border-b border-stone-200 pb-4">
       <div className="p-2 bg-brand-50 rounded-lg text-brand-600">
-        <Icon className="w-6 h-6" />
+        {Icon && <Icon className="w-6 h-6" />}
       </div>
-      <h2 className="text-2xl font-bold text-stone-900">{title}</h2>
+      <div>
+        <h2 className="text-2xl font-bold text-stone-900">{title}</h2>
+        {subtitle && <p className="text-sm text-stone-500 font-normal mt-1">{subtitle}</p>}
+      </div>
     </div>
   );
 }
@@ -108,11 +111,11 @@ function ComponentCard({
 }
 
 export default function RiskScoringPage() {
-  const [activeSection, setActiveSection] = useState('score');
+  const [activeSection, setActiveSection] = useState('approach');
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['score', 'affordability', 'grades', 'weights', 'methodology', 'sources', 'context', 'privacy'];
+      const sections = ['approach', 'score', 'weights', 'methodology', 'affordability', 'grades', 'privacy', 'sources'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -165,14 +168,14 @@ export default function RiskScoringPage() {
               <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Contents</h3>
               <nav className="space-y-1">
                 {[
+                  { id: 'approach', label: 'Industry Approach' },
                   { id: 'score', label: 'The Dual Score' },
+                  { id: 'weights', label: 'Weights & Factors' },
+                  { id: 'methodology', label: 'Detailed Methodology' },
                   { id: 'affordability', label: 'Loan Affordability' },
                   { id: 'grades', label: 'Grade System' },
-                  { id: 'weights', label: 'Score Components' },
-                  { id: 'methodology', label: 'Detailed Methodology' },
-                  { id: 'sources', label: 'Data Sources' },
-                  { id: 'context', label: 'Industry Context' },
                   { id: 'privacy', label: 'Privacy Design' },
+                  { id: 'sources', label: 'Data Sources' },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -193,21 +196,51 @@ export default function RiskScoringPage() {
           {/* Main Content */}
           <div className="lg:col-span-9 space-y-20">
 
-            {/* 1. The Dual Score (Overview) */}
+            {/* 1. Industry Approach */}
             <section>
-              <SectionHeading id="score" title="How Scoring Works" icon={ChartBarIcon} />
+              <SectionHeading id="approach" title="Industry-Informed Approach" icon={BuildingLibraryIcon} />
+              
+              <p className="text-lg text-stone-600 mb-8 leading-relaxed">
+                Our Business Health Score isn't reinventing the wheel; it draws from established risk rating systems used by leading peer-to-peer and revenue-based lending platforms to ensure reliability.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-6 mb-10">
+                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                  <div className="text-stone-900 font-bold mb-2">Kiva Model</div>
+                  <p className="text-sm text-stone-600">
+                    0.5-5 star ratings based on 7 distinct categories including governance, financials, and transparency.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                  <div className="text-stone-900 font-bold mb-2">Prosper Model</div>
+                  <p className="text-sm text-stone-600">
+                    Letter grades (AA to HR) that communicate comparative risk levels instantly to peer lenders.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                  <div className="text-stone-900 font-bold mb-2">Stripe Model</div>
+                  <p className="text-sm text-stone-600">
+                    Numeric scores (0-99) with clear thresholds for normal vs. elevated risk behavior.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 2. The Dual Score */}
+            <section>
+              <SectionHeading id="score" title="The Dual-Indicator System" icon={ChartBarIcon} />
               
               <div className="bg-brand-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-xl">
                 <div className="relative z-10">
                   <p className="text-brand-100 mb-8 max-w-2xl text-lg">
-                    We assess every application on two factors: <strong>Business Health</strong> (your quality) and <strong>Affordability</strong> (your burden). Seeing them separately helps lenders make better decisions.
+                    We separate <strong>"Business Quality"</strong> from <strong>"Loan Size"</strong> so lenders can make nuanced decisions. A great business asking for too much money is different from a risky business asking for a small amount.
                   </p>
                   
                   <div className="grid md:grid-cols-2 gap-6">
-                    {/* Card 1: Health Score */}
+                    {/* Card 1 */}
                     <div className="bg-white rounded-xl p-5 text-stone-900 shadow-lg">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">Score 1: Health</span>
+                        <span className="text-sm font-bold text-stone-500 uppercase">Health Score</span>
                         <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">A (82/100)</span>
                       </div>
                       <div className="space-y-3">
@@ -243,10 +276,10 @@ export default function RiskScoringPage() {
                       <div className="mt-4 text-xs text-stone-400 font-medium">Measures fundamental quality</div>
                     </div>
 
-                    {/* Card 2: Affordability */}
+                    {/* Card 2 */}
                     <div className="bg-white rounded-xl p-5 text-stone-900 shadow-lg">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Score 2: Affordability</span>
+                        <span className="text-sm font-bold text-stone-500 uppercase">Affordability</span>
                         <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">Comfortable</span>
                       </div>
                       <div className="mb-2">
@@ -259,139 +292,14 @@ export default function RiskScoringPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Quick Reference Legend (Simplified) */}
-              <div className="grid md:grid-cols-2 gap-6 mt-6">
-                {/* Grade Scale */}
-                <div className="bg-stone-50 rounded-xl p-5 border border-stone-200">
-                  <h4 className="font-bold text-stone-900 mb-3 text-sm uppercase tracking-wide">Grade Scale</h4>
-                  <div className="grid grid-cols-4 gap-2 text-center">
-                    <div className="bg-green-100 text-green-800 rounded py-1 text-xs font-bold">A</div>
-                    <div className="bg-blue-100 text-blue-800 rounded py-1 text-xs font-bold">B</div>
-                    <div className="bg-yellow-100 text-yellow-800 rounded py-1 text-xs font-bold">C</div>
-                    <div className="bg-red-100 text-red-800 rounded py-1 text-xs font-bold">D</div>
-                  </div>
-                </div>
-
-                {/* Affordability Scale */}
-                <div className="bg-stone-50 rounded-xl p-5 border border-stone-200">
-                  <h4 className="font-bold text-stone-900 mb-3 text-sm uppercase tracking-wide">Affordability Scale</h4>
-                  <div className="grid grid-cols-2 gap-2 text-center">
-                    <div className="bg-green-100 text-green-800 rounded py-1 text-xs font-bold">Comfortable</div>
-                    <div className="bg-red-100 text-red-800 rounded py-1 text-xs font-bold">High Burden</div>
-                  </div>
-                </div>
-              </div>
             </section>
 
-            {/* 2. Loan Affordability (Moved Up - Stands Alone) */}
+            {/* 3. Weights */}
             <section>
-              <SectionHeading id="affordability" title="Loan Affordability" icon={ScaleIcon} />
-              
-              <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-                <div className="p-6 border-b border-stone-100">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <ScaleIcon className="w-5 h-5 text-blue-700" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-stone-900">Loan-to-Revenue Ratio</div>
-                      <div className="text-sm text-stone-500">Loan Amount ÷ Average Monthly Revenue</div>
-                    </div>
-                  </div>
-                  <p className="text-stone-600">
-                    This is the simplest check. It ignores "Business Health" and just asks: "Is this loan too big?" 
-                    Revenue-based lenders typically cap advances at 1-2x monthly revenue.
-                  </p>
-                </div>
-
-                <div className="divide-y divide-stone-100">
-                  {[
-                    { tier: 'Comfortable', ratio: '< 0.5x', desc: 'Less than 2 weeks of revenue', color: 'green' },
-                    { tier: 'Manageable', ratio: '0.5x - 1.0x', desc: 'Less than 1 month of revenue', color: 'blue' },
-                    { tier: 'Stretched', ratio: '1.0x - 2.0x', desc: '1-2 months of revenue', color: 'amber' },
-                    { tier: 'High Burden', ratio: '> 2.0x', desc: 'More than 2 months of revenue', color: 'red' },
-                  ].map((item) => (
-                    <div key={item.tier} className="flex items-center px-6 py-4">
-                      <div className="w-32">
-                        <span className={`inline-block px-3 py-1 rounded-lg text-sm font-bold
-                          ${item.color === 'green' ? 'bg-green-100 text-green-800' : ''}
-                          ${item.color === 'blue' ? 'bg-blue-100 text-blue-800' : ''}
-                          ${item.color === 'amber' ? 'bg-amber-100 text-amber-800' : ''}
-                          ${item.color === 'red' ? 'bg-red-100 text-red-800' : ''}
-                        `}>
-                          {item.tier}
-                        </span>
-                      </div>
-                      <div className="w-28 font-mono text-sm text-stone-700">{item.ratio}</div>
-                      <div className="text-sm text-stone-500">{item.desc}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* 3. Grade System (Moved Up - Feeds into Components) */}
-            <section>
-              <SectionHeading id="grades" title="Grade System" icon={BeakerIcon} />
-              
-              <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-8">
-                <p className="text-stone-600 mb-6">
-                  The "Business Health Score" (0-100) is converted into a simple Letter Grade. This grade is calculated from the weighted sum of 4 key components.
-                </p>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
-                    { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
-                    { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
-                    { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
-                  ].map((item) => (
-                    <div
-                      key={item.grade}
-                      className={`p-5 rounded-xl text-center border-2
-                        ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
-                        ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
-                        ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
-                        ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
-                      `}
-                    >
-                      <div className={`text-4xl font-bold mb-1
-                        ${item.color === 'green' ? 'text-green-600' : ''}
-                        ${item.color === 'blue' ? 'text-blue-600' : ''}
-                        ${item.color === 'amber' ? 'text-amber-600' : ''}
-                        ${item.color === 'red' ? 'text-red-600' : ''}
-                      `}>
-                        {item.grade}
-                      </div>
-                      <div className={`text-sm font-bold mb-1
-                        ${item.color === 'green' ? 'text-green-800' : ''}
-                        ${item.color === 'blue' ? 'text-blue-800' : ''}
-                        ${item.color === 'amber' ? 'text-amber-800' : ''}
-                        ${item.color === 'red' ? 'text-red-800' : ''}
-                      `}>
-                        {item.range}
-                      </div>
-                      <div className={`text-xs
-                        ${item.color === 'green' ? 'text-green-700' : ''}
-                        ${item.color === 'blue' ? 'text-blue-700' : ''}
-                        ${item.color === 'amber' ? 'text-amber-700' : ''}
-                        ${item.color === 'red' ? 'text-red-700' : ''}
-                      `}>
-                        {item.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* 4. Score Components (Weights) */}
-            <section>
-              <SectionHeading id="weights" title="Score Components" icon={ScaleIcon} />
+              <SectionHeading id="weights" title="Components & Weights" icon={ScaleIcon} />
               
               <p className="text-lg text-stone-600 mb-8">
-                How do we calculate the Grade? It's a weighted average of four key metrics:
+                Our scoring model prioritizes cash flow stability above all else, based on FinRegLab research showing it as the strongest predictor of repayment.
               </p>
 
               {/* Visual Weight Bar */}
@@ -428,9 +336,13 @@ export default function RiskScoringPage() {
                   </p>
                 </div>
               </div>
+
+              <div className="mt-8 p-5 bg-blue-50 rounded-xl border border-blue-100 text-sm text-blue-800">
+                <strong>Research Basis:</strong> Weights derived from <span className="underline cursor-pointer">FinRegLab "Sharpening the Focus" (2025)</span> and <span className="underline cursor-pointer">NBER Working Paper 33367</span>, demonstrating that cash flow metrics provide 2x predictive power for young businesses compared to FICO.
+              </div>
             </section>
 
-            {/* 5. Detailed Methodology */}
+            {/* 4. Detailed Methodology */}
             <section>
               <SectionHeading id="methodology" title="Detailed Methodology" icon={BeakerIcon} />
               
@@ -509,57 +421,127 @@ export default function RiskScoringPage() {
               </div>
             </section>
 
-            {/* 6. Data Sources */}
+            {/* 5. Affordability */}
             <section>
-              <SectionHeading id="sources" title="Verified Data Sources" icon={ArrowPathIcon} />
-              <div className="grid md:grid-cols-3 gap-6">
-                {[
-                  { name: 'Shopify', color: '#96bf48', metrics: 'Orders, Revenue, Refunds, Shop Age' },
-                  { name: 'Stripe', color: '#635BFF', metrics: 'Charges, Subscriptions, MRR, Payouts' },
-                  { name: 'Square', color: '#000000', metrics: 'Payments, Refunds, POS Transactions' },
-                ].map((platform) => (
-                  <div key={platform.name} className="bg-white rounded-2xl border border-stone-200 p-6 text-center hover:shadow-lg transition-shadow">
-                    <div
-                      className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold"
-                      style={{ backgroundColor: platform.color }}
-                    >
-                      {platform.name[0]}
+              <SectionHeading
+                id="affordability"
+                title="Loan Affordability"
+                subtitle="Is this specific loan appropriate for this business?"
+              />
+
+              <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
+                <div className="p-6 border-b border-stone-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <ScaleIcon className="w-5 h-5 text-blue-700" />
                     </div>
-                    <h4 className="font-bold text-stone-900 mb-1">{platform.name}</h4>
-                    <p className="text-sm text-stone-500">{platform.metrics}</p>
+                    <div>
+                      <div className="font-bold text-stone-900">Loan-to-Revenue Ratio</div>
+                      <div className="text-sm text-stone-500">Loan Amount ÷ Average Monthly Revenue</div>
+                    </div>
                   </div>
-                ))}
+                  <p className="text-stone-600">
+                    Revenue-based lenders (Wayflyer, Clearco) typically cap advances at 1-2x monthly revenue.
+                    We display this separately so lenders can assess repayment burden independently from business health.
+                  </p>
+                </div>
+
+                <div className="divide-y divide-stone-100">
+                  {[
+                    { tier: 'Comfortable', ratio: '< 0.5x', desc: 'Less than 2 weeks of revenue', color: 'green' },
+                    { tier: 'Manageable', ratio: '0.5x - 1.0x', desc: 'Less than 1 month of revenue', color: 'blue' },
+                    { tier: 'Stretched', ratio: '1.0x - 2.0x', desc: '1-2 months of revenue', color: 'amber' },
+                    { tier: 'High Burden', ratio: '> 2.0x', desc: 'More than 2 months of revenue', color: 'red' },
+                  ].map((item) => (
+                    <div key={item.tier} className="flex items-center px-6 py-4">
+                      <div className="w-32">
+                        <span className={`inline-block px-3 py-1 rounded-lg text-sm font-bold
+                          ${item.color === 'green' ? 'bg-green-100 text-green-800' : ''}
+                          ${item.color === 'blue' ? 'bg-blue-100 text-blue-800' : ''}
+                          ${item.color === 'amber' ? 'bg-amber-100 text-amber-800' : ''}
+                          ${item.color === 'red' ? 'bg-red-100 text-red-800' : ''}
+                        `}>
+                          {item.tier}
+                        </span>
+                      </div>
+                      <div className="w-28 font-mono text-sm text-stone-700">{item.ratio}</div>
+                      <div className="text-sm text-stone-500">{item.desc}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
 
-            {/* 7. Industry Context */}
+            {/* 6. Grade System */}
             <section>
-              <SectionHeading id="context" title="Industry Context" icon={BuildingLibraryIcon} />
-              <div className="grid md:grid-cols-3 gap-6 mb-10">
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-                  <div className="text-stone-900 font-bold mb-2">Kiva Model</div>
-                  <p className="text-sm text-stone-600">
-                    0.5-5 star ratings based on 7 distinct categories including governance, financials, and transparency.
-                  </p>
+              <SectionHeading
+                id="grades"
+                title="Grade System"
+                subtitle="How component scores become letter grades"
+              />
+
+              <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-8">
+                <div className="text-center mb-8">
+                  <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3">The Formula</div>
+                  <div className="inline-block text-lg font-mono text-stone-800 bg-stone-50 px-6 py-4 rounded-xl border border-stone-200">
+                    (Stability × 0.35) + (Consistency × 0.25) + (Tenure × 0.20) + (Growth × 0.20)
+                  </div>
                 </div>
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-                  <div className="text-stone-900 font-bold mb-2">Prosper Model</div>
-                  <p className="text-sm text-stone-600">
-                    Letter grades (AA to HR) that communicate comparative risk levels instantly to peer lenders.
-                  </p>
-                </div>
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-                  <div className="text-stone-900 font-bold mb-2">Stripe Model</div>
-                  <p className="text-sm text-stone-600">
-                    Numeric scores (0-99) with clear thresholds for normal vs. elevated risk behavior.
-                  </p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
+                    { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
+                    { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
+                    { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
+                  ].map((item) => (
+                    <div
+                      key={item.grade}
+                      className={`p-5 rounded-xl text-center border-2
+                        ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
+                        ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
+                        ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
+                        ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
+                      `}
+                    >
+                      <div className={`text-4xl font-bold mb-1
+                        ${item.color === 'green' ? 'text-green-600' : ''}
+                        ${item.color === 'blue' ? 'text-blue-600' : ''}
+                        ${item.color === 'amber' ? 'text-amber-600' : ''}
+                        ${item.color === 'red' ? 'text-red-600' : ''}
+                      `}>
+                        {item.grade}
+                      </div>
+                      <div className={`text-sm font-bold mb-1
+                        ${item.color === 'green' ? 'text-green-800' : ''}
+                        ${item.color === 'blue' ? 'text-blue-800' : ''}
+                        ${item.color === 'amber' ? 'text-amber-800' : ''}
+                        ${item.color === 'red' ? 'text-red-800' : ''}
+                      `}>
+                        {item.range}
+                      </div>
+                      <div className={`text-xs
+                        ${item.color === 'green' ? 'text-green-700' : ''}
+                        ${item.color === 'blue' ? 'text-blue-700' : ''}
+                        ${item.color === 'amber' ? 'text-amber-700' : ''}
+                        ${item.color === 'red' ? 'text-red-700' : ''}
+                      `}>
+                        {item.label}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>
 
-            {/* 8. Privacy */}
+            {/* 7. Privacy */}
             <section>
-              <SectionHeading id="privacy" title="Privacy-First Design" icon={LockClosedIcon} />
+              <SectionHeading
+                id="privacy"
+                title="Privacy-First Design"
+                subtitle="We show signals, not sensitive data"
+              />
+
               <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
                 <table className="w-full text-sm text-left">
                   <thead className="bg-stone-50 text-stone-900 font-bold border-b border-stone-200">
@@ -590,23 +572,50 @@ export default function RiskScoringPage() {
               </div>
             </section>
 
+            {/* 8. Data Sources */}
+            <section>
+              <SectionHeading
+                id="sources"
+                title="Verified Data Sources"
+                subtitle="Read-only API connections to commerce platforms"
+              />
+
+              <div className="grid md:grid-cols-3 gap-6">
+                {[
+                  { name: 'Shopify', color: '#96bf48', metrics: 'Orders, Revenue, Refunds, Shop Age' },
+                  { name: 'Stripe', color: '#635BFF', metrics: 'Charges, Subscriptions, MRR, Payouts' },
+                  { name: 'Square', color: '#000000', metrics: 'Payments, Refunds, POS Transactions' },
+                ].map((platform) => (
+                  <div key={platform.name} className="bg-white rounded-2xl border border-stone-200 p-6 text-center hover:shadow-lg transition-shadow">
+                    <div
+                      className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold"
+                      style={{ backgroundColor: platform.color }}
+                    >
+                      {platform.name[0]}
+                    </div>
+                    <h4 className="font-bold text-stone-900 mb-1">{platform.name}</h4>
+                    <p className="text-sm text-stone-500">{platform.metrics}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             {/* CTA */}
-            <section className="bg-stone-900 rounded-3xl p-10 text-center text-white">
-              <h2 className="text-2xl font-bold mb-4">See Your Score</h2>
-              <p className="text-stone-300 mb-8 max-w-2xl mx-auto">
+            <section className="bg-gradient-to-br from-brand-600 to-brand-700 rounded-3xl p-10 text-center text-white">
+              <h2 className="text-3xl font-bold mb-4">See Your Score</h2>
+              <p className="text-brand-100 mb-8 max-w-xl mx-auto">
                 Connecting your accounts is safe, read-only, and takes less than 2 minutes.
-                See where you stand before you apply.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/create-loan"
-                  className="px-8 py-4 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-500 transition-colors"
+                  className="px-8 py-4 bg-white text-brand-700 font-bold rounded-xl hover:bg-brand-50 transition-colors"
                 >
                   Check Eligibility
                 </Link>
                 <Link
                   href="/about"
-                  className="px-8 py-4 bg-transparent border border-stone-700 text-white font-bold rounded-xl hover:bg-stone-800 transition-colors"
+                  className="px-8 py-4 bg-brand-500 text-white font-bold rounded-xl hover:bg-brand-400 transition-colors"
                 >
                   Learn More
                 </Link>
