@@ -165,10 +165,28 @@ export default function RiskScoringPage() {
                         <span className="text-sm font-bold text-stone-500 uppercase">Health Score</span>
                         <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">A (82/100)</span>
                       </div>
-                      <div className="space-y-2">
-                        <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[85%]"></div></div>
-                        <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[100%]"></div></div>
-                        <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[72%]"></div></div>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
+                            <span>Revenue Stability</span>
+                            <span>85/100</span>
+                          </div>
+                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[85%]"></div></div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
+                            <span>Business Tenure</span>
+                            <span>100/100</span>
+                          </div>
+                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[100%]"></div></div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-[10px] font-semibold text-stone-500 mb-1">
+                            <span>Growth Trend</span>
+                            <span>72/100</span>
+                          </div>
+                          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden"><div className="h-full bg-green-500 w-[72%]"></div></div>
+                        </div>
                       </div>
                       <div className="mt-4 text-xs text-stone-400 font-medium">Measures fundamental quality</div>
                     </div>
