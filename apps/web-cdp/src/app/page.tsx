@@ -6,30 +6,30 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-stone-50 font-sans selection:bg-brand-200 selection:text-brand-900">
+    <main className="min-h-screen bg-secondary-50 font-sans selection:bg-brand-200 selection:text-brand-900">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-white border-b border-stone-100">
+      <div className="relative overflow-hidden bg-white border-b border-secondary-100">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
         <div className="absolute inset-0 bg-gradient-to-br from-brand-50/30 via-white to-accent-50/30 opacity-70" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 sm:pt-24 sm:pb-28">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold mb-6 border border-brand-100/50 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary-50 text-accent-hover text-xs font-bold mb-6 border border-secondary-200 shadow-sm">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
               </span>
               0% Interest Loans • 100% Impact
             </div>
             
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-stone-900 tracking-tight mb-6 leading-[1.1]">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-secondary-900 tracking-tight mb-6 leading-[1.1]">
               Grow Your Business with <br className="hidden sm:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-secondary-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-secondary-600 to-accent">
                 Community Capital.
               </span>
             </h1>
             
-            <p className="text-xl sm:text-2xl text-stone-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+            <p className="text-xl sm:text-2xl text-secondary-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
               Skip the banks. Use your verifiable sales revenue to unlock 0% interest loans from the people who believe in you most.
             </p>
             
