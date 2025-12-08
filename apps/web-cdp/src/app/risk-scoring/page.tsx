@@ -61,23 +61,28 @@ function ComponentCard({
   thresholds: { label: string; score: string; color: string }[];
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-      {/* Header */}
-      <div className="px-6 py-5 border-b border-stone-100">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="text-lg font-bold text-stone-900">{title}</h3>
-            <p className="text-sm text-stone-500 mt-1">{description}</p>
+    <details className="group bg-white rounded-2xl border border-stone-200 overflow-hidden open:shadow-md transition-all">
+      {/* Header (Summary) */}
+      <summary className="cursor-pointer list-none px-6 py-5 border-b border-transparent group-open:border-stone-100 transition-colors hover:bg-stone-50 select-none">
+        <div className="flex items-start justify-between w-full">
+          <div className="flex-1 pr-4">
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-lg font-bold text-stone-900">{title}</h3>
+              <svg className="w-5 h-5 text-stone-400 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <p className="text-sm text-stone-500">{description}</p>
           </div>
-          <div className="text-right">
+          <div className="text-right flex-shrink-0">
             <div className="text-2xl font-bold text-stone-900">{weight}</div>
             <div className="text-xs text-stone-400 uppercase tracking-wider">Weight</div>
           </div>
         </div>
-      </div>
+      </summary>
 
-      {/* Body */}
-      <div className="p-6">
+      {/* Body (Details) */}
+      <div className="p-6 pt-2 animate-in slide-in-from-top-2 fade-in-50">
         {/* Formula */}
         <div className="mb-5 p-4 bg-stone-50 rounded-lg">
           <div className="font-mono text-sm text-stone-700 mb-1">{formula}</div>
@@ -106,7 +111,7 @@ function ComponentCard({
           <span className="font-medium">Min. data:</span> {minimum}
         </div>
       </div>
-    </div>
+    </details>
   );
 }
 
