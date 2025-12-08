@@ -333,26 +333,29 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Center: About Dropdown */}
-          <div
-            className={`flex-grow flex items-center justify-center ${
-              isSearchOpen && 'hidden sm:flex'
-            }`}
-          >
-            <div className="relative" ref={aboutDropdownRef}>
+          {/* Spacer to push right items */}
+          <div className="flex-grow" />
+
+          {/* Right: About Dropdown, Get Funded, and Auth */}
+          <div className="flex-shrink-0 flex items-center space-x-4">
+            {/* About Dropdown */}
+            <div
+              className={`relative ${isSearchOpen && 'hidden sm:block'}`}
+              ref={aboutDropdownRef}
+            >
               <button
                 onClick={() => {
                   console.log('About button clicked! Current state:', aboutDropdownOpen);
                   setAboutDropdownOpen(!aboutDropdownOpen);
                 }}
-                className="flex items-center gap-1 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
+                className="flex items-center gap-1 px-2 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
               >
                 About
                 <ChevronDownIcon className={`w-4 h-4 transition-transform ${aboutDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {aboutDropdownOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
                   <Link
                     href="/about"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
@@ -386,23 +389,23 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Right: Auth Buttons and User Menu */}
-          <div className="flex-shrink-0 flex items-center space-x-3">
+            {/* Log In - plain text link */}
+            {!isAuthenticated && (
+              <AuthModal />
+            )}
+
+            {/* Start your raise - thinner pill */}
             <Link
               href="/create-loan"
-              className="bg-brand-600 hover:bg-brand-700 text-white font-medium py-2.5 px-5 rounded-full shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
+              className="bg-brand-600 hover:bg-brand-700 text-white font-medium py-1.5 px-4 rounded-full shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap flex items-center gap-1.5"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Get Funded
+              Start Your Raise
             </Link>
-            {isAuthenticated ? (
+
+            {/* User Menu when authenticated */}
+            {isAuthenticated && (
               <UserMenu />
-            ) : (
-              <AuthModal />
             )}
           </div>
         </div>

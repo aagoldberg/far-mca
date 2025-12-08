@@ -26,7 +26,7 @@ const rubik = Rubik({
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
-  weight: ["600", "700", "800"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
 
 // Auto-detect base URL from Vercel or use env variable

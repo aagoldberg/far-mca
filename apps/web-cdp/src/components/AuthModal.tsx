@@ -101,10 +101,10 @@ export function AuthModal() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Trigger Button */}
+      {/* Trigger Button - plain text link style */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-white hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-5 rounded-full border border-gray-300 transition-all duration-200 whitespace-nowrap"
+        className="text-gray-700 hover:text-gray-900 font-medium py-2 px-2 transition-colors whitespace-nowrap"
       >
         Log In
       </button>
