@@ -216,6 +216,36 @@ export default function RiskScoringPage() {
           {/* Main Content */}
           <div className="lg:col-span-9 space-y-24">
 
+            {/* Intro / Roadmap */}
+            <div className="prose text-stone-600 max-w-none border-b border-stone-200 pb-12">
+              <p className="text-xl leading-relaxed">
+                Our assessment process is divided into three parts to give lenders a complete picture without exposing sensitive merchant data.
+              </p>
+              <ul className="mt-6 space-y-4 list-none pl-0">
+                <li className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm">1</span>
+                  <div>
+                    <strong className="text-stone-900 block">Business Health</strong>
+                    Measures the quality and stability of the business (0-100 Score).
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">2</span>
+                  <div>
+                    <strong className="text-stone-900 block">Loan Safety</strong>
+                    Checks if the specific loan amount is affordable given current revenue.
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-bold text-sm">3</span>
+                  <div>
+                    <strong className="text-stone-900 block">Data Foundation</strong>
+                    Explains how we verify sources and protect privacy.
+                  </div>
+                </li>
+              </ul>
+            </div>
+
             {/* ================= PART 1: BUSINESS HEALTH ================= */}
             <div>
               <SectionHeading 
