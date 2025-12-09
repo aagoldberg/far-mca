@@ -170,65 +170,68 @@ export default function RiskScoringPage() {
           {/* Sidebar Navigation */}
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-32">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Contents</h3>
-              <nav className="space-y-1">
-                <div className="pb-2 mb-2 border-b border-gray-100">
-                  <p className="px-3 text-xs font-semibold text-brand-600 mb-1">Part 1: Health</p>
-                  {[
-                    { id: 'health', label: 'Overview' },
-                    { id: 'weights', label: 'Components' },
-                    { id: 'methodology', label: 'Methodology' },
-                    { id: 'grades', label: 'Grade System' },
-                  ].map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollTo(item.id)}
-                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                        activeSection === item.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Contents</h3>
+              <nav className="space-y-8">
+                <div>
+                  <p className="px-3 text-xs font-semibold text-brand-600 mb-3 tracking-wide uppercase">Part 1: Health</p>
+                  <div className="space-y-1">
+                    {[
+                      { id: 'health', label: 'Overview' },
+                      { id: 'weights', label: 'Components' },
+                      { id: 'methodology', label: 'Methodology' },
+                      { id: 'grades', label: 'Grade System' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollTo(item.id)}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          activeSection === item.id ? 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-200' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                                <div>
-                                  <p className="px-3 text-xs font-semibold text-blue-600 mb-1">Part 2: Safety</p>
-                                  {[{
-                                    id: 'affordability',
-                                    label: 'Affordability Check'
-                                  },].map((item) => (
-                                    <button
-                                      key={item.id}
-                                      onClick={() => scrollTo(item.id)}
-                                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                                        activeSection === item.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
-                                      }`}
-                                    >
-                                      {item.label}
-                                    </button>
-                                  ))}
-                                </div>
-                                <div>
-                                  <p className="px-3 text-xs font-semibold text-gray-500 mb-1">Part 3: Foundation</p>
-                                  {[{
-                                    id: 'foundation',
-                                    label: 'Data Sources'
-                                  },
-                                  {
-                                    id: 'privacy',
-                                    label: 'Privacy'
-                                  },].map((item) => (
-                                    <button
-                                      key={item.id}
-                                      onClick={() => scrollTo(item.id)}
-                                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                                        activeSection === item.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
-                                      }`}
-                                    >
-                                      {item.label}
-                                    </button>
-                                  ))}
-                                </div>
+                
+                <div>
+                  <p className="px-3 text-xs font-semibold text-blue-600 mb-3 tracking-wide uppercase">Part 2: Safety</p>
+                  <div className="space-y-1">
+                    {[
+                      { id: 'affordability', label: 'Affordability Check' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollTo(item.id)}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          activeSection === item.id ? 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-200' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="px-3 text-xs font-semibold text-gray-500 mb-3 tracking-wide uppercase">Part 3: Foundation</p>
+                  <div className="space-y-1">
+                    {[
+                      { id: 'foundation', label: 'Data Sources' },
+                      { id: 'privacy', label: 'Privacy' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollTo(item.id)}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          activeSection === item.id ? 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-200' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </nav>
             </div>
           </div>
@@ -358,7 +361,10 @@ export default function RiskScoringPage() {
                     minimum="First order date"
                     thresholds={[
                       { label: '36+ months', score: '100 pts', color: 'green' },
+                      { label: '12-24 months', score: '85 pts', color: 'green' },
                       { label: '12-24 months', score: '70 pts', color: 'yellow' },
+                      { label: '6-12 months', score: '50 pts', color: 'yellow' },
+                      { label: '3-6 months', score: '30 pts', color: 'red' },
                       { label: '< 3 months', score: '15 pts', color: 'red' },
                     ]}
                   />
@@ -372,8 +378,11 @@ export default function RiskScoringPage() {
                     minimum="45+ days data"
                     thresholds={[
                       { label: '+10% to +30%', score: '100 pts', color: 'green' },
+                      { label: '+30% to +50%', score: '85 pts', color: 'green' },
                       { label: '0% to +10%', score: '75 pts', color: 'blue' },
-                      { label: '< -10%', score: '15 pts', color: 'red' },
+                      { label: '+50% or more', score: '60 pts', color: 'yellow' },
+                      { label: '0% to -10%', score: '50 pts', color: 'yellow' },
+                      { label: 'Below -10%', score: '15-30 pts', color: 'red' },
                     ]}
                   />
                 </div>
