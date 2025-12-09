@@ -1192,64 +1192,201 @@ export default function LoanCreationWizard() {
 
         {/* STEP 3: ELIGIBILITY */}
         {currentStep === 3 && (
-          <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Your Funding Eligibility</h2>
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-300 rounded-xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-2">Your Business Assessment</h2>
+              <p className="text-sm text-gray-600 mb-6">Based on your connected revenue sources</p>
 
-            {creditScore && creditScore.score > 0 ? (
-              <div className="bg-gradient-to-r from-secondary-50 to-brand-50 border border-gray-200 rounded-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-900">Business Trust Score</h3>
-                    <p className="text-sm text-gray-600">Based on your connected revenue sources</p>
+              {creditScore && creditScore.score > 0 ? (
+                <div className="space-y-6">
+                  {/* Business Health Score */}
+                  <div className="bg-gradient-to-r from-brand-50 to-green-50 border border-brand-200 rounded-xl p-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <div className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1">Part 1</div>
+                        <h3 className="text-lg font-bold text-gray-900">Business Health</h3>
+                        <p className="text-sm text-gray-500">Quality and stability of your business</p>
+                      </div>
+                      <div className="text-right">
+                        <div className={`text-2xl font-bold ${
+                          creditScore.score >= 75 ? 'text-green-600' :
+                          creditScore.score >= 55 ? 'text-blue-600' :
+                          creditScore.score >= 40 ? 'text-amber-600' : 'text-gray-600'
+                        }`}>
+                          {creditScore.score >= 75 ? 'Established' :
+                           creditScore.score >= 55 ? 'Growing' :
+                           creditScore.score >= 40 ? 'Building' : 'Emerging'}
+                        </div>
+                        <div className="text-sm text-gray-500">{creditScore.score}/100</div>
+                      </div>
+                    </div>
+
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                      <div
+                        className={`h-2.5 rounded-full ${
+                          creditScore.score >= 75 ? 'bg-green-500' :
+                          creditScore.score >= 55 ? 'bg-blue-500' :
+                          creditScore.score >= 40 ? 'bg-amber-500' : 'bg-gray-400'
+                        }`}
+                        style={{ width: `${creditScore.score}%` }}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Revenue Stability</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.revenueScore)}/40</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Order Consistency</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.consistencyScore)}/20</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Business Tenure</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.reliabilityScore)}/20</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Growth Trend</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.growthScore)}/20</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-4xl font-bold text-gray-900">{creditScore.score}</div>
-                    <div className="text-sm text-gray-500">out of 100</div>
-                  </div>
+
+                  {/* Loan Affordability */}
+                  {(() => {
+                    // Calculate monthly revenue from connected platforms
+                    const totalRevenue = creditScore.connections.reduce((sum, conn) => {
+                      return sum + (conn.revenue_data?.totalRevenue || 0);
+                    }, 0);
+                    const totalDays = creditScore.connections.reduce((sum, conn) => {
+                      return Math.max(sum, conn.revenue_data?.periodDays || 90);
+                    }, 90);
+                    const monthlyRevenue = (totalRevenue / totalDays) * 30;
+                    const loanAmount = parseFloat(formData.amount) || 0;
+                    const ratio = monthlyRevenue > 0 ? loanAmount / monthlyRevenue : Infinity;
+
+                    let tier: 'Comfortable' | 'Manageable' | 'Stretched' | 'High Burden';
+                    let tierColor: string;
+                    let tierBg: string;
+
+                    if (ratio < 0.5) {
+                      tier = 'Comfortable';
+                      tierColor = 'text-green-600';
+                      tierBg = 'bg-green-500';
+                    } else if (ratio < 1.0) {
+                      tier = 'Manageable';
+                      tierColor = 'text-blue-600';
+                      tierBg = 'bg-blue-500';
+                    } else if (ratio < 2.0) {
+                      tier = 'Stretched';
+                      tierColor = 'text-amber-600';
+                      tierBg = 'bg-amber-500';
+                    } else {
+                      tier = 'High Burden';
+                      tierColor = 'text-red-600';
+                      tierBg = 'bg-red-500';
+                    }
+
+                    const showWarning = ratio >= 1.0;
+
+                    return (
+                      <div className={`border rounded-xl p-5 ${showWarning ? 'bg-amber-50 border-amber-200' : 'bg-blue-50 border-blue-200'}`}>
+                        <div className="flex items-center justify-between mb-4">
+                          <div>
+                            <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Part 2</div>
+                            <h3 className="text-lg font-bold text-gray-900">Loan Affordability</h3>
+                            <p className="text-sm text-gray-500">Can your business handle this loan?</p>
+                          </div>
+                          <div className="text-right">
+                            <div className={`text-2xl font-bold ${tierColor}`}>{tier}</div>
+                            <div className="text-sm text-gray-500">{ratio.toFixed(1)}x monthly revenue</div>
+                          </div>
+                        </div>
+
+                        {/* Visual ratio bar */}
+                        <div className="mb-4">
+                          <div className="flex justify-between text-xs text-gray-500 mb-1">
+                            <span>0x</span>
+                            <span>2x+</span>
+                          </div>
+                          <div className="h-3 bg-gray-200 rounded-full overflow-hidden relative">
+                            <div className="absolute top-0 left-0 h-full w-[25%] bg-green-100"></div>
+                            <div className="absolute top-0 left-[25%] h-full w-[25%] bg-blue-100"></div>
+                            <div className="absolute top-0 left-[50%] h-full w-[25%] bg-amber-100"></div>
+                            <div className="absolute top-0 left-[75%] h-full w-[25%] bg-red-100"></div>
+                            <div
+                              className={`absolute top-0 h-full w-1 ${tierBg} z-10`}
+                              style={{ left: `${Math.min(ratio / 2 * 100, 100)}%` }}
+                            ></div>
+                          </div>
+                          <div className="flex text-[10px] text-gray-400 mt-1">
+                            <span className="w-[25%] text-center">Comfortable</span>
+                            <span className="w-[25%] text-center">Manageable</span>
+                            <span className="w-[25%] text-center">Stretched</span>
+                            <span className="w-[25%] text-center">High Burden</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between text-sm mb-4">
+                          <div>
+                            <span className="text-gray-500">Loan Request:</span>
+                            <span className="ml-2 font-semibold">${loanAmount.toLocaleString()}</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">~Monthly Revenue:</span>
+                            <span className="ml-2 font-semibold">${Math.round(monthlyRevenue).toLocaleString()}</span>
+                          </div>
+                        </div>
+
+                        {/* Adjust loan amount */}
+                        {showWarning && (
+                          <div className="bg-white border border-amber-300 rounded-lg p-4 mt-4">
+                            <p className="text-sm text-amber-800 font-medium mb-3">
+                              Consider reducing your loan amount for better repayment terms.
+                            </p>
+                            <div className="flex items-center gap-3">
+                              <label className="text-sm text-gray-600 whitespace-nowrap">Adjust amount:</label>
+                              <div className="relative flex-1">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                                <input
+                                  type="number"
+                                  value={formData.amount}
+                                  onChange={(e) => handleChange('amount', e.target.value)}
+                                  min="100"
+                                  max="10000"
+                                  step="50"
+                                  className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm"
+                                />
+                              </div>
+                            </div>
+                            {monthlyRevenue > 0 && (
+                              <p className="text-xs text-gray-500 mt-2">
+                                Suggested: ${Math.round(monthlyRevenue * 0.5).toLocaleString()} (Comfortable) or ${Math.round(monthlyRevenue).toLocaleString()} (Manageable)
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
-
-                <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
-                  <div
-                    className="bg-gradient-to-r from-secondary-500 to-brand-500 h-3 rounded-full"
-                    style={{ width: `${creditScore.score}%` }}
-                  />
+              ) : (
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
+                  <p className="text-gray-600 mb-4">
+                    You haven't connected any revenue sources yet. You can still create a request, but connecting platforms helps you get funded faster.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentStep(2)}
+                    className="text-brand-600 hover:text-brand-700 font-semibold"
+                  >
+                    ← Go Back to Connect Platforms
+                  </button>
                 </div>
+              )}
+            </div>
 
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <span className="text-gray-600">Revenue:</span>
-                    <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.revenueScore)}/40</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Consistency:</span>
-                    <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.consistencyScore)}/20</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Reliability:</span>
-                    <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.reliabilityScore)}/20</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Growth:</span>
-                    <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.growthScore)}/20</span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
-                <p className="text-gray-600 mb-4">
-                  You haven't connected any revenue sources yet. You can still create a request, but connecting platforms helps you get funded faster.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setCurrentStep(2)}
-                  className="text-brand-600 hover:text-brand-700 font-semibold"
-                >
-                  ← Go Back to Connect Platforms
-                </button>
-              </div>
-            )}
-
-            <div className="flex gap-3 pt-4">
+            <div className="flex gap-3">
               <button
                 type="button"
                 onClick={goToPreviousStep}

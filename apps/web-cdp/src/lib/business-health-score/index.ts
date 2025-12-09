@@ -225,7 +225,7 @@ function getGradeDescription(grade: HealthGrade): string {
 // ============================================================================
 
 /**
- * REVENUE STABILITY (30%)
+ * REVENUE STABILITY (35%)
  * Measures month-over-month consistency in revenue
  * Lower coefficient of variation = higher score
  *

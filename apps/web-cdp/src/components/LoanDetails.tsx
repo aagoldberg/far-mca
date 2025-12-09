@@ -13,6 +13,28 @@ import ShareModal from '@/components/ShareModal';
 import LoanUpdates from '@/components/LoanUpdates';
 import type { LoanShareData } from '@/utils/shareUtils';
 
+// Types for credit score data
+interface CreditScoreConnection {
+  platform: string;
+  revenue_data?: {
+    totalRevenue: number;
+    periodDays: number;
+    orderCount: number;
+    currency: string;
+  };
+}
+
+interface CreditScoreData {
+  score: number;
+  components: {
+    revenueStability: number;
+    orderConsistency: number;
+    businessTenure: number;
+    growthTrend: number;
+  };
+  connections: CreditScoreConnection[];
+}
+
 interface LoanDetailsProps {
   loanAddress: `0x${string}`;
 }
@@ -83,6 +105,8 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
   const [metadata, setMetadata] = useState<LoanMetadata | null>(null);
   const [loadingMetadata, setLoadingMetadata] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [creditScore, setCreditScore] = useState<CreditScoreData | null>(null);
+  const [loadingCreditScore, setLoadingCreditScore] = useState(false);
 
   // Fetch user's contribution (if any)
   const { contribution } = useContribution(loanAddress, userAddress);
@@ -156,6 +180,31 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
         });
     }
   }, [loanData?.metadataURI]);
+
+  // Fetch credit score for borrower
+  useEffect(() => {
+    if (loanData?.borrower) {
+      setLoadingCreditScore(true);
+      fetch(`/api/credit-score?walletAddress=${loanData.borrower}`)
+        .then(res => {
+          if (!res.ok) {
+            // Not an error - borrower may not have connected platforms
+            return null;
+          }
+          return res.json();
+        })
+        .then(data => {
+          setCreditScore(data);
+        })
+        .catch(err => {
+          // Silently fail - credit score is optional
+          setCreditScore(null);
+        })
+        .finally(() => {
+          setLoadingCreditScore(false);
+        });
+    }
+  }, [loanData?.borrower]);
 
   if (isLoading) {
     return (
@@ -358,6 +407,142 @@ export default function LoanDetails({ loanAddress }: LoanDetailsProps) {
                   businessWebsite={metadata?.loanDetails?.businessWebsite}
                   twitterHandle={metadata?.loanDetails?.twitterHandle}
                 />
+              </div>
+            )}
+
+            {/* Business Health + Loan Affordability */}
+            {creditScore && creditScore.connections && creditScore.connections.length > 0 && (
+              <div className="py-6 border-b border-gray-200">
+                <h2 className="text-[16px] font-medium text-gray-900 mb-4">Business Profile</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Business Health */}
+                  <div className="bg-gray-50 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                      </svg>
+                      <span className="text-[13px] font-medium text-gray-500 uppercase tracking-wide">Business Health</span>
+                    </div>
+                    {/* Star Rating - 4 stars for health */}
+                    {(() => {
+                      const filledStars = creditScore.score >= 75 ? 4 :
+                                         creditScore.score >= 55 ? 3 :
+                                         creditScore.score >= 40 ? 2 : 1;
+                      const starColor = creditScore.score >= 75 ? 'text-green-500' :
+                                       creditScore.score >= 55 ? 'text-blue-500' :
+                                       creditScore.score >= 40 ? 'text-amber-500' : 'text-gray-400';
+                      return (
+                        <div className="flex gap-0.5 mb-2">
+                          {[1, 2, 3, 4].map((star) => (
+                            star <= filledStars ? (
+                              <svg
+                                key={star}
+                                className={`w-5 h-5 ${starColor}`}
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ) : (
+                              <svg
+                                key={star}
+                                className="w-5 h-5 text-gray-300"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={1.5}
+                                viewBox="0 0 24 24"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                              </svg>
+                            )
+                          ))}
+                        </div>
+                      );
+                    })()}
+                    <div className={`text-xl font-bold ${
+                      creditScore.score >= 75 ? 'text-green-600' :
+                      creditScore.score >= 55 ? 'text-blue-600' :
+                      creditScore.score >= 40 ? 'text-amber-600' : 'text-gray-600'
+                    }`}>
+                      {creditScore.score >= 75 ? 'Established' :
+                       creditScore.score >= 55 ? 'Growing' :
+                       creditScore.score >= 40 ? 'Building' : 'Emerging'}
+                    </div>
+                    <div className="text-[13px] text-gray-500 mt-1">
+                      Based on {creditScore.connections.length} connected platform{creditScore.connections.length !== 1 ? 's' : ''}
+                    </div>
+                  </div>
+
+                  {/* Loan Affordability */}
+                  {(() => {
+                    const totalRevenue = creditScore.connections.reduce((sum, conn) => {
+                      return sum + (conn.revenue_data?.totalRevenue || 0);
+                    }, 0);
+                    const totalDays = creditScore.connections.reduce((sum, conn) => {
+                      return Math.max(sum, conn.revenue_data?.periodDays || 90);
+                    }, 90);
+                    const monthlyRevenue = (totalRevenue / totalDays) * 30;
+                    const loanAmount = parseFloat(formatUnits(loanData.principal, USDC_DECIMALS));
+                    const ratio = monthlyRevenue > 0 ? loanAmount / monthlyRevenue : Infinity;
+
+                    const affordabilityTier = ratio < 0.5 ? 'Comfortable' :
+                                             ratio < 1.0 ? 'Manageable' :
+                                             ratio < 2.0 ? 'Stretched' : 'High Burden';
+                    const affordabilityColor = ratio < 0.5 ? 'text-green-600' :
+                                              ratio < 1.0 ? 'text-blue-600' :
+                                              ratio < 2.0 ? 'text-amber-600' : 'text-red-600';
+                    // Stars: 4 for Comfortable, 3 for Manageable, 2 for Stretched, 1 for High Burden
+                    const filledStars = ratio < 0.5 ? 4 :
+                                       ratio < 1.0 ? 3 :
+                                       ratio < 2.0 ? 2 : 1;
+                    const starColor = ratio < 0.5 ? 'text-green-500' :
+                                     ratio < 1.0 ? 'text-blue-500' :
+                                     ratio < 2.0 ? 'text-amber-500' : 'text-red-500';
+
+                    return (
+                      <div className="bg-gray-50 rounded-xl p-5">
+                        <div className="flex items-center gap-2 mb-2">
+                          <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+                          </svg>
+                          <span className="text-[13px] font-medium text-gray-500 uppercase tracking-wide">Loan Affordability</span>
+                        </div>
+                        {/* Star Rating - 4 stars for affordability */}
+                        <div className="flex gap-0.5 mb-2">
+                          {[1, 2, 3, 4].map((star) => (
+                            star <= filledStars ? (
+                              <svg
+                                key={star}
+                                className={`w-5 h-5 ${starColor}`}
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ) : (
+                              <svg
+                                key={star}
+                                className="w-5 h-5 text-gray-300"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={1.5}
+                                viewBox="0 0 24 24"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                              </svg>
+                            )
+                          ))}
+                        </div>
+                        <div className={`text-xl font-bold ${affordabilityColor}`}>
+                          {affordabilityTier}
+                        </div>
+                        <div className="text-[13px] text-gray-500 mt-1">
+                          {ratio < Infinity ? `${ratio.toFixed(1)}x monthly revenue` : 'No revenue data'}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
               </div>
             )}
 
