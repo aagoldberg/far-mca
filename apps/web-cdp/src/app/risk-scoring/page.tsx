@@ -273,11 +273,11 @@ export default function RiskScoringPage() {
             <div>
               <SectionHeading 
                 id="health" 
-                chapter="Part 1"
-                title="Business Health Score" 
-                subtitle="Measures the fundamental quality and stability of the business based on cash flow patterns." 
+                title="Example Health Score" 
+                subtitle="An example of how an 'A' Grade is calculated." 
               />
               
+              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 block">Example Calculation</span>
               {/* Visual Card */}
               <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm mb-12">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
@@ -285,7 +285,6 @@ export default function RiskScoringPage() {
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">The Metric</div>
                     <div className="flex items-center gap-2">
                       <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Quality Score</h3>
-                      <span className="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 uppercase tracking-wide">Example</span>
                     </div>
                   </div>
                   <div className="mt-4 md:mt-0 flex items-center gap-3">
@@ -452,13 +451,13 @@ export default function RiskScoringPage() {
               />
 
               {/* Visual Card */}
+              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 block">Example Calculation</span>
               <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm mb-8">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
                   <div>
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">The Metric</div>
                     <div className="flex items-center gap-2">
                       <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Affordability Score</h3>
-                      <span className="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 uppercase tracking-wide">Example</span>
                     </div>
                   </div>
                   <div className="mt-4 md:mt-0 flex items-center gap-3">
