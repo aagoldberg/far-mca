@@ -1,0 +1,19 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "4c5187b829863b1726985517cc18ae24"
+name = "lendfriend"
+application_url = "https://lendfriend.org"
+
+[access_scopes]
+scopes = "read_locations,read_orders,read_products"
+
+[auth]
+redirect_urls = [ "https://lendfriend.org/api/shopify/callback" ]
+
+[webhooks]
+api_version = "2025-01"
+
+  [webhooks.privacy_compliance]
+  customer_deletion_url = "https://lendfriend.org/api/shopify/webhooks/customers-redact"
+  customer_data_request_url = "https://lendfriend.org/api/shopify/webhooks/customers-data-request"
+  shop_deletion_url = "https://lendfriend.org/api/shopify/webhooks/shop-redact"
