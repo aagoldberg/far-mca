@@ -271,28 +271,12 @@ export default function Navbar() {
                         Vision & Roadmap
                       </Link>
                       <Link
-                        href="/economic-context"
-                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Background
-                      </Link>
-                      <Link
                         href="/risk-scoring"
                         className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Risk Scoring
                       </Link>
-                      <a
-                        href="https://docs.lendfriend.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Documentation (Draft)
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -378,28 +362,12 @@ export default function Navbar() {
                     Vision & Roadmap
                   </Link>
                   <Link
-                    href="/economic-context"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
-                    onClick={() => setAboutDropdownOpen(false)}
-                  >
-                    Background
-                  </Link>
-                  <Link
                     href="/risk-scoring"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
                     onClick={() => setAboutDropdownOpen(false)}
                   >
                     Risk Scoring
                   </Link>
-                  <a
-                    href="https://docs.lendfriend.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition-colors"
-                    onClick={() => setAboutDropdownOpen(false)}
-                  >
-                    Documentation (Draft)
-                  </a>
                 </div>
               )}
             </div>

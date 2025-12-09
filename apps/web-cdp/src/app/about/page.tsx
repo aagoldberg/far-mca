@@ -1,18 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { EyeIcon, ChartBarIcon, BoltIcon, LockClosedIcon, ShieldCheckIcon, UserGroupIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, ChartBarIcon, BoltIcon, LockClosedIcon, ShieldCheckIcon, UserGroupIcon, ArrowTrendingUpIcon, HeartIcon } from '@heroicons/react/24/outline';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-[#3B9B7F] to-[#2E7D68] text-white py-16">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            About LendFriend
-          </h1>
-          <p className="text-xl md:text-2xl font-light">Loans backed by your business, not your credit score.</p>
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-brand-900 via-brand-800 to-brand-900 text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
+              <HeartIcon className="w-4 h-4" />
+              Community Lending
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+              About LendFriend
+            </h1>
+            <p className="text-xl text-white/80 leading-relaxed max-w-2xl">
+              Loans backed by your business, not your credit score.
+            </p>
+          </div>
         </div>
       </div>
 

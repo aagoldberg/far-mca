@@ -12,30 +12,27 @@ import {
   ArrowPathIcon,
   GlobeAltIcon,
   WrenchScrewdriverIcon,
+  RocketLaunchIcon,
 } from '@heroicons/react/24/outline';
 
 export default function VisionPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="relative bg-gradient-to-b from-brand-600 to-brand-800 py-24 sm:py-32 overflow-hidden isolate">
-        {/* Background Effects */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute top-[-40%] left-1/2 -translate-x-1/2 w-[200%] aspect-[1/1] rounded-full bg-white/5 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium text-brand-50 ring-1 ring-inset ring-brand-400/50 mb-6 bg-white/10 backdrop-blur-sm">
-            The Vision
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-brand-900 via-brand-800 to-brand-900 text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
+              <RocketLaunchIcon className="w-4 h-4" />
+              The Vision
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+              Credit for the<br />Reputation Economy
+            </h1>
+            <p className="text-xl text-white/80 leading-relaxed max-w-2xl">
+              Web3 infrastructure for uncollateralized credit—powered by verified revenue and community trust.
+            </p>
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-tight leading-tight">
-            Credit for the <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-100 to-white">Reputation Economy</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-brand-50 max-w-2xl mx-auto leading-relaxed font-light">
-            Web3 infrastructure for uncollateralized credit—powered by verified revenue and community trust.
-          </p>
         </div>
       </div>
 
