@@ -417,20 +417,22 @@ export default function RiskScoringPage() {
                   {/* Visual Bar */}
                   <div>
                     <div className="flex justify-between text-xs font-medium text-stone-500 mb-2">
-                      <span>0x (Safe)</span>
+                      <span>0x</span>
                       <span className="text-brand-600 font-bold">Current: 0.4x</span>
-                      <span>2.0x (Risky)</span>
+                      <span>2.0x+</span>
                     </div>
                     <div className="h-4 bg-stone-100 rounded-full overflow-hidden relative">
                       <div className="absolute top-0 left-0 h-full w-[25%] bg-green-100"></div>
                       <div className="absolute top-0 left-[25%] h-full w-[25%] bg-blue-100"></div>
-                      <div className="absolute top-0 left-[50%] h-full w-[50%] bg-amber-50"></div>
+                      <div className="absolute top-0 left-[50%] h-full w-[25%] bg-amber-100"></div>
+                      <div className="absolute top-0 left-[75%] h-full w-[25%] bg-red-100"></div>
                       <div className="absolute top-0 h-full w-1 bg-stone-900 z-10" style={{ left: '20%' }}></div>
                     </div>
-                    <div className="flex text-[10px] text-stone-400 mt-1 justify-between">
-                      <span className="w-[25%] text-center">Comfortable</span>
-                      <span className="w-[25%] text-center">Manageable</span>
-                      <span className="w-[50%] text-center pl-8">Stretched / High Burden</span>
+                    <div className="flex text-[9px] md:text-[10px] text-stone-400 mt-1 text-center">
+                      <span className="w-[25%]">Comfortable</span>
+                      <span className="w-[25%]">Manageable</span>
+                      <span className="w-[25%]">Stretched</span>
+                      <span className="w-[25%] text-red-400 font-medium">High Burden</span>
                     </div>
                   </div>
                 </div>
