@@ -477,15 +477,15 @@ export default function RiskScoringPage() {
                       <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Loan Request</div>
                       <div className="text-xl font-bold text-gray-900">$5,000</div>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                      <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Monthly Revenue</div>
-                      <div className="text-xl font-bold text-gray-900">$12,500</div>
+                    <div className="p-3 bg-stone-50 rounded-lg border border-stone-100">
+                      <div className="text-xs text-stone-500 uppercase tracking-wide mb-1">Monthly Revenue</div>
+                      <div className="text-xl font-bold text-stone-900">$12,500</div>
                     </div>
                   </div>
 
                   {/* Visual Bar */}
                   <div>
-                    <div className="flex justify-between text-xs font-medium text-gray-500 mb-2">
+                    <div className="flex justify-between text-xs font-medium text-stone-500 mb-2">
                       <span>0x</span>
                       <span className="text-brand-600 font-bold">Current: 0.4x</span>
                       <span>2.0x+</span>
