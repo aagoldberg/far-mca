@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
     reactStrictMode: true,
+    skipTrailingSlashRedirect: true,
     eslint: {
         // Temporarily disabled to allow builds - should fix ESLint errors and re-enable
         ignoreDuringBuilds: true,

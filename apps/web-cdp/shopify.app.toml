@@ -3,6 +3,7 @@
 client_id = "4c5187b829863b1726985517cc18ae24"
 name = "lendfriend"
 application_url = "https://lendfriend.org"
+embedded = false
 
 [access_scopes]
 scopes = "read_locations,read_orders,read_products"
