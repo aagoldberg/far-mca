@@ -18,7 +18,13 @@ export default function MediaKitPage() {
       return;
     }
 
-    toPng(ref.current, { cacheBust: true, width: 1600, height: 900, useCORS: true })
+    toPng(ref.current, { 
+      cacheBust: true, 
+      width: 1600, 
+      height: 900, 
+      useCORS: true,
+      pixelRatio: 1 
+    })
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.download = 'lendfriend-feature-media.png';
