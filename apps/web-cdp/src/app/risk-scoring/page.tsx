@@ -15,14 +15,14 @@ import {
 function ScoreBar({ label, value, tier }: { label: string; value: number; tier: string }) {
   return (
     <div className="flex items-center gap-4">
-      <div className="w-36 text-sm font-medium text-stone-600">{label}</div>
-      <div className="flex-1 h-2.5 bg-stone-100 rounded-full overflow-hidden">
+      <div className="w-36 text-sm font-medium text-gray-600">{label}</div>
+      <div className="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden">
         <div
           className="h-full bg-brand-600 rounded-full transition-all duration-1000 ease-out"
           style={{ width: `${value}%` }}
         />
       </div>
-      <div className="w-24 text-sm font-bold text-stone-900 text-right">{tier}</div>
+      <div className="w-24 text-sm font-bold text-gray-900 text-right">{tier}</div>
     </div>
   );
 }
@@ -35,8 +35,8 @@ function SectionHeading({ id, title, subtitle, chapter }: { id: string, title: s
           {chapter}
         </span>
       )}
-      <h2 className="text-3xl font-bold text-stone-900 mb-2">{title}</h2>
-      {subtitle && <p className="text-lg text-stone-500 max-w-2xl">{subtitle}</p>}
+      <h2 className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">{title}</h2>
+      {subtitle && <p className="text-lg text-gray-500 max-w-2xl">{subtitle}</p>}
     </div>
   );
 }
@@ -61,22 +61,22 @@ function ComponentCard({
   thresholds: { label: string; score: string; color: string }[];
 }) {
   return (
-    <details className="group bg-white rounded-2xl border border-stone-200 overflow-hidden open:shadow-md transition-all">
+    <details className="group bg-white rounded-2xl border border-gray-200 overflow-hidden open:shadow-md transition-all">
       {/* Header (Summary) */}
-      <summary className="cursor-pointer list-none px-6 py-5 border-b border-transparent group-open:border-stone-100 transition-colors hover:bg-stone-50 select-none">
+      <summary className="cursor-pointer list-none px-6 py-5 border-b border-transparent group-open:border-gray-100 transition-colors hover:bg-gray-50 select-none">
         <div className="flex items-start justify-between w-full">
           <div className="flex-1 pr-4">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-lg font-bold text-stone-900">{title}</h3>
-              <svg className="w-5 h-5 text-stone-400 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <h3 className="text-lg font-bold text-gray-900 tracking-tight">{title}</h3>
+              <svg className="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </div>
-            <p className="text-sm text-stone-500">{description}</p>
+            <p className="text-sm text-gray-500">{description}</p>
           </div>
           <div className="text-right flex-shrink-0">
-            <div className="text-2xl font-bold text-stone-900">{weight}</div>
-            <div className="text-xs text-stone-400 uppercase tracking-wider">Weight</div>
+            <div className="text-2xl font-bold text-gray-900">{weight}</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wider">Weight</div>
           </div>
         </div>
       </summary>
@@ -84,18 +84,18 @@ function ComponentCard({
       {/* Body (Details) */}
       <div className="p-6 pt-2 animate-in slide-in-from-top-2 fade-in-50">
         {/* Formula */}
-        <div className="mb-5 p-4 bg-stone-50 rounded-lg">
-          <div className="font-mono text-sm text-stone-700 mb-1">{formula}</div>
-          <div className="text-xs text-stone-500">{formulaExplanation}</div>
+        <div className="mb-5 p-4 bg-gray-50 rounded-lg">
+          <div className="font-mono text-sm text-gray-700 mb-1">{formula}</div>
+          <div className="text-xs text-gray-500">{formulaExplanation}</div>
         </div>
 
         {/* Thresholds - Simple list */}
         <div className="mb-5">
-          <div className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-3">Thresholds</div>
+          <div className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Thresholds</div>
           <div className="space-y-1">
             {thresholds.map((t, i) => (
               <div key={i} className="flex items-center justify-between text-sm py-1.5">
-                <span className="text-stone-600">{t.label}</span>
+                <span className="text-gray-600">{t.label}</span>
                 <span className={`font-mono font-medium ${
                   t.color === 'green' ? 'text-green-600' :
                   t.color === 'blue' ? 'text-blue-600' :
@@ -107,7 +107,7 @@ function ComponentCard({
         </div>
 
         {/* Minimum Requirement */}
-        <div className="text-xs text-stone-500 pt-4 border-t border-stone-100">
+        <div className="text-xs text-gray-500 pt-4 border-t border-gray-100">
           <span className="font-medium">Min. data:</span> {minimum}
         </div>
       </div>
@@ -145,7 +145,7 @@ export default function RiskScoringPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero */}
       <div className="bg-gradient-to-br from-brand-900 via-brand-800 to-brand-900 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
@@ -170,54 +170,74 @@ export default function RiskScoringPage() {
           {/* Sidebar Navigation */}
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-32">
-              <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Contents</h3>
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Contents</h3>
               <nav className="space-y-1">
-                <div className="pb-2 mb-2 border-b border-stone-100">
+                <div className="pb-2 mb-2 border-b border-gray-100">
                   <p className="px-3 text-xs font-semibold text-brand-600 mb-1">Part 1: Health</p>
                   {[
-                    { id: 'grades', label: 'Grade System' },
-                    { id: 'health', label: 'Example Card' },
+                    { id: 'health', label: 'Overview' },
                     { id: 'weights', label: 'Components' },
                     { id: 'methodology', label: 'Methodology' },
+                    { id: 'grades', label: 'Grade System' },
                   ].map((item) => (
                     <button
                       key={item.id}
                       onClick={() => scrollTo(item.id)}
                       className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                        activeSection === item.id ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-900'
+                        activeSection === item.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
                       }`}
                     >
                       {item.label}
                     </button>
                   ))}
                 </div>
-                <div>
-                  <p className="px-3 text-xs font-semibold text-blue-600 mb-1">Part 2: Safety</p>
-                  {[
-                    { id: 'affordability', label: 'Affordability Check' },
-                    { id: 'foundation', label: 'Data Sources' },
-                    { id: 'privacy', label: 'Privacy' },
-                  ].map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollTo(item.id)}
-                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                        activeSection === item.id ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-900'
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
+                                <div>
+                                  <p className="px-3 text-xs font-semibold text-blue-600 mb-1">Part 2: Safety</p>
+                                  {[{
+                                    id: 'affordability',
+                                    label: 'Affordability Check'
+                                  },].map((item) => (
+                                    <button
+                                      key={item.id}
+                                      onClick={() => scrollTo(item.id)}
+                                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                                        activeSection === item.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+                                      }`}
+                                    >
+                                      {item.label}
+                                    </button>
+                                  ))}
+                                </div>
+                                <div>
+                                  <p className="px-3 text-xs font-semibold text-gray-500 mb-1">Part 3: Foundation</p>
+                                  {[{
+                                    id: 'foundation',
+                                    label: 'Data Sources'
+                                  },
+                                  {
+                                    id: 'privacy',
+                                    label: 'Privacy'
+                                  },].map((item) => (
+                                    <button
+                                      key={item.id}
+                                      onClick={() => scrollTo(item.id)}
+                                      className={`block w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                                        activeSection === item.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+                                      }`}
+                                    >
+                                      {item.label}
+                                    </button>
+                                  ))}
+                                </div>
               </nav>
             </div>
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-9 space-y-24">
+          <div className="lg:col-span-9 space-y-16">
 
             {/* Intro / Roadmap */}
-            <div className="prose text-stone-600 max-w-none border-b border-stone-200 pb-12">
+            <div className="prose text-gray-600 max-w-none border-b border-gray-200 pb-12">
               <p className="text-xl leading-relaxed">
                 Our assessment process is divided into three parts to give lenders a complete picture without exposing sensitive merchant data.
               </p>
@@ -225,21 +245,21 @@ export default function RiskScoringPage() {
                 <li className="flex gap-4">
                   <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm">1</span>
                   <div>
-                    <strong className="text-stone-900 block">Business Health</strong>
+                    <strong className="text-gray-900 block">Business Health</strong>
                     Measures the quality and stability of the business (0-100 Score).
                   </div>
                 </li>
                 <li className="flex gap-4">
                   <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">2</span>
                   <div>
-                    <strong className="text-stone-900 block">Loan Safety</strong>
+                    <strong className="text-gray-900 block">Loan Safety</strong>
                     Checks if the specific loan amount is affordable given current revenue.
                   </div>
                 </li>
                 <li className="flex gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-bold text-sm">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center font-bold text-sm">3</span>
                   <div>
-                    <strong className="text-stone-900 block">Data Foundation</strong>
+                    <strong className="text-gray-900 block">Data Foundation</strong>
                     Explains how we verify sources and protect privacy.
                   </div>
                 </li>
@@ -248,73 +268,19 @@ export default function RiskScoringPage() {
 
             {/* ================= PART 1: BUSINESS HEALTH ================= */}
             <div>
-              {/* 1. Grade Output (Moved Up) */}
-              <div id="grades" className="scroll-mt-32 mb-12">
-                <SectionHeading 
-                  id="grades-heading" 
-                  chapter="Part 1"
-                  title="Grade System" 
-                  subtitle="We assign a Grade (A-D) based on business quality." 
-                />
-                <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[
-                      { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
-                      { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
-                      { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
-                      { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
-                    ].map((item) => (
-                      <div
-                        key={item.grade}
-                        className={`p-5 rounded-xl text-center border-2
-                          ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
-                          ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
-                          ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
-                          ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
-                        `}
-                      >
-                        <div className={`text-4xl font-bold mb-1
-                          ${item.color === 'green' ? 'text-green-600' : ''}
-                          ${item.color === 'blue' ? 'text-blue-600' : ''}
-                          ${item.color === 'amber' ? 'text-amber-600' : ''}
-                          ${item.color === 'red' ? 'text-red-600' : ''}
-                        `}>
-                          {item.grade}
-                        </div>
-                        <div className={`text-sm font-bold mb-1
-                          ${item.color === 'green' ? 'text-green-800' : ''}
-                          ${item.color === 'blue' ? 'text-blue-800' : ''}
-                          ${item.color === 'amber' ? 'text-amber-800' : ''}
-                          ${item.color === 'red' ? 'text-red-800' : ''}
-                        `}>
-                          {item.range}
-                        </div>
-                        <div className={`text-xs
-                          ${item.color === 'green' ? 'text-green-700' : ''}
-                          ${item.color === 'blue' ? 'text-blue-700' : ''}
-                          ${item.color === 'amber' ? 'text-amber-700' : ''}
-                          ${item.color === 'red' ? 'text-red-700' : ''}
-                        `}>
-                          {item.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
               <SectionHeading 
                 id="health" 
-                title="Example Health Score" 
-                subtitle="An example of how an 'A' Grade is calculated." 
+                chapter="Part 1"
+                title="Business Health Score" 
+                subtitle="Measures the fundamental quality and stability of the business based on cash flow patterns." 
               />
               
               {/* Visual Card */}
-              <div className="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm mb-12">
+              <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm mb-12">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
                   <div>
-                    <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">The Metric</div>
-                    <h3 className="text-2xl font-bold text-stone-900">Quality Score</h3>
+                    <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">The Metric</div>
+                    <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Quality Score</h3>
                   </div>
                   <div className="mt-4 md:mt-0 flex items-center gap-3">
                     <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">Grade A (82/100)</span>
@@ -331,15 +297,15 @@ export default function RiskScoringPage() {
 
               {/* Weights */}
               <div id="weights" className="scroll-mt-32 mb-12">
-                <h3 className="text-xl font-bold text-stone-900 mb-4">Score Components</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 tracking-tight">Score Components</h3>
                 {/* Visual Weight Bar */}
-                <div className="flex h-12 w-full rounded-xl overflow-hidden mb-4 shadow-sm border border-stone-200">
+                <div className="flex h-12 w-full rounded-xl overflow-hidden mb-4 shadow-sm border border-gray-200">
                   <div className="bg-brand-600 w-[35%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">35%</div>
                   <div className="bg-brand-500 w-[25%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">25%</div>
                   <div className="bg-brand-400 w-[20%] flex items-center justify-center text-white font-bold text-sm border-r border-white/20">20%</div>
                   <div className="bg-brand-300 w-[20%] flex items-center justify-center text-white font-bold text-sm">20%</div>
                 </div>
-                <div className="flex text-xs text-stone-500 justify-between px-1">
+                <div className="flex text-xs text-gray-500 justify-between px-1">
                   <span>Revenue Stability</span>
                   <span>Order Consistency</span>
                   <span>Tenure</span>
@@ -349,14 +315,14 @@ export default function RiskScoringPage() {
 
               {/* Methodology */}
               <div id="methodology" className="scroll-mt-32 mb-12">
-                <h3 className="text-xl font-bold text-stone-900 mb-6">Detailed Methodology</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight">Detailed Methodology</h3>
                 <div className="grid gap-6">
                   <ComponentCard
                     title="Revenue Stability"
                     weight="35%"
                     metric="CV of Monthly Revenue"
                     formula="CV = (σ / μ) × 100"
-                    formulaExplanation="CV (Coefficient of Variation) = Standard Deviation (σ) ÷ Mean (μ). In plain English: It measures volatility. Low CV means steady, predictable sales. High CV means erratic or seasonal income."
+                    formulaExplanation="Standard deviation (σ) of monthly revenue divided by mean (μ) monthly revenue. Lower CV indicates higher stability."
                     description="Month-over-month consistency is the strongest predictor of repayment per FinRegLab research."
                     minimum="3+ months data"
                     thresholds={[
@@ -372,7 +338,7 @@ export default function RiskScoringPage() {
                     weight="25%"
                     metric="CV of Weekly Orders"
                     formula="CV = (σ / μ) × 100"
-                    formulaExplanation="CV (Coefficient of Variation) = Standard Deviation (σ) ÷ Mean (μ). In plain English: It measures demand reliability. Low CV means customers buy consistently every week."
+                    formulaExplanation="Standard deviation (σ) of weekly order counts divided by mean (μ) weekly orders. Lower CV indicates reliable demand."
                     description="Steady transaction patterns indicate reliable demand."
                     minimum="4+ weeks data"
                     thresholds={[
@@ -401,7 +367,7 @@ export default function RiskScoringPage() {
                     weight="20%"
                     metric="Rev Change (Recent vs Prior)"
                     formula="((curr - prev) / prev) * 100"
-                    formulaExplanation="Comparison of recent 3 months vs prior."
+                    formulaExplanation="Comparison of recent 3 months vs prior 3 months."
                     description="Sustainable growth (10-30%) scores highest."
                     minimum="45+ days data"
                     thresholds={[
@@ -412,9 +378,57 @@ export default function RiskScoringPage() {
                   />
                 </div>
               </div>
+
+              {/* Grades */}
+              <div id="grades" className="scroll-mt-32">
+                <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight">Grade Output</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
+                    { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
+                    { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
+                    { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
+                  ].map((item) => (
+                    <div
+                      key={item.grade}
+                      className={`p-5 rounded-xl text-center border-2
+                        ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
+                        ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
+                        ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
+                        ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
+                      `}
+                    >
+                      <div className={`text-4xl font-bold mb-1
+                        ${item.color === 'green' ? 'text-green-600' : ''}
+                        ${item.color === 'blue' ? 'text-blue-600' : ''}
+                        ${item.color === 'amber' ? 'text-amber-600' : ''}
+                        ${item.color === 'red' ? 'text-red-600' : ''}
+                      `}>
+                        {item.grade}
+                      </div>
+                      <div className={`text-sm font-bold mb-1
+                        ${item.color === 'green' ? 'text-green-800' : ''}
+                        ${item.color === 'blue' ? 'text-blue-800' : ''}
+                        ${item.color === 'amber' ? 'text-amber-800' : ''}
+                        ${item.color === 'red' ? 'text-red-800' : ''}
+                      `}>
+                        {item.range}
+                      </div>
+                      <div className={`text-xs
+                        ${item.color === 'green' ? 'text-green-700' : ''}
+                        ${item.color === 'blue' ? 'text-blue-700' : ''}
+                        ${item.color === 'amber' ? 'text-amber-700' : ''}
+                        ${item.color === 'red' ? 'text-red-700' : ''}
+                      `}>
+                        {item.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="w-full h-px bg-stone-200" />
+            <div className="w-full h-px bg-gray-200" />
 
             {/* ================= PART 2: LOAN AFFORDABILITY ================= */}
             <div>
@@ -426,11 +440,11 @@ export default function RiskScoringPage() {
               />
 
               {/* Visual Card */}
-              <div className="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm mb-8">
+              <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm mb-8">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
                   <div>
-                    <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">The Metric</div>
-                    <h3 className="text-2xl font-bold text-stone-900">Affordability Score</h3>
+                    <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">The Metric</div>
+                    <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Affordability Score</h3>
                   </div>
                   <div className="mt-4 md:mt-0 flex items-center gap-3">
                     <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-bold">Comfortable (0.4x)</span>
@@ -440,31 +454,31 @@ export default function RiskScoringPage() {
                 <div className="space-y-6">
                   {/* Data Points */}
                   <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="p-3 bg-stone-50 rounded-lg border border-stone-100">
-                      <div className="text-xs text-stone-500 uppercase tracking-wide mb-1">Loan Request</div>
-                      <div className="text-xl font-bold text-stone-900">$5,000</div>
+                    <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                      <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Loan Request</div>
+                      <div className="text-xl font-bold text-gray-900">$5,000</div>
                     </div>
-                    <div className="p-3 bg-stone-50 rounded-lg border border-stone-100">
-                      <div className="text-xs text-stone-500 uppercase tracking-wide mb-1">Monthly Revenue</div>
-                      <div className="text-xl font-bold text-stone-900">$12,500</div>
+                    <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                      <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Monthly Revenue</div>
+                      <div className="text-xl font-bold text-gray-900">$12,500</div>
                     </div>
                   </div>
 
                   {/* Visual Bar */}
                   <div>
-                    <div className="flex justify-between text-xs font-medium text-stone-500 mb-2">
+                    <div className="flex justify-between text-xs font-medium text-gray-500 mb-2">
                       <span>0x</span>
                       <span className="text-brand-600 font-bold">Current: 0.4x</span>
                       <span>2.0x+</span>
                     </div>
-                    <div className="h-4 bg-stone-100 rounded-full overflow-hidden relative">
+                    <div className="h-4 bg-gray-100 rounded-full overflow-hidden relative">
                       <div className="absolute top-0 left-0 h-full w-[25%] bg-green-100"></div>
                       <div className="absolute top-0 left-[25%] h-full w-[25%] bg-blue-100"></div>
                       <div className="absolute top-0 left-[50%] h-full w-[25%] bg-amber-100"></div>
                       <div className="absolute top-0 left-[75%] h-full w-[25%] bg-red-100"></div>
-                      <div className="absolute top-0 h-full w-1 bg-stone-900 z-10" style={{ left: '20%' }}></div>
+                      <div className="absolute top-0 h-full w-1 bg-gray-900 z-10" style={{ left: '20%' }}></div>
                     </div>
-                    <div className="flex text-[9px] md:text-[10px] text-stone-400 mt-1 text-center">
+                    <div className="flex text-[9px] md:text-[10px] text-gray-400 mt-1 text-center">
                       <span className="w-[25%]">Comfortable</span>
                       <span className="w-[25%]">Manageable</span>
                       <span className="w-[25%]">Stretched</span>
@@ -492,35 +506,35 @@ export default function RiskScoringPage() {
               />
             </div>
 
-            <div className="w-full h-px bg-stone-200" />
+            <div className="w-full h-px bg-gray-200" />
 
             {/* ================= PART 3: FOUNDATION ================= */}
             <div>
               <SectionHeading id="foundation" chapter="Part 3" title="Data Foundation" />
               
               <div id="sources" className="scroll-mt-32 mb-12">
-                <h3 className="text-xl font-bold text-stone-900 mb-6">Verified Data Sources</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight">Verified Data Sources</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   {[
                     { name: 'Shopify', color: '#96bf48', metrics: 'Orders, Revenue' },
                     { name: 'Stripe', color: '#635BFF', metrics: 'Charges, Payouts' },
                     { name: 'Square', color: '#000000', metrics: 'POS Transactions' },
                   ].map((platform) => (
-                    <div key={platform.name} className="bg-white rounded-xl border border-stone-200 p-5 text-center">
+                    <div key={platform.name} className="bg-white rounded-xl border border-gray-200 p-5 text-center">
                       <div className="w-10 h-10 rounded-lg mx-auto mb-3 flex items-center justify-center text-white font-bold" style={{ backgroundColor: platform.color }}>
                         {platform.name[0]}
                       </div>
-                      <div className="font-bold text-stone-900">{platform.name}</div>
-                      <div className="text-xs text-stone-500">{platform.metrics}</div>
+                      <div className="font-bold text-gray-900">{platform.name}</div>
+                      <div className="text-xs text-gray-500">{platform.metrics}</div>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div id="privacy" className="scroll-mt-32">
-                <h3 className="text-xl font-bold text-stone-900 mb-6">Privacy Design</h3>
-                <div className="bg-white rounded-xl border border-stone-200 p-6">
-                  <p className="text-stone-600">
+                <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight">Privacy Design</h3>
+                <div className="bg-white rounded-xl border border-gray-200 p-6">
+                  <p className="text-gray-600">
                     We calculate these scores server-side and only display the <strong>Grade</strong> and <strong>Tier</strong> to the public. Raw financial data (exact revenue dollars) is never exposed, protecting the merchant's competitive advantage.
                   </p>
                 </div>
@@ -528,8 +542,8 @@ export default function RiskScoringPage() {
             </div>
 
             {/* CTA */}
-            <section className="bg-stone-900 rounded-3xl p-10 text-center text-white mt-12">
-              <h2 className="text-2xl font-bold mb-4">Check Your Business Health</h2>
+            <section className="bg-gray-900 rounded-3xl p-10 text-center text-white mt-12">
+              <h2 className="text-2xl font-bold mb-4 tracking-tight">Check Your Business Health</h2>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/create-loan" className="px-8 py-4 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-500 transition-colors">Check Eligibility</Link>
               </div>
