@@ -283,7 +283,10 @@ export default function RiskScoringPage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
                   <div>
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">The Metric</div>
-                    <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Quality Score</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Quality Score</h3>
+                      <span className="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 uppercase tracking-wide">Example</span>
+                    </div>
                   </div>
                   <div className="mt-4 md:mt-0 flex items-center gap-3">
                     <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">Grade A (82/100)</span>
@@ -453,7 +456,10 @@ export default function RiskScoringPage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
                   <div>
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">The Metric</div>
-                    <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Affordability Score</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Affordability Score</h3>
+                      <span className="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 uppercase tracking-wide">Example</span>
+                    </div>
                   </div>
                   <div className="mt-4 md:mt-0 flex items-center gap-3">
                     <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-bold">Comfortable (0.4x)</span>
