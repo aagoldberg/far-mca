@@ -302,7 +302,7 @@ export default function RiskScoringPage() {
                     weight="35%"
                     metric="CV of Monthly Revenue"
                     formula="CV = (σ / μ) × 100"
-                    formulaExplanation="Standard deviation (σ) of monthly revenue divided by mean (μ) monthly revenue. Lower CV indicates higher stability."
+                    formulaExplanation="σ = Standard Deviation, μ = Mean. In plain English: It measures volatility. Low CV means steady, predictable sales. High CV means erratic or seasonal income."
                     description="Month-over-month consistency is the strongest predictor of repayment per FinRegLab research."
                     minimum="3+ months data"
                     thresholds={[
@@ -318,7 +318,7 @@ export default function RiskScoringPage() {
                     weight="25%"
                     metric="CV of Weekly Orders"
                     formula="CV = (σ / μ) × 100"
-                    formulaExplanation="Standard deviation (σ) of weekly order counts divided by mean (μ) weekly orders. Lower CV indicates reliable demand."
+                    formulaExplanation="σ = Standard Deviation, μ = Mean. In plain English: It measures demand reliability. Low CV means customers buy consistently every week."
                     description="Steady transaction patterns indicate reliable demand."
                     minimum="4+ weeks data"
                     thresholds={[
