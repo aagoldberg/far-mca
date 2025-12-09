@@ -175,10 +175,10 @@ export default function RiskScoringPage() {
                 <div className="pb-2 mb-2 border-b border-stone-100">
                   <p className="px-3 text-xs font-semibold text-brand-600 mb-1">Part 1: Health</p>
                   {[
-                    { id: 'health', label: 'Overview' },
+                    { id: 'grades', label: 'Grade System' },
+                    { id: 'health', label: 'Example Card' },
                     { id: 'weights', label: 'Components' },
                     { id: 'methodology', label: 'Methodology' },
-                    { id: 'grades', label: 'Grade System' },
                   ].map((item) => (
                     <button
                       key={item.id}
@@ -248,11 +248,65 @@ export default function RiskScoringPage() {
 
             {/* ================= PART 1: BUSINESS HEALTH ================= */}
             <div>
+              {/* 1. Grade Output (Moved Up) */}
+              <div id="grades" className="scroll-mt-32 mb-12">
+                <SectionHeading 
+                  id="grades-heading" 
+                  chapter="Part 1"
+                  title="Grade System" 
+                  subtitle="We assign a Grade (A-D) based on business quality." 
+                />
+                <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                      { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
+                      { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
+                      { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
+                      { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
+                    ].map((item) => (
+                      <div
+                        key={item.grade}
+                        className={`p-5 rounded-xl text-center border-2
+                          ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
+                          ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
+                          ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
+                          ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
+                        `}
+                      >
+                        <div className={`text-4xl font-bold mb-1
+                          ${item.color === 'green' ? 'text-green-600' : ''}
+                          ${item.color === 'blue' ? 'text-blue-600' : ''}
+                          ${item.color === 'amber' ? 'text-amber-600' : ''}
+                          ${item.color === 'red' ? 'text-red-600' : ''}
+                        `}>
+                          {item.grade}
+                        </div>
+                        <div className={`text-sm font-bold mb-1
+                          ${item.color === 'green' ? 'text-green-800' : ''}
+                          ${item.color === 'blue' ? 'text-blue-800' : ''}
+                          ${item.color === 'amber' ? 'text-amber-800' : ''}
+                          ${item.color === 'red' ? 'text-red-800' : ''}
+                        `}>
+                          {item.range}
+                        </div>
+                        <div className={`text-xs
+                          ${item.color === 'green' ? 'text-green-700' : ''}
+                          ${item.color === 'blue' ? 'text-blue-700' : ''}
+                          ${item.color === 'amber' ? 'text-amber-700' : ''}
+                          ${item.color === 'red' ? 'text-red-700' : ''}
+                        `}>
+                          {item.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <SectionHeading 
                 id="health" 
-                chapter="Part 1"
-                title="Business Health Score" 
-                subtitle="Measures the fundamental quality and stability of the business based on cash flow patterns." 
+                title="Example Health Score" 
+                subtitle="An example of how an 'A' Grade is calculated." 
               />
               
               {/* Visual Card */}
@@ -356,54 +410,6 @@ export default function RiskScoringPage() {
                       { label: '< -10%', score: '15 pts', color: 'red' },
                     ]}
                   />
-                </div>
-              </div>
-
-              {/* Grades */}
-              <div id="grades" className="scroll-mt-32">
-                <h3 className="text-xl font-bold text-stone-900 mb-6">Grade Output</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { grade: 'A', range: '75-100', label: 'Excellent Health', color: 'green' },
-                    { grade: 'B', range: '55-74', label: 'Good Fundamentals', color: 'blue' },
-                    { grade: 'C', range: '40-54', label: 'Fair / Developing', color: 'amber' },
-                    { grade: 'D', range: '0-39', label: 'Elevated Risk', color: 'red' },
-                  ].map((item) => (
-                    <div
-                      key={item.grade}
-                      className={`p-5 rounded-xl text-center border-2
-                        ${item.color === 'green' ? 'bg-green-50 border-green-200' : ''}
-                        ${item.color === 'blue' ? 'bg-blue-50 border-blue-200' : ''}
-                        ${item.color === 'amber' ? 'bg-amber-50 border-amber-200' : ''}
-                        ${item.color === 'red' ? 'bg-red-50 border-red-200' : ''}
-                      `}
-                    >
-                      <div className={`text-4xl font-bold mb-1
-                        ${item.color === 'green' ? 'text-green-600' : ''}
-                        ${item.color === 'blue' ? 'text-blue-600' : ''}
-                        ${item.color === 'amber' ? 'text-amber-600' : ''}
-                        ${item.color === 'red' ? 'text-red-600' : ''}
-                      `}>
-                        {item.grade}
-                      </div>
-                      <div className={`text-sm font-bold mb-1
-                        ${item.color === 'green' ? 'text-green-800' : ''}
-                        ${item.color === 'blue' ? 'text-blue-800' : ''}
-                        ${item.color === 'amber' ? 'text-amber-800' : ''}
-                        ${item.color === 'red' ? 'text-red-800' : ''}
-                      `}>
-                        {item.range}
-                      </div>
-                      <div className={`text-xs
-                        ${item.color === 'green' ? 'text-green-700' : ''}
-                        ${item.color === 'blue' ? 'text-blue-700' : ''}
-                        ${item.color === 'amber' ? 'text-amber-700' : ''}
-                        ${item.color === 'red' ? 'text-red-700' : ''}
-                      `}>
-                        {item.label}
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
