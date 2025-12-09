@@ -302,8 +302,8 @@ export default function RiskScoringPage() {
                     weight="35%"
                     metric="CV of Monthly Revenue"
                     formula="CV = (σ / μ) × 100"
-                    formulaExplanation="Standard deviation divided by mean."
-                    description="Month-over-month consistency is the strongest predictor of repayment."
+                    formulaExplanation="Standard deviation (σ) of monthly revenue divided by mean (μ) monthly revenue. Lower CV indicates higher stability."
+                    description="Month-over-month consistency is the strongest predictor of repayment per FinRegLab research."
                     minimum="3+ months data"
                     thresholds={[
                       { label: 'CV < 15%', score: '100 pts', color: 'green' },
@@ -318,7 +318,7 @@ export default function RiskScoringPage() {
                     weight="25%"
                     metric="CV of Weekly Orders"
                     formula="CV = (σ / μ) × 100"
-                    formulaExplanation="Standard deviation of weekly orders."
+                    formulaExplanation="Standard deviation (σ) of weekly order counts divided by mean (μ) weekly orders. Lower CV indicates reliable demand."
                     description="Steady transaction patterns indicate reliable demand."
                     minimum="4+ weeks data"
                     thresholds={[
