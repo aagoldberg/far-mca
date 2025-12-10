@@ -8,12 +8,12 @@ import {
   UserGroupIcon, 
   CurrencyDollarIcon, 
   ArrowTrendingUpIcon,
-  HomeIcon,
-  CreditCardIcon,
-  ArrowPathIcon,
-  MapPinIcon,
-  GlobeAltIcon
-} from '@heroicons/react/24/solid';
+  CalculatorIcon,
+  CalendarIcon,
+  ChevronDownIcon,
+  MagnifyingGlassIcon
+} from '@heroicons/react/24/outline';
+import { CheckCircleIcon as SolidCheckCircle } from '@heroicons/react/24/solid';
 
 // Helper for downloads
 const useDownload = (ref: React.RefObject<HTMLDivElement>, filename: string, width: number, height: number) => {
@@ -30,10 +30,40 @@ const useDownload = (ref: React.RefObject<HTMLDivElement>, filename: string, wid
   }, [ref, filename, width, height]);
 };
 
+// Reusable Mock Navbar
+const MockNavbar = () => (
+  <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50 px-8 h-16 flex items-center justify-between">
+    <div className="flex items-center gap-8">
+      {/* Logo */}
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">L</div>
+        <span className="text-xl font-bold text-gray-900 tracking-tight">LendFriend</span>
+      </div>
+      {/* Search */}
+      <div className="hidden md:flex items-center text-gray-400 bg-gray-50 px-3 py-2 rounded-xl border border-gray-100 w-64">
+        <MagnifyingGlassIcon className="w-5 h-5 mr-2" />
+        <span className="text-sm">Search loans...</span>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-4">
+      <div className="flex items-center gap-1 text-sm font-medium text-gray-700">
+        About <ChevronDownIcon className="w-4 h-4" />
+      </div>
+      <button className="bg-brand-600 text-white text-sm font-medium py-2 px-5 rounded-full shadow-sm">
+        Start Your Raise
+      </button>
+      <div className="w-8 h-8 rounded-full bg-gray-200 border border-gray-300 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" className="w-full h-full object-cover" crossOrigin="anonymous"/>
+      </div>
+    </div>
+  </nav>
+);
+
 export default function MediaKitPage() {
   const featureRef = useRef<HTMLDivElement>(null);
-  const dashboardRef = useRef<HTMLDivElement>(null); // Active Loan Dashboard
-  const detailsRef = useRef<HTMLDivElement>(null); // Public Loan Details
+  const dashboardRef = useRef<HTMLDivElement>(null); 
+  const detailsRef = useRef<HTMLDivElement>(null); 
   const mobileRef = useRef<HTMLDivElement>(null);
 
   const downloadFeature = useDownload(featureRef, 'lendfriend-feature-media.png', 1600, 900);
@@ -49,7 +79,7 @@ export default function MediaKitPage() {
         <p className="text-gray-400">Generates 4 assets. Click download for each.</p>
       </div>
 
-      {/* 1. FEATURE MEDIA (The Swarm) */}
+      {/* 1. FEATURE MEDIA (Swarm - Unchanged) */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[1200px] items-center text-white">
           <h2 className="text-xl font-bold">1. Feature Media (1600x900)</h2>
@@ -89,7 +119,7 @@ export default function MediaKitPage() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2 text-green-600 bg-green-50 px-5 py-2.5 rounded-2xl">
-                        <CheckCircleIcon className="w-8 h-8" />
+                        <SolidCheckCircle className="w-8 h-8" />
                         <span className="font-bold text-xl">Fully Funded</span>
                       </div>
                     </div>
@@ -124,190 +154,229 @@ export default function MediaKitPage() {
         </div>
       </div>
 
-      {/* 2. DESKTOP DASHBOARD (Active Loan) */}
+      {/* 2. DESKTOP DASHBOARD (RevenueShareDashboard Style) */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[1200px] items-center text-white">
           <h2 className="text-xl font-bold">2. Desktop: Merchant Dashboard</h2>
           <button onClick={downloadDashboard} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-colors">Download PNG</button>
         </div>
         <div className="overflow-hidden shadow-2xl rounded-lg border border-gray-700" style={{ width: '1200px', height: '675px' }}>
-          <div ref={dashboardRef} className="relative bg-gray-50 flex overflow-hidden origin-top-left" style={{ width: '1600px', height: '900px', transform: 'scale(0.75)' }}>
-            {/* Sidebar */}
-            <div className="w-72 bg-white border-r border-gray-200 p-8 flex flex-col justify-between">
-              <div className="space-y-8">
-                <div className="flex items-center gap-3 text-brand-600 mb-10">
-                  <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">L</div>
-                  <span className="text-2xl font-extrabold tracking-tight text-gray-900">LendFriend</span>
-                </div>
-                <nav className="space-y-2">
-                  <div className="flex items-center gap-4 px-4 py-3 bg-brand-50 text-brand-700 rounded-xl font-bold"><HomeIcon className="w-6 h-6"/> Dashboard</div>
-                  <div className="flex items-center gap-4 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-xl font-medium"><CurrencyDollarIcon className="w-6 h-6"/> Capital</div>
-                  <div className="flex items-center gap-4 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-xl font-medium"><ChartBarIcon className="w-6 h-6"/> Insights</div>
-                  <div className="flex items-center gap-4 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-xl font-medium"><UserGroupIcon className="w-6 h-6"/> Community</div>
-                </nav>
-              </div>
-              <div className="flex items-center gap-3 border-t border-gray-100 pt-6">
-                <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" crossOrigin="anonymous" /></div>
-                <div className="text-sm"><p className="font-bold text-gray-900">Jane's Bakery</p><p className="text-gray-500">View Store</p></div>
-              </div>
-            </div>
-            {/* Main */}
-            <div className="flex-1 p-12 overflow-y-auto">
-              <header className="flex justify-between items-center mb-12">
-                <div>
-                  <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">Overview</h2>
-                  <p className="text-gray-500 mt-2 text-lg">Your capital growth engine is active.</p>
-                </div>
-                <button className="px-6 py-3 bg-gray-900 text-white font-bold rounded-xl shadow-lg">New Application</button>
-              </header>
-              <div className="grid grid-cols-3 gap-8 mb-12">
-                <div className="col-span-2 bg-white p-8 rounded-3xl border border-gray-200 shadow-sm relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-8 opacity-10"><CurrencyDollarIcon className="w-40 h-40 text-brand-600" /></div>
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-8">
+          <div ref={dashboardRef} className="relative bg-gray-50 flex flex-col overflow-hidden origin-top-left" style={{ width: '1600px', height: '900px', transform: 'scale(0.75)' }}>
+            
+            <MockNavbar />
+
+            {/* Dashboard Content */}
+            <div className="flex-1 p-12 max-w-7xl mx-auto w-full">
+              <div className="space-y-6">
+                
+                {/* Header */}
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900">Revenue Sharing Dashboard</h2>
+                    <span className="text-sm bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">
+                      Active
+                    </span>
+                  </div>
+
+                  {/* Revenue Metrics */}
+                  <div className="grid md:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100">
+                      <CurrencyDollarIcon className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                      <div className="text-3xl font-bold text-gray-900">5%</div>
+                      <div className="text-sm text-gray-500 font-medium">Revenue Share</div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100">
+                      <CalculatorIcon className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                      <div className="text-3xl font-bold text-gray-900">1.5x</div>
+                      <div className="text-sm text-gray-500 font-medium">Repayment Cap</div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100">
+                      <ArrowTrendingUpIcon className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                      <div className="text-3xl font-bold text-gray-900">$2,450</div>
+                      <div className="text-sm text-gray-500 font-medium">Total Repaid</div>
+                    </div>
+                  </div>
+
+                  {/* Revenue Reporting */}
+                  <div className="border-t border-gray-200 pt-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Revenue Reporting</h3>
+                    
+                    <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+                      <ChartBarIcon className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Active Capital</p>
-                        <h3 className="text-5xl font-extrabold text-gray-900">$10,000</h3>
+                        <p className="text-sm font-medium text-blue-900">Report Your Monthly Revenue</p>
+                        <p className="text-sm text-blue-700 mt-1">
+                          Report your business revenue each month to calculate investor payments. 
+                          Payments are automatically calculated at 5% of reported revenue.
+                        </p>
                       </div>
-                      <span className="px-4 py-1.5 bg-green-100 text-green-700 font-bold rounded-full text-sm">Active &bull; 0% Interest</span>
                     </div>
-                    <div className="space-y-3">
-                      <div className="flex justify-between text-sm font-bold text-gray-500"><span>Repaid: $2,450</span><span>Remaining: $7,550</span></div>
-                      <div className="h-4 bg-gray-100 rounded-full overflow-hidden"><div className="h-full w-[24%] bg-brand-500 rounded-full"></div></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-center">
-                  <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Repayment Rate</p>
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-6xl font-extrabold text-gray-900">10%</span>
-                    <span className="text-xl text-gray-500 font-medium">of sales</span>
-                  </div>
-                  <p className="text-sm text-gray-500">Auto-deducted from daily revenue.</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-8">
-                <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm col-span-1">
-                  <h3 className="font-bold text-gray-900 mb-6 text-lg">Recent Activity</h3>
-                  <div className="space-y-6">
-                    {[1,2,3].map(i => (
-                      <div key={i} className="flex items-center justify-between pb-4 border-b border-gray-50 last:border-0 last:pb-0">
-                        <div className="flex items-center gap-4">
-                          <div className="p-2 bg-blue-50 text-blue-600 rounded-lg"><ArrowPathIcon className="w-5 h-5"/></div>
-                          <div><p className="font-bold text-gray-900">Repayment</p><p className="text-xs text-gray-500">Daily Sales</p></div>
-                        </div>
-                        <span className="font-mono font-bold text-gray-900">-$124.50</span>
+
+                    <div className="flex gap-4 items-end">
+                      <div className="flex-1">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Revenue (USD)</label>
+                        <input type="text" placeholder="Enter this month's revenue" className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900" disabled />
                       </div>
-                    ))}
+                      <button className="px-6 py-3 bg-blue-600 text-white font-medium rounded-xl shadow-sm">Submit Revenue</button>
+                    </div>
                   </div>
                 </div>
-                <div className="bg-brand-900 p-8 rounded-3xl shadow-sm col-span-2 text-white relative overflow-hidden flex items-center justify-between">
-                   <div className="relative z-10">
-                     <h3 className="text-3xl font-bold mb-2">Community Trust Score</h3>
-                     <p className="text-brand-200 mb-6">Your network backing has improved your rate.</p>
-                     <div className="inline-flex items-center gap-3 bg-white/10 px-5 py-2 rounded-xl backdrop-blur-sm border border-white/20">
-                       <UserGroupIcon className="w-6 h-6" />
-                       <span className="font-bold">42 Backers Verified</span>
-                     </div>
-                   </div>
-                   <div className="relative z-10">
-                     <div className="w-32 h-32 rounded-full border-8 border-white/10 flex items-center justify-center text-4xl font-bold bg-white/5">
-                        A+
-                     </div>
-                   </div>
+
+                {/* Recent Activity */}
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Payment History</h3>
+                  <div className="overflow-hidden rounded-xl border border-gray-200">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {[1, 2, 3].map((i) => (
+                          <tr key={i}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dec {10 - i}, 2025</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">Revenue Share</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$124.50</td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 3. DESKTOP DETAILS (Public Page) */}
+      {/* 3. DESKTOP DETAILS (Public Page - Corrected) */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[1200px] items-center text-white">
-          <h2 className="text-xl font-bold">3. Desktop: Public Loan Page (1600x900)</h2>
+          <h2 className="text-xl font-bold">3. Desktop: Public Loan Page</h2>
           <button onClick={downloadDetails} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-colors">Download PNG</button>
         </div>
         <div className="overflow-hidden shadow-2xl rounded-lg border border-gray-700" style={{ width: '1200px', height: '675px' }}>
           <div ref={detailsRef} className="relative bg-white flex flex-col overflow-hidden origin-top-left" style={{ width: '1600px', height: '900px', transform: 'scale(0.75)' }}>
-            {/* Nav */}
-            <div className="border-b border-gray-200 px-12 py-6 flex justify-between items-center bg-white sticky top-0 z-50">
-              <div className="flex items-center gap-2 text-brand-600">
-                <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
-                <span className="text-xl font-bold text-gray-900">LendFriend</span>
-              </div>
-              <div className="flex gap-6 text-sm font-medium text-gray-600">
-                <span>Explore</span>
-                <span>How it Works</span>
-                <span>For Merchants</span>
-              </div>
-              <button className="px-5 py-2 bg-gray-900 text-white font-bold rounded-full text-sm">Connect Wallet</button>
-            </div>
-            {/* Content */}
+            
+            <MockNavbar />
+
             <div className="flex-1 overflow-y-auto">
-              <div className="h-64 w-full relative">
+              <div className="h-72 w-full relative">
                 <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" className="w-full h-full object-cover" crossOrigin="anonymous" />
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-black/30"></div>
               </div>
-              <div className="max-w-6xl mx-auto px-12 -mt-24 relative z-10 grid grid-cols-3 gap-12 pb-20">
-                {/* Left */}
-                <div className="col-span-2">
-                  <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 mb-8">
-                    <div className="flex items-end gap-6 mb-6">
-                      <div className="w-32 h-32 rounded-full border-[6px] border-white shadow-md overflow-hidden -mt-24 bg-white">
+              <div className="max-w-7xl mx-auto px-8 -mt-24 relative z-10 grid grid-cols-3 gap-12 pb-20">
+                
+                {/* Left Col */}
+                <div className="col-span-2 space-y-8">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <div className="flex items-start gap-6 mb-6">
+                      <div className="w-24 h-24 rounded-full border-4 border-white shadow-md overflow-hidden flex-shrink-0">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" className="w-full h-full object-cover" crossOrigin="anonymous" />
                       </div>
-                      <div className="pb-2">
-                        <h1 className="text-4xl font-extrabold text-gray-900 mb-1">Jane's Bakery</h1>
-                        <div className="flex items-center gap-2 text-gray-500 font-medium"><MapPinIcon className="w-5 h-5"/> New York, NY &bull; <GlobeAltIcon className="w-5 h-5"/> janesbakery.com</div>
+                      <div className="pt-2">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-1">Jane's Bakery Expansion</h1>
+                        <div className="flex items-center gap-2 text-gray-500 text-sm">
+                          <span>Organized by Jane Doe</span>
+                          <span className="bg-gray-100 px-2 py-0.5 rounded text-xs font-medium text-gray-600">Borrower</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="prose prose-lg text-gray-600">
-                      <p>We are expanding our wholesale division and need capital to purchase a new industrial oven. Our revenue has grown 40% YoY and we have a strong community of local supporters.</p>
+                    <div className="prose prose-gray max-w-none text-gray-600">
+                      <p>We are a beloved local bakery in downtown looking to expand our wholesale division. To meet growing demand from local cafes, we need to purchase a new industrial oven and hire two additional pastry chefs.</p>
+                      <p>This capital will allow us to increase production by 40% and reach profitability on our wholesale line within 6 months.</p>
                     </div>
                   </div>
-                  {/* Trust */}
-                  <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                    <h3 className="text-xl font-bold text-gray-900 mb-6">Business Health</h3>
-                    <div className="grid grid-cols-2 gap-6">
-                      <div className="bg-gray-50 p-6 rounded-2xl">
-                        <div className="text-sm font-bold text-gray-500 uppercase mb-2">Revenue Stability</div>
-                        <div className="flex gap-1 text-green-500"><CheckCircleIcon className="w-6 h-6"/><span className="text-lg font-bold text-gray-900">Verified Strong</span></div>
+
+                  {/* Business Health */}
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <h3 className="text-lg font-bold text-gray-900 mb-6">Business Health</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Revenue Stability</div>
+                        <div className="flex items-center gap-2 text-green-700 font-bold">
+                          <CheckCircleIcon className="w-5 h-5"/> <span>Excellent</span>
+                        </div>
                       </div>
-                      <div className="bg-gray-50 p-6 rounded-2xl">
-                        <div className="text-sm font-bold text-gray-500 uppercase mb-2">Repayment History</div>
-                        <div className="flex gap-1 text-blue-500"><CheckCircleIcon className="w-6 h-6"/><span className="text-lg font-bold text-gray-900">100% On Time</span></div>
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Business Tenure</div>
+                        <div className="flex items-center gap-2 text-blue-700 font-bold">
+                          <CheckCircleIcon className="w-5 h-5"/> <span>3+ Years</span>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Growth Trend</div>
+                        <div className="flex items-center gap-2 text-green-700 font-bold">
+                          <ArrowTrendingUpIcon className="w-5 h-5"/> <span>+25% YoY</span>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Order Volume</div>
+                        <div className="flex items-center gap-2 text-green-700 font-bold">
+                          <CheckCircleIcon className="w-5 h-5"/> <span>High</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* Right Sidebar */}
+
+                {/* Right Col - Funding Card */}
                 <div className="col-span-1">
-                  <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 sticky top-32">
+                  <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 sticky top-24">
                     <div className="mb-6">
-                      <div className="flex justify-between items-baseline mb-2">
-                        <span className="text-4xl font-extrabold text-gray-900">$10,000</span>
-                        <span className="text-gray-500 font-medium">goal</span>
+                      <div className="flex items-baseline gap-1 mb-2">
+                        <span className="text-3xl font-bold text-gray-900">$10,000</span>
+                        <span className="text-gray-500">raised of $10,000</span>
                       </div>
-                      <div className="h-3 bg-gray-100 rounded-full overflow-hidden mb-2"><div className="h-full w-full bg-green-500"></div></div>
-                      <p className="text-green-600 font-bold text-sm">100% Funded</p>
+                      <div className="w-full bg-gray-100 rounded-full h-2 mb-2">
+                        <div className="bg-brand-600 h-2 rounded-full w-full"></div>
+                      </div>
+                      <p className="text-sm text-gray-500 text-right">100% funded</p>
                     </div>
-                    <div className="space-y-4 mb-8">
-                      <div className="flex justify-between text-gray-700 font-medium border-b border-gray-50 pb-3"><span>Interest Rate</span><span className="font-bold">0%</span></div>
-                      <div className="flex justify-between text-gray-700 font-medium border-b border-gray-50 pb-3"><span>Repayment</span><span className="font-bold">1.0x</span></div>
-                      <div className="flex justify-between text-gray-700 font-medium pb-3"><span>Term</span><span className="font-bold">12 Months</span></div>
+
+                    <div className="space-y-3 mb-6">
+                      <button disabled className="w-full py-3 bg-gray-100 text-gray-400 font-bold rounded-full cursor-not-allowed">
+                        Fully Funded
+                      </button>
+                      <button className="w-full py-3 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50">
+                        Share
+                      </button>
                     </div>
-                    <button disabled className="w-full py-4 bg-gray-100 text-gray-400 font-bold rounded-xl mb-4">Loan Fully Funded</button>
-                    <p className="text-center text-gray-400 text-sm">42 backers supported this loan</p>
+
+                    <div className="border-t border-gray-100 pt-6">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4">Recent Supporters</h4>
+                      <div className="space-y-4">
+                        {[1,2,3].map(i => (
+                          <div key={i} className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs">
+                              {['JD', 'SM', 'MK'][i-1]}
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-gray-900">Anonymous</p>
+                              <p className="text-xs text-gray-500">$500 • {i}h ago</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 4. MOBILE (900x1600) */}
+      {/* 4. MOBILE (Updated) */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[400px] items-center text-white">
           <h2 className="text-xl font-bold">4. Mobile (900x1600)</h2>
@@ -315,57 +384,66 @@ export default function MediaKitPage() {
         </div>
         <div className="overflow-hidden shadow-2xl rounded-3xl border-8 border-gray-800" style={{ width: '400px', height: '711px' }}>
           <div ref={mobileRef} className="relative bg-gray-50 flex flex-col overflow-hidden origin-top-left" style={{ width: '900px', height: '1600px', transform: 'scale(0.444)' }}>
-            <div className="bg-white p-10 pt-16 flex justify-between items-center border-b border-gray-100 shadow-sm z-10">
-              <div className="flex items-center gap-4 text-brand-600">
-                <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl">L</div>
-                <span className="text-4xl font-extrabold tracking-tight text-gray-900">LendFriend</span>
+            
+            {/* Mobile Header */}
+            <div className="bg-white px-6 py-4 flex justify-between items-center border-b border-gray-200 pt-12">
+              <span className="text-2xl font-bold text-gray-900 tracking-tight">LendFriend</span>
+              <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" className="w-full h-full object-cover" crossOrigin="anonymous"/>
               </div>
-              <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"><div className="w-6 h-0.5 bg-gray-900 mb-1.5"></div><div className="w-6 h-0.5 bg-gray-900"></div></div>
             </div>
-            <div className="flex-1 p-10 space-y-10">
-              <div className="bg-white p-10 rounded-[3rem] shadow-sm border border-gray-200">
-                <p className="text-xl font-bold text-gray-400 uppercase tracking-widest mb-4">Active Loan</p>
-                <div className="flex justify-between items-end mb-8">
-                  <h3 className="text-7xl font-extrabold text-gray-900">$10k</h3>
-                  <span className="px-6 py-2 bg-green-100 text-green-700 font-bold rounded-full text-xl">0% Rate</span>
+
+            <div className="flex-1 p-6 space-y-6">
+              
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-sm font-bold text-gray-500 uppercase tracking-wide">Active Loan</span>
+                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-md text-xs font-bold">Active</span>
                 </div>
-                <div className="h-6 bg-gray-100 rounded-full overflow-hidden mb-4"><div className="h-full w-[24%] bg-brand-500 rounded-full"></div></div>
-                <p className="text-2xl text-gray-500 font-medium">Next payment: Tomorrow</p>
+                <div className="mb-4">
+                  <span className="text-4xl font-extrabold text-gray-900">$10,000</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-2 mb-4">
+                  <div className="bg-brand-600 h-2 rounded-full w-[24%]"></div>
+                </div>
+                <div className="flex justify-between text-sm text-gray-500 font-medium">
+                  <span>Paid: $2,450</span>
+                  <span>Left: $7,550</span>
+                </div>
               </div>
-              <div className="grid grid-cols-2 gap-8">
-                <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4">
-                  <div className="p-5 bg-blue-50 text-blue-600 rounded-3xl"><ChartBarIcon className="w-12 h-12"/></div>
-                  <p className="text-2xl font-bold text-gray-900">Insights</p>
-                </div>
-                <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4">
-                  <div className="p-5 bg-brand-50 text-brand-600 rounded-3xl"><UserGroupIcon className="w-12 h-12"/></div>
-                  <p className="text-2xl font-bold text-gray-900">Backers</p>
-                </div>
-              </div>
-              <div className="bg-brand-900 p-10 rounded-[3rem] text-white">
-                <div className="flex items-center gap-6 mb-6">
-                  <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center text-3xl font-bold">A</div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-2">
+                  <div className="p-3 bg-blue-50 text-blue-600 rounded-xl"><CalculatorIcon className="w-8 h-8"/></div>
                   <div>
-                    <h3 className="text-3xl font-bold">Health Score</h3>
-                    <p className="text-brand-200 text-xl">Excellent Standing</p>
+                    <p className="text-2xl font-bold text-gray-900">1.5x</p>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Cap</p>
                   </div>
                 </div>
-                <div className="bg-white/10 h-2 rounded-full w-full"><div className="bg-green-400 h-full w-[85%] rounded-full"></div></div>
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-2">
+                  <div className="p-3 bg-green-50 text-green-600 rounded-xl"><CurrencyDollarIcon className="w-8 h-8"/></div>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900">5%</p>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Share</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-6 px-4">Recent Activity</h3>
-                <div className="bg-white rounded-[3rem] border border-gray-200 overflow-hidden">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="p-8 border-b border-gray-100 flex justify-between items-center last:border-0">
-                      <div className="flex items-center gap-6">
-                        <div className="p-4 bg-gray-100 rounded-2xl text-gray-600"><CreditCardIcon className="w-8 h-8"/></div>
-                        <div><p className="text-2xl font-bold text-gray-900">Repayment</p><p className="text-lg text-gray-500"> Shopify Sales</p></div>
+
+              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-4">Recent Activity</h3>
+                <div className="space-y-4">
+                  {[1,2,3].map(i => (
+                    <div key={i} className="flex items-center justify-between border-b border-gray-50 last:border-0 pb-3 last:pb-0">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-gray-100 rounded-lg text-gray-600"><ArrowTrendingUpIcon className="w-5 h-5"/></div>
+                        <div><p className="font-bold text-sm text-gray-900">Repayment</p><p className="text-xs text-gray-500">Revenue Share</p></div>
                       </div>
-                      <span className="text-2xl font-mono font-bold text-gray-900">-$124</span>
+                      <span className="font-mono font-bold text-sm text-gray-900">-$124.50</span>
                     </div>
                   ))}
                 </div>
               </div>
+
             </div>
           </div>
         </div>
