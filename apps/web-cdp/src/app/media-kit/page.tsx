@@ -11,7 +11,15 @@ import {
   CalculatorIcon,
   CalendarIcon,
   ChevronDownIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
+  ShieldCheckIcon,
+  GlobeAltIcon,
+  HomeIcon,
+  CreditCardIcon,
+  ArrowPathIcon,
+  MapPinIcon,
+  ClockIcon,
+  BuildingStorefrontIcon
 } from '@heroicons/react/24/outline';
 import { CheckCircleIcon as SolidCheckCircle } from '@heroicons/react/24/solid';
 
@@ -79,7 +87,7 @@ export default function MediaKitPage() {
         <p className="text-gray-400">Generates 4 assets. Click download for each.</p>
       </div>
 
-      {/* 1. FEATURE MEDIA (Swarm - Unchanged) */}
+      {/* 1. FEATURE MEDIA */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[1200px] items-center text-white">
           <h2 className="text-xl font-bold">1. Feature Media (1600x900)</h2>
@@ -154,7 +162,7 @@ export default function MediaKitPage() {
         </div>
       </div>
 
-      {/* 2. DESKTOP DASHBOARD (RevenueShareDashboard Style) */}
+      {/* 2. DESKTOP DASHBOARD */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[1200px] items-center text-white">
           <h2 className="text-xl font-bold">2. Desktop: Merchant Dashboard</h2>
@@ -257,7 +265,7 @@ export default function MediaKitPage() {
         </div>
       </div>
 
-      {/* 3. DESKTOP DETAILS (Public Page - Corrected) */}
+      {/* 3. DESKTOP DETAILS (Public Page) */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[1200px] items-center text-white">
           <h2 className="text-xl font-bold">3. Desktop: Public Loan Page</h2>
@@ -287,12 +295,45 @@ export default function MediaKitPage() {
                         <div className="flex items-center gap-2 text-gray-500 text-sm">
                           <span>Organized by Jane Doe</span>
                           <span className="bg-gray-100 px-2 py-0.5 rounded text-xs font-medium text-gray-600">Borrower</span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-50 text-gray-600 rounded-md text-xs">
+                            <ShieldCheckIcon className="w-3 h-3 text-green-500" />
+                            Verified identity
+                          </span>
                         </div>
                       </div>
                     </div>
                     <div className="prose prose-gray max-w-none text-gray-600">
                       <p>We are a beloved local bakery in downtown looking to expand our wholesale division. To meet growing demand from local cafes, we need to purchase a new industrial oven and hire two additional pastry chefs.</p>
                       <p>This capital will allow us to increase production by 40% and reach profitability on our wholesale line within 6 months.</p>
+                    </div>
+                  </div>
+
+                  {/* Trust Signals */}
+                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider">Verification & Trust</h3>
+                    </div>
+                    <div className="p-6 space-y-6">
+                      <div className="flex items-start gap-4 p-4 bg-brand-50/50 border border-brand-100 rounded-xl">
+                        <div className="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center flex-shrink-0 text-brand-600">
+                          <GlobeAltIcon className="w-5 h-5"/>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm font-bold text-gray-900">Verified Business</span>
+                          </div>
+                          <div className="text-sm text-brand-600 font-medium">janesbakery.com</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-5 h-5 mt-0.5 flex items-center justify-center text-gray-400">
+                          <UserGroupIcon className="w-4 h-4"/>
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-gray-700">Community Support</div>
+                          <div className="text-sm text-gray-600">Strong (42 backers)</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -328,7 +369,7 @@ export default function MediaKitPage() {
                   </div>
                 </div>
 
-                {/* Right Col - Funding Card */}
+                {/* Right Col */}
                 <div className="col-span-1">
                   <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 sticky top-24">
                     <div className="mb-6">
@@ -339,7 +380,7 @@ export default function MediaKitPage() {
                       <div className="w-full bg-gray-100 rounded-full h-2 mb-2">
                         <div className="bg-brand-600 h-2 rounded-full w-full"></div>
                       </div>
-                      <p className="text-sm text-gray-500 text-right">100% funded</p>
+                      <p className="text-sm text-green-600 font-bold text-right">100% funded</p>
                     </div>
 
                     <div className="space-y-3 mb-6">
@@ -349,6 +390,21 @@ export default function MediaKitPage() {
                       <button className="w-full py-3 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50">
                         Share
                       </button>
+                    </div>
+
+                    <div className="space-y-4 mb-4 pt-4 border-t border-gray-100">
+                      <div className="flex items-start gap-3">
+                        <div className="w-5 h-5 flex-shrink-0 mt-0.5 text-gray-600"><CurrencyDollarIcon className="w-5 h-5"/></div>
+                        <div><div className="text-sm font-medium text-gray-900">0% interest rate</div><div className="text-xs text-gray-500">Pay back exactly what you borrow</div></div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-5 h-5 flex-shrink-0 mt-0.5 text-gray-600"><ArrowPathIcon className="w-5 h-5"/></div>
+                        <div><div className="text-sm font-medium text-gray-900">1.0x repayment</div><div className="text-xs text-gray-500">Full principal returned</div></div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-5 h-5 flex-shrink-0 mt-0.5 text-gray-600"><CalendarIcon className="w-5 h-5"/></div>
+                        <div><div className="text-sm font-medium text-gray-900">Due Dec 2026</div><div className="text-xs text-gray-500">12 month term</div></div>
+                      </div>
                     </div>
 
                     <div className="border-t border-gray-100 pt-6">
@@ -376,7 +432,7 @@ export default function MediaKitPage() {
         </div>
       </div>
 
-      {/* 4. MOBILE (Updated) */}
+      {/* 4. MOBILE */}
       <div className="flex flex-col items-center gap-4">
         <div className="flex justify-between w-[400px] items-center text-white">
           <h2 className="text-xl font-bold">4. Mobile (900x1600)</h2>
