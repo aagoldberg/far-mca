@@ -1,20 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { parseUnits } from 'viem';
-import { USDC_DECIMALS } from '@/types/loan';
-import { useWalletType } from '@/hooks/useWalletType';
-import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
-import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
-import ImageCropModal from './ImageCropModal';
-import { LoanCard } from './LoanCard';
 import {
   CheckCircleIcon,
   ArrowPathIcon,
   ShoppingBagIcon,
   CreditCardIcon,
   BuildingStorefrontIcon,
+  ChartBarIcon, // Added for Revenue Stability
+  ClipboardDocumentCheckIcon, // Added for Order Consistency
+  ClockIcon, // Added for Business Tenure
+  ArrowUpIcon, // Added for Growth Trend
 } from '@heroicons/react/24/outline';
 
 // Income range enum (same as CreateLoanForm)
@@ -1194,266 +1189,257 @@ export default function LoanCreationWizard() {
 
         {/* STEP 3: ELIGIBILITY */}
         {currentStep === 3 && (
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-300 rounded-xl p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-gray-900 mb-2">Your Business Assessment</h2>
-              <p className="text-sm text-gray-600 mb-6">Based on your connected revenue sources</p>
+          <div className="space-y-8">
+            <div className="text-center max-w-lg mx-auto">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Assessment Results</h2>
+              <p className="text-gray-600">
+                We've analyzed your connected data to generate your Trust Score and affordability rating.
+              </p>
+            </div>
 
-              {creditScore && creditScore.score > 0 ? (
-                <div className="space-y-6">
-                  {/* Business Health Score */}
-                  <div className="bg-gradient-to-r from-brand-50 to-green-50 border border-brand-200 rounded-xl p-5">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <div className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1">Part 1</div>
-                        <h3 className="text-lg font-bold text-gray-900">Business Health</h3>
-                        <p className="text-sm text-gray-500">Quality and stability of your business</p>
-                      </div>
-                      <div className="text-right">
-                        <div className={`text-2xl font-bold ${
-                          creditScore.score >= 75 ? 'text-green-600' :
-                          creditScore.score >= 55 ? 'text-blue-600' :
-                          creditScore.score >= 40 ? 'text-amber-600' : 'text-gray-600'
-                        }`}>
-                          {creditScore.score >= 75 ? 'Established' :
-                           creditScore.score >= 55 ? 'Growing' :
-                           creditScore.score >= 40 ? 'Building' : 'Emerging'}
+            {creditScore && creditScore.score > 0 ? (
+              <div className="space-y-6">
+                {/* 1. Trust Score Card */}
+                <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-blue-50 rounded-lg">
+                          <CheckCircleIcon className="w-5 h-5 text-blue-600" />
                         </div>
-                        <div className="text-sm text-gray-500">{creditScore.score}/100</div>
+                        <h3 className="text-lg font-bold text-gray-900">Trust Score</h3>
                       </div>
-                    </div>
-
-                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                      <div
-                        className={`h-2.5 rounded-full ${
-                          creditScore.score >= 75 ? 'bg-green-500' :
-                          creditScore.score >= 55 ? 'bg-blue-500' :
-                          creditScore.score >= 40 ? 'bg-amber-500' : 'bg-gray-400'
-                        }`}
-                        style={{ width: `${creditScore.score}%` }}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Revenue Stability</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.revenueStability)}/100</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Order Consistency</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.orderConsistency)}/100</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Business Tenure</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.businessTenure)}/100</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Growth Trend</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.growthTrend)}/100</span>
-                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        creditScore.score >= 75 ? 'bg-green-100 text-green-700' :
+                        creditScore.score >= 55 ? 'bg-blue-100 text-blue-700' :
+                        creditScore.score >= 40 ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-700'
+                      }`}>
+                        {creditScore.score >= 75 ? 'Excellent' :
+                         creditScore.score >= 55 ? 'Good' :
+                         creditScore.score >= 40 ? 'Fair' : 'Needs Work'}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Loan Affordability */}
-                  {(() => {
-                    // Calculate monthly revenue from connected platforms
-                    const totalRevenue = creditScore.connections.reduce((sum, conn) => {
-                      return sum + (conn.revenue_data?.totalRevenue || 0);
-                    }, 0);
-                    const totalDays = creditScore.connections.reduce((sum, conn) => {
-                      return Math.max(sum, conn.revenue_data?.periodDays || 90);
-                    }, 90);
+                  <div className="p-6 grid md:grid-cols-2 gap-8 items-center">
+                    {/* Score Visual */}
+                    <div className="text-center">
+                      <div className="relative inline-flex items-center justify-center">
+                        <svg className="w-32 h-32 transform -rotate-90">
+                          <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-gray-100" />
+                          <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="transparent"
+                            strokeDasharray={2 * Math.PI * 56}
+                            strokeDashoffset={2 * Math.PI * 56 * (1 - creditScore.score / 100)}
+                            className={`${
+                              creditScore.score >= 75 ? 'text-green-500' :
+                              creditScore.score >= 55 ? 'text-blue-500' :
+                              creditScore.score >= 40 ? 'text-amber-500' : 'text-gray-400'
+                            } transition-all duration-1000 ease-out`}
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                          <span className="text-3xl font-bold text-gray-900">{creditScore.score}</span>
+                          <span className="block text-xs text-gray-500 font-medium">/100</span>
+                        </div>
+                      </div>
+                      <p className="mt-2 text-sm text-gray-500">Based on {creditScore.connections.length} connected sources</p>
+                    </div>
+
+                    {/* Breakdown */}
+                    <div className="space-y-4">
+                      {[
+                        { label: 'Revenue Stability', value: creditScore.breakdown.revenueStability, Icon: ChartBarIcon },
+                        { label: 'Order Consistency', value: creditScore.breakdown.orderConsistency, Icon: ClipboardDocumentCheckIcon },
+                        { label: 'Business Tenure', value: creditScore.breakdown.businessTenure, Icon: ClockIcon },
+                        { label: 'Growth Trend', value: creditScore.breakdown.growthTrend, Icon: ArrowUpIcon },
+                      ].map((item) => (
+                        <div key={item.label}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-600 flex items-center gap-2"><item.Icon className="w-4 h-4" /> {item.label}</span>
+                            <span className="font-semibold text-gray-900">{Math.round(item.value)}/100</span>
+                          </div>
+                          <div className="w-full bg-gray-100 rounded-full h-1.5">
+                            <div className="bg-brand-500 h-1.5 rounded-full" style={{ width: `${item.value}%` }}></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Loan Affordability Card */}
+                {(() => {
+                    const totalRevenue = creditScore.connections.reduce((sum, conn) => sum + (conn.revenue_data?.totalRevenue || 0), 0);
+                    const totalDays = creditScore.connections.reduce((sum, conn) => Math.max(sum, conn.revenue_data?.periodDays || 90), 90);
                     const monthlyRevenue = (totalRevenue / totalDays) * 30;
                     const loanAmount = parseFloat(formData.amount) || 0;
                     const ratio = monthlyRevenue > 0 ? loanAmount / monthlyRevenue : Infinity;
 
-                    let tier: 'Comfortable' | 'Manageable' | 'Stretched' | 'High Burden';
-                    let tierColor: string;
-                    let tierBg: string;
+                    let tier = 'Comfortable';
+                    let tierColor = 'text-green-700 bg-green-50 border-green-200';
+                    let progressColor = 'bg-green-500';
 
-                    if (ratio < 0.5) {
-                      tier = 'Comfortable';
-                      tierColor = 'text-green-600';
-                      tierBg = 'bg-green-500';
-                    } else if (ratio < 1.0) {
-                      tier = 'Manageable';
-                      tierColor = 'text-blue-600';
-                      tierBg = 'bg-blue-500';
-                    } else if (ratio < 2.0) {
-                      tier = 'Stretched';
-                      tierColor = 'text-amber-600';
-                      tierBg = 'bg-amber-500';
-                    } else {
+                    if (ratio >= 2.0) {
                       tier = 'High Burden';
-                      tierColor = 'text-red-600';
-                      tierBg = 'bg-red-500';
+                      tierColor = 'text-red-700 bg-red-50 border-red-200';
+                      progressColor = 'bg-red-500';
+                    } else if (ratio >= 1.0) {
+                      tier = 'Stretched';
+                      tierColor = 'text-amber-700 bg-amber-50 border-amber-200';
+                      progressColor = 'bg-amber-500';
+                    } else if (ratio >= 0.5) {
+                      tier = 'Manageable';
+                      tierColor = 'text-blue-700 bg-blue-50 border-blue-200';
+                      progressColor = 'bg-blue-500';
                     }
 
-                    const showWarning = ratio >= 1.0;
-
                     return (
-                      <div className={`border rounded-xl p-5 ${showWarning ? 'bg-amber-50 border-amber-200' : 'bg-blue-50 border-blue-200'}`}>
-                        <div className="flex items-center justify-between mb-4">
-                          <div>
-                            <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Part 2</div>
-                            <h3 className="text-lg font-bold text-gray-900">Loan Affordability</h3>
-                            <p className="text-sm text-gray-500">Can your business handle this loan?</p>
-                          </div>
-                          <div className="text-right">
-                            <div className={`text-2xl font-bold ${tierColor}`}>{tier}</div>
-                            <div className="text-sm text-gray-500">{ratio.toFixed(1)}x monthly revenue</div>
-                          </div>
-                        </div>
-
-                        {/* Visual ratio bar */}
-                        <div className="mb-4">
-                          <div className="flex justify-between text-xs text-gray-500 mb-1">
-                            <span>0x</span>
-                            <span>2x+</span>
-                          </div>
-                          <div className="h-3 bg-gray-200 rounded-full overflow-hidden relative">
-                            <div className="absolute top-0 left-0 h-full w-[25%] bg-green-100"></div>
-                            <div className="absolute top-0 left-[25%] h-full w-[25%] bg-blue-100"></div>
-                            <div className="absolute top-0 left-[50%] h-full w-[25%] bg-amber-100"></div>
-                            <div className="absolute top-0 left-[75%] h-full w-[25%] bg-red-100"></div>
-                            <div
-                              className={`absolute top-0 h-full w-1 ${tierBg} z-10`}
-                              style={{ left: `${Math.min(ratio / 2 * 100, 100)}%` }}
-                            ></div>
-                          </div>
-                          <div className="flex text-[10px] text-gray-400 mt-1">
-                            <span className="w-[25%] text-center">Comfortable</span>
-                            <span className="w-[25%] text-center">Manageable</span>
-                            <span className="w-[25%] text-center">Stretched</span>
-                            <span className="w-[25%] text-center">High Burden</span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between text-sm mb-4">
-                          <div>
-                            <span className="text-gray-500">Loan Request:</span>
-                            <span className="ml-2 font-semibold">${loanAmount.toLocaleString()}</span>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">~Monthly Revenue:</span>
-                            <span className="ml-2 font-semibold">${Math.round(monthlyRevenue).toLocaleString()}</span>
-                          </div>
-                        </div>
-
-                        {/* Adjust loan amount - always visible */}
-                        {monthlyRevenue > 0 && (
-                          <div className={`border rounded-lg p-4 mt-4 ${showWarning ? 'bg-amber-50 border-amber-200' : 'bg-white border-gray-200'}`}>
-                            {showWarning && (
-                              <p className="text-sm text-amber-800 font-medium mb-3">
-                                Consider reducing your loan amount for better terms.
-                              </p>
-                            )}
-
-                            {/* Recommended amounts */}
-                            <div className="mb-4">
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Recommended amounts based on your revenue:</p>
-                              {(() => {
-                                // Round to nearest $100 for cleaner amounts
-                                const roundTo100 = (n: number) => Math.round(n / 100) * 100;
-                                const comfortableAmt = roundTo100(monthlyRevenue * 0.4);
-                                const manageableAmt = roundTo100(monthlyRevenue * 0.75);
-                                const stretchedAmt = roundTo100(monthlyRevenue * 1.5);
-
-                                return (
-                                  <div className="flex flex-wrap gap-2">
-                                    <button
-                                      type="button"
-                                      onClick={() => handleChange('amount', comfortableAmt.toString())}
-                                      className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
-                                        ratio < 0.5 && ratio >= 0.3
-                                          ? 'bg-green-100 border-green-300 text-green-700'
-                                          : 'bg-white border-gray-200 text-gray-600 hover:border-green-300 hover:bg-green-50'
-                                      }`}
-                                    >
-                                      ${comfortableAmt.toLocaleString()}
-                                      <span className="ml-1 text-xs opacity-75">Comfortable</span>
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleChange('amount', manageableAmt.toString())}
-                                      className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
-                                        ratio >= 0.5 && ratio < 1.0
-                                          ? 'bg-blue-100 border-blue-300 text-blue-700'
-                                          : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300 hover:bg-blue-50'
-                                      }`}
-                                    >
-                                      ${manageableAmt.toLocaleString()}
-                                      <span className="ml-1 text-xs opacity-75">Manageable</span>
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleChange('amount', stretchedAmt.toString())}
-                                      className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
-                                        ratio >= 1.0 && ratio < 2.0
-                                          ? 'bg-amber-100 border-amber-300 text-amber-700'
-                                          : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:bg-amber-50'
-                                      }`}
-                                    >
-                                      ${stretchedAmt.toLocaleString()}
-                                      <span className="ml-1 text-xs opacity-75">Stretched</span>
-                                    </button>
-                                  </div>
-                                );
-                              })()}
+                      <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <div className="p-6 border-b border-gray-100">
+                           <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="p-2 bg-purple-50 rounded-lg">
+                                <CreditCardIcon className="w-5 h-5 text-purple-600" />
+                              </div>
+                              <h3 className="text-lg font-bold text-gray-900">Loan Affordability</h3>
                             </div>
+                            <div className="text-right">
+                               <p className="text-sm text-gray-500">Monthly Revenue</p>
+                               <p className="font-bold text-gray-900">${Math.round(monthlyRevenue).toLocaleString()}</p>
+                            </div>
+                           </div>
+                        </div>
 
-                            {/* Custom amount input */}
-                            <div className="flex items-center gap-3">
-                              <label className="text-sm text-gray-600 whitespace-nowrap">Or enter custom:</label>
-                              <div className="relative flex-1">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                        <div className="p-6">
+                           {/* Status Banner */}
+                           <div className={`flex items-start gap-4 p-4 rounded-lg border mb-6 ${tierColor}`}>
+                              <div className="flex-1">
+                                <h4 className="font-bold text-sm uppercase tracking-wide mb-1">{tier}</h4>
+                                <p className="text-sm opacity-90">
+                                  {ratio < 0.5 ? 'This loan amount is well within your monthly revenue.' :
+                                   ratio < 1.0 ? 'This amount is reasonable for your business size.' :
+                                   ratio < 2.0 ? 'This amount is high relative to your revenue. Repayment may be tight.' :
+                                   'This amount exceeds 2x your monthly revenue. High risk of default.'}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <span className="text-2xl font-bold">{ratio.toFixed(1)}x</span>
+                                <span className="block text-xs opacity-75">Revenue Ratio</span>
+                              </div>
+                           </div>
+
+                           {/* Meter */}
+                           <div className="mb-8">
+                              <div className="flex justify-between text-xs text-gray-400 mb-2 uppercase tracking-wider font-medium">
+                                <span>Comfortable</span>
+                                <span>Manageable</span>
+                                <span>Stretched</span>
+                                <span>Burden</span>
+                              </div>
+                              <div className="h-4 bg-gray-100 rounded-full w-full relative overflow-hidden">
+                                 {/* Background Zones */}
+                                 <div className="absolute inset-0 flex opacity-20">
+                                    <div className="w-[25%] bg-green-500"></div>
+                                    <div className="w-[25%] bg-blue-500"></div>
+                                    <div className="w-[25%] bg-amber-500"></div>
+                                    <div className="w-[25%] bg-red-500"></div>
+                                 </div>
+                                 {/* Marker */}
+                                 <div
+                                    className="absolute top-0 bottom-0 w-1 bg-gray-900 shadow-[0_0_10px_rgba(0,0,0,0.3)] z-10 transition-all duration-500"
+                                    style={{ left: `${Math.min(ratio / 2 * 100, 100)}%` }}
+                                 ></div>
+                              </div>
+                           </div>
+
+                           {/* Recommendations */}
+                           <div>
+                              <label className="block text-sm font-medium text-gray-900 mb-3">Adjust Loan Amount</label>
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                                {(() => {
+                                  const roundTo100 = (n: number) => Math.round(n / 100) * 100;
+                                  const options = [
+                                    { label: 'Comfortable', value: roundTo100(monthlyRevenue * 0.4), color: 'green' },
+                                    { label: 'Manageable', value: roundTo100(monthlyRevenue * 0.75), color: 'blue' },
+                                    { label: 'Max Recommended', value: roundTo100(monthlyRevenue * 1.5), color: 'amber' },
+                                  ];
+
+                                  return options.map((opt) => (
+                                    <button
+                                      key={opt.label}
+                                      type="button"
+                                      onClick={() => handleChange('amount', opt.value.toString())}
+                                      className={`p-3 rounded-lg border text-left transition-all ${
+                                        parseInt(formData.amount) === opt.value
+                                          ? `border-${opt.color}-500 bg-${opt.color}-50 ring-1 ring-${opt.color}-500`
+                                          : `border-gray-200 hover:border-${opt.color}-300 hover:bg-${opt.color}-50`
+                                      }`}
+                                    >
+                                      <div className={`text-xs font-semibold uppercase tracking-wide text-${opt.color}-600 mb-1`}>
+                                        {opt.label}
+                                      </div>
+                                      <div className="font-bold text-gray-900">${opt.value.toLocaleString()}</div>
+                                    </button>
+                                  ));
+                                })()}
+                              </div>
+
+                              <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                  <span className="text-gray-500 sm:text-sm">$</span>
+                                </div>
                                 <input
                                   type="number"
                                   value={formData.amount}
                                   onChange={(e) => handleChange('amount', e.target.value)}
-                                  min="100"
-                                  max="50000"
-                                  step="50"
-                                  className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm"
+                                  className="block w-full pl-7 pr-12 py-3 border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
+                                  placeholder="Custom Amount"
                                 />
+                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                  <span className="text-gray-500 sm:text-sm">USDC</span>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        )}
+                           </div>
+                        </div>
                       </div>
                     );
-                  })()}
-                </div>
-              ) : (
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
-                  <p className="text-gray-600 mb-4">
-                    You haven't connected any revenue sources yet. You can still create a request, but connecting platforms helps you get funded faster.
+                })()}
+
+              </div>
+            ) : (
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center max-w-lg mx-auto">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <ShoppingBagIcon className="h-8 w-8 text-gray-400" />
+                    </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Data Available</h3>
+                  <p className="text-gray-600 mb-6">
+                    Connect your business accounts to see your Trust Score and affordability analysis.
                   </p>
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}
-                    className="text-brand-600 hover:text-brand-700 font-semibold"
+                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-brand-700 bg-brand-100 hover:bg-brand-200 transition-colors"
                   >
-                    ← Go Back to Connect Platforms
+                    ← Connect Platforms
                   </button>
                 </div>
-              )}
-            </div>
+            )}
 
-            <div className="flex gap-3">
+            <div className="flex gap-4 pt-4">
               <button
                 type="button"
                 onClick={goToPreviousStep}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-xl"
+                className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
               >
                 Back
               </button>
               <button
                 type="button"
                 onClick={goToNextStep}
-                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-transform active:scale-[0.98]"
               >
-                Continue to Complete Application
+                Continue to Application
               </button>
             </div>
           </div>
