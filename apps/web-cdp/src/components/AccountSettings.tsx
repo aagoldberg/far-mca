@@ -9,11 +9,13 @@ import { FarcasterProfileEdit } from './FarcasterProfileEdit';
 
 interface TrustScoreData {
   score: number;
+  grade: 'A' | 'B' | 'C' | 'D';
+  gradeLabel: string;
   breakdown: {
-    revenueScore: number;
-    consistencyScore: number;
-    reliabilityScore: number;
-    growthScore: number;
+    revenueStability: number;
+    orderConsistency: number;
+    businessTenure: number;
+    growthTrend: number;
   };
   connections: Array<{
     platform: string;
@@ -241,10 +243,10 @@ export default function AccountSettings() {
 
               {/* Score Breakdown */}
               <div className="space-y-4 pt-4 border-t border-gray-100">
-                <ScoreRow label="Revenue" value={trustData.breakdown.revenueScore} max={40} />
-                <ScoreRow label="Consistency" value={trustData.breakdown.consistencyScore} max={20} />
-                <ScoreRow label="Reliability" value={trustData.breakdown.reliabilityScore} max={20} />
-                <ScoreRow label="Growth" value={trustData.breakdown.growthScore} max={20} />
+                <ScoreRow label="Revenue Stability" value={trustData.breakdown.revenueStability} max={100} />
+                <ScoreRow label="Order Consistency" value={trustData.breakdown.orderConsistency} max={100} />
+                <ScoreRow label="Business Tenure" value={trustData.breakdown.businessTenure} max={100} />
+                <ScoreRow label="Growth Trend" value={trustData.breakdown.growthTrend} max={100} />
               </div>
             </div>
           ) : (

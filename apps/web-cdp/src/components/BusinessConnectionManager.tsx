@@ -36,11 +36,13 @@ interface BusinessConnection {
 
 interface CreditScoreData {
   score: number;
+  grade: 'A' | 'B' | 'C' | 'D';
+  gradeLabel: string;
   breakdown: {
-    revenueScore: number;
-    consistencyScore: number;
-    reliabilityScore: number;
-    growthScore: number;
+    revenueStability: number;
+    orderConsistency: number;
+    businessTenure: number;
+    growthTrend: number;
   };
   factors: string[];
   recommendations: string[];
@@ -176,20 +178,20 @@ export default function BusinessConnectionManager() {
         {creditScore && (
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
-              <span className="text-gray-600">Revenue:</span>
-              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.revenueScore)}/40</span>
+              <span className="text-gray-600">Revenue Stability:</span>
+              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.revenueStability)}/100</span>
             </div>
             <div>
-              <span className="text-gray-600">Consistency:</span>
-              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.consistencyScore)}/20</span>
+              <span className="text-gray-600">Order Consistency:</span>
+              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.orderConsistency)}/100</span>
             </div>
             <div>
-              <span className="text-gray-600">Reliability:</span>
-              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.reliabilityScore)}/20</span>
+              <span className="text-gray-600">Business Tenure:</span>
+              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.businessTenure)}/100</span>
             </div>
             <div>
-              <span className="text-gray-600">Growth:</span>
-              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.growthScore)}/20</span>
+              <span className="text-gray-600">Growth Trend:</span>
+              <span className="ml-2 font-semibold">{Math.round(creditScore.breakdown.growthTrend)}/100</span>
             </div>
           </div>
         )}

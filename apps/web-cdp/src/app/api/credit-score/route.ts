@@ -45,7 +45,9 @@ export async function POST(request: NextRequest) {
     if (!connections || connections.length === 0) {
       return NextResponse.json({
         score: 0,
-        breakdown: { revenueScore: 0, consistencyScore: 0, reliabilityScore: 0, growthScore: 0 },
+        grade: 'D',
+        gradeLabel: 'Emerging',
+        breakdown: { revenueStability: 0, orderConsistency: 0, businessTenure: 0, growthTrend: 0 },
         factors: ['No business connections'],
         recommendations: ['Connect your Shopify, Stripe, Square, or bank account'],
       });
@@ -107,7 +109,9 @@ export async function GET(request: NextRequest) {
     if (!connections || connections.length === 0) {
       return NextResponse.json({
         score: 0,
-        breakdown: { revenueScore: 0, consistencyScore: 0, reliabilityScore: 0, growthScore: 0 },
+        grade: 'D',
+        gradeLabel: 'Emerging',
+        breakdown: { revenueStability: 0, orderConsistency: 0, businessTenure: 0, growthTrend: 0 },
         factors: ['No business connections'],
         recommendations: ['Connect your Shopify, Stripe, Square, or bank account'],
         connections: [],

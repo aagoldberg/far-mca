@@ -55,11 +55,13 @@ interface FormData {
 
 interface CreditScoreData {
   score: number;
+  grade: 'A' | 'B' | 'C' | 'D';
+  gradeLabel: string;
   breakdown: {
-    revenueScore: number;
-    consistencyScore: number;
-    reliabilityScore: number;
-    growthScore: number;
+    revenueStability: number;
+    orderConsistency: number;
+    businessTenure: number;
+    growthTrend: number;
   };
   factors: string[];
   recommendations: string[];
@@ -1235,19 +1237,19 @@ export default function LoanCreationWizard() {
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-500">Revenue Stability</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.revenueScore)}/40</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.revenueStability)}/100</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">Order Consistency</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.consistencyScore)}/20</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.orderConsistency)}/100</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">Business Tenure</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.reliabilityScore)}/20</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.businessTenure)}/100</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">Growth Trend</span>
-                        <span className="font-medium">{Math.round(creditScore.breakdown.growthScore)}/20</span>
+                        <span className="font-medium">{Math.round(creditScore.breakdown.growthTrend)}/100</span>
                       </div>
                     </div>
                   </div>

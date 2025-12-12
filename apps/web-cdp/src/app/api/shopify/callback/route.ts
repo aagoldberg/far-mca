@@ -71,8 +71,16 @@ export async function GET(request: NextRequest) {
     // Exchange code for access token
     const session = await shopifyClient.exchangeCodeForToken(shop, code);
 
-    // Try to fetch revenue data (may fail if protected customer data access not approved)
-    let revenueData = {
+    // Try to fetch detailed revenue data for Business Health Score
+    let revenueData: {
+      totalRevenue: number;
+      orderCount: number;
+      periodDays: number;
+      currency: string;
+      orders?: Array<{ id: string; createdAt: string; totalPrice: number; currency: string }>;
+      firstOrderDate?: string;
+      lastOrderDate?: string;
+    } = {
       totalRevenue: 0,
       orderCount: 0,
       periodDays: 90,
@@ -81,11 +89,41 @@ export async function GET(request: NextRequest) {
     let dataAccessError = false;
 
     try {
-      revenueData = await shopifyClient.getRevenueData(session, 90); // 90 days
+      // Fetch detailed order data for the new Business Health Score algorithm
+      const detailedData = await shopifyClient.getDetailedRevenueData(session, 90); // 90 days
+      revenueData = {
+        totalRevenue: detailedData.totalRevenue,
+        orderCount: detailedData.orderCount,
+        periodDays: detailedData.periodDays,
+        currency: detailedData.currency,
+        // Store individual orders for CV calculations
+        orders: detailedData.orders.map(o => ({
+          id: o.id,
+          createdAt: o.createdAt.toISOString(),
+          totalPrice: o.totalPrice,
+          currency: o.currency,
+        })),
+        firstOrderDate: detailedData.firstOrderDate?.toISOString(),
+        lastOrderDate: detailedData.lastOrderDate?.toISOString(),
+      };
+      console.log(`[Shopify] Fetched ${detailedData.orders.length} orders for Business Health Score`);
     } catch (apiError: any) {
       // Log but don't fail - protected customer data may not be approved yet
-      console.warn('[Shopify] Could not fetch revenue data (protected customer data access may be required):', apiError.message);
+      console.warn('[Shopify] Could not fetch detailed revenue data (protected customer data access may be required):', apiError.message);
       dataAccessError = true;
+
+      // Try basic revenue data as fallback
+      try {
+        const basicData = await shopifyClient.getRevenueData(session, 90);
+        revenueData = {
+          totalRevenue: basicData.totalRevenue,
+          orderCount: basicData.orderCount,
+          periodDays: basicData.periodDays,
+          currency: basicData.currency,
+        };
+      } catch {
+        // Keep default empty data
+      }
     }
 
     // Calculate average order value
@@ -109,6 +147,10 @@ export async function GET(request: NextRequest) {
             periodDays: revenueData.periodDays,
             currency: revenueData.currency,
             averageOrderValue,
+            // Include detailed order data for Business Health Score
+            orders: revenueData.orders,
+            firstOrderDate: revenueData.firstOrderDate,
+            lastOrderDate: revenueData.lastOrderDate,
           },
           metadata: {
             shop_domain: shop,
