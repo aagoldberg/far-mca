@@ -5,7 +5,10 @@ import Image from 'next/image';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import { useLoanSocialSupport } from '@/hooks/useLoanSocialSupport';
 import { useBlueskyProfile } from '@/hooks/useBlueskyProfile';
+import { usePublicBorrowerProfile } from '@/hooks/useBorrowerProfile';
 import { getSocialSupportDescription } from '@/lib/socialProximity';
+import { getLoanStatusDisplay, getRepaymentDisplay } from '@/types/borrowerProfile';
+import { ipfsToHttp } from '@/lib/ipfs';
 
 interface TrustSignalsProps {
   borrowerAddress: `0x${string}`;
@@ -53,6 +56,7 @@ export function TrustSignals({
   const [showBlueskyInfo, setShowBlueskyInfo] = useState(false);
   const { profile, reputation } = useFarcasterProfile(borrowerAddress);
   const { profile: blueskyProfile, quality: blueskyQuality } = useBlueskyProfile(blueskyHandle);
+  const { profile: borrowerProfile, isLoading: isLoadingBorrowerProfile } = usePublicBorrowerProfile(borrowerAddress);
   const { support, hasContributors } = useLoanSocialSupport(
     loanAddress,
     borrowerAddress
@@ -79,7 +83,7 @@ export function TrustSignals({
   const blueskyQualityStatus = getBlueskyQualityStatus(blueskyQuality?.overall);
 
   // Check if we have any data to display
-  const hasAnyData = businessWebsite || twitterHandle || (hasContributors && support) || profile || profile?.score || blueskyProfile;
+  const hasAnyData = businessWebsite || twitterHandle || (hasContributors && support) || profile || profile?.score || blueskyProfile || borrowerProfile;
 
   if (!hasAnyData) {
     return null; // Don't show the section at all if there's no data
@@ -106,6 +110,187 @@ export function TrustSignals({
       </div>
 
       <div className="p-6 space-y-6">
+        {/* Owner Identity (Reputational Collateral) */}
+        {borrowerProfile && (
+          <div className="border border-brand-200 rounded-xl bg-gradient-to-br from-brand-50/50 to-white overflow-hidden">
+            {/* Owner Identity Header */}
+            <div className="p-4 flex items-center gap-4">
+              <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-2 border-brand-200 shadow-sm">
+                <Image
+                  src={ipfsToHttp(borrowerProfile.ownerPhotoUrl)}
+                  alt={borrowerProfile.ownerFullName}
+                  width={64}
+                  height={64}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-base font-bold text-gray-900">{borrowerProfile.ownerFullName}</span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-brand-100 text-brand-700">
+                    VERIFIED IDENTITY
+                  </span>
+                </div>
+                <div className="text-xs text-gray-500">
+                  Business owner has staked their public reputation
+                </div>
+              </div>
+            </div>
+
+            {/* Loan Status & Repayment History */}
+            {borrowerProfile.loanHistory.totalLoans > 0 && (
+              <div className="border-t border-brand-100 px-4 py-3 bg-white/50">
+                <div className="flex items-center justify-between gap-4">
+                  {/* Current Status */}
+                  <div>
+                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Loan Status</div>
+                    {(() => {
+                      const status = getLoanStatusDisplay(
+                        borrowerProfile.loanHistory.currentStatus,
+                        borrowerProfile.loanHistory.daysPastDue
+                      );
+                      return (
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold ${status.bgColor} ${status.color}`}>
+                          {status.icon === 'check' && (
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                          {status.icon === 'warning' && (
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                          )}
+                          {status.icon === 'error' && (
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          )}
+                          {status.label}
+                        </span>
+                      );
+                    })()}
+                  </div>
+
+                  {/* Repayment History */}
+                  <div className="text-right">
+                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Repayment Rate</div>
+                    {(() => {
+                      const repayment = getRepaymentDisplay(
+                        borrowerProfile.loanHistory.repaidOnTime,
+                        borrowerProfile.loanHistory.totalLoans
+                      );
+                      return (
+                        <div>
+                          <span className={`text-sm font-bold ${repayment.color}`}>{repayment.rate}</span>
+                          <span className="text-[10px] text-gray-500 ml-1">({repayment.label})</span>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Social Proof Badges */}
+            {(borrowerProfile.socialProof.googleRating ||
+              borrowerProfile.socialProof.instagramFollowers ||
+              borrowerProfile.socialProof.linkedinUrl) && (
+              <div className="border-t border-brand-100 px-4 py-3 bg-white/30">
+                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Social Proof</div>
+                <div className="flex flex-wrap gap-2">
+                  {/* Google Rating */}
+                  {borrowerProfile.socialProof.googleRating && (
+                    <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-white rounded-lg border border-gray-200 text-xs">
+                      <svg className="w-3.5 h-3.5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                      <span className="font-semibold text-gray-900">{borrowerProfile.socialProof.googleRating.toFixed(1)}</span>
+                      <span className="text-gray-500">Google</span>
+                      {borrowerProfile.socialProof.googleReviewCount && (
+                        <span className="text-gray-400">({borrowerProfile.socialProof.googleReviewCount})</span>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Instagram */}
+                  {borrowerProfile.socialProof.instagramFollowers && (
+                    <a
+                      href={borrowerProfile.socialProof.instagramHandle ? `https://instagram.com/${borrowerProfile.socialProof.instagramHandle}` : undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2 py-1 bg-white rounded-lg border border-gray-200 text-xs hover:border-pink-300 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                      </svg>
+                      <span className="font-semibold text-gray-900">{(borrowerProfile.socialProof.instagramFollowers / 1000).toFixed(1)}K</span>
+                      <span className="text-gray-500">followers</span>
+                    </a>
+                  )}
+
+                  {/* TikTok */}
+                  {borrowerProfile.socialProof.tiktokFollowers && (
+                    <a
+                      href={borrowerProfile.socialProof.tiktokHandle ? `https://tiktok.com/@${borrowerProfile.socialProof.tiktokHandle}` : undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2 py-1 bg-white rounded-lg border border-gray-200 text-xs hover:border-gray-400 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                      </svg>
+                      <span className="font-semibold text-gray-900">{(borrowerProfile.socialProof.tiktokFollowers / 1000).toFixed(1)}K</span>
+                      <span className="text-gray-500">followers</span>
+                    </a>
+                  )}
+
+                  {/* LinkedIn */}
+                  {borrowerProfile.socialProof.linkedinUrl && (
+                    <a
+                      href={borrowerProfile.socialProof.linkedinUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2 py-1 bg-white rounded-lg border border-gray-200 text-xs hover:border-blue-300 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                      </svg>
+                      <span className="text-gray-700">LinkedIn</span>
+                    </a>
+                  )}
+
+                  {/* Yelp */}
+                  {borrowerProfile.socialProof.yelpRating && (
+                    <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-white rounded-lg border border-gray-200 text-xs">
+                      <svg className="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.16 12.594l-4.995 1.433c-.96.276-1.27-.267-1.27-.863v-5.45c0-.743.6-1.204 1.328-1.057l4.937 1.006c.728.147 1.12.738 1.12 1.33v2.332c0 .59-.392 1.27-1.12.269zm-8.437 8.37l-2.482-4.52c-.39-.707-.05-1.232.687-1.232h5.19c.738 0 1.12.525.85 1.17l-1.68 4.49c-.27.645-.77 1.006-1.405 1.006h-1.027c-.635 0-1.133-.268-1.133-.914zm-9.71-11.4l4.995 1.432c.96.276 1.12.79 1.12 1.385v5.45c0 .742-.6 1.203-1.327 1.057l-4.938-1.006c-.727-.148-1.12-.74-1.12-1.33v-5.72c0-.59.392-1.27 1.27-.268zm8.437-8.37l2.483 4.52c.39.706.05 1.232-.687 1.232H6.066c-.738 0-1.12-.525-.85-1.17l1.68-4.49C7.166.64 7.666.28 8.3.28h1.027c.635 0 1.133.268 1.133.914z" />
+                      </svg>
+                      <span className="font-semibold text-gray-900">{borrowerProfile.socialProof.yelpRating.toFixed(1)}</span>
+                      <span className="text-gray-500">Yelp</span>
+                      {borrowerProfile.socialProof.yelpReviewCount && (
+                        <span className="text-gray-400">({borrowerProfile.socialProof.yelpReviewCount})</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Trust Boost Badge */}
+            {borrowerProfile.trustBoostPercent > 0 && (
+              <div className="border-t border-brand-100 px-4 py-2 bg-gradient-to-r from-brand-50 to-brand-100/50 flex items-center justify-between">
+                <span className="text-[10px] font-bold text-brand-600 uppercase tracking-wider">
+                  Reputational Collateral Active
+                </span>
+                <span className="text-xs font-bold text-brand-700">
+                  +{borrowerProfile.trustBoostPercent}% visibility boost
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Business Website (Top Priority) */}
         {businessWebsite && (
           <div className="flex items-start gap-4 p-4 bg-brand-50/50 border border-brand-100 rounded-xl">
