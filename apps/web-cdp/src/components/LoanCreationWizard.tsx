@@ -1352,44 +1352,54 @@ export default function LoanCreationWizard() {
                             {/* Recommended amounts */}
                             <div className="mb-4">
                               <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Recommended amounts based on your revenue:</p>
-                              <div className="flex flex-wrap gap-2">
-                                <button
-                                  type="button"
-                                  onClick={() => handleChange('amount', Math.round(monthlyRevenue * 0.4).toString())}
-                                  className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
-                                    ratio < 0.5 && ratio >= 0.3
-                                      ? 'bg-green-100 border-green-300 text-green-700'
-                                      : 'bg-white border-gray-200 text-gray-600 hover:border-green-300 hover:bg-green-50'
-                                  }`}
-                                >
-                                  ${Math.round(monthlyRevenue * 0.4).toLocaleString()}
-                                  <span className="ml-1 text-xs opacity-75">Comfortable</span>
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleChange('amount', Math.round(monthlyRevenue * 0.75).toString())}
-                                  className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
-                                    ratio >= 0.5 && ratio < 1.0
-                                      ? 'bg-blue-100 border-blue-300 text-blue-700'
-                                      : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300 hover:bg-blue-50'
-                                  }`}
-                                >
-                                  ${Math.round(monthlyRevenue * 0.75).toLocaleString()}
-                                  <span className="ml-1 text-xs opacity-75">Manageable</span>
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleChange('amount', Math.round(monthlyRevenue * 1.5).toString())}
-                                  className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
-                                    ratio >= 1.0 && ratio < 2.0
-                                      ? 'bg-amber-100 border-amber-300 text-amber-700'
-                                      : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:bg-amber-50'
-                                  }`}
-                                >
-                                  ${Math.round(monthlyRevenue * 1.5).toLocaleString()}
-                                  <span className="ml-1 text-xs opacity-75">Stretched</span>
-                                </button>
-                              </div>
+                              {(() => {
+                                // Round to nearest $100 for cleaner amounts
+                                const roundTo100 = (n: number) => Math.round(n / 100) * 100;
+                                const comfortableAmt = roundTo100(monthlyRevenue * 0.4);
+                                const manageableAmt = roundTo100(monthlyRevenue * 0.75);
+                                const stretchedAmt = roundTo100(monthlyRevenue * 1.5);
+
+                                return (
+                                  <div className="flex flex-wrap gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleChange('amount', comfortableAmt.toString())}
+                                      className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
+                                        ratio < 0.5 && ratio >= 0.3
+                                          ? 'bg-green-100 border-green-300 text-green-700'
+                                          : 'bg-white border-gray-200 text-gray-600 hover:border-green-300 hover:bg-green-50'
+                                      }`}
+                                    >
+                                      ${comfortableAmt.toLocaleString()}
+                                      <span className="ml-1 text-xs opacity-75">Comfortable</span>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleChange('amount', manageableAmt.toString())}
+                                      className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
+                                        ratio >= 0.5 && ratio < 1.0
+                                          ? 'bg-blue-100 border-blue-300 text-blue-700'
+                                          : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300 hover:bg-blue-50'
+                                      }`}
+                                    >
+                                      ${manageableAmt.toLocaleString()}
+                                      <span className="ml-1 text-xs opacity-75">Manageable</span>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleChange('amount', stretchedAmt.toString())}
+                                      className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors ${
+                                        ratio >= 1.0 && ratio < 2.0
+                                          ? 'bg-amber-100 border-amber-300 text-amber-700'
+                                          : 'bg-white border-gray-200 text-gray-600 hover:border-amber-300 hover:bg-amber-50'
+                                      }`}
+                                    >
+                                      ${stretchedAmt.toLocaleString()}
+                                      <span className="ml-1 text-xs opacity-75">Stretched</span>
+                                    </button>
+                                  </div>
+                                );
+                              })()}
                             </div>
 
                             {/* Custom amount input */}
