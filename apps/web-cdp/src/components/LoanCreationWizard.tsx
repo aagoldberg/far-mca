@@ -1,15 +1,24 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { parseUnits } from 'viem';
+import { USDC_DECIMALS } from '@/types/loan';
+import { useWalletType } from '@/hooks/useWalletType';
+import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
+import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import ImageCropModal from './ImageCropModal';
+import { LoanCard } from './LoanCard';
 import {
   CheckCircleIcon,
   ArrowPathIcon,
   ShoppingBagIcon,
   CreditCardIcon,
   BuildingStorefrontIcon,
-  ChartBarIcon, // Added for Revenue Stability
-  ClipboardDocumentCheckIcon, // Added for Order Consistency
-  ClockIcon, // Added for Business Tenure
-  ArrowUpIcon, // Added for Growth Trend
+  ChartBarIcon,
+  ClipboardDocumentCheckIcon,
+  ClockIcon,
+  ArrowUpIcon,
 } from '@heroicons/react/24/outline';
 
 // Income range enum (same as CreateLoanForm)
