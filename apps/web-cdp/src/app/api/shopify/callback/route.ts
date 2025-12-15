@@ -90,7 +90,8 @@ export async function GET(request: NextRequest) {
 
     try {
       // Fetch detailed order data for the new Business Health Score algorithm
-      const detailedData = await shopifyClient.getDetailedRevenueData(session, 90); // 90 days
+      // Use 450 days (~15 months) to capture full business tenure for accurate scoring
+      const detailedData = await shopifyClient.getDetailedRevenueData(session, 450);
       revenueData = {
         totalRevenue: detailedData.totalRevenue,
         orderCount: detailedData.orderCount,

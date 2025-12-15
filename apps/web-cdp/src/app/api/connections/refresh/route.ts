@@ -67,12 +67,14 @@ export async function POST(request: NextRequest) {
             scope: conn.metadata?.scope || '',
           };
 
-          const revenueData = await shopifyClient.getRevenueData(session, 90);
+          // Fetch detailed order data for Business Health Score
+          // Use 450 days (~15 months) to capture full business tenure for accurate scoring
+          const revenueData = await shopifyClient.getDetailedRevenueData(session, 450);
           const averageOrderValue = revenueData.orderCount > 0
             ? revenueData.totalRevenue / revenueData.orderCount
             : 0;
 
-          // Update the connection with fresh data
+          // Update the connection with fresh data including individual orders
           const { error: updateError } = await supabase
             .from('business_connections')
             .update({
@@ -82,6 +84,15 @@ export async function POST(request: NextRequest) {
                 periodDays: revenueData.periodDays,
                 currency: revenueData.currency,
                 averageOrderValue,
+                // Include detailed order data for Business Health Score CV calculations
+                orders: revenueData.orders.map(o => ({
+                  id: o.id,
+                  createdAt: o.createdAt.toISOString(),
+                  totalPrice: o.totalPrice,
+                  currency: o.currency,
+                })),
+                firstOrderDate: revenueData.firstOrderDate?.toISOString(),
+                lastOrderDate: revenueData.lastOrderDate?.toISOString(),
               },
               last_synced_at: new Date().toISOString(),
             })
