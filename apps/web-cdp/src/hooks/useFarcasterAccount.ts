@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSignTypedData } from 'wagmi';
 import { useSignEvmTypedData, useCurrentUser } from '@coinbase/cdp-hooks';
 import { useWalletType } from '@/hooks/useWalletType';
 
@@ -46,7 +45,6 @@ interface UseFarcasterAccountReturn {
 export function useFarcasterAccount(): UseFarcasterAccountReturn {
   const { address: defaultAddress, isExternalWallet, isCdpWallet } = useWalletType();
   const { currentUser } = useCurrentUser();
-  const { signTypedDataAsync: signWithWagmi } = useSignTypedData();
   const { signEvmTypedData: signWithCDP } = useSignEvmTypedData();
 
   // CDP creates both EOA and Smart Account when createOnLogin: 'smart'
@@ -166,8 +164,13 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
               timestamp: Date.now() - (4 * 60 * 1000), // Expire in 1 minute instead of 5
             }));
           }
+        } else if (response.status === 404) {
+          // 404 is expected when wallet has no Farcaster account - not an error
+          console.log('[Farcaster] No Farcaster account found for this wallet (404)');
+          setFarcasterAccount(null);
         } else {
-          console.error('[Farcaster] Failed to check account:', response.status);
+          // Only log actual errors (500, etc.)
+          console.warn('[Farcaster] Unexpected response checking account:', response.status);
         }
 
         // Load hasPrompted state from localStorage
@@ -286,22 +289,128 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
       console.log('Registration prepared with FID:', fid, 'requesting signature...');
 
       // Step 2: Request user signature (Farcaster requires EOA signature)
+      // Note: We use wallet.request with eth_signTypedData_v4 directly to bypass
+      // viem's chain ID validation. Farcaster signatures require chainId: 10 (Optimism)
+      // but the user may be connected to a different chain (e.g., Base Sepolia).
+      // Using the raw RPC method bypasses all client-side validation.
       let signature: string;
 
-      if (isExternalWallet) {
-        // External wallet (wagmi) - Convert string values back to BigInt for signing
-        console.log('[Farcaster] Using external wallet for signing...');
-        signature = await signWithWagmi({
+      if (isExternalWallet && walletAddress) {
+        // External wallet - Use raw eth_signTypedData_v4 via window.ethereum
+        // to bypass viem/wagmi chain ID validation.
+        // Farcaster ID Registry requires chainId: 10 (Optimism) but user may be on any chain.
+        // The signature itself doesn't require being on Optimism - it's just signing bytes.
+        console.log('[Farcaster] Using external wallet for signing via raw RPC...');
+
+        const ethereum = (window as any).ethereum;
+        if (!ethereum) {
+          throw new Error('No wallet found. Please install MetaMask or another wallet extension.');
+        }
+
+        // Get the currently connected accounts to ensure we have permission
+        const accounts = await ethereum.request({ method: 'eth_accounts' }) as string[];
+        console.log('[Farcaster] Connected accounts:', accounts);
+
+        if (!accounts || accounts.length === 0) {
+          throw new Error('No accounts connected. Please connect your wallet first.');
+        }
+
+        // Use the account from MetaMask directly (properly checksummed)
+        const signingAddress = accounts.find(
+          (acc: string) => acc.toLowerCase() === walletAddress.toLowerCase()
+        );
+
+        if (!signingAddress) {
+          throw new Error(`Wallet address ${walletAddress} is not connected. Connected: ${accounts.join(', ')}`);
+        }
+
+        console.log('[Farcaster] Using signing address:', signingAddress);
+
+        // Construct the typed data for eth_signTypedData_v4
+        // MetaMask validates chainId in domain against connected chain.
+        // We need to temporarily switch to Optimism to sign.
+        const targetChainId = '0xa'; // 10 in hex (Optimism)
+        const currentChainId = await ethereum.request({ method: 'eth_chainId' }) as string;
+
+        console.log('[Farcaster] Current chain:', currentChainId, 'Target chain:', targetChainId);
+
+        // Switch to Optimism if not already on it
+        if (currentChainId.toLowerCase() !== targetChainId.toLowerCase()) {
+          console.log('[Farcaster] Switching to Optimism for signing...');
+          try {
+            await ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: targetChainId }],
+            });
+          } catch (switchError: any) {
+            // If Optimism is not added, add it
+            if (switchError.code === 4902) {
+              console.log('[Farcaster] Adding Optimism network...');
+              await ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: targetChainId,
+                  chainName: 'Optimism',
+                  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+                  rpcUrls: ['https://mainnet.optimism.io'],
+                  blockExplorerUrls: ['https://optimistic.etherscan.io'],
+                }],
+              });
+            } else {
+              throw switchError;
+            }
+          }
+        }
+
+        const typedDataForSigning = {
           domain: typedData.domain,
           types: typedData.types,
           primaryType: typedData.primaryType,
           message: {
-            fid: BigInt(typedData.message.fid),
+            fid: typedData.message.fid,
             to: typedData.message.to,
-            nonce: BigInt(typedData.message.nonce),
-            deadline: BigInt(typedData.message.deadline),
+            nonce: typedData.message.nonce,
+            deadline: typedData.message.deadline,
           },
-        });
+        };
+
+        console.log('[Farcaster] Typed data:', JSON.stringify(typedDataForSigning, null, 2));
+
+        // Use raw RPC call directly to window.ethereum
+        try {
+          signature = await ethereum.request({
+            method: 'eth_signTypedData_v4',
+            params: [signingAddress, JSON.stringify(typedDataForSigning)],
+          }) as string;
+          console.log('[Farcaster] Signature received:', signature);
+        } catch (signError: any) {
+          console.error('[Farcaster] Signing error:', signError);
+          // Switch back to original chain before throwing
+          if (currentChainId.toLowerCase() !== targetChainId.toLowerCase()) {
+            try {
+              await ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: currentChainId }],
+              });
+            } catch {
+              // Ignore switch-back errors
+            }
+          }
+          throw signError;
+        }
+
+        // Switch back to original chain after signing
+        if (currentChainId.toLowerCase() !== targetChainId.toLowerCase()) {
+          console.log('[Farcaster] Switching back to original chain:', currentChainId);
+          try {
+            await ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: currentChainId }],
+            });
+          } catch {
+            console.warn('[Farcaster] Could not switch back to original chain');
+          }
+        }
       } else if (isCdpWallet && cdpEoaAddress) {
         // CDP Smart Wallet - Use the auto-created EOA for signing
         console.log('[Farcaster] Using CDP EOA for signing:', cdpEoaAddress);
