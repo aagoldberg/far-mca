@@ -74,6 +74,21 @@ export async function POST(request: NextRequest) {
             ? revenueData.totalRevenue / revenueData.orderCount
             : 0;
 
+          // Preserve manually set firstOrderDate if it's older than Shopify's data
+          // This allows for demo/testing with backdated tenure
+          const existingFirstOrderDate = conn.revenue_data?.firstOrderDate;
+          const shopifyFirstOrderDate = revenueData.firstOrderDate?.toISOString();
+          let effectiveFirstOrderDate = shopifyFirstOrderDate;
+
+          if (existingFirstOrderDate && shopifyFirstOrderDate) {
+            const existing = new Date(existingFirstOrderDate);
+            const shopify = new Date(shopifyFirstOrderDate);
+            // Keep the older date (allows manual backdating for demos)
+            if (existing < shopify) {
+              effectiveFirstOrderDate = existingFirstOrderDate;
+            }
+          }
+
           // Update the connection with fresh data including individual orders
           const { error: updateError } = await supabase
             .from('business_connections')
@@ -91,7 +106,7 @@ export async function POST(request: NextRequest) {
                   totalPrice: o.totalPrice,
                   currency: o.currency,
                 })),
-                firstOrderDate: revenueData.firstOrderDate?.toISOString(),
+                firstOrderDate: effectiveFirstOrderDate,
                 lastOrderDate: revenueData.lastOrderDate?.toISOString(),
               },
               last_synced_at: new Date().toISOString(),

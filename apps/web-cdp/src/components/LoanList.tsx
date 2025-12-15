@@ -2,8 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { useLoans, useLoanData } from '@/hooks/useMicroLoan';
-import { LoanCard } from './LoanCard';
+import { LoanCard, HealthScoreBreakdown } from './LoanCard';
 import { fetchFromIPFS, ipfsToHttp } from '@/lib/ipfs';
+
+interface CreditScoreData {
+  score: number;
+  grade: string;
+  breakdown: HealthScoreBreakdown;
+  connections?: Array<{ platform: string }>;
+}
 
 // Enhanced skeleton loading component matching actual loan card structure
 const LoanCardSkeleton = () => (
@@ -72,6 +79,7 @@ const LoanCardWrapper = ({
 }) => {
   const { loanData, isLoading } = useLoanData(loanAddress);
   const [metadata, setMetadata] = useState<any>(null);
+  const [creditScore, setCreditScore] = useState<CreditScoreData | null>(null);
 
   useEffect(() => {
     if (loanData?.metadataURI) {
@@ -91,6 +99,22 @@ const LoanCardWrapper = ({
     }
   }, [loanData?.metadataURI]);
 
+  // Fetch credit score for the borrower
+  useEffect(() => {
+    if (loanData?.borrower) {
+      fetch(`/api/credit-score?walletAddress=${loanData.borrower}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.score > 0) {
+            setCreditScore(data);
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching credit score:', err);
+        });
+    }
+  }, [loanData?.borrower]);
+
   if (isLoading || !loanData) {
     return <LoanCardSkeleton />;
   }
@@ -101,6 +125,9 @@ const LoanCardWrapper = ({
   if (inactive && !showInactive) {
     return null;
   }
+
+  // Determine the verified platform from the credit score connections
+  const verifiedPlatform = creditScore?.connections?.[0]?.platform as 'shopify' | 'stripe' | 'square' | undefined;
 
   return (
     <div className={inactive ? 'opacity-60 grayscale' : ''}>
@@ -118,6 +145,8 @@ const LoanCardWrapper = ({
         imageUrl={metadata?.image}
         fundraisingDeadline={loanData.fundraisingDeadline}
         businessWebsite={metadata?.loanDetails?.businessWebsite}
+        healthScoreBreakdown={creditScore?.breakdown}
+        verifiedPlatform={verifiedPlatform}
       />
     </div>
   );

@@ -277,11 +277,11 @@ export default function MediaKitPage() {
             <MockNavbar />
 
             <div className="flex-1 overflow-y-auto">
-              <div className="h-72 w-full relative">
+              <div className="h-48 w-full relative">
                 <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" className="w-full h-full object-cover" crossOrigin="anonymous" />
                 <div className="absolute inset-0 bg-black/30"></div>
               </div>
-              <div className="max-w-7xl mx-auto px-8 -mt-24 relative z-10 grid grid-cols-3 gap-12 pb-20">
+              <div className="max-w-7xl mx-auto px-8 -mt-20 relative z-10 grid grid-cols-3 gap-12 pb-20">
                 
                 {/* Left Col */}
                 <div className="col-span-2 space-y-8">

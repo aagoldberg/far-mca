@@ -5,6 +5,25 @@ import Link from 'next/link';
 import { formatUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
+import {
+  ChartBarIcon as ChartBarSolid,
+  QueueListIcon as QueueListSolid,
+  ClockIcon as ClockSolid,
+  ArrowTrendingUpIcon as ArrowTrendingUpSolid,
+} from '@heroicons/react/24/solid';
+import {
+  ChartBarIcon as ChartBarOutline,
+  QueueListIcon as QueueListOutline,
+  ClockIcon as ClockOutline,
+  ArrowTrendingUpIcon as ArrowTrendingUpOutline,
+} from '@heroicons/react/24/outline';
+
+export interface HealthScoreBreakdown {
+  revenueStability: number;
+  orderConsistency: number;
+  businessTenure: number;
+  growthTrend: number;
+}
 
 export interface LoanCardProps {
   address: `0x${string}`;
@@ -24,6 +43,8 @@ export interface LoanCardProps {
   disbursementTime?: bigint;
   totalRepaid?: bigint;
   businessWebsite?: string;
+  healthScoreBreakdown?: HealthScoreBreakdown;
+  verifiedPlatform?: 'shopify' | 'stripe' | 'square';
 }
 
 const formatUSDC = (amount: bigint): string => {
@@ -86,6 +107,80 @@ const getStatusInfo = (
   };
 };
 
+// Health signal icon configuration
+type SignalType = 'revenueStability' | 'orderConsistency' | 'businessTenure' | 'growthTrend';
+
+const signalConfig: Record<SignalType, {
+  SolidIcon: typeof ChartBarSolid;
+  OutlineIcon: typeof ChartBarOutline;
+  label: string;
+}> = {
+  revenueStability: { SolidIcon: ChartBarSolid, OutlineIcon: ChartBarOutline, label: 'Revenue' },
+  orderConsistency: { SolidIcon: QueueListSolid, OutlineIcon: QueueListOutline, label: 'Orders' },
+  businessTenure: { SolidIcon: ClockSolid, OutlineIcon: ClockOutline, label: 'Tenure' },
+  growthTrend: { SolidIcon: ArrowTrendingUpSolid, OutlineIcon: ArrowTrendingUpOutline, label: 'Growth' },
+};
+
+// Renders a health signal icon with visual state based on score
+const HealthSignalIcon = ({ signal, score }: { signal: SignalType; score: number }) => {
+  const { SolidIcon, OutlineIcon, label } = signalConfig[signal];
+  const iconClass = "w-4 h-4";
+
+  // 70+: Solid filled (full color)
+  // 50-69: Solid with half opacity (mixed)
+  // <50: Outline only (early/limited data)
+  if (score >= 70) {
+    return <SolidIcon className={`${iconClass} text-[#3B9B7F]`} title={`${label}: Strong`} />;
+  } else if (score >= 50) {
+    return <SolidIcon className={`${iconClass} text-[#3B9B7F] opacity-50`} title={`${label}: Building`} />;
+  } else {
+    return <OutlineIcon className={`${iconClass} text-gray-400`} title={`${label}: Early`} />;
+  }
+};
+
+// Platform verification badge
+const PlatformBadge = ({ platform }: { platform: 'shopify' | 'stripe' | 'square' }) => {
+  const platformColors: Record<string, string> = {
+    shopify: 'bg-[#96bf48]/10 text-[#5c8e26]',
+    stripe: 'bg-[#635bff]/10 text-[#635bff]',
+    square: 'bg-[#006aff]/10 text-[#006aff]',
+  };
+
+  const platformLabels: Record<string, string> = {
+    shopify: 'Shopify',
+    stripe: 'Stripe',
+    square: 'Square',
+  };
+
+  return (
+    <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${platformColors[platform]}`}>
+      {platformLabels[platform]}
+    </span>
+  );
+};
+
+// Renders all 4 health signals as a row of icons with optional platform badge
+const HealthSignals = ({
+  breakdown,
+  verifiedPlatform
+}: {
+  breakdown: HealthScoreBreakdown;
+  verifiedPlatform?: 'shopify' | 'stripe' | 'square';
+}) => {
+  const signals: SignalType[] = ['revenueStability', 'orderConsistency', 'businessTenure', 'growthTrend'];
+
+  return (
+    <div className="flex items-center gap-2">
+      {verifiedPlatform && <PlatformBadge platform={verifiedPlatform} />}
+      <div className="flex items-center gap-1">
+        {signals.map((signal) => (
+          <HealthSignalIcon key={signal} signal={signal} score={breakdown[signal]} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const getDaysRemaining = (fundraisingDeadline?: bigint): string | null => {
   if (!fundraisingDeadline) return null;
 
@@ -119,6 +214,8 @@ export function LoanCard({
   disbursementTime,
   totalRepaid,
   businessWebsite,
+  healthScoreBreakdown,
+  verifiedPlatform,
 }: LoanCardProps) {
   const totalFundedNum = parseFloat(formatUnits(totalFunded, USDC_DECIMALS));
   const principalNum = parseFloat(formatUnits(principal, USDC_DECIMALS));
@@ -252,6 +349,17 @@ export function LoanCard({
           <span className="font-semibold text-gray-900">${formatUSDC(totalFunded)}</span>
           <span className="text-gray-500">raised of ${formatUSDC(principal)}</span>
         </div>
+
+        {/* Health signals and verification */}
+        {(healthScoreBreakdown || verifiedPlatform) && (
+          <div className="flex items-center justify-between mb-3">
+            {healthScoreBreakdown ? (
+              <HealthSignals breakdown={healthScoreBreakdown} verifiedPlatform={verifiedPlatform} />
+            ) : verifiedPlatform ? (
+              <PlatformBadge platform={verifiedPlatform} />
+            ) : null}
+          </div>
+        )}
 
         {/* Show more link */}
         <span className="text-[14px] text-gray-500 underline underline-offset-2 group-hover:text-gray-900 transition-colors">
