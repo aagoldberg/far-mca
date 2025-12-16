@@ -74,10 +74,13 @@ export function calculateCreditScore(connections: BusinessConnection[]): CreditS
     return calculateBasicScore(connections);
   }
 
+  // Get the earliest stored firstOrderDate from connections (allows for manual backdating)
+  const storedFirstOrderDate = getEarliestFirstOrderDate(connections);
+
   // Calculate component scores (each returns 0-100)
   const revenueStability = calculateRevenueStability(allOrders);
   const orderConsistency = calculateOrderConsistency(allOrders);
-  const businessTenure = calculateBusinessTenure(allOrders);
+  const businessTenure = calculateBusinessTenure(allOrders, storedFirstOrderDate);
   const growthTrend = calculateGrowthTrend(allOrders);
 
   // Weighted average per /risk-scoring spec
@@ -178,13 +181,35 @@ function calculateOrderConsistency(orders: OrderData[]): number {
 }
 
 /**
+ * Get the earliest firstOrderDate from stored connection data
+ * This allows for manually backdated dates (for testing/demos)
+ */
+function getEarliestFirstOrderDate(connections: BusinessConnection[]): Date | null {
+  let earliest: Date | null = null;
+
+  for (const conn of connections) {
+    if (conn.revenue_data?.firstOrderDate) {
+      const date = new Date(conn.revenue_data.firstOrderDate);
+      if (!earliest || date < earliest) {
+        earliest = date;
+      }
+    }
+  }
+
+  return earliest;
+}
+
+/**
  * Business Tenure (20% weight)
  * Months since first order
+ * Uses stored firstOrderDate if available (allows for backdating), otherwise falls back to orders
  */
-function calculateBusinessTenure(orders: OrderData[]): number {
+function calculateBusinessTenure(orders: OrderData[], storedFirstOrderDate?: Date | null): number {
   if (orders.length === 0) return 15;
 
-  const firstOrderDate = orders[0].createdAt;
+  // Use stored firstOrderDate if available (allows for manual backdating)
+  // Otherwise fall back to the earliest order date from the orders array
+  const firstOrderDate = storedFirstOrderDate || orders[0].createdAt;
   const now = new Date();
   const monthsActive = (now.getTime() - firstOrderDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
 
