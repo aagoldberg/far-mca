@@ -886,35 +886,47 @@ export default function LoanCreationWizard() {
 
         {/* STEP 2: CONNECT PLATFORMS */}
         {currentStep === 2 && (
-          <div className="bg-white border border-gray-300 rounded-xl p-8 shadow-sm space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Connect Your Business</h2>
-              <p className="text-base text-gray-600">
-                Link your business platforms to build your Trust Score and unlock better loan terms.
+          <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm space-y-8">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900">Connect Your Business</h2>
+              <p className="text-base text-gray-600 leading-relaxed max-w-2xl">
+                Link your active business platforms. We analyze your revenue history to calculate your Trust Score and verify your repayment ability.
               </p>
             </div>
 
-            {/* Trust Score Display */}
+            {/* Trust Score Widget */}
             {creditScore && creditScore.connections.length > 0 && (
-              <div className="bg-gradient-to-r from-secondary-800 to-secondary-700 rounded-xl p-5 text-white">
-                <div className="flex items-center justify-between">
+              <div className="bg-slate-900 rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                   <svg className="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.75l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg>
+                </div>
+                
+                <div className="relative z-10 flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-secondary-200 mb-1">Your Trust Score</p>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold">{creditScore.score}</span>
-                      <span className="text-secondary-300">/100</span>
+                    <p className="text-sm font-medium text-slate-400 mb-1 uppercase tracking-wider">Current Trust Score</p>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-5xl font-bold tracking-tighter text-white">{creditScore.score}</span>
+                      <span className="text-xl text-slate-500 font-medium">/100</span>
+                      {creditScore.score >= 50 && (
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide border ${
+                          creditScore.score >= 75 ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400' :
+                          'bg-blue-500/10 border-blue-500/50 text-blue-400'
+                        }`}>
+                          {creditScore.score >= 75 ? 'Excellent' : 'Good'}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-secondary-200 mb-1">{creditScore.connections.length} platform{creditScore.connections.length !== 1 ? 's' : ''} connected</p>
-                    {creditScore.connections.length < 3 && (
-                      <p className="text-xs text-brand-300">Connect more to boost your score</p>
-                    )}
+                    <p className="text-sm text-slate-300 mb-2">
+                      <span className="font-semibold text-white">{creditScore.connections.length}</span> platform{creditScore.connections.length !== 1 ? 's' : ''} connected
+                    </p>
                     <button
                       type="button"
                       onClick={refreshConnections}
                       disabled={isRefreshingConnections}
-                      className="mt-2 text-xs text-secondary-300 hover:text-white flex items-center gap-1.5 ml-auto transition-colors"
+                      className="text-xs text-slate-400 hover:text-white flex items-center gap-1.5 ml-auto transition-colors px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10"
                     >
                       <ArrowPathIcon className={`w-3.5 h-3.5 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
                       {isRefreshingConnections ? 'Syncing...' : 'Refresh Data'}
@@ -924,255 +936,238 @@ export default function LoanCreationWizard() {
               </div>
             )}
 
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Connect platforms</h3>
-
-              <div className="space-y-3">
-                {/* Shopify Platform Card */}
+            <div className="space-y-4">
+              {/* Shopify Platform Card */}
+              <div className={`group relative p-5 border rounded-xl transition-all shadow-sm ${
+                showShopifyInput 
+                  ? 'border-brand-500 ring-1 ring-brand-500 bg-white'
+                  : creditScore?.connections.some(c => c.platform === 'shopify')
+                    ? 'border-emerald-200 bg-emerald-50/50 hover:shadow-md'
+                    : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+              }`}>
                 {showShopifyInput ? (
-                  // Input form for connecting/reconnecting
-                  <div className="border border-gray-200 rounded-lg p-4 bg-white space-y-3">
-                    <div className="flex items-center gap-3">
-                      <ShoppingBagIcon className="h-6 w-6 text-gray-700" />
-                      <span className="text-base font-medium text-gray-900">
-                        {creditScore?.connections.some(c => c.platform === 'shopify') ? 'Reconnect Shopify' : 'Connect Shopify'}
-                      </span>
-                    </div>
-                    <div>
-                      <label htmlFor="shopifyDomain" className="block text-sm font-medium text-gray-700 mb-1">
-                        Store Domain
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          id="shopifyDomain"
-                          value={shopifyDomain}
-                          onChange={(e) => setShopifyDomain(e.target.value)}
-                          placeholder="yourstore.myshopify.com"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                              e.preventDefault();
-                              handleShopifyConnect();
-                            }
-                          }}
-                          disabled={isConnectingShopify}
-                        />
-                        <button
-                          type="button"
-                          onClick={handleShopifyConnect}
-                          disabled={!shopifyDomain.trim() || isConnectingShopify}
-                          className="px-4 py-2 bg-brand-600 text-white rounded-md hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
-                        >
-                          {isConnectingShopify ? 'Connecting...' : 'Connect'}
-                        </button>
+                   // CONNECT FORM
+                   <div className="space-y-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-[#95BF47]/10 rounded-lg flex items-center justify-center p-2">
+                           <img src="/logos/shopify/shopify_glyph.svg" alt="Shopify" className="w-full h-full" />
+                        </div>
+                        <h3 className="font-bold text-gray-900">Connect Shopify</h3>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
-                        Enter your .myshopify.com domain to securely connect
-                      </p>
-                      {errors.shopify && (
-                        <p className="text-xs text-red-600 mt-1">{errors.shopify}</p>
-                      )}
+                      
+                      <div>
+                        <label htmlFor="shopifyDomain" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                          Store Domain
+                        </label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            id="shopifyDomain"
+                            value={shopifyDomain}
+                            onChange={(e) => setShopifyDomain(e.target.value)}
+                            placeholder="yourstore.myshopify.com"
+                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm shadow-sm"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleShopifyConnect();
+                              }
+                            }}
+                            disabled={isConnectingShopify}
+                            autoFocus
+                          />
+                          <button
+                            type="button"
+                            onClick={handleShopifyConnect}
+                            disabled={!shopifyDomain.trim() || isConnectingShopify}
+                            className="px-6 py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
+                          >
+                            {isConnectingShopify ? 'Connecting...' : 'Connect Store'}
+                          </button>
+                        </div>
+                        {errors.shopify && (
+                          <p className="text-xs text-red-600 mt-2 flex items-center gap-1">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+                            {errors.shopify}
+                          </p>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowShopifyInput(false);
+                          setShopifyDomain('');
+                          setErrors(prev => ({ ...prev, shopify: '' }));
+                        }}
+                        className="text-xs text-gray-500 hover:text-gray-800 font-medium"
+                      >
+                        Cancel
+                      </button>
+                   </div>
+                ) : creditScore?.connections.some(c => c.platform === 'shopify') ? (
+                  // CONNECTED STATE
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center p-2.5 relative">
+                        <img src="/logos/shopify/shopify_glyph.svg" alt="Shopify" className="w-full h-full" />
+                        <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+                           <CheckCircleIcon className="w-4 h-4 text-emerald-500" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                           <h3 className="font-bold text-gray-900">Shopify</h3>
+                           <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wide rounded-full">Connected</span>
+                        </div>
+                        {(() => {
+                           const conn = creditScore.connections.find(c => c.platform === 'shopify');
+                           return (
+                             <p className="text-sm text-gray-600 mt-0.5">
+                               <span className="font-medium text-gray-900">${conn?.revenue_data?.totalRevenue.toLocaleString()}</span> revenue detected
+                             </p>
+                           );
+                        })()}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                       <button
+                         type="button"
+                         onClick={refreshConnections}
+                         className="p-2 text-gray-400 hover:text-brand-600 transition-colors"
+                         title="Sync recent data"
+                       >
+                         <ArrowPathIcon className={`w-5 h-5 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
+                       </button>
+                    </div>
+                  </div>
+                ) : (
+                  // DISCONNECTED STATE
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2.5 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
+                        <img src="/logos/shopify/shopify_glyph.svg" alt="Shopify" className="w-full h-full" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 group-hover:text-brand-700 transition-colors">Shopify</h3>
+                        <p className="text-sm text-gray-500 group-hover:text-gray-600">Connect your store revenue</p>
+                      </div>
                     </div>
                     <button
                       type="button"
-                      onClick={() => {
-                        setShowShopifyInput(false);
-                        setShopifyDomain('');
-                        setErrors(prev => ({ ...prev, shopify: '' }));
-                      }}
-                      className="text-sm text-gray-500 hover:text-gray-700"
+                      onClick={() => setShowShopifyInput(true)}
+                      className="px-4 py-2 bg-white border border-gray-200 text-gray-700 font-medium rounded-lg text-sm group-hover:bg-brand-50 group-hover:text-brand-700 group-hover:border-brand-200 transition-all shadow-sm"
                     >
-                      Cancel
+                      Connect
                     </button>
-                  </div>
-                ) : creditScore?.connections.some(c => c.platform === 'shopify') ? (
-                  // Connected state
-                  (() => {
-                    const shopifyConn = creditScore.connections.find(c => c.platform === 'shopify');
-                    const revenue = shopifyConn?.revenue_data?.totalRevenue || 0;
-                    const orders = shopifyConn?.revenue_data?.orderCount || 0;
-                    return (
-                      <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                            <ShoppingBagIcon className="h-5 w-5 text-green-600" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base font-medium text-gray-900">Shopify</span>
-                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
-                            </div>
-                            <p className="text-sm text-gray-500">
-                              {shopifyConn?.platform_user_id || 'Store connected'}
-                            </p>
-                            <p className="text-xs text-gray-400 mt-0.5">
-                              ${revenue.toLocaleString()} revenue · {orders} orders
-                            </p>
-                          </div>
-                          <div className="flex flex-col items-end gap-1">
-                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
-                            <div className="flex items-center gap-2">
-                              <button
-                                type="button"
-                                onClick={refreshConnections}
-                                disabled={isRefreshingConnections}
-                                className="text-xs text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1"
-                              >
-                                <ArrowPathIcon className={`h-3 w-3 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
-                                {isRefreshingConnections ? 'Syncing' : 'Sync'}
-                              </button>
-                              <span className="text-gray-300">·</span>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setShopifyDomain(shopifyConn?.platform_user_id || '');
-                                  setShowShopifyInput(true);
-                                }}
-                                className="text-xs text-secondary-600 hover:text-secondary-700 transition-colors"
-                              >
-                                Reconnect
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()
-                ) : (
-                  // Not connected - show connect button
-                  <button
-                    type="button"
-                    onClick={() => setShowShopifyInput(true)}
-                    className="w-full border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3">
-                      <ShoppingBagIcon className="h-6 w-6 text-gray-700" />
-                      <span className="text-base font-medium text-gray-900">Shopify</span>
-                    </div>
-                  </button>
-                )}
-
-                {/* Stripe Platform Card */}
-                {creditScore?.connections.some(c => c.platform === 'stripe') ? (
-                  (() => {
-                    const stripeConn = creditScore.connections.find(c => c.platform === 'stripe');
-                    const revenue = stripeConn?.revenue_data?.totalRevenue || 0;
-                    const orders = stripeConn?.revenue_data?.orderCount || 0;
-                    return (
-                      <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                            <CreditCardIcon className="h-5 w-5 text-purple-600" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base font-medium text-gray-900">Stripe</span>
-                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
-                            </div>
-                            <p className="text-sm text-gray-500">
-                              {stripeConn?.platform_user_id || 'Account connected'}
-                            </p>
-                            {revenue > 0 && (
-                              <p className="text-xs text-gray-400 mt-0.5">
-                                ${revenue.toLocaleString()} revenue · {orders} transactions
-                              </p>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={refreshConnections}
-                              disabled={isRefreshingConnections}
-                              className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
-                              title="Refresh data"
-                            >
-                              <ArrowPathIcon className={`h-4 w-4 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
-                            </button>
-                            <CheckCircleIcon className="h-6 w-6 text-green-600" />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()
-                ) : (
-                  <div className="w-full border border-gray-200 rounded-lg p-4 bg-gray-50 opacity-60 cursor-not-allowed">
-                    <div className="flex items-center gap-3">
-                      <CreditCardIcon className="h-6 w-6 text-gray-400" />
-                      <span className="text-base font-medium text-gray-500">Stripe</span>
-                      <span className="ml-auto text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-medium">Coming Soon</span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Square Platform Card */}
-                {creditScore?.connections.some(c => c.platform === 'square') ? (
-                  (() => {
-                    const squareConn = creditScore.connections.find(c => c.platform === 'square');
-                    const revenue = squareConn?.revenue_data?.totalRevenue || 0;
-                    const orders = squareConn?.revenue_data?.orderCount || 0;
-                    return (
-                      <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
-                            <BuildingStorefrontIcon className="h-5 w-5 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base font-medium text-gray-900">Square</span>
-                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Connected</span>
-                            </div>
-                            <p className="text-sm text-gray-500">
-                              {squareConn?.platform_user_id || 'Account connected'}
-                            </p>
-                            {revenue > 0 && (
-                              <p className="text-xs text-gray-400 mt-0.5">
-                                ${revenue.toLocaleString()} revenue · {orders} transactions
-                              </p>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={refreshConnections}
-                              disabled={isRefreshingConnections}
-                              className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
-                              title="Refresh data"
-                            >
-                              <ArrowPathIcon className={`h-4 w-4 ${isRefreshingConnections ? 'animate-spin' : ''}`} />
-                            </button>
-                            <CheckCircleIcon className="h-6 w-6 text-green-600" />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()
-                ) : (
-                  <div className="w-full border border-gray-200 rounded-lg p-4 bg-gray-50 opacity-60 cursor-not-allowed">
-                    <div className="flex items-center gap-3">
-                      <BuildingStorefrontIcon className="h-6 w-6 text-gray-400" />
-                      <span className="text-base font-medium text-gray-500">Square</span>
-                      <span className="ml-auto text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-medium">Coming Soon</span>
-                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Helpful hints based on connection status */}
-              {creditScore && creditScore.connections.length === 0 && (
-                <div className="mt-6 bg-secondary-50 border border-secondary-200 rounded-lg p-4">
-                  <p className="text-sm text-secondary-800">
-                    <strong>Tip:</strong> Connecting at least one platform helps us verify your business revenue and may improve your loan terms.
-                  </p>
-                </div>
-              )}
+              {/* Stripe Platform Card */}
+              {(() => {
+                const isConnected = creditScore?.connections.some(c => c.platform === 'stripe');
+                const conn = creditScore?.connections.find(c => c.platform === 'stripe');
+                return (
+                  <div className={`group flex items-center justify-between p-5 border rounded-xl transition-all shadow-sm ${
+                    isConnected 
+                       ? 'border-emerald-200 bg-emerald-50/50' 
+                       : 'border-gray-200 bg-white opacity-80' 
+                  }`}>
+                    <div className="flex items-center gap-4">
+                      <div className={`flex-shrink-0 w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2.5 ${!isConnected && 'grayscale opacity-60'}`}>
+                        {/* Use img tag for Stripe logo */}
+                        <img src="/logos/stripe/Stripe wordmark - Blurple.svg" alt="Stripe" className="w-full h-auto" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                           <h3 className="font-bold text-gray-900">Stripe</h3>
+                           {isConnected ? (
+                             <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wide rounded-full">Connected</span>
+                           ) : (
+                             <span className="border border-gray-200 text-gray-400 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ml-1">Coming Soon</span>
+                           )}
+                        </div>
+                        {isConnected ? (
+                           <p className="text-sm text-gray-600 mt-0.5">
+                             <span className="font-medium text-gray-900">${conn?.revenue_data?.totalRevenue.toLocaleString()}</span> revenue detected
+                           </p>
+                        ) : (
+                           <p className="text-sm text-gray-500">Connect your payment processing</p>
+                        )}
+                      </div>
+                    </div>
+                    {isConnected ? (
+                       <button onClick={refreshConnections} className="p-2 text-gray-400 hover:text-brand-600"><ArrowPathIcon className="w-5 h-5" /></button>
+                    ) : (
+                       <button disabled className="px-4 py-2 border border-dashed border-gray-300 text-gray-400 font-medium rounded-lg text-sm cursor-not-allowed">
+                         Connect
+                       </button>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Square Platform Card */}
+              {(() => {
+                const isConnected = creditScore?.connections.some(c => c.platform === 'square');
+                const conn = creditScore?.connections.find(c => c.platform === 'square');
+                return (
+                  <div className={`group flex items-center justify-between p-5 border rounded-xl transition-all shadow-sm ${
+                    isConnected 
+                       ? 'border-emerald-200 bg-emerald-50/50' 
+                       : 'border-gray-200 bg-white opacity-80' 
+                  }`}>
+                    <div className="flex items-center gap-4">
+                      <div className={`flex-shrink-0 w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center p-3 ${!isConnected && 'opacity-60'}`}>
+                         <img src="/logos/square/Square_Logo_2025_White.png" alt="Square" className="w-full h-full object-contain" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                           <h3 className="font-bold text-gray-900">Square</h3>
+                           {isConnected ? (
+                             <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wide rounded-full">Connected</span>
+                           ) : (
+                             <span className="border border-gray-200 text-gray-400 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ml-1">Coming Soon</span>
+                           )}
+                        </div>
+                         {isConnected ? (
+                           <p className="text-sm text-gray-600 mt-0.5">
+                             <span className="font-medium text-gray-900">${conn?.revenue_data?.totalRevenue.toLocaleString()}</span> revenue detected
+                           </p>
+                        ) : (
+                           <p className="text-sm text-gray-500">Connect your POS system</p>
+                        )}
+                      </div>
+                    </div>
+                    {isConnected ? (
+                       <button onClick={refreshConnections} className="p-2 text-gray-400 hover:text-brand-600"><ArrowPathIcon className="w-5 h-5" /></button>
+                    ) : (
+                       <button disabled className="px-4 py-2 border border-dashed border-gray-300 text-gray-400 font-medium rounded-lg text-sm cursor-not-allowed">
+                         Connect
+                       </button>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-gray-200">
+            {/* Hint */}
+            {creditScore && creditScore.connections.length === 0 && (
+               <div className="flex gap-3 bg-blue-50 border border-blue-100 p-4 rounded-lg">
+                  <div className="flex-shrink-0">
+                     <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" /></svg>
+                  </div>
+                  <p className="text-sm text-blue-800">
+                    <strong>Tip:</strong> Connecting at least one platform is required to verify your business revenue. This typically increases your loan approval odds by 40%.
+                  </p>
+               </div>
+            )}
+
+            <div className="flex gap-3 pt-6 border-t border-gray-100">
               <button
                 type="button"
                 onClick={goToPreviousStep}
-                className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                className="px-6 py-3 border border-gray-200 rounded-lg text-gray-600 font-semibold hover:bg-gray-50 transition-colors"
               >
                 Back
               </button>
@@ -1184,13 +1179,13 @@ export default function LoanCreationWizard() {
                   }
                   goToNextStep();
                 }}
-                className={`px-6 py-2.5 font-medium rounded-lg transition-colors ${
+                className={`flex-1 px-6 py-3 font-bold rounded-lg transition-all shadow-md active:scale-[0.98] ${
                   creditScore && creditScore.connections.length > 0
-                    ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-md'
-                    : 'bg-brand-600 text-white hover:bg-brand-700'
+                    ? 'bg-brand-600 hover:bg-brand-700 text-white'
+                    : 'bg-white border border-gray-300 text-gray-500 hover:bg-gray-50'
                 }`}
               >
-                {creditScore && creditScore.connections.length > 0 ? 'Continue to Eligibility' : 'Skip for Now'}
+                {creditScore && creditScore.connections.length > 0 ? 'Continue to Eligibility Check' : 'Skip for Now'}
               </button>
             </div>
           </div>
@@ -1199,48 +1194,42 @@ export default function LoanCreationWizard() {
         {/* STEP 3: ELIGIBILITY */}
         {currentStep === 3 && (
           <div className="space-y-8">
-            <div className="text-center max-w-lg mx-auto">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Assessment Results</h2>
-              <p className="text-gray-600">
+            <div className="text-center max-w-lg mx-auto mb-10">
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-2">Assessment Results</h2>
+              <p className="text-gray-600 leading-relaxed">
                 We've analyzed your connected data to generate your Trust Score and affordability rating.
               </p>
             </div>
 
             {creditScore && creditScore.score > 0 ? (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {/* 1. Trust Score Card */}
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                  <div className="p-6 border-b border-gray-100">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
+                  <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-blue-50 rounded-lg">
                           <CheckCircleIcon className="w-5 h-5 text-blue-600" />
                         </div>
-                        <h3 className="text-lg font-bold text-gray-900">Trust Score</h3>
-                      </div>
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        creditScore.score >= 75 ? 'bg-green-100 text-green-700' :
-                        creditScore.score >= 55 ? 'bg-blue-100 text-blue-700' :
-                        creditScore.score >= 40 ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-700'
-                      }`}>
-                        {creditScore.score >= 75 ? 'Excellent' :
-                         creditScore.score >= 55 ? 'Good' :
-                         creditScore.score >= 40 ? 'Fair' : 'Needs Work'}
-                      </span>
-                    </div>
+                        <div>
+                           <h3 className="text-lg font-bold text-gray-900">Trust Score</h3>
+                           <p className="text-xs text-gray-500">Higher scores unlock better rates</p>
+                        </div>
+                     </div>
                   </div>
 
-                  <div className="p-6 grid md:grid-cols-2 gap-8 items-center">
+                  <div className="p-8 grid md:grid-cols-2 gap-10 items-center">
                     {/* Score Visual */}
-                    <div className="text-center">
+                    <div className="flex flex-col items-center justify-center relative">
                       <div className="relative inline-flex items-center justify-center">
-                        <svg className="w-32 h-32 transform -rotate-90">
-                          <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-gray-100" />
-                          <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="transparent"
-                            strokeDasharray={2 * Math.PI * 56}
-                            strokeDashoffset={2 * Math.PI * 56 * (1 - creditScore.score / 100)}
+                        <svg className="w-40 h-40 transform -rotate-90">
+                          {/* Background Ring */}
+                          <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-gray-100" />
+                          {/* Progress Ring */}
+                          <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="12" fill="transparent"
+                            strokeDasharray={2 * Math.PI * 70}
+                            strokeDashoffset={2 * Math.PI * 70 * (1 - creditScore.score / 100)}
                             className={`${
-                              creditScore.score >= 75 ? 'text-green-500' :
+                              creditScore.score >= 75 ? 'text-emerald-500' :
                               creditScore.score >= 55 ? 'text-blue-500' :
                               creditScore.score >= 40 ? 'text-amber-500' : 'text-gray-400'
                             } transition-all duration-1000 ease-out`}
@@ -1248,15 +1237,23 @@ export default function LoanCreationWizard() {
                           />
                         </svg>
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                          <span className="text-3xl font-bold text-gray-900">{creditScore.score}</span>
-                          <span className="block text-xs text-gray-500 font-medium">/100</span>
+                          <span className="text-5xl font-bold tracking-tighter text-gray-900">{creditScore.score}</span>
+                          <span className="block text-sm text-gray-400 font-medium tracking-wide">/100</span>
                         </div>
                       </div>
-                      <p className="mt-2 text-sm text-gray-500">Based on {creditScore.connections.length} connected sources</p>
+                      <div className={`mt-4 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wide border ${
+                          creditScore.score >= 75 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                          creditScore.score >= 55 ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                          creditScore.score >= 40 ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-gray-100 text-gray-600 border-gray-200'
+                        }`}>
+                        {creditScore.score >= 75 ? 'Excellent' :
+                         creditScore.score >= 55 ? 'Good' :
+                         creditScore.score >= 40 ? 'Fair' : 'Needs Work'}
+                      </div>
                     </div>
 
                     {/* Breakdown */}
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       {[
                         { label: 'Revenue Stability', value: creditScore.breakdown.revenueStability, Icon: ChartBarIcon },
                         { label: 'Order Consistency', value: creditScore.breakdown.orderConsistency, Icon: ClipboardDocumentCheckIcon },
@@ -1264,12 +1261,21 @@ export default function LoanCreationWizard() {
                         { label: 'Growth Trend', value: creditScore.breakdown.growthTrend, Icon: ArrowUpIcon },
                       ].map((item) => (
                         <div key={item.label}>
-                          <div className="flex justify-between text-sm mb-1">
-                            <span className="text-gray-600 flex items-center gap-2"><item.Icon className="w-4 h-4" /> {item.label}</span>
-                            <span className="font-semibold text-gray-900">{Math.round(item.value)}/100</span>
+                          <div className="flex justify-between text-sm mb-2">
+                            <span className="text-gray-700 font-medium flex items-center gap-2">
+                               <item.Icon className="w-4 h-4 text-gray-400" /> {item.label}
+                            </span>
+                            <span className="font-bold text-gray-900">{Math.round(item.value)}/100</span>
                           </div>
-                          <div className="w-full bg-gray-100 rounded-full h-1.5">
-                            <div className="bg-brand-500 h-1.5 rounded-full" style={{ width: `${item.value}%` }}></div>
+                          <div className="w-full bg-gray-100 rounded-full h-2">
+                            <div
+                                className={`h-2 rounded-full transition-all duration-1000 ${
+                                    item.value >= 80 ? 'bg-emerald-500' :
+                                    item.value >= 60 ? 'bg-blue-500' :
+                                    item.value >= 40 ? 'bg-amber-500' : 'bg-red-400'
+                                }`}
+                                style={{ width: `${item.value}%` }}
+                            />
                           </div>
                         </div>
                       ))}
@@ -1277,132 +1283,138 @@ export default function LoanCreationWizard() {
                   </div>
                 </div>
 
-                {/* 2. Loan Affordability Card */}
+                {/* 2. Loan Affordability Card (Scenario Planner) */}
                 {(() => {
                     const totalRevenue = creditScore.connections.reduce((sum, conn) => sum + (conn.revenue_data?.totalRevenue || 0), 0);
                     const totalDays = creditScore.connections.reduce((sum, conn) => Math.max(sum, conn.revenue_data?.periodDays || 90), 90);
                     const monthlyRevenue = (totalRevenue / totalDays) * 30;
                     const loanAmount = parseFloat(formData.amount) || 0;
                     const ratio = monthlyRevenue > 0 ? loanAmount / monthlyRevenue : Infinity;
+                    const weeklyRepayment = loanAmount / formData.repaymentWeeks;
 
                     let tier = 'Comfortable';
-                    let tierColor = 'text-green-700 bg-green-50 border-green-200';
-                    let progressColor = 'bg-green-500';
+                    let tierColor = 'text-emerald-700 bg-emerald-50 border-emerald-200';
+                    let progressColor = 'bg-emerald-500';
+                    let advisoryText = "This loan amount is well within your monthly revenue capacity.";
 
                     if (ratio >= 2.0) {
                       tier = 'High Burden';
                       tierColor = 'text-red-700 bg-red-50 border-red-200';
                       progressColor = 'bg-red-500';
+                      advisoryText = "Warning: This amount exceeds 2x your monthly revenue. High risk of rejection.";
                     } else if (ratio >= 1.0) {
                       tier = 'Stretched';
                       tierColor = 'text-amber-700 bg-amber-50 border-amber-200';
                       progressColor = 'bg-amber-500';
+                      advisoryText = "This amount is high relative to your revenue. Repayment may be tight.";
                     } else if (ratio >= 0.5) {
                       tier = 'Manageable';
                       tierColor = 'text-blue-700 bg-blue-50 border-blue-200';
                       progressColor = 'bg-blue-500';
+                      advisoryText = "This amount is reasonable, though check your margins carefully.";
                     }
 
                     return (
                       <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                        <div className="p-6 border-b border-gray-100">
-                           <div className="flex items-center gap-2">
+                        <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                           <div className="flex items-center gap-3">
                               <div className="p-2 bg-purple-50 rounded-lg">
                                 <CreditCardIcon className="w-5 h-5 text-purple-600" />
                               </div>
-                              <h3 className="text-lg font-bold text-gray-900">Loan Affordability</h3>
+                              <div>
+                                 <h3 className="text-lg font-bold text-gray-900">Affordability Check</h3>
+                                 <p className="text-xs text-gray-500">Ensure comfortably monthly payments</p>
+                              </div>
                            </div>
+                           <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${tierColor}`}>
+                              {tier}
+                           </span>
                         </div>
 
-                        <div className="p-6">
-                           {/* Status Banner */}
-                           <div className={`flex items-start gap-4 p-4 rounded-lg border mb-6 ${tierColor}`}>
-                              <div className="flex-1">
-                                <h4 className="font-bold text-sm uppercase tracking-wide mb-1">{tier}</h4>
-                                <p className="text-sm opacity-90">
-                                  {ratio < 0.5 ? 'This loan amount is well within your monthly revenue.' :
-                                   ratio < 1.0 ? 'This amount is reasonable for your business size.' :
-                                   ratio < 2.0 ? 'This amount is high relative to your revenue. Repayment may be tight.' :
-                                   'This amount exceeds 2x your monthly revenue. High risk of default.'}
-                                </p>
+                        <div className="p-6 flex flex-col md:flex-row gap-8">
+                           {/* Left: Controls */}
+                           <div className="flex-1 space-y-5">
+                              <div>
+                                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Request Amount</label>
+                                <div className={`relative flex items-center border rounded-xl overflow-hidden transition-all ${
+                                    tier === 'High Burden' ? 'border-red-300 ring-4 ring-red-50' : 'border-gray-300 focus-within:border-brand-500 focus-within:ring-4 focus-within:ring-brand-50'
+                                }`}>
+                                  <div className="pl-4 pr-2 text-gray-400 font-medium">$</div>
+                                  <input
+                                    type="number"
+                                    value={formData.amount}
+                                    onChange={(e) => handleChange('amount', e.target.value)}
+                                    className="w-full py-4 text-2xl font-bold text-gray-900 placeholder-gray-300 focus:outline-none"
+                                    placeholder="0"
+                                  />
+                                  <div className="pr-4 text-sm font-medium text-gray-400">USDC</div>
+                                </div>
                               </div>
-                              <div className="text-right">
-                                <span className="text-2xl font-bold">{ratio.toFixed(1)}x</span>
-                                <span className="block text-xs opacity-75">Revenue Ratio</span>
-                              </div>
-                           </div>
 
-                           {/* Meter */}
-                           <div className="mb-8">
-                              <div className="flex justify-between text-xs text-gray-400 mb-2 uppercase tracking-wider font-medium">
-                                <span>Comfortable</span>
-                                <span>Manageable</span>
-                                <span>Stretched</span>
-                                <span>Burden</span>
-                              </div>
-                              <div className="h-4 bg-gray-100 rounded-full w-full relative overflow-hidden">
-                                 {/* Background Zones */}
-                                 <div className="absolute inset-0 flex opacity-20">
-                                    <div className="w-[25%] bg-green-500"></div>
-                                    <div className="w-[25%] bg-blue-500"></div>
-                                    <div className="w-[25%] bg-amber-500"></div>
-                                    <div className="w-[25%] bg-red-500"></div>
+                              <div>
+                                 <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Quick Adjust</p>
+                                 <div className="flex flex-wrap gap-2">
+                                    {(() => {
+                                      const roundTo100 = (n: number) => Math.round(n / 100) * 100;
+                                      const options = [
+                                        { label: 'Safe', value: roundTo100(monthlyRevenue * 0.4), color: 'emerald' },
+                                        { label: 'Stretch', value: roundTo100(monthlyRevenue * 0.8), color: 'blue' },
+                                        { label: 'Max', value: roundTo100(monthlyRevenue * 1.5), color: 'amber' },
+                                      ];
+
+                                      return options.map((opt) => (
+                                        <button
+                                          key={opt.label}
+                                          type="button"
+                                          onClick={() => handleChange('amount', opt.value.toString())}
+                                          className="text-xs px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-100 transition-colors font-medium text-gray-600"
+                                        >
+                                          {opt.label}: <span className="text-gray-900 font-bold">${opt.value.toLocaleString()}</span>
+                                        </button>
+                                      ));
+                                    })()}
                                  </div>
-                                 {/* Marker */}
-                                 <div
-                                    className="absolute top-0 bottom-0 w-1 bg-gray-900 shadow-[0_0_10px_rgba(0,0,0,0.3)] z-10 transition-all duration-500"
-                                    style={{ left: `${Math.min(ratio / 2 * 100, 100)}%` }}
-                                 ></div>
                               </div>
                            </div>
 
-                           {/* Recommendations */}
-                           <div>
-                              <label className="block text-sm font-medium text-gray-900 mb-3">Adjust Loan Amount</label>
-                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                                {(() => {
-                                  const roundTo100 = (n: number) => Math.round(n / 100) * 100;
-                                  const options = [
-                                    { label: 'Comfortable', value: roundTo100(monthlyRevenue * 0.4), color: 'green' },
-                                    { label: 'Manageable', value: roundTo100(monthlyRevenue * 0.75), color: 'blue' },
-                                    { label: 'Max Recommended', value: roundTo100(monthlyRevenue * 1.5), color: 'amber' },
-                                  ];
+                           {/* Right: Analysis */}
+                           <div className="flex-1 bg-gray-50 rounded-xl p-5 border border-gray-100 flex flex-col justify-center space-y-4">
+                               <div className="flex justify-between items-end pb-4 border-b border-gray-200">
+                                   <div>
+                                       <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Est. Weekly Repayment</span>
+                                       <span className="text-2xl font-bold text-gray-900">${weeklyRepayment > 0 ? weeklyRepayment.toFixed(0) : '0'}</span>
+                                       <span className="text-sm text-gray-500 font-medium"> / week</span>
+                                   </div>
+                                   <div className="text-right">
+                                       <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Term</span>
+                                       <span className="text-lg font-bold text-gray-900">{formData.repaymentWeeks} Weeks</span>
+                                   </div>
+                               </div>
 
-                                  return options.map((opt) => (
-                                    <button
-                                      key={opt.label}
-                                      type="button"
-                                      onClick={() => handleChange('amount', opt.value.toString())}
-                                      className={`p-3 rounded-lg border text-left transition-all ${
-                                        parseInt(formData.amount) === opt.value
-                                          ? `border-${opt.color}-500 bg-${opt.color}-50 ring-1 ring-${opt.color}-500`
-                                          : `border-gray-200 hover:border-${opt.color}-300 hover:bg-${opt.color}-50`
-                                      }`}
-                                    >
-                                      <div className={`text-xs font-semibold uppercase tracking-wide text-${opt.color}-600 mb-1`}>
-                                        {opt.label}
-                                      </div>
-                                      <div className="font-bold text-gray-900">${opt.value.toLocaleString()}</div>
-                                    </button>
-                                  ));
-                                })()}
-                              </div>
-
-                              <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                  <span className="text-gray-500 sm:text-sm">$</span>
-                                </div>
-                                <input
-                                  type="number"
-                                  value={formData.amount}
-                                  onChange={(e) => handleChange('amount', e.target.value)}
-                                  className="block w-full pl-7 pr-12 py-3 border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
-                                  placeholder="Custom Amount"
-                                />
-                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                  <span className="text-gray-500 sm:text-sm">USDC</span>
-                                </div>
-                              </div>
+                               <div>
+                                   <div className="flex justify-between text-xs mb-1.5">
+                                      <span className="font-semibold text-gray-500 uppercase tracking-wide">Revenue Burden</span>
+                                      <span className={`font-bold ${
+                                         ratio > 1 ? 'text-red-600' : 'text-gray-900'
+                                      }`}>{ratio.toFixed(1)}x Monthly Rev</span>
+                                   </div>
+                                   <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden relative">
+                                       {/* Zones */}
+                                       <div className="absolute inset-0 flex opacity-10">
+                                            <div className="w-[25%] bg-emerald-500"></div>
+                                            <div className="w-[25%] bg-blue-500"></div>
+                                            <div className="w-[25%] bg-amber-500"></div>
+                                            <div className="w-[25%] bg-red-500"></div>
+                                       </div>
+                                       <div
+                                            className={`h-full transition-all duration-500 ${progressColor}`}
+                                            style={{ width: `${Math.min(ratio * 50, 100)}%` }}
+                                       />
+                                   </div>
+                                   <p className="mt-3 text-xs text-gray-500 leading-snug">
+                                     {advisoryText}
+                                   </p>
+                               </div>
                            </div>
                         </div>
                       </div>
@@ -1411,25 +1423,25 @@ export default function LoanCreationWizard() {
 
               </div>
             ) : (
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center max-w-lg mx-auto">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <ShoppingBagIcon className="h-8 w-8 text-gray-400" />
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-10 text-center max-w-lg mx-auto">
+                    <div className="w-16 h-16 bg-white shadow-sm border border-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <ChartBarIcon className="h-8 w-8 text-gray-300" />
                     </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Data Available</h3>
-                  <p className="text-gray-600 mb-6">
-                    Connect your business accounts to see your Trust Score and affordability analysis.
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">No Data Available</h3>
+                  <p className="text-gray-600 mb-8 max-w-sm mx-auto">
+                    Connect your business accounts to see your Trust Score and unlock your funding limit.
                   </p>
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}
-                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-brand-700 bg-brand-100 hover:bg-brand-200 transition-colors"
+                    className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-bold rounded-xl text-brand-700 bg-brand-100 hover:bg-brand-200 transition-colors"
                   >
-                    ← Connect Platforms
+                    Connect Platforms
                   </button>
                 </div>
             )}
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-4 pt-6 border-t border-gray-100">
               <button
                 type="button"
                 onClick={goToPreviousStep}
