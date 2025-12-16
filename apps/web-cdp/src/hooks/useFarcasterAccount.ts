@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSignEvmTypedData, useCurrentUser } from '@coinbase/cdp-hooks';
+import { useAccount } from 'wagmi';
 import { useWalletType } from '@/hooks/useWalletType';
 
 interface FarcasterAccount {
@@ -46,6 +47,7 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
   const { address: defaultAddress, isExternalWallet, isCdpWallet } = useWalletType();
   const { currentUser } = useCurrentUser();
   const { signEvmTypedData: signWithCDP } = useSignEvmTypedData();
+  const { connector } = useAccount();
 
   // CDP creates both EOA and Smart Account when createOnLogin: 'smart'
   // Access the EOA address for Farcaster signing
@@ -61,6 +63,9 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
   const [error, setError] = useState<string | null>(null);
   const [hasPrompted, setHasPrompted] = useState(false);
 
+  // Track in-flight checks to prevent duplicate API calls
+  const checkInProgressRef = useRef<string | null>(null);
+
   // Check if wallet has Farcaster account by querying Neynar
   useEffect(() => {
     if (!walletAddress) {
@@ -68,9 +73,22 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
       return;
     }
 
+    // Prevent duplicate checks for the same wallet
+    if (checkInProgressRef.current === walletAddress.toLowerCase()) {
+      return;
+    }
+
     async function checkFarcasterAccount() {
+      const walletLower = walletAddress!.toLowerCase();
+
+      // Double-check we're not already checking this wallet
+      if (checkInProgressRef.current === walletLower) {
+        return;
+      }
+
+      checkInProgressRef.current = walletLower;
       setIsLoading(true);
-      const promptKey = `farcaster_prompted_${walletAddress.toLowerCase()}`;
+      const promptKey = `farcaster_prompted_${walletLower}`;
 
       console.log('[Farcaster] Checking Farcaster account for wallet:', walletAddress);
 
@@ -168,6 +186,12 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
           // 404 is expected when wallet has no Farcaster account - not an error
           console.log('[Farcaster] No Farcaster account found for this wallet (404)');
           setFarcasterAccount(null);
+
+          // Cache the negative result (1 minute TTL)
+          localStorage.setItem(cacheKey, JSON.stringify({
+            data: null,
+            timestamp: Date.now() - (4 * 60 * 1000), // Expire in 1 minute instead of 5
+          }));
         } else {
           // Only log actual errors (500, etc.)
           console.warn('[Farcaster] Unexpected response checking account:', response.status);
@@ -287,6 +311,12 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
       const { fid, deadline, typedData } = await prepareResponse.json();
 
       console.log('Registration prepared with FID:', fid, 'requesting signature...');
+      console.log('[Farcaster] Wallet info:', {
+        walletAddress,
+        isExternalWallet,
+        isCdpWallet,
+        cdpEoaAddress: cdpEoaAddress || 'undefined',
+      });
 
       // Step 2: Request user signature (Farcaster requires EOA signature)
       // Note: We use wallet.request with eth_signTypedData_v4 directly to bypass
@@ -296,19 +326,42 @@ export function useFarcasterAccount(): UseFarcasterAccountReturn {
       let signature: string;
 
       if (isExternalWallet && walletAddress) {
-        // External wallet - Use raw eth_signTypedData_v4 via window.ethereum
-        // to bypass viem/wagmi chain ID validation.
+        // External wallet - Use raw eth_signTypedData_v4 via the connector's provider
+        // to bypass viem/wagmi chain ID validation AND the Coinbase Wallet SDK proxy.
         // Farcaster ID Registry requires chainId: 10 (Optimism) but user may be on any chain.
         // The signature itself doesn't require being on Optimism - it's just signing bytes.
         console.log('[Farcaster] Using external wallet for signing via raw RPC...');
+        console.log('[Farcaster] Connected via connector:', connector?.id, connector?.name);
 
-        const ethereum = (window as any).ethereum;
+        // Get the provider directly from the connector to avoid Coinbase Wallet SDK proxy issues
+        // when multiple wallet extensions are installed
+        let ethereum: any;
+        if (connector?.getProvider) {
+          try {
+            ethereum = await connector.getProvider();
+            console.log('[Farcaster] Got provider from connector');
+          } catch (providerError) {
+            console.warn('[Farcaster] Could not get provider from connector, falling back to window.ethereum');
+            ethereum = (window as any).ethereum;
+          }
+        } else {
+          ethereum = (window as any).ethereum;
+        }
+
         if (!ethereum) {
           throw new Error('No wallet found. Please install MetaMask or another wallet extension.');
         }
 
+        console.log('[Farcaster] Provider obtained, requesting accounts...');
+
         // Get the currently connected accounts to ensure we have permission
-        const accounts = await ethereum.request({ method: 'eth_accounts' }) as string[];
+        let accounts: string[];
+        try {
+          accounts = await ethereum.request({ method: 'eth_accounts' }) as string[];
+        } catch (accountsError: any) {
+          console.error('[Farcaster] Error getting accounts:', accountsError);
+          throw new Error(`Failed to get wallet accounts: ${accountsError.message || 'Unknown error'}`);
+        }
         console.log('[Farcaster] Connected accounts:', accounts);
 
         if (!accounts || accounts.length === 0) {
