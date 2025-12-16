@@ -1306,17 +1306,11 @@ export default function LoanCreationWizard() {
                     return (
                       <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                         <div className="p-6 border-b border-gray-100">
-                           <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
+                           <div className="flex items-center gap-2">
                               <div className="p-2 bg-purple-50 rounded-lg">
                                 <CreditCardIcon className="w-5 h-5 text-purple-600" />
                               </div>
                               <h3 className="text-lg font-bold text-gray-900">Loan Affordability</h3>
-                            </div>
-                            <div className="text-right">
-                               <p className="text-sm text-gray-500">Monthly Revenue</p>
-                               <p className="font-bold text-gray-900">${Math.round(monthlyRevenue).toLocaleString()}</p>
-                            </div>
                            </div>
                         </div>
 
