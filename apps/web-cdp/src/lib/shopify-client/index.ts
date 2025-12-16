@@ -39,6 +39,15 @@ export interface DetailedRevenueData {
   lastOrderDate: Date | null;
 }
 
+export interface ShopOwnerData {
+  shopName: string;
+  ownerName: string;
+  email: string;
+  phone: string | null;
+  domain: string;
+  createdAt: Date;
+}
+
 export class ShopifyClient {
   private config: ShopifyOAuthConfig;
 
@@ -210,20 +219,23 @@ export class ShopifyClient {
   /**
    * Fetch detailed order data for Business Health Score calculation
    * Gets individual order records with timestamps for trend analysis
+   * Uses processed_at (business date) instead of created_at for accurate historical dating
    */
   async getDetailedRevenueData(session: ShopifySession, days: number = 90): Promise<DetailedRevenueData> {
     const date = new Date();
     date.setDate(date.getDate() - days);
-    const createdAtMin = date.toISOString();
+    const processedAtMin = date.toISOString();
 
     // Use GraphQL API with detailed fields
+    // Include both processedAt and createdAt, prefer processedAt for business date
     const query = `
       query getDetailedOrders($query: String!) {
-        orders(first: 250, query: $query, sortKey: CREATED_AT) {
+        orders(first: 250, query: $query, sortKey: PROCESSED_AT) {
           edges {
             node {
               id
               createdAt
+              processedAt
               displayFinancialStatus
               displayFulfillmentStatus
               totalPriceSet {
@@ -251,11 +263,12 @@ export class ShopifyClient {
       const paginatedQuery = cursor
         ? `
           query getDetailedOrders($query: String!, $cursor: String!) {
-            orders(first: 250, query: $query, after: $cursor, sortKey: CREATED_AT) {
+            orders(first: 250, query: $query, after: $cursor, sortKey: PROCESSED_AT) {
               edges {
                 node {
                   id
                   createdAt
+                  processedAt
                   displayFinancialStatus
                   displayFulfillmentStatus
                   totalPriceSet {
@@ -284,8 +297,8 @@ export class ShopifyClient {
         body: JSON.stringify({
           query: paginatedQuery,
           variables: cursor
-            ? { query: `created_at:>='${createdAtMin}'`, cursor }
-            : { query: `created_at:>='${createdAtMin}'` },
+            ? { query: `processed_at:>='${processedAtMin}'`, cursor }
+            : { query: `processed_at:>='${processedAtMin}'` },
         }),
       });
 
@@ -304,9 +317,11 @@ export class ShopifyClient {
       const edges = result.data?.orders?.edges || [];
       for (const edge of edges) {
         const node = edge.node;
+        // Use processedAt as the business date, fallback to createdAt
+        const orderDate = node.processedAt || node.createdAt;
         allOrders.push({
           id: node.id,
-          createdAt: new Date(node.createdAt),
+          createdAt: new Date(orderDate),
           totalPrice: parseFloat(node.totalPriceSet?.shopMoney?.amount || '0'),
           currency: node.totalPriceSet?.shopMoney?.currencyCode || 'USD',
           financialStatus: node.displayFinancialStatus || 'UNKNOWN',
@@ -340,14 +355,16 @@ export class ShopifyClient {
 
   /**
    * Fallback REST API method for detailed order data
+   * Uses processed_at (business date) instead of created_at for accurate historical dating
    */
   private async getDetailedRevenueDataREST(session: ShopifySession, days: number): Promise<DetailedRevenueData> {
     const date = new Date();
     date.setDate(date.getDate() - days);
-    const createdAtMin = date.toISOString();
+    const processedAtMin = date.toISOString();
 
+    // Include processed_at in fields, use processed_at_min for filtering
     const url = `https://${session.shop}/admin/api/2024-10/orders.json` +
-      `?status=any&created_at_min=${createdAtMin}&fields=id,created_at,total_price,currency,financial_status,fulfillment_status&limit=250`;
+      `?status=any&processed_at_min=${processedAtMin}&fields=id,created_at,processed_at,total_price,currency,financial_status,fulfillment_status&limit=250`;
 
     const response = await fetch(url, {
       headers: {
@@ -364,7 +381,8 @@ export class ShopifyClient {
 
     const orders: OrderData[] = rawOrders.map((order: any) => ({
       id: order.id.toString(),
-      createdAt: new Date(order.created_at),
+      // Use processed_at as the business date, fallback to created_at
+      createdAt: new Date(order.processed_at || order.created_at),
       totalPrice: parseFloat(order.total_price || '0'),
       currency: order.currency || 'USD',
       financialStatus: order.financial_status || 'unknown',
@@ -384,6 +402,59 @@ export class ShopifyClient {
       currency: orders[0]?.currency || 'USD',
       firstOrderDate: orders.length > 0 ? orders[0].createdAt : null,
       lastOrderDate: orders.length > 0 ? orders[orders.length - 1].createdAt : null,
+    };
+  }
+
+  /**
+   * Fetch shop owner details (name, email, etc.)
+   * No special scope required - available with any valid access token
+   */
+  async getShopOwnerData(session: ShopifySession): Promise<ShopOwnerData> {
+    const query = `
+      query {
+        shop {
+          name
+          email
+          shopOwnerName
+          billingAddress {
+            phone
+          }
+          primaryDomain {
+            url
+          }
+          createdAt
+        }
+      }
+    `;
+
+    const response = await fetch(`https://${session.shop}/admin/api/2024-10/graphql.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Access-Token': session.accessToken,
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Shopify API error: ${response.statusText}`);
+    }
+
+    const result = await response.json() as any;
+
+    if (result.errors) {
+      throw new Error(`Shopify GraphQL error: ${JSON.stringify(result.errors)}`);
+    }
+
+    const shop = result.data.shop;
+
+    return {
+      shopName: shop.name,
+      ownerName: shop.shopOwnerName || '',
+      email: shop.email || '',
+      phone: shop.billingAddress?.phone || null,
+      domain: shop.primaryDomain?.url || '',
+      createdAt: new Date(shop.createdAt),
     };
   }
 }
