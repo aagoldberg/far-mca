@@ -4,10 +4,6 @@ import {
   searchYelp,
   lookupInstagram,
   lookupTikTok,
-  type GooglePlacesResult,
-  type YelpResult,
-  type InstagramResult,
-  type TikTokResult,
 } from '@/lib/social-verification';
 
 /**

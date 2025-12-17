@@ -56,6 +56,47 @@ interface FormData {
   monthlyIncome: IncomeRange;
   imageUrl: string;
   imageAspectRatio?: number;
+
+  // Social Links
+  instagramHandle: string;
+  tiktokHandle: string;
+  googleBusinessName: string;
+  googleBusinessLocation: string;
+  yelpBusinessName: string;
+  yelpBusinessLocation: string;
+}
+
+// Verified social data types
+interface VerifiedSocialData {
+  instagram?: {
+    username: string;
+    fullName: string;
+    followersCount: number;
+    postsCount: number;
+    isVerified: boolean;
+    isBusinessAccount: boolean;
+  };
+  tiktok?: {
+    username: string;
+    nickname: string;
+    followersCount: number;
+    likesCount: number;
+    videoCount: number;
+    isVerified: boolean;
+  };
+  google?: {
+    name: string;
+    rating: number;
+    reviewCount: number;
+    address: string;
+  };
+  yelp?: {
+    name: string;
+    rating: number;
+    reviewCount: number;
+    categories: string[];
+    url: string;
+  };
 }
 
 interface CreditScoreData {
@@ -106,10 +147,21 @@ export default function LoanCreationWizard() {
     loanUseAndImpact: '',
     monthlyIncome: IncomeRange.PREFER_NOT_TO_SAY,
     imageUrl: '',
+    instagramHandle: '',
+    tiktokHandle: '',
+    googleBusinessName: '',
+    googleBusinessLocation: '',
+    yelpBusinessName: '',
+    yelpBusinessLocation: '',
   });
 
   // Credit score data (from Step 2 OAuth)
   const [creditScore, setCreditScore] = useState<CreditScoreData | null>(null);
+
+  // Verified social data
+  const [verifiedSocial, setVerifiedSocial] = useState<VerifiedSocialData>({});
+  const [verifyingPlatform, setVerifyingPlatform] = useState<string | null>(null);
+  const [expandedSocial, setExpandedSocial] = useState<Record<string, boolean>>({});
 
   // UI state
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -521,6 +573,92 @@ export default function LoanCreationWizard() {
     const files = e.target.files;
     if (files && files[0]) {
       handleImageUpload(files[0]);
+    }
+  };
+
+  // Format follower count for display (e.g., 1.2K, 15K, 1.5M)
+  const formatFollowerCount = (count: number): string => {
+    if (count >= 1000000) {
+      return `${(count / 1000000).toFixed(1)}M`;
+    }
+    if (count >= 1000) {
+      return `${(count / 1000).toFixed(1)}K`;
+    }
+    return count.toString();
+  };
+
+  // Verify social platform and fetch profile data
+  const verifySocial = async (platform: 'instagram' | 'tiktok' | 'google' | 'yelp') => {
+    setVerifyingPlatform(platform);
+
+    try {
+      let body: Record<string, string> = { platform };
+
+      switch (platform) {
+        case 'instagram':
+          if (!formData.instagramHandle.trim()) {
+            setVerifyingPlatform(null);
+            return;
+          }
+          body.username = formData.instagramHandle.replace(/^@/, '');
+          break;
+        case 'tiktok':
+          if (!formData.tiktokHandle.trim()) {
+            setVerifyingPlatform(null);
+            return;
+          }
+          body.username = formData.tiktokHandle.replace(/^@/, '');
+          break;
+        case 'google':
+          if (!formData.googleBusinessName.trim()) {
+            setVerifyingPlatform(null);
+            return;
+          }
+          body.query = `${formData.googleBusinessName} ${formData.googleBusinessLocation}`.trim();
+          break;
+        case 'yelp':
+          if (!formData.yelpBusinessName.trim() || !formData.yelpBusinessLocation.trim()) {
+            setVerifyingPlatform(null);
+            return;
+          }
+          body.businessName = formData.yelpBusinessName;
+          body.location = formData.yelpBusinessLocation;
+          break;
+      }
+
+      const response = await fetch('/api/verify-social', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setVerifiedSocial(prev => ({
+          ...prev,
+          [platform]: result.data,
+        }));
+        // Auto-expand verified profile
+        setExpandedSocial(prev => ({
+          ...prev,
+          [platform]: true,
+        }));
+      } else {
+        // Show error
+        setErrors(prev => ({
+          ...prev,
+          [`${platform}Verify`]: result.error || 'Verification failed',
+        }));
+      }
+    } catch (error) {
+      console.error(`Error verifying ${platform}:`, error);
+      setErrors(prev => ({
+        ...prev,
+        [`${platform}Verify`]: 'Failed to verify. Please try again.',
+      }));
+    } finally {
+      setVerifyingPlatform(null);
     }
   };
 
@@ -1532,6 +1670,219 @@ export default function LoanCreationWizard() {
                   placeholder="@alice or alice"
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
                 />
+              </div>
+            </div>
+
+            {/* Social Presence */}
+            <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-gray-900">Social Presence</h2>
+              <p className="text-sm text-gray-600">
+                Link your social accounts to help lenders learn more about you (optional)
+              </p>
+
+              {/* Instagram */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-900">Instagram</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={formData.instagramHandle}
+                    onChange={(e) => handleChange('instagramHandle', e.target.value)}
+                    placeholder="@yourusername"
+                    className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => verifySocial('instagram')}
+                    disabled={verifyingPlatform === 'instagram' || !formData.instagramHandle.trim()}
+                    className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                  >
+                    {verifyingPlatform === 'instagram' ? 'Verifying...' : verifiedSocial.instagram ? 'Verified' : 'Verify'}
+                  </button>
+                </div>
+                {errors.instagramVerify && <p className="text-sm text-red-600">{errors.instagramVerify}</p>}
+
+                {/* Expandable Instagram Profile */}
+                {verifiedSocial.instagram && (
+                  <div className="mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedSocial(prev => ({ ...prev, instagram: !prev.instagram }))}
+                      className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700"
+                    >
+                      <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                      @{verifiedSocial.instagram.username}
+                      <span className="text-gray-400">{expandedSocial.instagram ? '▲' : '▼'}</span>
+                    </button>
+                    {expandedSocial.instagram && (
+                      <div className="mt-2 p-3 bg-gray-50 rounded-lg text-sm space-y-1">
+                        <p><span className="text-gray-500">Name:</span> {verifiedSocial.instagram.fullName}</p>
+                        <p><span className="text-gray-500">Followers:</span> {formatFollowerCount(verifiedSocial.instagram.followersCount)}</p>
+                        <p><span className="text-gray-500">Posts:</span> {verifiedSocial.instagram.postsCount}</p>
+                        {verifiedSocial.instagram.isBusinessAccount && (
+                          <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Business Account</span>
+                        )}
+                        {verifiedSocial.instagram.isVerified && (
+                          <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs ml-1">Verified</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* TikTok */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-900">TikTok</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={formData.tiktokHandle}
+                    onChange={(e) => handleChange('tiktokHandle', e.target.value)}
+                    placeholder="@yourusername"
+                    className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => verifySocial('tiktok')}
+                    disabled={verifyingPlatform === 'tiktok' || !formData.tiktokHandle.trim()}
+                    className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                  >
+                    {verifyingPlatform === 'tiktok' ? 'Verifying...' : verifiedSocial.tiktok ? 'Verified' : 'Verify'}
+                  </button>
+                </div>
+                {errors.tiktokVerify && <p className="text-sm text-red-600">{errors.tiktokVerify}</p>}
+
+                {/* Expandable TikTok Profile */}
+                {verifiedSocial.tiktok && (
+                  <div className="mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedSocial(prev => ({ ...prev, tiktok: !prev.tiktok }))}
+                      className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700"
+                    >
+                      <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                      @{verifiedSocial.tiktok.username}
+                      <span className="text-gray-400">{expandedSocial.tiktok ? '▲' : '▼'}</span>
+                    </button>
+                    {expandedSocial.tiktok && (
+                      <div className="mt-2 p-3 bg-gray-50 rounded-lg text-sm space-y-1">
+                        <p><span className="text-gray-500">Display Name:</span> {verifiedSocial.tiktok.nickname}</p>
+                        <p><span className="text-gray-500">Followers:</span> {formatFollowerCount(verifiedSocial.tiktok.followersCount)}</p>
+                        <p><span className="text-gray-500">Likes:</span> {formatFollowerCount(verifiedSocial.tiktok.likesCount)}</p>
+                        <p><span className="text-gray-500">Videos:</span> {verifiedSocial.tiktok.videoCount}</p>
+                        {verifiedSocial.tiktok.isVerified && (
+                          <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">Verified</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Google Business */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-900">Google Business Profile</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={formData.googleBusinessName}
+                    onChange={(e) => handleChange('googleBusinessName', e.target.value)}
+                    placeholder="Business name"
+                    className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
+                  />
+                  <input
+                    type="text"
+                    value={formData.googleBusinessLocation}
+                    onChange={(e) => handleChange('googleBusinessLocation', e.target.value)}
+                    placeholder="City, State"
+                    className="w-36 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => verifySocial('google')}
+                    disabled={verifyingPlatform === 'google' || !formData.googleBusinessName.trim()}
+                    className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                  >
+                    {verifyingPlatform === 'google' ? 'Searching...' : verifiedSocial.google ? 'Found' : 'Search'}
+                  </button>
+                </div>
+                {errors.googleVerify && <p className="text-sm text-red-600">{errors.googleVerify}</p>}
+
+                {/* Expandable Google Profile */}
+                {verifiedSocial.google && (
+                  <div className="mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedSocial(prev => ({ ...prev, google: !prev.google }))}
+                      className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700"
+                    >
+                      <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                      {verifiedSocial.google.name}
+                      <span className="text-gray-400">{expandedSocial.google ? '▲' : '▼'}</span>
+                    </button>
+                    {expandedSocial.google && (
+                      <div className="mt-2 p-3 bg-gray-50 rounded-lg text-sm space-y-1">
+                        <p><span className="text-gray-500">Rating:</span> {verifiedSocial.google.rating} ★ ({verifiedSocial.google.reviewCount} reviews)</p>
+                        <p><span className="text-gray-500">Address:</span> {verifiedSocial.google.address}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Yelp */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-900">Yelp Business</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={formData.yelpBusinessName}
+                    onChange={(e) => handleChange('yelpBusinessName', e.target.value)}
+                    placeholder="Business name"
+                    className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
+                  />
+                  <input
+                    type="text"
+                    value={formData.yelpBusinessLocation}
+                    onChange={(e) => handleChange('yelpBusinessLocation', e.target.value)}
+                    placeholder="City, State"
+                    className="w-36 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-brand-500 focus:ring-0 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => verifySocial('yelp')}
+                    disabled={verifyingPlatform === 'yelp' || !formData.yelpBusinessName.trim() || !formData.yelpBusinessLocation.trim()}
+                    className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                  >
+                    {verifyingPlatform === 'yelp' ? 'Searching...' : verifiedSocial.yelp ? 'Found' : 'Search'}
+                  </button>
+                </div>
+                {errors.yelpVerify && <p className="text-sm text-red-600">{errors.yelpVerify}</p>}
+
+                {/* Expandable Yelp Profile */}
+                {verifiedSocial.yelp && (
+                  <div className="mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedSocial(prev => ({ ...prev, yelp: !prev.yelp }))}
+                      className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700"
+                    >
+                      <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                      {verifiedSocial.yelp.name}
+                      <span className="text-gray-400">{expandedSocial.yelp ? '▲' : '▼'}</span>
+                    </button>
+                    {expandedSocial.yelp && (
+                      <div className="mt-2 p-3 bg-gray-50 rounded-lg text-sm space-y-1">
+                        <p><span className="text-gray-500">Rating:</span> {verifiedSocial.yelp.rating} ★ ({verifiedSocial.yelp.reviewCount} reviews)</p>
+                        <p><span className="text-gray-500">Categories:</span> {verifiedSocial.yelp.categories.join(', ')}</p>
+                        <a href={verifiedSocial.yelp.url} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:underline">
+                          View on Yelp →
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
