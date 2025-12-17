@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { parseUnits } from 'viem';
 import { useRouter } from 'next/navigation';
-import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
+import { useCreateLoanUnified } from '@/hooks/useMicroLoan';
 import { USDC_DECIMALS } from '@/types/loan';
 import ImageCropModal from '@/components/ImageCropModal';
 import { LoanCard } from '@/components/LoanCard';
@@ -57,7 +57,7 @@ export default function CreateLoanForm() {
   // Use standardized wallet detection utility (CDP best practice)
   const { address, isConnected } = useWalletType();
 
-  const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoanGasless();
+  const { createLoan, isPending, isConfirming, isSuccess, hash } = useCreateLoanUnified();
   const { profile } = useFarcasterProfile(address);
 
   const [isCheckingConnection, setIsCheckingConnection] = useState(true);

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { parseUnits } from 'viem';
 import { USDC_DECIMALS } from '@/types/loan';
 import { useWalletType } from '@/hooks/useWalletType';
-import { useCreateLoanGasless } from '@/hooks/useMicroLoan';
+import { useCreateLoanUnified } from '@/hooks/useMicroLoan';
 import { useFarcasterProfile } from '@/hooks/useFarcasterProfile';
 import ImageCropModal from './ImageCropModal';
 import { LoanCard } from './LoanCard';
@@ -178,14 +178,16 @@ export default function LoanCreationWizard() {
   const [isConnectingShopify, setIsConnectingShopify] = useState(false);
   const [isRefreshingConnections, setIsRefreshingConnections] = useState(false);
 
-  // Loan creation hook
+  // Loan creation hook - unified for both CDP Smart Wallets and external wallets (Farcaster, etc.)
   const {
     createLoan,
     isPending,
     isConfirming,
     isSuccess,
     hash,
-  } = useCreateLoanGasless();
+    isCdpWallet,
+    isExternalWallet,
+  } = useCreateLoanUnified();
 
   // Load draft from URL params (after OAuth callback)
   useEffect(() => {
