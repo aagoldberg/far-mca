@@ -1981,7 +1981,7 @@ export default function LoanCreationWizard() {
                   <LoanCard
                     address={"0x0000000000000000000000000000000000000000" as `0x${string}`}
                     borrower={address || "0x0000000000000000000000000000000000000000" as `0x${string}`}
-                    name={formData.loanPurposes.length > 0 ? `Funding for ${formData.loanPurposes.join(', ')}` : "What's this funding for?"}
+                    name={formData.loanTitle.trim() || (formData.loanPurposes.length > 0 ? `Funding for ${formData.loanPurposes.join(', ')}` : "What's this funding for?")}
                     description={""}
                     principal={formData.amount ? parseUnits(formData.amount, USDC_DECIMALS) : 0n}
                     totalFunded={0n}
