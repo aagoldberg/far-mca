@@ -48,6 +48,7 @@ interface FormData {
   loanPurposes: string[];
 
   // Step 4: About You & Loan Details
+  loanTitle: string; // Custom headline like "Help Maya buy seasonal inventory"
   aboutYou: string;
   businessWebsite: string;
   twitterHandle: string;
@@ -98,6 +99,7 @@ export default function LoanCreationWizard() {
     amount: '',
     repaymentWeeks: 12,
     loanPurposes: [],
+    loanTitle: '',
     aboutYou: '',
     businessWebsite: '',
     twitterHandle: '',
@@ -536,8 +538,8 @@ export default function LoanCreationWizard() {
     }
 
     // Create metadata
-    // Generate title from loan purposes
-    const title = `Funding for ${formData.loanPurposes.join(', ')}`;
+    // Use custom title if provided, otherwise generate from loan purposes
+    const title = formData.loanTitle.trim() || `Funding for ${formData.loanPurposes.join(', ')}`;
 
     const metadata = {
       name: title,
@@ -1463,6 +1465,28 @@ export default function LoanCreationWizard() {
         {/* STEP 4: COMPLETE APPLICATION */}
         {currentStep === 4 && (
           <>
+            {/* Loan Title */}
+            <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-gray-900">Your Ask</h2>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Write a short headline for your loan card *
+                </label>
+                <input
+                  type="text"
+                  value={formData.loanTitle}
+                  onChange={(e) => setFormData({ ...formData, loanTitle: e.target.value })}
+                  placeholder="Help Maya buy seasonal inventory"
+                  maxLength={60}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                />
+                <p className="mt-2 text-xs text-gray-500">
+                  {formData.loanTitle.length}/60 characters · This is what lenders will see first
+                </p>
+              </div>
+            </div>
+
             {/* About You */}
             <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm space-y-4">
               <h2 className="text-lg font-bold text-gray-900">Your Story</h2>
