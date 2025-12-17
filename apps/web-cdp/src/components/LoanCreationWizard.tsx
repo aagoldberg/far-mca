@@ -1089,8 +1089,8 @@ export default function LoanCreationWizard() {
                    // CONNECT FORM
                    <div className="space-y-4">
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 bg-[#95BF47]/10 rounded-lg flex items-center justify-center p-2">
-                           <img src="/logos/shopify/shopify_glyph.svg" alt="Shopify" className="w-full h-full" />
+                        <div className="w-10 h-10 bg-[#95BF47]/10 rounded-lg flex items-center justify-center">
+                           <span className="text-xl font-bold text-[#95BF47]">S</span>
                         </div>
                         <h3 className="font-bold text-gray-900">Connect Shopify</h3>
                       </div>
@@ -1148,8 +1148,8 @@ export default function LoanCreationWizard() {
                   // CONNECTED STATE
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center p-2.5 relative">
-                        <img src="/logos/shopify/shopify_glyph.svg" alt="Shopify" className="w-full h-full" />
+                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center relative">
+                        <span className="text-2xl font-bold text-[#95BF47]">S</span>
                         <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
                            <CheckCircleIcon className="w-4 h-4 text-emerald-500" />
                         </div>
@@ -1184,8 +1184,8 @@ export default function LoanCreationWizard() {
                   // DISCONNECTED STATE
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2.5 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-                        <img src="/logos/shopify/shopify_glyph.svg" alt="Shopify" className="w-full h-full" />
+                      <div className="flex-shrink-0 w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center opacity-70 group-hover:opacity-100 transition-all">
+                        <span className="text-2xl font-bold text-[#95BF47]">S</span>
                       </div>
                       <div>
                         <h3 className="font-bold text-gray-900 group-hover:text-brand-700 transition-colors">Shopify</h3>

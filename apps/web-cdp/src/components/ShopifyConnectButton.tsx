@@ -96,7 +96,7 @@ export default function ShopifyConnectButton({
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-1">
-            We'll securely connect to your Shopify store to verify revenue data
+            Enter your store domain to connect
           </p>
         </div>
         <button
