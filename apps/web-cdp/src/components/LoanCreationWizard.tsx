@@ -989,8 +989,8 @@ export default function LoanCreationWizard() {
                 <label className="block text-sm font-medium text-gray-900 mb-2">What's this funding for?</label>
                 <p className="text-xs text-gray-500 mb-3">Select all that apply</p>
 
-                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                  {['Marketing', 'Improving cash flow', 'Company expansion', 'Inventory purchasing', 'Research and development', 'Other'].map((purpose) => (
+                <div className="flex flex-col gap-3">
+                  {['Inventory & materials', 'Operations & equipment', 'Marketing & promotion'].map((purpose) => (
                     <label key={purpose} className="flex items-center gap-3 cursor-pointer group">
                       <input
                         type="checkbox"
